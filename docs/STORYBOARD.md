@@ -47,25 +47,101 @@
 **Notes:** Time of day: Morning light
 
 ### Panel 2.2
-**Shot Type:** MEDIUM TRACKING
-**Duration:** 3 sec
-**Description:** Ryan waddles from house to garage next door
-**Sound:** Footsteps on gravel
-**Character Animation:** Coffee in one hand, other hand in hoodie pocket
-**Notes:** Garage has satellite dishes and antennas on roof
+**Shot Type:** MEDIUM - RYAN APPROACHING HOUSE
+**Duration:** 2 sec
+**Description:** Ryan walks toward house entrance with espresso
+**Sound:** Footsteps on path
+**Character Animation:** Casual stride, coffee in hand
 
 ---
 
-## SCENE 03: THE MANCAVE
+## SCENE 03: THE LIVINGROOM
 
 ### Panel 3.1
+**Shot Type:** MEDIUM - LIVINGROOM INTERIOR
+**Duration:** 4 sec
+**Description:** Ryan enters cozy livingroom, IES on couch watching TV
+**Sound:** Door opening, TV audio in background
+**Key Elements:**
+- Comfortable couch, family photos on walls
+- TV showing documentary preview
+- Warm, homey atmosphere
+
+### Panel 3.2
+**Shot Type:** TWO-SHOT - RYAN AND IES
+**Duration:** 8 sec
+**Description:** Ryan and Ies have conversation about documentary
+**Dialogue:**
+- Ies: "You should watch this documentary tonight"
+- Ryan: "Tech pioneers? In Drenthe?"
+- Ies: "Dr. Prinsloo, Cees Bassa, Jaap Haartsen..."
+**Character Animation:** Ies gestures at TV, Ryan looks interested but distracted
+
+### Panel 3.3
+**Shot Type:** MEDIUM - RYAN LEAVING
+**Duration:** 3 sec
+**Description:** Ryan heads toward door to mancave
+**Dialogue:** "Maybe later. I have code to write."
+**Character Animation:** Ryan exits frame right
+
+### Panel 3.4
+**Shot Type:** CLOSE-UP - IES
+**Duration:** 2 sec
+**Description:** Ies shakes head fondly at TV
+**Dialogue:** "He'll watch it."
+**Notes:** Knowing smile
+
+---
+
+## SCENE 03A: THE DOCUMENTARY (OPTIONAL)
+
+### Panel 3A.1
+**Shot Type:** FULL SCREEN - TV DISPLAY
+**Duration:** Variable (if player chooses)
+**Description:** NTR logo, documentary title card
+**Sound:** Dramatic orchestral music
+**Text Overlay:** "Wireless Pioneers of Drenthe - An NTR Documentary"
+
+### Panel 3A.2
+**Shot Type:** MONTAGE - DOCUMENTARY CLIPS
+**Duration:** 30-180 sec (depending on player choice)
+**Description:** Quick cuts of documentary content
+**Clips shown:**
+1. Dr. David Prinsloo at TU Eindhoven lab explaining phased array antenna technology
+2. Aerial shots of Drenthe radio telescopes (WSRT, LOFAR) establishing regional context
+3. LOFAR antenna fields across European landscape
+4. Cees Bassa at ASTRON discussing satellite interference and signal processing
+5. Historic Ericsson office, Bluetooth protocol diagrams
+6. Jaap Haartsen explaining frequency-hopping spread spectrum
+**Sound:** Narrator voice-over, interview audio
+**Notes:** Educational montage establishing Ryan's future allies and their expertise
+
+### Panel 3A.3
+**Shot Type:** MEDIUM - RYAN AND IES ON COUCH
+**Duration:** 3 sec
+**Description:** Ryan watching, impressed and thoughtful
+**Dialogue:** "I didn't realize these guys were so close by"
+**Character Animation:** Leaning forward, engaged
+
+---
+
+## SCENE 04: THE MANCAVE
+
+### Panel 4.1
+**Shot Type:** WIDE ESTABLISHING - EXTERIOR
+**Duration:** 3 sec
+**Description:** Ryan walking from house to garage/mancave next door
+**Sound:** Footsteps on gravel
+**Notes:** Garage has satellite dishes and antennas on roof
+
+### Panel 4.2
 **Shot Type:** POV - DOOR OPENING
 **Duration:** 2 sec
 **Description:** Door swings open to reveal hacker paradise
 **Sound:** Door creak, electronic hum begins
 **Notes:** Green LED glow from equipment creates dramatic effect
 
-### Panel 3.2
+### Panel 4.3
 **Shot Type:** WIDE - MANCAVE INTERIOR
 **Duration:** 5 sec
 **Description:** Full room reveal - monitors, equipment, posters
@@ -78,14 +154,14 @@
 - 3D printer mid-print
 - Oscilloscope traces moving
 
-### Panel 3.3
+### Panel 4.4
 **Shot Type:** MEDIUM - RYAN AT DESK
 **Duration:** 3 sec
 **Description:** Ryan settles into ergonomic chair
 **Sound:** Chair squeak
 **Character Animation:** Puts on large headphones, cracks knuckles
 
-### Panel 3.4
+### Panel 4.5
 **Shot Type:** MONTAGE - TIME PASSING
 **Duration:** 8 sec
 **Description:** Quick cuts showing Ryan working
@@ -98,30 +174,30 @@
 
 ---
 
-## SCENE 04: THE TRANSMISSION
+## SCENE 05: THE TRANSMISSION
 
-### Panel 4.1
+### Panel 5.1
 **Shot Type:** CLOSE-UP - SSTV MONITOR
 **Duration:** 3 sec
 **Description:** Static begins to form patterns
 **Sound:** Warbling, musical static
 **Animation:** Screen interference pattern
 
-### Panel 4.2
+### Panel 5.2
 **Shot Type:** OVER SHOULDER - RYAN
 **Duration:** 2 sec
 **Description:** Ryan glances at SSTV, does double-take
 **Sound:** Music stops
 **Character Animation:** Frozen mid-type, slowly turns head
 
-### Panel 4.3
+### Panel 5.3
 **Shot Type:** CLOSE-UP - RYAN'S FACE
 **Duration:** 2 sec
 **Description:** Eyes widening behind glasses
 **Sound:** Dramatic sting
 **Dialogue:** "What the hell?"
 
-### Panel 4.4
+### Panel 5.4
 **Shot Type:** EXTREME CLOSE-UP - SSTV SCREEN
 **Duration:** 5 sec
 **Description:** Visual morse code forming - dots and dashes
@@ -138,30 +214,30 @@
 
 ---
 
-## SCENE 05: DECODING THE MESSAGE
+## SCENE 06: DECODING THE MESSAGE
 
-### Panel 5.1
+### Panel 6.1
 **Shot Type:** INSERT - SCREEN
 **Duration:** 4 sec
 **Description:** Encrypted text on monitor
 **Text on screen:** "XBSOJOH - QSPKFDU FDIP JT DPNQSPNJTFE..."
 **Sound:** Keyboard clicking
 
-### Panel 5.2
+### Panel 6.2
 **Shot Type:** SPLIT SCREEN
 **Duration:** 5 sec
 **Description:** Left: Encrypted | Right: Decrypted appearing
 **Animation:** Letters shifting one by one (B→A, C→B, etc.)
 **Sound:** Digital processing sound
 
-### Panel 5.3
+### Panel 6.3
 **Shot Type:** CLOSE-UP - RYAN
 **Duration:** 3 sec
 **Description:** Reading the decoded message aloud
 **Dialogue:** "Warning. Project Echo is compromised. Trust no one."
 **Character Animation:** Growing alarm on face
 
-### Panel 5.4
+### Panel 6.4
 **Shot Type:** MEDIUM - RYAN LEANING BACK
 **Duration:** 4 sec
 **Description:** Ryan suspicious, thinking
@@ -170,16 +246,16 @@
 
 ---
 
-## SCENE 06: THE SECOND TRANSMISSION
+## SCENE 07: THE SECOND TRANSMISSION
 
-### Panel 6.1
+### Panel 7.1
 **Shot Type:** WIDE - MANCAVE
 **Duration:** 2 sec
 **Description:** SSTV crackles back to life
 **Sound:** Static crackle
 **Animation:** Screen flickers
 
-### Panel 6.2
+### Panel 7.2
 **Shot Type:** CLOSE-UP - SSTV SCREEN
 **Duration:** 8 sec
 **Description:** Image forms LINE BY LINE - photo of Ryan's house
@@ -187,7 +263,7 @@
 **Animation:** Classic SSTV scan-line appearance
 **Notes:** Building tension as image becomes recognizable
 
-### Panel 6.3
+### Panel 7.3
 **Shot Type:** REACTION - RYAN
 **Duration:** 2 sec
 **Description:** Ryan stands up so fast his chair spins
@@ -195,19 +271,19 @@
 **Dialogue:** "THAT'S MY HOUSE!"
 **Character Animation:** Horror/shock expression
 
-### Panel 6.4
+### Panel 7.4
 **Shot Type:** INSERT - SCREEN
 **Duration:** 4 sec
 **Description:** Text below image - another ROT1 message
 **Sound:** Tense music begins
 
-### Panel 6.5
+### Panel 7.5
 **Shot Type:** CLOSE-UP - RYAN'S TREMBLING HANDS
 **Duration:** 3 sec
 **Description:** Hands shaking as he decodes
 **Dialogue:** "Meet at Ter Apel Klooster. 23:00. Come alone."
 
-### Panel 6.6
+### Panel 7.6
 **Shot Type:** MEDIUM - RYAN
 **Duration:** 4 sec
 **Description:** Ryan looks at clock (18:00), then at camera
@@ -216,9 +292,9 @@
 
 ---
 
-## SCENE 07: PREPARATION MONTAGE
+## SCENE 08: PREPARATION MONTAGE
 
-### Panel 7.1
+### Panel 8.1
 **Shot Type:** TABLE TOP - EQUIPMENT
 **Duration:** 6 sec (fast cuts)
 **Description:** Items being laid out like a heist movie
@@ -232,13 +308,13 @@
 **Sound:** Items being placed down rhythmically
 **Music:** Tense preparation music
 
-### Panel 7.2
+### Panel 8.2
 **Shot Type:** CLOSE-UP - PHONES
 **Duration:** 3 sec
 **Description:** Regular phone put down, burner phone picked up
 **Dialogue:** "Phone stays. Too easy to track."
 
-### Panel 7.3
+### Panel 8.3
 **Shot Type:** MEDIUM - SERVER RACK
 **Duration:** 4 sec
 **Description:** Ryan typing at server terminal
@@ -247,30 +323,30 @@
 
 ---
 
-## SCENE 08: TER APEL KLOOSTER - NIGHT
+## SCENE 09: TER APEL KLOOSTER - NIGHT
 
-### Panel 8.1
+### Panel 9.1
 **Shot Type:** WIDE ESTABLISHING - KLOOSTER
 **Duration:** 5 sec
 **Description:** Medieval monastery at night, moonlit
 **Sound:** Owls, wind, distant church bells (23:00)
 **Notes:** Gothic architecture, shadows everywhere
 
-### Panel 8.2
+### Panel 9.2
 **Shot Type:** MEDIUM - RYAN APPROACHING
 **Duration:** 3 sec
 **Description:** Ryan creeps through shadows
 **Sound:** Gravel crunching quietly
 **Character Animation:** Hunched, cautious movement
 
-### Panel 8.3
+### Panel 9.3
 **Shot Type:** POV - RYAN'S WATCH
 **Duration:** 2 sec each
 **Description:** Time passing - 23:00, 23:05, 23:10, 23:15
 **Sound:** Clock ticking
 **Notes:** Tension building through waiting
 
-### Panel 8.4
+### Panel 9.4
 **Shot Type:** MEDIUM - RYAN FRUSTRATED
 **Duration:** 3 sec
 **Description:** Ryan trying locked doors
@@ -279,28 +355,28 @@
 
 ---
 
-## SCENE 09: THE USB STICK
+## SCENE 10: THE USB STICK
 
-### Panel 9.1
+### Panel 10.1
 **Shot Type:** WIDE - RYAN APPROACHING CAR
 **Duration:** 3 sec
 **Description:** Ryan walks to his Volvo, shoulders slumped
 **Sound:** Footsteps on pavement
 
-### Panel 9.2
+### Panel 10.2
 **Shot Type:** CLOSE-UP - CAR DOOR HANDLE
 **Duration:** 3 sec
 **Description:** USB stick wedged under handle, tape visible
 **Sound:** Dramatic sting
 **Text visible:** "TRUST THE PROCESS"
 
-### Panel 9.3
+### Panel 10.3
 **Shot Type:** REACTION - RYAN
 **Duration:** 2 sec
 **Description:** Eyes wide, looking around wildly
 **Character Animation:** Spinning, searching shadows
 
-### Panel 9.4
+### Panel 10.4
 **Shot Type:** EXTREME CLOSE-UP - USB IN PALM
 **Duration:** 3 sec
 **Description:** Tiny drive in Ryan's large hand
@@ -309,35 +385,35 @@
 
 ---
 
-## SCENE 10: THE REVEAL
+## SCENE 11: THE REVEAL
 
-### Panel 10.1
+### Panel 11.1
 **Shot Type:** WIDE - MANCAVE - LATE NIGHT
 **Duration:** 3 sec
 **Description:** Ryan at his air-gapped ThinkPad
 **Sound:** Old laptop boot sounds
 **Notes:** Single lamp illumination, atmospheric
 
-### Panel 10.2
+### Panel 11.2
 **Shot Type:** INSERT - SCREEN
 **Duration:** 5 sec
 **Description:** Files appearing - README, schematics, evidence.zip
 **Sound:** Click sounds
 
-### Panel 10.3
+### Panel 11.3
 **Shot Type:** OVER SHOULDER
 **Duration:** 8 sec
 **Description:** Ryan reading README, key lines highlighted
 **Key text:** "They're building a weapon... hijack any wireless signal... 72 hours"
 **Character Animation:** Growing horror
 
-### Panel 10.4
+### Panel 11.4
 **Shot Type:** INSERT - SCREEN
 **Duration:** 3 sec
 **Description:** Password prompt for ZIP file
 **Sound:** Keyboard typing - "243"
 
-### Panel 10.5
+### Panel 11.5
 **Shot Type:** RAPID CUTS - EVIDENCE
 **Duration:** 6 sec
 **Description:** Documents flying across screen
@@ -347,7 +423,7 @@
 - Email signature: "V."
 **Sound:** Disturbing document shuffle sound
 
-### Panel 10.6
+### Panel 11.6
 **Shot Type:** CLOSE-UP - RYAN
 **Duration:** 3 sec  
 **Description:** Face lit by screen, horrified
@@ -355,29 +431,29 @@
 
 ---
 
-## SCENE 11: TAG - THE PLAN
+## SCENE 12: TAG - THE PLAN
 
-### Panel 11.1
+### Panel 12.1
 **Shot Type:** WIDE - MANCAVE AT DAWN
 **Duration:** 4 sec
 **Description:** Ryan surrounded by espresso cups, conspiracy board behind him
 **Sound:** Morning birds, printer humming
 **Notes:** Red string connecting photos and documents
 
-### Panel 11.2
+### Panel 12.2
 **Shot Type:** INSERT - PHONE SCREEN
 **Duration:** 3 sec
 **Description:** Three message notifications
-**Text:** "Henk is in." "Marieke confirmed." "Pieter says yes."
+**Text:** "David is in." "Cees confirmed." "Pieter says yes."
 
-### Panel 11.3
+### Panel 12.3
 **Shot Type:** MEDIUM - RYAN BREAKING FOURTH WALL
 **Duration:** 5 sec
 **Description:** Ryan looks directly at camera
 **Dialogue:** "Time to hack the planet. For real this time."
 **Character Animation:** Cracks knuckles, determined smile
 
-### Panel 11.4
+### Panel 12.4
 **Shot Type:** FREEZE FRAME
 **Duration:** 2 sec
 **Description:** Hold on Ryan's determined face
@@ -412,8 +488,8 @@
 ## EPISODE 2 STORYBOARD PREVIEW
 
 **Key Scenes:**
-1. Ryan meeting Henk at WSRT radio telescopes
-2. Marieke's basement filled with Meshtastic devices
+1. Ryan meeting David at radio telescope facilities
+2. Cees's workspace filled with Meshtastic devices
 3. Pieter's apartment (tin foil everywhere)
 4. EVA revealed in shadow
 5. Surveillance montage - someone watching Ryan

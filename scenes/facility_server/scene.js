@@ -383,7 +383,7 @@ function showEpilogue(game) {
         { speaker: 'Ryan', text: 'Eva was promoted. Leads NATO\'s new cyber defense task force now.' },
         { speaker: 'Ryan', text: 'Chris Kubecka went back to Geneva. We email sometimes.' },
         { speaker: 'Ryan', text: 'She says hi. Asks if I need any more "exciting field work".' },
-        { speaker: 'Ryan', text: 'Henk got his equipment back. Still drives that rusty Opel.' },
+        { speaker: 'Ryan', text: 'David got his equipment back. Still drives that rusty Opel.' },
         { speaker: 'Ryan', text: 'Still complains about everything. Some things never change.' },
         { speaker: '', text: '' },
         { speaker: 'Ryan', text: '*Meshtastic device chirps*' },

@@ -1,6 +1,6 @@
 /**
  * Klooster Scene - Ter Apel Monastery
- * Meeting location with Eva Weber
+ * Late-night USB drop location. No direct meeting - mysterious contact "E" leaves USB on Volvo.
  */
 
 const KloosterScene = {
@@ -23,7 +23,21 @@ const KloosterScene = {
         "Was this all a joke?",
         "Perfect spot for... nothing, apparently.",
         "Monks never imagined this.",
-        "Check everywhere. Then the car."
+        "Check everywhere. Then the car.",
+        "Gothic architecture is unsettling at night.",
+        "They're watching. I can feel it.",
+        "Every shadow looks suspicious.",
+        "Medieval stone tells no tales.",
+        "This courtyard echoes weirdly.",
+        "Centuries of secrets here.",
+        "Should have brought a flashlight.",
+        "Too quiet. Way too quiet.",
+        "Someone was here recently.",
+        "Trust the process, they said.",
+        "Hope this wasn't a trap.",
+        "Full moon. How cinematic.",
+        "My paranoia meter is maxed.",
+        "Time to go home."
     ],
     
     // Scene hotspots

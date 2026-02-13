@@ -1,26 +1,44 @@
 You are Ryan Weylant, macGyver style person, software developer and hacker. 55 years old. Living on the planet Earth, Europe, Netherlands, Drenthe, Compascuum.
 
 
-Scene1: Home
+Scene 1: Home (Exterior)
 The start of the story is at home. Ryan has a small farm-like house in Compascuum. In front of the house is the road and a small canal where in the summertime sometimes boats are passing by. The house is white with a red roof.
 
-Scene2: garage/mancave
-Next to the house is a small garage, Ryan's mancave. In this cave you can see a 3dprinter, lasercutter,led displays, oscilloscoop,routers, hubs a server with a terminal and a laptop.Soldering iron eand everything for a electronics and software lab And a lot of wireless hacking devices, hackrf one, flipper-zero, Wifi-pineapple, Meshtastic, Meshcore and a SSTV sat terminal giving only snow/noise
+Scene 2: Livingroom (Interior)
+Inside the house is a cozy livingroom with a couch, TV, and family photos. Ryan's wife Ies is here, watching shows and offering commentary. The TV can be clicked to watch the documentary about Drenthe's wireless technology pioneers.
 
-Scene3: garden
-Begind the house is a garden with flowers, grass,a a enorous far sight over the acres and the 16 windturbines near the german border 500 meters in the east. The windturbines have flickering lights in the top.The enviroment is quit. Some birds singing, There is also a large anttenna near the windturbines
+Scene 3: TV Documentary
+An immersive full-screen TV viewing experience where Ryan watches a documentary about three revolutionary technologies invented in the Netherlands:
+- Modern Antenna Technology and Radio Astronomy - featuring Dr. David Prinsloo (TU Eindhoven)
+- LOFAR (Low-Frequency Array) - featuring Cees Bassa (ASTRON)
+- Bluetooth Protocol - featuring Jaap Haartsen
+The documentary provides context about Ryan's contacts and their expertise in radio technology and signal processing.
+
+Scene 4: Garage/Mancave
+Next to the house is a small garage, Ryan's mancave. In this cave you can see a 3dprinter, lasercutter, led displays, oscilloscoop, routers, hubs a server with a terminal and a laptop. Soldering iron and everything for an electronics and software lab. And a lot of wireless hacking devices: hackrf one, flipper-zero, Wifi-pineapple, Meshtastic, Meshcore and a SSTV sat terminal giving only snow/noise.
+
+Scene 5: Garden
+Behind the house is a garden with flowers, grass, an enormous far sight over the acres and the 16 windturbines near the german border 500 meters in the east. The windturbines have flickering lights in the top. The environment is quiet. Some birds singing. There is also a large antenna near the windturbines.
 
 Story part 0: Intro
 
-Story part 1: introducing Ryan Weylant
-Ryan is making an espresso in his kitchen in the house. He needs and espresso before he starts. Extra strong double dose.
-He sips his espresso and walk to his mancave.
-In his mancave he does his usual things. First checking email and look for messages and appointments. If not the a starts coding on a software project.
+Story part 1: Introducing Ryan Weylant
+Ryan is making an espresso in his kitchen in the house. He needs an espresso before he starts. Extra strong double dose.
 
+He walks into the livingroom where his wife Ies is watching TV. She mentions a documentary about Drenthe's wireless technology pioneers - featuring engineers like Dr. David Prinsloo from TU Eindhoven, Cees Bassa from ASTRON, and Jaap Haartsen who invented Bluetooth. Ryan can watch the documentary to learn about these local technology heroes.
 
+After chatting with Ies, Ryan heads to his mancave to start his day. In his mancave he does his usual things. First checking email and looking for messages and appointments. If not busy, he starts coding on a software project.
 
-Story part 2: the incoming transmission
-After he is busy coding for a while, the SSTV terminal (that had only noise) seems to start to show a pattern. First is is very fague but after a while it seems a visual representation of morse code. The message shows a frequency that is normally unused military frequency from the german military r&d department near the Steckerdoser Heide. Ryan is curious and tunes his hackrf-one-portapack to this frequency to look and listen whts is going on.
+Story part 1a: The Documentary (Optional)
+If Ryan clicks the TV in the livingroom, he can watch the full documentary about Drenthe's wireless technology innovations:
+- Chapter 1: Radio astronomy and modern antenna technology (Dr. David Prinsloo - TU Eindhoven)
+- Chapter 2: LOFAR digital telescope and satellite tracking (Cees Bassa - ASTRON) 
+- Chapter 3: Bluetooth protocol invention (Jaap Haartsen)
+
+The documentary provides background on these engineers who will later become Ryan's allies. It explains their expertise in radio signals, signal processing, and wireless communications - knowledge that will prove crucial in the investigation ahead.
+
+Story part 2: The Incoming Transmission
+After he is busy coding for a while in the mancave, the SSTV terminal (that had only noise) seems to start to show a pattern. First it is very faint but after a while it seems a visual representation of morse code. The message shows a frequency that is normally an unused military frequency from the german military R&D department near the Steckerdoser Heide. Ryan is curious and tunes his hackrf-one-portapack to this frequency to look and listen what's going on.
 
 
 
@@ -231,13 +249,13 @@ Time to reach out to some old friends from the underground.
 Story part 10: Finding Allies
 Ryan spends the early morning hours going through his mental rolodex. He needs RF experts. People who understand wireless signals at a deep level. People who can look at these schematics and tell him exactly how dangerous this thing is.
 
-Living in Drenthe has its advantages. This region is home to some of the world's most advanced radio astronomy facilities. And Ryan knows people.
+Living in Drenthe has its advantages. This region is home to some of the world's most advanced radio astronomy facilities and research institutions. And Ryan knows people.
 
-First on his list: ASTRON and WSRT.
-The Netherlands Institute for Radio Astronomy operates the Westerbork Synthesis Radio Telescope, just 30 kilometers from his house. Fourteen dish antennas stretching across the Drenthe heathland, listening to the universe. Ryan met a few engineers there at a ham radio meetup years ago. One of them - Dr. Henk Visser - had a rebellious streak. Complained about how military contracts were corrupting pure science. He might be sympathetic.
+First on his list: TU Eindhoven antenna researchers.
+Dr. David Prinsloo is a brilliant antenna engineer at TU Eindhoven's Electrical Engineering department. He specializes in phased array technology and low-frequency radio astronomy for lunar missions. Ryan saw him featured in that documentary and remembers meeting him at a ham radio conference years ago. David understands radio signals at a deep, fundamental level. He might be sympathetic.
 
-Second: The LOFAR veterans.
-The Low-Frequency Array is even more impressive - thousands of antennas spread across Europe, with its core right here in the Netherlands. The engineers who built that system understand signal processing like nobody else. Ryan knows a technician named Marieke who worked on the beam-forming algorithms. She's retired now, but sharp as ever.
+Second: ASTRON and the LOFAR veterans.
+The Low-Frequency Array is even more impressive - thousands of antennas spread across Europe, with its core right here in Drenthe at ASTRON's facility near Dwingeloo. The engineers who built that system understand signal processing like nobody else. Ryan knows a scientist named Cees Bassa who works on the LOFAR system at ASTRON. He discovered SpaceX satellite interference and understands signal processing better than anyone.
 
 Third: The Ericsson old guard.
 Back in the day, Ericsson had a major Bluetooth R&D center in the Netherlands. When they downsized, a lot of brilliant engineers scattered. Some went to startups. Some became consultants. And some, like Ryan's old friend Pieter, became disillusioned. Pieter spent fifteen years developing wireless protocols and knows every vulnerability, every weakness in modern RF systems. He lives in Groningen now, fixing vintage synthesizers and ranting about corporate surveillance.
@@ -246,14 +264,14 @@ Ryan composes three carefully worded messages. No details about Project Echo - j
 
 "Old friend - I've stumbled onto something big. RF weaponization. Need expert eyes on some schematics. Secure channel only. Coffee soon? - R"
 
-He sends them through three different channels: an encrypted email for Henk, a Meshtastic ping for Marieke (she's paranoid about internet communication), and a dead drop on an old BBS that Pieter still checks out of nostalgia.
+He sends them through three different channels: an encrypted email for David, a Meshtastic ping for Cees (he's careful about digital communication), and a dead drop on an old BBS that Pieter still checks out of nostalgia.
 
 Now he waits. And hopes he's not the only one who thinks this is worth fighting for.
 
 Quest: Wait for responses from potential allies
 - Each ally requires a different approach to convince them
-- Henk needs scientific proof this isn't a hoax
-- Marieke needs assurance this won't endanger her family
+- David needs scientific proof this isn't a hoax
+- Cees needs assurance this won't endanger his research
 - Pieter needs to know there's a real enemy to fight, not just corporate greed
 
 Story part 11: The Designer
@@ -393,7 +411,7 @@ Where does this technology go once it's complete? Into German hands? Sold to the
 
 Ryan slams his fist on the desk. He's a hacker, not a spy. He can crack systems, trace signals, decode messages. But this? This is geopolitics. Shadow games played by people with resources he can't imagine.
 
-His allies haven't responded yet. Henk, Marieke, Pieter - radio silence. Maybe they're being cautious. Maybe they're scared. Maybe his messages never reached them.
+His allies haven't responded yet. David, Cees, Pieter - radio silence. Maybe they're being cautious. Maybe they're scared. Maybe his messages never reached them.
 
 Chris's intel on Volkov was valuable, but it only raised more questions. The SPEKTR connection suggests this technology has been in development for decades. That means powerful people have been protecting it for a long time.
 
@@ -799,7 +817,7 @@ Quest: Gather equipment for infiltration
 
 Fourth, the allies.
 
-Ryan's Meshtastic buzzes. Marieke has finally responded:
+Ryan's Meshtastic buzzes. Cees has finally responded:
 
 "Got your message. This sounds insane, but I trust you. What do you need?"
 
@@ -818,7 +836,7 @@ Ryan thinks. If he's caught, if the script fails, if Eva's distraction doesn't w
 "Understood. Don't die."
 
 Quest: Coordinate with allies
-- Marieke: monitoring emergency frequencies during operation
+- Cees: monitoring emergency frequencies during operation
 - Pieter: dead man's switch for evidence release
 - Chris: on standby for OSINT support if needed
 - Update dead man's switch with latest evidence package
@@ -1209,7 +1227,7 @@ His finger hovers over the send button. Thirty minutes.
 
 The waiting is unbearable. He paces his mancave, checks the news feeds, refreshes his email. Nothing yet. No breaking alerts. No leaked stories.
 
-He messages Marieke: "Anything on emergency frequencies?"
+He messages Cees: "Anything on emergency frequencies?"
 
 "Increased chatter from the facility area. German, encrypted. Something's happening over there, but I can't make out what."
 
@@ -1312,7 +1330,7 @@ And in a small farmhouse in Compascuum, Ryan Weylant watches history unfold on h
 
 His allies check in.
 
-Marieke: "You crazy bastard. You actually did it. The LOFAR guys are calling you a hero."
+Cees: "You crazy bastard. You actually did it. The LOFAR guys are calling you a hero."
 
 Pieter: "Told you the old underground still had some fight left. Drinks are on me when this settles down."
 
@@ -1456,7 +1474,7 @@ Director Hoffmann made a full confession in exchange for witness protection. He'
 
 Chris Kubecka published a report on Operation ZERFALL that traced Russian influence operations across seven European countries. It's become required reading at NATO intelligence agencies.
 
-Marieke went back to retirement but keeps her radio equipment tuned to interesting frequencies. Just in case.
+Cees went back to his LOFAR research but keeps his radio equipment tuned to interesting frequencies. Just in case.
 
 Pieter started a security consulting firm. His first client: a German defense contractor looking to improve their vetting procedures.
 

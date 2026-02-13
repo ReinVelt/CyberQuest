@@ -49,14 +49,14 @@ const EpilogueScene = {
                 { speaker: 'Narrator', text: 'Now required reading at NATO intelligence agencies.' },
                 { speaker: '', text: '' },
                 
-                // Marieke
-                { speaker: 'Narrator', text: 'Marieke went back to retirement.' },
+                // Cees Bassa
+                { speaker: 'Narrator', text: 'Cees Bassa went back to his work at ASTRON.' },
                 { speaker: 'Narrator', text: 'But keeps her radio equipment tuned to interesting frequencies.' },
                 { speaker: 'Narrator', text: 'Just in case.' },
                 { speaker: '', text: '' },
                 
-                // Pieter
-                { speaker: 'Narrator', text: 'Pieter started a security consulting firm.' },
+                // Jaap Haartsen
+                { speaker: 'Narrator', text: 'Jaap Haartsen started a security consulting firm.' },
                 { speaker: 'Narrator', text: 'His first client: a German defense contractor.' },
                 { speaker: 'Narrator', text: 'Improving their vetting procedures.' },
                 { speaker: '', text: '' },

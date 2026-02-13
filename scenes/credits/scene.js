@@ -15,117 +15,242 @@ const CreditsScene = {
     hotspots: [],
     
     onEnter: (game) => {
-        // Show full credits
-        setTimeout(() => {
-            game.startDialogue([
-                { speaker: '', text: '═══════════════════════════════════════' },
-                { speaker: '', text: 'CYBERQUEST: OPERATION ZERFALL' },
-                { speaker: '', text: '═══════════════════════════════════════' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'GAME DESIGN & DEVELOPMENT' },
-                { speaker: '', text: 'Rein Velt' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'CHARACTERS' },
-                { speaker: '', text: 'Ryan Weylant - Dutch Hacker' },
-                { speaker: '', text: 'Eva Weber - IT Security Analyst (Whistleblower)' },
-                { speaker: '', text: 'Dr. Henk Visser - ASTRON Radio Astronomer' },
-                { speaker: '', text: 'Chris Kubecka - Cybersecurity Expert' },
-                { speaker: '', text: 'Dr. Dmitri Volkov - Russian Scientist' },
-                { speaker: '', text: 'Marieke - LOFAR Technician (Retired)' },
-                { speaker: '', text: 'Pieter - Ericsson Bluetooth Engineer' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '─────────────────────────────────────' },
-                { speaker: '', text: 'BASED ON REAL TECHNOLOGY & EVENTS' },
-                { speaker: '', text: '─────────────────────────────────────' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'MESHTASTIC NETWORKS' },
-                { speaker: '', text: 'Real off-grid communication technology using LoRa radio.' },
-                { speaker: '', text: 'Used worldwide by privacy advocates, hikers, and emergency responders.' },
-                { speaker: '', text: 'Truly decentralized - no internet, no cell towers required.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'FLIPPER ZERO' },
-                { speaker: '', text: 'Actual multi-tool device for hardware hacking and RF analysis.' },
-                { speaker: '', text: 'Used by security researchers to test wireless systems.' },
-                { speaker: '', text: 'Released in 2022, became popular in hacker communities.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'CHRIS KUBECKA' },
-                { speaker: '', text: 'Real cybersecurity expert who worked on major incidents.' },
-                { speaker: '', text: 'Helped Saudi Aramco recover from devastating cyberattack.' },
-                { speaker: '', text: 'Now works with international organizations on cyber defense.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'TER APEL MONASTERY' },
-                { speaker: '', text: 'Real 15th-century monastery in Groningen, Netherlands.' },
-                { speaker: '', text: 'Now a museum, historically a meeting place for secretive groups.' },
-                { speaker: '', text: 'Located near the German border in quiet countryside.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'STECKERDOSER HEIDE' },
-                { speaker: '', text: 'Fictional location inspired by real military testing areas.' },
-                { speaker: '', text: 'Similar restricted zones exist throughout Germany.' },
-                { speaker: '', text: 'Used for defense research and weapons development.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'RADIO FREQUENCY WEAPONS' },
-                { speaker: '', text: 'Actual area of military research since the 1950s.' },
-                { speaker: '', text: 'High-power microwave weapons can disable electronics.' },
-                { speaker: '', text: 'Concerns about health effects remain debated.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'CHAOS COMPUTER CLUB (CCC)' },
-                { speaker: '', text: 'Europe\'s largest hacker association, founded 1981 in Germany.' },
-                { speaker: '', text: 'Annual Congress in Hamburg brings together security researchers.' },
-                { speaker: '', text: 'Advocates for transparency, privacy, and digital rights.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'GERMAN INTELLIGENCE (BND)' },
-                { speaker: '', text: 'Real German foreign intelligence agency.' },
-                { speaker: '', text: 'Works closely with NATO allies on cyber threats.' },
-                { speaker: '', text: 'Located in Berlin with operations across Europe.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'DUTCH INTELLIGENCE (AIVD)' },
-                { speaker: '', text: 'Netherlands\' General Intelligence and Security Service.' },
-                { speaker: '', text: 'Known for sophisticated cyber operations.' },
-                { speaker: '', text: 'Headquarters in The Hague.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '─────────────────────────────────────' },
-                { speaker: '', text: 'FICTIONAL ELEMENTS' },
-                { speaker: '', text: '─────────────────────────────────────' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'Operation ZERFALL is fictional.' },
-                { speaker: '', text: 'Dr. Dmitri Volkov is a fictional character.' },
-                { speaker: '', text: 'Ryan Weylant is fictional.' },
-                { speaker: '', text: 'Eva Weber is fictional.' },
-                { speaker: '', text: 'Specific plot events are dramatized for storytelling.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '─────────────────────────────────────' },
-                { speaker: '', text: 'INSPIRATION' },
-                { speaker: '', text: '─────────────────────────────────────' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'This game was inspired by:' },
-                { speaker: '', text: '• Real events in cybersecurity and intelligence' },
-                { speaker: '', text: '• The hacker ethic of transparency and accountability' },
-                { speaker: '', text: '• Classic point-and-click adventure games' },
-                { speaker: '', text: '• The Dutch countryside and its hidden history' },
-                { speaker: '', text: '• Concerns about weaponized technology' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '─────────────────────────────────────' },
-                { speaker: '', text: 'SPECIAL THANKS' },
-                { speaker: '', text: '─────────────────────────────────────' },
-                { speaker: '', text: '' },
-                { speaker: '', text: 'To the Chaos Computer Club community' },
-                { speaker: '', text: 'To Meshtastic developers and users' },
-                { speaker: '', text: 'To security researchers who keep us safe' },
-                { speaker: '', text: 'To everyone fighting for digital rights' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '═══════════════════════════════════════' },
-                { speaker: '', text: 'THANK YOU FOR PLAYING' },
-                { speaker: '', text: '═══════════════════════════════════════' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '© 2026 Rein Velt' },
-                { speaker: '', text: 'A CCC-inspired cybersecurity adventure' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '[Click to return to title screen]' }
-            ]);
-        }, 500);
+        // Hide player character during credits
+        const charactersContainer = document.getElementById('scene-characters');
+        if (charactersContainer) {
+            charactersContainer.style.display = 'none';
+        }
+        
+        // Create scrolling credits overlay
+        const creditsOverlay = document.createElement('div');
+        creditsOverlay.id = 'credits-scroll';
+        creditsOverlay.innerHTML = `
+            <div class="credits-content">
+                <div class="credits-spacer"></div>
+                
+                <h1>CYBERQUEST: OPERATION ZERFALL</h1>
+                
+                <h2>GAME DESIGN & DEVELOPMENT</h2>
+                <p>Rein Velt</p>
+                
+                <h2>CHARACTERS</h2>
+                <p>Ryan Weylant - Dutch Hacker</p>
+                <p>Eva Weber - IT Security Analyst (Whistleblower)</p>
+                <p>Dr. David Prinsloo - TU Eindhoven Antenna Engineer</p>
+                <p>Chris Kubecka - Cybersecurity Expert</p>
+                <p>Dr. Dmitri Volkov - Russian Scientist</p>
+                <p>Cees Bassa - ASTRON Scientist</p>
+                <p>Jaap Haartsen - Bluetooth Inventor (Ericsson)</p>
+                
+                <h2>BASED ON REAL TECHNOLOGY & EVENTS</h2>
+                
+                <h3>MESHTASTIC NETWORKS</h3>
+                <p>Real off-grid communication technology using LoRa radio.</p>
+                <p>Used worldwide by privacy advocates, hikers, and emergency responders.</p>
+                <p>Truly decentralized - no internet, no cell towers required.</p>
+                
+                <h3>FLIPPER ZERO</h3>
+                <p>Actual multi-tool device for hardware hacking and RF analysis.</p>
+                <p>Used by security researchers to test wireless systems.</p>
+                <p>Released in 2022, became popular in hacker communities.</p>
+                
+                <h3>CHRIS KUBECKA</h3>
+                <p>Real cybersecurity expert who worked on major incidents.</p>
+                <p>Helped Saudi Aramco recover from devastating cyberattack.</p>
+                <p>Now works with international organizations on cyber defense.</p>
+                
+                <h3>TER APEL MONASTERY</h3>
+                <p>Real 15th-century monastery in Groningen, Netherlands.</p>
+                <p>Now a museum, historically a meeting place for secretive groups.</p>
+                <p>Located near the German border in quiet countryside.</p>
+                
+                <h3>STECKERDOSER HEIDE</h3>
+                <p>Fictional location inspired by real military testing areas.</p>
+                <p>Similar restricted zones exist throughout Germany.</p>
+                <p>Used for defense research and weapons development.</p>
+                
+                <h3>RADIO FREQUENCY WEAPONS</h3>
+                <p>Actual area of military research since the 1950s.</p>
+                <p>High-power microwave weapons can disable electronics.</p>
+                <p>Concerns about health effects remain debated.</p>
+                
+                <h3>CHAOS COMPUTER CLUB (CCC)</h3>
+                <p>Europe's largest hacker association, founded 1981 in Germany.</p>
+                <p>Annual Congress in Hamburg brings together security researchers.</p>
+                <p>Advocates for transparency, privacy, and digital rights.</p>
+                
+                <h3>GERMAN INTELLIGENCE (BND)</h3>
+                <p>Real German foreign intelligence agency.</p>
+                <p>Works closely with NATO allies on cyber threats.</p>
+                <p>Located in Berlin with operations across Europe.</p>
+                
+                <h3>DUTCH INTELLIGENCE (AIVD)</h3>
+                <p>Netherlands' General Intelligence and Security Service.</p>
+                <p>Known for sophisticated cyber operations.</p>
+                <p>Headquarters in The Hague.</p>
+                
+                <h2>FICTIONAL ELEMENTS</h2>
+                <p>Operation ZERFALL is fictional.</p>
+                <p>Dr. Dmitri Volkov is a fictional character.</p>
+                <p>Ryan Weylant is fictional.</p>
+                <p>Eva Weber is fictional.</p>
+                <p>Specific plot events are dramatized for storytelling.</p>
+                
+                <h2>INSPIRATION</h2>
+                <p>This game was inspired by:</p>
+                <p>• Real events in cybersecurity and intelligence</p>
+                <p>• The hacker ethic of transparency and accountability</p>
+                <p>• Classic point-and-click adventure games</p>
+                <p>• The Dutch countryside and its hidden history</p>
+                <p>• Concerns about weaponized technology</p>
+                
+                <h2>SPECIAL THANKS</h2>
+                <p>To the Chaos Computer Club community</p>
+                <p>To Meshtastic developers and users</p>
+                <p>To security researchers who keep us safe</p>
+                <p>To everyone fighting for digital rights</p>
+                
+                <h1>THANK YOU FOR PLAYING</h1>
+                
+                <p class="copyright">© 2026 Rein Velt</p>
+                <p class="tagline">A Sierra-inspired cybersecurity adventure</p>
+                
+                <div class="credits-end-spacer"></div>
+                <p class="click-to-return">[Click to return to title screen]</p>
+                <div class="credits-spacer"></div>
+            </div>
+        `;
+        
+        // Add styles
+        const style = document.createElement('style');
+        style.textContent = `
+            #credits-scroll {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                z-index: 1000;
+                overflow: hidden;
+                color: #fff;
+                font-family: 'Arial', sans-serif;
+                cursor: pointer;
+            }
+            
+            .credits-content {
+                position: absolute;
+                width: 80%;
+                max-width: 800px;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
+                animation: creditsScroll 120s linear forwards;
+            }
+            
+            @keyframes creditsScroll {
+                from {
+                    top: 100%;
+                }
+                to {
+                    top: -100%;
+                }
+            }
+            
+            .credits-content h1 {
+                font-size: 2.5em;
+                margin: 60px 0 40px 0;
+                color: #4A90E2;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+            }
+            
+            .credits-content h2 {
+                font-size: 1.8em;
+                margin: 50px 0 30px 0;
+                color: #FFD700;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                border-bottom: 2px solid #FFD700;
+                padding-bottom: 10px;
+            }
+            
+            .credits-content h3 {
+                font-size: 1.3em;
+                margin: 35px 0 20px 0;
+                color: #87CEEB;
+                text-transform: uppercase;
+            }
+            
+            .credits-content p {
+                font-size: 1.1em;
+                margin: 10px 0;
+                line-height: 1.6;
+                color: #ddd;
+            }
+            
+            .credits-spacer {
+                height: 100vh;
+            }
+            
+            .credits-end-spacer {
+                height: 50vh;
+            }
+            
+            .copyright {
+                margin-top: 40px !important;
+                font-size: 1em !important;
+                color: #999 !important;
+            }
+            
+            .tagline {
+                font-style: italic;
+                color: #aaa !important;
+                margin-bottom: 60px !important;
+            }
+            
+            .click-to-return {
+                font-size: 1.2em !important;
+                color: #4A90E2 !important;
+                animation: pulse 2s infinite;
+            }
+            
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.5; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Add to page
+        document.body.appendChild(creditsOverlay);
+        
+        // Click to return to title
+        creditsOverlay.addEventListener('click', () => {
+            creditsOverlay.remove();
+            style.remove();
+            
+            // Restore character visibility
+            if (charactersContainer) {
+                charactersContainer.style.display = '';
+            }
+            
+            // Return to title screen
+            window.location.reload();
+        });
     },
     
-    onExit: () => {
-        // Could add return to title screen functionality
+    onExit: (game) => {
+        // Clean up credits overlay if it exists
+        const creditsOverlay = document.getElementById('credits-scroll');
+        if (creditsOverlay) {
+            creditsOverlay.remove();
+        }
+        
+        // Restore character visibility
+        const charactersContainer = document.getElementById('scene-characters');
+        if (charactersContainer) {
+            charactersContainer.style.display = '';
+        }
     }
 };

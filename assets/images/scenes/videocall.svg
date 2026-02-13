@@ -17,12 +17,12 @@
     SECURE
   </text>
   
-  <!-- Video slot 1 - Dr. Henk Visser -->
+  <!-- Video slot 1 - Dr. David Prinsloo -->
   <g id="video-slot-1">
     <rect x="120" y="200" width="480" height="360" fill="#0a0a15" stroke="#00d9ff" stroke-width="3" rx="5"/>
     <rect x="120" y="200" width="480" height="50" fill="#0f3460"/>
     <text x="360" y="232" font-family="monospace" font-size="24" fill="#00d9ff" text-anchor="middle" font-weight="bold">
-      Dr. Henk Visser
+      Dr. David Prinsloo
     </text>
     <text x="360" y="265" font-family="monospace" font-size="16" fill="#888" text-anchor="middle">
       ASTRON - Radio Astronomy
@@ -44,12 +44,12 @@
     </text>
   </g>
   
-  <!-- Video slot 2 - Marieke -->
+  <!-- Video slot 2 - Cees Bassa -->
   <g id="video-slot-2">
     <rect x="720" y="200" width="480" height="360" fill="#0a0a15" stroke="#00d9ff" stroke-width="3" rx="5"/>
     <rect x="720" y="200" width="480" height="50" fill="#0f3460"/>
     <text x="960" y="232" font-family="monospace" font-size="24" fill="#00d9ff" text-anchor="middle" font-weight="bold">
-      Marieke
+      Cees Bassa
     </text>
     <text x="960" y="265" font-family="monospace" font-size="16" fill="#888" text-anchor="middle">
       LOFAR - Beam Forming

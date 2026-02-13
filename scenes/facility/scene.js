@@ -172,7 +172,7 @@ const FacilityScene = {
                     game.showDialogue([
                         "The guard tower. Searchlight sweeping the perimeter.",
                         "Military police - Feldjäger. Not people to mess with.",
-                        "We'll need Henk's distraction to draw them away."
+                        "We'll need David's distraction to draw them away."
                     ], "Ryan observes");
                 }
             }

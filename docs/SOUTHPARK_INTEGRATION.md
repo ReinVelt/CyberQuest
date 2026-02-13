@@ -23,14 +23,14 @@ Located in `/assets/images/characters/`:
    - BND agent, mysterious contact "E"
    - Knowing smirk, spy aesthetic
 
-3. **henk_southpark.svg** - Wild white Einstein hair, lab coat, Pink Floyd shirt, ASTRON badge
-   - Radio astronomer, excitable scientist type
+3. **david_prinsloo_southpark.svg** - Short dark hair, modern rectangular glasses, lab coat over button-down shirt, TU/e badge
+   - 35-year-old antenna researcher, professional scientist type
 
-4. **pieter_southpark.svg** - Scruffy brown hair, stubble, paranoid eyes, tin foil hat in hand
+4. **jaap_haartsen_southpark.svg** - Professional appearance, early 70s, Bluetooth inventor at Ericsson
    - Ex-Ericsson engineer, devices on belt
 
-5. **marieke_southpark.svg** - Gray hair bun, cardigan over tactical vest, reading glasses
-   - Retired LOFAR engineer, grandmotherly but tactical
+5. **cees_bassa_southpark.svg** - Bald, tiny round glasses, casual jacket, Meshtastic device
+   - ASTRON LOFAR scientist, signal processing expert
 
 ### Animation Style Created
 Located in `/assets/images/scenes/`:
@@ -305,16 +305,16 @@ sprite.style.transform = this.facing === 'left' ? 'scaleX(-1)' : 'scaleX(1)';
 4. **Clothing**
    - Ryan: #2d4a6b hoodie, "I VOID WARRANTIES" text
    - Eva: Black turtleneck (#1a1a1a)
-   - Henk: Lab coat, Pink Floyd logo
+   - David: Lab coat over button-down shirt
    - Pieter: Brown jacket, devices on belt
-   - Marieke: Cardigan over tactical vest
+   - Cees: Casual jacket over practical clothes
 
 5. **Props**
    - Ryan: Coffee cup (#c5914d)
    - Eva: Bluetooth earpiece
-   - Henk: ASTRON badge
+   - David: TU/e ID badge
    - Pieter: Tin foil hat, Flipper Zero
-   - Marieke: Meshtastic device, glasses on chain
+   - Cees: Meshtastic device, tiny round glasses
 
 ---
 
@@ -325,9 +325,9 @@ sprite.style.transform = this.facing === 'left' ? 'scaleX(-1)' : 'scaleX(1)';
 These South Park characters exist but aren't in active scenes yet:
 
 - **Eva Weber** - Will appear in Klooster/USB analysis scenes
-- **Henk Visser** - ASTRON ally recruitment scene
+- **Dr. David Prinsloo** - TU Eindhoven ally recruitment scene
 - **Pieter** - Ex-Ericsson ally recruitment scene
-- **Marieke** - LOFAR ally recruitment scene
+- **Cees Bassa** - LOFAR ally recruitment scene
 
 ### Implementation Plan
 
@@ -417,7 +417,7 @@ South Park style assets also created for animation:
 - ✅ `/scenes/facility/scene.js` - Idle thoughts updated
 
 ### Assets Created:
-- ✅ 5 character SVGs (Ryan, Eva, Henk, Pieter, Marieke)
+- ✅ 5 character SVGs (Ryan, Eva, David, Pieter, Cees)
 - ✅ 5 scene frame illustrations
 - ✅ Screenplay document (Episode 1)
 - ✅ Storyboard document (11 scenes)

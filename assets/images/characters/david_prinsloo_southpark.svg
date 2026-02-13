@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- DR. DAVID PRINSLOO - South Park Style Character -->
+  <!-- 35-year-old TU Eindhoven antenna researcher, modern professional appearance -->
+  
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- BODY (tall, thin, scholarly) -->
+  <!-- Lab coat -->
+  <path d="M60,140 L55,290 L75,290 L80,180 L120,180 L125,290 L145,290 L140,140 Q100,130 60,140 Z" 
+        fill="#f5f5f5" filter="url(#shadow)"/>
+  
+  <!-- Lab coat collar -->
+  <path d="M70,140 L85,180 L100,160 L115,180 L130,140" stroke="#e0e0e0" stroke-width="2" fill="none"/>
+  
+  <!-- Lab coat pockets -->
+  <rect x="62" y="200" width="20" height="25" fill="#e8e8e8" rx="2"/>
+  <rect x="118" y="200" width="20" height="25" fill="#e8e8e8" rx="2"/>
+  <!-- Pens in pocket -->
+  <rect x="65" y="195" width="3" height="15" fill="#3333aa"/>
+  <rect x="70" y="197" width="3" height="13" fill="#aa3333"/>
+  <rect x="75" y="196" width="3" height="14" fill="#33aa33"/>
+  
+  <!-- Shirt underneath (professional button-down) -->
+  <rect x="85" y="160" width="30" height="30" fill="#4a7aaa"/>
+  <!-- Button-down shirt collar visible -->
+  <path d="M92,160 L88,175 L100,168 L112,175 L108,160" fill="#5a8aba"/>
+  
+  <!-- LEGS (dress pants) -->
+  <rect x="70" y="280" width="22" height="15" fill="#2a2a4a"/>
+  <rect x="108" y="280" width="22" height="15" fill="#2a2a4a"/>
+  <!-- Shoes -->
+  <rect x="67" y="292" width="28" height="6" rx="2" fill="#4a3a2a"/>
+  <rect x="105" y="292" width="28" height="6" rx="2" fill="#4a3a2a"/>
+  
+  <!-- ARMS -->
+  <path d="M55,145 Q35,200 50,240" stroke="#f5f5f5" stroke-width="25" fill="none"/>
+  <path d="M145,145 Q165,200 150,240" stroke="#f5f5f5" stroke-width="25" fill="none"/>
+  
+  <!-- Hands (gesturing excitedly) -->
+  <circle cx="50" cy="245" r="10" fill="#f5d0b5"/>
+  <circle cx="150" cy="245" r="10" fill="#f5d0b5"/>
+  
+  <!-- HEAD (oval) -->
+  <ellipse cx="100" cy="75" rx="45" ry="52" fill="#f5d0b5" filter="url(#shadow)"/>
+  
+  <!-- MODERN SHORT HAIR (professional, 35yr old style) -->
+  <!-- Main hair -->
+  <ellipse cx="100" cy="40" rx="46" ry="25" fill="#3a2a1a"/>
+  <!-- Styled sides -->
+  <path d="M54,50 Q52,65 54,75" fill="#3a2a1a"/>
+  <path d="M146,50 Q148,65 146,75" fill="#3a2a1a"/>
+  <!-- Modern swept front -->
+  <path d="M70,45 Q85,38 100,40 Q115,38 130,45" fill="#3a2a1a"/>
+  
+  <!-- EARS -->
+  <ellipse cx="54" cy="80" rx="7" ry="11" fill="#f5d0b5"/>
+  <ellipse cx="146" cy="80" rx="7" ry="11" fill="#f5d0b5"/>
+  
+  <!-- EYES (intelligent, professional) -->
+  <ellipse cx="82" cy="72" rx="10" ry="8" fill="#fff"/>
+  <ellipse cx="118" cy="72" rx="10" ry="8" fill="#fff"/>
+  <!-- Irises -->
+  <circle cx="83" cy="72" r="5" fill="#4a7a5a"/>
+  <circle cx="119" cy="72" r="5" fill="#4a7a5a"/>
+  <!-- Pupils -->
+  <circle cx="83" cy="72" r="2.5" fill="#1a1a1a"/>
+  <circle cx="119" cy="72" r="2.5" fill="#1a1a1a"/>
+  <!-- Reflections -->
+  <circle cx="82" cy="70" r="1" fill="#fff"/>
+  <circle cx="118" cy="70" r="1" fill="#fff"/>
+  
+  <!-- EYEBROWS (natural, professional) -->
+  <path d="M72,62 Q82,60 90,62" stroke="#3a2a1a" stroke-width="2" fill="none"/>
+  <path d="M110,62 Q118,60 128,62" stroke="#3a2a1a" stroke-width="2" fill="none"/>
+  
+  <!-- NOSE -->
+  <ellipse cx="100" cy="85" rx="5" ry="7" fill="#e5c0a5"/>
+  
+  <!-- MOUTH (friendly professional smile) -->
+  <path d="M82,98 Q100,104 118,98" stroke="#8b5a5a" stroke-width="2.5" fill="none"/>
+  
+  <!-- GLASSES (modern rectangular frames) -->
+  <rect x="65" y="65" width="28" height="18" rx="2" fill="none" stroke="#333" stroke-width="2"/>
+  <rect x="107" y="65" width="28" height="18" rx="2" fill="none" stroke="#333" stroke-width="2"/>
+  <line x1="93" y1="74" x2="107" y2="74" stroke="#333" stroke-width="2"/>
+  <line x1="65" y1="74" x2="54" y2="74" stroke="#333" stroke-width="1"/>
+  <line x1="135" y1="74" x2="146" y2="74" stroke="#333" stroke-width="1"/>
+  <!-- Subtle lens reflection -->
+  <rect x="67" y="67" width="24" height="14" rx="1" fill="#fff" opacity="0.15"/>
+  <rect x="109" y="67" width="24" height="14" rx="1" fill="#fff" opacity="0.15"/>
+  
+  <!-- ID Badge -->
+  <g transform="translate(60, 160)">
+    <rect x="0" y="0" width="20" height="28" fill="#fff" rx="2"/>
+    <rect x="3" y="3" width="14" height="10" fill="#cc4444"/>
+    <text x="10" y="18" text-anchor="middle" font-family="Arial" font-size="4" fill="#333">TU/e</text>
+    <text x="10" y="23" text-anchor="middle" font-family="Arial" font-size="3" fill="#666">Prinsloo</text>
+    <circle cx="5" cy="0" r="3" fill="#ccc"/>
+  </g>
+</svg>

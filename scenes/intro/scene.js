@@ -18,240 +18,280 @@ const IntroScene = {
     hotspots: [],
     
     onEnter: function(game) {
-        // Show prologue sequence
-        setTimeout(() => {
-            game.startDialogue([
-                { speaker: '', text: '═══════════════════════════════════════════' },
-                { speaker: '', text: '📍 COMPASCUUM, DRENTHE, NETHERLANDS' },
-                { speaker: '', text: '📅 February 9, 2026' },
-                { speaker: '', text: '⏰ 07:45 AM' },
-                { speaker: '', text: '═══════════════════════════════════════════' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Dawn breaks over the Dutch countryside.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'The first light touches the heathlands of Drenthe, painting purple heather in shades of gold.' },
-                { speaker: 'Narrator', text: 'Mist rises slowly from the canals, tendrils of white drifting across still water.' },
-                { speaker: 'Narrator', text: 'The world is silent except for the distant call of a heron, the rustle of reeds in the breeze.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'In the distance, wind turbines turn methodically, their blades cutting through the morning fog.' },
-                { speaker: 'Narrator', text: 'Each rotation hypnotic. Endless. A rhythm older than memory, newer than tomorrow.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'This is Drenthe.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Quiet. Rural. Unassuming.' },
-                { speaker: 'Narrator', text: 'A province forgotten by many. Overlooked by most.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Ancient dolmens rise from the heath - megalithic tombs five thousand years old.' },
-                { speaker: 'Narrator', text: 'Villages with narrow streets and red brick churches dot the landscape.' },
-                { speaker: 'Narrator', text: 'Farmers tend their fields. Cyclists pedal along winding paths.' },
-                { speaker: 'Narrator', text: 'Life moves slowly here. Deliberately. With purpose.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'But beneath this peaceful surface lies something else entirely...' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '⸻' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Scattered across these quiet fields are machines listening to the universe.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'The Westerbork Synthesis Radio Telescope - fourteen massive dishes scanning the heavens.' },
-                { speaker: 'Narrator', text: 'Operating since 1970, detecting pulsars, mapping distant galaxies, measuring cosmic background radiation.' },
-                { speaker: 'Narrator', text: 'A cathedral of science built on moorland and peat.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'LOFAR - the Low-Frequency Array - over 50,000 antennas spread across Europe.' },
-                { speaker: 'Narrator', text: 'Its core here in Drenthe, listening to frequencies no other telescope can hear.' },
-                { speaker: 'Narrator', text: 'Detecting signals from the dawn of the universe. Thirteen billion years traveling through space.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'These instruments pioneered techniques that changed the world.' },
-                { speaker: 'Narrator', text: 'Signal processing algorithms. Beam-forming techniques. Interference mitigation strategies.' },
-                { speaker: 'Narrator', text: 'Methods developed to study distant stars now power the smartphones in our pockets.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Bluetooth technology - protocols refined right here in the Netherlands.' },
-                { speaker: 'Narrator', text: 'WiFi mesh networks. 5G beam-forming. Software-defined radio.' },
-                { speaker: 'Narrator', text: 'All born from innovations in these quiet northern fields.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Wireless technology that now connects five billion devices worldwide...' },
-                { speaker: 'Narrator', text: 'Its roots buried deep in the heath of Drenthe.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '⸻' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'And in a small farmhouse by a canal...' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'This is Ryan Weylant.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: '55 years old.' },
-                { speaker: 'Narrator', text: 'Software developer by trade. Radio enthusiast by passion. Hacker in the truest sense of the word.' },
-                { speaker: 'Narrator', text: 'A MacGyver-style problem solver who never met a signal he couldn\'t decode.' },
-                { speaker: 'Narrator', text: 'A puzzle he couldn\'t solve. A system he couldn\'t understand.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'He lives in a white farmhouse with a distinctive red roof.' },
-                { speaker: 'Narrator', text: 'Right next to the canal, where water reflects clouds and sky.' },
-                { speaker: 'Narrator', text: 'Where ducks paddle in summer and ice forms geometric patterns in winter.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'His partner Ies still sleeps upstairs, wrapped in quilts and dreams.' },
-                { speaker: 'Narrator', text: 'Their three dogs are curled in their favorite spots throughout the house.' },
-                { speaker: 'Narrator', text: 'Tino and Kessy - white fluffy companions - on the couch.' },
-                { speaker: 'Narrator', text: 'ET - their energetic pug - sprawled on the rug, snoring softly.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'This is Ryan\'s sanctuary. His fortress of solitude. His home.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '⸻' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'But it\'s Ryan\'s garage - his "mancave" - where the real magic happens.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'A treasure trove of technology accumulated over decades.' },
-                { speaker: 'Narrator', text: 'Every tool carefully chosen. Every device serving a purpose.' },
-                { speaker: 'Narrator', text: 'This is where Ryan thinks. Where he builds. Where he solves the impossible.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: '3D printers wait patiently in the corner, ready to manifest ideas into reality.' },
-                { speaker: 'Narrator', text: 'Oscilloscopes line the workbench - Rigol, Tektronix - their screens dark but ready.' },
-                { speaker: 'Narrator', text: 'Component drawers organize decades of projects: resistors, capacitors, microcontrollers, sensors.' },
-                { speaker: 'Narrator', text: 'Each labeled. Each sorted. A library of possibility.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'On his main workbench sits his arsenal of wireless hacking tools:' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'A HackRF One software-defined radio - capable of transmitting and receiving from 1 MHz to 6 GHz.' },
-                { speaker: 'Narrator', text: 'Every protocol, every frequency, every signal within reach.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'A Flipper Zero multi-tool - RFID cloning, infrared control, sub-GHz analysis.' },
-                { speaker: 'Narrator', text: 'Small enough to fit in a pocket. Powerful enough to unlock secrets.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'A WiFi Pineapple for network analysis and penetration testing.' },
-                { speaker: 'Narrator', text: 'Understanding the hidden architecture of wireless networks.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Meshtastic long-range communicators running on LoRa frequencies.' },
-                { speaker: 'Narrator', text: 'Off-grid messaging when traditional networks fail.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'An SSTV satellite terminal for slow-scan television from space.' },
-                { speaker: 'Narrator', text: 'Receiving images from the International Space Station. From weather satellites. From amateur radio operators worldwide.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Each device a window into the invisible world of electromagnetic waves.' },
-                { speaker: 'Narrator', text: 'Each a key to understanding the signals that surround us every moment of every day.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '⸻' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Ryan has spent decades in this quiet corner of the Netherlands.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Building networks when the internet was young.' },
-                { speaker: 'Narrator', text: 'Writing code when software was still an art form.' },
-                { speaker: 'Narrator', text: 'Solving puzzles that stumped entire teams of engineers.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'His contacts span the entire country - a network built on trust and shared curiosity:' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Dr. Henk Visser - radio astronomer at ASTRON, expert in signal processing and pulsar detection.' },
-                { speaker: 'Narrator', text: 'Marieke - retired LOFAR technician who pioneered beam-forming algorithms now used in 5G.' },
-                { speaker: 'Narrator', text: 'Pieter - former Ericsson engineer who spent fifteen years developing Bluetooth protocols.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'These are Ryan\'s people. Fellow travelers in the electromagnetic spectrum.' },
-                { speaker: 'Narrator', text: 'When they have impossible problems, they call Ryan.' },
-                { speaker: 'Narrator', text: 'When Ryan has questions, they answer.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'It\'s a community built on mutual respect and endless fascination.' },
-                { speaker: 'Narrator', text: 'A hidden network of minds that understand the invisible world.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '⸻' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Ryan\'s philosophy is simple:' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Be curious. Stay methodical. Never give up.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'If there\'s a signal, he can find it.' },
-                { speaker: 'Narrator', text: 'If there\'s a code, he can crack it.' },
-                { speaker: 'Narrator', text: 'If there\'s a problem, there\'s always a solution.' },
-                { speaker: 'Narrator', text: 'You just have to look. You just have to think. You just have to persist.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Sometimes the answer takes hours. Sometimes days. Sometimes weeks.' },
-                { speaker: 'Narrator', text: 'But the answer is always there, waiting to be found.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'That\'s what Ryan believes.' },
-                { speaker: 'Narrator', text: 'That\'s what he\'s always believed.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '⸻' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'This morning seems like any other.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'The house is quiet. The dogs are peaceful. Ies sleeps soundly.' },
-                { speaker: 'Narrator', text: 'In the kitchen, the espresso machine warms up with familiar sounds - clicks, gurgles, hisses.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'The ritual is always the same:' },
-                { speaker: 'Narrator', text: 'Wake up. Make espresso. Check the radio frequencies. Start working.' },
-                { speaker: 'Narrator', text: 'A routine perfected over decades. Comfortable. Reliable. Safe.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Outside, the mist continues to rise from the canal.' },
-                { speaker: 'Narrator', text: 'The wind turbines turn their eternal rotation.' },
-                { speaker: 'Narrator', text: 'The radio telescopes scan frequencies from the edge of the observable universe.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Everything as it should be.' },
-                { speaker: 'Narrator', text: 'Everything normal.' },
-                { speaker: 'Narrator', text: 'Everything perfectly, peacefully ordinary.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '⸻' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'But Ryan has no idea.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'No idea that today will change everything.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'That in exactly eighteen minutes, a transmission will arrive.' },
-                { speaker: 'Narrator', text: 'A signal that should not exist. Cannot exist. Must not exist.' },
-                { speaker: 'Narrator', text: 'A message encrypted with algorithms no civilian should possess.' },
-                { speaker: 'Narrator', text: 'Coordinates that point to something impossible. Something that will unravel everything.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'A conspiracy reaching the highest levels of government.' },
-                { speaker: 'Narrator', text: 'A secret buried so deep that nations have killed to protect it.' },
-                { speaker: 'Narrator', text: 'A truth that will shake the foundations of power in the Netherlands.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '⸻' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'Forces are already in motion.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'In a bunker beneath The Hague, screens glow with intercepted data.' },
-                { speaker: 'Narrator', text: 'Algorithms calculate probabilities. AI systems monitor every frequency, every network, every whisper.' },
-                { speaker: 'Narrator', text: 'People in dark suits make decisions that will cost lives.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'They know someone will intercept the transmission.' },
-                { speaker: 'Narrator', text: 'They\'ve planned for this. Prepared for this.' },
-                { speaker: 'Narrator', text: 'They have protocols. Assets. Methods that leave no trace.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'But they don\'t know about Ryan Weylant.' },
-                { speaker: 'Narrator', text: 'They don\'t know about the man in the farmhouse by the canal.' },
-                { speaker: 'Narrator', text: 'They don\'t know what he\'s capable of.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '⸻' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'And so the gears turn.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'The gears of something vast and terrible.' },
-                { speaker: 'Narrator', text: 'Something that has been running for decades.' },
-                { speaker: 'Narrator', text: 'Operation Zerfall - The Fall.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'In the quiet of his farmhouse, drinking his morning espresso...' },
-                { speaker: 'Narrator', text: 'Ryan Weylant is about to become the most important person in the Netherlands.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'The only person who can stop what\'s coming.' },
-                { speaker: 'Narrator', text: 'The only person who can uncover the truth.' },
-                { speaker: 'Narrator', text: 'The only person who stands between conspiracy and catastrophe.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '⸻' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'This is how it begins.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'With dawn breaking over Drenthe.' },
-                { speaker: 'Narrator', text: 'With mist rising from canals.' },
-                { speaker: 'Narrator', text: 'With an espresso machine warming up.' },
-                { speaker: '', text: '' },
-                { speaker: 'Narrator', text: 'With a man who doesn\'t know he\'s about to save his country.' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '' },
-                { speaker: '', text: '═══════════════════════════════════════════' },
-                { speaker: '', text: '🎮 CYBERQUEST: OPERATION ZERFALL' },
-                { speaker: '', text: '═══════════════════════════════════════════' },
-                { speaker: '', text: '' }
-            ]);
+        // Hide ALL characters during prologue narration (including player)
+        const charactersContainer = document.getElementById('scene-characters');
+        if (charactersContainer) {
+            charactersContainer.style.display = 'none';
+        }
+        
+        // Disable voice for intro
+        const originalVoiceState = game.voiceEnabled;
+        game.voiceEnabled = false;
+        
+        // Hide dialogue box if visible
+        const dialogueBox = document.getElementById('dialogue-box');
+        if (dialogueBox) {
+            dialogueBox.classList.add('hidden');
+        }
+        
+        // Create scrolling intro overlay
+        const introOverlay = document.createElement('div');
+        introOverlay.id = 'intro-scroll';
+        introOverlay.innerHTML = `
+            <div class="intro-content">
+                <div class="intro-spacer"></div>
+                
+                <div class="location-header">
+                    <p>📍 COMPASCUUM, DRENTHE, NETHERLANDS</p>
+                    <p>📅 February 9, 2026 | ⏰ 07:45 AM</p>
+                </div>
+                
+                <p class="paragraph">Drenthe. Rural Netherlands. Quiet heathlands and canals. A province most people forget exists.</p>
+                
+                <p class="paragraph">But these fields hide something remarkable: the Westerbork Radio Telescope and LOFAR - over 50,000 antennas listening to the universe. The innovations developed here pioneered Bluetooth, WiFi mesh networks, and 5G beam-forming. Technology connecting five billion devices worldwide, rooted in these quiet northern fields.</p>
+                
+                <h2>⸻</h2>
+                
+                <p class="emphasis">Meet Ryan Weylant.</p>
+                
+                <p class="paragraph">55. Software developer. Radio enthusiast. Problem solver who never met a signal he couldn't decode or a puzzle he couldn't solve.</p>
+                
+                <p class="paragraph">He lives in a white farmhouse by the canal with his partner Ies and three dogs - Tino, Kessy, and ET the pug. They're still sleeping as Ryan starts his morning routine.</p>
+                
+                <p class="paragraph">His garage is where the magic happens. 3D printers, oscilloscopes, and component drawers line the walls. On his workbench: HackRF One SDR, Flipper Zero, WiFi Pineapple, Meshtastic LoRa devices, and an SSTV satellite terminal. Every tool chosen for a purpose.</p>
+                
+                <p class="paragraph">His network spans the country: Dr. David Prinsloo at TU Eindhoven, Cees Bassa at ASTRON, Jaap Haartsen who invented Bluetooth. When they have impossible problems, they call Ryan.</p>
+                
+                <p class="emphasis">His philosophy: Be curious. Stay methodical. Never give up.</p>
+                
+                <h2>⸻</h2>
+                
+                <p class="paragraph">This morning seems normal. Espresso machine warming up. Radio frequencies to check. Another routine day.</p>
+                
+                <p class="emphasis warning">He has no idea everything is about to change.</p>
+                
+                <p class="paragraph">In eighteen minutes, a transmission will arrive. A signal that shouldn't exist. Encrypted with algorithms no civilian should possess. Coordinates pointing to something impossible.</p>
+                
+                <p class="paragraph">A conspiracy at the highest levels. A secret nations have killed to protect.</p>
+                
+                <h2>⸻</h2>
+                
+                <p class="paragraph">In a bunker beneath The Hague, screens glow. AI systems monitor every frequency. People in dark suits have protocols. Assets. Methods that leave no trace.</p>
+                
+                <p class="emphasis">But they don't know about Ryan Weylant.</p>
+                
+                <p class="paragraph">They don't know what he's capable of.</p>
+                
+                <h2>⸻</h2>
+                
+                <h1 class="title">CYBERQUEST</h1>
+                <h1 class="subtitle">OPERATION ZERFALL</h1>
+                
+                <div class="intro-end-spacer"></div>
+                <p class="click-to-continue">Click to begin your mission...</p>
+                <div class="intro-spacer"></div>
+            </div>
+        `;
+        
+        // Add styles
+        const style = document.createElement('style');
+        style.id = 'intro-scroll-style';
+        style.textContent = `
+            #intro-scroll {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: #000 !important;
+                z-index: 9999 !important;
+                overflow: hidden !important;
+                color: #ffd700 !important;
+                font-family: 'Arial', sans-serif !important;
+                cursor: pointer !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+            }
             
-            // After dialogue, transition to home
-            setTimeout(() => {
-                game.loadScene('home');
-            }, 2000);
-        }, 500);
+            .intro-content {
+                position: absolute !important;
+                width: 90% !important;
+                max-width: 1600px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                text-align: center !important;
+                line-height: 2 !important;
+                will-change: top !important;
+                font-weight: bold !important;
+                letter-spacing: 3px !important;
+            }
+            
+            @keyframes introScroll {
+                0% {
+                    top: 100%;
+                    opacity: 1;
+                }
+                90% {
+                    opacity: 1;
+                }
+                100% {
+                    top: -150%;
+                    opacity: 0;
+                }
+            }
+            
+            .intro-spacer {
+                height: 20vh;
+            }
+            
+            .intro-end-spacer {
+                height: 50vh;
+            }
+            
+            .location-header {
+                text-align: center;
+                font-size: 1.2em;
+                margin: 30px 0 40px 0;
+                color: #4db8ff;
+                letter-spacing: 3px;
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+            
+            .location-header p {
+                margin: 8px 0;
+            }
+            
+            .intro-content .paragraph {
+                font-size: 1.5em;
+                margin: 25px 0;
+                line-height: 2;
+                color: #ffd700;
+            }
+            
+            .intro-content .emphasis {
+                font-size: 1.8em;
+                margin: 35px 0;
+                color: #ffeb3b;
+                text-align: center;
+                font-style: italic;
+                text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            }
+            
+            .intro-content .emphasis.warning {
+                color: #ff4444;
+                font-size: 2em;
+                text-shadow: 0 0 30px rgba(255, 68, 68, 0.6);
+            }
+            
+            .intro-content h2 {
+                text-align: center;
+                font-size: 1.8em;
+                margin: 40px 0;
+                color: #4db8ff;
+                font-weight: normal;
+                letter-spacing: 10px;
+            }
+            
+            .intro-content h1.title {
+                font-size: 3.5em;
+                margin: 60px 0 20px 0;
+                color: #4db8ff;
+                text-transform: uppercase;
+                letter-spacing: 15px;
+                text-align: center;
+                font-weight: bold;
+                text-shadow: 0 0 40px rgba(77, 184, 255, 0.8);
+            }
+            
+            .intro-content h1.subtitle {
+                font-size: 2.2em;
+                margin: 0 0 50px 0;
+                color: #ffd700;
+                text-transform: uppercase;
+                letter-spacing: 10px;
+                text-align: center;
+                font-weight: normal;
+                text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+            }
+            
+            .click-to-continue {
+                font-size: 1.4em !important;
+                color: #4db8ff !important;
+                text-align: center;
+                animation: pulse 2s infinite;
+                margin: 40px 0 !important;
+                text-shadow: 0 0 20px rgba(77, 184, 255, 0.6);
+            }
+            
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.4; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Add to page
+        document.body.appendChild(introOverlay);
+        
+        // Force animation to start after element is in DOM
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                const content = introOverlay.querySelector('.intro-content');
+                if (content) {
+                    content.style.animation = 'introScroll 90s linear 0s 1 normal forwards';
+                    console.log('Intro animation started:', {
+                        element: content,
+                        animation: window.getComputedStyle(content).animation,
+                        top: window.getComputedStyle(content).top
+                    });
+                }
+            });
+        });
+        
+        // Click to skip to home scene
+        introOverlay.addEventListener('click', () => {
+            introOverlay.remove();
+            
+            // Remove style element
+            const styleElement = document.getElementById('intro-scroll-style');
+            if (styleElement) {
+                styleElement.remove();
+            }
+            
+            // Restore character visibility
+            if (charactersContainer) {
+                charactersContainer.style.display = '';
+            }
+            
+            // Restore voice state
+            game.voiceEnabled = originalVoiceState;
+            
+            // Transition to home scene
+            game.loadScene('home');
+        });
+    },
+    
+    onExit: function(game) {
+        // Clean up intro overlay if it exists
+        const introOverlay = document.getElementById('intro-scroll');
+        if (introOverlay) {
+            introOverlay.remove();
+        }
+        
+        // Clean up style element
+        const styleElement = document.getElementById('intro-scroll-style');
+        if (styleElement) {
+            styleElement.remove();
+        }
+        
+        // Ensure characters are visible when leaving intro scene
+        const charactersContainer = document.getElementById('scene-characters');
+        if (charactersContainer) {
+            charactersContainer.style.display = '';
+        }
     }
 };
 

@@ -149,7 +149,7 @@ a Soviet-era weapons specialist, the project is building an RF weapon
 that could cripple communications across a 50km radius.
 
 Eva's father Klaus suspected the truth. Eva gathered the evidence. 
-Together with allies from ASTRON (Henk), LOFAR (Marieke), and 
+Together with allies from TU Eindhoven (David), LOFAR (Cees), and 
 ex-Ericsson engineers (Pieter), they're preparing to expose the 
 operation.
 
@@ -272,8 +272,8 @@ game.startDialogue([
     { speaker: 'Ryan', text: 'I need expert opinions. Time to call in favors.' },
     { speaker: '', text: 'Ryan sends encrypted messages to three contacts...' },
     { speaker: '', text: '[Several hours later]' },
-    { speaker: 'Henk', text: '[Message] Those schematics are real. ASTRON saw similar research in the 90s. I'm in.' },
-    { speaker: 'Marieke', text: '[Meshtastic] LOFAR could detect this weapon's signature. We need to stop it. Count on me.' },
+    { speaker: 'David Prinsloo', text: '[Message] Those schematics are real. Similar to antenna research I've seen. I'm in.' },
+    { speaker: 'Cees Bassa', text: '[Meshtastic] LOFAR could detect this weapon's signature. We need to stop it. Count on me.' },
     { speaker: 'Pieter', text: '[BBS] Bluetooth vulnerabilities could help. And I've wanted to stick it to military contractors for years. Let's do this.' },
     { speaker: 'Ryan', text: 'Three allies. Now we need a plan...' }
 ]);

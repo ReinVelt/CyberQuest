@@ -20,7 +20,21 @@ const HomeScene = {
         "This place is a mess.",
         "Another day, another hack.",
         "Check my email... or not.",
-        "Canal view never gets old."
+        "Canal view never gets old.",
+        "Need to call Ies later.",
+        "That chair looks comfortable.",
+        "Dutch countryside, best countryside.",
+        "Morning light hits just right here.",
+        "Should probably eat something.",
+        "This kitchen's seen better days.",
+        "Radio on or off? Decisions.",
+        "Peace and quiet. Rare commodity.",
+        "Home sweet surveillance-free home.",
+        "Neighbors probably think I'm weird.",
+        "Living off the grid, sort of.",
+        "Old farmhouse charm.",
+        "Better here than in the city.",
+        "Just me and the signals."
     ],
     
     hotspots: [
@@ -45,7 +59,8 @@ const HomeScene = {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Okay, espresso time. Extra strong, double dose.' },
                         { speaker: '', text: '*The rich aroma fills the kitchen*' },
-                        { speaker: 'Ryan', text: 'Perfect. Now I can actually think. Mancave time.' }
+                        { speaker: 'Ryan', text: 'Perfect. Now I can actually think.' },
+                        { speaker: 'Ryan', text: 'I should check what Ies is watching in the living room before heading to my mancave.' }
                     ]);
                     game.advanceTime(15);
                 }
@@ -90,9 +105,9 @@ const HomeScene = {
             height: 52.78,
             cursor: 'pointer',
             condition: function(game) {
-                return game.getFlag('made_espresso');
+                return game.getFlag('tv_documentary_watched');
             },
-            failMessage: 'I should make my espresso first. Can\'t think without caffeine.',
+            failMessage: 'I should check out that documentary Ies is watching in the living room first. Might learn something useful.',
             targetScene: 'mancave'
         },
         {

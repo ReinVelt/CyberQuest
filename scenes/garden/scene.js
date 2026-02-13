@@ -19,7 +19,21 @@ const GardenScene = {
         "Germany's just over there.",
         "Antenna picking up weird stuff.",
         "Should maintain this more.",
-        "Beautiful evening... espionage aside."
+        "Beautiful evening... espionage aside.",
+        "Wind patterns tell their own story.",
+        "Birds don't care about borders.",
+        "That Volvo's seen some adventures.",
+        "Garden therapy. Works every time.",
+        "Clouds moving fast tonight.",
+        "Rural life suits me fine.",
+        "Clean air, clear signals.",
+        "This antenna array is my pride.",
+        "Nature and technology coexist.",
+        "Every direction has a view.",
+        "Crickets and RF noise.",
+        "Could use some weeding.",
+        "Peaceful. For now.",
+        "This is why I moved here."
     ],
     
     hotspots: [

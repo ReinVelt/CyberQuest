@@ -149,8 +149,8 @@
 **Implementation:**
 - Three separate contact sequences
 - Each ally requires different approach:
-  - **Henk (ASTRON):** Email - needs scientific proof
-  - **Marieke (LOFAR):** Meshtastic - needs safety assurance
+  - **David (TU Eindhoven):** Email - needs scientific proof
+  - **Cees (LOFAR):** Meshtastic - needs research assurance
   - **Pieter (Ericsson):** BBS - needs enemy to fight
 
 **Per ally:**
@@ -322,7 +322,7 @@
 - Decision: Include log exfiltration? (+90 seconds risk)
 - Equipment selection interface
 - Ally coordination messages
-  - Marieke: Emergency frequency monitoring
+  - Cees: Emergency frequency monitoring
   - Pieter: Dead man's switch setup
   - Chris: Standby
 - Timeline review

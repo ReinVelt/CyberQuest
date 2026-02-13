@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <!-- Interview studio background -->
+  <defs>
+    <linearGradient id="studioGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a2838;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2a3848;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="spotlight">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0"/>
+    </radialGradient>
+  </defs>
+  
+  <rect width="1600" height="900" fill="url(#studioGrad)"/>
+  
+  <!-- Spotlight effect -->
+  <ellipse cx="500" cy="200" rx="400" ry="300" fill="url(#spotlight)"/>
+  
+  <!-- Studio background blur effect (bokeh) -->
+  <circle cx="200" cy="250" r="40" fill="#4a6a8a" opacity="0.3"/>
+  <circle cx="1200" cy="200" r="50" fill="#5a7a9a" opacity="0.2"/>
+  <circle cx="1400" cy="350" r="35" fill="#3a5a7a" opacity="0.25"/>
+  <circle cx="300" cy="450" r="45" fill="#4a6a8a" opacity="0.2"/>
+  
+  <!-- Chair/sitting position -->
+  <ellipse cx="500" cy="720" rx="120" ry="30" fill="#1a2530" opacity="0.6"/>
+  
+  <!-- Person silhouette (engineer being interviewed) -->
+  <g transform="translate(500, 550)">
+    <!-- Chair back -->
+    <rect x="-80" y="50" width="160" height="15" rx="5" fill="#334455"/>
+    <rect x="-80" y="65" width="160" height="80" rx="8" fill="#2a3a4a"/>
+    
+    <!-- Body -->
+    <ellipse cx="0" cy="80" rx="70" ry="90" fill="#3a4a5a"/>
+    <!-- Shoulders -->
+    <path d="M -70,50 Q -80,30 -60,20 L -40,40" fill="#3a4a5a"/>
+    <path d="M 70,50 Q 80,30 60,20 L 40,40" fill="#3a4a5a"/>
+    
+    <!-- Arms -->
+    <rect x="-75" y="80" width="25" height="80" rx="12" fill="#3a4a5a"/>
+    <rect x="50" y="80" width="25" height="80" rx="12" fill="#3a4a5a"/>
+    
+    <!-- Hands on armrests -->
+    <ellipse cx="-62" cy="165" rx="18" ry="12" fill="#4a5a6a"/>
+    <ellipse cx="62" cy="165" rx="18" ry="12" fill="#4a5a6a"/>
+    
+    <!-- Neck -->
+    <rect x="-15" y="-25" width="30" height="30" rx="5" fill="#4a5a6a"/>
+    
+    <!-- Head -->
+    <ellipse cx="0" cy="-45" rx="40" ry="50" fill="#5a6a7a"/>
+    <!-- Ear -->
+    <ellipse cx="38" cy="-40" rx="8" ry="12" fill="#5a6a7a"/>
+    
+    <!-- Glasses -->
+    <rect x="-30" y="-50" width="25" height="18" rx="4" fill="none" stroke="#88aacc" stroke-width="2"/>
+    <rect x="5" y="-50" width="25" height="18" rx="4" fill="none" stroke="#88aacc" stroke-width="2"/>
+    <line x1="-5" y1="-45" x2="5" y2="-45" stroke="#88aacc" stroke-width="2"/>
+    
+    <!-- Minimal facial features -->
+    <circle cx="-15" cy="-48" r="3" fill="#2a3a4a" opacity="0.6"/>
+    <circle cx="15" cy="-48" r="3" fill="#2a3a4a" opacity="0.6"/>
+    
+    <!-- Nose -->
+    <line x1="0" y1="-45" x2="0" y2="-35" stroke="#4a5a6a" stroke-width="2"/>
+    
+    <!-- Mouth (slight smile) -->
+    <path d="M -12,-25 Q 0,-20 12,-25" fill="none" stroke="#3a4a5a" stroke-width="2"/>
+  </g>
+  
+  <!-- Microphone on lapel -->
+  <circle cx="480" cy="600" r="6" fill="#555"/>
+  <rect x="477" y="606" width="6" height="20" rx="2" fill="#333"/>
+  
+  <!-- Equipment/technology in background (blurred) -->
+  <g opacity="0.3">
+    <rect x="1100" y="300" width="200" height="150" rx="10" fill="#3a4a5a"/>
+    <rect x="1120" y="320" width="160" height="90" fill="#1a2a3a"/>
+    <circle cx="1140" cy="380" r="8" fill="#00ff88" opacity="0.5"/>
+    <circle cx="1170" cy="380" r="8" fill="#00ff88" opacity="0.5"/>
+    <circle cx="1200" cy="380" r="8" fill="#ffaa00" opacity="0.5"/>
+  </g>
+  
+  <!-- Name plate / caption -->
+  <rect x="50" y="800" width="600" height="80" fill="#000000" opacity="0.75" rx="5"/>
+  <text x="350" y="835" font-family="Arial, sans-serif" font-size="22" fill="#00ff88" text-anchor="middle" font-weight="bold">
+    Interview Segment
+  </text>
+  <text x="350" y="865" font-family="Arial, sans-serif" font-size="16" fill="#cccccc" text-anchor="middle" id="interviewName">
+    Engineering Pioneer
+  </text>
+  
+  <!-- Recording indicator -->
+  <circle cx="1500" cy="50" r="15" fill="#ff3333">
+    <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <text x="1450" y="56" font-family="Arial, sans-serif" font-size="16" fill="#ff3333" text-anchor="end">REC</text>
+</svg>

@@ -44,7 +44,7 @@ Successfully validated CyberQuest game against STORY.md and created all missing 
 | Eva Weber | ✅ | eva_southpark.svg | Referenced | Whistleblower (messages only) |
 | Dr. Henk Visser | ✅ | henk_southpark.svg | Livingroom | Documentary speaker |
 | Marieke | ✅ | marieke_southpark.svg | Livingroom | Documentary speaker |
-| Pieter | ✅ | pieter_southpark.svg | Livingroom | Documentary speaker |
+| Jaap Haartsen | ✅ | jaap_haartsen_southpark.svg | Livingroom | Documentary speaker, Bluetooth inventor |
 | Chris Kubecka | ✅ | kubecka_southpark.svg | Referenced | OSINT expert (messages) |
 | Dr. Dimitri Volkov | ✅ | volkov_southpark.svg | Referenced | Antagonist |
 | Dogs (Tino, Kessy) | ✅ | dog_white_southpark.svg | Livingroom | Sleeping on couch |

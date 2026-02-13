@@ -88,7 +88,7 @@ class VoiceManager {
             },
             
             // Dutch friends - varied male voices
-            'Henk': {
+            'David Prinsloo': {
                 pitch: 0.95,
                 rate: 1.0,
                 voicePreference: ['Google UK English Male', 'Microsoft David', 'male'],
@@ -100,7 +100,7 @@ class VoiceManager {
                 voicePreference: ['Google UK English Male', 'Microsoft David', 'male'],
                 lang: 'en-GB'
             },
-            'Marieke': {
+            'Cees Bassa': {
                 pitch: 1.2,
                 rate: 0.95,
                 voicePreference: ['Google UK English Female', 'Microsoft Zira', 'Samantha', 'female'],
@@ -476,9 +476,9 @@ class VoiceManager {
             'Chris Kubecka': '#ffa726',
             'Volkov': '#ff4444',
             'Dmitri Volkov': '#ff4444',
-            'Henk': '#66bb6a',
+            'David Prinsloo': '#66bb6a',
             'Pieter': '#ab47bc',
-            'Marieke': '#26c6da',
+            'Cees Bassa': '#26c6da',
             'Narrator': '#ffd54f',
             '': '#ffd54f'
         };
@@ -615,4 +615,7 @@ const unlockVoice = () => {
             }
         }
     }
-};\n\ndocument.addEventListener('click', unlockVoice, { once: true });\ndocument.addEventListener('touchstart', unlockVoice, { once: true });
+};
+
+document.addEventListener('click', unlockVoice, { once: true });
+document.addEventListener('touchstart', unlockVoice, { once: true });

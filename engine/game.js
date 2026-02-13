@@ -26,6 +26,7 @@ class CyberQuestEngine {
         this.evidenceViewer = null;
         this.passwordPuzzle = null;
         this.chatInterface = null;
+        this.typewriterAbortController = null;
     }
     
     init() {
@@ -318,6 +319,11 @@ class CyberQuestEngine {
         container.innerHTML = '';
         
         hotspots.forEach(hotspot => {
+            // Skip hotspots that are explicitly hidden
+            if (hotspot.visible === false) {
+                return;
+            }
+            
             const element = document.createElement('div');
             element.className = 'hotspot';
             element.id = `hotspot-${hotspot.id}`;
@@ -499,6 +505,12 @@ class CyberQuestEngine {
             return;
         }
         
+        // Abort any ongoing typewriter effect
+        if (this.typewriterAbortController) {
+            this.typewriterAbortController.abort();
+        }
+        this.typewriterAbortController = new AbortController();
+        
         const current = this.dialogueQueue[0];
         const speakerEl = document.getElementById('dialogue-speaker');
         const textEl = document.getElementById('dialogue-text');
@@ -508,24 +520,42 @@ class CyberQuestEngine {
         speakerEl.textContent = speaker;
         portraitEl.style.backgroundImage = current.portrait ? `url('${current.portrait}')` : '';
         
+        // Execute action callback if provided (for visual changes, etc.)
+        if (current.action && typeof current.action === 'function') {
+            current.action(this);
+        }
+        
         // Typewriter effect
-        this.typeText(textEl, current.text);
+        this.typeText(textEl, current.text, 30, this.typewriterAbortController.signal);
         
         // Speak the dialogue
         this.speakText(current.text, speaker);
     }
     
-    async typeText(element, text, speed = 30) {
+    async typeText(element, text, speed = 30, signal = null) {
         element.textContent = '';
-        for (let i = 0; i < text.length; i++) {
-            element.textContent += text[i];
-            await this.wait(speed);
+        try {
+            for (let i = 0; i < text.length; i++) {
+                if (signal && signal.aborted) {
+                    return;
+                }
+                element.textContent += text[i];
+                await this.wait(speed);
+            }
+        } catch (error) {
+            // Abort or other error - just stop typing
+            return;
         }
     }
     
     advanceDialogue() {
         // Stop current speech when advancing
         this.stopSpeech();
+        
+        // Abort any ongoing typewriter effect
+        if (this.typewriterAbortController) {
+            this.typewriterAbortController.abort();
+        }
         
         this.dialogueQueue.shift();
         if (this.dialogueQueue.length > 0) {
@@ -538,6 +568,13 @@ class CyberQuestEngine {
     endDialogue() {
         this.isDialogueActive = false;
         this.stopSpeech();
+        
+        // Abort any ongoing typewriter effect
+        if (this.typewriterAbortController) {
+            this.typewriterAbortController.abort();
+            this.typewriterAbortController = null;
+        }
+        
         document.getElementById('dialogue-box').classList.add('hidden');
     }
     
@@ -1363,7 +1400,7 @@ Good luck.
         this.showChat({
             id: 'test_meshtastic',
             type: 'meshtastic',
-            contact: 'Marieke',
+            contact: 'Cees Bassa',
             contactSubtitle: 'Node: NL-DRN-042',
             messages: [
                 {
@@ -1372,7 +1409,7 @@ Good luck.
                     timestamp: '22:15'
                 },
                 {
-                    from: 'Marieke',
+                    from: 'Cees Bassa',
                     text: '[ACK] Switching to private mesh. What\'s up?',
                     timestamp: '22:17'
                 },
@@ -1382,7 +1419,7 @@ Good luck.
                     timestamp: '22:18'
                 },
                 {
-                    from: 'Marieke',
+                    from: 'Cees Bassa',
                     text: 'How big? And how dangerous?',
                     timestamp: '22:19'
                 },
@@ -1392,7 +1429,7 @@ Good luck.
                     timestamp: '22:20'
                 },
                 {
-                    from: 'Marieke',
+                    from: 'Cees Bassa',
                     text: '...Jesus. Send me the schematics over dead drop. Will analyze.',
                     timestamp: '22:23'
                 }

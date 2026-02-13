@@ -33,14 +33,63 @@ That's the stuff.
 
 *Establishing shot of a charming white Dutch farmhouse with a red roof. A small canal runs along the road. In the background, wind turbines spin lazily near the German border.*
 
-*Ryan walks from the house to a garage/shed next door. A satellite dish and multiple antennas sprout from the roof like mechanical mushrooms.*
-
 **RYAN (V.O.)**
 I live in Compascuum. Population: me, some cows, and whatever's listening on the radio waves.
 
 ---
 
+### INT. LIVINGROOM - CONTINUOUS
+
+*Ryan enters the cozy livingroom. IES (53, warm, maternal, wearing comfortable clothes) is on the couch watching TV.*
+
+**IES**
+Coffee done already? That was fast.
+
+**RYAN**
+*(holding up espresso cup)*
+Double shot. Efficiency.
+
+*He starts to head out but Ies calls after him.*
+
+**IES**
+Wait - you should watch this documentary tonight. It's about those local tech pioneers.
+
+**RYAN**
+*(pausing)*
+Tech pioneers? In Drenthe?
+
+**IES**
+Yes! That Dr. Prinsloo from TU Eindhoven, and Cees Bassa who works at ASTRON. The Bluetooth guy too - Jaap something.
+
+**RYAN**
+*(interested but distracted)*
+Haartsen. Jaap Haartsen. Yeah, I know about him.
+
+**IES**
+You know *of* them. But do you know their stories? It's actually fascinating.
+
+**RYAN**
+*(heading toward the door)*
+Maybe later. I have code to write.
+
+**IES**
+It's about radio telescopes and signal processing. Your kind of thing!
+
+**RYAN**
+*(over his shoulder)*
+I'll watch it if I get bored!
+
+*Ryan exits toward the mancave. Ies shakes her head fondly.*
+
+**IES**
+*(to herself)*
+He'll watch it.
+
+---
+
 ### INT. MANCAVE - CONTINUOUS
+
+*Ryan walks from the house to a garage/shed next door. A satellite dish and multiple antennas sprout from the roof like mechanical mushrooms.*
 
 *The door opens to reveal a hacker's paradise. Every surface is covered with equipment: 3D printers, oscilloscopes, soldering stations, server racks with blinking LEDs. Posters on the wall: "HACK THE PLANET", a Mr. Robot print, the FSF logo.*
 
@@ -56,6 +105,46 @@ Home sweet home.
 Let's see who wants what today...
 
 *Montage: Email spam deleting. Code scrolling. Coffee being sipped. Time passing on a clock.*
+
+---
+
+## OPTIONAL SCENE: THE DOCUMENTARY
+
+### INT. LIVINGROOM - EVENING (IF PLAYER CHOOSES)
+
+*If Ryan decides to take Ies's advice and watch the documentary...*
+
+*Ryan sits on the couch with Ies. The TV shows the NTR logo.*
+
+**NARRATOR (V.O.)**
+*(dramatic Dutch documentary voice)*
+From the quiet heathlands of Drenthe came innovations that changed the world...
+
+*Cut to: Aerial shots of radio telescopes.*
+
+**NARRATOR (V.O.)**
+The Westerbork Synthesis Radio Telescope. LOFAR's digital antenna arrays. And a wireless protocol that connected billions.
+
+*Interview clips flash by: DR. DAVID PRINSLOO (35, professional, rectangular glasses) at TU Eindhoven explaining antenna technology. CEES BASSA (bald, tiny round glasses) at ASTRON discussing satellite interference. JAAP HAARTSEN describing Bluetooth's invention.*
+
+**RYAN**
+*(watching, impressed)*
+I didn't realize these guys were so close by.
+
+**IES**
+See? Local heroes. Right in our backyard.
+
+**RYAN**
+*(thoughtful)*
+Signal processing expertise... radio interference detection... wireless protocols...
+
+**IES**
+What are you thinking?
+
+**RYAN**
+Nothing. Just... interesting people to know.
+
+*Ryan continues watching, taking mental notes.*
 
 ---
 
@@ -368,7 +457,7 @@ I'm going to need more espresso.
 
 **RYAN**
 *(reading)*
-Henk is in. Marieke is in. Even Pieter, the paranoid bastard.
+David is in. Cees is in. Even Pieter, the paranoid bastard.
 
 *He looks at the camera.*
 
@@ -394,8 +483,8 @@ Time to hack the planet. For real this time.
 Next time on CyberQuest...
 
 *Quick cuts:*
-- Ryan meeting HENK at a radio telescope
-- MARIEKE in a shadowy room with Meshtastic devices
+- Ryan meeting DAVID at a radio telescope
+- CEES in a shadowy room with Meshtastic devices
 - PIETER with a soldering iron, looking intense
 - A WOMAN (EVA) in silhouette
 - Ryan's house with surveillance photos
@@ -431,18 +520,19 @@ I've got 72 hours and three nerds. What could go wrong?
 - Slight German accent
 - Always in shadow initially
 
-### HENK (Radio astronomer ally)
-- Skinny, tall
-- Wild white Einstein hair
-- Lab coat over vintage band t-shirt
-- Perpetually excited expression
+### DAVID PRINSLOO (TU Eindhoven antenna researcher ally)
+- 35 years old, professional
+- Short dark hair, modern rectangular glasses
+- Lab coat over button-down shirt
+- Intelligent, focused expression
+- TU/e ID badge
 
-### MARIEKE (LOFAR engineer ally)
-- Older woman, grandmotherly with edge
-- Gray hair in practical bun
-- Cardigan over tactical vest
-- Reading glasses on chain
-- No-nonsense expression
+### CEES BASSA (LOFAR scientist ally)
+- Bald, white Dutch scientist
+- Tiny round glasses
+- Casual jacket over practical clothes
+- Meshtastic device often in hand
+- Sharp, observant expression
 
 ### PIETER (Former Ericsson engineer)
 - Medium build, scruffy

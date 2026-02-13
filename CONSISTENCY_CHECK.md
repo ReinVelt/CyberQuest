@@ -64,7 +64,7 @@ Facility_Server → Debrief → Epilogue → Credits
 - ✅ eva_southpark.svg
 - ✅ henk_southpark.svg
 - ✅ marieke_southpark.svg
-- ✅ pieter_southpark.svg
+- ✅ jaap_haartsen_southpark.svg
 - ✅ kubecka_southpark.svg
 - ✅ volkov_southpark.svg
 - ✅ vandeberg_southpark.svg

@@ -242,6 +242,7 @@
     <script src="scenes/intro/scene.js?v=2"></script>
     <script src="scenes/home/scene.js"></script>
     <script src="scenes/livingroom/scene.js?v=2"></script>
+    <script src="scenes/tvdocumentary/scene.js"></script>
     <script src="scenes/mancave/scene.js?v=3"></script>
     <script src="scenes/videocall/scene.js?v=2"></script>
     <script src="scenes/garden/scene.js"></script>
@@ -309,6 +310,7 @@
             game.registerScene(IntroScene);
             game.registerScene(HomeScene);
             game.registerScene(LivingroomScene);
+            game.registerScene(TvdocumentaryScene);
             game.registerScene(MancaveScene);
             game.registerScene(VideocallScene);
             game.registerScene(GardenScene);
@@ -335,17 +337,8 @@
             initGame();
             
             // Load starting scene (intro prologue)
+            // The intro scene's onEnter function will handle the prologue dialogue
             game.loadScene('intro');
-            
-            // Show intro dialogue after a brief delay
-            setTimeout(() => {
-                game.showDialogue([
-                    "Another morning in Compascuum...",
-                    "The coffee machine hums softly. Through the window, I can see the old wind turbines spinning in the morning breeze.",
-                    "It's quiet here, near the German border. Just the way I like it.",
-                    "Time to grab some espresso and head to the mancave. There's always something interesting on the radio frequencies..."
-                ], "Ryan's Thoughts");
-            }, 1000);
         }
         
         function continueGame() {
