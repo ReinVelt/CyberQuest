@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="ceilingGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a12"/>
+      <stop offset="100%" style="stop-color:#12121f"/>
+    </linearGradient>
+    <linearGradient id="wallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#0f0f1a"/>
+    </linearGradient>
+    <linearGradient id="floorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a"/>
+      <stop offset="100%" style="stop-color:#0d0d0d"/>
+    </linearGradient>
+    <linearGradient id="deskGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a2a2a"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="monitorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#333"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#001a00"/>
+      <stop offset="100%" style="stop-color:#000d00"/>
+    </linearGradient>
+    <linearGradient id="greenGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0"/>
+    </linearGradient>
+    <linearGradient id="blueGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0088ff;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#0088ff;stop-opacity:0"/>
+    </linearGradient>
+    <linearGradient id="serverGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1a1a1a"/>
+      <stop offset="50%" style="stop-color:#252525"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    
+    <!-- Filters -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="strongGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="3" dy="3" stdDeviation="5" flood-opacity="0.5"/>
+    </filter>
+    
+    <!-- Grid Pattern -->
+    <pattern id="gridPattern" patternUnits="userSpaceOnUse" width="50" height="50">
+      <path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(0,255,136,0.03)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1920" height="200" fill="url(#ceilingGrad)"/>
+  <rect y="200" width="1920" height="680" fill="url(#wallGrad)"/>
+  <rect y="800" width="1920" height="280" fill="url(#floorGrad)"/>
+  
+  <!-- Grid overlay -->
+  <rect width="1920" height="1080" fill="url(#gridPattern)"/>
+  
+  <!-- ============ MAIN DESK SETUP ============ -->
+  <g transform="translate(250, 450)">
+    <!-- Desk surface -->
+    <rect y="200" width="900" height="30" fill="url(#deskGrad)" filter="url(#shadow)"/>
+    <rect y="230" width="900" height="200" fill="#1a1a1a"/>
+    
+    <!-- ======= LAPTOP (on desk) ======= -->
+    <g transform="translate(0, 20)">
+      <!-- Laptop base -->
+      <rect x="-15" y="-15" width="230" height="180" fill="url(#monitorGrad)" rx="5"/>
+      <rect width="200" height="150" fill="#0a0a12" rx="3"/>
+      
+      <!-- Active terminal screen -->
+      <rect x="5" y="5" width="190" height="140" fill="#000"/>
+      <text x="10" y="25" fill="#00ff88" font-family="monospace" font-size="10" filter="url(#glow)">ryan@mancave:~$ _</text>
+      <text x="10" y="45" fill="#0088ff" font-family="monospace" font-size="9">Signal: 3 conversations</text>
+      <text x="10" y="60" fill="#0088ff" font-family="monospace" font-size="9">Meshtastic: 2 nodes</text>
+      <text x="10" y="75" fill="#ffaa00" font-family="monospace" font-size="9">BBS: 1 message</text>
+      <rect x="8" y="78" width="180" height="1" fill="#333"/>
+      <text x="10" y="95" fill="#666" font-family="monospace" font-size="8">Documents analyzed: 8</text>
+      <text x="10" y="110" fill="#666" font-family="monospace" font-size="8">Evidence viewed: 12</text>
+      
+      <!-- Laptop keyboard -->
+      <rect y="150" width="200" height="25" fill="#1a1a1a" rx="2"/>
+      
+      <!-- Green screen glow -->
+      <ellipse cx="100" cy="75" rx="100" ry="70" fill="url(#greenGlow)" opacity="0.3"/>
+    </g>
+    
+    <!-- ======= SECURE PHONE (on desk near laptop) ======= -->
+    <g transform="translate(280, 30)">
+      <!-- Phone body (larger and more visible) -->
+      <rect width="70" height="110" fill="#1a1a1a" rx="10" filter="url(#shadow)"/>
+      <rect x="3" y="3" width="64" height="104" fill="#0a0a0a" rx="8"/>
+      
+      <!-- Screen with Signal conversation -->
+      <rect x="6" y="12" width="58" height="85" fill="#001a00" rx="4"/>
+      <rect x="8" y="14" width="54" height="20" fill="#003a00"/>
+      <text x="12" y="27" fill="#00ff88" font-family="sans-serif" font-size="10" font-weight="bold">Signal</text>
+      <!-- Notification badge -->
+      <circle cx="58" cy="20" r="6" fill="#ff3366" filter="url(#strongGlow)">
+        <animate attributeName="r" values="6;7;6" dur="1s" repeatCount="indefinite"/>
+      </circle>
+      <text x="55" y="23" fill="#fff" font-family="sans-serif" font-size="6" font-weight="bold">3</text>
+      
+      <!-- Message preview (larger text) -->
+      <text x="12" y="46" fill="#00ff88" font-family="sans-serif" font-size="7" font-weight="bold">Chris K.</text>
+      <text x="12" y="55" fill="#00aa66" font-family="sans-serif" font-size="6">Need OSINT on Volkov</text>
+      <text x="12" y="68" fill="#00dd88" font-family="sans-serif" font-size="7" font-weight="bold">Henk</text>
+      <text x="12" y="77" fill="#00aa66" font-family="sans-serif" font-size="6">Scientific data needed</text>
+      <text x="12" y="90" fill="#00dd88" font-family="sans-serif" font-size="7" font-weight="bold">Marieke</text>
+      
+      <!-- Home button/notch -->
+      <circle cx="35" cy="100" r="5" fill="#222"/>
+      
+      <!-- Strong phone glow with pulse -->
+      <ellipse cx="35" cy="55" rx="50" ry="65" fill="url(#greenGlow)" opacity="0.6" filter="url(#glow)">
+        <animate attributeName="opacity" values="0.6;0.9;0.6" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="rx" values="50;55;50" dur="2s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="65;70;65" dur="2s" repeatCount="indefinite"/>
+      </ellipse>
+      
+      <!-- Attention indicator ring -->
+      <circle cx="35" cy="55" r="55" fill="none" stroke="#00ff88" stroke-width="2" opacity="0">
+        <animate attributeName="r" values="55;70;85" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.8;0.4;0" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="stroke-width" values="2;1;0.5" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    
+    <!-- Cable management hole -->
+    <ellipse cx="450" cy="210" rx="30" ry="8" fill="#0a0a0a"/>
+    
+    <!-- ======= SSTV TERMINAL (Main Monitor) ======= -->
+    <g transform="translate(300, 0)">
+      <!-- Monitor bezel -->
+      <rect x="-20" y="-20" width="340" height="240" fill="url(#monitorGrad)" rx="10"/>
+      <rect width="300" height="200" fill="url(#screenGrad)" rx="5"/>
+      
+      <!-- SSTV Image display with noise animation -->
+      <rect x="10" y="10" width="280" height="150" fill="#001100"/>
+      
+      <!-- Animated image "decoding" - static/noise pattern -->
+      <g clip-path="url(#sstvClip)">
+        <defs>
+          <clipPath id="sstvClip">
+            <rect x="10" y="10" width="280" height="150"/>
+          </clipPath>
+        </defs>
+        <!-- Noise rectangles that flicker -->
+        <g opacity="0.15">
+          <rect x="15" y="20" width="8" height="3" fill="#00ff44">
+            <animate attributeName="opacity" values="0;1;0.5;0;0.8;0" dur="0.3s" repeatCount="indefinite"/>
+          </rect>
+          <rect x="50" y="35" width="12" height="2" fill="#00ff88">
+            <animate attributeName="opacity" values="0.5;0;1;0;0.3" dur="0.2s" repeatCount="indefinite"/>
+          </rect>
+          <rect x="100" y="25" width="6" height="4" fill="#00aa44">
+            <animate attributeName="opacity" values="1;0;0.5;1;0" dur="0.25s" repeatCount="indefinite"/>
+          </rect>
+          <rect x="180" y="45" width="10" height="2" fill="#00ff66">
+            <animate attributeName="opacity" values="0;0.8;0;1;0.2" dur="0.15s" repeatCount="indefinite"/>
+          </rect>
+          <rect x="220" y="30" width="15" height="3" fill="#00cc55">
+            <animate attributeName="opacity" values="0.7;0;0.3;0;1" dur="0.35s" repeatCount="indefinite"/>
+          </rect>
+          <rect x="250" y="55" width="8" height="2" fill="#00ff88">
+            <animate attributeName="opacity" values="0;1;0;0.5;0" dur="0.18s" repeatCount="indefinite"/>
+          </rect>
+          <rect x="30" y="70" width="20" height="2" fill="#00dd66">
+            <animate attributeName="opacity" values="1;0.3;0;0.8;0" dur="0.22s" repeatCount="indefinite"/>
+          </rect>
+          <rect x="150" y="80" width="25" height="3" fill="#00ff44">
+            <animate attributeName="opacity" values="0.2;1;0;0.6;0" dur="0.28s" repeatCount="indefinite"/>
+          </rect>
+        </g>
+        
+        <!-- Animated scan line moving down -->
+        <rect x="10" y="10" width="280" height="3" fill="#00ff88" opacity="0.8" filter="url(#glow)">
+          <animate attributeName="y" values="10;155;10" dur="4s" repeatCount="indefinite"/>
+        </rect>
+        
+        <!-- Secondary faster scan line -->
+        <rect x="10" y="10" width="280" height="1" fill="#ffffff" opacity="0.3">
+          <animate attributeName="y" values="10;155;10" dur="1.5s" repeatCount="indefinite"/>
+        </rect>
+      </g>
+      
+      <!-- SSTV horizontal scan lines effect -->
+      <g opacity="0.3">
+        <line x1="10" y1="30" x2="290" y2="30" stroke="#00ff88" stroke-width="1"/>
+        <line x1="10" y1="60" x2="290" y2="60" stroke="#00ff88" stroke-width="1"/>
+        <line x1="10" y1="90" x2="290" y2="90" stroke="#00ff88" stroke-width="1"/>
+        <line x1="10" y1="120" x2="290" y2="120" stroke="#00ff88" stroke-width="1"/>
+      </g>
+      
+      <!-- Partial image reveal animation (like image decoding from top) -->
+      <rect x="10" y="10" width="280" height="0" fill="#002200" opacity="0.5">
+        <animate attributeName="height" values="0;150;0" dur="8s" repeatCount="indefinite"/>
+      </rect>
+      
+      <!-- SSTV text display -->
+      <text x="20" y="40" fill="#00ff88" font-family="monospace" font-size="14" filter="url(#glow)">SSTV DECODER v2.3</text>
+      <text x="20" y="60" fill="#00aa66" font-family="monospace" font-size="12">FREQ: 14.230 MHz</text>
+      <text x="20" y="80" fill="#00aa66" font-family="monospace" font-size="12">MODE: ROBOT36</text>
+      <text x="20" y="100" fill="#ffaa00" font-family="monospace" font-size="12">
+        <animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite"/>
+        SIGNAL DETECTED...
+      </text>
+      
+      <!-- Encrypted message preview with flicker -->
+      <rect x="20" y="110" width="260" height="45" fill="#000800" stroke="#00ff88" stroke-width="1">
+        <animate attributeName="stroke-opacity" values="1;0.5;1;0.8;1" dur="0.5s" repeatCount="indefinite"/>
+      </rect>
+      <text x="25" y="128" fill="#00ff88" font-family="monospace" font-size="10" filter="url(#glow)">
+        <animate attributeName="opacity" values="1;0.7;1;0.9;1" dur="0.3s" repeatCount="indefinite"/>
+        NFFU BU UFS BQFM LMPTUFS
+      </text>
+      <text x="25" y="143" fill="#00ff88" font-family="monospace" font-size="10" filter="url(#glow)">
+        <animate attributeName="opacity" values="0.9;1;0.8;1;0.95" dur="0.25s" repeatCount="indefinite"/>
+        DPEF: SPU2 - F
+      </text>
+      
+      <!-- Status bar -->
+      <rect x="10" y="165" width="280" height="25" fill="#0a0a0a"/>
+      <!-- Animated progress bar -->
+      <rect x="12" y="167" width="0" height="21" fill="#003300" opacity="0.5">
+        <animate attributeName="width" values="0;276;0" dur="8s" repeatCount="indefinite"/>
+      </rect>
+      <text x="20" y="182" fill="#00ff88" font-family="monospace" font-size="11">> Decoding image...</text>
+      <text x="200" y="182" fill="#ffaa00" font-family="monospace" font-size="11">
+        <animate attributeName="opacity" values="1;0;1" dur="0.5s" repeatCount="indefinite"/>
+        ▌
+      </text>
+      <rect x="250" y="170" width="30" height="15" fill="#004400">
+        <animate attributeName="fill" values="#004400;#00ff00;#004400" dur="2s" repeatCount="indefinite"/>
+      </rect>
+      
+      <!-- Monitor stand -->
+      <rect x="120" y="200" width="60" height="30" fill="#2a2a2a"/>
+      <rect x="100" y="225" width="100" height="10" fill="#1a1a1a"/>
+      
+      <!-- Green glow effect with pulse -->
+      <ellipse cx="150" cy="250" rx="200" ry="50" fill="url(#greenGlow)" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0.7;0.5" dur="3s" repeatCount="indefinite"/>
+      </ellipse>
+    </g>
+    
+    <!-- ======= LEFT MONITOR - System Status ======= -->
+    <g transform="translate(0, 20)">
+      <rect x="-15" y="-15" width="230" height="180" fill="url(#monitorGrad)" rx="8"/>
+      <rect width="200" height="150" fill="#000810"/>
+      
+      <!-- System info -->
+      <text x="10" y="25" fill="#0088ff" font-family="monospace" font-size="12" filter="url(#glow)">SYSTEM MONITOR</text>
+      <text x="10" y="45" fill="#0066cc" font-family="monospace" font-size="10">CPU: 12% [||||      ]</text>
+      <text x="10" y="60" fill="#0066cc" font-family="monospace" font-size="10">MEM: 4.2GB/16GB</text>
+      <text x="10" y="75" fill="#0066cc" font-family="monospace" font-size="10">NET: 125 Mbps ↓</text>
+      <text x="10" y="95" fill="#00ff88" font-family="monospace" font-size="10">SDR: CONNECTED</text>
+      <text x="10" y="110" fill="#00ff88" font-family="monospace" font-size="10">HACKRF: READY</text>
+      <text x="10" y="130" fill="#ffaa00" font-family="monospace" font-size="10">VPN: ACTIVE (NL)</text>
+      
+      <!-- Monitor stand -->
+      <rect x="80" y="150" width="40" height="20" fill="#2a2a2a"/>
+      
+      <!-- Blue glow -->
+      <ellipse cx="100" cy="180" rx="120" ry="40" fill="url(#blueGlow)" opacity="0.4"/>
+    </g>
+    
+    <!-- ======= RIGHT MONITOR - Email ======= -->
+    <g transform="translate(700, 20)">
+      <rect x="-15" y="-15" width="230" height="180" fill="url(#monitorGrad)" rx="8"/>
+      <rect width="200" height="150" fill="#0f0f0f"/>
+      
+      <!-- Email client header -->
+      <rect x="5" y="5" width="190" height="25" fill="#1a1a2e"/>
+      <text x="10" y="22" fill="#fff" font-family="sans-serif" font-size="11">📧 INBOX</text>
+      <!-- Animated new mail counter -->
+      <rect x="70" y="9" width="35" height="16" fill="#ff3366" rx="8">
+        <animate attributeName="fill" values="#ff3366;#ff6688;#ff3366" dur="1.5s" repeatCount="indefinite"/>
+      </rect>
+      <text x="78" y="21" fill="#fff" font-family="sans-serif" font-size="9" font-weight="bold">3 new</text>
+      <!-- Refresh spinner -->
+      <g transform="translate(175, 17)">
+        <circle cx="0" cy="0" r="6" fill="none" stroke="#0088ff" stroke-width="1.5" stroke-dasharray="10 20" opacity="0.7">
+          <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="2s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+      
+      <!-- Email 1 - New unread with notification pulse -->
+      <g>
+        <rect x="5" y="35" width="190" height="30" fill="#1a2a1a">
+          <animate attributeName="fill" values="#1a2a1a;#2a3a2a;#1a2a1a" dur="3s" repeatCount="indefinite"/>
+        </rect>
+        <!-- Unread indicator dot -->
+        <circle cx="12" cy="50" r="4" fill="#00ff88" filter="url(#glow)">
+          <animate attributeName="r" values="4;5;4" dur="1s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="1;0.7;1" dur="1s" repeatCount="indefinite"/>
+        </circle>
+        <text x="20" y="50" fill="#00ff88" font-family="sans-serif" font-size="9" font-weight="bold">Chris Kubecka</text>
+        <text x="20" y="62" fill="#aaa" font-family="sans-serif" font-size="8">Re: Strange signals...</text>
+        <text x="160" y="50" fill="#666" font-family="sans-serif" font-size="7">2m ago</text>
+      </g>
+      
+      <!-- Email 2 - with typing indicator (someone is replying) -->
+      <g>
+        <rect x="5" y="68" width="190" height="30" fill="#151515"/>
+        <circle cx="12" cy="83" r="4" fill="#0088ff" filter="url(#glow)">
+          <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <text x="20" y="83" fill="#0088ff" font-family="sans-serif" font-size="9">Pieter van der Berg</text>
+        <text x="20" y="95" fill="#666" font-family="sans-serif" font-size="8">Antenna upgrade specs</text>
+        <!-- Typing indicator dots -->
+        <g transform="translate(155, 90)">
+          <circle cx="0" cy="0" r="2" fill="#666">
+            <animate attributeName="opacity" values="0.3;1;0.3" dur="1s" repeatCount="indefinite" begin="0s"/>
+          </circle>
+          <circle cx="7" cy="0" r="2" fill="#666">
+            <animate attributeName="opacity" values="0.3;1;0.3" dur="1s" repeatCount="indefinite" begin="0.2s"/>
+          </circle>
+          <circle cx="14" cy="0" r="2" fill="#666">
+            <animate attributeName="opacity" values="0.3;1;0.3" dur="1s" repeatCount="indefinite" begin="0.4s"/>
+          </circle>
+        </g>
+        <text x="160" y="83" fill="#666" font-family="sans-serif" font-size="7">1h ago</text>
+      </g>
+      
+      <!-- Email 3 - Read -->
+      <g>
+        <rect x="5" y="101" width="190" height="30" fill="#151515"/>
+        <text x="20" y="116" fill="#888" font-family="sans-serif" font-size="9">Marieke</text>
+        <text x="20" y="128" fill="#555" font-family="sans-serif" font-size="8">Coffee next week?</text>
+        <text x="160" y="116" fill="#555" font-family="sans-serif" font-size="7">3d ago</text>
+      </g>
+      
+      <!-- Status bar at bottom -->
+      <rect x="5" y="134" width="190" height="12" fill="#0a0a0a"/>
+      <text x="10" y="143" fill="#444" font-family="monospace" font-size="6">Synced</text>
+      <circle cx="45" cy="140" r="2" fill="#00ff00">
+        <animate attributeName="fill" values="#00ff00;#006600;#00ff00" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <!-- New mail notification sliding in -->
+      <g opacity="0">
+        <animate attributeName="opacity" values="0;0;0;1;1;0" dur="8s" repeatCount="indefinite"/>
+        <rect x="60" y="134" width="130" height="12" fill="#ff6600" rx="2">
+          <animate attributeName="x" values="200;60;60;60;200" dur="8s" repeatCount="indefinite"/>
+        </rect>
+        <text x="65" y="143" fill="#fff" font-family="sans-serif" font-size="6" font-weight="bold">
+          <animate attributeName="x" values="205;65;65;65;205" dur="8s" repeatCount="indefinite"/>
+          ✉ New message from VERON...
+        </text>
+      </g>
+      
+      <rect x="80" y="150" width="40" height="20" fill="#2a2a2a"/>
+    </g>
+    
+    <!-- ======= KEYBOARD ======= -->
+    <g transform="translate(350, 250)">
+      <rect width="200" height="60" fill="#1a1a1a" rx="5"/>
+      <rect x="5" y="5" width="190" height="50" fill="#252525" rx="3"/>
+      <!-- Key rows -->
+      <g fill="#333" opacity="0.8">
+        <rect x="10" y="10" width="180" height="10" rx="2"/>
+        <rect x="10" y="23" width="180" height="10" rx="2"/>
+        <rect x="10" y="36" width="180" height="10" rx="2"/>
+      </g>
+      <!-- RGB strip -->
+      <rect x="5" y="55" width="190" height="3" fill="#ff0088">
+        <animate attributeName="fill" values="#ff0088;#00ff88;#0088ff;#ff0088" dur="4s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+    
+    <!-- ======= MOUSE ======= -->
+    <g transform="translate(580, 270)">
+      <ellipse cx="20" cy="25" rx="20" ry="25" fill="#1a1a1a"/>
+      <ellipse cx="20" cy="20" rx="15" ry="18" fill="#252525"/>
+      <rect x="17" y="8" width="6" height="15" fill="#333" rx="2"/>
+    </g>
+  </g>
+  
+  <!-- ============ HACKRF SDR + PORTAPACK ============ -->
+  <g transform="translate(1200, 530)">
+    <!-- HackRF One base -->
+    <rect width="150" height="80" fill="#1a3d15" rx="5" filter="url(#shadow)"/>
+    <rect x="5" y="5" width="140" height="70" fill="#2d5a27"/>
+    
+    <!-- Ports -->
+    <rect x="10" y="15" width="20" height="15" fill="#333"/>
+    <rect x="10" y="40" width="20" height="15" fill="#333"/>
+    
+    <!-- Status LEDs -->
+    <circle cx="130" cy="20" r="5" fill="#00ff00" filter="url(#glow)">
+      <animate attributeName="opacity" values="1;0.3;1" dur="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="130" cy="40" r="5" fill="#ff0000" opacity="0.3"/>
+    <circle cx="130" cy="60" r="5" fill="#ffaa00" filter="url(#glow)">
+      <animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Label -->
+    <text x="50" y="50" fill="#00ff00" font-family="monospace" font-size="10">HackRF</text>
+    
+    <!-- Antenna -->
+    <rect x="70" y="-60" width="8" height="60" fill="#555"/>
+    <rect x="65" y="-65" width="18" height="8" fill="#333"/>
+    
+    <!-- ====== PORTAPACK H2 DISPLAY ====== -->
+    <g transform="translate(160, -30)">
+      <!-- PortaPack body -->
+      <rect width="120" height="140" fill="#1a1a1a" rx="5" filter="url(#shadow)"/>
+      <rect x="5" y="5" width="110" height="100" fill="#000" rx="3"/>
+      
+      <!-- Screen bezel -->
+      <rect x="8" y="8" width="104" height="94" fill="#111" rx="2"/>
+      
+      <!-- Screen content area -->
+      <rect x="10" y="10" width="100" height="90" fill="#000811"/>
+      
+      <!-- Spectrum analyzer display -->
+      <g transform="translate(10, 15)">
+        <!-- Frequency label -->
+        <text x="2" y="8" fill="#00ff88" font-family="monospace" font-size="6" filter="url(#glow)">433.92 MHz</text>
+        <text x="70" y="8" fill="#888" font-family="monospace" font-size="5">SPAN:1M</text>
+        
+        <!-- Grid lines -->
+        <g stroke="#003322" stroke-width="0.5" opacity="0.5">
+          <line x1="0" y1="20" x2="100" y2="20"/>
+          <line x1="0" y1="35" x2="100" y2="35"/>
+          <line x1="0" y1="50" x2="100" y2="50"/>
+          <line x1="25" y1="12" x2="25" y2="55"/>
+          <line x1="50" y1="12" x2="50" y2="55"/>
+          <line x1="75" y1="12" x2="75" y2="55"/>
+        </g>
+        
+        <!-- Animated spectrum bars -->
+        <g fill="#00ff88" filter="url(#glow)">
+          <!-- Bar 1 -->
+          <rect x="5" y="45" width="4" height="10">
+            <animate attributeName="height" values="10;20;8;15;10" dur="0.8s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="45;35;47;40;45" dur="0.8s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Bar 2 -->
+          <rect x="12" y="40" width="4" height="15">
+            <animate attributeName="height" values="15;25;12;20;15" dur="0.7s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="40;30;43;35;40" dur="0.7s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Bar 3 -->
+          <rect x="19" y="35" width="4" height="20">
+            <animate attributeName="height" values="20;30;15;25;20" dur="0.9s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="35;25;40;30;35" dur="0.9s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Bar 4 - Peak signal -->
+          <rect x="26" y="20" width="4" height="35" fill="#ffff00">
+            <animate attributeName="height" values="35;45;30;40;35" dur="0.6s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="20;10;25;15;20" dur="0.6s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Bar 5 -->
+          <rect x="33" y="25" width="4" height="30">
+            <animate attributeName="height" values="30;40;25;35;30" dur="0.75s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="25;15;30;20;25" dur="0.75s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Bar 6 -->
+          <rect x="40" y="35" width="4" height="20">
+            <animate attributeName="height" values="20;28;15;22;20" dur="0.85s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="35;27;40;33;35" dur="0.85s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Bar 7 -->
+          <rect x="47" y="42" width="4" height="13">
+            <animate attributeName="height" values="13;22;10;18;13" dur="0.65s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="42;33;45;37;42" dur="0.65s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Bar 8 -->
+          <rect x="54" y="40" width="4" height="15">
+            <animate attributeName="height" values="15;8;20;12;15" dur="0.95s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="40;47;35;43;40" dur="0.95s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Bar 9 -->
+          <rect x="61" y="38" width="4" height="17">
+            <animate attributeName="height" values="17;25;12;20;17" dur="0.72s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="38;30;43;35;38" dur="0.72s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Bar 10 -->
+          <rect x="68" y="30" width="4" height="25">
+            <animate attributeName="height" values="25;35;20;30;25" dur="0.88s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="30;20;35;25;30" dur="0.88s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Bar 11 -->
+          <rect x="75" y="35" width="4" height="20">
+            <animate attributeName="height" values="20;15;28;18;20" dur="0.78s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="35;40;27;37;35" dur="0.78s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Bar 12 -->
+          <rect x="82" y="42" width="4" height="13">
+            <animate attributeName="height" values="13;18;8;15;13" dur="0.68s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="42;37;47;40;42" dur="0.68s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Bar 13 -->
+          <rect x="89" y="45" width="4" height="10">
+            <animate attributeName="height" values="10;15;6;12;10" dur="0.92s" repeatCount="indefinite"/>
+            <animate attributeName="y" values="45;40;49;43;45" dur="0.92s" repeatCount="indefinite"/>
+          </rect>
+        </g>
+        
+        <!-- Waterfall display -->
+        <g transform="translate(0, 58)">
+          <rect width="100" height="25" fill="#000"/>
+          <!-- Animated waterfall lines scrolling down -->
+          <g>
+            <rect x="25" y="0" width="8" height="2" fill="#0066ff" opacity="0.9">
+              <animate attributeName="y" values="0;25" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.9;0.3" dur="2s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="26" y="5" width="6" height="2" fill="#0088ff" opacity="0.8">
+              <animate attributeName="y" values="5;30" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.8;0.2" dur="2s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="24" y="10" width="10" height="2" fill="#00aaff" opacity="0.7">
+              <animate attributeName="y" values="10;35" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.7;0.1" dur="2s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="25" y="15" width="7" height="2" fill="#0055ff" opacity="0.6">
+              <animate attributeName="y" values="15;40" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.6;0" dur="2s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="67" y="3" width="5" height="2" fill="#004488" opacity="0.5">
+              <animate attributeName="y" values="3;28" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.5;0.1" dur="2s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="68" y="12" width="4" height="2" fill="#003366" opacity="0.4">
+              <animate attributeName="y" values="12;37" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.4;0" dur="2s" repeatCount="indefinite"/>
+            </rect>
+          </g>
+        </g>
+      </g>
+      
+      <!-- Status bar at bottom of screen -->
+      <rect x="10" y="88" width="100" height="10" fill="#111"/>
+      <text x="12" y="96" fill="#00ff88" font-family="monospace" font-size="5">RX</text>
+      <circle cx="25" cy="93" r="2" fill="#00ff00" filter="url(#glow)">
+        <animate attributeName="fill" values="#00ff00;#004400;#00ff00" dur="0.5s" repeatCount="indefinite"/>
+      </circle>
+      <text x="32" y="96" fill="#888" font-family="monospace" font-size="5">-45dB</text>
+      <text x="55" y="96" fill="#ffaa00" font-family="monospace" font-size="5">
+        <animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite"/>
+        SCANNING
+      </text>
+      
+      <!-- Navigation buttons -->
+      <g transform="translate(10, 108)">
+        <circle cx="15" cy="12" r="10" fill="#333" stroke="#444" stroke-width="1"/>
+        <polygon points="15,6 19,14 11,14" fill="#888"/>
+        <polygon points="15,18 19,10 11,10" fill="#888" transform="translate(0, 8)"/>
+        <polygon points="9,12 17,8 17,16" fill="#888"/>
+        <polygon points="21,12 13,8 13,16" fill="#888"/>
+        <circle cx="15" cy="12" r="3" fill="#1a3d15"/>
+        
+        <rect x="40" y="5" width="25" height="14" fill="#333" rx="2"/>
+        <text x="45" y="15" fill="#888" font-family="sans-serif" font-size="6">OK</text>
+        
+        <rect x="70" y="5" width="25" height="14" fill="#333" rx="2"/>
+        <text x="73" y="15" fill="#888" font-family="sans-serif" font-size="6">ESC</text>
+      </g>
+      
+      <!-- PortaPack label -->
+      <text x="20" y="135" fill="#666" font-family="monospace" font-size="6">PORTAPACK H2</text>
+    </g>
+  </g>
+  
+  <!-- ============ FLIPPER ZERO ============ -->
+  <g transform="translate(1200, 650)">
+    <rect width="100" height="50" fill="#ff6600" rx="8" filter="url(#shadow)"/>
+    <rect x="10" y="8" width="50" height="35" fill="#000"/>
+    
+    <!-- Flipper screen -->
+    <rect x="12" y="10" width="46" height="31" fill="#aaffaa"/>
+    <!-- Flipper dolphin (simplified) -->
+    <ellipse cx="35" cy="25" rx="12" ry="10" fill="#333"/>
+    <circle cx="30" cy="22" r="2" fill="#fff"/>
+    
+    <!-- Buttons -->
+    <circle cx="75" cy="15" r="6" fill="#333"/>
+    <circle cx="75" cy="35" r="6" fill="#333"/>
+    <circle cx="90" cy="25" r="6" fill="#333"/>
+    
+    <!-- Label -->
+    <text x="15" y="60" fill="#fff" font-family="sans-serif" font-size="8" font-weight="bold">FLIPPER ZERO</text>
+  </g>
+  
+  <!-- ============ SERVER RACK ============ -->
+  <g transform="translate(1650, 200)">
+    <rect width="200" height="600" fill="url(#serverGrad)" filter="url(#shadow)"/>
+    <rect x="10" y="10" width="180" height="580" fill="#0a0a0a"/>
+    
+    <!-- Server units -->
+    <g transform="translate(20, 20)">
+      <!-- Server 1 -->
+      <rect width="160" height="60" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+      <rect x="10" y="20" width="100" height="20" fill="#0a0a0a"/>
+      <circle cx="140" cy="15" r="4" fill="#00ff00" filter="url(#glow)"/>
+      <circle cx="140" cy="30" r="4" fill="#00ff00" filter="url(#glow)"/>
+      <circle cx="140" cy="45" r="4" fill="#00ff00" filter="url(#glow)">
+        <animate attributeName="fill" values="#00ff00;#ffaa00;#00ff00" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      
+      <!-- Server 2 -->
+      <g transform="translate(0, 70)">
+        <rect width="160" height="60" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+        <rect x="10" y="20" width="100" height="20" fill="#0a0a0a"/>
+        <circle cx="140" cy="15" r="4" fill="#00ff00" filter="url(#glow)"/>
+        <circle cx="140" cy="30" r="4" fill="#0066ff" filter="url(#glow)">
+          <animate attributeName="opacity" values="1;0.3;1" dur="0.3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="140" cy="45" r="4" fill="#00ff00" filter="url(#glow)"/>
+      </g>
+      
+      <!-- Server 3 - NAS -->
+      <g transform="translate(0, 140)">
+        <rect width="160" height="80" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+        <!-- Drive bays -->
+        <rect x="10" y="10" width="35" height="60" fill="#0a0a0a" stroke="#222"/>
+        <rect x="50" y="10" width="35" height="60" fill="#0a0a0a" stroke="#222"/>
+        <rect x="90" y="10" width="35" height="60" fill="#0a0a0a" stroke="#222"/>
+        <circle cx="27" cy="60" r="3" fill="#00ff00" filter="url(#glow)"/>
+        <circle cx="67" cy="60" r="3" fill="#00ff00" filter="url(#glow)"/>
+        <circle cx="107" cy="60" r="3" fill="#00ff00" filter="url(#glow)"/>
+        <circle cx="145" cy="40" r="5" fill="#0066ff" filter="url(#glow)">
+          <animate attributeName="opacity" values="1;0.3;1" dur="0.2s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+      
+      <!-- Network switch -->
+      <g transform="translate(0, 230)">
+        <rect width="160" height="40" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+        <g transform="translate(10, 10)">
+          <rect width="15" height="20" fill="#333"/>
+          <rect x="18" width="15" height="20" fill="#333"/>
+          <rect x="36" width="15" height="20" fill="#333"/>
+          <rect x="54" width="15" height="20" fill="#333"/>
+          <rect x="72" width="15" height="20" fill="#333"/>
+          <rect x="90" width="15" height="20" fill="#333"/>
+          <rect x="108" width="15" height="20" fill="#333"/>
+          <rect x="126" width="15" height="20" fill="#333"/>
+          <!-- Link lights -->
+          <circle cx="7" cy="25" r="2" fill="#00ff00" filter="url(#glow)"/>
+          <circle cx="25" cy="25" r="2" fill="#00ff00" filter="url(#glow)"/>
+          <circle cx="43" cy="25" r="2" fill="#00ff00" filter="url(#glow)">
+            <animate attributeName="opacity" values="1;0.3;1" dur="0.1s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="61" cy="25" r="2" fill="#00ff00" filter="url(#glow)">
+            <animate attributeName="opacity" values="1;0.3;1" dur="0.15s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="79" cy="25" r="2" fill="#333"/>
+          <circle cx="97" cy="25" r="2" fill="#333"/>
+          <circle cx="115" cy="25" r="2" fill="#333"/>
+          <circle cx="133" cy="25" r="2" fill="#333"/>
+        </g>
+      </g>
+      
+      <!-- UPS -->
+      <g transform="translate(0, 280)">
+        <rect width="160" height="60" fill="#2a2a2a" stroke="#333" stroke-width="1"/>
+        <text x="10" y="25" fill="#888" font-family="sans-serif" font-size="10">APC Smart-UPS</text>
+        <rect x="10" y="35" width="80" height="15" fill="#001a00"/>
+        <rect x="10" y="35" width="60" height="15" fill="#00ff00" opacity="0.8"/>
+        <text x="95" y="47" fill="#00ff00" font-family="monospace" font-size="10">87%</text>
+      </g>
+    </g>
+    
+    <!-- Rack label -->
+    <text x="60" y="590" fill="#444" font-family="monospace" font-size="12">RACK-01</text>
+  </g>
+  
+  <!-- ============ DOOR TO KITCHEN ============ -->
+  <g transform="translate(30, 250)">
+    <rect width="140" height="500" fill="#2a2a2a" rx="3" filter="url(#shadow)"/>
+    <rect x="10" y="10" width="120" height="480" fill="#1a1a1a"/>
+    
+    <!-- Door panels -->
+    <rect x="20" y="20" width="100" height="200" fill="#222"/>
+    <rect x="20" y="240" width="100" height="200" fill="#222"/>
+    
+    <!-- Handle -->
+    <rect x="105" y="250" width="15" height="40" fill="#555" rx="2"/>
+    
+    <!-- Light strip under door -->
+    <rect x="10" y="490" width="120" height="3" fill="#ffcc88" opacity="0.5" filter="url(#glow)"/>
+    
+    <!-- Sign -->
+    <rect x="35" y="450" width="70" height="25" fill="#333"/>
+    <text x="42" y="467" fill="#888" font-family="sans-serif" font-size="10">← KITCHEN</text>
+  </g>
+  
+  <!-- ============ MESHTASTIC DEVICE ============ -->
+  <g transform="translate(1380, 600)">
+    <rect width="80" height="120" fill="#333" rx="5" filter="url(#shadow)"/>
+    <rect x="10" y="10" width="60" height="40" fill="#001a00"/>
+    <text x="15" y="35" fill="#00ff00" font-family="monospace" font-size="8">MESH</text>
+    <text x="15" y="45" fill="#00aa00" font-family="monospace" font-size="6">3 nodes</text>
+    
+    <!-- Antenna -->
+    <rect x="35" y="-40" width="6" height="50" fill="#444"/>
+    <rect x="30" y="-45" width="16" height="8" fill="#333"/>
+    
+    <!-- Status LED -->
+    <circle cx="65" cy="90" r="4" fill="#00ff00" filter="url(#glow)">
+      <animate attributeName="opacity" values="1;0.2;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    
+    <text x="10" y="110" fill="#666" font-family="monospace" font-size="7">Meshtastic</text>
+  </g>
+  
+  <!-- ============ COFFEE MUG ============ -->
+  <g transform="translate(1150, 620)">
+    <path d="M0,50 L5,0 L35,0 L40,50 Z" fill="#1a1a1a"/>
+    <ellipse cx="20" cy="5" rx="17" ry="6" fill="#0a0a0a"/>
+    <ellipse cx="20" cy="10" rx="14" ry="4" fill="#3a2a1a"/>
+    <path d="M40,15 Q55,20 40,35" fill="none" stroke="#1a1a1a" stroke-width="6"/>
+    
+    <!-- Steam -->
+    <g opacity="0.3" fill="none" stroke="#888" stroke-width="2">
+      <path d="M15,-5 Q10,-15 15,-25">
+        <animate attributeName="d" dur="2s" repeatCount="indefinite"
+          values="M15,-5 Q10,-15 15,-25;M15,-5 Q20,-15 15,-25;M15,-5 Q10,-15 15,-25"/>
+      </path>
+      <path d="M25,-5 Q30,-15 25,-25">
+        <animate attributeName="d" dur="2.5s" repeatCount="indefinite"
+          values="M25,-5 Q30,-15 25,-25;M25,-5 Q20,-15 25,-25;M25,-5 Q30,-15 25,-25"/>
+      </path>
+    </g>
+  </g>
+  
+  <!-- ============ POSTER ON WALL ============ -->
+  <g transform="translate(1000, 100)">
+    <rect width="150" height="200" fill="#1a1a1a" filter="url(#shadow)"/>
+    <rect x="5" y="5" width="140" height="190" fill="#0a0a0a"/>
+    <text x="20" y="50" fill="#00ff88" font-family="monospace" font-size="16" filter="url(#glow)">HACK</text>
+    <text x="20" y="75" fill="#00ff88" font-family="monospace" font-size="16" filter="url(#glow)">THE</text>
+    <text x="20" y="100" fill="#00ff88" font-family="monospace" font-size="16" filter="url(#glow)">PLANET</text>
+    <text x="20" y="140" fill="#ff0088" font-family="monospace" font-size="10">// 1995</text>
+    <text x="20" y="160" fill="#666" font-family="monospace" font-size="8">"Mess with the best,</text>
+    <text x="20" y="175" fill="#666" font-family="monospace" font-size="8">die like the rest"</text>
+  </g>
+  
+  <!-- ============ VIDEO CONFERENCE TERMINAL ============ -->
+  <g transform="translate(1250, 280)">
+    <!-- Wall-mounted tablet/monitor for video calls -->
+    <rect x="-5" y="-5" width="310" height="210" fill="#1a1a1a" rx="10" filter="url(#shadow)"/>
+    <rect width="300" height="200" fill="#0a0a12" rx="8"/>
+    
+    <!-- Screen bezel -->
+    <rect x="10" y="10" width="280" height="150" fill="#000"/>
+    
+    <!-- Video call interface -->
+    <rect x="15" y="15" width="270" height="30" fill="#0f3460"/>
+    <text x="25" y="35" fill="#00d9ff" font-family="monospace" font-size="14" font-weight="bold">VIDEO CONFERENCE</text>
+    <circle cx="260" cy="30" r="6" fill="#00ff00" filter="url(#glow)">
+      <animate attributeName="opacity" values="1;0.5;1" dur="1s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Three contact slots -->
+    <g transform="translate(20, 55)">
+      <!-- Henk -->
+      <rect width="75" height="95" fill="#0f3460" rx="3"/>
+      <circle cx="37.5" cy="35" r="18" fill="#00d9ff" opacity="0.3"/>
+      <text x="37.5" y="40" fill="#00d9ff" font-family="monospace" font-size="20" text-anchor="middle">H</text>
+      <text x="37.5" y="75" fill="#aaa" font-family="monospace" font-size="8" text-anchor="middle">Henk</text>
+      <text x="37.5" y="88" fill="#888" font-family="monospace" font-size="6" text-anchor="middle">ASTRON</text>
+    </g>
+    
+    <g transform="translate(102, 55)">
+      <!-- Marieke -->
+      <rect width="75" height="95" fill="#0f3460" rx="3"/>
+      <circle cx="37.5" cy="35" r="18" fill="#00d9ff" opacity="0.3"/>
+      <text x="37.5" y="40" fill="#00d9ff" font-family="monospace" font-size="20" text-anchor="middle">M</text>
+      <text x="37.5" y="75" fill="#aaa" font-family="monospace" font-size="8" text-anchor="middle">Marieke</text>
+      <text x="37.5" y="88" fill="#888" font-family="monospace" font-size="6" text-anchor="middle">LOFAR</text>
+    </g>
+    
+    <g transform="translate(184, 55)">
+      <!-- Pieter -->
+      <rect width="75" height="95" fill="#0f3460" rx="3"/>
+      <circle cx="37.5" cy="35" r="18" fill="#00d9ff" opacity="0.3"/>
+      <text x="37.5" y="40" fill="#00d9ff" font-family="monospace" font-size="20" text-anchor="middle">P</text>
+      <text x="37.5" y="75" fill="#aaa" font-family="monospace" font-size="8" text-anchor="middle">Pieter</text>
+      <text x="37.5" y="88" fill="#888" font-family="monospace" font-size="6" text-anchor="middle">Bluetooth</text>
+    </g>
+    
+    <!-- Status bar -->
+    <rect x="15" y="165" width="270" height="15" fill="#0a0a0a"/>
+    <text x="20" y="176" fill="#00ff00" font-family="monospace" font-size="8">🔒 ENCRYPTED</text>
+    <text x="180" y="176" fill="#888" font-family="monospace" font-size="6">SIGNAL: ▂▄▆█</text>
+    
+    <!-- Glow effect -->
+    <ellipse cx="150" cy="220" rx="180" ry="40" fill="url(#blueGlow)" opacity="0.4"/>
+  </g>
+  
+  <!-- ============ LED STRIP ON CEILING ============ -->
+  <rect x="200" y="180" width="1500" height="5" fill="#0088ff" opacity="0.5" filter="url(#strongGlow)">
+    <animate attributeName="fill" values="#0088ff;#00ff88;#ff0088;#0088ff" dur="10s" repeatCount="indefinite"/>
+  </rect>
+  
+  <!-- ============ AMBIENT LIGHTING ============ -->
+  <!-- Green ambient from monitors -->
+  <ellipse cx="700" cy="700" rx="500" ry="200" fill="url(#greenGlow)" opacity="0.3"/>
+  <!-- Blue ambient from system monitor -->
+  <ellipse cx="350" cy="650" rx="200" ry="100" fill="url(#blueGlow)" opacity="0.2"/>
+  
+  <!-- Vignette effect -->
+  <rect width="1920" height="1080" fill="url(#ceilingGrad)" opacity="0.3"/>
+</svg>

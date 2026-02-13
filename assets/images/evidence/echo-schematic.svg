@@ -1,0 +1,162 @@
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#0a0a0a"/>
+  
+  <!-- Grid pattern for technical look -->
+  <defs>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#1a3a1a" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="600" fill="url(#grid)"/>
+  
+  <!-- Title -->
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#ff9900" text-anchor="middle">
+    PROJECT ECHO - SYSTEM OVERVIEW
+  </text>
+  <text x="400" y="65" font-family="Arial, sans-serif" font-size="14" fill="#ff9900" text-anchor="middle">
+    STRENG GEHEIM - TOP SECRET - CLASSIFICATION LEVEL 4
+  </text>
+  
+  <!-- Main antenna array diagram -->
+  <g id="antenna-array">
+    <!-- Central control unit -->
+    <rect x="350" y="150" width="100" height="80" fill="#1a1a2e" stroke="#00ff88" stroke-width="2"/>
+    <text x="400" y="185" font-family="monospace" font-size="12" fill="#00ff88" text-anchor="middle">CONTROL</text>
+    <text x="400" y="200" font-family="monospace" font-size="12" fill="#00ff88" text-anchor="middle">UNIT</text>
+    <text x="400" y="215" font-family="monospace" font-size="10" fill="#888" text-anchor="middle">Phase-Lock Loop</text>
+    
+    <!-- Antenna elements (8 antennas in circular pattern) -->
+    <g id="antennas">
+      <!-- Top antenna -->
+      <line x1="400" y1="150" x2="400" y2="100" stroke="#00ff88" stroke-width="2"/>
+      <circle cx="400" cy="90" r="8" fill="#ff3333" stroke="#ff9900" stroke-width="2"/>
+      <text x="400" y="75" font-family="monospace" font-size="10" fill="#00ff88" text-anchor="middle">ANT-1</text>
+      
+      <!-- Top-right antenna -->
+      <line x1="450" y1="150" x2="480" y2="110" stroke="#00ff88" stroke-width="2"/>
+      <circle cx="490" cy="100" r="8" fill="#ff3333" stroke="#ff9900" stroke-width="2"/>
+      <text x="505" y="100" font-family="monospace" font-size="10" fill="#00ff88">ANT-2</text>
+      
+      <!-- Right antenna -->
+      <line x1="450" y1="190" x2="510" y2="190" stroke="#00ff88" stroke-width="2"/>
+      <circle cx="520" cy="190" r="8" fill="#ff3333" stroke="#ff9900" stroke-width="2"/>
+      <text x="535" y="195" font-family="monospace" font-size="10" fill="#00ff88">ANT-3</text>
+      
+      <!-- Bottom-right antenna -->
+      <line x1="450" y1="230" x2="480" y2="270" stroke="#00ff88" stroke-width="2"/>
+      <circle cx="490" cy="280" r="8" fill="#ff3333" stroke="#ff9900" stroke-width="2"/>
+      <text x="505" y="285" font-family="monospace" font-size="10" fill="#00ff88">ANT-4</text>
+      
+      <!-- Bottom antenna -->
+      <line x1="400" y1="230" x2="400" y2="280" stroke="#00ff88" stroke-width="2"/>
+      <circle cx="400" cy="290" r="8" fill="#ff3333" stroke="#ff9900" stroke-width="2"/>
+      <text x="400" y="310" font-family="monospace" font-size="10" fill="#00ff88" text-anchor="middle">ANT-5</text>
+      
+      <!-- Bottom-left antenna -->
+      <line x1="350" y1="230" x2="320" y2="270" stroke="#00ff88" stroke-width="2"/>
+      <circle cx="310" cy="280" r="8" fill="#ff3333" stroke="#ff9900" stroke-width="2"/>
+      <text x="285" y="285" font-family="monospace" font-size="10" fill="#00ff88" text-anchor="end">ANT-6</text>
+      
+      <!-- Left antenna -->
+      <line x1="350" y1="190" x2="290" y2="190" stroke="#00ff88" stroke-width="2"/>
+      <circle cx="280" cy="190" r="8" fill="#ff3333" stroke="#ff9900" stroke-width="2"/>
+      <text x="265" y="195" font-family="monospace" font-size="10" fill="#00ff88" text-anchor="end">ANT-7</text>
+      
+      <!-- Top-left antenna -->
+      <line x1="350" y1="150" x2="320" y2="110" stroke="#00ff88" stroke-width="2"/>
+      <circle cx="310" cy="100" r="8" fill="#ff3333" stroke="#ff9900" stroke-width="2"/>
+      <text x="295" y="100" font-family="monospace" font-size="10" fill="#00ff88" text-anchor="end">ANT-8</text>
+    </g>
+  </g>
+  
+  <!-- Signal flow diagram -->
+  <g id="signal-flow">
+    <!-- Power source -->
+    <rect x="50" y="350" width="120" height="60" fill="#1a1a2e" stroke="#ff9900" stroke-width="2"/>
+    <text x="110" y="375" font-family="monospace" font-size="11" fill="#ff9900" text-anchor="middle">POWER</text>
+    <text x="110" y="390" font-family="monospace" font-size="11" fill="#ff9900" text-anchor="middle">SOURCE</text>
+    <text x="110" y="403" font-family="monospace" font-size="9" fill="#888" text-anchor="middle">25kW Peak</text>
+    
+    <!-- Arrow to modulator -->
+    <line x1="170" y1="380" x2="210" y2="380" stroke="#00ff88" stroke-width="2" marker-end="url(#arrowhead)"/>
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#00ff88"/>
+      </marker>
+    </defs>
+    
+    <!-- Modulator -->
+    <rect x="210" y="350" width="120" height="60" fill="#1a1a2e" stroke="#00ff88" stroke-width="2"/>
+    <text x="270" y="375" font-family="monospace" font-size="11" fill="#00ff88" text-anchor="middle">SIGNAL</text>
+    <text x="270" y="390" font-family="monospace" font-size="11" fill="#00ff88" text-anchor="middle">MODULATOR</text>
+    <text x="270" y="403" font-family="monospace" font-size="9" fill="#888" text-anchor="middle">50MHz-6GHz</text>
+    
+    <!-- Arrow to antenna array -->
+    <line x1="330" y1="380" x2="370" y2="380" stroke="#00ff88" stroke-width="2"/>
+    <line x1="370" y1="380" x2="390" y2="250" stroke="#00ff88" stroke-width="2" marker-end="url(#arrowhead)"/>
+    
+    <!-- Frequency targeting -->
+    <rect x="470" y="350" width="140" height="60" fill="#1a1a2e" stroke="#ff3333" stroke-width="2"/>
+    <text x="540" y="370" font-family="monospace" font-size="11" fill="#ff3333" text-anchor="middle">FREQUENCY</text>
+    <text x="540" y="385" font-family="monospace" font-size="11" fill="#ff3333" text-anchor="middle">TARGETING</text>
+    <text x="540" y="403" font-family="monospace" font-size="9" fill="#888" text-anchor="middle">Multi-band sweep</text>
+    
+    <!-- Arrow from targeting to control -->
+    <line x1="540" y1="350" x2="540" y2="320" stroke="#ff3333" stroke-width="2"/>
+    <line x1="540" y1="320" x2="450" y2="220" stroke="#ff3333" stroke-width="2" marker-end="url(#arrowhead-red)"/>
+    <defs>
+      <marker id="arrowhead-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#ff3333"/>
+      </marker>
+    </defs>
+  </g>
+  
+  <!-- Target effect visualization -->
+  <g id="target-effects">
+    <text x="50" y="450" font-family="monospace" font-size="12" fill="#ff9900" font-weight="bold">TARGET EFFECTS:</text>
+    
+    <!-- Vehicle icon -->
+    <rect x="50" y="465" width="40" height="20" rx="3" fill="none" stroke="#888" stroke-width="1"/>
+    <circle cx="60" cy="490" r="5" fill="none" stroke="#888" stroke-width="1"/>
+    <circle cx="80" cy="490" r="5" fill="none" stroke="#888" stroke-width="1"/>
+    <text x="100" y="480" font-family="monospace" font-size="10" fill="#ccc">Vehicle ECU crash</text>
+    
+    <!-- Aircraft icon -->
+    <path d="M 50 510 L 70 505 L 90 510 L 70 500 Z" fill="none" stroke="#888" stroke-width="1"/>
+    <line x1="55" y1="508" x2="45" y2="512" stroke="#888" stroke-width="1"/>
+    <line x1="85" y1="508" x2="95" y2="512" stroke="#888" stroke-width="1"/>
+    <text x="100" y="513" font-family="monospace" font-size="10" fill="#ccc">Aviation nav failure</text>
+    
+    <!-- Medical icon -->
+    <rect x="50" y="525" width="30" height="20" rx="2" fill="none" stroke="#888" stroke-width="1"/>
+    <line x1="55" y1="535" x2="75" y2="535" stroke="#888" stroke-width="1"/>
+    <line x1="65" y1="530" x2="65" y2="540" stroke="#888" stroke-width="1"/>
+    <text x="100" y="538" font-family="monospace" font-size="10" fill="#ccc">Medical device crash</text>
+    
+    <!-- Communication icon -->
+    <circle cx="65" cy="565" r="8" fill="none" stroke="#888" stroke-width="1"/>
+    <circle cx="65" cy="565" r="12" fill="none" stroke="#888" stroke-width="0.5" opacity="0.5"/>
+    <circle cx="65" cy="565" r="16" fill="none" stroke="#888" stroke-width="0.5" opacity="0.3"/>
+    <text x="100" y="570" font-family="monospace" font-size="10" fill="#ccc">Comm blackout</text>
+  </g>
+  
+  <!-- Technical specifications -->
+  <g id="specs">
+    <text x="470" y="450" font-family="monospace" font-size="12" fill="#ff9900" font-weight="bold">SPECIFICATIONS:</text>
+    <text x="470" y="470" font-family="monospace" font-size="10" fill="#ccc">Range: 5.0 km (tested)</text>
+    <text x="470" y="485" font-family="monospace" font-size="10" fill="#ccc">Power: 25kW peak output</text>
+    <text x="470" y="500" font-family="monospace" font-size="10" fill="#ccc">Freq: 50MHz - 6GHz</text>
+    <text x="470" y="515" font-family="monospace" font-size="10" fill="#ccc">Mode: Directional beam</text>
+    <text x="470" y="530" font-family="monospace" font-size="10" fill="#ccc">Pulse: 50ms - 2000ms</text>
+    <text x="470" y="545" font-family="monospace" font-size="10" fill="#ccc">Accuracy: ± 15 degrees</text>
+    <text x="470" y="560" font-family="monospace" font-size="10" fill="#ccc">Status: Phase 2 complete</text>
+    <text x="470" y="575" font-family="monospace" font-size="10" fill="#ff3333" font-weight="bold">Next: Urban testing</text>
+  </g>
+  
+  <!-- Warning footer -->
+  <rect x="50" y="585" width="700" height="2" fill="#ff9900"/>
+  <text x="400" y="598" font-family="monospace" font-size="10" fill="#ff9900" text-anchor="middle">
+    UNAUTHORIZED DISCLOSURE SUBJECT TO PROSECUTION - §93 StGB (TREASON)
+  </text>
+</svg>

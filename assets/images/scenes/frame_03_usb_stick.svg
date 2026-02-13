@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <!-- SCENE FRAME 3: The USB Stick Discovery -->
+  <!-- Ryan finds the USB stick on his car door - dramatic close-up -->
+  
+  <defs>
+    <filter id="moonGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <linearGradient id="nightSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a20"/>
+      <stop offset="100%" style="stop-color:#1a1a3a"/>
+    </linearGradient>
+    <linearGradient id="carReflect" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#3a3a5a"/>
+      <stop offset="50%" style="stop-color:#4a4a6a"/>
+      <stop offset="100%" style="stop-color:#3a3a5a"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- BACKGROUND: Dark street at night -->
+  <rect width="800" height="450" fill="url(#nightSky)"/>
+  
+  <!-- Moon -->
+  <circle cx="650" cy="80" r="40" fill="#e8e8d0" filter="url(#moonGlow)"/>
+  <circle cx="650" cy="80" r="35" fill="#f0f0e0"/>
+  
+  <!-- Silhouette of Klooster in far background -->
+  <g fill="#1a1a2a" opacity="0.5">
+    <rect x="500" y="150" width="100" height="150"/>
+    <path d="M480,150 L550,80 L620,150 Z"/>
+    <rect x="520" y="120" width="20" height="40"/>
+  </g>
+  
+  <!-- Trees silhouette -->
+  <g fill="#0a0a15">
+    <ellipse cx="100" cy="200" rx="80" ry="100"/>
+    <ellipse cx="250" cy="180" rx="60" ry="80"/>
+    <ellipse cx="700" cy="190" rx="70" ry="90"/>
+  </g>
+  
+  <!-- Ground/street -->
+  <rect x="0" y="350" width="800" height="100" fill="#1a1a25"/>
+  
+  <!-- THE CAR (Volvo - main focus) -->
+  <g transform="translate(150, 200)">
+    <!-- Car body -->
+    <path d="M0,100 L50,100 L80,60 L320,60 L350,100 L400,100 L400,150 L0,150 Z" 
+          fill="url(#carReflect)"/>
+    
+    <!-- Windows -->
+    <path d="M90,65 L110,30 L290,30 L310,65 Z" fill="#1a2a3a"/>
+    
+    <!-- Door line -->
+    <line x1="200" y1="60" x2="200" y2="145" stroke="#2a2a4a" stroke-width="2"/>
+    
+    <!-- THE DOOR HANDLE (focus point) -->
+    <g transform="translate(180, 100)">
+      <!-- Handle base -->
+      <rect x="0" y="0" width="40" height="15" fill="#555" rx="3"/>
+      <rect x="5" y="3" width="30" height="9" fill="#333" rx="2"/>
+      
+      <!-- USB STICK (the star of this shot!) -->
+      <g transform="translate(15, -10)">
+        <!-- USB body -->
+        <rect x="0" y="0" width="25" height="12" fill="#1a1a1a" rx="2"/>
+        <rect x="22" y="2" width="8" height="8" fill="#333"/>
+        <!-- Tape with message -->
+        <rect x="-5" y="12" width="35" height="15" fill="#f5f5dc"/>
+        <text x="12" y="22" text-anchor="middle" font-family="Arial" font-size="4" fill="#333">TRUST THE</text>
+        <text x="12" y="26" text-anchor="middle" font-family="Arial" font-size="3" fill="#333">PROCESS</text>
+        
+        <!-- Spotlight/emphasis glow -->
+        <ellipse cx="12" cy="8" rx="25" ry="20" fill="#fff" opacity="0.1"/>
+      </g>
+    </g>
+    
+    <!-- Wheels -->
+    <circle cx="80" cy="150" r="25" fill="#1a1a1a"/>
+    <circle cx="80" cy="150" r="15" fill="#333"/>
+    <circle cx="320" cy="150" r="25" fill="#1a1a1a"/>
+    <circle cx="320" cy="150" r="15" fill="#333"/>
+  </g>
+  
+  <!-- RYAN'S HAND reaching for the USB -->
+  <g transform="translate(300, 280)">
+    <!-- Forearm -->
+    <path d="M80,50 L50,30 L40,35 L70,55 Z" fill="#2d4a6b"/> <!-- Hoodie sleeve -->
+    <!-- Hand -->
+    <ellipse cx="45" cy="30" rx="20" ry="15" fill="#f5d0b5"/>
+    <!-- Finger pointing at USB -->
+    <ellipse cx="25" cy="25" rx="8" ry="5" fill="#f5d0b5" transform="rotate(-20 25 25)"/>
+  </g>
+  
+  <!-- CLOSE-UP INSET (zoomed view of USB) -->
+  <g transform="translate(550, 250)">
+    <rect x="-10" y="-10" width="220" height="140" fill="#000" stroke="#444" stroke-width="3"/>
+    <text x="100" y="10" text-anchor="middle" fill="#888" font-family="monospace" font-size="10">CLOSE-UP</text>
+    
+    <!-- Enlarged USB -->
+    <g transform="translate(30, 30)">
+      <rect x="0" y="0" width="80" height="40" fill="#1a1a1a" rx="5"/>
+      <rect x="70" y="8" width="25" height="24" fill="#444"/>
+      <!-- LED -->
+      <circle cx="15" cy="20" r="4" fill="#003300"/>
+      
+      <!-- Tape -->
+      <rect x="-10" y="40" width="100" height="45" fill="#f5f5dc"/>
+      <text x="40" y="55" text-anchor="middle" font-family="Arial" font-size="9" fill="#333">TRUST THE</text>
+      <text x="40" y="68" text-anchor="middle" font-family="Arial" font-size="9" fill="#333">PROCESS</text>
+      <text x="40" y="82" text-anchor="middle" font-family="Arial" font-size="6" fill="#666">AIR-GAPPED ONLY</text>
+    </g>
+  </g>
+  
+  <!-- Thought bubble from Ryan -->
+  <g transform="translate(30, 50)">
+    <ellipse cx="100" cy="50" rx="90" ry="45" fill="#fff"/>
+    <ellipse cx="50" cy="110" rx="15" ry="12" fill="#fff"/>
+    <ellipse cx="30" cy="140" rx="8" ry="6" fill="#fff"/>
+    <text x="100" y="40" text-anchor="middle" font-family="Arial" font-size="12" fill="#333">They were here.</text>
+    <text x="100" y="55" text-anchor="middle" font-family="Arial" font-size="12" fill="#333">They watched me the</text>
+    <text x="100" y="70" text-anchor="middle" font-family="Arial" font-size="12" fill="#333" font-weight="bold">whole time.</text>
+  </g>
+  
+  <!-- Title card -->
+  <rect x="0" y="420" width="800" height="30" fill="#000" opacity="0.8"/>
+  <text x="400" y="442" text-anchor="middle" fill="#aaaaff" font-family="monospace" font-size="18">SCENE 08: THE USB STICK</text>
+</svg>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speech Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #00ff00;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #333;
+            color: #0f0;
+            border: 2px solid #0f0;
+        }
+        button:hover {
+            background: #0f0;
+            color: #000;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #0f0;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .error { color: #ff0000; }
+        .success { color: #00ff00; }
+        .info { color: #ffff00; }
+    </style>
+</head>
+<body>
+    <h1>🔊 Browser Speech Synthesis Test</h1>
+    
+    <button id="checkBtn">Check Speech API</button>
+    <button id="testBtn">Test Speech</button>
+    <button id="listBtn">List Voices</button>
+    
+    <div id="output"></div>
+
+    <script>
+        const output = document.getElementById('output');
+        
+        function log(message, type = 'info') {
+            const line = document.createElement('div');
+            line.className = type;
+            line.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            output.appendChild(line);
+            output.scrollTop = output.scrollHeight;
+        }
+        
+        function clear() {
+            output.innerHTML = '';
+        }
+        
+        // Check API availability
+        document.getElementById('checkBtn').addEventListener('click', () => {
+            clear();
+            log('=== Speech Synthesis API Check ===');
+            
+            if ('speechSynthesis' in window) {
+                log('✓ speechSynthesis API is available', 'success');
+                
+                const synth = window.speechSynthesis;
+                log(`Speaking: ${synth.speaking}`, 'info');
+                log(`Paused: ${synth.paused}`, 'info');
+                log(`Pending: ${synth.pending}`, 'info');
+                
+                const voices = synth.getVoices();
+                log(`Voices loaded: ${voices.length}`, voices.length > 0 ? 'success' : 'error');
+                
+                if (voices.length === 0) {
+                    log('⚠ No voices available yet. Waiting for voiceschanged event...', 'error');
+                    
+                    speechSynthesis.onvoiceschanged = () => {
+                        const newVoices = synth.getVoices();
+                        log(`✓ Voices loaded via event: ${newVoices.length}`, 'success');
+                        newVoices.slice(0, 5).forEach(v => {
+                            log(`  - ${v.name} (${v.lang})`, 'info');
+                        });
+                    };
+                }
+            } else {
+                log('✗ speechSynthesis API is NOT available', 'error');
+                log('Try Chrome/Chromium with: chromium --enable-speech-dispatcher', 'error');
+            }
+        });
+        
+        // List all voices
+        document.getElementById('listBtn').addEventListener('click', () => {
+            clear();
+            log('=== Available Voices ===');
+            
+            const synth = window.speechSynthesis;
+            const voices = synth.getVoices();
+            
+            if (voices.length === 0) {
+                log('⚠ No voices available', 'error');
+                log('Waiting 1 second and retrying...', 'info');
+                
+                setTimeout(() => {
+                    const retryVoices = synth.getVoices();
+                    if (retryVoices.length > 0) {
+                        log(`✓ Found ${retryVoices.length} voices after retry`, 'success');
+                        
+                        const english = retryVoices.filter(v => v.lang.toLowerCase().startsWith('en'));
+                        const other = retryVoices.filter(v => !v.lang.toLowerCase().startsWith('en'));
+                        
+                        if (english.length > 0) {
+                            log(`\nEnglish Voices (${english.length}):`, 'success');
+                            english.forEach((v, i) => {
+                                const def = v.default ? ' [DEFAULT]' : '';
+                                log(`  ${i + 1}. ${v.name} (${v.lang})${def}`, 'success');
+                            });
+                        } else {
+                            log('\n⚠ No English voices found!', 'error');
+                        }
+                        
+                        if (other.length > 0) {
+                            log(`\nOther Languages (${other.length}):`, 'info');
+                            other.forEach((v, i) => {
+                                log(`  ${i + 1}. ${v.name} (${v.lang})`, 'info');
+                            });
+                        }
+                    } else {
+                        log('✗ Still no voices available', 'error');
+                    }
+                }, 1000);
+            } else {
+                const english = voices.filter(v => v.lang.toLowerCase().startsWith('en'));
+                const other = voices.filter(v => !v.lang.toLowerCase().startsWith('en'));
+                
+                log(`✓ Found ${voices.length} voices:`, 'success');
+                
+                if (english.length > 0) {
+                    log(`\nEnglish Voices (${english.length}):`, 'success');
+                    english.forEach((v, i) => {
+                        const def = v.default ? ' [DEFAULT]' : '';
+                        log(`  ${i + 1}. ${v.name} (${v.lang})${def}`, 'success');
+                    });
+                } else {
+                    log('\n⚠ No English voices found!', 'error');
+                }
+                
+                if (other.length > 0) {
+                    log(`\nOther Languages (${other.length}):`, 'info');
+                    other.forEach((v, i) => {
+                        log(`  ${i + 1}. ${v.name} (${v.lang})`, 'info');
+                    });
+                }
+            }
+        });
+        
+        // Test speech
+        document.getElementById('testBtn').addEventListener('click', () => {
+            clear();
+            log('=== Testing Speech Output ===');
+            
+            const synth = window.speechSynthesis;
+            const voices = synth.getVoices();
+            
+            if (voices.length === 0) {
+                log('✗ No voices available. Cannot test speech.', 'error');
+                return;
+            }
+            
+            // Find first English voice
+            const englishVoices = voices.filter(v => v.lang.toLowerCase().startsWith('en'));
+            const voiceToUse = englishVoices.length > 0 ? englishVoices[0] : voices[0];
+            
+            log(`Using voice: ${voiceToUse.name} (${voiceToUse.lang})`, 'info');
+            if (!voiceToUse.lang.toLowerCase().startsWith('en')) {
+                log('⚠ WARNING: No English voice found! Speech will be in wrong language.', 'error');
+            }
+            
+            const utterance = new SpeechSynthesisUtterance('Hello from CyberQuest. Testing speech synthesis in English.');
+            utterance.voice = voiceToUse;
+            utterance.lang = voiceToUse.lang;
+            utterance.pitch = 1.0;
+            utterance.rate = 1.0;
+            utterance.volume = 1.0;
+            
+            utterance.onstart = () => {
+                log('✓ Speech started', 'success');
+            };
+            
+            utterance.onend = () => {
+                log('✓ Speech completed successfully', 'success');
+            };
+            
+            utterance.onerror = (e) => {
+                log(`✗ Speech error: ${e.error}`, 'error');
+                log(`Error message: ${e.message || 'none'}`, 'error');
+            };
+            
+            log('Attempting to speak...', 'info');
+            synth.speak(utterance);
+        });
+        
+        // Auto-check on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('checkBtn').click();
+            }, 500);
+        });
+    </script>
+</body>
+</html>

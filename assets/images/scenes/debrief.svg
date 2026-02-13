@@ -1,0 +1,294 @@
+<!-- Ryan's Dining Room - AIVD Debrief Scene -->
+<!-- Two black AIVD cars visible through window, formal meeting -->
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .sp-stroke { stroke: #000; stroke-width: 3px; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+    
+    <!-- Window light gradient -->
+    <linearGradient id="windowLight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e0f7ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#fff;stop-opacity:0.3" />
+    </linearGradient>
+    
+    <!-- Floor gradient -->
+    <linearGradient id="floorGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4a574;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b8935c;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Wall gradient -->
+    <linearGradient id="wallGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5f5dc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e6e6c8;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Table wood gradient -->
+    <linearGradient id="tableWood" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b4513;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#654321;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4a2f1a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background wall -->
+  <rect x="0" y="0" width="800" height="400" fill="url(#wallGradient)"/>
+  
+  <!-- Floor - wooden -->
+  <rect x="0" y="400" width="800" height="200" fill="url(#floorGradient)"/>
+  
+  <!-- Floor planks -->
+  <line x1="0" y1="430" x2="800" y2="430" stroke="#a0824a" stroke-width="2"/>
+  <line x1="0" y1="470" x2="800" y2="470" stroke="#a0824a" stroke-width="2"/>
+  <line x1="0" y1="510" x2="800" y2="510" stroke="#a0824a" stroke-width="2"/>
+  <line x1="0" y1="550" x2="800" y2="550" stroke="#a0824a" stroke-width="2"/>
+  
+  <!-- Window on left - showing driveway with black cars -->
+  <rect x="50" y="80" width="220" height="180" rx="8" fill="#87CEEB" class="sp-stroke"/>
+  
+  <!-- Window frame cross -->
+  <line x1="160" y1="80" x2="160" y2="260" stroke="#654321" stroke-width="6"/>
+  <line x1="50" y1="170" x2="270" y2="170" stroke="#654321" stroke-width="6"/>
+  
+  <!-- View through window: Two black AIVD cars -->
+  <!-- Driveway -->
+  <rect x="55" y="200" width="100" height="55" fill="#696969"/>
+  
+  <!-- First black car (closer) -->
+  <rect x="60" y="215" width="40" height="20" rx="3" fill="#0a0a0a" stroke="#000" stroke-width="2"/>
+  <rect x="63" y="219" width="7" height="8" fill="#4a90e2" stroke="#000" stroke-width="1"/>
+  <circle cx="68" cy="236" r="4" fill="#333" stroke="#000" stroke-width="1"/>
+  <circle cx="92" cy="236" r="4" fill="#333" stroke="#000" stroke-width="1"/>
+  
+  <!-- Second black car (further back) -->
+  <rect x="105" y="210" width="35" height="17" rx="3" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
+  <rect x="108" y="213" width="6" height="7" fill="#4a90e2" stroke="#000" stroke-width="1"/>
+  <circle cx="113" cy="228" r="3" fill="#333" stroke="#000" stroke-width="1"/>
+  <circle cx="132" cy="228" r="3" fill="#333" stroke="#000" stroke-width="1"/>
+  
+  <!-- Dutch house visible in window (neighbor) -->
+  <rect x="170" y="120" width="90" height="60" fill="#c86428" stroke="#000" stroke-width="2"/>
+  <path d="M 165 120 L 215 90 L 265 120 Z" fill="#8b0000" stroke="#000" stroke-width="2"/>
+  <rect x="195" y="140" width="15" height="20" fill="#4a3020" stroke="#000" stroke-width="2"/>
+  <rect x="180" y="130" width="12" height="12" fill="#87CEEB" stroke="#000" stroke-width="2"/>
+  <rect x="230" y="130" width="12" height="12" fill="#87CEEB" stroke="#000" stroke-width="2"/>
+  
+  <!-- Sky in window -->
+  <rect x="55" y="85" width="100" height="80" fill="#87CEEB"/>
+  <rect x="165" y="85" width="100" height="80" fill="#b0e0e6"/>
+  
+  <!-- Window sill -->
+  <rect x="45" y="258" width="230" height="12" fill="#654321" class="sp-stroke"/>
+  
+  <!-- Small plant on window sill -->
+  <ellipse cx="250" cy="265" rx="12" ry="6" fill="#8b4513" stroke="#000" stroke-width="2"/>
+  <circle cx="250" cy="252" r="15" fill="#228b22" stroke="#000" stroke-width="2"/>
+  <circle cx="245" cy="248" r="8" fill="#32cd32"/>
+  <circle cx="255" cy="248" r="8" fill="#32cd32"/>
+  
+  <!-- Dining cabinet/hutch on right wall -->
+  <g id="diningCabinet">
+    <!-- Cabinet base -->
+    <rect x="580" y="280" width="180" height="120" fill="#6d4c41" class="sp-stroke"/>
+    <rect x="585" y="285" width="170" height="110" fill="#8b6f47" stroke="#654321" stroke-width="2"/>
+    
+    <!-- Cabinet doors -->
+    <rect x="590" y="290" width="75" height="100" rx="3" fill="#a0826d" stroke="#654321" stroke-width="2"/>
+    <rect x="675" y="290" width="75" height="100" rx="3" fill="#a0826d" stroke="#654321" stroke-width="2"/>
+    
+    <!-- Door handles -->
+    <circle cx="655" cy="340" r="4" fill="#c0c0c0" stroke="#888" stroke-width="1"/>
+    <circle cx="685" cy="340" r="4" fill="#c0c0c0" stroke="#888" stroke-width="1"/>
+    
+    <!-- Top shelf with decorative items -->
+    <rect x="580" y="240" width="180" height="35" fill="#8b6f47" class="sp-stroke"/>
+    <rect x="585" y="245" width="170" height="25" fill="#a0826d" stroke="#654321" stroke-width="2"/>
+    
+    <!-- Decorative vase on shelf -->
+    <ellipse cx="630" cy="270" rx="8" ry="4" fill="#8b4513"/>
+    <path d="M 622 258 L 622 270 L 638 270 L 638 258 Z" fill="#4169e1" stroke="#000" stroke-width="2"/>
+    <ellipse cx="630" cy="258" rx="8" ry="4" fill="#5583d4" stroke="#000" stroke-width="2"/>
+    
+    <!-- Decorative plate -->
+    <circle cx="700" cy="260" r="15" fill="#fff" stroke="#003DA5" stroke-width="2"/>
+    <circle cx="700" cy="260" r="10" fill="none" stroke="#003DA5" stroke-width="1"/>
+    <circle cx="700" cy="260" r="3" fill="#003DA5"/>
+  </g>
+  
+  <!-- Dining chairs - FAR SIDE (drawn before table so table is in front) -->
+  <!-- Chair 1 - far side of table (left) -->
+  <g id="chair1">
+    <!-- Back legs -->
+    <rect x="208" y="325" width="8" height="70" rx="2" fill="#654321" class="sp-stroke"/>
+    <rect x="240" y="325" width="8" height="70" rx="2" fill="#654321" class="sp-stroke"/>
+    <!-- Seat -->
+    <ellipse cx="228" cy="330" rx="22" ry="10" fill="#8b4513" class="sp-stroke"/>
+    <rect x="206" y="330" width="44" height="8" fill="#8b4513"/>
+    <!-- Chair back -->
+    <path d="M 210 285 Q 228 280 246 285 L 244 325 L 212 325 Z" fill="#654321" class="sp-stroke"/>
+    <rect x="215" y="290" width="26" height="30" rx="3" fill="#8b6f47" stroke="#654321" stroke-width="2"/>
+    <!-- Front legs (shorter, perspective) -->
+    <rect x="210" y="338" width="7" height="57" rx="2" fill="#7d5a3a" class="sp-stroke"/>
+    <rect x="239" y="338" width="7" height="57" rx="2" fill="#7d5a3a" class="sp-stroke"/>
+  </g>
+  
+  <!-- Chair 2 - far side (center-left) -->
+  <g id="chair2">
+    <!-- Back legs -->
+    <rect x="328" y="325" width="8" height="70" rx="2" fill="#654321" class="sp-stroke"/>
+    <rect x="360" y="325" width="8" height="70" rx="2" fill="#654321" class="sp-stroke"/>
+    <!-- Seat -->
+    <ellipse cx="348" cy="330" rx="22" ry="10" fill="#8b4513" class="sp-stroke"/>
+    <rect x="326" y="330" width="44" height="8" fill="#8b4513"/>
+    <!-- Chair back -->
+    <path d="M 330 285 Q 348 280 366 285 L 364 325 L 332 325 Z" fill="#654321" class="sp-stroke"/>
+    <rect x="335" y="290" width="26" height="30" rx="3" fill="#8b6f47" stroke="#654321" stroke-width="2"/>
+    <!-- Front legs (shorter, perspective) -->
+    <rect x="330" y="338" width="7" height="57" rx="2" fill="#7d5a3a" class="sp-stroke"/>
+    <rect x="359" y="338" width="7" height="57" rx="2" fill="#7d5a3a" class="sp-stroke"/>
+  </g>
+  
+  <!-- Chair 3 - far side (right) -->
+  <g id="chair3">
+    <!-- Back legs -->
+    <rect x="448" y="325" width="8" height="70" rx="2" fill="#654321" class="sp-stroke"/>
+    <rect x="480" y="325" width="8" height="70" rx="2" fill="#654321" class="sp-stroke"/>
+    <!-- Seat -->
+    <ellipse cx="468" cy="330" rx="22" ry="10" fill="#8b4513" class="sp-stroke"/>
+    <rect x="446" y="330" width="44" height="8" fill="#8b4513"/>
+    <!-- Chair back -->
+    <path d="M 450 285 Q 468 280 486 285 L 484 325 L 452 325 Z" fill="#654321" class="sp-stroke"/>
+    <rect x="455" y="290" width="26" height="30" rx="3" fill="#8b6f47" stroke="#654321" stroke-width="2"/>
+    <!-- Front legs (shorter, perspective) -->
+    <rect x="450" y="338" width="7" height="57" rx="2" fill="#7d5a3a" class="sp-stroke"/>
+    <rect x="479" y="338" width="7" height="57" rx="2" fill="#7d5a3a" class="sp-stroke"/>
+  </g>
+  
+  <!-- Dining table - SIDE VIEW (more formal) -->
+  <g id="diningTable">
+    <!-- Table top (side perspective) -->
+    <rect x="180" y="380" width="380" height="25" rx="3" fill="url(#tableWood)" class="sp-stroke"/>
+    <!-- Table top highlight -->
+    <rect x="185" y="383" width="370" height="8" fill="#a0826d" opacity="0.4"/>
+    
+    <!-- Table apron/frame -->
+    <rect x="185" y="405" width="370" height="12" fill="#654321" class="sp-stroke"/>
+    
+    <!-- Table legs (side view - show 4 legs) -->
+    <!-- Far left leg -->
+    <rect x="195" y="417" width="18" height="183" rx="2" fill="#654321" class="sp-stroke"/>
+    <rect x="198" y="420" width="12" height="175" fill="#7d5a3a"/>
+    <!-- Near left leg -->
+    <rect x="230" y="417" width="20" height="183" rx="2" fill="#543210" class="sp-stroke"/>
+    <rect x="233" y="420" width="14" height="175" fill="#654321"/>
+    <!-- Far right leg -->
+    <rect x="520" y="417" width="18" height="183" rx="2" fill="#654321" class="sp-stroke"/>
+    <rect x="523" y="420" width="12" height="175" fill="#7d5a3a"/>
+    <!-- Near right leg -->
+    <rect x="492" y="417" width="20" height="183" rx="2" fill="#543210" class="sp-stroke"/>
+    <rect x="495" y="420" width="14" height="175" fill="#654321"/>
+    
+    <!-- Leg feet -->
+    <ellipse cx="204" cy="598" rx="12" ry="5" fill="#4a2f1a" stroke="#000" stroke-width="2"/>
+    <ellipse cx="240" cy="598" rx="13" ry="6" fill="#4a2f1a" stroke="#000" stroke-width="2"/>
+    <ellipse cx="529" cy="598" rx="12" ry="5" fill="#4a2f1a" stroke="#000" stroke-width="2"/>
+    <ellipse cx="502" cy="598" rx="13" ry="6" fill="#4a2f1a" stroke="#000" stroke-width="2"/>
+  </g>
+  
+  <!-- Espresso cups and saucers on table (5 settings) -->
+  <!-- Cup 1 (left) -->
+  <ellipse cx="220" cy="393" rx="8" ry="4" fill="#f5f5f5" stroke="#000" stroke-width="1"/>
+  <ellipse cx="220" cy="388" rx="10" ry="6" fill="#fff" class="sp-stroke"/>
+  <ellipse cx="220" cy="385" rx="7" ry="4" fill="#3e2723"/>
+  <path d="M 230 388 Q 235 388 235 391 Q 235 393 230 393" fill="none" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- Cup 2 -->
+  <ellipse cx="290" cy="393" rx="8" ry="4" fill="#f5f5f5" stroke="#000" stroke-width="1"/>
+  <ellipse cx="290" cy="388" rx="10" ry="6" fill="#fff" class="sp-stroke"/>
+  <ellipse cx="290" cy="385" rx="7" ry="4" fill="#3e2723"/>
+  <path d="M 300 388 Q 305 388 305 391 Q 305 393 300 393" fill="none" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- Cup 3 (center) -->
+  <ellipse cx="360" cy="393" rx="8" ry="4" fill="#f5f5f5" stroke="#000" stroke-width="1"/>
+  <ellipse cx="360" cy="388" rx="10" ry="6" fill="#fff" class="sp-stroke"/>
+  <ellipse cx="360" cy="385" rx="7" ry="4" fill="#3e2723"/>
+  <path d="M 370 388 Q 375 388 375 391 Q 375 393 370 393" fill="none" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- Cup 4 -->
+  <ellipse cx="430" cy="393" rx="8" ry="4" fill="#f5f5f5" stroke="#000" stroke-width="1"/>
+  <ellipse cx="430" cy="388" rx="10" ry="6" fill="#fff" class="sp-stroke"/>
+  <ellipse cx="430" cy="385" rx="7" ry="4" fill="#3e2723"/>
+  <path d="M 440 388 Q 445 388 445 391 Q 445 393 440 393" fill="none" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- Cup 5 (right) -->
+  <ellipse cx="500" cy="393" rx="8" ry="4" fill="#f5f5f5" stroke="#000" stroke-width="1"/>
+  <ellipse cx="500" cy="388" rx="10" ry="6" fill="#fff" class="sp-stroke"/>
+  <ellipse cx="500" cy="385" rx="7" ry="4" fill="#3e2723"/>
+  <path d="M 510 388 Q 515 388 515 391 Q 515 393 510 393" fill="none" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- Van der Berg's business card on table -->
+  <rect x="332" y="390" width="36" height="24" rx="2" fill="#fff" class="sp-stroke"/>
+  <rect x="335" y="392" width="30" height="8" fill="#003DA5"/>
+  <line x1="337" y1="403" x2="363" y2="403" stroke="#333" stroke-width="0.8"/>
+  <line x1="337" y1="406" x2="363" y2="406" stroke="#333" stroke-width="0.8"/>
+  <line x1="337" y1="409" x2="355" y2="409" stroke="#333" stroke-width="0.8"/>
+  <text x="339" y="399" font-family="Arial" font-size="5" fill="#fff" font-weight="bold">AIVD</text>
+  
+  <!-- Chairs on near side (front view, partially hidden by table) -->
+  <!-- Chair 4 - near side left -->
+  <g id="chair4">
+    <!-- Chair back (taller, closer to viewer) -->
+    <path d="M 248 425 Q 268 420 288 425 L 286 480 L 250 480 Z" fill="#543210" class="sp-stroke"/>
+    <rect x="254" y="432" width="28" height="42" rx="3" fill="#654321" stroke="#4a2f1a" stroke-width="2"/>
+    <!-- Front legs visible below table -->
+    <rect x="254" y="480" width="9" height="120" rx="2" fill="#4a2f1a" class="sp-stroke"/>
+    <rect x="277" y="480" width="9" height="120" rx="2" fill="#4a2f1a" class="sp-stroke"/>
+  </g>
+  
+  <!-- Chair 5 - near side right -->
+  <g id="chair5">
+    <!-- Chair back (taller, closer to viewer) -->
+    <path d="M 438 425 Q 458 420 478 425 L 476 480 L 440 480 Z" fill="#543210" class="sp-stroke"/>
+    <rect x="444" y="432" width="28" height="42" rx="3" fill="#654321" stroke="#4a2f1a" stroke-width="2"/>
+    <!-- Front legs visible below table -->
+    <rect x="444" y="480" width="9" height="120" rx="2" fill="#4a2f1a" class="sp-stroke"/>
+    <rect x="467" y="480" width="9" height="120" rx="2" fill="#4a2f1a" class="sp-stroke"/>
+  </g>
+  
+  <!-- Dutch tile decoration on wall (typical Dutch kitchen) -->
+  <rect x="350" y="150" width="120" height="80" fill="#fff" stroke="#003DA5" stroke-width="3"/>
+  <g id="delftTile">
+    <circle cx="380" cy="180" r="15" fill="none" stroke="#003DA5" stroke-width="2"/>
+    <path d="M 380 165 L 380 195" stroke="#003DA5" stroke-width="2"/>
+    <path d="M 365 180 L 395 180" stroke="#003DA5" stroke-width="2"/>
+    <circle cx="380" cy="180" r="5" fill="#003DA5"/>
+  </g>
+  <g id="delftTile2">
+    <circle cx="440" cy="180" r="15" fill="none" stroke="#003DA5" stroke-width="2"/>
+    <path d="M 425 180 Q 440 165 455 180 Q 440 195 425 180" fill="#003DA5" opacity="0.3"/>
+  </g>
+  <line x1="410" y1="150" x2="410" y2="230" stroke="#003DA5" stroke-width="3"/>
+  
+  <!-- Clock on wall (11:00 AM - debrief time) -->
+  <circle cx="700" cy="90" r="35" fill="#fff" class="sp-stroke"/>
+  <circle cx="700" cy="90" r="30" fill="#f5f5f5" stroke="#000" stroke-width="2"/>
+  <line x1="700" y1="90" x2="700" y2="70" stroke="#000" stroke-width="3"/>
+  <line x1="700" y1="90" x2="715" y2="90" stroke="#000" stroke-width="3"/>
+  <circle cx="700" cy="90" r="3" fill="#000"/>
+  
+  <!-- Small details for atmosphere -->
+  <!-- Light switch -->
+  <rect x="30" y="280" width="15" height="25" rx="2" fill="#f5f5dc" stroke="#000" stroke-width="2"/>
+  <rect x="34" y="290" width="7" height="10" rx="1" fill="#fff" stroke="#000" stroke-width="1"/>
+  
+  <!-- Baseboards -->
+  <rect x="0" y="395" width="800" height="8" fill="#654321" stroke="#4a2f1a" stroke-width="1"/>
+  
+  <!-- Light rays from window (morning light) -->
+  <path d="M 160 170 L 350 400" stroke="#ffffcc" stroke-width="80" opacity="0.12"/>
+  <path d="M 160 170 L 280 380" stroke="#ffffcc" stroke-width="50" opacity="0.08"/>
+  
+  <!-- Ceiling molding -->
+  <rect x="0" y="0" width="800" height="12" fill="#e8dcc0" stroke="#d4c9a8" stroke-width="2"/>
+</svg>

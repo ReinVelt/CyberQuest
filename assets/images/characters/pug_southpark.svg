@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 110" width="140" height="110">
+  <!-- Pug - South Park style -->
+  
+  <!-- Body - small and compact -->
+  <ellipse cx="70" cy="75" rx="35" ry="22" fill="#D4A574" stroke="#000" stroke-width="2"/>
+  
+  <!-- Legs - short stubby legs -->
+  <rect x="50" y="90" width="10" height="15" rx="2" fill="#D4A574" stroke="#000" stroke-width="1.5"/>
+  <rect x="65" y="90" width="10" height="15" rx="2" fill="#D4A574" stroke="#000" stroke-width="1.5"/>
+  <rect x="80" y="90" width="10" height="15" rx="2" fill="#D4A574" stroke="#000" stroke-width="1.5"/>
+  <rect x="95" y="90" width="10" height="15" rx="2" fill="#D4A574" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- Paws -->
+  <ellipse cx="55" cy="105" rx="6" ry="4" fill="#8B7355" stroke="#000" stroke-width="1"/>
+  <ellipse cx="70" cy="105" rx="6" ry="4" fill="#8B7355" stroke="#000" stroke-width="1"/>
+  <ellipse cx="85" cy="105" rx="6" ry="4" fill="#8B7355" stroke="#000" stroke-width="1"/>
+  <ellipse cx="100" cy="105" rx="6" ry="4" fill="#8B7355" stroke="#000" stroke-width="1"/>
+  
+  <!-- Head - distinctive pug face -->
+  <circle cx="70" cy="50" r="23" fill="#D4A574" stroke="#000" stroke-width="2"/>
+  
+  <!-- Black face mask -->
+  <ellipse cx="70" cy="55" rx="18" ry="15" fill="#2C2416" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- Wrinkles on forehead -->
+  <path d="M 55 42 Q 60 40 65 42" fill="none" stroke="#000" stroke-width="1.5"/>
+  <path d="M 75 42 Q 80 40 85 42" fill="none" stroke="#000" stroke-width="1.5"/>
+  <path d="M 60 38 Q 70 36 80 38" fill="none" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- Ears - small folded -->
+  <ellipse cx="50" cy="45" rx="8" ry="12" fill="#8B7355" stroke="#000" stroke-width="1.5" transform="rotate(-30 50 45)"/>
+  <ellipse cx="90" cy="45" rx="8" ry="12" fill="#8B7355" stroke="#000" stroke-width="1.5" transform="rotate(30 90 45)"/>
+  
+  <!-- Eyes - big round pug eyes -->
+  <circle cx="62" cy="50" r="6" fill="#000"/>
+  <circle cx="60" cy="48" r="2" fill="#FFFFFF"/>
+  <circle cx="78" cy="50" r="6" fill="#000"/>
+  <circle cx="76" cy="48" r="2" fill="#FFFFFF"/>
+  
+  <!-- Snout - flat pug nose -->
+  <ellipse cx="70" cy="62" rx="8" ry="6" fill="#1A1410" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- Nostrils -->
+  <ellipse cx="67" cy="62" rx="2" ry="3" fill="#000"/>
+  <ellipse cx="73" cy="62" rx="2" ry="3" fill="#000"/>
+  
+  <!-- Tongue out (classic pug) -->
+  <ellipse cx="70" cy="70" rx="4" ry="3" fill="#FF69B4" stroke="#000" stroke-width="1"/>
+  
+  <!-- Curly tail -->
+  <path d="M 105 72 Q 115 68 118 73 Q 120 78 115 80 Q 110 82 108 77" fill="#D4A574" stroke="#000" stroke-width="1.5"/>
+</svg>

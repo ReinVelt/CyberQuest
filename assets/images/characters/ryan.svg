@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 200">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5d0b0"/>
+      <stop offset="100%" style="stop-color:#e8b896"/>
+    </linearGradient>
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#808080"/>
+      <stop offset="100%" style="stop-color:#606060"/>
+    </linearGradient>
+    <linearGradient id="beardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#707070"/>
+      <stop offset="100%" style="stop-color:#505050"/>
+    </linearGradient>
+    <linearGradient id="shirtGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2c3e50"/>
+      <stop offset="100%" style="stop-color:#1a252f"/>
+    </linearGradient>
+    <linearGradient id="pantsGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#34495e"/>
+      <stop offset="100%" style="stop-color:#2c3e50"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Shadow (bigger for larger character) -->
+  <ellipse cx="60" cy="195" rx="35" ry="6" fill="#000" opacity="0.3"/>
+  
+  <!-- Legs (thicker) -->
+  <g id="legs">
+    <!-- Left leg -->
+    <rect x="35" y="140" width="20" height="45" fill="url(#pantsGrad)" rx="4"/>
+    <!-- Right leg -->
+    <rect x="65" y="140" width="20" height="45" fill="url(#pantsGrad)" rx="4"/>
+    <!-- Shoes (bigger) -->
+    <ellipse cx="45" cy="188" rx="14" ry="7" fill="#1a1a1a"/>
+    <ellipse cx="75" cy="188" rx="14" ry="7" fill="#1a1a1a"/>
+  </g>
+  
+  <!-- Body/Torso (chubby, big belly) -->
+  <g id="body">
+    <!-- Big belly torso -->
+    <path d="M22,70 
+             Q18,85 20,110 
+             Q22,145 35,148 
+             L85,148 
+             Q98,145 100,110 
+             Q102,85 98,70 
+             Q95,55 60,50 
+             Q25,55 22,70" 
+          fill="url(#shirtGrad)"/>
+    
+    <!-- Belly curve detail -->
+    <path d="M30,100 Q60,130 90,100" fill="none" stroke="#1a252f" stroke-width="1" opacity="0.3"/>
+    
+    <!-- Shirt collar (V-neck) -->
+    <path d="M48,52 L60,68 L72,52" fill="none" stroke="#1a252f" stroke-width="2"/>
+    
+    <!-- Arms (thicker) -->
+    <!-- Left arm -->
+    <path d="M22,72 Q8,80 6,105 Q4,130 18,138" fill="url(#shirtGrad)" stroke="url(#shirtGrad)" stroke-width="2"/>
+    <!-- Left hand (bigger) -->
+    <ellipse cx="18" cy="142" rx="10" ry="10" fill="url(#skinGrad)"/>
+    
+    <!-- Right arm -->
+    <path d="M98,72 Q112,80 114,105 Q116,130 102,138" fill="url(#shirtGrad)" stroke="url(#shirtGrad)" stroke-width="2"/>
+    <!-- Right hand (bigger) -->
+    <ellipse cx="102" cy="142" rx="10" ry="10" fill="url(#skinGrad)"/>
+  </g>
+  
+  <!-- Head (rounder, fuller face) -->
+  <g id="head">
+    <!-- Thick neck -->
+    <rect x="48" y="42" width="24" height="14" fill="url(#skinGrad)"/>
+    
+    <!-- Double chin hint -->
+    <ellipse cx="60" cy="52" rx="16" ry="6" fill="url(#skinGrad)"/>
+    
+    <!-- Head shape (rounder, bigger) -->
+    <ellipse cx="60" cy="28" rx="28" ry="28" fill="url(#skinGrad)"/>
+    
+    <!-- Gray hair (receding, balding on top) -->
+    <path d="M32,28 Q32,5 60,2 Q88,5 88,28 Q85,12 60,10 Q35,12 32,28" fill="url(#hairGrad)"/>
+    <!-- Side hair (gray) -->
+    <path d="M32,28 Q28,35 32,48" fill="url(#hairGrad)" stroke="url(#hairGrad)" stroke-width="5"/>
+    <path d="M88,28 Q92,35 88,48" fill="url(#hairGrad)" stroke="url(#hairGrad)" stroke-width="5"/>
+    
+    <!-- Ears (bigger) -->
+    <ellipse cx="32" cy="32" rx="5" ry="8" fill="url(#skinGrad)"/>
+    <ellipse cx="88" cy="32" rx="5" ry="8" fill="url(#skinGrad)"/>
+    
+    <!-- Gray beard (full) -->
+    <path d="M35,42 
+             Q32,50 35,58 
+             Q45,68 60,70 
+             Q75,68 85,58 
+             Q88,50 85,42
+             Q80,38 75,42
+             Q68,36 60,36
+             Q52,36 45,42
+             Q40,38 35,42" 
+          fill="url(#beardGrad)"/>
+    <!-- Beard texture -->
+    <g fill="#606060" opacity="0.4">
+      <circle cx="42" cy="50" r="1"/>
+      <circle cx="48" cy="55" r="1"/>
+      <circle cx="55" cy="58" r="1"/>
+      <circle cx="60" cy="62" r="1"/>
+      <circle cx="65" cy="58" r="1"/>
+      <circle cx="72" cy="55" r="1"/>
+      <circle cx="78" cy="50" r="1"/>
+      <circle cx="50" cy="48" r="0.8"/>
+      <circle cx="70" cy="48" r="0.8"/>
+      <circle cx="60" cy="52" r="0.8"/>
+    </g>
+    
+    <!-- Mustache (gray, connects to beard) -->
+    <path d="M45,40 Q52,44 60,43 Q68,44 75,40 Q68,46 60,46 Q52,46 45,40" fill="url(#beardGrad)"/>
+    
+    <!-- Face details -->
+    <!-- Eyebrows (gray, bushy) -->
+    <path d="M40,18 Q48,15 54,18" fill="none" stroke="#606060" stroke-width="3" stroke-linecap="round"/>
+    <path d="M66,18 Q72,15 80,18" fill="none" stroke="#606060" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Eyes -->
+    <ellipse cx="48" cy="26" rx="6" ry="5" fill="#fff"/>
+    <ellipse cx="72" cy="26" rx="6" ry="5" fill="#fff"/>
+    <circle cx="49" cy="26" r="3" fill="#4a7c59"/>
+    <circle cx="73" cy="26" r="3" fill="#4a7c59"/>
+    <circle cx="49.5" cy="25.5" r="1.2" fill="#000"/>
+    <circle cx="73.5" cy="25.5" r="1.2" fill="#000"/>
+    <!-- Crow's feet (age lines) -->
+    <path d="M38,26 L35,24" stroke="#d4a888" stroke-width="0.5" opacity="0.5"/>
+    <path d="M38,27 L35,28" stroke="#d4a888" stroke-width="0.5" opacity="0.5"/>
+    <path d="M82,26 L85,24" stroke="#d4a888" stroke-width="0.5" opacity="0.5"/>
+    <path d="M82,27 L85,28" stroke="#d4a888" stroke-width="0.5" opacity="0.5"/>
+    
+    <!-- Nose (bigger, rounder) -->
+    <path d="M60,28 Q58,34 56,38 Q60,42 64,38 Q62,34 60,28" fill="#e0a882" opacity="0.6"/>
+    
+    <!-- Mouth (hidden by mustache, just a hint) -->
+    <path d="M52,46 Q60,48 68,46" fill="none" stroke="#8b5a3c" stroke-width="1" opacity="0.5"/>
+    
+    <!-- Glasses (bigger frames for bigger face) -->
+    <rect x="40" y="21" width="16" height="12" fill="none" stroke="#333" stroke-width="2.5" rx="2"/>
+    <rect x="64" y="21" width="16" height="12" fill="none" stroke="#333" stroke-width="2.5" rx="2"/>
+    <line x1="56" y1="27" x2="64" y2="27" stroke="#333" stroke-width="2"/>
+    <line x1="40" y1="27" x2="32" y2="26" stroke="#333" stroke-width="2"/>
+    <line x1="80" y1="27" x2="88" y2="26" stroke="#333" stroke-width="2"/>
+    <!-- Glass reflection -->
+    <line x1="43" y1="24" x2="45" y2="24" stroke="#fff" stroke-width="1" opacity="0.3"/>
+    <line x1="67" y1="24" x2="69" y2="24" stroke="#fff" stroke-width="1" opacity="0.3"/>
+    
+    <!-- Forehead wrinkles (age) -->
+    <path d="M45,12 Q60,10 75,12" fill="none" stroke="#d4a888" stroke-width="0.5" opacity="0.4"/>
+    <path d="M48,15 Q60,13 72,15" fill="none" stroke="#d4a888" stroke-width="0.5" opacity="0.3"/>
+  </g>
+  
+  <!-- Thought bubble indicator (hidden by default, shown when thinking) -->
+  <g id="thought-indicator" opacity="0">
+    <circle cx="95" cy="10" r="3" fill="#fff"/>
+    <circle cx="102" cy="5" r="2" fill="#fff"/>
+    <circle cx="107" cy="2" r="1.5" fill="#fff"/>
+  </g>
+</svg>

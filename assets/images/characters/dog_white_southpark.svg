@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140">
+  <!-- PODENCO - Modern South Park Style -->
+  <!-- Spanish hunting dog - elegant, alert, white with brown patches -->
+  
+  <defs>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:#f0f0f0"/>
+    </linearGradient>
+    
+    <linearGradient id="brownPatchGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#9a6a4a"/>
+      <stop offset="100%" style="stop-color:#7a5a3a"/>
+    </linearGradient>
+    
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- TAIL (curved, expressive) -->
+  <path d="M30,85 Q20,75 15,80 Q12,85 18,90 Q24,92 28,88" 
+        fill="url(#bodyGrad)" stroke="#000" stroke-width="2.5" filter="url(#shadow)"/>
+  <ellipse cx="16" cy="82" rx="6" ry="8" fill="url(#brownPatchGrad)" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- BODY (slender, elegant Podenco build) -->
+  <ellipse cx="90" cy="90" rx="48" ry="26" fill="url(#bodyGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+  
+  <!-- Brown patches on body -->
+  <ellipse cx="65" cy="85" rx="18" ry="14" fill="url(#brownPatchGrad)" stroke="#000" stroke-width="2"/>
+  <ellipse cx="105" cy="92" rx="16" ry="12" fill="url(#brownPatchGrad)" stroke="#000" stroke-width="2"/>
+  <ellipse cx="85" cy="78" rx="12" ry="9" fill="#8a6a4a" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- LEGS (long, thin, elegant - Podenco characteristic) -->
+  <rect x="60" y="110" width="9" height="25" rx="2" fill="#fff" stroke="#000" stroke-width="2.5"/>
+  <rect x="80" y="110" width="9" height="25" rx="2" fill="#fff" stroke="#000" stroke-width="2.5"/>
+  <rect x="100" y="110" width="9" height="25" rx="2" fill="#fff" stroke="#000" stroke-width="2.5"/>
+  <rect x="120" y="110" width="9" height="25" rx="2" fill="#fff" stroke="#000" stroke-width="2.5"/>
+  
+  <!-- PAWS -->
+  <ellipse cx="64.5" cy="135" rx="6" ry="4" fill="#e8d8c8" stroke="#000" stroke-width="1.5"/>
+  <ellipse cx="84.5" cy="135" rx="6" ry="4" fill="#e8d8c8" stroke="#000" stroke-width="1.5"/>
+  <ellipse cx="104.5" cy="135" rx="6" ry="4" fill="#e8d8c8" stroke="#000" stroke-width="1.5"/>
+  <ellipse cx="124.5" cy="135" rx="6" ry="4" fill="#e8d8c8" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- Paw pads detail -->
+  <circle cx="64.5" cy="134" r="1.5" fill="#9a7a6a"/>
+  <circle cx="84.5" cy="134" r="1.5" fill="#9a7a6a"/>
+  <circle cx="104.5" cy="134" r="1.5" fill="#9a7a6a"/>
+  <circle cx="124.5" cy="134" r="1.5" fill="#9a7a6a"/>
+  
+  <!-- NECK (elegant) -->
+  <ellipse cx="125" cy="72" rx="12" ry="18" fill="url(#bodyGrad)" stroke="#000" stroke-width="2.5"/>
+  
+  <!-- HEAD (long, elegant Podenco snout) -->
+  <ellipse cx="138" cy="55" rx="22" ry="20" fill="url(#bodyGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+  
+  <!-- Brown patch on head -->
+  <ellipse cx="145" cy="48" rx="14" ry="12" fill="url(#brownPatchGrad)" stroke="#000" stroke-width="2"/>
+  
+  <!-- EARS (LARGE UPRIGHT - signature Podenco feature!) -->
+  <path d="M120,25 L115,42 L125,48 L130,28 Z" 
+        fill="#fff" stroke="#000" stroke-width="2.5" filter="url(#shadow)"/>
+  <path d="M122,28 L119,40 L123,44 L126,32 Z" 
+        fill="#f5e5d5"/>
+  
+  <path d="M155,22 L150,40 L160,46 L165,26 Z" 
+        fill="url(#brownPatchGrad)" stroke="#000" stroke-width="2.5" filter="url(#shadow)"/>
+  <path d="M157,26 L154,38 L158,42 L161,30 Z" 
+        fill="#aa8a6a"/>
+  
+  <!-- SNOUT (long, elegant) -->
+  <ellipse cx="155" cy="60" rx="16" ry="12" fill="#fff" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="160" cy="58" rx="10" ry="8" fill="#f8f8f8" stroke="#000" stroke-width="2"/>
+  
+  <!-- NOSE (black, prominent) -->
+  <ellipse cx="165" cy="60" rx="5" ry="6" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
+  <ellipse cx="163" cy="59" r="1.5" fill="#444" opacity="0.5"/>
+  
+  <!-- NOSTRILS -->
+  <ellipse cx="163.5" cy="60" rx="1.5" ry="2" fill="#000"/>
+  <ellipse cx="166.5" cy="60" rx="1.5" ry="2" fill="#000"/>
+  
+  <!-- MOUTH (gentle expression) -->
+  <path d="M165,66 L165,70" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+  <path d="M158,70 Q165,74 172,70" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- EYES (large, expressive, alert - animated look) -->
+  <ellipse cx="135" cy="52" rx="8" ry="10" fill="#fff" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="150" cy="52" rx="8" ry="10" fill="#fff" stroke="#000" stroke-width="2.5"/>
+  
+  <!-- Irises (warm brown, alert) -->
+  <circle cx="135" cy="53" r="5" fill="#6a4a3a"/>
+  <circle cx="150" cy="53" r="5" fill="#6a4a3a"/>
+  
+  <!-- Pupils (dilated, friendly) -->
+  <circle cx="135" cy="53" r="3" fill="#1a1a1a"/>
+  <circle cx="150" cy="53" r="3" fill="#1a1a1a"/>
+  
+  <!-- Eye highlights (bright, animated, alive) -->
+  <circle cx="133" cy="51" r="2.5" fill="#fff" opacity="0.95"/>
+  <circle cx="148" cy="51" r="2.5" fill="#fff" opacity="0.95"/>
+  <circle cx="137" cy="55" r="1.5" fill="#fff" opacity="0.7"/>
+  <circle cx="152" cy="55" r="1.5" fill="#fff" opacity="0.7"/>
+  
+  <!-- Eyelids (alert expression) -->
+  <path d="M127,48 Q135,46 143,48" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M142,48 Q150,46 158,48" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- EYEBROWS (alert, expressive) -->
+  <path d="M128,44 Q135,42 142,44" stroke="#8a6a4a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M143,44 Q150,42 157,44" stroke="#8a6a4a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Facial detail (alert expression lines) -->
+  <path d="M125,54 Q122,56 125,58" stroke="#e0e0e0" stroke-width="1" opacity="0.5"/>
+  <path d="M160,54 Q163,56 160,58" stroke="#e0e0e0" stroke-width="1" opacity="0.5"/>
+  
+  <!-- WHISKER SPOTS -->
+  <circle cx="145" cy="64" r="1.5" fill="#8a6a4a"/>
+  <circle cx="152" cy="62" r="1.5" fill="#8a6a4a"/>
+  <circle cx="155" cy="66" r="1.5" fill="#8a6a4a"/>
+  
+  <!-- Collar (optional pet detail) -->
+  <ellipse cx="125" cy="75" rx="14" ry="6" fill="#c74440" stroke="#000" stroke-width="2"/>
+  <circle cx="125" cy="75" r="3" fill="#d4a860" stroke="#aa8840" stroke-width="1.5"/>
+  <circle cx="125" cy="75" r="1.5" fill="#fff" opacity="0.6"/>
+</svg>

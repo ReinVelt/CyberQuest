@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>CyberQuest: Operation ZERFALL</title>
+    <link rel="stylesheet" href="engine/styles.css">
+    <style>
+        /* Loading screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0e17 0%, #1a1f2e 50%, #0d1117 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        #loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-title {
+            font-family: 'Courier New', monospace;
+            font-size: 2.5rem;
+            color: var(--cyber-green, #00ff88);
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .loading-subtitle {
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            color: var(--terminal-text, #a0a0a0);
+            margin-bottom: 2rem;
+        }
+        
+        .loading-bar {
+            width: 300px;
+            height: 4px;
+            background: rgba(0, 255, 136, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .loading-progress {
+            height: 100%;
+            background: var(--cyber-green, #00ff88);
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+        
+        .loading-status {
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--terminal-text, #a0a0a0);
+            margin-top: 1rem;
+        }
+
+        /* Title screen */
+        #title-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0e17 0%, #1a1f2e 50%, #0d1117 100%);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+        }
+        
+        #title-screen.visible {
+            display: flex;
+        }
+        
+        .title-logo {
+            font-family: 'Courier New', monospace;
+            font-size: 3rem;
+            color: var(--cyber-green, #00ff88);
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+            margin-bottom: 0.5rem;
+            text-align: center;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        .title-operation {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            color: var(--warning-amber, #ffaa00);
+            text-shadow: 0 0 15px rgba(255, 170, 0, 0.5);
+            margin-bottom: 3rem;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { text-shadow: 0 0 30px rgba(0, 255, 136, 0.6); }
+            50% { text-shadow: 0 0 50px rgba(0, 255, 136, 0.9); }
+        }
+        
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .menu-btn {
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            padding: 1rem 3rem;
+            background: rgba(0, 255, 136, 0.1);
+            border: 2px solid var(--cyber-green, #00ff88);
+            color: var(--cyber-green, #00ff88);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .menu-btn:hover {
+            background: rgba(0, 255, 136, 0.3);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            transform: scale(1.05);
+        }
+        
+        .menu-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .credits {
+            position: absolute;
+            bottom: 2rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: var(--terminal-text, #606060);
+            text-align: center;
+        }
+        
+        .credits a {
+            color: var(--cyber-green, #00ff88);
+            text-decoration: none;
+        }
+
+        /* Responsive title screen */
+        @media (max-width: 480px) {
+            .title-logo {
+                font-size: 1.8rem;
+            }
+            .title-operation {
+                font-size: 1rem;
+            }
+            .menu-btn {
+                font-size: 1rem;
+                padding: 0.8rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-title">CYBERQUEST</div>
+        <div class="loading-subtitle">Initializing systems...</div>
+        <div class="loading-bar">
+            <div class="loading-progress" id="loading-progress"></div>
+        </div>
+        <div class="loading-status" id="loading-status">Loading engine...</div>
+    </div>
+
+    <!-- Title Screen -->
+    <div id="title-screen">
+        <div class="title-logo">CYBERQUEST</div>
+        <div class="title-operation">Operation ZERFALL</div>
+        <div class="menu-buttons">
+            <button class="menu-btn" id="btn-new-game">New Game</button>
+            <button class="menu-btn" id="btn-continue" disabled>Continue</button>
+            <button class="menu-btn" id="btn-about">About</button>
+        </div>
+        <div class="credits">
+            <p>A Sierra-style adventure game</p>
+            <p>Inspired by real events</p>
+        </div>
+    </div>
+
+    <!-- Game Container -->
+    <div id="game-container"></div>
+
+    <!-- About Modal -->
+    <div id="about-modal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h2>About CyberQuest</h2>
+                <button class="modal-close" id="close-about">&times;</button>
+            </div>
+            <div class="modal-body" style="text-align: left; line-height: 1.8;">
+                <p><strong>CyberQuest: Operation ZERFALL</strong> is a Sierra-style point-and-click adventure game.</p>
+                <br>
+                <p>You play as <strong>Ryan Weylant</strong>, a 55-year-old Dutch hacker living in Compascuum, a quiet village near the German border. What starts as a routine morning quickly escalates into an international espionage thriller involving:</p>
+                <br>
+                <ul style="margin-left: 1.5rem;">
+                    <li>Mysterious SSTV transmissions</li>
+                    <li>A Russian infiltration operation</li>
+                    <li>German military research facilities</li>
+                    <li>Old friends and new allies</li>
+                </ul>
+                <br>
+                <p><strong>Controls:</strong></p>
+                <ul style="margin-left: 1.5rem;">
+                    <li>Click on highlighted areas to interact</li>
+                    <li>Use the inventory to combine and use items</li>
+                    <li>Read dialogue carefully for clues</li>
+                    <li>Solve puzzles to progress the story</li>
+                </ul>
+                <br>
+                <p style="color: var(--warning-amber);">Note: This game features realistic hacking scenarios and encryption puzzles. The ROT1 cipher is deliberately weak - just like in real spy games of old.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Engine -->
+    <script src="engine/voice.js"></script>
+    <script src="engine/evidence-viewer.js"></script>
+    <script src="engine/puzzles/password-puzzle.js"></script>
+    <script src="engine/chat-interface.js"></script>
+    <script src="engine/game.js"></script>
+    <script src="engine/player.js"></script>
+    
+    <!-- Load Scenes -->
+    <script src="scenes/intro/scene.js?v=2"></script>
+    <script src="scenes/home/scene.js"></script>
+    <script src="scenes/livingroom/scene.js?v=2"></script>
+    <script src="scenes/mancave/scene.js?v=3"></script>
+    <script src="scenes/videocall/scene.js?v=2"></script>
+    <script src="scenes/garden/scene.js"></script>
+    <script src="scenes/klooster/scene.js"></script>
+    <script src="scenes/driving/scene.js"></script>
+    <script src="scenes/facility/scene.js?v=3"></script>
+    <script src="scenes/facility_interior/scene.js?v=3"></script>
+    <script src="scenes/facility_server/scene.js?v=4"></script>
+    <script src="scenes/debrief/scene.js"></script>
+    <script src="scenes/epilogue/scene.js"></script>
+    <script src="scenes/credits/scene.js"></script>
+
+    <!-- Game Initialization -->
+    <script>
+        // Game instance
+        let game = null;
+        
+        // Loading progress simulation
+        const loadingProgress = document.getElementById('loading-progress');
+        const loadingStatus = document.getElementById('loading-status');
+        const loadingScreen = document.getElementById('loading-screen');
+        const titleScreen = document.getElementById('title-screen');
+        
+        const loadingSteps = [
+            { progress: 20, status: 'Loading engine...' },
+            { progress: 40, status: 'Initializing scenes...' },
+            { progress: 60, status: 'Loading assets...' },
+            { progress: 80, status: 'Configuring systems...' },
+            { progress: 100, status: 'Ready!' }
+        ];
+        
+        let currentStep = 0;
+        
+        function updateLoading() {
+            if (currentStep < loadingSteps.length) {
+                const step = loadingSteps[currentStep];
+                loadingProgress.style.width = step.progress + '%';
+                loadingStatus.textContent = step.status;
+                currentStep++;
+                
+                if (currentStep < loadingSteps.length) {
+                    setTimeout(updateLoading, 400);
+                } else {
+                    setTimeout(showTitleScreen, 500);
+                }
+            }
+        }
+        
+        function showTitleScreen() {
+            loadingScreen.classList.add('hidden');
+            titleScreen.classList.add('visible');
+            
+            // Check for saved game
+            const savedGame = localStorage.getItem('cyberquest_save');
+            if (savedGame) {
+                document.getElementById('btn-continue').disabled = false;
+            }
+        }
+        
+        function initGame() {
+            // Initialize game engine
+            game = new CyberQuestEngine();
+            
+            // Register all scenes
+            game.registerScene(IntroScene);
+            game.registerScene(HomeScene);
+            game.registerScene(LivingroomScene);
+            game.registerScene(MancaveScene);
+            game.registerScene(VideocallScene);
+            game.registerScene(GardenScene);
+            game.registerScene(KloosterScene);
+            game.registerScene(DrivingScene);
+            game.registerScene(FacilityScene);
+            game.registerScene(FacilityInteriorScene);
+            game.registerScene(FacilityServerScene);
+            game.registerScene(DebriefScene);
+            game.registerScene(EpilogueScene);
+            game.registerScene(CreditsScene);
+            
+            // Initialize the game
+            game.init();
+        }
+        
+        function startNewGame() {
+            titleScreen.classList.remove('visible');
+            
+            // Clear any existing save
+            localStorage.removeItem('cyberquest_save');
+            
+            // Initialize and start
+            initGame();
+            
+            // Load starting scene (intro prologue)
+            game.loadScene('intro');
+            
+            // Show intro dialogue after a brief delay
+            setTimeout(() => {
+                game.showDialogue([
+                    "Another morning in Compascuum...",
+                    "The coffee machine hums softly. Through the window, I can see the old wind turbines spinning in the morning breeze.",
+                    "It's quiet here, near the German border. Just the way I like it.",
+                    "Time to grab some espresso and head to the mancave. There's always something interesting on the radio frequencies..."
+                ], "Ryan's Thoughts");
+            }, 1000);
+        }
+        
+        function continueGame() {
+            titleScreen.classList.remove('visible');
+            
+            // Initialize game
+            initGame();
+            
+            // Load saved state
+            game.loadGame();
+            
+            game.showNotification('Game loaded successfully');
+        }
+        
+        function showAbout() {
+            document.getElementById('about-modal').style.display = 'flex';
+        }
+        
+        function hideAbout() {
+            document.getElementById('about-modal').style.display = 'none';
+        }
+        
+        // Event listeners
+        document.getElementById('btn-new-game').addEventListener('click', startNewGame);
+        document.getElementById('btn-continue').addEventListener('click', continueGame);
+        document.getElementById('btn-about').addEventListener('click', showAbout);
+        document.getElementById('close-about').addEventListener('click', hideAbout);
+        document.getElementById('about-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'about-modal') hideAbout();
+        });
+        
+        // Debug help hint
+        console.log('%c🛠️ DEBUG MODE: Press D key in-game to open debug panel', 'color: #00ff88; font-size: 14px; font-weight: bold;');
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                hideAbout();
+            }
+        });
+        
+        // Start loading sequence when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(updateLoading, 300);
+        });
+    </script>
+</body>
+</html>

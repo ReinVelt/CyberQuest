@@ -1,0 +1,1879 @@
+/**
+ * CyberQuest - Main Stylesheet
+ * Sierra-style adventure game with responsive design
+ */
+
+/* CSS Variables */
+:root {
+    --color-primary: #1a1a2e;
+    --color-secondary: #16213e;
+    --color-accent: #0f3460;
+    --color-highlight: #e94560;
+    --color-text: #eaeaea;
+    --color-text-dim: #a0a0a0;
+    --color-success: #4ecca3;
+    --color-warning: #ffc107;
+    --color-error: #ff6b6b;
+    
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-mono: 'Courier New', Courier, monospace;
+    
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    
+    --z-scene: 1;
+    --z-hotspots: 10;
+    --z-ui: 100;
+    --z-dialogue: 200;
+    --z-puzzle: 300;
+    --z-notification: 400;
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: #000;
+    color: var(--color-text);
+    line-height: 1.6;
+}
+
+/* Game Container */
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Scene Container - maintains 16:9 aspect ratio, centered with letterboxing */
+#scene-container {
+    position: relative;
+    width: 100vw;
+    height: calc(100vw * 9 / 16);
+    max-height: 100vh;
+    z-index: var(--z-scene);
+    transition: opacity var(--transition-slow);
+    overflow: hidden;
+}
+
+/* If height-constrained, switch to width based on height */
+@media (min-aspect-ratio: 16/9) {
+    #scene-container {
+        width: calc(100vh * 16 / 9);
+        height: 100vh;
+    }
+}
+
+#scene-container.fade-out {
+    opacity: 0;
+}
+
+#scene-container.fade-in {
+    opacity: 1;
+}
+
+#scene-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#scene-hotspots {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: var(--z-hotspots);
+}
+
+#scene-characters {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Hotspots */
+.hotspot {
+    position: absolute;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    transition: all var(--transition-fast);
+}
+
+.hotspot:hover {
+    border-color: rgba(233, 69, 96, 0.6);
+    background-color: rgba(233, 69, 96, 0.1);
+    box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
+}
+
+.hotspot[data-tooltip]:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 12px;
+    background-color: var(--color-secondary);
+    color: var(--color-text);
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* UI Overlay */
+#ui-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: var(--z-ui);
+}
+
+#ui-overlay > * {
+    pointer-events: auto;
+}
+
+/* Dialogue Box */
+#dialogue-box {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    max-width: 800px;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    border: 2px solid var(--color-accent);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    z-index: var(--z-dialogue);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+#dialogue-box.hidden {
+    display: none;
+}
+
+#dialogue-portrait {
+    width: 100px;
+    height: 100px;
+    flex-shrink: 0;
+    background-color: var(--color-accent);
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    border: 2px solid var(--color-highlight);
+}
+
+#dialogue-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#dialogue-speaker {
+    font-weight: bold;
+    font-size: 18px;
+    color: var(--color-highlight);
+    margin-bottom: 8px;
+}
+
+#dialogue-text {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--color-text);
+}
+
+#dialogue-continue {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    font-size: 12px;
+    color: var(--color-text-dim);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Inventory Bar */
+#inventory-bar {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+#inventory-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    border: 2px solid var(--color-accent);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+#inventory-toggle:hover {
+    border-color: var(--color-highlight);
+}
+
+#inventory-toggle .icon {
+    font-size: 24px;
+}
+
+#inventory-toggle .label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#inventory-items {
+    margin-top: 10px;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    border: 2px solid var(--color-accent);
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: repeat(4, 60px);
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#inventory-items.hidden {
+    display: none;
+}
+
+.inventory-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+    background-color: var(--color-accent);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.inventory-item:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(233, 69, 96, 0.3);
+}
+
+.inventory-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.inventory-item .item-name {
+    font-size: 10px;
+    text-align: center;
+    margin-top: 4px;
+    color: var(--color-text-dim);
+}
+
+.inventory-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--color-text-dim);
+    font-style: italic;
+}
+
+/* Quest Log */
+#quest-log {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#quest-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    border: 2px solid var(--color-accent);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+#quest-toggle:hover {
+    border-color: var(--color-highlight);
+}
+
+#quest-toggle .icon {
+    font-size: 24px;
+}
+
+#quest-toggle .label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#quest-list {
+    position: absolute;
+    right: 0;
+    margin-top: 10px;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    border: 2px solid var(--color-accent);
+    border-radius: 8px;
+    min-width: 300px;
+    max-width: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+#quest-list.hidden {
+    display: none;
+}
+
+.quest-item {
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: rgba(15, 52, 96, 0.5);
+    border-radius: 8px;
+    border-left: 4px solid var(--color-highlight);
+}
+
+.quest-item:last-child {
+    margin-bottom: 0;
+}
+
+.quest-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--color-highlight);
+    margin-bottom: 4px;
+}
+
+.quest-description {
+    font-size: 14px;
+    color: var(--color-text);
+    margin-bottom: 8px;
+}
+
+.quest-hint {
+    font-size: 12px;
+    color: var(--color-warning);
+    padding: 8px;
+    background-color: rgba(255, 193, 7, 0.1);
+    border-radius: 4px;
+}
+
+.quest-empty {
+    text-align: center;
+    color: var(--color-text-dim);
+    font-style: italic;
+}
+
+/* Game Menu */
+#game-menu {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+#game-menu button {
+    padding: 10px 16px;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    border: 2px solid var(--color-accent);
+    border-radius: 8px;
+    color: var(--color-text);
+    font-size: 14px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+#game-menu button:hover {
+    border-color: var(--color-highlight);
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%);
+}
+
+#menu-voice {
+    min-width: 90px;
+}
+
+#menu-voice.muted {
+    opacity: 0.6;
+    border-color: var(--color-text-dim);
+}
+
+/* Time Display */
+#time-display {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    border: 2px solid var(--color-accent);
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+}
+
+#game-day {
+    color: var(--color-warning);
+}
+
+#game-time {
+    color: var(--color-success);
+}
+
+/* Puzzle Overlay */
+#puzzle-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-puzzle);
+}
+
+#puzzle-overlay.hidden {
+    display: none;
+}
+
+#puzzle-container {
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.puzzle {
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    border: 2px solid var(--color-accent);
+    border-radius: 12px;
+    padding: 30px;
+}
+
+.puzzle h2 {
+    font-size: 24px;
+    color: var(--color-highlight);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.puzzle-description {
+    margin-bottom: 20px;
+    color: var(--color-text);
+}
+
+.encrypted-message {
+    padding: 20px;
+    background-color: var(--color-primary);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    word-break: break-all;
+    color: var(--color-success);
+    border: 1px solid var(--color-accent);
+}
+
+.puzzle-hint {
+    margin-bottom: 20px;
+}
+
+.puzzle-hint button {
+    padding: 8px 16px;
+    background-color: var(--color-accent);
+    border: none;
+    border-radius: 4px;
+    color: var(--color-text);
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.puzzle-hint p {
+    padding: 12px;
+    background-color: rgba(255, 193, 7, 0.1);
+    border-radius: 4px;
+    color: var(--color-warning);
+    font-size: 14px;
+}
+
+.puzzle-hint p.hidden {
+    display: none;
+}
+
+.puzzle-input {
+    margin-bottom: 20px;
+}
+
+.puzzle-input label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--color-text-dim);
+}
+
+.puzzle-input textarea,
+.puzzle-input input {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-accent);
+    border-radius: 8px;
+    color: var(--color-text);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    resize: vertical;
+}
+
+.puzzle-input textarea:focus,
+.puzzle-input input:focus {
+    outline: none;
+    border-color: var(--color-highlight);
+}
+
+.puzzle-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-primary {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--color-highlight) 0%, #c73e54 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(233, 69, 96, 0.4);
+}
+
+.btn-secondary {
+    padding: 12px 24px;
+    background-color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+    border-radius: 8px;
+    color: var(--color-text);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-secondary);
+}
+
+/* Frequency Puzzle Specific */
+.frequency-display {
+    text-align: center;
+    font-size: 48px;
+    font-family: var(--font-mono);
+    color: var(--color-success);
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: var(--color-primary);
+    border-radius: 8px;
+    border: 2px solid var(--color-accent);
+}
+
+.frequency-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.frequency-controls button {
+    padding: 8px 16px;
+    background-color: var(--color-accent);
+    border: none;
+    border-radius: 4px;
+    color: var(--color-text);
+    cursor: pointer;
+    font-family: var(--font-mono);
+}
+
+.frequency-controls button:hover {
+    background-color: var(--color-highlight);
+}
+
+.frequency-controls input[type="range"] {
+    flex: 1;
+    min-width: 200px;
+}
+
+.signal-indicator {
+    height: 20px;
+    background-color: var(--color-primary);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.signal-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--color-warning) 0%, var(--color-success) 100%);
+    transition: width var(--transition-fast);
+}
+
+/* Notifications */
+#notification-area {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: var(--z-notification);
+    pointer-events: none;
+}
+
+.notification {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    border: 2px solid var(--color-success);
+    border-radius: 8px;
+    color: var(--color-text);
+    font-size: 14px;
+    animation: slideIn 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.notification.fade-out {
+    animation: slideOut 0.5s ease forwards;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* Responsive Design */
+
+/* Tablet (481px - 1024px) */
+@media (max-width: 1024px) {
+    #dialogue-box {
+        width: calc(100% - 30px);
+        padding: 16px;
+        gap: 16px;
+    }
+    
+    #dialogue-portrait {
+        width: 80px;
+        height: 80px;
+    }
+    
+    #dialogue-speaker {
+        font-size: 16px;
+    }
+    
+    #dialogue-text {
+        font-size: 14px;
+    }
+    
+    #inventory-items {
+        grid-template-columns: repeat(3, 55px);
+    }
+    
+    #quest-list {
+        min-width: 260px;
+        max-width: 320px;
+    }
+    
+    #game-menu {
+        flex-direction: column;
+    }
+    
+    .frequency-display {
+        font-size: 36px;
+    }
+}
+
+/* Smartphone (320px - 480px) */
+@media (max-width: 480px) {
+    #dialogue-box {
+        bottom: 10px;
+        width: calc(100% - 20px);
+        padding: 12px;
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    #dialogue-portrait {
+        width: 60px;
+        height: 60px;
+        align-self: center;
+    }
+    
+    #dialogue-speaker {
+        font-size: 14px;
+        text-align: center;
+    }
+    
+    #dialogue-text {
+        font-size: 13px;
+    }
+    
+    #inventory-bar {
+        top: 10px;
+        left: 10px;
+    }
+    
+    #inventory-toggle {
+        padding: 8px 12px;
+    }
+    
+    #inventory-toggle .label {
+        display: none;
+    }
+    
+    #inventory-items {
+        grid-template-columns: repeat(3, 50px);
+        gap: 8px;
+        padding: 12px;
+    }
+    
+    #quest-log {
+        top: 10px;
+        right: 10px;
+    }
+    
+    #quest-toggle {
+        padding: 8px 12px;
+    }
+    
+    #quest-toggle .label {
+        display: none;
+    }
+    
+    #quest-list {
+        min-width: 200px;
+        max-width: calc(100vw - 40px);
+        padding: 12px;
+    }
+    
+    .quest-name {
+        font-size: 14px;
+    }
+    
+    .quest-description {
+        font-size: 12px;
+    }
+    
+    #game-menu {
+        bottom: 10px;
+        right: 10px;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    #game-menu button {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+    
+    #time-display {
+        font-size: 12px;
+        padding: 8px 12px;
+        gap: 12px;
+    }
+    
+    .puzzle {
+        padding: 20px;
+    }
+    
+    .puzzle h2 {
+        font-size: 20px;
+    }
+    
+    .frequency-display {
+        font-size: 28px;
+        padding: 16px;
+    }
+    
+    .frequency-controls {
+        gap: 6px;
+    }
+    
+    .frequency-controls button {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+    
+    .btn-primary, .btn-secondary {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+    
+    .hotspot[data-tooltip]:hover::after {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
+
+/* Touch-friendly adjustments */
+@media (hover: none) and (pointer: coarse) {
+    .hotspot {
+        min-width: 44px;
+        min-height: 44px;
+    }
+    
+    #inventory-toggle,
+    #quest-toggle,
+    #game-menu button {
+        min-height: 44px;
+    }
+    
+    .inventory-item {
+        min-width: 50px;
+        min-height: 50px;
+    }
+    
+    .btn-primary, .btn-secondary {
+        min-height: 44px;
+    }
+}
+
+/* Landscape phone optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+    #dialogue-box {
+        bottom: 5px;
+        padding: 10px;
+        max-height: 40vh;
+    }
+    
+    #dialogue-portrait {
+        width: 50px;
+        height: 50px;
+    }
+    
+    #time-display {
+        top: 5px;
+    }
+    
+    #inventory-bar,
+    #quest-log {
+        top: 5px;
+    }
+    
+    #game-menu {
+        bottom: 5px;
+    }
+}
+
+/* Hidden utility class */
+.hidden {
+    display: none !important;
+}
+
+/* ===========================================
+   CSS Scene Graphics (Placeholder Artwork)
+   =========================================== */
+
+/* Scene name label */
+#scene-background::before {
+    content: attr(data-scene-name);
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    z-index: 100;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* HOME SCENE - Kitchen */
+#scene-background.scene-home {
+    background: linear-gradient(180deg, 
+        #87CEEB 0%,      /* Sky */
+        #87CEEB 20%,
+        #e8dcc4 20%,     /* Wall */
+        #e8dcc4 100%);
+}
+
+#scene-background.scene-home::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 25%;
+    background: linear-gradient(90deg,
+        #8B4513 0%, #8B4513 10%,
+        #A0522D 10%, #A0522D 20%,
+        #8B4513 20%, #8B4513 30%,
+        #A0522D 30%, #A0522D 40%,
+        #8B4513 40%, #8B4513 50%,
+        #A0522D 50%, #A0522D 60%,
+        #8B4513 60%, #8B4513 70%,
+        #A0522D 70%, #A0522D 80%,
+        #8B4513 80%, #8B4513 90%,
+        #A0522D 90%, #A0522D 100%);
+}
+
+/* CSS Kitchen Elements */
+.scene-home .css-window {
+    position: absolute;
+    top: 15%;
+    left: 30%;
+    width: 20%;
+    height: 25%;
+    background: linear-gradient(180deg, #87CEEB 0%, #a8d8ea 100%);
+    border: 8px solid #654321;
+    box-shadow: inset 0 0 30px rgba(255,255,255,0.3);
+}
+
+.scene-home .css-counter {
+    position: absolute;
+    bottom: 25%;
+    left: 55%;
+    width: 35%;
+    height: 15%;
+    background: linear-gradient(180deg, #2c2c2c 0%, #1a1a1a 100%);
+    border-radius: 5px 5px 0 0;
+}
+
+.scene-home .css-coffee {
+    position: absolute;
+    bottom: 40%;
+    left: 62%;
+    width: 10%;
+    height: 12%;
+    background: linear-gradient(180deg, #c0c0c0 0%, #808080 100%);
+    border-radius: 5px;
+}
+
+.scene-home .css-door {
+    position: absolute;
+    top: 20%;
+    right: 8%;
+    width: 10%;
+    height: 45%;
+    background: linear-gradient(180deg, #654321 0%, #4a3520 100%);
+    border: 3px solid #3d2817;
+}
+
+/* MANCAVE SCENE - Tech Lab */
+#scene-background.scene-mancave {
+    background: linear-gradient(180deg, 
+        #1a1a2e 0%,
+        #16213e 50%,
+        #0f0f1a 100%);
+}
+
+#scene-background.scene-mancave::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        /* Grid pattern */
+        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px),
+        /* Computer glow */
+        radial-gradient(ellipse at 30% 60%, rgba(0, 255, 136, 0.15) 0%, transparent 40%),
+        radial-gradient(ellipse at 70% 50%, rgba(0, 100, 255, 0.1) 0%, transparent 30%);
+    background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%;
+    pointer-events: none;
+}
+
+/* Desk */
+.scene-mancave .css-desk {
+    position: absolute;
+    bottom: 15%;
+    left: 10%;
+    width: 80%;
+    height: 8%;
+    background: linear-gradient(180deg, #3d3d3d 0%, #2a2a2a 100%);
+}
+
+/* Monitor */
+.scene-mancave .css-monitor {
+    position: absolute;
+    bottom: 23%;
+    left: 25%;
+    width: 20%;
+    height: 25%;
+    background: #000;
+    border: 4px solid #333;
+    border-radius: 3px;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+}
+
+.scene-mancave .css-monitor::after {
+    content: '> SSTV DECODER';
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    color: #00ff88;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    animation: blink 1s infinite;
+}
+
+/* SDR Equipment */
+.scene-mancave .css-hackrf {
+    position: absolute;
+    bottom: 23%;
+    left: 55%;
+    width: 12%;
+    height: 8%;
+    background: linear-gradient(180deg, #2d5a27 0%, #1a3d15 100%);
+    border-radius: 3px;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+}
+
+/* Server rack */
+.scene-mancave .css-server {
+    position: absolute;
+    bottom: 15%;
+    right: 5%;
+    width: 8%;
+    height: 50%;
+    background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+    border: 2px solid #333;
+}
+
+.scene-mancave .css-server::after {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    width: 60%;
+    height: 5px;
+    background: #00ff00;
+    box-shadow: 
+        0 15px 0 #00ff00,
+        0 30px 0 #ff0000,
+        0 45px 0 #00ff00,
+        0 60px 0 #ffaa00;
+    animation: serverBlink 2s infinite;
+}
+
+@keyframes serverBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* GARDEN SCENE */
+#scene-background.scene-garden {
+    background: linear-gradient(180deg, 
+        #87CEEB 0%,      /* Sky */
+        #87CEEB 40%,
+        #90EE90 40%,     /* Grass horizon */
+        #228B22 100%);   /* Grass foreground */
+}
+
+#scene-background.scene-garden::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        /* Clouds */
+        radial-gradient(ellipse at 20% 15%, rgba(255,255,255,0.8) 0%, transparent 10%),
+        radial-gradient(ellipse at 25% 12%, rgba(255,255,255,0.8) 0%, transparent 8%),
+        radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.7) 0%, transparent 12%),
+        /* Wind turbines silhouette */
+        linear-gradient(180deg, transparent 25%, #666 25%, #666 26%, transparent 26%),
+        linear-gradient(180deg, transparent 20%, #888 20%, #888 38%, transparent 38%);
+    background-size: 100%, 100%, 100%, 2px 100%, 3px 100%;
+    background-position: 0 0, 0 0, 0 0, 85% 0, 85% 0;
+    background-repeat: no-repeat;
+    pointer-events: none;
+}
+
+/* Antenna */
+.scene-garden .css-antenna {
+    position: absolute;
+    top: 15%;
+    right: 20%;
+    width: 3px;
+    height: 30%;
+    background: #666;
+}
+
+.scene-garden .css-antenna::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 23px;
+    height: 3px;
+    background: #666;
+}
+
+/* Flowers */
+.scene-garden .css-flowers {
+    position: absolute;
+    bottom: 20%;
+    left: 15%;
+    width: 25%;
+    height: 10%;
+    background: repeating-linear-gradient(90deg,
+        #ff6b6b 0px, #ff6b6b 10px,
+        #ffd93d 10px, #ffd93d 20px,
+        #6bcb77 20px, #6bcb77 30px,
+        #4d96ff 30px, #4d96ff 40px);
+    border-radius: 50% 50% 0 0;
+    opacity: 0.8;
+}
+
+/* KLOOSTER SCENE */
+#scene-background.scene-klooster {
+    background: linear-gradient(180deg, 
+        #1a1a2e 0%,      /* Night sky */
+        #2d3436 30%,
+        #636e72 60%,     /* Stone walls */
+        #4a4a4a 100%);
+}
+
+#scene-background.scene-klooster::after {
+    content: '';
+    position: absolute;
+    /* Gothic arches silhouette */
+    top: 20%;
+    left: 20%;
+    width: 60%;
+    height: 50%;
+    background:
+        /* Moon */
+        radial-gradient(circle at 80% 15%, #f5f5dc 0%, transparent 8%),
+        /* Gothic arch 1 */
+        linear-gradient(135deg, transparent 40%, #2d2d2d 40%, #2d2d2d 60%, transparent 60%),
+        linear-gradient(45deg, transparent 40%, #2d2d2d 40%, #2d2d2d 60%, transparent 60%);
+    pointer-events: none;
+}
+
+/* FACILITY SCENE */
+#scene-background.scene-facility {
+    background: linear-gradient(180deg, 
+        #1a1a2e 0%,
+        #0f3460 40%,
+        #16213e 100%);
+}
+
+#scene-background.scene-facility::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        /* Fence pattern */
+        repeating-linear-gradient(90deg,
+            transparent 0px, transparent 30px,
+            rgba(100,100,100,0.3) 30px, rgba(100,100,100,0.3) 32px),
+        /* Security lights */
+        radial-gradient(ellipse at 20% 40%, rgba(255, 0, 0, 0.2) 0%, transparent 20%),
+        radial-gradient(ellipse at 80% 35%, rgba(255, 0, 0, 0.2) 0%, transparent 20%),
+        /* Building silhouette */
+        linear-gradient(180deg, transparent 50%, #1a1a1a 50%);
+    animation: securitySweep 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes securitySweep {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.1); }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Make hotspots more visible in placeholder mode */
+.hotspot {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px dashed rgba(233, 69, 96, 0.4) !important;
+}
+
+.hotspot:hover {
+    background: rgba(233, 69, 96, 0.25);
+    border: 2px solid rgba(233, 69, 96, 0.8) !important;
+}
+
+/* ==========================================
+   PLAYER CHARACTER STYLES
+   ========================================== */
+
+/* Character container */
+.player-character {
+    position: absolute;
+    z-index: 50;
+    transform: translateX(-50%);
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.player-character.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.player-character .character-sprite {
+    height: 100%;
+    width: auto;
+    transition: transform 0.1s ease;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
+}
+
+/* South Park style - paper cutout animation */
+.player-character.southpark-style .character-sprite {
+    image-rendering: crisp-edges;
+    filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.4));
+}
+
+.player-character.walking .character-sprite {
+    animation: walkBob 0.3s ease-in-out infinite;
+}
+
+/* South Park walk - more exaggerated bobbing */
+.player-character.southpark-style.walking .character-sprite {
+    animation: southparkWalk 0.25s steps(2, end) infinite;
+}
+
+@keyframes walkBob {
+    0%, 100% { transform: translateY(0) scaleX(1); }
+    50% { transform: translateY(-2px) scaleX(1); }
+}
+
+@keyframes southparkWalk {
+    0% { transform: translateY(0) scaleY(1); }
+    50% { transform: translateY(-4px) scaleY(0.98); }
+    100% { transform: translateY(0) scaleY(1); }
+}
+
+/* Thought Bubble */
+.thought-bubble {
+    position: absolute;
+    z-index: 60;
+    transform: translateX(-50%);
+    max-width: 280px;
+    min-width: 150px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 12px 16px;
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+}
+
+.thought-bubble.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+}
+
+.thought-bubble.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Thought bubble tail - cloud-like dots */
+.thought-bubble::before,
+.thought-bubble::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.thought-bubble::before {
+    width: 16px;
+    height: 16px;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.thought-bubble::after {
+    width: 10px;
+    height: 10px;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.thought-text {
+    font-family: var(--font-main);
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Thinking animation dots */
+.thought-dots {
+    display: none;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.thought-dots span {
+    width: 6px;
+    height: 6px;
+    background: #666;
+    border-radius: 50%;
+    animation: thinkingDots 1.4s ease-in-out infinite;
+}
+
+.thought-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.thought-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes thinkingDots {
+    0%, 80%, 100% {
+        transform: scale(0.6);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Walking cursor when clicking to move */
+#scene-container.can-walk {
+    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">🚶</text></svg>') 16 16, pointer;
+}
+
+/* ============ Livingroom Scene Character Animations ============ */
+
+/* Dog sleeping animation - gentle breathing */
+@keyframes dogSleeping {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-1px) scale(1.01); }
+}
+
+.npc-character[data-character="dog_white"] {
+    animation: dogSleeping 3s ease-in-out infinite;
+    transform-origin: center bottom;
+}
+
+/* Pug walking around animation */
+@keyframes pugWalk {
+    0% { 
+        left: 30%; 
+        transform: scaleX(1);
+    }
+    25% { 
+        left: 45%; 
+        transform: scaleX(1);
+    }
+    50% { 
+        left: 60%; 
+        transform: scaleX(-1);
+    }
+    75% { 
+        left: 45%; 
+        transform: scaleX(-1);
+    }
+    100% { 
+        left: 30%; 
+        transform: scaleX(1);
+    }
+}
+
+.npc-character[data-character="pug"] {
+    animation: pugWalk 20s linear infinite;
+}
+
+/* Ies watching TV - subtle movement */
+@keyframes watchingTV {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-1px); }
+}
+
+.npc-character[data-character="ies"] {
+    animation: watchingTV 4s ease-in-out infinite;
+}
+
+/* ============ Mobile & Touch Responsiveness ============ */
+
+/* Prevent text selection during touch interactions */
+* {
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Make all interactive elements touch-friendly */
+.hotspot,
+button,
+.inventory-item,
+#inventory-toggle,
+#quest-toggle {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    /* Increase tap target sizes for mobile */
+    .hotspot {
+        min-width: 40px;
+        min-height: 40px;
+    }
+    
+    /* Dialogue box adjustments */
+    #dialogue-box {
+        bottom: 10px;
+        width: calc(100% - 20px);
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    #dialogue-portrait {
+        width: 60px;
+        height: 60px;
+    }
+    
+    #dialogue-speaker {
+        font-size: 16px;
+    }
+    
+    #dialogue-text {
+        font-size: 14px;
+        line-height: 1.5;
+    }
+    
+    #dialogue-continue {
+        font-size: 11px;
+        bottom: 5px;
+        right: 10px;
+    }
+    
+    /* Inventory adjustments */
+    #inventory-bar {
+        top: 10px;
+        left: 10px;
+    }
+    
+    #inventory-toggle {
+        padding: 8px 12px;
+        gap: 6px;
+    }
+    
+    #inventory-toggle .icon {
+        font-size: 20px;
+    }
+    
+    #inventory-toggle .label {
+        font-size: 12px;
+    }
+    
+    #inventory-items {
+        grid-template-columns: repeat(3, 55px);
+        padding: 12px;
+        max-height: 250px;
+    }
+    
+    .inventory-item {
+        padding: 6px;
+    }
+    
+    .inventory-item img {
+        width: 35px;
+        height: 35px;
+    }
+    
+    /* Quest log adjustments */
+    #quest-log {
+        top: 10px;
+        right: 10px;
+    }
+    
+    #quest-toggle {
+        padding: 8px 12px;
+        gap: 6px;
+    }
+    
+    #quest-toggle .icon {
+        font-size: 20px;
+    }
+    
+    #quest-toggle .label {
+        font-size: 12px;
+    }
+    
+    #quest-list {
+        min-width: 250px;
+        max-width: calc(100vw - 30px);
+        max-height: 350px;
+        padding: 12px;
+    }
+    
+    .quest-item {
+        padding: 10px;
+    }
+    
+    .quest-name {
+        font-size: 14px;
+    }
+    
+    .quest-description {
+        font-size: 13px;
+    }
+    
+    /* Game menu adjustments */
+    #game-menu {
+        bottom: 10px;
+        right: 10px;
+        gap: 5px;
+        flex-wrap: wrap;
+        max-width: calc(100vw - 20px);
+    }
+    
+    #game-menu button {
+        padding: 8px 12px;
+        font-size: 12px;
+        min-width: 70px;
+    }
+    
+    #menu-voice {
+        min-width: 75px;
+    }
+    
+    /* Time display adjustments */
+    #time-display {
+        top: 10px;
+        padding: 8px 16px;
+        gap: 15px;
+        font-size: 14px;
+    }
+    
+    /* Puzzle container adjustments */
+    #puzzle-container {
+        width: 95%;
+        max-height: 80vh;
+    }
+    
+    .puzzle {
+        padding: 20px;
+    }
+    
+    .puzzle h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+    
+    /* Puzzle button adjustments for touch */
+    .puzzle button,
+    .btn-primary,
+    .btn-secondary,
+    .frequency-controls button {
+        min-height: 44px;
+        padding: 10px 18px;
+        font-size: 14px;
+        touch-action: manipulation;
+    }
+    
+    .puzzle-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .puzzle-actions button {
+        flex: 1;
+        min-width: 120px;
+    }
+    
+    /* Frequency puzzle adjustments */
+    .frequency-display {
+        font-size: 36px;
+        padding: 15px;
+    }
+    
+    .frequency-controls {
+        gap: 8px;
+    }
+    
+    .frequency-controls button {
+        min-height: 44px;
+        padding: 10px 14px;
+        font-size: 16px;
+    }
+    
+    .frequency-controls input[type="range"] {
+        min-width: 150px;
+    }
+    
+    /* Password puzzle input */
+    .puzzle-input input {
+        min-height: 44px;
+        font-size: 16px;
+        padding: 10px;
+    }
+    
+    /* Cipher puzzle textarea */
+    .puzzle-input textarea {
+        min-height: 100px;
+        font-size: 14px;
+        padding: 10px;
+    }
+    
+    /* Tooltip adjustments - move above on mobile */
+    .hotspot[data-tooltip]:active::after,
+    .hotspot[data-tooltip]:focus::after {
+        bottom: calc(100% + 5px);
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    /* Hide labels on very small screens */
+    #inventory-toggle .label,
+    #quest-toggle .label {
+        display: none;
+    }
+    
+    #inventory-toggle,
+    #quest-toggle {
+        padding: 8px;
+    }
+    
+    /* Stack dialogue vertically on very small screens */
+    #dialogue-box {
+        flex-direction: column;
+        padding: 12px;
+    }
+    
+    #dialogue-portrait {
+        width: 50px;
+        height: 50px;
+        align-self: center;
+    }
+    
+    #dialogue-speaker {
+        font-size: 14px;
+        text-align: center;
+    }
+    
+    #dialogue-text {
+        font-size: 13px;
+    }
+    
+    /* Smaller inventory grid */
+    #inventory-items {
+        grid-template-columns: repeat(2, 50px);
+        gap: 8px;
+    }
+    
+    /* Compact game menu */
+    #game-menu button {
+        padding: 6px 10px;
+        font-size: 11px;
+        min-width: 60px;
+    }
+    
+    #menu-voice {
+        min-width: 65px;
+    }
+    
+    /* Time display more compact */
+    #time-display {
+        padding: 6px 12px;
+        gap: 10px;
+        font-size: 12px;
+    }
+    
+    /* Frequency puzzle compact */
+    .frequency-display {
+        font-size: 28px;
+        padding: 12px;
+    }
+    
+    .frequency-controls button {
+        padding: 8px 10px;
+        font-size: 14px;
+        min-width: 40px;
+    }
+    
+    /* Prevent zoom on input focus for iOS */
+    input,
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+}
+
+/* Landscape mobile devices */
+@media (max-width: 768px) and (orientation: landscape) {
+    /* Adjust dialogue box for landscape */
+    #dialogue-box {
+        bottom: 5px;
+        padding: 10px;
+        max-width: 600px;
+    }
+    
+    /* Move UI elements closer to edges */
+    #inventory-bar {
+        top: 5px;
+        left: 5px;
+    }
+    
+    #quest-log {
+        top: 5px;
+        right: 5px;
+    }
+    
+    #game-menu {
+        bottom: 5px;
+        right: 5px;
+    }
+    
+    #time-display {
+        top: 5px;
+    }
+}
+
+/* Tablet devices */
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Slightly larger tap targets for tablets */
+    .hotspot {
+        min-width: 30px;
+        min-height: 30px;
+    }
+    
+    #dialogue-box {
+        width: calc(100% - 60px);
+    }
+    
+    #inventory-items {
+        grid-template-columns: repeat(4, 60px);
+    }
+    
+    #quest-list {
+        min-width: 280px;
+    }
+}
+
+/* Touch device specific enhancements */
+@media (hover: none) and (pointer: coarse) {
+    /* Remove hover effects on touch devices */
+    .hotspot:hover {
+        border-color: transparent;
+        background-color: transparent;
+        box-shadow: none;
+    }
+    
+    /* Show interaction feedback on touch */
+    .hotspot:active {
+        border-color: rgba(233, 69, 96, 0.8);
+        background-color: rgba(233, 69, 96, 0.2);
+    }
+    
+    #inventory-toggle:hover,
+    #quest-toggle:hover,
+    #game-menu button:hover {
+        border-color: var(--color-accent);
+        background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
+    }
+    
+    #inventory-toggle:active,
+    #quest-toggle:active,
+    #game-menu button:active {
+        border-color: var(--color-highlight);
+        transform: scale(0.95);
+    }
+    
+    .inventory-item:hover {
+        transform: none;
+    }
+    
+    .inventory-item:active {
+        transform: scale(0.95);
+    }
+}
+

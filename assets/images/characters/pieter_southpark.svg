@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- PIETER - South Park Style Character -->
+  <!-- Ex-Ericsson engineer, paranoid, scruffy, tin foil hat nearby -->
+  
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+    <linearGradient id="tinfoil" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c0c0c0"/>
+      <stop offset="25%" style="stop-color:#e8e8e8"/>
+      <stop offset="50%" style="stop-color:#a0a0a0"/>
+      <stop offset="75%" style="stop-color:#d8d8d8"/>
+      <stop offset="100%" style="stop-color:#b0b0b0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- BODY (medium build, slouchy) -->
+  <!-- Worn hoodie -->
+  <path d="M65,135 L60,280 L140,280 L135,135 Q100,125 65,135 Z" fill="#3a5a3a" filter="url(#shadow)"/>
+  
+  <!-- Hoodie details (worn, faded) -->
+  <path d="M75,135 Q100,145 125,135 L125,155 Q100,165 75,155 Z" fill="#2a4a2a"/>
+  
+  <!-- LEGS -->
+  <rect x="72" y="275" width="22" height="18" fill="#2a2a4a"/>
+  <rect x="106" y="275" width="22" height="18" fill="#2a2a4a"/>
+  <!-- Beat up sneakers -->
+  <rect x="68" y="290" width="28" height="8" rx="2" fill="#555"/>
+  <rect x="104" y="290" width="28" height="8" rx="2" fill="#555"/>
+  
+  <!-- ARMS -->
+  <ellipse cx="50" cy="200" rx="18" ry="45" fill="#3a5a3a"/>
+  <ellipse cx="150" cy="200" rx="18" ry="45" fill="#3a5a3a"/>
+  
+  <!-- Hands -->
+  <circle cx="50" cy="245" r="10" fill="#f5d0b5"/>
+  <circle cx="150" cy="245" r="10" fill="#f5d0b5"/>
+  
+  <!-- HEAD -->
+  <circle cx="100" cy="75" r="48" fill="#f5d0b5" filter="url(#shadow)"/>
+  
+  <!-- SCRUFFY HAIR (messy, unkempt) -->
+  <ellipse cx="100" cy="40" rx="40" ry="20" fill="#5a4a3a"/>
+  <ellipse cx="60" cy="50" rx="15" ry="18" fill="#4a3a2a"/>
+  <ellipse cx="140" cy="50" rx="15" ry="18" fill="#4a3a2a"/>
+  <!-- Messy bits -->
+  <path d="M55,45 Q50,30 60,25" stroke="#5a4a3a" stroke-width="5" fill="none"/>
+  <path d="M145,45 Q150,30 140,25" stroke="#5a4a3a" stroke-width="5" fill="none"/>
+  <path d="M90,30 Q88,20 95,15" stroke="#4a3a2a" stroke-width="4" fill="none"/>
+  <path d="M110,30 Q112,20 105,15" stroke="#4a3a2a" stroke-width="4" fill="none"/>
+  
+  <!-- STUBBLE (5 o'clock shadow) -->
+  <ellipse cx="100" cy="100" rx="35" ry="25" fill="#e5c0a5"/>
+  <!-- Stubble dots -->
+  <g fill="#8a7a6a" opacity="0.5">
+    <circle cx="70" cy="95" r="0.8"/>
+    <circle cx="75" cy="100" r="0.8"/>
+    <circle cx="80" cy="95" r="0.8"/>
+    <circle cx="85" cy="102" r="0.8"/>
+    <circle cx="90" cy="98" r="0.8"/>
+    <circle cx="110" cy="98" r="0.8"/>
+    <circle cx="115" cy="102" r="0.8"/>
+    <circle cx="120" cy="95" r="0.8"/>
+    <circle cx="125" cy="100" r="0.8"/>
+    <circle cx="130" cy="95" r="0.8"/>
+    <circle cx="95" cy="108" r="0.8"/>
+    <circle cx="100" cy="110" r="0.8"/>
+    <circle cx="105" cy="108" r="0.8"/>
+  </g>
+  
+  <!-- EARS -->
+  <ellipse cx="52" cy="75" rx="8" ry="12" fill="#f5d0b5"/>
+  <ellipse cx="148" cy="75" rx="8" ry="12" fill="#f5d0b5"/>
+  
+  <!-- EYES (paranoid, darting) -->
+  <ellipse cx="80" cy="70" rx="12" ry="10" fill="#fff"/>
+  <ellipse cx="120" cy="70" rx="12" ry="10" fill="#fff"/>
+  <!-- Irises (looking to the side - paranoid) -->
+  <circle cx="85" cy="70" r="6" fill="#6a8a6a"/>
+  <circle cx="125" cy="70" r="6" fill="#6a8a6a"/>
+  <!-- Pupils -->
+  <circle cx="86" cy="70" r="3" fill="#1a1a1a"/>
+  <circle cx="126" cy="70" r="3" fill="#1a1a1a"/>
+  <!-- Reflections -->
+  <circle cx="84" cy="68" r="1" fill="#fff"/>
+  <circle cx="124" cy="68" r="1" fill="#fff"/>
+  
+  <!-- Bags under eyes -->
+  <path d="M70,78 Q80,82 90,78" stroke="#d0b0a0" stroke-width="2" fill="none"/>
+  <path d="M110,78 Q120,82 130,78" stroke="#d0b0a0" stroke-width="2" fill="none"/>
+  
+  <!-- Eyebrows (furrowed, suspicious) -->
+  <path d="M65,58 Q80,62 92,58" stroke="#5a4a3a" stroke-width="4" fill="none"/>
+  <path d="M108,58 Q120,62 135,58" stroke="#5a4a3a" stroke-width="4" fill="none"/>
+  
+  <!-- NOSE -->
+  <ellipse cx="100" cy="85" rx="5" ry="7" fill="#e5c0a5"/>
+  
+  <!-- MOUTH (slight frown, suspicious) -->
+  <path d="M85,100 Q100,95 115,100" stroke="#8b5a4a" stroke-width="2" fill="none"/>
+  
+  <!-- TIN FOIL HAT (the signature item - he's holding it) -->
+  <g transform="translate(140, 200)">
+    <path d="M-15,40 L0,-10 L15,40 Z" fill="url(#tinfoil)" stroke="#999" stroke-width="1"/>
+    <ellipse cx="0" cy="40" rx="18" ry="6" fill="url(#tinfoil)" stroke="#999" stroke-width="1"/>
+    <!-- Crinkle lines -->
+    <line x1="-8" y1="30" x2="-3" y2="5" stroke="#aaa" stroke-width="0.5"/>
+    <line x1="8" y1="30" x2="3" y2="5" stroke="#aaa" stroke-width="0.5"/>
+    <line x1="0" y1="35" x2="0" y2="0" stroke="#bbb" stroke-width="0.5"/>
+  </g>
+  
+  <!-- BELT with multiple devices -->
+  <rect x="60" y="240" width="80" height="8" fill="#3a3a3a"/>
+  <!-- Devices on belt -->
+  <rect x="65" y="235" width="12" height="18" fill="#1a1a1a" rx="1"/> <!-- Phone -->
+  <rect x="80" y="236" width="8" height="15" fill="#333" rx="1"/> <!-- Pager?? -->
+  <rect x="92" y="237" width="15" height="12" fill="#ff6600" rx="2"/> <!-- Flipper? -->
+  <rect x="110" y="236" width="10" height="14" fill="#2a2a2a" rx="1"/> <!-- Another device -->
+  <rect x="125" y="237" width="12" height="13" fill="#444" rx="1"/> <!-- Radio -->
+  
+  <!-- STICKERS on hoodie (hacker culture) -->
+  <g transform="translate(75, 170)">
+    <rect x="0" y="0" width="15" height="10" fill="#fff" rx="1"/>
+    <text x="7.5" y="7" text-anchor="middle" font-family="Arial" font-size="4" fill="#333">EFF</text>
+  </g>
+  <g transform="translate(105, 180)">
+    <rect x="0" y="0" width="20" height="8" fill="#000" rx="1"/>
+    <text x="10" y="6" text-anchor="middle" font-family="monospace" font-size="4" fill="#0f0">sudo</text>
+  </g>
+</svg>

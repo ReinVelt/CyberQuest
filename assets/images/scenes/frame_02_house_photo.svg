@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <!-- SCENE FRAME 2: The Photo Reveal -->
+  <!-- Ryan's house appears on the SSTV screen - horror moment -->
+  
+  <defs>
+    <filter id="scanlines">
+      <feTurbulence type="fractalNoise" baseFrequency="0 0.5" numOctaves="1" result="noise"/>
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply"/>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="horrorGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff0000;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#ff0000;stop-opacity:0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- BACKGROUND: Dark mancave, dramatic lighting -->
+  <rect width="800" height="450" fill="#0a0a15"/>
+  
+  <!-- THE SCREEN (center focus) -->
+  <g transform="translate(200, 30)">
+    <!-- Monitor frame -->
+    <rect x="-20" y="-20" width="440" height="340" fill="#222" rx="10"/>
+    <rect width="400" height="300" fill="#001100"/>
+    
+    <!-- SSTV HOUSE IMAGE (scanline by scanline reveal effect) -->
+    <g clip-path="url(#screenClip)">
+      <defs>
+        <clipPath id="screenClip">
+          <rect x="10" y="10" width="380" height="200"/>
+        </clipPath>
+      </defs>
+      
+      <!-- Sky -->
+      <rect x="10" y="10" width="380" height="60" fill="#2a3a4a" opacity="0.7"/>
+      
+      <!-- Canal -->
+      <rect x="10" y="130" width="380" height="40" fill="#1a2a3a" opacity="0.8"/>
+      
+      <!-- House (Ryan's house - recognizable) -->
+      <g transform="translate(120, 40)">
+        <!-- House body (white) -->
+        <rect x="0" y="50" width="150" height="80" fill="#e8e8e8"/>
+        <!-- Red roof -->
+        <path d="M-10,50 L75,10 L160,50 Z" fill="#8b3030"/>
+        <!-- Windows -->
+        <rect x="20" y="65" width="30" height="35" fill="#333"/>
+        <rect x="65" y="65" width="30" height="35" fill="#333"/>
+        <rect x="110" y="65" width="25" height="35" fill="#333"/>
+        <!-- Door -->
+        <rect x="60" y="95" width="30" height="35" fill="#4a3020"/>
+        <!-- Chimney -->
+        <rect x="110" y="20" width="20" height="35" fill="#8b3030"/>
+      </g>
+      
+      <!-- Wind turbines in background -->
+      <g fill="#3a4a5a" opacity="0.6">
+        <line x1="300" y1="30" x2="300" y2="100" stroke="#3a4a5a" stroke-width="3"/>
+        <line x1="285" y1="32" x2="315" y2="32" stroke="#3a4a5a" stroke-width="2"/>
+        <line x1="350" y1="35" x2="350" y2="95" stroke="#3a4a5a" stroke-width="2"/>
+      </g>
+      
+      <!-- Scanline effect overlay -->
+      <g opacity="0.3">
+        <line x1="10" y1="30" x2="390" y2="30" stroke="#00ff00" stroke-width="1"/>
+        <line x1="10" y1="60" x2="390" y2="60" stroke="#00ff00" stroke-width="1"/>
+        <line x1="10" y1="90" x2="390" y2="90" stroke="#00ff00" stroke-width="1"/>
+        <line x1="10" y1="120" x2="390" y2="120" stroke="#00ff00" stroke-width="1"/>
+        <line x1="10" y1="150" x2="390" y2="150" stroke="#00ff00" stroke-width="1"/>
+        <line x1="10" y1="180" x2="390" y2="180" stroke="#00ff00" stroke-width="1"/>
+      </g>
+      
+      <!-- SSTV decode line (animated) -->
+      <rect x="10" y="10" width="380" height="3" fill="#00ff00">
+        <animate attributeName="y" values="10;200;10" dur="4s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+    
+    <!-- Encrypted message below image -->
+    <rect x="10" y="220" width="380" height="70" fill="#0a1a0a"/>
+    <text x="200" y="245" text-anchor="middle" fill="#ff4444" font-family="monospace" font-size="12" filter="url(#glow)">
+      XF LOPX ZPV BSF XBUDIJOH
+    </text>
+    <text x="200" y="265" text-anchor="middle" fill="#ff4444" font-family="monospace" font-size="12" filter="url(#glow)">
+      NFFU BU UFS BQFM LMPTUFS 23:00
+    </text>
+    <text x="200" y="285" text-anchor="middle" fill="#ff4444" font-family="monospace" font-size="12" filter="url(#glow)">
+      DPNF BMPOF - CSJOH ZPVS TLJMMT
+    </text>
+    
+    <!-- Horror glow from screen -->
+    <ellipse cx="200" cy="320" rx="220" ry="60" fill="url(#horrorGlow)" opacity="0.8"/>
+  </g>
+  
+  <!-- RYAN (terrified silhouette in foreground) -->
+  <g transform="translate(50, 300)">
+    <!-- Body silhouette -->
+    <ellipse cx="80" cy="100" rx="60" ry="50" fill="#1a1a2a"/>
+    
+    <!-- Head silhouette -->
+    <circle cx="80" cy="40" r="50" fill="#1a1a2a"/>
+    
+    <!-- Just enough detail to see expression -->
+    <!-- Glasses glare from screen -->
+    <rect x="55" y="30" width="20" height="15" fill="#002200" opacity="0.5"/>
+    <rect x="85" y="30" width="20" height="15" fill="#002200" opacity="0.5"/>
+    
+    <!-- Wide terrified eyes (visible in screen light) -->
+    <circle cx="65" cy="38" r="4" fill="#fff"/>
+    <circle cx="95" cy="38" r="4" fill="#fff"/>
+    <circle cx="66" cy="38" r="2" fill="#333"/>
+    <circle cx="96" cy="38" r="2" fill="#333"/>
+  </g>
+  
+  <!-- Speech bubble (horrified) -->
+  <g transform="translate(30, 200)">
+    <path d="M0,0 L150,0 L150,60 L50,60 L60,90 L40,60 L0,60 Z" fill="#fff"/>
+    <text x="75" y="25" text-anchor="middle" font-family="Arial" font-size="16" fill="#333" font-weight="bold">THAT'S MY</text>
+    <text x="75" y="50" text-anchor="middle" font-family="Arial" font-size="20" fill="#cc0000" font-weight="bold">HOUSE!</text>
+  </g>
+  
+  <!-- Dramatic red vignette around edges -->
+  <rect width="800" height="450" fill="none" stroke="#ff0000" stroke-width="40" opacity="0.1"/>
+  <rect x="20" y="20" width="760" height="410" fill="none" stroke="#ff0000" stroke-width="20" opacity="0.1"/>
+  
+  <!-- Title card -->
+  <rect x="0" y="420" width="800" height="30" fill="#000" opacity="0.8"/>
+  <text x="400" y="442" text-anchor="middle" fill="#ff4444" font-family="monospace" font-size="18">SCENE 06: THE SECOND TRANSMISSION</text>
+</svg>

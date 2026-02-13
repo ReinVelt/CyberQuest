@@ -1,0 +1,190 @@
+<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <!-- Epilogue Scene - Spring at Ryan's house, peaceful resolution -->
+  
+  <defs>
+    <!-- Spring sky gradient -->
+    <linearGradient id="springSkyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B0E0E6;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Grass gradient (brighter spring green) -->
+    <linearGradient id="springGrassGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7CFC00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00FF00;stop-opacity:0.8" />
+    </linearGradient>
+    
+    <!-- Canal gradient -->
+    <linearGradient id="springCanalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5DADE2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Bright spring sky -->
+  <rect x="0" y="0" width="1920" height="650" fill="url(#springSkyGradient)"/>
+  
+  <!-- White fluffy clouds -->
+  <g id="clouds" opacity="0.8">
+    <!-- Cloud 1 -->
+    <ellipse cx="300" cy="150" rx="80" ry="40" fill="#FFFFFF"/>
+    <ellipse cx="250" cy="160" rx="60" ry="35" fill="#FFFFFF"/>
+    <ellipse cx="350" cy="155" rx="70" ry="38" fill="#FFFFFF"/>
+    
+    <!-- Cloud 2 -->
+    <ellipse cx="800" cy="200" rx="100" ry="50" fill="#FFFFFF"/>
+    <ellipse cx="740" cy="210" rx="75" ry="42" fill="#FFFFFF"/>
+    <ellipse cx="860" cy="205" rx="85" ry="45" fill="#FFFFFF"/>
+    
+    <!-- Cloud 3 -->
+    <ellipse cx="1400" cy="120" rx="90" ry="45" fill="#FFFFFF"/>
+    <ellipse cx="1350" cy="130" rx="70" ry="38" fill="#FFFFFF"/>
+    <ellipse cx="1450" cy="125" rx="75" ry="40" fill="#FFFFFF"/>
+  </g>
+  
+  <!-- Sun -->
+  <circle cx="1700" cy="200" r="80" fill="#FFD700" opacity="0.6"/>
+  <circle cx="1700" cy="200" r="60" fill="#FFFF00" opacity="0.8"/>
+  
+  <!-- Distant horizon -->
+  <rect x="0" y="600" width="1920" height="50" fill="#90EE90" opacity="0.5"/>
+  
+  <!-- Lush spring grass -->
+  <rect x="0" y="650" width="1920" height="430" fill="url(#springGrassGradient)"/>
+  
+  <!-- Flowers in grass (colorful spring blooms) -->
+  <g id="flowers">
+    <!-- Flower cluster 1 -->
+    <circle cx="250" cy="750" r="8" fill="#FF69B4"/>
+    <circle cx="270" cy="755" r="7" fill="#FF1493"/>
+    <circle cx="290" cy="752" r="8" fill="#FF69B4"/>
+    <circle cx="260" cy="770" r="6" fill="#FFB6C1"/>
+    
+<!--    Flower cluster 2 -->
+    <circle cx="600" cy="820" r="7" fill="#FFFF00"/>
+    <circle cx="620" cy="825" r="8" fill="#FFD700"/>
+    <circle cx="640" cy="822" r="7" fill="#FFFF00"/>
+    
+    <!-- Flower cluster 3 -->
+    <circle cx="1100" cy="780" r="8" fill="#9370DB"/>
+    <circle cx="1120" cy="785" r="7" fill="#8A2BE2"/>
+    <circle cx="1140" cy="782" r="8" fill="#9370DB"/>
+    
+    <!-- Flower cluster 4 -->
+    <circle cx="1500" cy="850" r="7" fill="#FF6347"/>
+    <circle cx="1520" cy="855" r="8" fill="#FF4500"/>
+    <circle cx="1540" cy="852" r="7" fill="#FF6347"/>
+  </g>
+  
+  <!-- Canal (brighter in spring) -->
+  <ellipse cx="960" cy="850" rx="800" ry="60" fill="url(#springCanalGradient)" opacity="0.9"/>
+  <ellipse cx="960" cy="850" rx="750" ry="50" fill="#ADD8E6" opacity="0.4"/>
+  
+  <!-- Boat on canal (someone waving) -->
+  <g id="boat" transform="translate(650, 840)">
+    <ellipse cx="0" cy="0" rx="60" ry="18" fill="#8B4513" stroke="#654321" stroke-width="3"/>
+    <rect x="-50" y="-8" width="100" height="12" fill="#D2691E" stroke="#654321" stroke-width="2"/>
+    
+    <!-- Person waving -->
+    <circle cx="15" cy="-25" r="8" fill="#FDB" stroke="#000" stroke-width="2"/>
+    <rect x="12" y="-15" width="6" height="15" fill="#4169E1" stroke="#000" stroke-width="1"/>
+    <!-- Waving arm -->
+    <line x1="15" y1="-12" x2="25" y2="-28" stroke="#FDB" stroke-width="3"/>
+    <circle cx="25" cy="-28" r="3" fill="#FDB" stroke="#000" stroke-width="1"/>
+  </g>
+  
+  <!-- Ryan's house (brighter, peaceful) -->
+  <g id="house" transform="translate(700, 650)">
+    <!-- House body with shading -->
+    <rect x="0" y="40" width="180" height="120" fill="#FAFAFA" stroke="#000" stroke-width="4"/>
+    <rect x="5" y="45" width="170" height="110" fill="#FFFFFF" opacity="0.3"/>
+    
+    <!-- Red roof -->
+    <polygon points="90,0 -20,40 200,40" fill="#DC143C" stroke="#000" stroke-width="4"/>
+    <polygon points="90,5 -15,40 195,40" fill="#FF6347" opacity="0.3"/>
+    
+    <!-- Windows (sunlight glinting) -->
+    <rect x="20" y="70" width="35" height="35" fill="#87CEEB" stroke="#000" stroke-width="3"/>
+    <rect x="125" y="70" width="35" height="35" fill="#87CEEB" stroke="#000" stroke-width="3"/>
+    <line x1="37.5" y1="70" x2="37.5" y2="105" stroke="#000" stroke-width="2"/>
+    <line x1="20" y1="87.5" x2="55" y2="87.5" stroke="#000" stroke-width="2"/>
+    <line x1="142.5" y1="70" x2="142.5" y2="105" stroke="#000" stroke-width="2"/>
+    <line x1="125" y1="87.5" x2="160" y2="87.5" stroke="#000" stroke-width="2"/>
+    
+    <!-- Sunlight reflection on windows -->
+    <rect x="23" y="73" width="10" height="10" fill="#FFFFFF" opacity="0.6"/>
+    <rect x="128" y="73" width="10" height="10" fill="#FFFFFF" opacity="0.6"/>
+    
+    <!-- Door -->
+    <rect x="75" y="105" width="35" height="55" fill="#8B4513" stroke="#000" stroke-width="3"/>
+    <circle cx="102" cy="135" r="3" fill="#FFD700"/>
+  </g>
+  
+  <!-- Garage/mancave (antennas visible on roof) -->
+  <g id="garage" transform="translate(895, 685)">
+    <rect x="0" y="50" width="120" height="95" fill="#D0D0D0" stroke="#000" stroke-width="3"/>
+    <polygon points="60,25 0,50 120,50" fill="#A9A9A9" stroke="#000" stroke-width="3"/>
+    
+    <!-- Garage door -->
+    <rect x="25" y="75" width="70" height="70" fill="#8B4513" stroke="#000" stroke-width="3"/>
+    <line x1="25" y1="95" x2="95" y2="95" stroke="#654321" stroke-width="2"/>
+    <line x1="25" y1="115" x2="95" y2="115" stroke="#654321" stroke-width="2"/>
+    
+    <!-- Small antenna on roof -->
+    <line x1="60" y1="25" x2="60" y2="5" stroke="#333" stroke-width="3"/>
+    <circle cx="60" cy="5" r="4" fill="#FF0000"/>
+  </g>
+  
+  <!-- Trees in full spring bloom -->
+  <g id="springTrees">
+    <!-- Tree 1 - pink blossoms -->
+    <rect x="350" y="720" width="20" height="80" fill="#654321" stroke="#000" stroke-width="2"/>
+    <circle cx="360" cy="710" r="50" fill="#FFB6C1" stroke="#000" stroke-width="2"/>
+    <circle cx="340" cy="695" r="42" fill="#FFC0CB" stroke="#000" stroke-width="2"/>
+    <circle cx="380" cy="695" r="42" fill="#FFC0CB" stroke="#000" stroke-width="2"/>
+    
+    <!-- Tree 2 - green leaves -->
+    <rect x="1150" y="730" width="20" height="75" fill="#654321" stroke="#000" stroke-width="2"/>
+    <circle cx="1160" cy="720" r="48" fill="#32CD32" stroke="#000" stroke-width="2"/>
+    <circle cx="1142" cy="707" r="40" fill="#3CB371" stroke="#000" stroke-width="2"/>
+    <circle cx="1178" cy="707" r="40" fill="#3CB371" stroke="#000" stroke-width="2"/>
+    
+    <!-- Tree 3 - white blossoms -->
+    <rect x="1450" y="710" width="22" height="85" fill="#654321" stroke="#000" stroke-width="2"/>
+    <circle cx="1461" cy="700" r="52" fill="#FFFFFF" stroke="#000" stroke-width="2"/>
+    <circle cx="1440" cy="685" r="44" fill="#F0F8FF" stroke="#000" stroke-width="2"/>
+    <circle cx="1482" cy="685" r="44" fill="#F0F8FF" stroke="#000" stroke-width="2"/>
+  </g>
+  
+  <!-- Birds flying (freedom, new beginnings) -->
+  <g id="birds" opacity="0.6">
+    <path d="M 400 300 Q 415 290 430 300 M 420 300 Q 420 285 420 300" stroke="#000" stroke-width="3" fill="none"/>
+    <path d="M 450 320 Q 465 310 480 320 M 470 320 Q 470 305 470 320" stroke="#000" stroke-width="3" fill="none"/>
+    <path d="M 700 250 Q 715 240 730 250 M 720 250 Q 720 235 720 250" stroke="#000" stroke-width="3" fill="none"/>
+    <path d="M 1200 280 Q 1215 270 1230 280 M 1220 280 Q 1220 265 1220 280" stroke="#000" stroke-width="3" fill="none"/>
+    <path d="M 1550 230 Q 1565 220 1580 230 M 1570 230 Q 1570 215 1570 230" stroke="#000" stroke-width="3" fill="none"/>
+  </g>
+  
+  <!-- Windturbines in distance (peaceful now, no longer menacing) -->
+  <g id="windturbines" opacity="0.4">
+    <rect x="1680" y="530" width="6" height="70" fill="#DDD" stroke="#AAA" stroke-width="1"/>
+    <circle cx="1683" cy="530" r="8" fill="#FFF" stroke="#AAA" stroke-width="1"/>
+    <line x1="1683" y1="530" x2="1683" y2="500" stroke="#CCC" stroke-width="2"/>
+    <line x1="1683" y1="530" x2="1705" y2="540" stroke="#CCC" stroke-width="2"/>
+    
+    <rect x="1740" y="540" width="5" height="60" fill="#DDD" stroke="#AAA" stroke-width="1"/>
+    <circle cx="1742" cy="540" r="7" fill="#FFF" stroke="#AAA" stroke-width="1"/>
+    <line x1="1742" y1="540" x2="1742" y2="515" stroke="#CCC" stroke-width="1.5"/>
+    
+    <rect x="1800" y="545" width="5" height="55" fill="#DDD" stroke="#AAA" stroke-width="1"/>
+    <circle cx="1802" cy="545" r="6" fill="#FFF" stroke="#AAA" stroke-width="1"/>
+    <line x1="1802" y1="545" x2="1802" y2="523" stroke="#CCC" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Road -->
+  <rect x="0" y="920" width="1920" height="50" fill="#666" opacity="0.4"/>
+  <line x1="0" y1="945" x2="1920" y2="945" stroke="#FFF" stroke-width="3" stroke-dasharray="50,35" opacity="0.6"/>
+  
+  <!-- Light bloom effect (peaceful atmosphere) -->
+  <rect x="0" y="0" width="1920" height="1080" fill="url(#springSkyGradient)" opacity="0.1"/>
+</svg>

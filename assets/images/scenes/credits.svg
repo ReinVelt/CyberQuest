@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <!-- Credits Scene - Dark atmospheric background -->
+  
+  <defs>
+    <!-- Gradient for background -->
+    <linearGradient id="creditsBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Stars animation -->
+    <radialGradient id="star" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1920" height="1080" fill="url(#creditsBg)"/>
+  
+  <!-- Animated stars -->
+  <circle cx="200" cy="150" r="2" fill="url(#star)" opacity="0.8">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="450" cy="280" r="1.5" fill="url(#star)" opacity="0.6">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1200" cy="200" r="2" fill="url(#star)" opacity="0.7">
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="3.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1500" cy="400" r="1.5" fill="url(#star)" opacity="0.9">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="800" cy="600" r="2" fill="url(#star)" opacity="0.5">
+    <animate attributeName="opacity" values="0.3;0.8;0.3" dur="4.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1600" cy="750" r="1.5" fill="url(#star)" opacity="0.7">
+    <animate attributeName="opacity" values="0.4;1;0.4" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="300" cy="850" r="2" fill="url(#star)" opacity="0.6">
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="3.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1000" cy="950" r="1.5" fill="url(#star)" opacity="0.8">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2.8s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Central logo/emblem area -->
+  <g transform="translate(960, 300)">
+    <!-- Meshtastic-inspired network visualization -->
+    <g opacity="0.3" filter="url(#glow)">
+      <!-- Network nodes -->
+      <circle cx="0" cy="0" r="8" fill="#00ff88" opacity="0.8"/>
+      <circle cx="-80" cy="-60" r="5" fill="#00ff88" opacity="0.6"/>
+      <circle cx="80" cy="-60" r="5" fill="#00ff88" opacity="0.6"/>
+      <circle cx="-100" cy="40" r="5" fill="#00ff88" opacity="0.6"/>
+      <circle cx="100" cy="40" r="5" fill="#00ff88" opacity="0.6"/>
+      
+      <!-- Network connections -->
+      <line x1="0" y1="0" x2="-80" y2="-60" stroke="#00ff88" stroke-width="1" opacity="0.4"/>
+      <line x1="0" y1="0" x2="80" y2="-60" stroke="#00ff88" stroke-width="1" opacity="0.4"/>
+      <line x1="0" y1="0" x2="-100" y2="40" stroke="#00ff88" stroke-width="1" opacity="0.4"/>
+      <line x1="0" y1="0" x2="100" y2="40" stroke="#00ff88" stroke-width="1" opacity="0.4"/>
+      
+      <!-- Pulsing circle -->
+      <circle cx="0" cy="0" r="30" fill="none" stroke="#00ff88" stroke-width="2" opacity="0.4">
+        <animate attributeName="r" values="30;50;30" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0.1;0.4" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    
+    <!-- Title -->
+    <text y="100" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="32" font-weight="bold" filter="url(#glow)">
+      CYBERQUEST
+    </text>
+    <text y="135" text-anchor="middle" fill="#00ccff" font-family="monospace" font-size="18">
+      Operation ZERFALL
+    </text>
+  </g>
+  
+  <!-- Bottom decoration - Circuit board pattern -->
+  <g opacity="0.15">
+    <!-- Horizontal lines -->
+    <line x1="0" y1="1020" x2="1920" y2="1020" stroke="#00ff88" stroke-width="2"/>
+    <line x1="0" y1="1040" x2="1920" y2="1040" stroke="#00ff88" stroke-width="1"/>
+    <line x1="0" y1="1060" x2="1920" y2="1060" stroke="#00ff88" stroke-width="2"/>
+    
+    <!-- Vertical accents -->
+    <line x1="480" y1="1020" x2="480" y2="1080" stroke="#00ff88" stroke-width="1"/>
+    <line x1="960" y1="1020" x2="960" y2="1080" stroke="#00ff88" stroke-width="2"/>
+    <line x1="1440" y1="1020" x2="1440" y2="1080" stroke="#00ff88" stroke-width="1"/>
+    
+    <!-- Circuit nodes -->
+    <circle cx="480" cy="1040" r="4" fill="#00ff88"/>
+    <circle cx="960" cy="1050" r="5" fill="#00ccff"/>
+    <circle cx="1440" cy="1040" r="4" fill="#00ff88"/>
+  </g>
+  
+  <!-- Side decorative elements - Data streams -->
+  <g opacity="0.2">
+    <!-- Left side -->
+    <rect x="20" y="200" width="4" height="30" fill="#00ff88">
+      <animate attributeName="y" values="200;800;200" dur="5s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="30" y="400" width="3" height="20" fill="#00ccff">
+      <animate attributeName="y" values="400;900;400" dur="7s" repeatCount="indefinite"/>
+    </rect>
+    
+    <!-- Right side -->
+    <rect x="1896" y="300" width="4" height="30" fill="#00ff88">
+      <animate attributeName="y" values="300;850;300" dur="6s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="1887" y="500" width="3" height="20" fill="#00ccff">
+      <animate attributeName="y" values="500;950;500" dur="8s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  
+  <!-- Copyright notice area (subtle) -->
+  <text x="960" y="1000" text-anchor="middle" fill="#666" font-family="sans-serif" font-size="14" opacity="0.5">
+    © 2026 Rein Velt
+  </text>
+</svg>

@@ -1,0 +1,209 @@
+<!-- Colonel Van der Berg - AIVD Military Intelligence Officer -->
+<!-- Dutch Military Intelligence - Authoritative, Strategic, Commanding -->
+<svg width="200" height="300" viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradients for depth and modern look -->
+    <linearGradient id="uniformGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d4a2b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1f3a1f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1a0d;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="pantsGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d4a2b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a2e1a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffddbf;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f4d3b0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e8c4a0;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7a7a7a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#5a5a5a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3a3a3a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="capGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3a5a38;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#2d4a2b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1f3a1f;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#daa520;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b8860b;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Shadows -->
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.4"/>
+    </filter>
+    <filter id="lightShadow">
+      <feDropShadow dx="1" dy="1" stdDeviation="1" flood-opacity="0.3"/>
+    </filter>
+    
+    <style>
+      .sp-stroke { stroke: #000; stroke-width: 3px; stroke-linecap: round; stroke-linejoin: round; }
+      .thick-stroke { stroke: #000; stroke-width: 3.5px; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+  
+  <!-- Ground Shadow -->
+  <ellipse cx="100" cy="285" rx="40" ry="8" fill="rgba(0,0,0,0.3)"/>
+  
+  <!-- Military boots - Polished black combat boots -->
+  <ellipse cx="85" cy="293" rx="14" ry="8" fill="#1a1a1a" class="sp-stroke" filter="url(#shadow)"/>
+  <ellipse cx="115" cy="293" rx="14" ry="8" fill="#1a1a1a" class="sp-stroke" filter="url(#shadow)"/>
+  <rect x="78" y="280" width="14" height="15" fill="#2a2a2a" class="sp-stroke"/>
+  <rect x="108" y="280" width="14" height="15" fill="#2a2a2a" class="sp-stroke"/>
+  <ellipse cx="83" cy="289" rx="4" ry="2" fill="#666" opacity="0.7"/>
+  <ellipse cx="113" cy="289" rx="4" ry="2" fill="#666" opacity="0.7"/>
+  
+  <!-- Legs - Military dress uniform pants -->
+  <rect x="75" y="240" width="22" height="58" rx="3" fill="url(#pantsGrad)" class="sp-stroke" filter="url(#shadow)"/>
+  <rect x="103" y="240" width="22" height="58" rx="3" fill="url(#pantsGrad)" class="sp-stroke" filter="url(#shadow)"/>
+  <!-- Sharp crease lines -->
+  <line x1="86" y1="242" x2="86" y2="295" stroke="#0f1a0f" stroke-width="2" opacity="0.5"/>
+  <line x1="114" y1="242" x2="114" y2="295" stroke="#0f1a0f" stroke-width="2" opacity="0.5"/>
+  
+  <!-- Body - Military dress uniform jacket -->
+  <ellipse cx="100" cy="195" rx="48" ry="58" fill="url(#uniformGrad)" class="thick-stroke" filter="url(#shadow)"/>
+  
+  <!-- White dress shirt collar -->
+  <path d="M 82 165 Q 100 170 118 165 L 118 175 Q 100 177 82 175 Z" fill="#ffffff" class="sp-stroke" filter="url(#lightShadow)"/>
+  
+  <!-- Military tie - Dark olive green -->
+  <ellipse cx="100" cy="170" r="4" fill="#1f3a1f" class="sp-stroke"/>
+  <path d="M 100 174 L 97 195 L 100 210 L 103 195 Z" fill="#1f3a1f" class="sp-stroke" filter="url(#lightShadow)"/>
+  
+  <!-- Military jacket buttons - Brass buttons down center -->
+  <circle cx="100" cy="185" r="4" fill="url(#goldGrad)" class="sp-stroke"/>
+  <circle cx="100" cy="200" r="4" fill="url(#goldGrad)" class="sp-stroke"/>
+  <circle cx="100" cy="215" r="4" fill="url(#goldGrad)" class="sp-stroke"/>
+  <circle cx="100" cy="230" r="4" fill="url(#goldGrad)" class="sp-stroke"/>
+  
+  <!-- Military jacket seams and structure -->
+  <path d="M 68 175 L 78 180 L 78 240" fill="none" stroke="#0d1a0d" stroke-width="2.5"/>
+  <path d="M 132 175 L 122 180 L 122 240" fill="none" stroke="#0d1a0d" stroke-width="2.5"/>
+  <line x1="78" y1="190" x2="50" y2="190" stroke="#2d4a2b" stroke-width="2"/>
+  <line x1="122" y1="190" x2="150" y2="190" stroke="#2d4a2b" stroke-width="2"/>
+  
+  <!-- Arms - Military uniform sleeves -->
+  <rect x="48" y="178" width="22" height="62" rx="10" fill="url(#uniformGrad)" class="sp-stroke" filter="url(#shadow)"/>
+  <rect x="130" y="178" width="22" height="62" rx="10" fill="url(#uniformGrad)" class="sp-stroke" filter="url(#shadow)"/>
+  
+  <!-- Rank stripes on sleeves - Colonel insignia -->
+  <rect x="50" y="220" width="18" height="3" fill="url(#goldGrad)"/>
+  <rect x="50" y="226" width="18" height="3" fill="url(#goldGrad)"/>
+  <rect x="50" y="232" width="18" height="3" fill="url(#goldGrad)"/>
+  <rect x="132" y="220" width="18" height="3" fill="url(#goldGrad)"/>
+  <rect x="132" y="226" width="18" height="3" fill="url(#goldGrad)"/>
+  <rect x="132" y="232" width="18" height="3" fill="url(#goldGrad)"/>
+  
+  <!-- Hands - Stern military posture -->
+  <ellipse cx="59" cy="243" rx="11" ry="13" fill="url(#skinGrad)" class="sp-stroke" filter="url(#lightShadow)"/>
+  <ellipse cx="141" cy="243" rx="11" ry="13" fill="url(#skinGrad)" class="sp-stroke" filter="url(#lightShadow)"/>
+  
+  <!-- Military tablet/documents in left hand -->
+  <rect x="50" y="232" width="18" height="24" rx="1" fill="#2a2a2a" class="sp-stroke" filter="url(#shadow)"/>
+  <rect x="52" y="234" width="14" height="20" rx="0.5" fill="#3a5a38"/>
+  <line x1="54" y1="238" x2="64" y2="238" stroke="#ffd700" stroke-width="1.5"/>
+  <line x1="54" y1="242" x2="64" y2="242" stroke="#ffd700" stroke-width="1"/>
+  <line x1="54" y1="245" x2="64" y2="245" stroke="#ffd700" stroke-width="1"/>
+  
+  <!-- Neck -->
+  <rect x="90" y="155" width="20" height="18" rx="4" fill="url(#skinGrad)" class="sp-stroke"/>
+  
+  <!-- Head - Stern military features -->
+  <ellipse cx="100" cy="128" rx="36" ry="40" fill="url(#skinGrad)" class="thick-stroke" filter="url(#shadow)"/>
+  
+  <!-- Ears -->
+  <ellipse cx="65" cy="128" rx="9" ry="12" fill="url(#skinGrad)" class="sp-stroke"/>
+  <ellipse cx="135" cy="128" rx="9" ry="12" fill="url(#skinGrad)" class="sp-stroke"/>
+  <ellipse cx="67" cy="128" rx="4" ry="6" fill="#e8c4a0"/>
+  <ellipse cx="133" cy="128" rx="4" ry="6" fill="#e8c4a0"/>
+  
+  <!-- Military cap - Officer's dress cap -->
+  <ellipse cx="100" cy="95" rx="40" ry="15" fill="url(#capGrad)" class="thick-stroke" filter="url(#shadow)"/>
+  <path d="M 60 95 Q 60 85 100 78 Q 140 85 140 95" fill="url(#capGrad)" class="thick-stroke"/>
+  <!-- Cap visor - Black shiny peak -->
+  <ellipse cx="100" cy="95" rx="42" ry="10" fill="#1a1a1a" class="thick-stroke"/>
+  <ellipse cx="100" cy="93" rx="38" ry="6" fill="#2a2a2a" opacity="0.6"/>
+  <!-- Cap badge - Dutch military insignia -->
+  <circle cx="100" cy="85" r="8" fill="url(#goldGrad)" class="sp-stroke"/>
+  <circle cx="100" cy="85" r="5" fill="#c8102e"/>
+  <circle cx="100" cy="85" r="2" fill="url(#goldGrad)"/>
+  
+  <!-- Short military haircut - Gray/salt-and-pepper -->
+  <path d="M 64 103 Q 68 98 75 100" fill="url(#hairGrad)" class="sp-stroke"/>
+  <path d="M 136 103 Q 132 98 125 100" fill="url(#hairGrad)" class="sp-stroke"/>
+  <line x1="67" y1="100" x2="70" y2="106" stroke="#5a5a5a" stroke-width="2"/>
+  <line x1="133" y1="100" x2="130" y2="106" stroke="#5a5a5a" stroke-width="2"/>
+  
+  <!-- Eyebrows - Stern, authoritative expression -->
+  <path d="M 73 116 Q 83 114 92 117" fill="none" stroke="#4a4a4a" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M 108 117 Q 117 114 127 116" fill="none" stroke="#4a4a4a" stroke-width="3.5" stroke-linecap="round"/>
+  
+  <!-- Eyes - Commanding, steel-blue military gaze -->
+  <ellipse cx="82" cy="130" rx="10" ry="11" fill="#ffffff" class="sp-stroke"/>
+  <ellipse cx="118" cy="130" rx="10" ry="11" fill="#ffffff" class="sp-stroke"/>
+  <!-- Steel-blue irises with intensity -->
+  <circle cx="83" cy="132" r="6" fill="#4682b4"/>
+  <circle cx="119" cy="132" r="6" fill="#4682b4"/>
+  <circle cx="83" cy="133" r="4" fill="#2c5f7e"/>
+  <circle cx="119" cy="133" r="4" fill="#2c5f7e"/>
+  <!-- Pupils - Direct gaze -->
+  <circle cx="84" cy="133" r="2.5" fill="#000"/>
+  <circle cx="120" cy="133" r="2.5" fill="#000"/>
+  <!-- Sharp highlights -->
+  <circle cx="85" cy="130" r="2" fill="#ffffff"/>
+  <circle cx="121" cy="130" r="2" fill="#ffffff"/>
+  <circle cx="81" cy="135" r="1" fill="#ffffff" opacity="0.7"/>
+  <circle cx="117" cy="135" r="1" fill="#ffffff" opacity="0.7"/>
+  
+  <!-- Nose - Strong, commanding -->
+  <path d="M 100 134 L 100 147" fill="none" stroke="#000" stroke-width="2.5"/>
+  <path d="M 100 147 Q 95 149 92 147" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M 100 147 Q 105 149 108 147" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="95" cy="146" rx="2" ry="3" fill="#e8c4a0"/>
+  <ellipse cx="105" cy="146" rx="2" ry="3" fill="#e8c4a0"/>
+  
+  <!-- Mouth - Firm, authoritative line -->
+  <path d="M 82 156 Q 100 157 118 156" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="90" y1="157" x2="110" y2="157" stroke="#ce9999" stroke-width="1.5" opacity="0.3"/>
+  
+  <!-- Strong jawline and command presence -->
+  <path d="M 68 150 Q 66 155 68 160" stroke="#d4a98a" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M 132 150 Q 134 155 132 160" stroke="#d4a98a" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M 73 162 Q 78 165 83 164" stroke="#d4a98a" stroke-width="1.5" fill="none" opacity="0.3"/>
+  <path d="M 127 162 Q 122 165 117 164" stroke="#d4a98a" stroke-width="1.5" fill="none" opacity="0.3"/>
+  
+  <!-- Service ribbons/medals on chest - Multiple campaign ribbons -->
+  <rect x="72" y="182" width="26" height="6" rx="1" fill="#c8102e" class="sp-stroke"/>
+  <rect x="72" y="190" width="26" height="6" rx="1" fill="#003DA5" class="sp-stroke"/>
+  <rect x="72" y="198" width="26" height="6" rx="1" fill="#ff8c00" class="sp-stroke"/>
+  <line x1="78" y1="182" x2="78" y2="188" stroke="#ffd700" stroke-width="1"/>
+  <line x1="85" y1="182" x2="85" y2="188" stroke="#ffd700" stroke-width="1"/>
+  <line x1="92" y1="182" x2="92" y2="188" stroke="#ffd700" stroke-width="1"/>
+  
+  <!-- Name plate - Col. Van der Berg -->
+  <rect x="105" y="182" width="30" height="7" rx="1" fill="#1a1a1a" class="sp-stroke"/>
+  <text x="120" y="187.5" font-size="5" fill="#ffd700" font-weight="bold" text-anchor="middle">VD BERG</text>
+  
+  <!-- AIVD Military Intelligence Badge -->
+  <rect x="105" y="193" width="30" height="24" rx="2" fill="#2a2a2a" class="sp-stroke" filter="url(#lightShadow)"/>
+  <rect x="107" y="195" width="26" height="9" rx="1" fill="#0066cc"/>
+  <text x="120" y="201" font-size="6" fill="#fff" font-weight="bold" text-anchor="middle">AIVD-MI</text>
+  <line x1="108" y1="207" x2="132" y2="207" stroke="#ffd700" stroke-width="1.5"/>
+  <line x1="108" y1="210" x2="132" y2="210" stroke="#ffd700" stroke-width="1.5"/>
+  <line x1="108" y1="213" x2="132" y2="213" stroke="#ffd700" stroke-width="1.5"/>
+  
+  <!-- Dutch flag patch on shoulder -->
+  <rect x="132" y="168" width="16" height="12" rx="1" fill="#ffffff" stroke="#000" stroke-width="2" filter="url(#lightShadow)"/>
+  <rect x="132" y="168" width="16" height="4" fill="#c8102e"/>
+  <rect x="132" y="176" width="16" height="4" fill="#003DA5"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- USB Stick Body -->
+  <rect x="18" y="24" width="28" height="36" fill="#2a2a2a" stroke="#1a1a1a" stroke-width="2" rx="3"/>
+  
+  <!-- USB metal connector -->
+  <rect x="24" y="10" width="16" height="16" fill="#c0c0c0" stroke="#808080" stroke-width="1.5"/>
+  
+  <!-- USB contacts -->
+  <rect x="26" y="14" width="4" height="8" fill="#404040"/>
+  <rect x="34" y="14" width="4" height="8" fill="#404040"/>
+  
+  <!-- Detail lines on body -->
+  <line x1="32" y1="30" x2="32" y2="54" stroke="#3a3a3a" stroke-width="2"/>
+  <circle cx="32" cy="40" r="3" fill="#4a4a4a"/>
+  
+  <!-- Warning tape wrap -->
+  <rect x="20" y="46" width="24" height="6" fill="#ffd700" opacity="0.4"/>
+  <text x="22" y="51" font-family="monospace" font-size="5" fill="#000">TRUST</text>
+  
+  <!-- Shine effect -->
+  <rect x="20" y="26" width="4" height="8" fill="#ffffff" opacity="0.3"/>
+</svg>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- HENK VISSER - South Park Style Character -->
+  <!-- Radio astronomer, wild Einstein hair, lab coat, excited expression -->
+  
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- BODY (tall, thin, scholarly) -->
+  <!-- Lab coat -->
+  <path d="M60,140 L55,290 L75,290 L80,180 L120,180 L125,290 L145,290 L140,140 Q100,130 60,140 Z" 
+        fill="#f5f5f5" filter="url(#shadow)"/>
+  
+  <!-- Lab coat collar -->
+  <path d="M70,140 L85,180 L100,160 L115,180 L130,140" stroke="#e0e0e0" stroke-width="2" fill="none"/>
+  
+  <!-- Lab coat pockets -->
+  <rect x="62" y="200" width="20" height="25" fill="#e8e8e8" rx="2"/>
+  <rect x="118" y="200" width="20" height="25" fill="#e8e8e8" rx="2"/>
+  <!-- Pens in pocket -->
+  <rect x="65" y="195" width="3" height="15" fill="#3333aa"/>
+  <rect x="70" y="197" width="3" height="13" fill="#aa3333"/>
+  <rect x="75" y="196" width="3" height="14" fill="#33aa33"/>
+  
+  <!-- Shirt underneath (band t-shirt visible) -->
+  <rect x="85" y="160" width="30" height="30" fill="#222"/>
+  <text x="100" y="178" text-anchor="middle" font-family="Arial" font-size="6" fill="#ff6600">PINK</text>
+  <text x="100" y="185" text-anchor="middle" font-family="Arial" font-size="5" fill="#ff6600">FLOYD</text>
+  
+  <!-- LEGS (dress pants) -->
+  <rect x="70" y="280" width="22" height="15" fill="#2a2a4a"/>
+  <rect x="108" y="280" width="22" height="15" fill="#2a2a4a"/>
+  <!-- Shoes -->
+  <rect x="67" y="292" width="28" height="6" rx="2" fill="#4a3a2a"/>
+  <rect x="105" y="292" width="28" height="6" rx="2" fill="#4a3a2a"/>
+  
+  <!-- ARMS -->
+  <path d="M55,145 Q35,200 50,240" stroke="#f5f5f5" stroke-width="25" fill="none"/>
+  <path d="M145,145 Q165,200 150,240" stroke="#f5f5f5" stroke-width="25" fill="none"/>
+  
+  <!-- Hands (gesturing excitedly) -->
+  <circle cx="50" cy="245" r="10" fill="#f5d0b5"/>
+  <circle cx="150" cy="245" r="10" fill="#f5d0b5"/>
+  
+  <!-- HEAD (round) -->
+  <circle cx="100" cy="80" r="50" fill="#f5d0b5" filter="url(#shadow)"/>
+  
+  <!-- WILD EINSTEIN HAIR (the signature look) -->
+  <!-- Main hair mass -->
+  <ellipse cx="100" cy="45" rx="55" ry="30" fill="#f0f0f0"/>
+  <!-- Wild tufts sticking out everywhere -->
+  <ellipse cx="45" cy="55" rx="20" ry="12" fill="#e8e8e8"/>
+  <ellipse cx="155" cy="55" rx="20" ry="12" fill="#e8e8e8"/>
+  <ellipse cx="55" cy="40" rx="15" ry="20" fill="#f5f5f5"/>
+  <ellipse cx="145" cy="40" rx="15" ry="20" fill="#f5f5f5"/>
+  <ellipse cx="100" cy="25" rx="25" ry="15" fill="#e0e0e0"/>
+  <!-- Extra wild bits -->
+  <ellipse cx="35" cy="70" rx="12" ry="8" fill="#e8e8e8"/>
+  <ellipse cx="165" cy="70" rx="12" ry="8" fill="#e8e8e8"/>
+  <ellipse cx="70" cy="30" rx="10" ry="12" fill="#f0f0f0"/>
+  <ellipse cx="130" cy="30" rx="10" ry="12" fill="#f0f0f0"/>
+  
+  <!-- EARS -->
+  <ellipse cx="50" cy="85" rx="8" ry="12" fill="#f5d0b5"/>
+  <ellipse cx="150" cy="85" rx="8" ry="12" fill="#f5d0b5"/>
+  
+  <!-- EYES (wide, excited, perpetually amazed) -->
+  <circle cx="80" cy="75" r="15" fill="#fff"/>
+  <circle cx="120" cy="75" r="15" fill="#fff"/>
+  <!-- Irises -->
+  <circle cx="82" cy="75" r="7" fill="#5588aa"/>
+  <circle cx="122" cy="75" r="7" fill="#5588aa"/>
+  <!-- Pupils (small - excited) -->
+  <circle cx="82" cy="75" r="3" fill="#1a1a1a"/>
+  <circle cx="122" cy="75" r="3" fill="#1a1a1a"/>
+  <!-- Reflections -->
+  <circle cx="80" cy="73" r="2" fill="#fff"/>
+  <circle cx="120" cy="73" r="2" fill="#fff"/>
+  
+  <!-- Eyebrows (raised in excitement) -->
+  <path d="M60,55 Q80,48 95,55" stroke="#aaa" stroke-width="4" fill="none"/>
+  <path d="M105,55 Q120,48 140,55" stroke="#aaa" stroke-width="4" fill="none"/>
+  
+  <!-- NOSE -->
+  <ellipse cx="100" cy="90" rx="6" ry="7" fill="#e5c0a5"/>
+  
+  <!-- MOUTH (big excited smile) -->
+  <path d="M75,105 Q100,125 125,105" stroke="#8b4513" stroke-width="3" fill="#4a2020"/>
+  <!-- Teeth -->
+  <rect x="85" y="105" width="30" height="8" fill="#fff"/>
+  
+  <!-- GLASSES (reading/science glasses) -->
+  <rect x="60" y="65" width="35" height="25" rx="3" fill="none" stroke="#666" stroke-width="3"/>
+  <rect x="105" y="65" width="35" height="25" rx="3" fill="none" stroke="#666" stroke-width="3"/>
+  <line x1="95" y1="77" x2="105" y2="77" stroke="#666" stroke-width="3"/>
+  <line x1="60" y1="77" x2="50" y2="72" stroke="#666" stroke-width="2"/>
+  <line x1="140" y1="77" x2="150" y2="72" stroke="#666" stroke-width="2"/>
+  <!-- Lenses -->
+  <rect x="62" y="67" width="31" height="21" rx="2" fill="#f8f8ff" opacity="0.2"/>
+  <rect x="107" y="67" width="31" height="21" rx="2" fill="#f8f8ff" opacity="0.2"/>
+  
+  <!-- ID Badge -->
+  <g transform="translate(60, 160)">
+    <rect x="0" y="0" width="20" height="28" fill="#fff" rx="2"/>
+    <rect x="3" y="3" width="14" height="10" fill="#4a88cc"/>
+    <text x="10" y="18" text-anchor="middle" font-family="Arial" font-size="4" fill="#333">ASTRON</text>
+    <text x="10" y="23" text-anchor="middle" font-family="Arial" font-size="3" fill="#666">Dr. Visser</text>
+    <circle x="5" y="0" r="3" fill="#ccc"/>
+  </g>
+</svg>

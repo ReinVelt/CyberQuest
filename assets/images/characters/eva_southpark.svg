@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- EVA WEBER - Modern South Park Style Character -->
+  <!-- German BND agent, tall, slim, dark hair, turtleneck, professional -->
+  
+  <defs>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f8d4b8"/>
+      <stop offset="100%" style="stop-color:#f0c0a0"/>
+    </linearGradient>
+    
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a2a2a"/>
+      <stop offset="100%" style="stop-color:#0a0a0a"/>
+    </linearGradient>
+    
+    <linearGradient id="turtleneckGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a2a2a"/>
+      <stop offset="100%" style="stop-color:#0a0a0a"/>
+    </linearGradient>
+    
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+    
+    <filter id="lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  
+  <!-- BOOTS -->
+  <ellipse cx="84" cy="294" rx="14" ry="5" fill="#0a0a0a" opacity="0.3"/>
+  <ellipse cx="116" cy="294" rx="14" ry="5" fill="#0a0a0a" opacity="0.3"/>
+  <rect x="72" y="287" width="24" height="9" rx="3" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+  <rect x="104" y="287" width="24" height="9" rx="3" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+  <line x1="78" y1="290" x2="90" y2="290" stroke="#333" stroke-width="1"/>
+  <line x1="110" y1="290" x2="122" y2="290" stroke="#333" stroke-width="1"/>
+  
+  <!-- LEGS (slim, black pants) -->
+  <rect x="75" y="268" width="20" height="22" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+  <rect x="105" y="268" width="20" height="22" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+  
+  <!-- BODY (tall, slim - black turtleneck) -->
+  <path d="M68,128 L62,270 L138,270 L132,128 Q100,118 68,128 Z" 
+        fill="url(#turtleneckGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+  
+  <!-- Turtleneck collar -->
+  <ellipse cx="100" cy="128" rx="28" ry="12" fill="#2a2a2a" stroke="#000" stroke-width="2.5"/>
+  <path d="M72,128 Q100,140 128,128 Q100,150 72,128 Z" fill="#3a3a3a" stroke="#000" stroke-width="2"/>
+  
+  <!-- USB drive in pocket (subtle detail) -->
+  <rect x="73" y="195" width="18" height="30" fill="#0a0a0a" stroke="#000" stroke-width="1.5" rx="2"/>
+  <rect x="75" y="197" width="14" height="4" fill="#334455" rx="1"/>
+  
+  <!-- ARMS (slim) -->
+  <path d="M62,138 Q48,175 58,218 L74,220 Q68,178 78,148" 
+        fill="url(#turtleneckGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <path d="M138,138 Q152,175 142,218 L126,220 Q132,178 122,148" 
+        fill="url(#turtleneckGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  
+  <!-- Hands (confident pose) -->
+  <ellipse cx="60" cy="220" rx="10" ry="12" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <ellipse cx="140" cy="220" rx="10" ry="12" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  
+  <!-- Watch on left wrist -->
+  <rect x="52" y="212" width="14" height="16" fill="#2a2a2a" stroke="#000" stroke-width="2" rx="2"/>
+  <rect x="54" y="214" width="10" height="12" fill="#1a3a2a" stroke="#000" stroke-width="1"/>
+  <line x1="59" y1="217" x2="59" y2="222" stroke="#33ff66" stroke-width="1.5"/>
+  <line x1="59" y1="220" x2="62" y2="220" stroke="#33ff66" stroke-width="1"/>
+  
+  <!-- HEAD (angular, intelligent) -->
+  <ellipse cx="100" cy="72" rx="42" ry="52" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+  
+  <!-- HAIR (short, dark, angular modern style) -->
+  <path d="M58,58 Q58,22 100,18 Q142,22 142,58 L140,48 Q100,38 60,48 Z" 
+        fill="url(#hairGrad)" stroke="#000" stroke-width="3"/>
+  
+  <!-- Side hair layers -->
+  <path d="M58,58 Q54,68 56,82" fill="url(#hairGrad)" stroke="#000" stroke-width="2.5"/>
+  <path d="M142,58 Q146,68 144,82" fill="url(#hairGrad)" stroke="#000" stroke-width="2.5"/>
+  
+  <!-- Modern bangs/fringe with highlights -->
+  <path d="M64,52 Q78,58 84,48 Q94,60 104,50 Q114,58 128,52 L128,44 Q100,34 64,44 Z" 
+        fill="#1a1a1a" stroke="#000" stroke-width="2"/>
+  <path d="M88,42 Q92,48 96,44" stroke="#3a3a3a" stroke-width="2" fill="none"/>
+  <path d="M104,42 Q108,48 112,44" stroke="#3a3a3a" stroke-width="2" fill="none"/>
+  
+  <!-- EARS (partially covered) -->
+  <ellipse cx="58" cy="72" rx="7" ry="12" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <ellipse cx="60" cy="72" rx="4" ry="7" fill="#f5caa8"/>
+  <ellipse cx="142" cy="72" rx="7" ry="12" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <ellipse cx="140" cy="72" rx="4" ry="7" fill="#f5caa8"/>
+  
+  <!-- Earpiece (spy tech) -->
+  <circle cx="56" cy="72" r="4" fill="#2a2a2a" stroke="#000" stroke-width="1.5"/>
+  <circle cx="56" cy="72" r="2" fill="#334466"/>
+  
+  <!-- EYES (intelligent, focused) -->
+  <!-- Eye whites -->
+  <ellipse cx="78" cy="68" rx="12" ry="10" fill="#fff" stroke="#000" stroke-width="2"/>
+  <ellipse cx="122" cy="68" rx="12" ry="10" fill="#fff" stroke="#000" stroke-width="2"/>
+  
+  <!-- Irises (blue-gray, sharp) -->
+  <circle cx="80" cy="68" r="6" fill="#4a7a9a"/>
+  <circle cx="124" cy="68" r="6" fill="#4a7a9a"/>
+  
+  <!-- Pupils -->
+  <circle cx="80" cy="68" r="3" fill="#1a1a1a"/>
+  <circle cx="124" cy="68" r="3" fill="#1a1a1a"/>
+  
+  <!-- Light reflections -->
+  <circle cx="78" cy="66" r="2" fill="#fff" opacity="0.9"/>
+  <circle cx="122" cy="66" r="2" fill="#fff" opacity="0.9"/>
+  <circle cx="82" cy="70" r="1" fill="#fff" opacity="0.6"/>
+  <circle cx="126" cy="70" r="1" fill="#fff" opacity="0.6"/>
+  
+  <!-- Eyelids (slightly narrowed - calculating) -->
+  <path d="M66,62 Q78,59 90,62" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M110,62 Q122,59 134,62" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Lower eyelids -->
+  <path d="M68,74 Q78,77 88,74" stroke="#e0b898" stroke-width="1.5" fill="none"/>
+  <path d="M112,74 Q122,77 132,74" stroke="#e0b898" stroke-width="1.5" fill="none"/>
+  
+  <!-- EYEBROWS (arched, expressive) -->
+  <path d="M68,54 Q78,50 90,54" stroke="#1a1a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M110,54 Q122,50 132,54" stroke="#1a1a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- NOSE (slim, angular) -->
+  <path d="M100,68 L98,84 L102,84 Z" fill="#e8c8a8" stroke="#000" stroke-width="1.5"/>
+  <ellipse cx="100" cy="85" rx="5" ry="3" fill="#e5bfa0"/>
+  <ellipse cx="97" cy="85" rx="2" ry="1.5" fill="#d5af90"/>
+  <ellipse cx="103" cy="85" rx="2" ry="1.5" fill="#d5af90"/>
+  
+  <!-- MOUTH (slight knowing smile) -->
+  <path d="M86,98 Q100,105 114,98" stroke="#9b5a5a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Subtle smirk -->
+  <path d="M114,98 Q117,96 118,94" stroke="#9b5a5a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- Lip detail -->
+  <path d="M90,98 Q100,101 110,98" stroke="#aa6a6a" stroke-width="1" fill="none" opacity="0.6"/>
+  
+  <!-- Subtle cheekbones (angular face) -->
+  <path d="M62,80 Q65,90 72,95" stroke="#e0b898" stroke-width="1.5" fill="none" opacity="0.4"/>
+  <path d="M138,80 Q135,90 128,95" stroke="#e0b898" stroke-width="1.5" fill="none" opacity="0.4"/>
+  
+  <!-- Jawline hints -->
+  <path d="M58,88 Q62,108 78,118" stroke="#e5bfa0" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M142,88 Q138,108 122,118" stroke="#e5bfa0" stroke-width="1" fill="none" opacity="0.5"/>
+</svg>

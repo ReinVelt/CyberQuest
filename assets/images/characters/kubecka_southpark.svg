@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- CHRIS KUBECKA - Modern South Park Style Character -->
+  <!-- 60-year-old Puerto Rican cybersecurity expert, tough, experienced, long blond/gray hair -->
+  
+  <defs>
+    <!-- Gradients for depth -->
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4c4a0"/>
+      <stop offset="50%" style="stop-color:#b8a880"/>
+      <stop offset="100%" style="stop-color:#9a9a9a"/>
+    </linearGradient>
+    
+    <linearGradient id="jacketGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3a4a5a"/>
+      <stop offset="100%" style="stop-color:#2a3a4a"/>
+    </linearGradient>
+    
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4a882"/>
+      <stop offset="100%" style="stop-color:#c4987a"/>
+    </linearGradient>
+    
+    <!-- Shadow filters -->
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+    
+    <filter id="lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  
+  <!-- COMBAT BOOTS (heavy duty) -->
+  <ellipse cx="85" cy="294" rx="16" ry="6" fill="#0a0a0a" opacity="0.3"/>
+  <ellipse cx="115" cy="294" rx="16" ry="6" fill="#0a0a0a" opacity="0.3"/>
+  <rect x="72" y="287" width="26" height="10" rx="2" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+  <rect x="102" y="287" width="26" height="10" rx="2" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+  <!-- Boot laces -->
+  <line x1="78" y1="290" x2="90" y2="290" stroke="#444" stroke-width="1.5"/>
+  <line x1="108" y1="290" x2="120" y2="290" stroke="#444" stroke-width="1.5"/>
+  
+  <!-- LEGS (tactical cargo pants) -->
+  <rect x="74" y="268" width="22" height="22" fill="#3a4a3a" stroke="#000" stroke-width="2.5"/>
+  <rect x="104" y="268" width="22" height="22" fill="#3a4a3a" stroke="#000" stroke-width="2.5"/>
+  <!-- Cargo pockets -->
+  <rect x="76" y="272" width="8" height="12" fill="#2a3a2a" stroke="#000" stroke-width="1"/>
+  <rect x="106" y="272" width="8" height="12" fill="#2a3a2a" stroke="#000" stroke-width="1"/>
+  
+  <!-- BODY (athletic build, tactical jacket) -->
+  <path d="M65,133 L58,270 L142,270 L135,133 Q100,123 65,133 Z" 
+        fill="url(#jacketGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+  
+  <!-- Jacket collar (high, tactical) -->
+  <ellipse cx="100" cy="133" rx="32" ry="13" fill="#4a5a6a" stroke="#000" stroke-width="2.5"/>
+  <path d="M68,133 Q100,145 132,133 Q100,155 68,133 Z" fill="#3a4a5a" stroke="#000" stroke-width="2"/>
+  
+  <!-- Zipper -->
+  <line x1="100" y1="145" x2="100" y2="268" stroke="#888" stroke-width="3.5"/>
+  <rect x="97" y="145" width="6" height="10" fill="#aaa" stroke="#000" stroke-width="1.5" rx="1"/>
+  
+  <!-- Tactical shoulder patches -->
+  <rect x="66" y="140" width="18" height="14" rx="2" fill="#27ae60" stroke="#000" stroke-width="1.5"/>
+  <text x="75" y="150" font-size="7" fill="#fff" font-weight="bold" text-anchor="middle">NATO</text>
+  <rect x="116" y="140" width="18" height="14" rx="2" fill="#27ae60" stroke="#000" stroke-width="1.5"/>
+  <text x="125" y="150" font-size="7" fill="#fff" font-weight="bold" text-anchor="middle">SEC</text>
+  
+  <!-- ARMS (strong, ready) -->
+  <path d="M65,143 Q43,185 53,223 L70,225 Q63,185 73,153" 
+        fill="url(#jacketGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <path d="M135,143 Q157,185 147,223 L130,225 Q137,185 127,153" 
+        fill="url(#jacketGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  
+  <!-- Hands (tough, weathered) -->
+  <ellipse cx="55" cy="228" rx="11" ry="13" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="145" cy="228" rx="11" ry="13" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  
+  <!-- Tactical gloves (fingerless) -->
+  <rect x="48" y="223" width="14" height="8" fill="#2a2a2a" stroke="#000" stroke-width="1.5" rx="2"/>
+  <rect x="138" y="223" width="14" height="8" fill="#2a2a2a" stroke="#000" stroke-width="1.5" rx="2"/>
+  
+  <!-- HEAD (weathered, tough, experienced) -->
+  <ellipse cx="100" cy="78" rx="44" ry="54" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+  
+  <!-- LONG BLOND/GRAY HAIR (flowing, tough look) -->
+  <!-- Top of head -->
+  <ellipse cx="100" cy="40" rx="50" ry="28" fill="url(#hairGrad)" stroke="#000" stroke-width="3"/>
+  
+  <!-- Long flowing hair sides -->
+  <path d="M50,50 Q42,65 44,80 Q43,95 46,110 Q48,125 52,140 Q54,155 58,165 Q60,175 62,180" 
+        fill="url(#hairGrad)" stroke="#000" stroke-width="2.5"/>
+  <path d="M150,50 Q158,65 156,80 Q157,95 154,110 Q152,125 148,140 Q146,155 142,165 Q140,175 138,180" 
+        fill="url(#hairGrad)" stroke="#000" stroke-width="2.5"/>
+  
+  <!-- Hair layers (wild, tough) -->
+  <ellipse cx="62" cy="58" rx="16" ry="26" fill="#c4b490" stroke="#000" stroke-width="2"/>
+  <ellipse cx="138" cy="58" rx="16" ry="26" fill="#c4b490" stroke="#000" stroke-width="2"/>
+  
+  <!-- Gray streaks (age, experience) -->
+  <path d="M70,40 Q68,65 70,90 Q72,115 74,140" stroke="#b0b0b0" stroke-width="4" fill="none" opacity="0.6"/>
+  <path d="M130,40 Q132,65 130,90 Q128,115 126,140" stroke="#b0b0b0" stroke-width="4" fill="none" opacity="0.6"/>
+  <path d="M55,70 Q53,95 55,120 Q57,145 59,165" stroke="#c8c8c8" stroke-width="3" fill="none" opacity="0.5"/>
+  <path d="M145,70 Q147,95 145,120 Q143,145 141,165" stroke="#c8c8c8" stroke-width="3" fill="none" opacity="0.5"/>
+  
+  <!-- Bangs/front hair (swept) -->
+  <path d="M65,48 Q75,52 80,46 Q90,54 100,48 Q110,54 120,46 Q125,52 135,48" 
+        fill="#c4b490" stroke="#000" stroke-width="2.5"/>
+  
+  <!-- EARS -->
+  <ellipse cx="52" cy="78" rx="9" ry="14" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="55" cy="78" rx="5" ry="9" fill="#c49874"/>
+  <ellipse cx="148" cy="78" rx="9" ry="14" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="145" cy="78" rx="5" ry="9" fill="#c49874"/>
+  
+  <!-- Tactical earpiece -->
+  <circle cx="146" cy="76" r="4" fill="#3a4a5a" stroke="#000" stroke-width="1.5"/>
+  <circle cx="146" cy="76" r="2" fill="#4a9af0"/>
+  <line x1="146" y1="76" x2="153" y2="74" stroke="#3a4a5a" stroke-width="2.5"/>
+  
+  <!-- EYES (sharp, experienced, tough) -->
+  <ellipse cx="82" cy="75" rx="11" ry="14" fill="white" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="75" rx="11" ry="14" fill="white" stroke="#000" stroke-width="2"/>
+  
+  <!-- Irises (steel gray/blue, piercing) -->
+  <circle cx="83" cy="76" r="7" fill="#6a8a9a"/>
+  <circle cx="119" cy="76" r="7" fill="#6a8a9a"/>
+  
+  <!-- Pupils (focused, alert) -->
+  <circle cx="83" cy="76" r="3.5" fill="#2a3a4a"/>
+  <circle cx="119" cy="76" r="3.5" fill="#2a3a4a"/>
+  
+  <!-- Eye highlights (sharp, determined) -->
+  <circle cx="81" cy="74" r="2" fill="#fff" opacity="0.9"/>
+  <circle cx="117" cy="74" r="2" fill="#fff" opacity="0.9"/>
+  
+  <!-- EYEBROWS (thick, strong, determined) -->
+  <path d="M68,60 Q80,56 92,60" stroke="#a89870" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M108,60 Q120,56 132,60" stroke="#a89870" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  
+  <!-- Brow intensity (furrowed slightly) -->
+  <line x1="92" y1="62" x2="94" y2="65" stroke="#a89870" stroke-width="2.5" opacity="0.5" stroke-linecap="round"/>
+  <line x1="108" y1="62" x2="106" y2="65" stroke="#a89870" stroke-width="2.5" opacity="0.5" stroke-linecap="round"/>
+  
+  <!-- NOSE (strong, defined) -->
+  <path d="M100,76 L100,89" stroke="#c49874" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="100" cy="90" rx="6" ry="8" fill="#c49874" stroke="#000" stroke-width="1.5"/>
+  <ellipse cx="96" cy="90" rx="3" ry="4" fill="#b48864"/>
+  <ellipse cx="104" cy="90" rx="3" ry="4" fill="#b48864"/>
+  
+  <!-- MOUTH (firm, determined, slight tough smile) -->
+  <path d="M84,102 Q100,106 116,102" stroke="#8b6a5a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Slight smirk -->
+  <path d="M116,102 Q119,100 120,98" stroke="#8b6a5a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  
+  <!-- AGE LINES (weathered, experienced, 60 years) -->
+  <path d="M70,78 Q68,82 70,86" stroke="#c49874" stroke-width="1.5" opacity="0.5"/>
+  <path d="M130,78 Q132,82 130,86" stroke="#c49874" stroke-width="1.5" opacity="0.5"/>
+  <path d="M65,84 Q62,88 65,92" stroke="#c49874" stroke-width="1.2" opacity="0.4"/>
+  <path d="M135,84 Q138,88 135,92" stroke="#c49874" stroke-width="1.2" opacity="0.4"/>
+  <!-- Forehead lines -->
+  <path d="M75,58 Q100,56 125,58" stroke="#c49874" stroke-width="1" opacity="0.3"/>
+  <path d="M78,62 Q100,60 122,62" stroke="#c49874" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Scar (battle-hardened detail) -->
+  <path d="M126,70 L131,78" stroke="#b48864" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+  
+  <!-- NECK (strong) -->
+  <rect x="86" y="122" width="28" height="14" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  
+  <!-- Dog tags visible -->
+  <ellipse cx="100" cy="138" rx="4" ry="6" fill="#888" stroke="#666" stroke-width="1"/>
+  <ellipse cx="100" cy="146" rx="4" ry="6" fill="#888" stroke="#666" stroke-width="1"/>
+  <line x1="100" y1="135" x2="100" y2="150" stroke="#777" stroke-width="1.5"/>
+  
+  <!-- Security badge on jacket -->
+  <rect x="114" y="165" width="20" height="14" rx="2" fill="#e74c3c" stroke="#000" stroke-width="1.5"/>
+  <text x="124" y="174" font-size="8" fill="#fff" font-weight="bold" text-anchor="middle">NATO</text>
+</svg>

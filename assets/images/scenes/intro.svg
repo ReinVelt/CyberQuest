@@ -1,0 +1,127 @@
+<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <!-- Intro/Prologue Scene - Atmospheric establishing shot -->
+  
+  <defs>
+    <!-- Sky gradient -->
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B0D4E3;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Ground gradient -->
+    <linearGradient id="groundGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7CB342;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#5A8F2F;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Canal water gradient -->
+    <linearGradient id="canalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2E5C8A;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Sky -->
+  <rect x="0" y="0" width="1920" height="650" fill="url(#skyGradient)"/>
+  
+  <!-- Distant horizon -->
+  <rect x="0" y="580" width="1920" height="70" fill="#6B9548" opacity="0.6"/>
+  
+  <!-- Ground/fields -->
+  <rect x="0" y="650" width="1920" height="430" fill="url(#groundGradient)"/>
+  
+  <!-- Canal -->
+  <ellipse cx="960" cy="850" rx="800" ry="60" fill="url(#canalGradient)" opacity="0.8"/>
+  <ellipse cx="960" cy="850" rx="750" ry="50" fill="#6BB0E8" opacity="0.3"/>
+  
+  <!-- Distant windturbines (very small on horizon) -->
+  <g id="windturbines" opacity="0.7">
+    <!-- Turbine 1 -->
+    <rect x="1650" y="500" width="8" height="80" fill="#E0E0E0" stroke="#AAA" stroke-width="2"/>
+    <circle cx="1654" cy="500" r="12" fill="#FFF" stroke="#AAA" stroke-width="2"/>
+    <line x1="1654" y1="500" x2="1654" y2="460" stroke="#DDD" stroke-width="3"/>
+    <line x1="1654" y1="500" x2="1690" y2="515" stroke="#DDD" stroke-width="3"/>
+    <line x1="1654" y1="500" x2="1620" y2="515" stroke="#DDD" stroke-width="3"/>
+    
+    <!-- Turbine 2 -->
+    <rect x="1750" y="510" width="7" height="70" fill="#E0E0E0" stroke="#AAA" stroke-width="2"/>
+    <circle cx="1753" cy="510" r="10" fill="#FFF" stroke="#AAA" stroke-width="2"/>
+    <line x1="1753" y1="510" x2="1753" y2="475" stroke="#DDD" stroke-width="2.5"/>
+    <line x1="1753" y1="510" x2="1785" y2="523" stroke="#DDD" stroke-width="2.5"/>
+    <line x1="1753" y1="510" x2="1722" y2="523" stroke="#DDD" stroke-width="2.5"/>
+    
+    <!-- Turbine 3 -->
+    <rect x="1830" y="515" width="6" height="65" fill="#E0E0E0" stroke="#AAA" stroke-width="2"/>
+    <circle cx="1833" cy="515" r="9" fill="#FFF" stroke="#AAA" stroke-width="2"/>
+    <line x1="1833" y1="515" x2="1833" y2="483" stroke="#DDD" stroke-width="2"/>
+    <line x1="1833" y1="515" x2="1863" y2="527" stroke="#DDD" stroke-width="2"/>
+    <line x1="1833" y1="515" x2="1805" y2="527" stroke="#DDD" stroke-width="2"/>
+  </g>
+  
+  <!-- Ryan's house in distance -->
+  <g id="house" transform="translate(700, 700)">
+    <!-- House body -->
+    <rect x="0" y="40" width="140" height="90" fill="#FAFAFA" stroke="#000" stroke-width="3"/>
+    
+    <!-- Red roof -->
+    <polygon points="70,0 -10,40 150,40" fill="#C83232" stroke="#000" stroke-width="3"/>
+    
+    <!-- Door -->
+    <rect x="55" y="85" width="30" height="45" fill="#654321" stroke="#000" stroke-width="2"/>
+    
+    <!-- Windows -->
+    <rect x="15" y="60" width="25" height="25" fill="#87CEEB" stroke="#000" stroke-width="2"/>
+    <rect x="100" y="60" width="25" height="25" fill="#87CEEB" stroke="#000" stroke-width="2"/>
+  </g>
+  
+  <!-- Garage/mancave next to house -->
+  <g id="garage" transform="translate(850, 730)">
+    <rect x="0" y="50" width="100" height="80" fill="#D0D0D0" stroke="#000" stroke-width="3"/>
+    <polygon points="50,20 0,50 100,50" fill="#999" stroke="#000" stroke-width="3"/>
+    
+    <!-- Garage door -->
+    <rect x="20" y="70" width="60" height="60" fill="#8B4513" stroke="#000" stroke-width="2"/>
+    <line x1="20" y1="90" x2="80" y2="90" stroke="#654321" stroke-width="1"/>
+    <line x1="20" y1="110" x2="80" y2="110" stroke="#654321" stroke-width="1"/>
+  </g>
+  
+  <!-- Trees (simple South Park style) -->
+  <g id="trees">
+    <!-- Tree 1 -->
+    <rect x="450" y="750" width="15" height="60" fill="#654321" stroke="#000" stroke-width="2"/>
+    <circle cx="457" cy="740" r="40" fill="#2E7D32" stroke="#000" stroke-width="2"/>
+    <circle cx="440" cy="730" r="35" fill="#388E3C" stroke="#000" stroke-width="2"/>
+    <circle cx="475" cy="730" r="35" fill="#388E3C" stroke="#000" stroke-width="2"/>
+    
+    <!-- Tree 2 -->
+    <rect x="1050" y="760" width="15" height="50" fill="#654321" stroke="#000" stroke-width="2"/>
+    <circle cx="1057" cy="750" r="35" fill="#2E7D32" stroke="#000" stroke-width="2"/>
+    <circle cx="1042" cy="742" r="30" fill="#388E3C" stroke="#000" stroke-width="2"/>
+    <circle cx="1072" cy="742" r="30" fill="#388E3C" stroke="#000" stroke-width="2"/>
+    
+    <!-- Tree 3 -->
+    <rect x="1300" y="745" width="18" height="65" fill="#654321" stroke="#000" stroke-width="2"/>
+    <circle cx="1309" cy="735" r="45" fill="#2E7D32" stroke="#000" stroke-width="2"/>
+    <circle cx="1290" cy="723" r="38" fill="#388E3C" stroke="#000" stroke-width="2"/>
+    <circle cx="1328" cy="723" r="38" fill="#388E3C" stroke="#000" stroke-width="2"/>
+  </g>
+  
+  <!-- Road -->
+  <rect x="0" y="820" width="1920" height="40" fill="#555" opacity="0.6"/>
+  <line x1="0" y1="840" x2="1920" y2="840" stroke="#FFF" stroke-width="3" stroke-dasharray="40,30" opacity="0.6"/>
+  
+  <!-- Birds in sky -->
+  <g id="birds" opacity="0.5">
+    <path d="M 300 200 Q 310 195 320 200 M 315 200 Q 315 190 315 200" stroke="#000" stroke-width="2" fill="none"/>
+    <path d="M 500 250 Q 510 245 520 250 M 515 250 Q 515 240 515 250" stroke="#000" stroke-width="2" fill="none"/>
+    <path d="M 1400 180 Q 1410 175 1420 180 M 1415 180 Q 1415 170 1415 180" stroke="#000" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- Text overlay area (dark vignette for text readability) -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#000" opacity="0.2"/>
+  
+  <!-- Title text area (will be handled by dialogue system but leave space) -->
+  <g id="titleSpace" opacity="0">
+    <rect x="460" y="400" width="1000" height="280" rx="20" fill="#000" opacity="0.8"/>
+  </g>
+</svg>
