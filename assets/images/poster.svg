@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" style="background: linear-gradient(180deg, #0a0e17 0%, #1a1f2e 50%, #0d1117 100%)">
+  <defs>
+    <!-- Gradient definitions -->
+    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a2a3e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f1923;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="redAlert" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff0000;stop-opacity:0.3" />
+      <stop offset="50%" style="stop-color:#ff3333;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#ff0000;stop-opacity:0.3" />
+    </linearGradient>
+    
+    <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0" />
+    </radialGradient>
+    
+    <radialGradient id="glowRed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff3333;stop-opacity:0.6" />
+      <stop offset="100%" style="stop-color:#ff3333;stop-opacity:0" />
+    </radialGradient>
+    
+    <!-- Filter for glow effects -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="strongGlow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Scanline pattern -->
+    <pattern id="scanlines" x="0" y="0" width="2" height="2" patternUnits="userSpaceOnUse">
+      <rect width="2" height="1" fill="rgba(0,255,255,0.03)"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background sky -->
+  <rect width="600" height="900" fill="url(#skyGradient)"/>
+  
+  <!-- Scanline overlay -->
+  <rect width="600" height="900" fill="url(#scanlines)" opacity="0.4"/>
+  
+  <!-- Background LOFAR antenna field (distant) -->
+  <g opacity="0.3">
+    <!-- Multiple antenna towers in perspective -->
+    <line x1="50" y1="400" x2="50" y2="320" stroke="#4db8ff" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="50" cy="315" r="8" fill="none" stroke="#4db8ff" stroke-width="1"/>
+    
+    <line x1="90" y1="410" x2="90" y2="340" stroke="#4db8ff" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="90" cy="335" r="8" fill="none" stroke="#4db8ff" stroke-width="1"/>
+    
+    <line x1="130" y1="420" x2="130" y2="355" stroke="#4db8ff" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="130" cy="350" r="8" fill="none" stroke="#4db8ff" stroke-width="1"/>
+    
+    <line x1="470" y1="420" x2="470" y2="355" stroke="#4db8ff" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="470" cy="350" r="8" fill="none" stroke="#4db8ff" stroke-width="1"/>
+    
+    <line x1="510" y1="410" x2="510" y2="340" stroke="#4db8ff" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="510" cy="335" r="8" fill="none" stroke="#4db8ff" stroke-width="1"/>
+    
+    <line x1="550" y1="400" x2="550" y2="320" stroke="#4db8ff" stroke-width="1.5" opacity="0.6"/>
+    <circle cx="550" cy="315" r="8" fill="none" stroke="#4db8ff" stroke-width="1"/>
+  </g>
+  
+  <!-- WSRT Large Radio Telescope (left side) -->
+  <g opacity="0.5">
+    <!-- Large dish -->
+    <ellipse cx="120" cy="280" rx="45" ry="20" fill="none" stroke="#5599cc" stroke-width="3"/>
+    <ellipse cx="120" cy="280" rx="35" ry="15" fill="none" stroke="#5599cc" stroke-width="1.5"/>
+    <line x1="120" y1="280" x2="120" y2="380" stroke="#5599cc" stroke-width="4"/>
+    <polygon points="110,380 130,380 135,390 105,390" fill="#3a5f7d"/>
+    
+    <!-- Signal waves from dish -->
+    <path d="M 120,260 Q 100,230 85,200" fill="none" stroke="#00ff88" stroke-width="1.5" opacity="0.4" stroke-dasharray="5,5">
+      <animate attributeName="opacity" values="0.2;0.6;0.2" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 120,260 Q 140,230 155,200" fill="none" stroke="#00ff88" stroke-width="1.5" opacity="0.4" stroke-dasharray="5,5">
+      <animate attributeName="opacity" values="0.2;0.6;0.2" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  
+  <!-- WSRT second dish (right side) -->
+  <g opacity="0.5">
+    <ellipse cx="480" cy="290" rx="40" ry="18" fill="none" stroke="#5599cc" stroke-width="3"/>
+    <ellipse cx="480" cy="290" rx="30" ry="13" fill="none" stroke="#5599cc" stroke-width="1.5"/>
+    <line x1="480" y1="290" x2="480" y2="380" stroke="#5599cc" stroke-width="4"/>
+    <polygon points="470,380 490,380 495,390 465,390" fill="#3a5f7d"/>
+  </g>
+  
+  <!-- Military facility - Steckerdoser Heide bunker complex -->
+  <g opacity="0.7">
+    <!-- Main bunker building -->
+    <rect x="200" y="340" width="200" height="80" fill="#1a1a1a" stroke="#333" stroke-width="2"/>
+    
+    <!-- Bunker entrance -->
+    <rect x="280" y="370" width="40" height="50" fill="#0a0a0a"/>
+    <polygon points="280,370 300,360 320,370" fill="#2a2a2a"/>
+    
+    <!-- Windows with red glow -->
+    <rect x="220" y="355" width="20" height="12" fill="#660000" opacity="0.8">
+      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="250" y="355" width="20" height="12" fill="#660000" opacity="0.8">
+      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" begin="1s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="330" y="355" width="20" height="12" fill="#660000" opacity="0.8">
+      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" begin="2s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="360" y="355" width="20" height="12" fill="#660000" opacity="0.8">
+      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" begin="0.5s" repeatCount="indefinite"/>
+    </rect>
+    
+    <!-- Barbed wire fence -->
+    <line x1="150" y1="420" x2="450" y2="420" stroke="#666" stroke-width="2"/>
+    <path d="M 150,420 L 160,418 L 170,422 L 180,418 L 190,422 L 200,418 L 210,422 L 220,418 L 230,422 L 240,418 L 250,422 L 260,418 L 270,422 L 280,418 L 290,422 L 300,418 L 310,422 L 320,418 L 330,422 L 340,418 L 350,422 L 360,418 L 370,422 L 380,418 L 390,422 L 400,418 L 410,422 L 420,418 L 430,422 L 440,418 L 450,420" fill="none" stroke="#999" stroke-width="1"/>
+    
+    <!-- Side building/tower -->
+    <rect x="410" y="310" width="40" height="110" fill="#1a1a1a" stroke="#333" stroke-width="2"/>
+    <rect x="420" y="325" width="8" height="8" fill="#ff3333" opacity="0.9" filter="url(#glow)">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite"/>
+    </rect>
+    
+    <!-- Surveillance camera -->
+    <circle cx="390" cy="345" r="5" fill="#2a2a2a" stroke="#666" stroke-width="1"/>
+    <rect x="385" y="343" width="10" height="4" fill="#333"/>
+    <circle cx="390" cy="345" r="2" fill="#ff0000" opacity="0.8">
+      <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Signal waves emanating from antennas -->
+  <g opacity="0.4">
+    <circle cx="300" cy="200" r="80" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.3">
+      <animate attributeName="r" values="80;150;220" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0.1;0" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="300" cy="200" r="80" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.3">
+      <animate attributeName="r" values="80;150;220" dur="4s" begin="1.3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0.1;0" dur="4s" begin="1.3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="300" cy="200" r="80" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.3">
+      <animate attributeName="r" values="80;150;220" dur="4s" begin="2.6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0.1;0" dur="4s" begin="2.6s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- Protagonist silhouette (Ryan with laptop/equipment) -->
+  <g transform="translate(300,500)">
+    <!-- Shadow/base -->
+    <ellipse cx="0" cy="100" rx="50" ry="8" fill="#000" opacity="0.5"/>
+    
+    <!-- Legs -->
+    <rect x="-12" y="40" width="10" height="60" fill="#1a1a1a"/>
+    <rect x="2" y="40" width="10" height="60" fill="#1a1a1a"/>
+    
+    <!-- Body -->
+    <rect x="-20" y="0" width="40" height="45" fill="#2a2a2a"/>
+    
+    <!-- Arms -->
+    <rect x="-35" y="5" width="15" height="8" fill="#2a2a2a" transform="rotate(-20 -27.5 9)"/>
+    <rect x="20" y="5" width="15" height="8" fill="#2a2a2a" transform="rotate(20 27.5 9)"/>
+    
+    <!-- Laptop/device in hands -->
+    <rect x="-15" y="15" width="30" height="20" fill="#1a1a1a" stroke="#00ff88" stroke-width="1.5"/>
+    <rect x="-13" y="17" width="26" height="16" fill="#003322">
+      <animate attributeName="fill" values="#003322;#004433;#003322" dur="2s" repeatCount="indefinite"/>
+    </rect>
+    
+    <!-- Screen glow -->
+    <rect x="-15" y="15" width="30" height="20" fill="url(#glowGreen)" opacity="0.5"/>
+    
+    <!-- Head -->
+    <circle cx="0" cy="-18" r="15" fill="#2a2a2a"/>
+    
+    <!-- Headset/radio equipment -->
+    <path d="M -12,-18 Q -15,-13 -12,-8" fill="none" stroke="#00ff88" stroke-width="2"/>
+    <circle cx="-12" cy="-18" r="4" fill="#2a2a2a" stroke="#00ff88" stroke-width="1.5"/>
+  </g>
+  
+  <!-- Surveillance grid overlay -->
+  <g opacity="0.3">
+    <line x1="0" y1="150" x2="600" y2="150" stroke="#ff3333" stroke-width="0.5" stroke-dasharray="10,10">
+      <animate attributeName="y1" values="150;450" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="y2" values="150;450" dur="8s" repeatCount="indefinite"/>
+    </line>
+    <line x1="0" y1="200" x2="600" y2="200" stroke="#ff3333" stroke-width="0.5" stroke-dasharray="10,10">
+      <animate attributeName="y1" values="200;500" dur="8s" begin="2s" repeatCount="indefinite"/>
+      <animate attributeName="y2" values="200;500" dur="8s" begin="2s" repeatCount="indefinite"/>
+    </line>
+  </g>
+  
+  <!-- Data streams / code rain effect -->
+  <g opacity="0.4" font-family="monospace" font-size="10" fill="#00ff88">
+    <text x="50" y="100">01001000</text>
+    <text x="50" y="150">11010010</text>
+    <text x="50" y="200">00110101</text>
+    
+    <text x="530" y="120">10110011</text>
+    <text x="530" y="170">01011100</text>
+    <text x="530" y="220">11001010</text>
+    
+    <animateTransform attributeName="transform" type="translate" values="0,0; 0,300" dur="6s" repeatCount="indefinite"/>
+  </g>
+  
+  <!-- Dramatic lighting flare from top -->
+  <polygon points="300,0 250,200 350,200" fill="url(#glowRed)" opacity="0.2">
+    <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" repeatCount="indefinite"/>
+  </polygon>
+  
+  <!-- Target reticle (surveillance theme) -->
+  <g opacity="0.5">
+    <circle cx="450" cy="150" r="30" fill="none" stroke="#ff3333" stroke-width="1.5"/>
+    <circle cx="450" cy="150" r="20" fill="none" stroke="#ff3333" stroke-width="1"/>
+    <line x1="420" y1="150" x2="440" y2="150" stroke="#ff3333" stroke-width="1.5"/>
+    <line x1="460" y1="150" x2="480" y2="150" stroke="#ff3333" stroke-width="1.5"/>
+    <line x1="450" y1="120" x2="450" y2="140" stroke="#ff3333" stroke-width="1.5"/>
+    <line x1="450" y1="160" x2="450" y2="180" stroke="#ff3333" stroke-width="1.5"/>
+    <text x="485" y="155" font-family="monospace" font-size="10" fill="#ff3333">TARGET ACQUIRED</text>
+  </g>
+  
+  <!-- Warning indicator -->
+  <g opacity="0.7">
+    <polygon points="150,100 135,125 165,125" fill="none" stroke="#ffaa00" stroke-width="2"/>
+    <text x="146" y="120" font-family="monospace" font-size="14" font-weight="bold" fill="#ffaa00">!</text>
+    <text x="170" y="115" font-family="monospace" font-size="9" fill="#ffaa00">CLASSIFIED</text>
+  </g>
+  
+  <!-- Bottom dark vignette -->
+  <rect x="0" y="650" width="600" height="250" fill="url(#skyGradient)" opacity="0.8"/>
+  
+  <!-- Title text -->
+  <g filter="url(#strongGlow)">
+    <text x="300" y="720" font-family="Arial Black, sans-serif" font-size="64" font-weight="bold" fill="#00ffff" text-anchor="middle" letter-spacing="8">
+      CYBERQUEST
+    </text>
+    <text x="300" y="760" font-family="Arial, sans-serif" font-size="32" font-weight="normal" fill="#ffd700" text-anchor="middle" letter-spacing="6">
+      OPERATION ZERFALL
+    </text>
+  </g>
+  
+  <!-- Tagline -->
+  <text x="300" y="800" font-family="monospace" font-size="16" font-style="italic" fill="#cccccc" text-anchor="middle" letter-spacing="2">
+    THE TRUTH IS HIDDEN IN THE SIGNAL
+  </text>
+  
+  <!-- Bottom text -->
+  <g font-family="monospace" font-size="11" fill="#999999" text-anchor="middle">
+    <text x="300" y="840">A SIERRA-STYLE ADVENTURE</text>
+    <text x="300" y="860">SET IN DRENTHE, NETHERLANDS</text>
+    <text x="300" y="880">INSPIRED BY REAL EVENTS</text>
+  </g>
+  
+  <!-- Classification stamp -->
+  <g transform="translate(480, 830) rotate(15)">
+    <rect x="-45" y="-15" width="90" height="30" fill="none" stroke="#ff3333" stroke-width="2" opacity="0.7"/>
+    <text x="0" y="5" font-family="monospace" font-size="12" font-weight="bold" fill="#ff3333" text-anchor="middle" opacity="0.7">
+      CLASSIFIED
+    </text>
+  </g>
+  
+  <!-- Scanline animation overlay -->
+  <rect x="0" y="0" width="600" height="3" fill="#00ffff" opacity="0.1">
+    <animate attributeName="y" values="0;900" dur="5s" repeatCount="indefinite"/>
+  </rect>
+</svg>
