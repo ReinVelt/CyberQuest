@@ -42,53 +42,86 @@ const IntroScene = {
                 <div class="intro-spacer"></div>
                 
                 <div class="location-header">
-                    <p>📍 COMPASCUUM, DRENTHE, NETHERLANDS</p>
-                    <p>📅 February 9, 2026 | ⏰ 07:45 AM</p>
+                    <p class="glitch-text">📍 COMPASCUUM, DRENTHE, NETHERLANDS</p>
+                    <p class="fade-in-text">📅 February 9, 2026 | ⏰ 07:45 AM</p>
                 </div>
                 
-                <p class="paragraph">Drenthe. Rural Netherlands. Quiet heathlands and canals. A province most people forget exists.</p>
+                <p class="paragraph fade-in">The province everyone forgets.</p>
                 
-                <p class="paragraph">But these fields hide something remarkable: the Westerbork Radio Telescope and LOFAR - over 50,000 antennas listening to the universe. The innovations developed here pioneered Bluetooth, WiFi mesh networks, and 5G beam-forming. Technology connecting five billion devices worldwide, rooted in these quiet northern fields.</p>
+                <p class="paragraph fade-in">Drenthe. Rural Netherlands. Quiet heathlands stretching to the horizon. Ancient dolmens. Narrow canals reflecting morning clouds.</p>
                 
-                <h2>⸻</h2>
+                <p class="paragraph emphasis-glow">But beneath this peaceful surface lies something extraordinary.</p>
                 
-                <p class="emphasis">Meet Ryan Weylant.</p>
+                <p class="paragraph fade-in">Hidden in these fields: the Westerbork Radio Telescope. LOFAR's 50,000 antennas. Listening posts that pierce the cosmos itself.</p>
                 
-                <p class="paragraph">55. Software developer. Radio enthusiast. Problem solver who never met a signal he couldn't decode or a puzzle he couldn't solve.</p>
+                <p class="paragraph fade-in">The innovations born here revolutionized our world. Bluetooth. WiFi mesh networks. 5G beam-forming algorithms. Technology connecting five billion devices worldwide—all rooted in these forgotten northern fields.</p>
                 
-                <p class="paragraph">He lives in a white farmhouse by the canal with his partner Ies and three dogs - Tino, Kessy, and ET the pug. They're still sleeping as Ryan starts his morning routine.</p>
+                <h2 class="divider">⸻ ✦ ⸻</h2>
                 
-                <p class="paragraph">His garage is where the magic happens. 3D printers, oscilloscopes, and component drawers line the walls. On his workbench: HackRF One SDR, Flipper Zero, WiFi Pineapple, Meshtastic LoRa devices, and an SSTV satellite terminal. Every tool chosen for a purpose.</p>
+                <p class="emphasis name-reveal">Meet Ryan Weylant.</p>
                 
-                <p class="paragraph">His network spans the country: Dr. David Prinsloo at TU Eindhoven, Cees Bassa at ASTRON, Jaap Haartsen who invented Bluetooth. When they have impossible problems, they call Ryan.</p>
+                <p class="paragraph fade-in">Age 55. Software architect. Radio specialist. Hacker in the truest sense.</p>
                 
-                <p class="emphasis">His philosophy: Be curious. Stay methodical. Never give up.</p>
+                <p class="paragraph fade-in">A man who never met a signal he couldn't decode. A puzzle he couldn't solve. A system he couldn't break.</p>
                 
-                <h2>⸻</h2>
+                <p class="paragraph fade-in">Home: a white farmhouse by the canal. Partner: Ies, sleeping peacefully upstairs. Three dogs—Tino, Kessy, and ET the pug—curled in their beds, unaware of what's coming.</p>
                 
-                <p class="paragraph">This morning seems normal. Espresso machine warming up. Radio frequencies to check. Another routine day.</p>
+                <p class="paragraph emphasis-glow">His garage is his sanctuary.</p>
                 
-                <p class="emphasis warning">He has no idea everything is about to change.</p>
+                <p class="paragraph fade-in">3D printers humming softly. Oscilloscopes tracing invisible waves. Component drawers organized with obsessive precision.</p>
                 
-                <p class="paragraph">In eighteen minutes, a transmission will arrive. A signal that shouldn't exist. Encrypted with algorithms no civilian should possess. Coordinates pointing to something impossible.</p>
+                <p class="paragraph fade-in">On his workbench: HackRF One SDR. Flipper Zero. WiFi Pineapple. Meshtastic LoRa nodes. SSTV satellite terminal. Every tool hand-selected. Every capability considered.</p>
                 
-                <p class="paragraph">A conspiracy at the highest levels. A secret nations have killed to protect.</p>
+                <p class="paragraph fade-in">His network spans the nation's brightest minds: Dr. David Prinsloo at TU Eindhoven. Cees Bassa at ASTRON. Jaap Haartsen—the inventor of Bluetooth itself.</p>
                 
-                <h2>⸻</h2>
+                <p class="paragraph fade-in">When they face impossible problems, they call Ryan.</p>
                 
-                <p class="paragraph">In a bunker beneath The Hague, screens glow. AI systems monitor every frequency. People in dark suits have protocols. Assets. Methods that leave no trace.</p>
+                <p class="emphasis philosophy">His philosophy: <span class="emphasis-glow">Be curious. Stay methodical. Never surrender.</span></p>
                 
-                <p class="emphasis">But they don't know about Ryan Weylant.</p>
+                <h2 class="divider pulse-slow">⸻ ✦ ⸻</h2>
                 
-                <p class="paragraph">They don't know what he's capable of.</p>
+                <p class="paragraph fade-in">This morning feels ordinary.</p>
                 
-                <h2>⸻</h2>
+                <p class="paragraph fade-in">Espresso machine warming. Radio frequencies cycling through the spectrum. Another day in paradise.</p>
                 
-                <h1 class="title">CYBERQUEST</h1>
-                <h1 class="subtitle">OPERATION ZERFALL</h1>
+                <p class="emphasis warning pulse-fast">He has absolutely no idea.</p>
+                
+                <p class="paragraph warning-text">In eighteen minutes, everything changes.</p>
+                
+                <p class="paragraph warning-text">A transmission will arrive that shouldn't exist. Encrypted with algorithms no civilian should possess. Coordinates pointing to a location that's supposed to be abandoned.</p>
+                
+                <p class="paragraph emphasis-glow">A conspiracy at the highest levels of power.</p>
+                
+                <p class="paragraph warning-text">A secret nations have killed to protect.</p>
+                
+                <h2 class="divider pulse-slow">⸻ ✦ ⸻</h2>
+                
+                <p class="paragraph sinister">Deep beneath The Hague, in a bunker that doesn't officially exist:</p>
+                
+                <p class="paragraph sinister">Screens glow in the darkness. AI systems monitor every frequency. Every transmission. Every anomaly.</p>
+                
+                <p class="paragraph sinister">People in dark suits have protocols. Response teams on standby. Assets embedded across the country.</p>
+                
+                <p class="paragraph sinister">Methods refined over decades. Methods that leave no trace.</p>
+                
+                <p class="emphasis warning pulse-fast">But they don't know about Ryan Weylant.</p>
+                
+                <p class="paragraph emphasis-glow">They don't know what he's capable of when pushed.</p>
+                
+                <p class="paragraph emphasis-glow">They don't realize they've just made their first mistake.</p>
+                
+                <p class="paragraph emphasis-glow">Their last mistake.</p>
+                
+                <h2 class="divider pulse-slow">⸻ ✦ ⸻</h2>
+                
+                <div class="title-container">
+                    <h1 class="title glitch-text">CYBERQUEST</h1>
+                    <h1 class="subtitle pulse-glow">OPERATION ZERFALL</h1>
+                    <p class="tagline">The truth is hidden in the signal.</p>
+                </div>
                 
                 <div class="intro-end-spacer"></div>
-                <p class="click-to-continue">Click to begin your mission...</p>
+                <p class="click-to-continue pulse-fast">▶ Click to begin your mission ◀</p>
                 <div class="intro-spacer"></div>
             </div>
         `;
@@ -103,11 +136,11 @@ const IntroScene = {
                 left: 0 !important;
                 width: 100% !important;
                 height: 100% !important;
-                background: #000 !important;
+                background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%) !important;
                 z-index: 9999 !important;
                 overflow: hidden !important;
                 color: #ffd700 !important;
-                font-family: 'Arial', sans-serif !important;
+                font-family: 'Courier New', monospace !important;
                 cursor: pointer !important;
                 display: block !important;
                 visibility: visible !important;
@@ -115,17 +148,41 @@ const IntroScene = {
                 pointer-events: auto !important;
             }
             
+            #intro-scroll::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: 
+                    repeating-linear-gradient(
+                        0deg,
+                        rgba(0, 255, 255, 0.03) 0px,
+                        transparent 1px,
+                        transparent 2px,
+                        rgba(0, 255, 255, 0.03) 3px
+                    );
+                pointer-events: none;
+                animation: scanlines 8s linear infinite;
+            }
+            
+            @keyframes scanlines {
+                0% { transform: translateY(0); }
+                100% { transform: translateY(10px); }
+            }
+            
             .intro-content {
                 position: absolute !important;
                 width: 90% !important;
-                max-width: 1600px !important;
+                max-width: 1400px !important;
                 left: 50% !important;
                 transform: translateX(-50%) !important;
                 text-align: center !important;
-                line-height: 2 !important;
+                line-height: 2.2 !important;
                 will-change: top !important;
                 font-weight: bold !important;
-                letter-spacing: 3px !important;
+                letter-spacing: 2px !important;
             }
             
             @keyframes introScroll {
@@ -133,12 +190,12 @@ const IntroScene = {
                     top: 100%;
                     opacity: 1;
                 }
-                90% {
+                95% {
                     opacity: 1;
                 }
                 100% {
-                    top: -150%;
-                    opacity: 0;
+                    top: -300%;
+                    opacity: 1;
                 }
             }
             
@@ -152,83 +209,215 @@ const IntroScene = {
             
             .location-header {
                 text-align: center;
-                font-size: 1.2em;
-                margin: 30px 0 40px 0;
-                color: #4db8ff;
-                letter-spacing: 3px;
+                font-size: 1.3em;
+                margin: 30px 0 50px 0;
+                color: #00ffff;
+                letter-spacing: 4px;
                 text-transform: uppercase;
                 font-weight: bold;
             }
             
             .location-header p {
-                margin: 8px 0;
+                margin: 12px 0;
+                text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
             }
             
             .intro-content .paragraph {
-                font-size: 1.5em;
-                margin: 25px 0;
-                line-height: 2;
-                color: #ffd700;
+                font-size: 1.6em;
+                margin: 30px auto;
+                line-height: 2.2;
+                color: #e0e0e0;
+                max-width: 1200px;
+                text-shadow: 0 0 10px rgba(224, 224, 224, 0.3);
+            }
+            
+            .intro-content .paragraph.fade-in {
+                animation: fadeIn 2s ease-in;
+            }
+            
+            @keyframes fadeIn {
+                0% { opacity: 0; transform: translateY(20px); }
+                100% { opacity: 1; transform: translateY(0); }
             }
             
             .intro-content .emphasis {
-                font-size: 1.8em;
-                margin: 35px 0;
+                font-size: 2.2em;
+                margin: 45px 0;
                 color: #ffeb3b;
                 text-align: center;
                 font-style: italic;
-                text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+                text-shadow: 0 0 30px rgba(255, 235, 59, 0.7);
+                font-weight: bold;
+                letter-spacing: 3px;
+            }
+            
+            .intro-content .emphasis.name-reveal {
+                font-size: 2.8em;
+                color: #00ffff;
+                text-shadow: 0 0 40px rgba(0, 255, 255, 0.8);
+                animation: glow 3s ease-in-out infinite;
+            }
+            
+            .intro-content .emphasis.philosophy {
+                font-size: 2em;
+                color: #4db8ff;
+                font-style: normal;
+            }
+            
+            .intro-content .emphasis-glow {
+                color: #ffd700;
+                text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+                font-weight: bold;
             }
             
             .intro-content .emphasis.warning {
-                color: #ff4444;
-                font-size: 2em;
-                text-shadow: 0 0 30px rgba(255, 68, 68, 0.6);
+                color: #ff3333;
+                font-size: 2.4em;
+                text-shadow: 0 0 50px rgba(255, 51, 51, 0.9);
+                animation: pulse-warning 2s ease-in-out infinite;
             }
             
-            .intro-content h2 {
+            .intro-content .warning-text {
+                color: #ff6666;
+                text-shadow: 0 0 20px rgba(255, 102, 102, 0.6);
+            }
+            
+            .intro-content .sinister {
+                color: #9999ff;
+                text-shadow: 0 0 15px rgba(153, 153, 255, 0.5);
+                font-style: italic;
+            }
+            
+            @keyframes pulse-warning {
+                0%, 100% { 
+                    text-shadow: 0 0 30px rgba(255, 51, 51, 0.6);
+                    transform: scale(1);
+                }
+                50% { 
+                    text-shadow: 0 0 60px rgba(255, 51, 51, 1);
+                    transform: scale(1.05);
+                }
+            }
+            
+            @keyframes glow {
+                0%, 100% { 
+                    text-shadow: 0 0 30px rgba(0, 255, 255, 0.6);
+                }
+                50% { 
+                    text-shadow: 0 0 60px rgba(0, 255, 255, 1);
+                }
+            }
+            
+            .intro-content h2.divider {
                 text-align: center;
-                font-size: 1.8em;
-                margin: 40px 0;
+                font-size: 2.5em;
+                margin: 60px 0;
                 color: #4db8ff;
                 font-weight: normal;
-                letter-spacing: 10px;
+                letter-spacing: 20px;
+                text-shadow: 0 0 30px rgba(77, 184, 255, 0.6);
+            }
+            
+            .intro-content h2.pulse-slow {
+                animation: glow 4s ease-in-out infinite;
+            }
+            
+            .title-container {
+                margin: 80px 0;
             }
             
             .intro-content h1.title {
-                font-size: 3.5em;
-                margin: 60px 0 20px 0;
-                color: #4db8ff;
+                font-size: 4.5em;
+                margin: 70px 0 30px 0;
+                color: #00ffff;
                 text-transform: uppercase;
-                letter-spacing: 15px;
+                letter-spacing: 25px;
                 text-align: center;
                 font-weight: bold;
-                text-shadow: 0 0 40px rgba(77, 184, 255, 0.8);
+                text-shadow: 0 0 60px rgba(0, 255, 255, 1);
+                animation: title-glow 3s ease-in-out infinite;
+            }
+            
+            @keyframes title-glow {
+                0%, 100% { 
+                    text-shadow: 0 0 40px rgba(0, 255, 255, 0.8),
+                                 0 0 80px rgba(0, 255, 255, 0.4);
+                }
+                50% { 
+                    text-shadow: 0 0 80px rgba(0, 255, 255, 1),
+                                 0 0 120px rgba(0, 255, 255, 0.6);
+                }
             }
             
             .intro-content h1.subtitle {
-                font-size: 2.2em;
-                margin: 0 0 50px 0;
+                font-size: 2.6em;
+                margin: 0 0 30px 0;
                 color: #ffd700;
                 text-transform: uppercase;
-                letter-spacing: 10px;
+                letter-spacing: 15px;
                 text-align: center;
                 font-weight: normal;
-                text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+                text-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
+            }
+            
+            .intro-content .subtitle.pulse-glow {
+                animation: glow 2.5s ease-in-out infinite;
+            }
+            
+            .intro-content .tagline {
+                font-size: 1.6em;
+                color: #ffeb3b;
+                font-style: italic;
+                margin-top: 20px;
+                text-shadow: 0 0 20px rgba(255, 235, 59, 0.6);
+                letter-spacing: 3px;
+            }
+            
+            .glitch-text {
+                animation: glitch 5s infinite;
+            }
+            
+            @keyframes glitch {
+                0%, 90%, 100% {
+                    transform: translate(0);
+                }
+                92% {
+                    transform: translate(-2px, 2px);
+                }
+                94% {
+                    transform: translate(2px, -2px);
+                }
+                96% {
+                    transform: translate(-1px, 1px);
+                }
+                98% {
+                    transform: translate(1px, -1px);
+                }
             }
             
             .click-to-continue {
-                font-size: 1.4em !important;
-                color: #4db8ff !important;
+                font-size: 1.8em !important;
+                color: #00ffff !important;
                 text-align: center;
-                animation: pulse 2s infinite;
-                margin: 40px 0 !important;
-                text-shadow: 0 0 20px rgba(77, 184, 255, 0.6);
+                margin: 50px 0 !important;
+                text-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+                font-weight: bold;
+                letter-spacing: 4px;
             }
             
-            @keyframes pulse {
-                0%, 100% { opacity: 1; }
-                50% { opacity: 0.4; }
+            .pulse-fast {
+                animation: pulse-fast 1.5s ease-in-out infinite;
+            }
+            
+            @keyframes pulse-fast {
+                0%, 100% { 
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                50% { 
+                    opacity: 0.6;
+                    transform: scale(1.05);
+                }
             }
         `;
         document.head.appendChild(style);
@@ -241,7 +430,7 @@ const IntroScene = {
             requestAnimationFrame(() => {
                 const content = introOverlay.querySelector('.intro-content');
                 if (content) {
-                    content.style.animation = 'introScroll 90s linear 0s 1 normal forwards';
+                    content.style.animation = 'introScroll 120s linear 0s 1 normal forwards';
                     console.log('Intro animation started:', {
                         element: content,
                         animation: window.getComputedStyle(content).animation,
