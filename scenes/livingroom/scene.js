@@ -16,10 +16,10 @@ const LivingroomScene = {
         {
             id: 'tv',
             name: 'Watch TV',
-            x: 55,
-            y: 30,
-            width: 20,
-            height: 25,
+            x: 45,
+            y: 17,
+            width: 30,
+            height: 38,
             cursor: 'pointer',
             action: (game) => {
                 if (!game.getFlag('saw_tv_documentary')) {
@@ -95,7 +95,7 @@ const LivingroomScene = {
             action: (game) => {
                 const responses = [
                     [
-                        { speaker: 'Ryan', text: 'Hey Tino and Kessy! Sleeping well?' },
+                        { speaker: 'Ryan', text: 'Hey Kino and Kessy! Sleeping well?' },
                         { speaker: '', text: '*Both dogs are curled up, peaceful and content*' },
                         { speaker: '', text: '*Tino yawns softly without opening his eyes*' }
                     ],
@@ -155,10 +155,10 @@ const LivingroomScene = {
         {
             id: 'to_home',
             name: 'Door to Kitchen',
-            x: 1,
-            y: 48,
-            width: 9,
-            height: 27,
+            x: 0.5,
+            y: 45,
+            width: 11,
+            height: 32,
             cursor: 'pointer',
             targetScene: 'home'
         }

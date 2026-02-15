@@ -1,6 +1,6 @@
 <!-- Ryan's Dining Room - AIVD Debrief Scene -->
 <!-- Two black AIVD cars visible through window, formal meeting -->
-<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
       .sp-stroke { stroke: #000; stroke-width: 3px; stroke-linecap: round; stroke-linejoin: round; }

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
   <!-- Living room scene - Enhanced South Park style -->
   
   <defs>
@@ -36,6 +36,7 @@
     </linearGradient>
   </defs>
   
+  <g transform="scale(1.6, 1.35)">
   <!-- Background wall with gradient -->
   <rect x="0" y="0" width="1200" height="600" fill="url(#wallGradient)"/>
   
@@ -379,6 +380,7 @@
   </g>
   
   <!-- Room ambient lighting effect -->
+  </g>
   <ellipse cx="600" cy="300" rx="600" ry="400" fill="#FFFFFF" opacity="0.03"/>
   
 </svg>

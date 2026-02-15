@@ -1,5 +1,5 @@
 # CyberQuest: Story Validation Report
-**Date:** February 8, 2026  
+**Date:** February 15, 2026  
 **Status:** ✅ **COMPLETE** (~95% Story Coverage)
 
 ---
@@ -42,9 +42,9 @@ Successfully validated CyberQuest game against STORY.md and created all missing 
 | Ryan Weylant | ✅ | ryan_southpark.svg | All scenes | Player character |
 | Ies (Wife) | ✅ | ies_southpark.svg | Livingroom | Watching documentary |
 | Eva Weber | ✅ | eva_southpark.svg | Referenced | Whistleblower (messages only) |
-| Dr. Henk Visser | ✅ | henk_southpark.svg | Livingroom | Documentary speaker |
-| Marieke | ✅ | marieke_southpark.svg | Livingroom | Documentary speaker |
-| Jaap Haartsen | ✅ | jaap_haartsen_southpark.svg | Livingroom | Documentary speaker, Bluetooth inventor |
+| Dr. David Prinsloo | ✅ | david_prinsloo_southpark.svg | Livingroom, TVDoc | TU Eindhoven antenna engineer (real) |
+| Cees Bassa | ✅ | cees_bassa_southpark.svg | Livingroom, TVDoc | ASTRON LOFAR scientist (real) |
+| Jaap Haartsen | ✅ | jaap_haartsen_southpark.svg | Livingroom, TVDoc | Bluetooth inventor (real) |
 | Chris Kubecka | ✅ | kubecka_southpark.svg | Referenced | OSINT expert (messages) |
 | Dr. Dimitri Volkov | ✅ | volkov_southpark.svg | Referenced | Antagonist |
 | Dogs (Tino, Kessy) | ✅ | dog_white_southpark.svg | Livingroom | Sleeping on couch |
@@ -88,7 +88,7 @@ Successfully validated CyberQuest game against STORY.md and created all missing 
   - Hoffmann (witness protection in Canada)
   - Eva (testimony, new career)
   - Chris Kubecka (published report)
-  - Marieke, Pieter (new ventures)
+  - David, Cees, Jaap (continue their work)
   - Ryan (joined AIVD)
 - South Park-style spring scene:
   - Bright sunny sky with clouds
@@ -304,7 +304,7 @@ While the game is now complete and playable end-to-end, future enhancements coul
 ### Optional Gameplay Expansions
 1. **Facility Infiltration** - More interactive stealth mechanics
 2. **Puzzle Complexity** - Additional encryption challenges
-3. **Ally Missions** - Side quests with Henk, Marieke, Pieter
+3. **Ally Missions** - Side quests with real-world experts
 4. **Investigation Tools** - More hacking mini-games
 5. **Multiple Endings** - Story branches based on choices
 
@@ -335,6 +335,6 @@ While the game is now complete and playable end-to-end, future enhancements coul
 ---
 
 **Validation Completed By:** AI Assistant  
-**Date:** February 8, 2026  
+**Date:** February 15, 2026  
 **Game Version:** 1.0 (Post-Validation)  
 **Status:** ✅ **PRODUCTION READY**

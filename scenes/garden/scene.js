@@ -216,6 +216,8 @@ const GardenScene = {
                 }
                 
                 // Part 7: Drive to Klooster
+                console.log('[Garden] Volvo clicked. klooster_unlocked:', game.getFlag('klooster_unlocked'));
+                
                 if (game.getFlag('klooster_unlocked')) {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'My old Volvo. Reliable, anonymous, untraceable.' },

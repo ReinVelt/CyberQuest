@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Night Vision Monocular Icon - Military Grade Device -->
+  
+  <defs>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3a3a3a"/>
+      <stop offset="50%" style="stop-color:#2a2a2a"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    
+    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00e676"/>
+      <stop offset="50%" style="stop-color:#00c853"/>
+      <stop offset="100%" style="stop-color:#00695c"/>
+    </linearGradient>
+    
+    <radialGradient id="lensGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#76ff03;stop-opacity:0.8"/>
+      <stop offset="60%" style="stop-color:#00e676;stop-opacity:0.4"/>
+      <stop offset="100%" style="stop-color:#004d40;stop-opacity:0"/>
+    </radialGradient>
+    
+    <linearGradient id="rubberGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#424242"/>
+      <stop offset="100%" style="stop-color:#212121"/>
+    </linearGradient>
+    
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Shadow -->
+  <ellipse cx="50" cy="88" rx="35" ry="4" fill="#000" opacity="0.3"/>
+  
+  <!-- Main body (cylindrical monocular) -->
+  <rect x="30" y="35" width="40" height="35" rx="2" fill="url(#bodyGrad)" stroke="#000" stroke-width="1"/>
+  
+  <!-- Body segments/ridges -->
+  <rect x="30" y="40" width="40" height="1" fill="#1a1a1a" opacity="0.5"/>
+  <rect x="30" y="45" width="40" height="1" fill="#1a1a1a" opacity="0.5"/>
+  <rect x="30" y="55" width="40" height="1" fill="#4a4a4a" opacity="0.3"/>
+  <rect x="30" y="60" width="40" height="1" fill="#4a4a4a" opacity="0.3"/>
+  
+  <!-- Objective lens (front - larger) -->
+  <ellipse cx="50" cy="32" rx="18" ry="5" fill="#1a1a1a" stroke="#000" stroke-width="1"/>
+  <ellipse cx="50" cy="30" rx="16" ry="14" fill="url(#lensGrad)" stroke="#003d00" stroke-width="2"/>
+  <ellipse cx="50" cy="30" rx="14" ry="12" fill="#00a152" opacity="0.6"/>
+  <ellipse cx="50" cy="30" rx="10" ry="8" fill="#1de9b6" opacity="0.4"/>
+  
+  <!-- Lens glow effect -->
+  <ellipse cx="50" cy="30" rx="20" ry="16" fill="url(#lensGlow)" filter="url(#glow)" opacity="0.6"/>
+  
+  <!-- Lens reflections -->
+  <ellipse cx="45" cy="26" rx="4" ry="3" fill="#a7ffeb" opacity="0.7"/>
+  <ellipse cx="54" cy="28" rx="2.5" ry="2" fill="#76ff03" opacity="0.5"/>
+  
+  <!-- Eyepiece (back - smaller) -->
+  <ellipse cx="50" cy="73" rx="12" ry="4" fill="#1a1a1a" stroke="#000" stroke-width="1"/>
+  <ellipse cx="50" cy="72" rx="10" ry="9" fill="url(#rubberGrad)" stroke="#000" stroke-width="1"/>
+  <ellipse cx="50" cy="72" rx="7" ry="6" fill="#1a1a1a"/>
+  <ellipse cx="50" cy="72" rx="5" ry="4" fill="#0d47a1" opacity="0.3"/>
+  
+  <!-- Focusing ring -->
+  <rect x="35" y="48" width="30" height="8" rx="1" fill="#2a2a2a" stroke="#000" stroke-width="0.8"/>
+  <line x1="38" y1="48" x2="38" y2="56" stroke="#4a4a4a" stroke-width="0.5"/>
+  <line x1="42" y1="48" x2="42" y2="56" stroke="#4a4a4a" stroke-width="0.5"/>
+  <line x1="46" y1="48" x2="46" y2="56" stroke="#4a4a4a" stroke-width="0.5"/>
+  <line x1="50" y1="48" x2="50" y2="56" stroke="#4a4a4a" stroke-width="0.5"/>
+  <line x1="54" y1="48" x2="54" y2="56" stroke="#4a4a4a" stroke-width="0.5"/>
+  <line x1="58" y1="48" x2="58" y2="56" stroke="#4a4a4a" stroke-width="0.5"/>
+  <line x1="62" y1="48" x2="62" y2="56" stroke="#4a4a4a" stroke-width="0.5"/>
+  
+  <!-- Power/IR illuminator button -->
+  <circle cx="68" cy="42" r="3" fill="#c62828" opacity="0.8"/>
+  <circle cx="68" cy="42" r="2" fill="#ff5252" opacity="0.6"/>
+  <circle cx="67.5" cy="41.5" r="1" fill="#ffcdd2" opacity="0.8"/>
+  
+  <!-- Status LED -->
+  <circle cx="68" cy="52" r="1.5" fill="#00e676" opacity="0.9"/>
+  <circle cx="68" cy="52" r="2.5" fill="#00e676" opacity="0.3" filter="url(#glow)"/>
+  
+  <!-- Mounting bracket -->
+  <rect x="28" y="50" width="4" height="12" rx="1" fill="#424242" stroke="#000" stroke-width="0.5"/>
+  <circle cx="30" cy="56" r="2" fill="#616161" stroke="#000" stroke-width="0.5"/>
+  <circle cx="30" cy="56" r="1" fill="#1a1a1a"/>
+  
+  <!-- Battery compartment lines -->
+  <line x1="30" y1="63" x2="70" y2="63" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="2,1"/>
+  <line x1="30" y1="67" x2="70" y2="67" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="2,1"/>
+  
+  <!-- Tactical rail (top) -->
+  <rect x="42" y="33" width="16" height="2" fill="#1a1a1a" stroke="#000" stroke-width="0.5"/>
+  <line x1="44" y1="33" x2="44" y2="35" stroke="#0d0d0d" stroke-width="0.5"/>
+  <line x1="47" y1="33" x2="47" y2="35" stroke="#0d0d0d" stroke-width="0.5"/>
+  <line x1="50" y1="33" x2="50" y2="35" stroke="#0d0d0d" stroke-width="0.5"/>
+  <line x1="53" y1="33" x2="53" y2="35" stroke="#0d0d0d" stroke-width="0.5"/>
+  <line x1="56" y1="33" x2="56" y2="35" stroke="#0d0d0d" stroke-width="0.5"/>
+  
+  <!-- Lens protection cap (attached) -->
+  <ellipse cx="24" cy="50" rx="5" ry="8" fill="url(#rubberGrad)" stroke="#000" stroke-width="0.8"/>
+  <line x1="26" y1="46" x2="26" y2="54" stroke="#0d0d0d" stroke-width="0.5"/>
+  <line x1="24" y1="46" x2="24" y2="54" stroke="#0d0d0d" stroke-width="0.5"/>
+  
+  <!-- Strap attachment point -->
+  <rect x="20" y="60" width="3" height="6" rx="1" fill="#212121" stroke="#000" stroke-width="0.5"/>
+  <rect x="77" y="60" width="3" height="6" rx="1" fill="#212121" stroke="#000" stroke-width="0.5"/>
+  
+  <!-- Detail highlights -->
+  <line x1="32" y1="37" x2="68" y2="37" stroke="#4a4a4a" stroke-width="0.5" opacity="0.6"/>
+  <line x1="32" y1="68" x2="68" y2="68" stroke="#4a4a4a" stroke-width="0.5" opacity="0.6"/>
+  
+  <!-- Brand marking (subtle) -->
+  <text x="50" y="46" font-family="Arial, sans-serif" font-size="3" fill="#616161" text-anchor="middle" opacity="0.5">MIL-SPEC</text>
+</svg>

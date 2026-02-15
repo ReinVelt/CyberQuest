@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- WiFi Pineapple Icon - Portable WiFi Auditing Device -->
+  
+  <defs>
+    <linearGradient id="pineappleBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f4d03f"/>
+      <stop offset="50%" style="stop-color:#f9a825"/>
+      <stop offset="100%" style="stop-color:#e65100"/>
+    </linearGradient>
+    
+    <linearGradient id="screenGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00e676"/>
+      <stop offset="100%" style="stop-color:#00c853"/>
+    </linearGradient>
+    
+    <radialGradient id="wifiSignal" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#4db8ff;stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#0288d1;stop-opacity:0.3"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- WiFi signal waves (background) -->
+  <path d="M50,25 Q35,30 30,45" fill="none" stroke="url(#wifiSignal)" stroke-width="2" opacity="0.6"/>
+  <path d="M50,25 Q65,30 70,45" fill="none" stroke="url(#wifiSignal)" stroke-width="2" opacity="0.6"/>
+  <path d="M50,28 Q40,32 37,42" fill="none" stroke="url(#wifiSignal)" stroke-width="1.5" opacity="0.5"/>
+  <path d="M50,28 Q60,32 63,42" fill="none" stroke="url(#wifiSignal)" stroke-width="1.5" opacity="0.5"/>
+  
+  <!-- Main device body (rounded rectangle mimicking pineapple) -->
+  <rect x="35" y="40" width="30" height="40" rx="5" fill="url(#pineappleBody)" stroke="#c17900" stroke-width="1.5"/>
+  
+  <!-- Hexagonal pattern (pineapple texture) -->
+  <path d="M40,45 L43,47 L43,50 L40,52 L37,50 L37,47 Z" fill="#e65100" opacity="0.3"/>
+  <path d="M47,45 L50,47 L50,50 L47,52 L44,50 L44,47 Z" fill="#e65100" opacity="0.3"/>
+  <path d="M54,45 L57,47 L57,50 L54,52 L51,50 L51,47 Z" fill="#e65100" opacity="0.3"/>
+  <path d="M40,54 L43,56 L43,59 L40,61 L37,59 L37,56 Z" fill="#e65100" opacity="0.3"/>
+  <path d="M47,54 L50,56 L50,59 L47,61 L44,59 L44,56 Z" fill="#e65100" opacity="0.3"/>
+  <path d="M54,54 L57,56 L57,59 L54,61 L51,59 L51,56 Z" fill="#e65100" opacity="0.3"/>
+  <path d="M40,63 L43,65 L43,68 L40,70 L37,68 L37,65 Z" fill="#e65100" opacity="0.3"/>
+  <path d="M47,63 L50,65 L50,68 L47,70 L44,68 L44,65 Z" fill="#e65100" opacity="0.3"/>
+  <path d="M54,63 L57,65 L57,68 L54,70 L51,68 L51,65 Z" fill="#e65100" opacity="0.3"/>
+  
+  <!-- Display screen (showing active status) -->
+  <rect x="40" y="48" width="20" height="12" rx="1" fill="#1a1a1a" stroke="#333" stroke-width="0.5"/>
+  <rect x="41" y="49" width="18" height="10" rx="0.5" fill="url(#screenGlow)" opacity="0.9"/>
+  
+  <!-- Status text lines -->
+  <line x1="42" y1="52" x2="56" y2="52" stroke="#003d00" stroke-width="0.8"/>
+  <line x1="42" y1="54.5" x2="54" y2="54.5" stroke="#003d00" stroke-width="0.8"/>
+  <line x1="42" y1="57" x2="57" y2="57" stroke="#003d00" stroke-width="0.8"/>
+  
+  <!-- Antenna (top leaves) -->
+  <path d="M50,35 L48,40 L50,40 Z" fill="#4caf50" stroke="#2e7d32" stroke-width="0.8"/>
+  <path d="M50,35 L52,40 L50,40 Z" fill="#4caf50" stroke="#2e7d32" stroke-width="0.8"/>
+  <path d="M50,33 L47,38 L49,38 Z" fill="#66bb6a" stroke="#2e7d32" stroke-width="0.8"/>
+  <path d="M50,33 L53,38 L51,38 Z" fill="#66bb6a" stroke="#2e7d32" stroke-width="0.8"/>
+  
+  <!-- Ports/connectors at bottom -->
+  <rect x="38" y="75" width="4" height="3" rx="0.5" fill="#333"/>
+  <rect x="44" y="75" width="4" height="3" rx="0.5" fill="#333"/>
+  <rect x="52" y="75" width="4" height="3" rx="0.5" fill="#333"/>
+  <rect x="58" y="75" width="4" height="3" rx="0.5" fill="#333"/>
+  
+  <!-- LED indicators -->
+  <circle cx="42" cy="44" r="1.2" fill="#00e676" opacity="0.9"/>
+  <circle cx="46" cy="44" r="1.2" fill="#ffd600" opacity="0.9"/>
+  <circle cx="54" cy="44" r="1.2" fill="#ff3d00" opacity="0.9"/>
+  <circle cx="58" cy="44" r="1.2" fill="#2196f3" opacity="0.9"/>
+  
+  <!-- WiFi icon overlay -->
+  <path d="M50,66 A8,8 0 0,1 42,74" fill="none" stroke="#fff" stroke-width="1.2" opacity="0.7"/>
+  <path d="M50,68 A6,6 0 0,1 44,74" fill="none" stroke="#fff" stroke-width="1.2" opacity="0.7"/>
+  <path d="M50,70 A4,4 0 0,1 46,74" fill="none" stroke="#fff" stroke-width="1.2" opacity="0.7"/>
+  <circle cx="48" cy="74" r="1.5" fill="#fff" opacity="0.7"/>
+  
+  <!-- Shadow/depth -->
+  <ellipse cx="50" cy="81" rx="15" ry="2" fill="#000" opacity="0.2"/>
+</svg>

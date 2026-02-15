@@ -1,0 +1,340 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- Paper texture pattern -->
+    <pattern id="paperTexture" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="#f4ead5"/>
+      <circle cx="20" cy="30" r="0.5" fill="#e8dcc0" opacity="0.3"/>
+      <circle cx="60" cy="70" r="0.5" fill="#e8dcc0" opacity="0.3"/>
+      <circle cx="80" cy="20" r="0.5" fill="#e8dcc0" opacity="0.3"/>
+      <circle cx="40" cy="90" r="0.5" fill="#e8dcc0" opacity="0.3"/>
+    </pattern>
+    
+    <!-- Forest pattern -->
+    <pattern id="forestPattern" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="5" cy="8" r="3" fill="#8fbc8f" opacity="0.4"/>
+      <circle cx="15" cy="5" r="3" fill="#9fcc9f" opacity="0.4"/>
+      <circle cx="25" cy="10" r="3" fill="#8fbc8f" opacity="0.4"/>
+      <circle cx="10" cy="20" r="3" fill="#9fcc9f" opacity="0.4"/>
+      <circle cx="20" cy="25" r="3" fill="#8fbc8f" opacity="0.4"/>
+    </pattern>
+    
+    <!-- Farmland pattern -->
+    <pattern id="farmlandPattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="40" y2="0" stroke="#d4c4a8" stroke-width="0.5" opacity="0.3"/>
+      <line x1="0" y1="10" x2="40" y2="10" stroke="#d4c4a8" stroke-width="0.5" opacity="0.3"/>
+      <line x1="0" y1="20" x2="40" y2="20" stroke="#d4c4a8" stroke-width="0.5" opacity="0.3"/>
+      <line x1="0" y1="30" x2="40" y2="30" stroke="#d4c4a8" stroke-width="0.5" opacity="0.3"/>
+    </pattern>
+    
+    <!-- Light shadow for labels -->
+    <filter id="labelShadow">
+      <feDropShadow dx="1" dy="1" stdDeviation="0.5" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Cream paper background -->
+  <rect width="1920" height="1080" fill="url(#paperTexture)"/>
+  
+  <!-- Slight border aging effect -->
+  <rect width="1920" height="1080" fill="none" stroke="#d4c4a8" stroke-width="8"/>
+
+  <!-- Natural landscape features -->
+  <g id="landscape" opacity="0.6">
+    <!-- Forest areas (Netherlands side) -->
+    <ellipse cx="600" cy="400" rx="120" ry="100" fill="url(#forestPattern)" stroke="#7fac7f" stroke-width="1" opacity="0.7"/>
+    <ellipse cx="450" cy="650" rx="100" ry="80" fill="url(#forestPattern)" stroke="#7fac7f" stroke-width="1" opacity="0.7"/>
+    <ellipse cx="800" cy="800" rx="90" ry="70" fill="url(#forestPattern)" stroke="#7fac7f" stroke-width="1" opacity="0.7"/>
+    
+    <!-- Forest areas (Germany side) -->
+    <ellipse cx="1350" cy="350" rx="110" ry="90" fill="url(#forestPattern)" stroke="#7fac7f" stroke-width="1" opacity="0.7"/>
+    <ellipse cx="1450" cy="600" rx="95" ry="85" fill="url(#forestPattern)" stroke="#7fac7f" stroke-width="1" opacity="0.7"/>
+    
+    <!-- Farmland areas (Netherlands - around Compascuum) -->
+    <rect x="650" y="580" width="150" height="120" fill="url(#farmlandPattern)" stroke="#c4b49a" stroke-width="0.5" rx="5" opacity="0.5"/>
+    <rect x="500" y="480" width="130" height="100" fill="url(#farmlandPattern)" stroke="#c4b49a" stroke-width="0.5" rx="5" opacity="0.5"/>
+    <rect x="300" y="600" width="120" height="90" fill="url(#farmlandPattern)" stroke="#c4b49a" stroke-width="0.5" rx="5" opacity="0.5"/>
+    
+    <!-- Farmland areas (Germany side) -->
+    <rect x="1100" y="450" width="140" height="110" fill="url(#farmlandPattern)" stroke="#c4b49a" stroke-width="0.5" rx="5" opacity="0.5"/>
+    <rect x="1250" y="800" width="130" height="100" fill="url(#farmlandPattern)" stroke="#c4b49a" stroke-width="0.5" rx="5" opacity="0.5"/>
+    
+    <!-- Individual trees (scattered) -->
+    <g id="trees">
+      <!-- Netherlands trees -->
+      <circle cx="720" cy="450" r="4" fill="#77a877" stroke="#5f8c5f" stroke-width="1"/>
+      <circle cx="740" cy="465" r="4" fill="#77a877" stroke="#5f8c5f" stroke-width="1"/>
+      <circle cx="380" cy="550" r="4" fill="#77a877" stroke="#5f8c5f" stroke-width="1"/>
+      <circle cx="550" cy="700" r="4" fill="#77a877" stroke="#5f8c5f" stroke-width="1"/>
+      <circle cx="920" cy="800" r="4" fill="#77a877" stroke="#5f8c5f" stroke-width="1"/>
+      
+      <!-- Germany trees -->
+      <circle cx="1200" cy="250" r="4" fill="#77a877" stroke="#5f8c5f" stroke-width="1"/>
+      <circle cx="1320" cy="520" r="4" fill="#77a877" stroke="#5f8c5f" stroke-width="1"/>
+      <circle cx="1520" cy="480" r="4" fill="#77a877" stroke="#5f8c5f" stroke-width="1"/>
+    </g>
+  </g>
+
+  <!-- Title in Michelin style -->
+  <g id="title">
+    <text x="960" y="50" font-family="Arial, sans-serif" font-size="32" 
+          fill="#c41e3a" text-anchor="middle" font-weight="bold">
+      Northern Netherlands - Germany
+    </text>
+    <text x="960" y="80" font-family="Arial, sans-serif" font-size="18" 
+          fill="#333" text-anchor="middle">
+      Regional Route Map
+    </text>
+  </g>
+
+  <!-- Legend in paper style -->
+  <g id="legend">
+    <rect x="1650" y="120" width="220" height="180" fill="#fff" stroke="#999" stroke-width="1" rx="2"/>
+    <text x="1760" y="145" font-family="Arial" font-size="14" fill="#333" text-anchor="middle" font-weight="bold">
+      LEGEND
+    </text>
+    <line x1="1665" y1="155" x2="1855" y2="155" stroke="#ccc" stroke-width="1"/>
+    
+    <!-- Home location -->
+    <circle cx="1675" cy="175" r="6" fill="#2a7f3e" stroke="#1a5f2e" stroke-width="2"/>
+    <text x="1695" y="180" font-family="Arial" font-size="11" fill="#333">Home Base</text>
+    
+    <!-- Investigation point -->
+    <circle cx="1675" cy="200" r="6" fill="#4a90e2" stroke="#2a5f9e" stroke-width="2"/>
+    <text x="1695" y="205" font-family="Arial" font-size="11" fill="#333">Meeting Point</text>
+    
+    <!-- Target location -->
+    <circle cx="1675" cy="225" r="6" fill="#c41e3a" stroke="#8e0e1a" stroke-width="2"/>
+    <text x="1695" y="230" font-family="Arial" font-size="11" fill="#333">Target Site</text>
+    
+    <!-- Research site -->
+    <circle cx="1675" cy="250" r="6" fill="#f39c12" stroke="#c87f0a" stroke-width="2"/>
+    <text x="1695" y="255" font-family="Arial" font-size="11" fill="#333">Research</text>
+    
+    <!-- Reference location -->
+    <circle cx="1675" cy="275" r="6" fill="#7f8c8d" stroke="#5f6c6d" stroke-width="2"/>
+    <text x="1695" y="280" font-family="Arial" font-size="11" fill="#333">Reference</text>
+  </g>
+
+  <!-- Country labels -->
+  <text x="500" y="900" font-family="Georgia, serif" font-size="36" 
+        fill="#999" text-anchor="middle" font-weight="normal" opacity="0.5">
+    NEDERLAND
+  </text>
+
+  <text x="1300" y="900" font-family="Georgia, serif" font-size="36" 
+        fill="#999" text-anchor="middle" font-weight="normal" opacity="0.5">
+    DEUTSCHLAND
+  </text>
+
+  <!-- Border line (straight) -->
+  <line x1="1055" y1="100" x2="1055" y2="950" stroke="#c41e3a" stroke-width="2" stroke-dasharray="12,8"/>
+  
+  <!-- Roads (Michelin style - red and yellow) -->
+  <g id="roads">
+    <!-- A37 Highway (major red route from west to Meppen) -->
+    <path d="M 100 750 L 300 750 L 500 745 L 700 740 L 900 735 L 1050 740 L 1150 750" stroke="#c41e3a" stroke-width="6" fill="none" stroke-linecap="round"/>
+    
+    <!-- Main red routes (major roads) -->
+    <path d="M 830 630 L 880 590 L 920 560 L 960 540" stroke="#c41e3a" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M 960 540 L 1010 520 L 1100 700 L 1150 750" stroke="#c41e3a" stroke-width="5" fill="none" stroke-linecap="round"/>
+    <path d="M 960 540 L 1010 480 L 1100 300 L 1180 200 L 1260 140" stroke="#c41e3a" stroke-width="5" fill="none" stroke-linecap="round"/>
+    
+    <!-- Secondary yellow routes -->
+    <path d="M 360 530 L 460 540 L 560 540 L 680 540 L 820 540 L 960 540" stroke="#ffd700" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M 460 540 L 440 480 L 420 420 L 380 360 L 360 320" stroke="#ffd700" stroke-width="4" fill="none" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Highway markers (Michelin style) -->
+  <g id="highway-markers">
+    <!-- A37 marker at west -->
+    <rect x="230" y="728" width="60" height="44" fill="#c41e3a" stroke="#8e0e1a" stroke-width="2" rx="4"/>
+    <rect x="235" y="733" width="50" height="34" fill="#fff" rx="2"/>
+    <text x="260" y="755" font-family="Arial" font-size="18" fill="#c41e3a" text-anchor="middle" font-weight="bold">A37</text>
+    
+    <!-- A37 marker at center -->
+    <rect x="670" y="718" width="60" height="44" fill="#c41e3a" stroke="#8e0e1a" stroke-width="2" rx="4"/>
+    <rect x="675" y="723" width="50" height="34" fill="#fff" rx="2"/>
+    <text x="700" y="745" font-family="Arial" font-size="18" fill="#c41e3a" text-anchor="middle" font-weight="bold">A37</text>
+    
+    <!-- A37 marker near Meppen -->
+    <rect x="1020" y="718" width="60" height="44" fill="#c41e3a" stroke="#8e0e1a" stroke-width="2" rx="4"/>
+    <rect x="1025" y="723" width="50" height="34" fill="#fff" rx="2"/>
+    <text x="1050" y="745" font-family="Arial" font-size="18" fill="#c41e3a" text-anchor="middle" font-weight="bold">A37</text>
+  </g>
+
+  <!-- LOCATIONS -->
+
+  <!-- 1. COMPASCUUM (Ryan's home) -->
+  <g id="location-compascuum">
+    <circle cx="830" cy="630" r="8" fill="#2a7f3e" stroke="#1a5f2e" stroke-width="2.5"/>
+    <circle cx="830" cy="630" r="3" fill="#fff"/>
+    
+    <!-- Label -->
+    <rect x="750" y="642" width="160" height="28" fill="#fff" stroke="#999" stroke-width="0.5" rx="2" opacity="0.95"/>
+    <text x="830" y="660" font-family="Arial" font-size="12" fill="#1a5f2e" text-anchor="middle" font-weight="bold">
+      Compascuum
+    </text>
+  </g>
+
+  <!-- 2. TER APEL (Monastery - CENTER) -->
+  <g id="location-terapel">
+    <circle cx="960" cy="540" r="8" fill="#4a90e2" stroke="#2a5f9e" stroke-width="2.5"/>
+    <circle cx="960" cy="540" r="3" fill="#fff"/>
+    
+    <!-- Label -->
+    <rect x="890" y="500" width="140" height="28" fill="#fff" stroke="#999" stroke-width="0.5" rx="2" opacity="0.95"/>
+    <text x="960" y="518" font-family="Arial" font-size="12" fill="#2a5f9e" text-anchor="middle" font-weight="bold">
+      Ter Apel
+    </text>
+  </g>
+
+  <!-- 3. STECKERDOSER HEIDE (Facility) -->
+  <g id="location-facility">
+    <circle cx="1260" cy="140" r="8" fill="#c41e3a" stroke="#8e0e1a" stroke-width="2.5"/>
+    <circle cx="1260" cy="140" r="3" fill="#fff"/>
+    
+    <!-- Warning symbol -->
+    <path d="M 1260 125 L 1268 137 L 1252 137 Z" stroke="#8e0e1a" stroke-width="2" fill="none"/>
+    <text x="1260" y="134" font-family="Arial" font-size="8" fill="#8e0e1a" text-anchor="middle" font-weight="bold">!</text>
+    
+    <!-- Label -->
+    <rect x="1150" y="90" width="220" height="32" fill="#fff" stroke="#999" stroke-width="0.5" rx="2" opacity="0.95"/>
+    <text x="1260" y="107" font-family="Arial" font-size="11" fill="#8e0e1a" text-anchor="middle" font-weight="bold">
+      Steckerdoser Heide
+    </text>
+    <text x="1260" y="118" font-family="Arial" font-size="9" fill="#666" text-anchor="middle">
+      Project Echo Facility
+    </text>
+  </g>
+
+  <!-- 4. WSRT (Westerbork) -->
+  <g id="location-wsrt">
+    <circle cx="460" cy="540" r="8" fill="#f39c12" stroke="#c87f0a" stroke-width="2.5"/>
+    <circle cx="460" cy="540" r="3" fill="#fff"/>
+    
+    <!-- Label -->
+    <rect x="380" y="552" width="160" height="28" fill="#fff" stroke="#999" stroke-width="0.5" rx="2" opacity="0.95"/>
+    <text x="460" y="570" font-family="Arial" font-size="12" fill="#c87f0a" text-anchor="middle" font-weight="bold">
+      WSRT
+    </text>
+  </g>
+
+  <!-- 5. LOFAR -->
+  <g id="location-lofar">
+    <circle cx="360" cy="530" r="8" fill="#f39c12" stroke="#c87f0a" stroke-width="2.5"/>
+    <circle cx="360" cy="530" r="3" fill="#fff"/>
+    
+    <!-- Label -->
+    <rect x="290" y="492" width="140" height="28" fill="#fff" stroke="#999" stroke-width="0.5" rx="2" opacity="0.95"/>
+    <text x="360" y="510" font-family="Arial" font-size="12" fill="#c87f0a" text-anchor="middle" font-weight="bold">
+      LOFAR
+    </text>
+  </g>
+
+  <!-- 7. MEPPEN (German town) -->
+  <g id="location-meppen">
+    <circle cx="1150" cy="750" r="8" fill="#7f8c8d" stroke="#5f6c6d" stroke-width="2.5"/>
+    <circle cx="1150" cy="750" r="3" fill="#fff"/>
+    
+    <!-- Label -->
+    <rect x="1080" y="762" width="140" height="28" fill="#fff" stroke="#999" stroke-width="0.5" rx="2" opacity="0.95"/>
+    <text x="1150" y="780" font-family="Arial" font-size="12" fill="#5f6c6d" text-anchor="middle" font-weight="bold">
+      Meppen
+    </text>
+  </g>
+
+  <!-- Distance indicators with Michelin-style route numbers -->
+  <g id="distances" opacity="0">
+    <!-- Distance from Ter Apel to Compascuum -->
+    <rect x="880" y="575" width="40" height="22" fill="#fff" stroke="#c41e3a" stroke-width="2" rx="2"/>
+    <text x="900" y="590" font-family="Arial" font-size="12" fill="#c41e3a" text-anchor="middle" font-weight="bold">
+      15
+    </text>
+    
+    <!-- Distance from Ter Apel to Facility -->
+    <rect x="1100" y="320" width="40" height="22" fill="#fff" stroke="#c41e3a" stroke-width="2" rx="2"/>
+    <text x="1120" y="335" font-family="Arial" font-size="12" fill="#c41e3a" text-anchor="middle" font-weight="bold">
+      44
+    </text>
+    
+    <!-- Distance on WSRT to Ter Apel route -->
+    <rect x="690" y="530" width="40" height="22" fill="#fff" stroke="#ffd700" stroke-width="2" rx="2"/>
+    <text x="710" y="545" font-family="Arial" font-size="12" fill="#d4a017" text-anchor="middle" font-weight="bold">
+      50
+    </text>
+    
+    <!-- Distance to LOFAR -->
+    <rect x="640" y="520" width="40" height="22" fill="#fff" stroke="#ffd700" stroke-width="2" rx="2"/>
+    <text x="660" y="535" font-family="Arial" font-size="12" fill="#d4a017" text-anchor="middle" font-weight="bold">
+      60
+    </text>
+    
+    <!-- Distance to Meppen -->
+    <rect x="1050" y="640" width="40" height="22" fill="#fff" stroke="#c41e3a" stroke-width="2" rx="2"/>
+    <text x="1070" y="655" font-family="Arial" font-size="12" fill="#c41e3a" text-anchor="middle" font-weight="bold">
+      30
+    </text>
+  </g>
+
+  <!-- Compass Rose -->
+  <g id="compass" transform="translate(150, 900)">
+    <circle cx="0" cy="0" r="50" fill="rgba(0, 255, 136, 0.1)" stroke="#00ff88" stroke-width="2"/>
+    
+    <!-- North arrow -->
+    <path d="M 0 -40 L -8 -20 L 0 -25 L 8 -20 Z" fill="#ff4757" stroke="#fff" stroke-width="1"/>
+    <text x="0" y="-48" font-family="Arial" font-size="16" fill="#ff4757" text-anchor="middle" font-weight="bold">N</text>
+    
+    <!-- South -->
+    <path d="M 0 40 L -6 25 L 6 25 Z" fill="#00ff88" stroke="#fff" stroke-width="1" opacity="0.5"/>
+    <text x="0" y="54" font-family="Arial" font-size="12" fill="#00ff88" text-anchor="middle">S</text>
+    
+    <!-- East -->
+    <path d="M 40 0 L 25 -6 L 25 6 Z" fill="#00ff88" stroke="#fff" stroke-width="1" opacity="0.5"/>
+    <text x="50" y="5" font-family="Arial" font-size="12" fill="#00ff88" text-anchor="middle">E</text>
+    
+    <!-- West -->
+    <path d="M -40 0 L -25 -6 L -25 6 Z" fill="#00ff88" stroke="#fff" stroke-width="1" opacity="0.5"/>
+    <text x="-50" y="5" font-family="Arial" font-size="12" fill="#00ff88" text-anchor="middle">W</text>
+    
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="3" fill="#00ff88"/>
+  </g>
+
+  <!-- Scale indicator -->
+  <!-- Scale bar (Michelin style) -->
+  <g id="scale" transform="translate(100, 960)">
+    <rect x="-5" y="-15" width="260" height="35" fill="#fff" stroke="#999" stroke-width="1" rx="2"/>
+    <line x1="10" y1="0" x2="210" y2="0" stroke="#333" stroke-width="3"/>
+    <line x1="10" y1="-8" x2="10" y2="8" stroke="#333" stroke-width="3"/>
+    <line x1="110" y1="-8" x2="110" y2="8" stroke="#333" stroke-width="3"/>
+    <line x1="210" y1="-8" x2="210" y2="8" stroke="#333" stroke-width="3"/>
+    <text x="10" y="-10" font-family="Arial" font-size="10" fill="#333" text-anchor="start">0</text>
+    <text x="110" y="-10" font-family="Arial" font-size="10" fill="#333" text-anchor="middle">50</text>
+    <text x="210" y="-10" font-family="Arial" font-size="10" fill="#333" text-anchor="end">100 km</text>
+  </g>
+
+  <!-- Compass rose (simple Michelin style) -->
+  <g id="compass" transform="translate(1750, 950)">
+    <circle cx="0" cy="0" r="35" fill="#fff" stroke="#999" stroke-width="1.5"/>
+    <path d="M 0 -25 L 5 0 L 0 -30 L -5 0 Z" fill="#c41e3a"/>
+    <path d="M 0 25 L 5 0 L 0 30 L -5 0 Z" fill="#fff" stroke="#333" stroke-width="1"/>
+    <text x="0" y="-40" font-family="Arial" font-size="16" fill="#c41e3a" text-anchor="middle" font-weight="bold">N</text>
+  </g>
+
+  <!-- Back button (paper style) -->
+  <g id="back-button" cursor="pointer">
+    <rect x="50" y="30" width="100" height="40" fill="#fff" stroke="#999" stroke-width="1.5" rx="3"/>
+    <text x="100" y="55" font-family="Arial" font-size="14" fill="#333" text-anchor="middle" font-weight="bold">
+      ← Back
+    </text>
+  </g>
+
+  <!-- Toggle distances button (paper style) -->
+  <g id="toggle-distances-button" cursor="pointer">
+    <rect x="170" y="30" width="140" height="40" fill="#fff" stroke="#c41e3a" stroke-width="1.5" rx="3"/>
+    <text x="240" y="55" font-family="Arial" font-size="13" fill="#c41e3a" text-anchor="middle" font-weight="bold">
+      Show Distances
+    </text>
+  </g>
+
+</svg>

@@ -172,59 +172,26 @@ const KloosterScene = {
             height: (300 / 1080) * 100, // 27.78%
             cursor: 'use',
             lookMessage: function(game) {
-                if (game.getFlag('found_usb_stick')) {
+                if (game.getFlag('picked_up_usb')) {
                     return "My Volvo. Time to drive home and check that USB.";
                 }
                 return "My old Volvo. Parked in the shadows.";
             },
             action: function(game) {
+                console.log('[Klooster] Volvo clicked. Flags:', {
+                    found_usb_stick: game.getFlag('found_usb_stick'),
+                    picked_up_usb: game.getFlag('picked_up_usb')
+                });
+                
                 if (!game.getFlag('found_usb_stick')) {
+                    // First time approaching the car - discover the USB stick
                     game.setFlag('found_usb_stick', true);
+                    console.log('[Klooster] Loading car_discovery scene');
                     
-                    game.startDialogue([
-                        { speaker: '', text: '*Ryan approaches the Volvo*' },
-                        { speaker: 'Ryan', text: 'Time to go home. What a waste of—' },
-                        { speaker: 'Ryan', text: 'Wait. What the hell?' },
-                        { speaker: '', text: '*There is something under the door handle*' },
-                        { speaker: 'Ryan', text: 'A USB stick. Someone WAS here.' },
-                        { speaker: '', text: '*A piece of tape wrapped around it with handwritten text:*' },
-                        { speaker: '', text: '"TRUST THE PROCESS - AIR-GAPPED ONLY"' },
-                        { speaker: 'Ryan', text: 'They watched me walk in. Watched me look around.' },
-                        { speaker: 'Ryan', text: 'Never meant to meet face-to-face.' },
-                        { speaker: 'Ryan', text: 'This IS the meeting.' }
-                    ]);
-                    
-                    // Give USB stick item
-                    game.addItem({
-                        id: 'usb_stick',
-                        name: 'USB Stick',
-                        description: 'Black USB stick with note: "TRUST THE PROCESS - AIR-GAPPED ONLY". Whatever is on this drive, someone risked everything to deliver it.',
-                        icon: 'assets/images/icons/usb-stick.svg'
-                    });
-                    
-                    // Complete go_to_klooster quest and add new one
-                    if (game.questManager.hasQuest('go_to_klooster')) {
-                        game.questManager.complete('go_to_klooster');
-                    }
-                    
-                    game.addQuest({
-                        id: 'analyze_usb',
-                        name: 'Analyze USB Stick',
-                        description: 'Examine the USB stick on an air-gapped machine. Find out what "E" wants me to see.',
-                        hint: 'Use the air-gapped laptop in the mancave'
-                    });
-                    
-                    setTimeout(() => {
-                        game.startDialogue([
-                            { speaker: 'Ryan', text: 'Back to the mancave. Time to see what this is.' }
-                        ]);
-                        
-                        setTimeout(() => {
-                            game.showNotification('Click the Volvo to drive home');
-                        }, 2000);
-                    }, 2000);
-                } else {
-                    // Allow player to leave and go back to mancave
+                    // Transition to the close-up car discovery scene
+                    game.loadScene('car_discovery');
+                } else if (game.getFlag('picked_up_usb')) {
+                    // Already picked up USB, allow driving home
                     game.startDialogue([
                         { speaker: 'Ryan', text: '*Gets in the car*' },
                         { speaker: '', text: '*Engine starts. Time to head home.*' }
@@ -236,6 +203,9 @@ const KloosterScene = {
                         console.log('Klooster: Loading driving scene');
                         game.loadScene('driving');
                     }, 2000);
+                } else {
+                    // Found USB but haven't picked it up yet - go back to car discovery
+                    game.loadScene('car_discovery');
                 }
             }
         },

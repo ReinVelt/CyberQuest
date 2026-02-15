@@ -1,128 +1,415 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140">
-  <!-- PODENCO - Modern South Park Style -->
-  <!-- Spanish hunting dog - elegant, alert, white with brown patches -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 160">
+  <!-- Ultra-Photorealistic Lying Podenco (Athletic Hunting Dog, Eyes Open) -->
   
   <defs>
-    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+    <!-- Complex fur gradients with natural variation -->
+    <radialGradient id="bodyFur1" cx="40%" cy="30%">
       <stop offset="0%" style="stop-color:#ffffff"/>
-      <stop offset="100%" style="stop-color:#f0f0f0"/>
-    </linearGradient>
+      <stop offset="25%" style="stop-color:#fcfbf9"/>
+      <stop offset="50%" style="stop-color:#f5f2ee"/>
+      <stop offset="75%" style="stop-color:#ebe6e0"/>
+      <stop offset="100%" style="stop-color:#ddd5cc"/>
+    </radialGradient>
     
-    <linearGradient id="brownPatchGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#9a6a4a"/>
-      <stop offset="100%" style="stop-color:#7a5a3a"/>
-    </linearGradient>
+    <radialGradient id="brownPatch1" cx="35%" cy="28%">
+      <stop offset="0%" style="stop-color:#d4b494"/>
+      <stop offset="30%" style="stop-color:#b89474"/>
+      <stop offset="65%" style="stop-color:#987658"/>
+      <stop offset="100%" style="stop-color:#755a40"/>
+    </radialGradient>
     
-    <filter id="shadow">
-      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    <radialGradient id="deepShadow" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#c8beb0"/>
+      <stop offset="50%" style="stop-color:#b0a598"/>
+      <stop offset="100%" style="stop-color:#988e80"/>
+    </radialGradient>
+    
+    <!-- Advanced fur texture with high detail -->
+    <filter id="photoFur">
+      <feTurbulence type="fractalNoise" baseFrequency="4 3.2" numOctaves="7" seed="7"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="table" tableValues="0 0.02 0.05 0.08 0.12 0.15 0.18"/>
+      </feComponentTransfer>
+      <feGaussianBlur stdDeviation="0.2"/>
+    </filter>
+    
+    <filter id="softShadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="1" dy="2"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.25"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <filter id="deepBlur">
+      <feGaussianBlur stdDeviation="5"/>
     </filter>
   </defs>
   
-  <!-- TAIL (curved, expressive) -->
-  <path d="M30,85 Q20,75 15,80 Q12,85 18,90 Q24,92 28,88" 
-        fill="url(#bodyGrad)" stroke="#000" stroke-width="2.5" filter="url(#shadow)"/>
-  <ellipse cx="16" cy="82" rx="6" ry="8" fill="url(#brownPatchGrad)" stroke="#000" stroke-width="1.5"/>
+  <!-- Multi-layer ground shadows for realism (lean body profile) -->
+  <ellipse cx="120" cy="152" rx="80" ry="5" fill="#000" opacity="0.06" filter="url(#deepBlur)"/>
+  <ellipse cx="120" cy="153" rx="65" ry="3.5" fill="#000" opacity="0.09"/>
+  <ellipse cx="120" cy="154" rx="50" ry="2.5" fill="#000" opacity="0.12"/>
   
-  <!-- BODY (slender, elegant Podenco build) -->
-  <ellipse cx="90" cy="90" rx="48" ry="26" fill="url(#bodyGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+  <!-- BACK LEGS (organic, irregular shapes - lean and athletic) -->
+  <!-- Left back leg with natural curves -->
+  <path d="M77,112 Q75,119 76,126 Q77,132 79,137" 
+        fill="url(#bodyFur1)" filter="url(#softShadow)"/>
+  <path d="M78,114 Q77,120 77,126 Q78,131 79,135" 
+        fill="#faf7f3" opacity="0.6"/>
+  <path d="M74,117 C74,117 72,122 73,128 Q74,131 76,134" 
+        fill="none" stroke="#e0d8ce" stroke-width="0.8" opacity="0.3"/>
+  <!-- Leg muscle definition -->
+  <ellipse cx="77" cy="120" rx="6" ry="10" fill="#ebe3d8" opacity="0.2"/>
+  <path d="M75,115 Q77,120 78,125" stroke="#d5cdc0" stroke-width="0.6" opacity="0.25" fill="none"/>
   
-  <!-- Brown patches on body -->
-  <ellipse cx="65" cy="85" rx="18" ry="14" fill="url(#brownPatchGrad)" stroke="#000" stroke-width="2"/>
-  <ellipse cx="105" cy="92" rx="16" ry="12" fill="url(#brownPatchGrad)" stroke="#000" stroke-width="2"/>
-  <ellipse cx="85" cy="78" rx="12" ry="9" fill="#8a6a4a" stroke="#000" stroke-width="1.5"/>
+  <!-- Right back leg (partially hidden) -->
+  <path d="M96,115 Q97,122 97,129 Q97,134 98,138" 
+        fill="url(#bodyFur1)" opacity="0.75"/>
+  <path d="M97,118 Q97,124 97,130" 
+        fill="#f0e8de" opacity="0.5"/>
   
-  <!-- LEGS (long, thin, elegant - Podenco characteristic) -->
-  <rect x="60" y="110" width="9" height="25" rx="2" fill="#fff" stroke="#000" stroke-width="2.5"/>
-  <rect x="80" y="110" width="9" height="25" rx="2" fill="#fff" stroke="#000" stroke-width="2.5"/>
-  <rect x="100" y="110" width="9" height="25" rx="2" fill="#fff" stroke="#000" stroke-width="2.5"/>
-  <rect x="120" y="110" width="9" height="25" rx="2" fill="#fff" stroke="#000" stroke-width="2.5"/>
+  <!-- Left back paw with individual toes -->
+  <path d="M78,136 C78,136 76,140 77,143 L81,143 Q82,141 82,138" 
+        fill="#e5dcd2"/>
+  <ellipse cx="79" cy="142" rx="7" ry="5" fill="#f2e9e0" opacity="0.4"/>
+  <!-- Toe pads -->
+  <ellipse cx="77" cy="142" rx="1.8" ry="1.5" fill="#b5a594" opacity="0.7"/>
+  <ellipse cx="79.5" cy="141.5" rx="2" ry="1.7" fill="#b5a594" opacity="0.75"/>
+  <ellipse cx="82" cy="142" rx="1.7" ry="1.4" fill="#b5a594" opacity="0.7"/>
+  <ellipse cx="79.5" cy="144" rx="2.5" ry="2" fill="#a89786" opacity="0.8"/>
+  <!-- Fur tufts between toes -->
+  <path d="M77,140 L76.5,138" stroke="#f8f5f1" stroke-width="0.3" opacity="0.4"/>
+  <path d="M79,139 L79,137" stroke="#f8f5f1" stroke-width="0.3" opacity="0.4"/>
+  <path d="M81,140 L81.5,138" stroke="#f8f5f1" stroke-width="0.3" opacity="0.4"/>
   
-  <!-- PAWS -->
-  <ellipse cx="64.5" cy="135" rx="6" ry="4" fill="#e8d8c8" stroke="#000" stroke-width="1.5"/>
-  <ellipse cx="84.5" cy="135" rx="6" ry="4" fill="#e8d8c8" stroke="#000" stroke-width="1.5"/>
-  <ellipse cx="104.5" cy="135" rx="6" ry="4" fill="#e8d8c8" stroke="#000" stroke-width="1.5"/>
-  <ellipse cx="124.5" cy="135" rx="6" ry="4" fill="#e8d8c8" stroke="#000" stroke-width="1.5"/>
+  <!-- TAIL (organic curved path - slender) -->
+  <path d="M70,105 Q62,107 58,103 C56,100 56,97 58,94 Q60,90 65,91 Q69,92 71,96 Q73,100 72,103" 
+        fill="url(#bodyFur1)"/>
+  <path d="M71,106 Q64,107 60,104 Q58,101 59,97 Q61,93 65,94 Q69,95 70,99" 
+        fill="#fdfcfa" opacity="0.5"/>
+  <!-- Tail fur strands -->
+  <path d="M61,95 L59,93" stroke="#f5f1ed" stroke-width="0.4" opacity="0.35" stroke-linecap="round"/>
+  <path d="M59,98 L57,97" stroke="#f5f1ed" stroke-width="0.4" opacity="0.35" stroke-linecap="round"/>
+  <path d="M59,102 L57,104" stroke="#f5f1ed" stroke-width="0.4" opacity="0.35" stroke-linecap="round"/>
+  <!-- Brown patch on tail -->
+  <path d="M62,97 Q59,100 61,103 Q64,104 66,102 Q67,99 65,96 Q63,95 62,97" 
+        fill="url(#brownPatch1)" opacity="0.85"/>
+  <ellipse cx="63" cy="100" rx="4.5" ry="5.5" fill="#c4a080" opacity="0.4"/>
   
-  <!-- Paw pads detail -->
-  <circle cx="64.5" cy="134" r="1.5" fill="#9a7a6a"/>
-  <circle cx="84.5" cy="134" r="1.5" fill="#9a7a6a"/>
-  <circle cx="104.5" cy="134" r="1.5" fill="#9a7a6a"/>
-  <circle cx="124.5" cy="134" r="1.5" fill="#9a7a6a"/>
+  <!-- MAIN BODY (irregular organic shape, athletic and lean) -->
+  <path d="M75,95 C75,95 82,91 95,89 Q110,88 125,90 Q138,92 145,97 C145,97 149,101 149,108 Q149,115 145,121 C145,121 140,125 130,127 Q115,129 100,128 Q85,127 78,123 C78,123 73,118 73,110 Q73,101 75,95" 
+        fill="url(#bodyFur1)" filter="url(#softShadow)"/>
+  <path d="M77,96 Q85,92 98,91 Q115,90 130,93 Q140,96 145,103 Q148,109 145,117 Q140,123 128,125 Q115,126 100,125 Q85,124 78,119 Q74,112 77,96" 
+        fill="#fcfaf7" opacity="0.45"/>
   
-  <!-- NECK (elegant) -->
-  <ellipse cx="125" cy="72" rx="12" ry="18" fill="url(#bodyGrad)" stroke="#000" stroke-width="2.5"/>
+  <!-- Detailed fur texture overlay -->
+  <path d="M77,96 Q85,92 98,91 Q115,90 130,93 Q140,96 145,103 Q148,109 145,117 Q140,123 128,125 Q115,126 100,125 Q85,124 78,119 Q74,112 77,96" 
+        fill="url(#bodyFur1)" filter="url(#photoFur)" opacity="0.18"/>
   
-  <!-- HEAD (long, elegant Podenco snout) -->
-  <ellipse cx="138" cy="55" rx="22" ry="20" fill="url(#bodyGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+  <!-- Body contour shadows (creates 3D depth, lean athletic build) -->
+  <ellipse cx="95" cy="98" rx="18" ry="8" fill="url(#deepShadow)" opacity="0.15"/>
+  <ellipse cx="120" cy="100" rx="15" ry="7" fill="#e8dfd5" opacity="0.18"/>
+  <ellipse cx="108" cy="112" rx="20" ry="8" fill="#d5cdc0" opacity="0.12"/>
+  <!-- Spine shadow (visible, athletic) -->
+  <path d="M85,91 Q105,89 125,92" stroke="#cfc5b8" stroke-width="1.3" opacity="0.28" fill="none"/>
+  <!-- Ribcage contours (prominent for athletic look) -->
+  <path d="M88,100 Q98,98 108,100" stroke="#ddd3c8" stroke-width="0.7" opacity="0.22" fill="none"/>
+  <path d="M90,104 Q100,102 110,104" stroke="#ddd3c8" stroke-width="0.7" opacity="0.20" fill="none"/>
+  <path d="M92,108 Q102,106 112,108" stroke="#ddd3c8" stroke-width="0.6" opacity="0.18" fill="none"/>
+  <path d="M94,112 Q103,110 112,112" stroke="#ddd3c8" stroke-width="0.6" opacity="0.16" fill="none"/>
+  <!-- Hip/rump definition (lean) -->
+  <ellipse cx="85" cy="116" rx="10" ry="7" fill="#e0d6cc" opacity="0.15"/>
   
-  <!-- Brown patch on head -->
-  <ellipse cx="145" cy="48" rx="14" ry="12" fill="url(#brownPatchGrad)" stroke="#000" stroke-width="2"/>
+  <!-- Brown patches (irregular, organic shapes) -->
+  <path d="M82,95 Q78,99 80,105 Q83,109 90,110 Q97,109 100,104 Q102,98 98,94 Q92,91 85,92 Q82,93 82,95" 
+        fill="url(#brownPatch1)"/>
+  <path d="M84,96 Q82,100 83,104 Q86,107 92,108 Q97,107 99,103 Q100,98 97,95 Q93,93 88,94 Q85,94 84,96" 
+        fill="#c4a080" opacity="0.5"/>
+  <ellipse cx="91" cy="101" rx="11" ry="7" fill="#d8b894" opacity="0.3"/>
   
-  <!-- EARS (LARGE UPRIGHT - signature Podenco feature!) -->
-  <path d="M120,25 L115,42 L125,48 L130,28 Z" 
-        fill="#fff" stroke="#000" stroke-width="2.5" filter="url(#shadow)"/>
-  <path d="M122,28 L119,40 L123,44 L126,32 Z" 
-        fill="#f5e5d5"/>
+  <path d="M115,101 Q112,106 114,112 Q118,117 126,117 Q132,116 135,111 Q137,105 134,100 Q130,97 123,97 Q118,98 115,101" 
+        fill="url(#brownPatch1)"/>
+  <path d="M117,103 Q115,107 116,111 Q119,114 125,114 Q130,113 132,110 Q133,105 131,102 Q128,100 123,100 Q119,100 117,103" 
+        fill="#b89068" opacity="0.45"/>
   
-  <path d="M155,22 L150,40 L160,46 L165,26 Z" 
-        fill="url(#brownPatchGrad)" stroke="#000" stroke-width="2.5" filter="url(#shadow)"/>
-  <path d="M157,26 L154,38 L158,42 L161,30 Z" 
-        fill="#aa8a6a"/>
+  <path d="M100,89 Q97,91 98,95 Q101,98 108,98 Q113,97 115,94 Q116,91 113,89 Q108,87 103,88 Q100,88 100,89" 
+        fill="#a68058"/>
+  <ellipse cx="107" cy="93" rx="8" ry="5" fill="#c4a484" opacity="0.35"/>
   
-  <!-- SNOUT (long, elegant) -->
-  <ellipse cx="155" cy="60" rx="16" ry="12" fill="#fff" stroke="#000" stroke-width="2.5"/>
-  <ellipse cx="160" cy="58" rx="10" ry="8" fill="#f8f8f8" stroke="#000" stroke-width="2"/>
+  <!-- Individual fur strands for realism -->
+  <path d="M78,98 L76,96" stroke="#faf8f4" stroke-width="0.35" opacity="0.3" stroke-linecap="round"/>
+  <path d="M82,95 L80,93" stroke="#faf8f4" stroke-width="0.35" opacity="0.3" stroke-linecap="round"/>
+  <path d="M108,91 L110,89" stroke="#faf8f4" stroke-width="0.35" opacity="0.3" stroke-linecap="round"/>
+  <path d="M125,94 L127,92" stroke="#faf8f4" stroke-width="0.35" opacity="0.3" stroke-linecap="round"/>
+  <path d="M140,100 L142,98" stroke="#faf8f4" stroke-width="0.35" opacity="0.3" stroke-linecap="round"/>
   
-  <!-- NOSE (black, prominent) -->
-  <ellipse cx="165" cy="60" rx="5" ry="6" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
-  <ellipse cx="163" cy="59" r="1.5" fill="#444" opacity="0.5"/>
+  <!-- FRONT LEG (visible, tucked naturally - lean and athletic) -->
+  <path d="M130,106 C130,106 129,113 129,121 Q129,129 130,136" 
+        fill="url(#bodyFur1)" filter="url(#softShadow)"/>
+  <path d="M130,109 Q130,116 130,123 Q130,130 130,135" 
+        fill="#fdfbf8" opacity="0.55"/>
+  <!-- Leg contour and muscle -->
+  <path d="M127,109 Q129,116 130,123" stroke="#e0d6cc" stroke-width="0.8" opacity="0.25" fill="none"/>
+  <ellipse cx="130" cy="120" rx="5" ry="10" fill="#ebe3d8" opacity="0.18"/>
   
-  <!-- NOSTRILS -->
-  <ellipse cx="163.5" cy="60" rx="1.5" ry="2" fill="#000"/>
-  <ellipse cx="166.5" cy="60" rx="1.5" ry="2" fill="#000"/>
+  <!-- Front paw with detailed toes -->
+  <path d="M128,135 C128,135 126,139 127,142 L133,142 Q134,140 133,137" 
+        fill="#e5dcd2"/>
+  <ellipse cx="130" cy="141" rx="7" ry="5" fill="#f2e9e0" opacity="0.4"/>
+  <!-- Individual toe pads -->
+  <ellipse cx="127.5" cy="141" rx="1.7" ry="1.4" fill="#b5a594" opacity="0.7"/>
+  <ellipse cx="130" cy="140.5" rx="2.1" ry="1.8" fill="#b5a594" opacity="0.75"/>
+  <ellipse cx="132.5" cy="141" rx="1.8" ry="1.5" fill="#b5a594" opacity="0.7"/>
+  <ellipse cx="130" cy="143.5" rx="2.6" ry="2.1" fill="#a89786" opacity="0.8"/>
+  <!-- Paw fur tufts -->
+  <path d="M127,138 L126.5,136" stroke="#f8f5f1" stroke-width="0.3" opacity="0.4"/>
+  <path d="M130,137 L130,135" stroke="#f8f5f1" stroke-width="0.3" opacity="0.4"/>
+  <path d="M133,138 L133.5,136" stroke="#f8f5f1" stroke-width="0.3" opacity="0.4"/>
   
-  <!-- MOUTH (gentle expression) -->
-  <path d="M165,66 L165,70" stroke="#000" stroke-width="2" stroke-linecap="round"/>
-  <path d="M158,70 Q165,74 172,70" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+  <!-- NECK (natural curve with skin folds - lean and elegant) -->
+  <path d="M140,95 Q144,91 150,88 Q155,86 159,88 Q161,90 162,93" 
+        fill="url(#bodyFur1)"/>
+  <path d="M141,96 Q145,93 151,91 Q156,90 159,92 Q161,93 161,96" 
+        fill="#fcfaf7" opacity="0.5"/>
+  <!-- Neck fold/wrinkle -->
+  <path d="M143,93 Q149,91 155,93" stroke="#d5cbc0" stroke-width="0.9" opacity="0.28" fill="none"/>
+  <path d="M144,96 Q149,95 154,96" stroke="#e0d6cc" stroke-width="0.7" opacity="0.22" fill="none"/>
   
-  <!-- EYES (large, expressive, alert - animated look) -->
-  <ellipse cx="135" cy="52" rx="8" ry="10" fill="#fff" stroke="#000" stroke-width="2.5"/>
-  <ellipse cx="150" cy="52" rx="8" ry="10" fill="#fff" stroke="#000" stroke-width="2.5"/>
+  <!-- HEAD (complex organic shape, realistic skull structure) -->
+  <path d="M158,80 Q155,76 155,71 Q156,66 160,63 Q165,61 171,62 Q176,64 179,68 Q181,73 180,78 Q178,83 174,86 Q169,88 163,87 Q159,85 158,80" 
+        fill="url(#bodyFur1)" filter="url(#softShadow)"/>
+  <path d="M159,79 Q157,75 157,71 Q158,67 161,65 Q165,63 170,64 Q174,66 176,70 Q178,74 177,78 Q175,82 172,84 Q168,85 164,84 Q160,83 159,79" 
+        fill="#ffffff" opacity="0.35"/>
   
-  <!-- Irises (warm brown, alert) -->
-  <circle cx="135" cy="53" r="5" fill="#6a4a3a"/>
-  <circle cx="150" cy="53" r="5" fill="#6a4a3a"/>
+  <!-- Skull/forehead contour -->
+  <path d="M160,68 Q168,65 176,68" stroke="#e0d5ca" stroke-width="0.6" opacity="0.22" fill="none"/>
+  <ellipse cx="168" cy="72" rx="10" ry="8" fill="#f0e8de" opacity="0.12"/>
   
-  <!-- Pupils (dilated, friendly) -->
-  <circle cx="135" cy="53" r="3" fill="#1a1a1a"/>
-  <circle cx="150" cy="53" r="3" fill="#1a1a1a"/>
+  <!-- Brown head patch (irregular) -->
+  <path d="M168,64 Q165,66 165,70 Q166,75 170,78 Q175,79 179,77 Q182,74 182,70 Q181,66 178,64 Q174,62 170,63 Q168,63 168,64" 
+        fill="url(#brownPatch1)"/>
+  <path d="M169,66 Q167,68 167,71 Q168,74 171,76 Q175,77 178,75 Q180,73 180,70 Q179,67 177,66 Q174,65 171,65 Q169,65 169,66" 
+        fill="#c4a080" opacity="0.45"/>
+  <ellipse cx="174" cy="71" rx="7" ry="6" fill="#d8b894" opacity="0.28"/>
   
-  <!-- Eye highlights (bright, animated, alive) -->
-  <circle cx="133" cy="51" r="2.5" fill="#fff" opacity="0.95"/>
-  <circle cx="148" cy="51" r="2.5" fill="#fff" opacity="0.95"/>
-  <circle cx="137" cy="55" r="1.5" fill="#fff" opacity="0.7"/>
-  <circle cx="152" cy="55" r="1.5" fill="#fff" opacity="0.7"/>
+  <!-- EARS (organic, not perfect shapes) -->
+  <!-- Left ear (white, flopped) -->
+  <path d="M156,68 Q152,71 151,76 Q151,82 154,87 Q157,90 162,89 Q166,87 168,83 Q169,77 167,72 Q164,68 160,67 Q157,67 156,68" 
+        fill="url(#bodyFur1)"/>
+  <path d="M157,70 Q154,73 154,77 Q154,82 156,85 Q159,87 162,86 Q165,84 166,81 Q167,76 165,73 Q163,70 160,70 Q158,70 157,70" 
+        fill="#f8f4f0" opacity="0.45"/>
+  <!-- Ear inner detail -->
+  <path d="M158,72 Q156,75 156,79 Q157,82 159,84 Q161,85 163,83 Q164,80 163,77 Q162,74 160,73 Q159,72 158,72" 
+        fill="#f0e6db" opacity="0.55"/>
+  <!-- Ear fur flow lines -->
+  <path d="M159,73 Q157,77 158,81" stroke="#ebe0d5" stroke-width="0.4" opacity="0.3" fill="none"/>
+  <path d="M161,74 Q159,78 160,82" stroke="#ebe0d5" stroke-width="0.4" opacity="0.3" fill="none"/>
+  <path d="M163,75 Q162,79 162,83" stroke="#f5ebe0" stroke-width="0.3" opacity="0.35" fill="none"/>
   
-  <!-- Eyelids (alert expression) -->
-  <path d="M127,48 Q135,46 143,48" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <path d="M142,48 Q150,46 158,48" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Right ear (brown, flopped) -->
+  <path d="M177,65 Q182,67 185,72 Q187,78 186,84 Q184,89 179,91 Q174,91 170,88 Q167,84 167,79 Q167,73 170,69 Q173,66 177,65" 
+        fill="url(#brownPatch1)"/>
+  <path d="M178,67 Q182,69 184,73 Q185,78 184,83 Q182,87 178,88 Q174,88 171,85 Q169,82 169,78 Q169,74 171,71 Q174,68 178,67" 
+        fill="#c4a080" opacity="0.45"/>
+  <!-- Ear inner detail -->
+  <path d="M179,70 Q182,72 183,76 Q183,80 181,83 Q179,85 176,84 Q173,82 172,79 Q172,75 174,72 Q176,70 179,70" 
+        fill="#b08860" opacity="0.5"/>
+  <!-- Ear fur flow -->
+  <path d="M179,72 Q181,76 181,80" stroke="#d0b090" stroke-width="0.4" opacity="0.3" fill="none"/>
+  <path d="M177,73 Q179,77 179,81" stroke="#d0b090" stroke-width="0.4" opacity="0.3" fill="none"/>
   
-  <!-- EYEBROWS (alert, expressive) -->
-  <path d="M128,44 Q135,42 142,44" stroke="#8a6a4a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-  <path d="M143,44 Q150,42 157,44" stroke="#8a6a4a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- MUZZLE/SNOUT (detailed anatomical structure) -->
+  <path d="M175,82 Q178,83 182,84 Q186,85 189,86 Q191,87 192,89 Q192,91 191,93 Q189,94 186,94 Q182,93 178,91 Q175,89 174,87 Q173,84 175,82" 
+        fill="url(#bodyFur1)"/>
+  <path d="M176,83 Q179,84 183,85 Q186,86 189,87 Q190,88 190,90 Q190,92 189,93 Q186,93 183,92 Q179,91 177,89 Q176,87 176,85 Q176,84 176,83" 
+        fill="#fcfaf8" opacity="0.55"/>
+  <ellipse cx="183" cy="88" rx="9" ry="6" fill="#f8f4f0" opacity="0.4"/>
   
-  <!-- Facial detail (alert expression lines) -->
-  <path d="M125,54 Q122,56 125,58" stroke="#e0e0e0" stroke-width="1" opacity="0.5"/>
-  <path d="M160,54 Q163,56 160,58" stroke="#e0e0e0" stroke-width="1" opacity="0.5"/>
+  <!-- Muzzle contour/structure -->
+  <path d="M176,85 Q182,83 188,86" stroke="#e8ddd0" stroke-width="0.7" opacity="0.25" fill="none"/>
+  <ellipse cx="184" cy="90" rx="7" ry="4" fill="#efe5d8" opacity="0.18"/>
   
-  <!-- WHISKER SPOTS -->
-  <circle cx="145" cy="64" r="1.5" fill="#8a6a4a"/>
-  <circle cx="152" cy="62" r="1.5" fill="#8a6a4a"/>
-  <circle cx="155" cy="66" r="1.5" fill="#8a6a4a"/>
+  <!-- NOSE (highly detailed) -->
+  <path d="M191,89 Q193,89 194,91 Q194,93 193,95 Q191,96 189,96 Q187,95 186,93 Q186,91 187,89 Q189,88 191,89" 
+        fill="#2c2824"/>
+  <ellipse cx="190" cy="92" rx="4" ry="4.5" fill="#3c3834" opacity="0.6"/>
+  <ellipse cx="188.5" cy="91" rx="2.2" ry="2.8" fill="#5c5854" opacity="0.5"/>
+  <!-- Nose shine/moisture -->
+  <ellipse cx="188" cy="90.5" rx="1.6" ry="2.2" fill="#7c7874" opacity="0.5"/>
+  <circle cx="187.5" cy="90" r="1" fill="#9c9894" opacity="0.6"/>
+  <circle cx="187" cy="89.5" r="0.6" fill="#bcb8b4" opacity="0.75"/>
+  <ellipse cx="190" cy="90" rx="0.8" ry="1.2" fill="#e8e4e0" opacity="0.4"/>
   
-  <!-- Collar (optional pet detail) -->
-  <ellipse cx="125" cy="75" rx="14" ry="6" fill="#c74440" stroke="#000" stroke-width="2"/>
-  <circle cx="125" cy="75" r="3" fill="#d4a860" stroke="#aa8840" stroke-width="1.5"/>
-  <circle cx="125" cy="75" r="1.5" fill="#fff" opacity="0.6"/>
+  <!-- Detailed nostrils -->
+  <ellipse cx="188.5" cy="92.5" rx="1.2" ry="1.8" fill="#1c1814"/>
+  <ellipse cx="191.5" cy="92.5" rx="1.2" ry="1.8" fill="#1c1814"/>
+  <ellipse cx="188.5" cy="92" rx="0.7" ry="1.1" fill="#3c3834" opacity="0.5"/>
+  <ellipse cx="191.5" cy="92" rx="0.7" ry="1.1" fill="#3c3834" opacity="0.5"/>
+  <!-- Nostril inner shadow -->
+  <ellipse cx="188.3" cy="93" rx="0.5" ry="0.8" fill="#0c0804" opacity="0.6"/>
+  <ellipse cx="191.7" cy="93" rx="0.5" ry="0.8" fill="#0c0804" opacity="0.6"/>
+  
+  <!-- Subtle mouth line -->
+  <path d="M190,96 Q190,97 190,98" stroke="#6a6460" stroke-width="0.6" opacity="0.35" stroke-linecap="round"/>
+  <path d="M184,98 Q190,100 196,98" fill="none" stroke="#6a6460" stroke-width="0.6" opacity="0.28" stroke-linecap="round"/>
+  
+  <!-- OPEN EYES (ultra-realistic) -->
+  <!-- Left eye -->
+  <!-- Eye socket shadow/depth -->
+  <ellipse cx="166" cy="74.5" rx="7" ry="5" fill="#d0c5b8" opacity="0.18"/>
+  <ellipse cx="166" cy="75" rx="6" ry="4" fill="#c0b5a8" opacity="0.12"/>
+  
+  <!-- Eye white (sclera) -->
+  <ellipse cx="166" cy="74" rx="5.5" ry="4.2" fill="#fdfcfa"/>
+  <ellipse cx="166" cy="74" rx="5.3" ry="4" fill="#f8f6f3" opacity="0.6"/>
+  
+  <!-- Iris (amber/brown for Podenco) -->
+  <ellipse cx="166" cy="74" rx="3.2" ry="3.2" fill="#8b6f47"/>
+  <ellipse cx="166" cy="74" rx="2.8" ry="2.8" fill="#a68a5f" opacity="0.7"/>
+  <ellipse cx="166" cy="74" rx="2.3" ry="2.3" fill="#b89968" opacity="0.5"/>
+  <!-- Iris detail/pattern -->
+  <path d="M164.5,73 L167.5,75" stroke="#6b5735" stroke-width="0.2" opacity="0.3"/>
+  <path d="M165,72.5 L167,75.5" stroke="#6b5735" stroke-width="0.2" opacity="0.3"/>
+  <path d="M166.5,72.3 L165.5,75.7" stroke="#6b5735" stroke-width="0.2" opacity="0.3"/>
+  
+  <!-- Pupil -->
+  <ellipse cx="166" cy="74" rx="1.5" ry="1.6" fill="#1a1410"/>
+  <ellipse cx="166" cy="74" rx="1.3" ry="1.4" fill="#0a0805"/>
+  
+  <!-- Eye shine/reflection (essential for life) -->
+  <ellipse cx="165.2" cy="73" rx="0.9" ry="1.1" fill="#ffffff" opacity="0.85"/>
+  <circle cx="164.8" cy="72.7" r="0.5" fill="#ffffff" opacity="0.95"/>
+  <ellipse cx="167.2" cy="75" rx="0.5" ry="0.6" fill="#ffffff" opacity="0.4"/>
+  
+  <!-- Upper eyelid -->
+  <path d="M160.5,72.5 Q166,70.5 171.5,72.5" stroke="#6a5e52" stroke-width="1.1" opacity="0.8" stroke-linecap="round" fill="none"/>
+  <path d="M161,73 Q166,71.2 171,73" stroke="#8a7e72" stroke-width="0.6" opacity="0.5" fill="none"/>
+  
+  <!-- Lower eyelid -->
+  <path d="M160.5,75.5 Q166,76.8 171.5,75.5" stroke="#7a6e62" stroke-width="0.9" opacity="0.65" stroke-linecap="round" fill="none"/>
+  <path d="M161,75.2 Q166,76.3 171,75.2" stroke="#9a8e82" stroke-width="0.5" opacity="0.4" fill="none"/>
+  
+  <!-- Eye corner detail -->
+  <ellipse cx="160.5" cy="74" rx="1.2" ry="1.8" fill="#d8bca8" opacity="0.4"/>
+  <ellipse cx="171.5" cy="74" rx="1.2" ry="1.8" fill="#d8bca8" opacity="0.4"/>
+  
+  <!-- Right eye -->
+  <!-- Eye socket shadow/depth -->
+  <ellipse cx="182" cy="74.5" rx="7" ry="5" fill="#d0c5b8" opacity="0.18"/>
+  <ellipse cx="182" cy="75" rx="6" ry="4" fill="#c0b5a8" opacity="0.12"/>
+  
+  <!-- Eye white (sclera) -->
+  <ellipse cx="182" cy="74" rx="5.5" ry="4.2" fill="#fdfcfa"/>
+  <ellipse cx="182" cy="74" rx="5.3" ry="4" fill="#f8f6f3" opacity="0.6"/>
+  
+  <!-- Iris (amber/brown for Podenco) -->
+  <ellipse cx="182" cy="74" rx="3.2" ry="3.2" fill="#8b6f47"/>
+  <ellipse cx="182" cy="74" rx="2.8" ry="2.8" fill="#a68a5f" opacity="0.7"/>
+  <ellipse cx="182" cy="74" rx="2.3" ry="2.3" fill="#b89968" opacity="0.5"/>
+  <!-- Iris detail/pattern -->
+  <path d="M180.5,73 L183.5,75" stroke="#6b5735" stroke-width="0.2" opacity="0.3"/>
+  <path d="M181,72.5 L183,75.5" stroke="#6b5735" stroke-width="0.2" opacity="0.3"/>
+  <path d="M182.5,72.3 L181.5,75.7" stroke="#6b5735" stroke-width="0.2" opacity="0.3"/>
+  
+  <!-- Pupil -->
+  <ellipse cx="182" cy="74" rx="1.5" ry="1.6" fill="#1a1410"/>
+  <ellipse cx="182" cy="74" rx="1.3" ry="1.4" fill="#0a0805"/>
+  
+  <!-- Eye shine/reflection (essential for life) -->
+  <ellipse cx="181.2" cy="73" rx="0.9" ry="1.1" fill="#ffffff" opacity="0.85"/>
+  <circle cx="180.8" cy="72.7" r="0.5" fill="#ffffff" opacity="0.95"/>
+  <ellipse cx="183.2" cy="75" rx="0.5" ry="0.6" fill="#ffffff" opacity="0.4"/>
+  
+  <!-- Upper eyelid -->
+  <path d="M176.5,72.5 Q182,70.5 187.5,72.5" stroke="#6a5e52" stroke-width="1.1" opacity="0.8" stroke-linecap="round" fill="none"/>
+  <path d="M177,73 Q182,71.2 187,73" stroke="#8a7e72" stroke-width="0.6" opacity="0.5" fill="none"/>
+  
+  <!-- Lower eyelid -->
+  <path d="M176.5,75.5 Q182,76.8 187.5,75.5" stroke="#7a6e62" stroke-width="0.9" opacity="0.65" stroke-linecap="round" fill="none"/>
+  <path d="M177,75.2 Q182,76.3 187,75.2" stroke="#9a8e82" stroke-width="0.5" opacity="0.4" fill="none"/>
+  
+  <!-- Eye corner detail -->
+  <ellipse cx="176.5" cy="74" rx="1.2" ry="1.8" fill="#d8bca8" opacity="0.4"/>
+  <ellipse cx="187.5" cy="74" rx="1.2" ry="1.8" fill="#d8bca8" opacity="0.4"/>
+  
+  <!-- Natural eyelashes (delicate) -->
+  <path d="M162,72.5 L161.5,71" stroke="#5a5450" stroke-width="0.3" opacity="0.55" stroke-linecap="round"/>
+  <path d="M166,70.5 L166,69" stroke="#5a5450" stroke-width="0.3" opacity="0.55" stroke-linecap="round"/>
+  <path d="M170,72.5 L170.5,71" stroke="#5a5450" stroke-width="0.3" opacity="0.55" stroke-linecap="round"/>
+  <path d="M178,72.5 L177.5,71" stroke="#5a5450" stroke-width="0.3" opacity="0.55" stroke-linecap="round"/>
+  <path d="M182,70.5 L182,69" stroke="#5a5450" stroke-width="0.3" opacity="0.55" stroke-linecap="round"/>
+  <path d="M186,72.5 L186.5,71" stroke="#5a5450" stroke-width="0.3" opacity="0.55" stroke-linecap="round"/>
+  <path d="M164,71.5 L163.8,70.3" stroke="#5a5450" stroke-width="0.25" opacity="0.45" stroke-linecap="round"/>
+  <path d="M168,71.5 L168.2,70.3" stroke="#5a5450" stroke-width="0.25" opacity="0.45" stroke-linecap="round"/>
+  <path d="M180,71.5 L179.8,70.3" stroke="#5a5450" stroke-width="0.25" opacity="0.45" stroke-linecap="round"/>
+  <path d="M184,71.5 L184.2,70.3" stroke="#5a5450" stroke-width="0.25" opacity="0.45" stroke-linecap="round"/>
+  
+  <!-- Subtle eyebrows -->
+  <path d="M159,69 Q166,67.5 172,69.5" stroke="#8a7a6a" stroke-width="0.85" opacity="0.42" stroke-linecap="round" fill="none"/>
+  <path d="M176,69 Q182,67.5 188,69.5" stroke="#8a7a6a" stroke-width="0.85" opacity="0.42" stroke-linecap="round" fill="none"/>
+  
+  <!-- Forehead subtle definition -->
+  <path d="M163,69 Q174,67 185,69" stroke="#e5dad0" stroke-width="0.5" opacity="0.2" fill="none"/>
+  
+  <!-- WHISKER FOLLICLES (natural irregular placement) -->
+  <circle cx="176" cy="88" r="1" fill="#9a8a7a" opacity="0.52"/>
+  <circle cx="180" cy="86" r="1.1" fill="#9a8a7a" opacity="0.54"/>
+  <circle cx="184" cy="88" r="0.95" fill="#9a8a7a" opacity="0.5"/>
+  <circle cx="188" cy="86" r="1" fill="#9a8a7a" opacity="0.48"/>
+  <circle cx="178" cy="91" r="0.9" fill="#9a8a7a" opacity="0.45"/>
+  <circle cx="185" cy="90" r="0.85" fill="#9a8a7a" opacity="0.43"/>
+  
+  <!-- WHISKERS (ultra-fine, natural curves) -->
+  <path d="M176,88 Q170,87.5 164,87" stroke="#9a9a9a" stroke-width="0.22" opacity="0.28" stroke-linecap="round"/>
+  <path d="M180,86 Q172,84 164,83" stroke="#9a9a9a" stroke-width="0.22" opacity="0.28" stroke-linecap="round"/>
+  <path d="M184,88 Q175,88 166,89" stroke="#9a9a9a" stroke-width="0.22" opacity="0.26" stroke-linecap="round"/>
+  <path d="M188,86 Q195,85 202,84" stroke="#9a9a9a" stroke-width="0.22" opacity="0.28" stroke-linecap="round"/>
+  <path d="M184,88 Q191,90 198,91" stroke="#9a9a9a" stroke-width="0.22" opacity="0.26" stroke-linecap="round"/>
+  <path d="M178,91 Q172,93 166,95" stroke="#9a9a9a" stroke-width="0.22" opacity="0.24" stroke-linecap="round"/>
+  <path d="M185,90 Q190,92 195,93" stroke="#9a9a9a" stroke-width="0.2" opacity="0.24" stroke-linecap="round"/>
+  
+  <!-- COLLAR (realistic leather texture) -->
+  <path d="M155,95 Q162,94 169,95 Q175,96 180,97 Q182,97 182,99 Q182,101 180,102 Q175,103 169,104 Q162,105 155,104 Q153,104 153,102 Q153,100 153,98 Q153,96 155,95" 
+        fill="#a84034"/>
+  <path d="M156,95.5 Q162,94.5 169,95.5 Q175,96.5 179,97.5 Q181,98 181,99.5 Q181,101 179,101.5 Q175,102.5 169,103.5 Q162,104 156,103 Q154,103 154,101.5 Q154,100 154,98.5 Q154,97 156,95.5" 
+        fill="#b84844" opacity="0.65"/>
+  <ellipse cx="167.5" cy="99" rx="13" ry="4.5" fill="#c85450" opacity="0.35"/>
+  
+  <!-- Collar buckle (detailed) -->
+  <rect x="164" y="97" width="7" height="4" rx="0.6" fill="#b89868"/>
+  <rect x="164.5" y="97.5" width="6" height="3" rx="0.4" fill="#c8a878" opacity="0.7"/>
+  <rect x="165" y="98" width="5" height="2" rx="0.3" fill="#d8b888" opacity="0.5"/>
+  <ellipse cx="167.5" cy="99" rx="1.6" ry="1.4" fill="#e8c898"/>
+  <circle cx="167.5" cy="99" r="0.9" fill="#f8d8a8" opacity="0.65"/>
+  <circle cx="167.2" cy="98.7" r="0.5" fill="#fffae8" opacity="0.5"/>
+  
+  <!-- Collar stitching (detailed) -->
+  <path d="M154,96.5 Q167.5,95.5 181,96.5" stroke="#882820" stroke-width="0.22" opacity="0.55"/>
+  <path d="M154,102 Q167.5,103 181,102" stroke="#882820" stroke-width="0.22" opacity="0.55"/>
+  <!-- Cross stitches -->
+  <line x1="157" y1="97.5" x2="157" y2="101" stroke="#882820" stroke-width="0.18" opacity="0.45"/>
+  <line x1="161" y1="97" x2="161" y2="101.5" stroke="#882820" stroke-width="0.18" opacity="0.45"/>
+  <line x1="174" y1="97" x2="174" y2="101.5" stroke="#882820" stroke-width="0.18" opacity="0.45"/>
+  <line x1="178" y1="97.5" x2="178" y2="101" stroke="#882820" stroke-width="0.18" opacity="0.45"/>
+  
+  <!-- Collar shadow under neck -->
+  <ellipse cx="167.5" cy="104" rx="14" ry="2.5" fill="#000" opacity="0.15"/>
+  
+  <!-- Overall photorealistic lighting (lean body) -->
+  <ellipse cx="110" cy="100" rx="24" ry="9" fill="#ffffff" opacity="0.09" filter="url(#softShadow)"/>
+  <ellipse cx="168" cy="72" rx="14" ry="11" fill="#ffffff" opacity="0.11" filter="url(#softShadow)"/>
+  <ellipse cx="183" cy="84" rx="10" ry="8" fill="#ffffff" opacity="0.10"/>
+  <ellipse cx="130" cy="108" rx="9" ry="11" fill="#ffffff" opacity="0.08"/>
+  <ellipse cx="90" cy="102" rx="13" ry="7" fill="#ffffff" opacity="0.07"/>
+  
+  <!-- Subtle breathing motion indicators -->
+  <ellipse cx="112" cy="106" rx="17" ry="7" fill="#ffffff" opacity="0.055"/>
+  <path d="M105,105 Q112,103 119,105" stroke="#f5f0eb" stroke-width="0.5" opacity="0.12" fill="none"/>
 </svg>

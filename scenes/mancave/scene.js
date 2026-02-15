@@ -71,17 +71,24 @@ const MancaveScene = {
                             solution: 'WE KNOW YOU ARE WATCHING - WE NEED YOUR HELP - MEET AT TER APEL KLOOSTER 23:00 - COME ALONE - BRING YOUR SKILLS',
                             onSolve: function(g) {
                                 g.setFlag('second_message_decoded', true);
+                                g.setFlag('klooster_unlocked', true);
                                 g.setStoryPart(6);
                                 g.advanceTime(60);
+                                
+                                // Complete the SSTV quest
+                                g.completeQuest('check_sstv_again');
                                 
                                 g.addQuest({
                                     id: 'go_to_klooster',
                                     name: 'Meet at Ter Apel Klooster',
                                     description: 'Someone wants to meet at the Ter Apel monastery at 23:00. They know where you live. This could be a trap... or the answer to everything.',
-                                    hint: 'Head through the garden to reach your car and drive to the Klooster.'
+                                    hint: 'Use the side door to the garden (right side of scene), then get in your Volvo to drive to the Klooster.'
                                 });
                                 
-                                g.setFlag('klooster_unlocked', true);
+                                // Show notification to make it clear
+                                setTimeout(() => {
+                                    g.showNotification('✓ Klooster location unlocked! Head to the garden to reach your car.');
+                                }, 2000);
                                 
                                 g.startDialogue([
                                     { speaker: 'Ryan', text: 'WE KNOW YOU ARE WATCHING - WE NEED YOUR HELP - MEET AT TER APEL KLOOSTER 23:00 - COME ALONE - BRING YOUR SKILLS' },
@@ -863,7 +870,15 @@ NOTES:
                                 // Trigger second SSTV transmission after a delay
                                 setTimeout(() => {
                                     g.setFlag('second_transmission_ready', true);
-                                    g.showNotification('The SSTV terminal is showing a new transmission!');
+                                    g.showNotification('⚠️ NEW TRANSMISSION: The SSTV terminal has incoming data!');
+                                    
+                                    // Add quest reminder
+                                    g.addQuest({
+                                        id: 'check_sstv_again',
+                                        name: 'Check SSTV Terminal',
+                                        description: 'The SSTV terminal received a new transmission. Check it to decode the second message.',
+                                        hint: 'Click on the SSTV terminal (left monitor) to see the new transmission.'
+                                    });
                                 }, 4000);
                             }
                         });
@@ -1563,6 +1578,55 @@ SUPERVISOR NOTES:
                         game.loadScene('garden');
                     }, 1500);
                 }
+            }
+        },
+        {
+            id: 'investigation-board',
+            name: 'Investigation Board',
+            // Cork board on the wall - detective-style evidence board
+            x: 70,
+            y: 15,
+            width: 12,
+            height: 15,
+            cursor: 'pointer',
+            lookMessage: "My investigation board. All the clues connected with red string. Very detective movie.",
+            action: function(game) {
+                // Only accessible after finding first clue
+                if (!game.getFlag('sstv_decoded') && !game.getFlag('picked_up_usb')) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'Empty cork board. Waiting for a mystery to solve.' }
+                    ]);
+                    return;
+                }
+                
+                // Access the planboard
+                game.startDialogue([
+                    { speaker: 'Ryan', text: 'Let me check what I\'ve got so far...' }
+                ]);
+                
+                setTimeout(() => {
+                    game.loadScene('planboard');
+                }, 1500);
+            }
+        },
+        {
+            id: 'regional-map',
+            name: 'Regional Map',
+            // Map on the desk or wall showing all locations
+            x: 50,
+            y: 60,
+            width: 10,
+            height: 12,
+            cursor: 'pointer',
+            lookMessage: "Regional map showing all the locations. Good for planning routes.",
+            action: function(game) {
+                game.startDialogue([
+                    { speaker: 'Ryan', text: 'Let me check the map. See where everything is...' }
+                ]);
+                
+                setTimeout(() => {
+                    game.loadScene('regional_map');
+                }, 1500);
             }
         }
     ],
