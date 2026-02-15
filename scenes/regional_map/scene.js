@@ -8,6 +8,9 @@ const RegionalMapScene = {
   name: 'Regional Map',
   background: 'assets/images/scenes/regional_map.svg',
   
+  // Player position (not shown, UI-only scene)
+  playerStart: { x: 50, y: 50 },
+  
   // Track distance display state
   showDistances: false,
   
@@ -392,10 +395,13 @@ const RegionalMapScene = {
     // Back button
     {
       id: 'back-button',
-      position: { x: 2.6, y: 2.8 },
-      size: { w: 5.2, h: 3.7 },
+      name: 'Back to Mancave',
+      x: 2.6,
+      y: 2.8,
+      width: 5.2,
+      height: 3.7,
       cursor: 'pointer',
-      onClick: function() {
+      action: function(game) {
         game.loadScene('mancave');
       }
     },
@@ -403,10 +409,13 @@ const RegionalMapScene = {
     // Toggle distances button
     {
       id: 'toggle-distances',
-      position: { x: 8.9, y: 2.8 },
-      size: { w: 7.3, h: 3.7 },
+      name: 'Toggle Distances',
+      x: 8.9,
+      y: 2.8,
+      width: 7.3,
+      height: 3.7,
       cursor: 'pointer',
-      onClick: function() {
+      action: function(game) {
         game.currentScene.toggleDistances();
       }
     },
@@ -414,60 +423,78 @@ const RegionalMapScene = {
     // Location hotspots
     {
       id: 'location-compascuum-hotspot',
-      position: { x: 38.2, y: 53.3 },
-      size: { w: 10, h: 12 },
+      name: 'Compascuum',
+      x: 38.2,
+      y: 53.3,
+      width: 10,
+      height: 12,
       cursor: 'pointer',
-      onClick: function() {
+      action: function(game) {
         game.currentScene.showLocationInfo('compascuum');
       }
     },
     
     {
       id: 'location-terapel-hotspot',
-      position: { x: 45, y: 45 },
-      size: { w: 10, h: 12 },
+      name: 'Ter Apel',
+      x: 45,
+      y: 45,
+      width: 10,
+      height: 12,
       cursor: 'pointer',
-      onClick: function() {
+      action: function(game) {
         game.currentScene.showLocationInfo('terapel');
       }
     },
     
     {
       id: 'location-facility-hotspot',
-      position: { x: 58.6, y: 8 },
-      size: { w: 14, h: 12 },
+      name: 'Facility',
+      x: 58.6,
+      y: 8,
+      width: 14,
+      height: 12,
       cursor: 'pointer',
-      onClick: function() {
+      action: function(game) {
         game.currentScene.showLocationInfo('facility');
       }
     },
     
     {
       id: 'location-wsrt-hotspot',
-      position: { x: 18, y: 45 },
-      size: { w: 12, h: 12 },
+      name: 'WSRT',
+      x: 18,
+      y: 45,
+      width: 12,
+      height: 12,
       cursor: 'pointer',
-      onClick: function() {
+      action: function(game) {
         game.currentScene.showLocationInfo('wsrt');
       }
     },
     
     {
       id: 'location-lofar-hotspot',
-      position: { x: 13.75, y: 44.1 },
-      size: { w: 10, h: 10 },
+      name: 'LOFAR',
+      x: 13.75,
+      y: 44.1,
+      width: 10,
+      height: 10,
       cursor: 'pointer',
-      onClick: function() {
+      action: function(game) {
         game.currentScene.showLocationInfo('lofar');
       }
     },
     
     {
       id: 'location-meppen-hotspot',
-      position: { x: 54.9, y: 64.4 },
-      size: { w: 10, h: 12 },
+      name: 'Meppen',
+      x: 54.9,
+      y: 64.4,
+      width: 10,
+      height: 12,
       cursor: 'pointer',
-      onClick: function() {
+      action: function(game) {
         game.currentScene.showLocationInfo('meppen');
       }
     }

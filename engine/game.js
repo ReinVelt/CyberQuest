@@ -291,8 +291,12 @@ class CyberQuestEngine {
                 this.player.setIdleThoughts(scene.idleThoughts);
             }
             
-            // Show player (in case hidden)
-            this.player.show();
+            // Show or hide player based on scene settings
+            if (scene.hidePlayer) {
+                this.player.hide();
+            } else {
+                this.player.show();
+            }
         }
         
         // Execute scene entry script

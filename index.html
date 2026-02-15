@@ -309,15 +309,21 @@
             // Initialize game engine
             game = new CyberQuestEngine();
             
+            // Make game globally accessible
+            window.game = game;
+            
             // Register all scenes
             game.registerScene(IntroScene);
             game.registerScene(HomeScene);
             game.registerScene(LivingroomScene);
             game.registerScene(TvdocumentaryScene);
             game.registerScene(MancaveScene);
+            game.registerScene(PlanboardScene);
+            game.registerScene(RegionalMapScene);
             game.registerScene(VideocallScene);
             game.registerScene(GardenScene);
             game.registerScene(KloosterScene);
+            game.registerScene(CarDiscoveryScene);
             game.registerScene(DrivingScene);
             game.registerScene(FacilityScene);
             game.registerScene(FacilityInteriorScene);

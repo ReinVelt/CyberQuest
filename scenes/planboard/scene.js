@@ -7,6 +7,8 @@ const PlanboardScene = {
   id: 'planboard',
   name: 'Investigation Board',
   background: 'assets/images/scenes/planboard.svg',
+  backgroundColor: '#1a1a1a',
+  hidePlayer: true,  // No player character on static board interface
   
   // Track which evidence slots are currently visible
   visibleSlots: [],
@@ -14,29 +16,311 @@ const PlanboardScene = {
   // Dossier popup state
   activeDossier: null,
   
-  onEnter: function() {
+  onEnter: function(game) {
     console.log('Entering planboard scene');
     
+    // Create evidence slot overlays
+    this.createEvidenceOverlays();
+    
     // Update board based on discovered clues
-    this.updateBoard();
+    this.updateBoard(game);
     
     // Show animation of board updating
     this.animateBoardEntrance();
   },
   
-  onExit: function() {
+  onExit: function(game) {
     // Clean up any open dossiers
-    if (this.activeDossier) {
-      this.closeDossier();
+    if (PlanboardScene.activeDossier) {
+      PlanboardScene.closeDossier();
     }
+    
+    // Clean up overlays
+    const overlay = document.getElementById('planboard-overlays');
+    if (overlay) {
+      overlay.remove();
+    }
+  },
+  
+  /**
+   * Create HTML overlays for evidence slots and connections
+   */
+  createEvidenceOverlays: function() {
+    // Remove existing overlays if any
+    let overlay = document.getElementById('planboard-overlays');
+    if (overlay) {
+      overlay.remove();
+    }
+    
+    // Create container for overlays
+    overlay = document.createElement('div');
+    overlay.id = 'planboard-overlays';
+    overlay.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    `;
+    
+    // Define evidence slots with their positions and SVG content
+    const slots = [
+      { 
+        id: 'slot-sstv', 
+        x: 10.42, 
+        y: 22.22, 
+        width: 13.54, 
+        height: 25.93, 
+        color: '#00ff00',
+        svg: this.createSSTVIcon()
+      },
+      { 
+        id: 'slot-usb', 
+        x: 25.52, 
+        y: 22.22, 
+        width: 12.5, 
+        height: 25.93, 
+        color: '#00ccff',
+        svg: this.createUSBIcon()
+      },
+      { 
+        id: 'slot-eva', 
+        x: 40.63, 
+        y: 22.22, 
+        width: 13.54, 
+        height: 25.93, 
+        color: '#ff9900',
+        svg: this.createContactIcon()
+      },
+      { 
+        id: 'slot-facility', 
+        x: 56.77, 
+        y: 22.22, 
+        width: 13.54, 
+        height: 25.93, 
+        color: '#ff3366',
+        svg: this.createFacilityIcon()
+      },
+      { 
+        id: 'slot-weapon', 
+        x: 72.92, 
+        y: 22.22, 
+        width: 17.71, 
+        height: 31.48, 
+        color: '#cc00cc',
+        svg: this.createWeaponIcon()
+      },
+      { 
+        id: 'slot-readme', 
+        x: 8.85, 
+        y: 59.26, 
+        width: 21.88, 
+        height: 26.85, 
+        color: '#ffcc00',
+        svg: this.createDocumentIcon()
+      },
+      { 
+        id: 'slot-experts', 
+        x: 33.33, 
+        y: 59.26, 
+        width: 16.67, 
+        height: 26.85, 
+        color: '#00ff99',
+        svg: this.createExpertsIcon()
+      },
+      { 
+        id: 'slot-timeline', 
+        x: 52.6, 
+        y: 59.26, 
+        width: 19.79, 
+        height: 26.85, 
+        color: '#ff6699',
+        svg: this.createTimelineIcon()
+      }
+    ];
+    
+    // Create visual indicators for each slot
+    slots.forEach(slot => {
+      const element = document.createElement('div');
+      element.id = slot.id;
+      element.className = 'planboard-slot';
+      element.style.cssText = `
+        position: absolute;
+        left: ${slot.x}%;
+        top: ${slot.y}%;
+        width: ${slot.width}%;
+        height: ${slot.height}%;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        border: 3px solid ${slot.color};
+        border-radius: 5px;
+        box-shadow: 0 0 20px ${slot.color}80;
+        background: linear-gradient(135deg, ${slot.color}10, #00000080);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 5%;
+        box-sizing: border-box;
+      `;
+      element.innerHTML = slot.svg;
+      overlay.appendChild(element);
+    });
+    
+    // Add connection lines container
+    const connectionsCanvas = document.createElement('canvas');
+    connectionsCanvas.id = 'planboard-connections';
+    connectionsCanvas.style.cssText = `
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    `;
+    overlay.appendChild(connectionsCanvas);
+    
+    // Add overlay to scene
+    const sceneContainer = document.getElementById('scene-container');
+    if (sceneContainer) {
+      sceneContainer.appendChild(overlay);
+      
+      // Set canvas size
+      const rect = sceneContainer.getBoundingClientRect();
+      connectionsCanvas.width = rect.width;
+      connectionsCanvas.height = rect.height;
+    }
+  },
+  
+  // SVG Icon generators
+  createSSTVIcon: function() {
+    return `
+      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
+        <circle cx="50" cy="50" r="8" fill="#00ff00" opacity="0.8">
+          <animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <path d="M 30 50 Q 40 30, 50 50 T 70 50" stroke="#00ff00" stroke-width="2" fill="none"/>
+        <path d="M 25 50 Q 35 25, 50 50 T 75 50" stroke="#00ff00" stroke-width="1.5" fill="none" opacity="0.6"/>
+        <path d="M 20 50 Q 30 20, 50 50 T 80 50" stroke="#00ff00" stroke-width="1" fill="none" opacity="0.4"/>
+        <text x="50" y="90" font-family="monospace" font-size="10" fill="#00ff00" text-anchor="middle">SSTV</text>
+      </svg>
+    `;
+  },
+  
+  createUSBIcon: function() {
+    return `
+      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
+        <rect x="30" y="20" width="40" height="50" rx="3" fill="#00ccff" opacity="0.3" stroke="#00ccff" stroke-width="2"/>
+        <rect x="35" y="25" width="30" height="35" fill="#00ccff" opacity="0.5"/>
+        <rect x="40" y="65" width="20" height="10" fill="#00ccff"/>
+        <line x1="45" y1="35" x2="55" y2="35" stroke="#ffffff" stroke-width="2"/>
+        <line x1="45" y1="45" x2="55" y2="45" stroke="#ffffff" stroke-width="2"/>
+        <text x="50" y="92" font-family="monospace" font-size="10" fill="#00ccff" text-anchor="middle">USB</text>
+      </svg>
+    `;
+  },
+  
+  createContactIcon: function() {
+    return `
+      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
+        <circle cx="50" cy="35" r="12" fill="#ff9900" opacity="0.6" stroke="#ff9900" stroke-width="2"/>
+        <path d="M 30 55 Q 50 45, 70 55 L 70 75 Q 50 70, 30 75 Z" fill="#ff9900" opacity="0.6" stroke="#ff9900" stroke-width="2"/>
+        <circle cx="35" cy="65" r="2" fill="#ffffff"/>
+        <circle cx="65" cy="65" r="2" fill="#ffffff"/>
+        <text x="50" y="92" font-family="monospace" font-size="9" fill="#ff9900" text-anchor="middle">EVA</text>
+      </svg>
+    `;
+  },
+  
+  createFacilityIcon: function() {
+    return `
+      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
+        <rect x="25" y="40" width="50" height="35" fill="#ff3366" opacity="0.3" stroke="#ff3366" stroke-width="2"/>
+        <rect x="35" y="50" width="8" height="8" fill="#ff3366" opacity="0.6"/>
+        <rect x="47" y="50" width="8" height="8" fill="#ff3366" opacity="0.6"/>
+        <rect x="59" y="50" width="8" height="8" fill="#ff3366" opacity="0.6"/>
+        <rect x="35" y="62" width="8" height="8" fill="#ff3366" opacity="0.6"/>
+        <rect x="47" y="62" width="8" height="8" fill="#ff3366" opacity="0.6"/>
+        <rect x="59" y="62" width="8" height="8" fill="#ff3366" opacity="0.6"/>
+        <polygon points="25,40 50,25 75,40" fill="#ff3366" opacity="0.5" stroke="#ff3366" stroke-width="2"/>
+        <text x="50" y="92" font-family="monospace" font-size="8" fill="#ff3366" text-anchor="middle">FACILITY</text>
+      </svg>
+    `;
+  },
+  
+  createWeaponIcon: function() {
+    return `
+      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
+        <circle cx="50" cy="45" r="15" fill="none" stroke="#cc00cc" stroke-width="2" opacity="0.6"/>
+        <circle cx="50" cy="45" r="10" fill="none" stroke="#cc00cc" stroke-width="2" opacity="0.8"/>
+        <line x1="50" y1="20" x2="50" y2="70" stroke="#cc00cc" stroke-width="3"/>
+        <line x1="20" y1="45" x2="80" y2="45" stroke="#cc00cc" stroke-width="3"/>
+        <path d="M 50 45 L 60 35 M 50 45 L 60 55 M 50 45 L 40 35 M 50 45 L 40 55" stroke="#cc00cc" stroke-width="2" opacity="0.6"/>
+        <circle cx="50" cy="45" r="3" fill="#cc00cc">
+          <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+        </circle>
+        <text x="50" y="92" font-family="monospace" font-size="8" fill="#cc00cc" text-anchor="middle">EMP</text>
+      </svg>
+    `;
+  },
+  
+  createDocumentIcon: function() {
+    return `
+      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
+        <rect x="25" y="20" width="50" height="60" rx="3" fill="#ffcc00" opacity="0.2" stroke="#ffcc00" stroke-width="2"/>
+        <line x1="32" y1="32" x2="68" y2="32" stroke="#ffcc00" stroke-width="2" opacity="0.8"/>
+        <line x1="32" y1="42" x2="68" y2="42" stroke="#ffcc00" stroke-width="1.5" opacity="0.6"/>
+        <line x1="32" y1="50" x2="68" y2="50" stroke="#ffcc00" stroke-width="1.5" opacity="0.6"/>
+        <line x1="32" y1="58" x2="55" y2="58" stroke="#ffcc00" stroke-width="1.5" opacity="0.6"/>
+        <text x="50" y="92" font-family="monospace" font-size="8" fill="#ffcc00" text-anchor="middle">README</text>
+      </svg>
+    `;
+  },
+  
+  createExpertsIcon: function() {
+    return `
+      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
+        <circle cx="35" cy="35" r="8" fill="#00ff99" opacity="0.6"/>
+        <path d="M 22 50 Q 35 45, 48 50 L 48 65 Q 35 62, 22 65 Z" fill="#00ff99" opacity="0.6"/>
+        <circle cx="65" cy="35" r="8" fill="#00ff99" opacity="0.6"/>
+        <path d="M 52 50 Q 65 45, 78 50 L 78 65 Q 65 62, 52 65 Z" fill="#00ff99" opacity="0.6"/>
+        <circle cx="50" cy="45" r="9" fill="#00ff99" opacity="0.8" stroke="#00ff99" stroke-width="2"/>
+        <path d="M 35 60 Q 50 55, 65 60 L 65 75 Q 50 72, 35 75 Z" fill="#00ff99" opacity="0.8" stroke="#00ff99" stroke-width="2"/>
+        <text x="50" y="92" font-family="monospace" font-size="7" fill="#00ff99" text-anchor="middle">EXPERTS</text>
+      </svg>
+    `;
+  },
+  
+  createTimelineIcon: function() {
+    return `
+      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
+        <line x1="20" y1="50" x2="80" y2="50" stroke="#ff6699" stroke-width="3"/>
+        <circle cx="25" cy="50" r="5" fill="#ff6699"/>
+        <line x1="25" y1="50" x2="25" y2="35" stroke="#ff6699" stroke-width="2"/>
+        <circle cx="45" cy="50" r="5" fill="#ff6699"/>
+        <line x1="45" y1="50" x2="45" y2="65" stroke="#ff6699" stroke-width="2"/>
+        <circle cx="65" cy="50" r="5" fill="#ff6699"/>
+        <line x1="65" y1="50" x2="65" y2="35" stroke="#ff6699" stroke-width="2"/>
+        <circle cx="75" cy="50" r="5" fill="#ff6699"/>
+        <line x1="75" y1="50" x2="75" y2="65" stroke="#ff6699" stroke-width="2"/>
+        <text x="50" y="92" font-family="monospace" font-size="7" fill="#ff6699" text-anchor="middle">TIMELINE</text>
+      </svg>
+    `;
   },
   
   /**
    * Update board visibility based on discovered clues
    */
-  updateBoard: function() {
-    const svg = document.querySelector('svg');
-    if (!svg) return;
+  updateBoard: function(game) {
+    console.log('Updating board with flags:', {
+      sstv_decoded: game.getFlag('sstv_decoded'),
+      picked_up_usb: game.getFlag('picked_up_usb'),
+      usb_analyzed: game.getFlag('usb_analyzed'),
+      viewed_schematics: game.getFlag('viewed_schematics'),
+      visited_videocall: game.getFlag('visited_videocall')
+    });
     
     this.visibleSlots = [];
     
@@ -96,12 +380,12 @@ const PlanboardScene = {
    * Show an evidence slot with animation
    */
   showSlot: function(slotId) {
-    const svg = document.querySelector('svg');
-    if (!svg) return;
-    
-    const slot = svg.getElementById(slotId);
+    const slot = document.getElementById(slotId);
     if (slot) {
-      slot.setAttribute('opacity', '1');
+      slot.style.opacity = '1';
+      console.log('Showing slot:', slotId);
+    } else {
+      console.warn('Slot element not found:', slotId);
     }
   },
   
@@ -109,36 +393,72 @@ const PlanboardScene = {
    * Update connection strings between evidence
    */
   updateConnections: function() {
-    const svg = document.querySelector('svg');
-    if (!svg) return;
-    
-    const connectionsGroup = svg.getElementById('connections');
-    if (!connectionsGroup) return;
-    
-    // Show connections group if we have multiple clues
-    if (this.visibleSlots.length >= 2) {
-      connectionsGroup.setAttribute('opacity', '1');
+    const canvas = document.getElementById('planboard-connections');
+    if (!canvas) {
+      console.warn('Canvas not found for connections');
+      return;
     }
     
-    // Individual connection visibility logic
-    const connections = {
-      'string-sstv-usb': ['sstv', 'usb'],
-      'string-usb-eva': ['usb', 'eva'],
-      'string-eva-facility': ['eva', 'facility'],
-      'string-facility-weapon': ['facility', 'weapon'],
-      'string-eva-experts': ['eva', 'experts']
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    
+    // Clear previous connections
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Only draw if we have multiple clues
+    if (this.visibleSlots.length < 2) return;
+    
+    // Slot center positions (in percentage)
+    const slotPositions = {
+      'sstv': { x: 17.19, y: 35.185 },      // center of slot-sstv
+      'usb': { x: 31.77, y: 35.185 },       // center of slot-usb
+      'eva': { x: 47.4, y: 35.185 },        // center of slot-eva
+      'facility': { x: 63.54, y: 35.185 },  // center of slot-facility
+      'weapon': { x: 81.775, y: 37.96 },    // center of slot-weapon
+      'readme': { x: 19.79, y: 72.685 },    // center of slot-readme
+      'experts': { x: 41.665, y: 72.685 },  // center of slot-experts
+      'timeline': { x: 62.495, y: 72.685 }  // center of slot-timeline
     };
     
-    for (const [stringId, [slot1, slot2]] of Object.entries(connections)) {
-      const stringElement = svg.getElementById(stringId);
-      if (stringElement) {
-        if (this.visibleSlots.includes(slot1) && this.visibleSlots.includes(slot2)) {
-          stringElement.setAttribute('opacity', '1');
-        } else {
-          stringElement.setAttribute('opacity', '0');
+    // Connection definitions
+    const connections = [
+      ['sstv', 'usb'],
+      ['usb', 'eva'],
+      ['eva', 'facility'],
+      ['facility', 'weapon'],
+      ['eva', 'experts']
+    ];
+    
+    // Draw connections
+    ctx.strokeStyle = '#d32f2f';
+    ctx.lineWidth = 3;
+    ctx.setLineDash([5, 5]);
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = '#d32f2f';
+    
+    connections.forEach(([slot1, slot2]) => {
+      if (this.visibleSlots.includes(slot1) && this.visibleSlots.includes(slot2)) {
+        const pos1 = slotPositions[slot1];
+        const pos2 = slotPositions[slot2];
+        
+        if (pos1 && pos2) {
+          const x1 = (pos1.x / 100) * canvas.width;
+          const y1 = (pos1.y / 100) * canvas.height;
+          const x2 = (pos2.x / 100) * canvas.width;
+          const y2 = (pos2.y / 100) * canvas.height;
+          
+          // Draw curved line
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          const midX = (x1 + x2) / 2;
+          const midY = (y1 + y2) / 2;
+          const ctrlX = midX;
+          const ctrlY = midY + (y2 - y1) * 0.2; // Curve downward
+          ctx.quadraticCurveTo(ctrlX, ctrlY, x2, y2);
+          ctx.stroke();
         }
       }
-    }
+    });
   },
   
   /**
@@ -147,13 +467,13 @@ const PlanboardScene = {
   animateBoardEntrance: function() {
     // Fade in slots sequentially
     setTimeout(() => {
-      const slots = document.querySelectorAll('[id^="slot-"]');
+      const slots = document.querySelectorAll('.planboard-slot');
       slots.forEach((slot, index) => {
-        if (slot.getAttribute('opacity') === '1') {
-          slot.style.transition = 'opacity 0.5s';
+        if (slot.style.opacity === '1') {
+          const originalOpacity = slot.style.opacity;
           slot.style.opacity = '0';
           setTimeout(() => {
-            slot.style.opacity = '1';
+            slot.style.opacity = originalOpacity;
           }, index * 200);
         }
       });
@@ -167,8 +487,8 @@ const PlanboardScene = {
     console.log('Opening dossier:', evidenceType);
     
     // Close any existing dossier
-    if (this.activeDossier) {
-      this.closeDossier();
+    if (PlanboardScene.activeDossier) {
+      PlanboardScene.closeDossier();
     }
     
     // Get dossier content
@@ -258,6 +578,10 @@ const PlanboardScene = {
         from { opacity: 0; }
         to { opacity: 1; }
       }
+      @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
+      }
       @keyframes slideIn {
         from {
           opacity: 0;
@@ -290,26 +614,26 @@ const PlanboardScene = {
     
     // Add close button handler
     document.getElementById('close-dossier-btn').addEventListener('click', () => {
-      this.closeDossier();
+      PlanboardScene.closeDossier();
     });
     
     // Close on overlay click
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
-        this.closeDossier();
+        PlanboardScene.closeDossier();
       }
     });
     
     // Close on ESC key
     const escHandler = (e) => {
       if (e.key === 'Escape') {
-        this.closeDossier();
+        PlanboardScene.closeDossier();
         document.removeEventListener('keydown', escHandler);
       }
     };
     document.addEventListener('keydown', escHandler);
     
-    this.activeDossier = evidenceType;
+    PlanboardScene.activeDossier = evidenceType;
   },
   
   /**
@@ -323,7 +647,7 @@ const PlanboardScene = {
         overlay.remove();
       }, 300);
     }
-    this.activeDossier = null;
+    PlanboardScene.activeDossier = null;
   },
   
   /**
@@ -629,10 +953,13 @@ const PlanboardScene = {
     // Back button
     {
       id: 'back-button',
-      position: { x: 2.6, y: 2.78 }, // Top left
-      size: { w: 6.25, h: 4.63 },
+      x: 2.6,
+      y: 2.78,
+      width: 6.25,
+      height: 4.63,
       cursor: 'pointer',
-      onClick: function() {
+      skipWalk: true,
+      action: function(game) {
         game.loadScene('mancave');
       }
     },
@@ -640,103 +967,124 @@ const PlanboardScene = {
     // Evidence slots - only clickable when visible
     {
       id: 'hotspot-sstv',
-      position: { x: 10.42, y: 22.22 },
-      size: { w: 13.54, h: 25.93 },
+      x: 10.42,
+      y: 22.22,
+      width: 13.54,
+      height: 25.93,
       cursor: 'pointer',
-      onClick: function() {
+      skipWalk: true,
+      action: function(game) {
         if (game.getFlag('sstv_decoded')) {
-          game.currentScene.showDossier('sstv');
+          PlanboardScene.showDossier('sstv');
         }
       }
     },
     
     {
       id: 'hotspot-usb',
-      position: { x: 25.52, y: 22.22 },
-      size: { w: 12.5, h: 25.93 },
+      x: 25.52,
+      y: 22.22,
+      width: 12.5,
+      height: 25.93,
       cursor: 'pointer',
-      onClick: function() {
+      skipWalk: true,
+      action: function(game) {
         if (game.getFlag('picked_up_usb')) {
-          game.currentScene.showDossier('usb');
+          PlanboardScene.showDossier('usb');
         }
       }
     },
     
     {
       id: 'hotspot-eva',
-      position: { x: 40.63, y: 22.22 },
-      size: { w: 13.54, h: 25.93 },
+      x: 40.63,
+      y: 22.22,
+      width: 13.54,
+      height: 25.93,
       cursor: 'pointer',
-      onClick: function() {
+      skipWalk: true,
+      action: function(game) {
         if (game.getFlag('usb_analyzed')) {
-          game.currentScene.showDossier('eva');
+          PlanboardScene.showDossier('eva');
         }
       }
     },
     
     {
       id: 'hotspot-facility',
-      position: { x: 56.77, y: 22.22 },
-      size: { w: 13.54, h: 25.93 },
+      x: 56.77,
+      y: 22.22,
+      width: 13.54,
+      height: 25.93,
       cursor: 'pointer',
-      onClick: function() {
+      skipWalk: true,
+      action: function(game) {
         if (game.getFlag('sstv_decoded') || game.getFlag('usb_analyzed')) {
-          game.currentScene.showDossier('facility');
+          PlanboardScene.showDossier('facility');
         }
       }
     },
     
     {
       id: 'hotspot-weapon',
-      position: { x: 72.92, y: 22.22 },
-      size: { w: 17.71, h: 31.48 },
+      x: 72.92,
+      y: 22.22,
+      width: 17.71,
+      height: 31.48,
       cursor: 'pointer',
-      onClick: function() {
+      skipWalk: true,
+      action: function(game) {
         if (game.getFlag('viewed_schematics')) {
-          game.currentScene.showDossier('weapon');
+          PlanboardScene.showDossier('weapon');
         }
       }
     },
     
     {
       id: 'hotspot-readme',
-      position: { x: 8.85, y: 59.26 },
-      size: { w: 21.88, h: 26.85 },
+      x: 8.85,
+      y: 59.26,
+      width: 21.88,
+      height: 26.85,
       cursor: 'pointer',
-      onClick: function() {
+      skipWalk: true,
+      action: function(game) {
         if (game.getFlag('usb_analyzed')) {
-          game.currentScene.showDossier('readme');
+          PlanboardScene.showDossier('readme');
         }
       }
     },
     
     {
       id: 'hotspot-experts',
-      position: { x: 33.33, y: 59.26 },
-      size: { w: 16.67, h: 26.85 },
+      x: 33.33,
+      y: 59.26,
+      width: 16.67,
+      height: 26.85,
       cursor: 'pointer',
-      onClick: function() {
+      skipWalk: true,
+      action: function(game) {
         if (game.getFlag('visited_videocall')) {
-          game.currentScene.showDossier('experts');
+          PlanboardScene.showDossier('experts');
         }
       }
     },
     
     {
       id: 'hotspot-timeline',
-      position: { x: 52.6, y: 59.26 },
-      size: { w: 19.79, h: 26.85 },
+      x: 52.6,
+      y: 59.26,
+      width: 19.79,
+      height: 26.85,
       cursor: 'pointer',
-      onClick: function() {
+      skipWalk: true,
+      action: function(game) {
         if (game.getFlag('usb_analyzed')) {
-          game.currentScene.showDossier('timeline');
+          PlanboardScene.showDossier('timeline');
         }
       }
     }
   ]
 };
 
-// Register scene
-if (typeof game !== 'undefined') {
-  game.registerScene(PlanboardScene);
-}
+// Scene will be registered in index.html initGame() function

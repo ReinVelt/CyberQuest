@@ -21,11 +21,12 @@ const CarDiscoveryScene = {
         {
             id: 'usb_stick',
             name: 'USB Stick',
-            // The USB stick on the door handle - make it prominent
-            x: 35,
-            y: 45,
-            width: 30,
-            height: 20,
+            // The USB stick is in the detail inset - upper right quadrant
+            // Detail box spans roughly x:1000-1500, y:150-600 in SVG
+            x: 52,  // (1000/1920) * 100
+            y: 14,  // (150/1080) * 100
+            width: 26,  // (500/1920) * 100
+            height: 42,  // (450/1080) * 100
             cursor: 'use',
             action: function(game) {
                 if (!game.getFlag('picked_up_usb')) {
@@ -74,10 +75,11 @@ const CarDiscoveryScene = {
         {
             id: 'door_handle',
             name: 'Door Handle',
-            x: 30,
-            y: 40,
-            width: 40,
-            height: 30,
+            // Actual car door handle on the left side
+            x: 35,  // (670/1920) * 100
+            y: 65,  // (700/1080) * 100
+            width: 10,  // (190/1920) * 100
+            height: 10,  // (108/1080) * 100
             cursor: 'look',
             action: function(game) {
                 if (!game.getFlag('picked_up_usb')) {
@@ -96,10 +98,11 @@ const CarDiscoveryScene = {
         {
             id: 'car',
             name: 'Get in Car',
-            x: 15,
-            y: 35,
-            width: 70,
-            height: 50,
+            // Entire car body area
+            x: 13,  // (250/1920) * 100
+            y: 55,  // (600/1080) * 100
+            width: 50,  // (960/1920) * 100
+            height: 35,  // (380/1080) * 100
             cursor: 'use',
             action: function(game) {
                 if (game.getFlag('picked_up_usb')) {
@@ -124,8 +127,12 @@ const CarDiscoveryScene = {
     ],
     
     // Scene entry
-    onEnter: () => {
-        game.showNotification('Discovered something on the car...');
+    onEnter: function(game) {
+        console.log('[Car Discovery] Scene entered');
+        console.log('[Car Discovery] Flags:', {
+            saw_usb_first_time: game.getFlag('saw_usb_first_time'),
+            picked_up_usb: game.getFlag('picked_up_usb')
+        });
         
         if (!game.getFlag('saw_usb_first_time')) {
             game.setFlag('saw_usb_first_time', true);
@@ -134,23 +141,28 @@ const CarDiscoveryScene = {
                 game.startDialogue([
                     { speaker: '', text: '*Ryan approaches the Volvo*' },
                     { speaker: 'Ryan', text: 'Time to go home. What a waste of—' },
-                    { speaker: 'Ryan', text: 'Wait. What the hell?' }
+                    { speaker: 'Ryan', text: 'Wait. What the hell?' },
+                    { speaker: 'Ryan', text: 'There\'s something taped under the door handle...' }
                 ]);
                 
                 setTimeout(() => {
-                    game.showNotification('Click the USB stick to examine it');
-                }, 2000);
+                    game.showNotification('⚠️ Click the USB STICK in the detail box (upper right) to examine it!');
+                }, 3000);
             }, 500);
+        } else {
+            // Returning to scene
+            if (!game.getFlag('picked_up_usb')) {
+                game.showNotification('Click the USB STICK in the detail box (upper right)');
+            } else {
+                game.showNotification('Click the car to drive home');
+            }
         }
     },
     
     // Scene exit
-    onExit: () => {
-        // Cleanup
+    onExit: function(game) {
+        console.log('[Car Discovery] Scene exited');
     }
 };
 
-// Register scene when script loads
-if (typeof game !== 'undefined' && game.registerScene) {
-    game.registerScene(CarDiscoveryScene);
-}
+// Scene will be registered in index.html initGame() function

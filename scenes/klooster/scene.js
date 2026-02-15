@@ -42,6 +42,22 @@ const KloosterScene = {
     
     // Scene hotspots
     hotspots: [
+        // TEST VOLVO - Large clickable area in bottom right
+        {
+            id: 'volvo-test',
+            name: '🚗 CLICK HERE - Volvo',
+            x: 70,
+            y: 60,
+            width: 28,
+            height: 35,
+            cursor: 'pointer',
+            skipWalk: true,
+            action: function(game) {
+                console.log('[Klooster] VOLVO TEST HOTSPOT CLICKED!');
+                game.setFlag('found_usb_stick', true);
+                game.loadScene('car_discovery');
+            }
+        },
         {
             id: 'entrance',
             name: 'Main Entrance',
@@ -52,19 +68,11 @@ const KloosterScene = {
             width: (150 / 1920) * 100, // 7.81%
             height: (250 / 1080) * 100, // 23.15%
             cursor: 'look',
-            interactions: {
-                look: () => {
-                    game.showDialogue([
-                        "The museum entrance. Heavy oak doors, probably centuries old.",
-                        "A sign says GESLOTEN - closed. Not surprising at this hour."
-                    ], "Ryan observes");
-                },
-                use: () => {
-                    game.showDialogue([
-                        "The doors are locked. The museum is closed.",
-                        "But that is not why I am here anyway."
-                    ], "Ryan");
-                }
+            action: function(game) {
+                game.startDialogue([
+                    { speaker: 'Ryan', text: 'The museum entrance. Heavy oak doors, probably centuries old.' },
+                    { speaker: 'Ryan', text: 'A sign says GESLOTEN - closed. Not surprising at this hour.' }
+                ]);
             }
         },
         {
@@ -75,29 +83,21 @@ const KloosterScene = {
             y: (700 / 1080) * 100,    // 64.81%
             width: (950 / 1920) * 100, // 49.48%
             height: (270 / 1080) * 100, // 25.00%
-            cursor: 'walk',
-            interactions: {
-                look: () => {
-                    game.showDialogue([
-                        "The central courtyard. Empty. Silent.",
-                        "No one is here. Nothing is happening."
-                    ], "Ryan observes");
-                },
-                use: () => {
-                    if (!game.getFlag('checked_courtyard')) {
-                        game.setFlag('checked_courtyard', true);
-                        game.startDialogue([
-                            { speaker: 'Ryan', text: '23:00. Exactly when they said.' },
-                            { speaker: 'Ryan', text: 'Nobody here. Surprise, surprise.' },
-                            { speaker: '', text: '*He waits in the shadows for fifteen minutes*' },
-                            { speaker: 'Ryan', text: 'Screw this. Maybe it was all a joke.' },
-                            { speaker: 'Ryan', text: 'Better check my car.' }
-                        ]);
-                    } else {
-                        game.startDialogue([
-                            { speaker: 'Ryan', text: 'Still no one. Time to go.' }
-                        ]);
-                    }
+            cursor: 'pointer',
+            action: function(game) {
+                if (!game.getFlag('checked_courtyard')) {
+                    game.setFlag('checked_courtyard', true);
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: '23:00. Exactly when they said.' },
+                        { speaker: 'Ryan', text: 'Nobody here. Surprise, surprise.' },
+                        { speaker: '', text: '*He waits in the shadows for fifteen minutes*' },
+                        { speaker: 'Ryan', text: 'Screw this. Maybe it was all a joke.' },
+                        { speaker: 'Ryan', text: 'Better check my car.' }
+                    ]);
+                } else {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'Still no one. Time to go.' }
+                    ]);
                 }
             }
         },
@@ -166,11 +166,13 @@ const KloosterScene = {
             id: 'volvo',
             name: 'My Volvo',
             // SVG: translate(1450,700), w=400, h=300
-            x: (1450 / 1920) * 100,   // 75.52%
-            y: (700 / 1080) * 100,    // 64.81%
-            width: (400 / 1920) * 100, // 20.83%
-            height: (300 / 1080) * 100, // 27.78%
-            cursor: 'use',
+            // Simplified coordinates - the car is in the bottom right
+            x: 75,
+            y: 65,
+            width: 21,
+            height: 28,
+            cursor: 'pointer',
+            skipWalk: false,
             lookMessage: function(game) {
                 if (game.getFlag('picked_up_usb')) {
                     return "My Volvo. Time to drive home and check that USB.";
@@ -186,10 +188,13 @@ const KloosterScene = {
                 if (!game.getFlag('found_usb_stick')) {
                     // First time approaching the car - discover the USB stick
                     game.setFlag('found_usb_stick', true);
-                    console.log('[Klooster] Loading car_discovery scene');
+                    console.log('[Klooster] Setting found_usb_stick flag and loading car_discovery scene');
                     
                     // Transition to the close-up car discovery scene
-                    game.loadScene('car_discovery');
+                    setTimeout(() => {
+                        console.log('[Klooster] Now calling loadScene for car_discovery');
+                        game.loadScene('car_discovery');
+                    }, 500);
                 } else if (game.getFlag('picked_up_usb')) {
                     // Already picked up USB, allow driving home
                     game.startDialogue([
@@ -285,8 +290,10 @@ const KloosterScene = {
     ],
     
     // Scene entry
-    onEnter: () => {
-        game.showNotification('Arrived at Ter Apel Klooster');
+    onEnter: function(game) {
+        console.log('[Klooster] Scene entered');
+        console.log('[Klooster] Hotspots:', this.hotspots.map(h => h.id));
+        game.showNotification('Arrived at Ter Apel Klooster - Click the Volvo (bottom right)');
         
         if (!game.getFlag('first_klooster_visit')) {
             game.setFlag('first_klooster_visit', true);
@@ -303,12 +310,9 @@ const KloosterScene = {
     },
     
     // Scene exit
-    onExit: () => {
-        // Cleanup
+    onExit: function(game) {
+        console.log('[Klooster] Scene exited');
     }
 };
 
-// Register scene when script loads
-if (typeof game !== 'undefined' && game.registerScene) {
-    game.registerScene(KloosterScene);
-}
+// Scene will be registered in index.html initGame() function
