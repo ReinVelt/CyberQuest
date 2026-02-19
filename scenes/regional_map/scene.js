@@ -14,14 +14,14 @@ const RegionalMapScene = {
   // Track distance display state
   showDistances: false,
   
-  onEnter: function() {
+  onEnter: function(game) {
     console.log('Entering regional map scene');
     
     // Update status indicators based on game progress
-    this.updateStatus();
+    this.updateStatus(game);
     
     // Update location marker states
-    this.updateLocationMarkers();
+    this.updateLocationMarkers(game);
   },
   
   onExit: function() {
@@ -31,7 +31,8 @@ const RegionalMapScene = {
   /**
    * Update status panel based on game flags
    */
-  updateStatus: function() {
+  updateStatus: function(game) {
+    game = game || window.game;
     const svg = document.querySelector('svg');
     if (!svg) return;
     
@@ -72,7 +73,8 @@ const RegionalMapScene = {
   /**
    * Update location marker appearance based on visit status
    */
-  updateLocationMarkers: function() {
+  updateLocationMarkers: function(game) {
+    game = game || window.game;
     const svg = document.querySelector('svg');
     if (!svg) return;
     
@@ -424,10 +426,10 @@ const RegionalMapScene = {
     {
       id: 'location-compascuum-hotspot',
       name: 'Compascuum',
-      x: 38.2,
-      y: 53.3,
-      width: 10,
-      height: 12,
+      x: 39.23,
+      y: 54.33,
+      width: 8,
+      height: 8,
       cursor: 'pointer',
       action: function(game) {
         game.currentScene.showLocationInfo('compascuum');
@@ -437,10 +439,10 @@ const RegionalMapScene = {
     {
       id: 'location-terapel-hotspot',
       name: 'Ter Apel',
-      x: 45,
-      y: 45,
-      width: 10,
-      height: 12,
+      x: 46,
+      y: 46,
+      width: 8,
+      height: 8,
       cursor: 'pointer',
       action: function(game) {
         game.currentScene.showLocationInfo('terapel');
@@ -463,10 +465,10 @@ const RegionalMapScene = {
     {
       id: 'location-wsrt-hotspot',
       name: 'WSRT',
-      x: 18,
-      y: 45,
-      width: 12,
-      height: 12,
+      x: 19.96,
+      y: 46,
+      width: 8,
+      height: 8,
       cursor: 'pointer',
       action: function(game) {
         game.currentScene.showLocationInfo('wsrt');
@@ -476,10 +478,10 @@ const RegionalMapScene = {
     {
       id: 'location-lofar-hotspot',
       name: 'LOFAR',
-      x: 13.75,
-      y: 44.1,
-      width: 10,
-      height: 10,
+      x: 14.75,
+      y: 45.07,
+      width: 8,
+      height: 8,
       cursor: 'pointer',
       action: function(game) {
         game.currentScene.showLocationInfo('lofar');

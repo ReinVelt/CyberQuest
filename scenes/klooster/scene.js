@@ -42,22 +42,6 @@ const KloosterScene = {
     
     // Scene hotspots
     hotspots: [
-        // TEST VOLVO - Large clickable area in bottom right
-        {
-            id: 'volvo-test',
-            name: '🚗 CLICK HERE - Volvo',
-            x: 70,
-            y: 60,
-            width: 28,
-            height: 35,
-            cursor: 'pointer',
-            skipWalk: true,
-            action: function(game) {
-                console.log('[Klooster] VOLVO TEST HOTSPOT CLICKED!');
-                game.setFlag('found_usb_stick', true);
-                game.loadScene('car_discovery');
-            }
-        },
         {
             id: 'entrance',
             name: 'Main Entrance',

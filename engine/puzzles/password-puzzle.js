@@ -9,6 +9,8 @@ class PasswordPuzzle {
         this.game = game;
         this.isActive = false;
         this.currentPuzzle = null;
+        this._escHandler = null; // Track ESC handler for cleanup
+        this._pendingTimeout = null; // Track success/failure timeout
     }
 
     /**
@@ -358,19 +360,32 @@ class PasswordPuzzle {
             });
         }
 
-        // ESC to close
-        const escHandler = (e) => {
+        // ESC to close (tracked for cleanup)
+        this._removeEscHandler();
+        this._escHandler = (e) => {
             if (e.key === 'Escape' && this.isActive) {
                 this.close();
             }
         };
-        document.addEventListener('keydown', escHandler);
+        document.addEventListener('keydown', this._escHandler);
+    }
+    
+    /**
+     * Remove tracked ESC handler.
+     */
+    _removeEscHandler() {
+        if (this._escHandler) {
+            document.removeEventListener('keydown', this._escHandler);
+            this._escHandler = null;
+        }
     }
 
     /**
      * Check if the entered answer is correct
      */
     checkAnswer() {
+        if (!this.currentPuzzle || !this.isActive) return;
+        
         const input = document.getElementById('password-input');
         const feedback = document.getElementById('pp-feedback');
         const attemptCount = document.getElementById('pp-attempt-count');
@@ -410,10 +425,15 @@ class PasswordPuzzle {
         // Play success sound if available
         this.playSound('success');
 
+        // Store callback ref before timeout (guard against close race condition)
+        const onSuccess = this.currentPuzzle?.onSuccess;
+        const gameRef = this.game;
+
         // Call success callback after short delay
-        setTimeout(() => {
-            if (this.currentPuzzle.onSuccess) {
-                this.currentPuzzle.onSuccess(this.game);
+        this._pendingTimeout = setTimeout(() => {
+            this._pendingTimeout = null;
+            if (onSuccess) {
+                try { onSuccess(gameRef); } catch (err) { console.error('Puzzle onSuccess error:', err); }
             }
             this.close();
         }, 1500);
@@ -436,9 +456,14 @@ class PasswordPuzzle {
             // Play failure sound
             this.playSound('failure');
 
-            setTimeout(() => {
-                if (this.currentPuzzle.onFailure) {
-                    this.currentPuzzle.onFailure(this.game);
+            // Store callback ref before timeout (guard against close race condition)
+            const onFailure = this.currentPuzzle?.onFailure;
+            const gameRef = this.game;
+
+            this._pendingTimeout = setTimeout(() => {
+                this._pendingTimeout = null;
+                if (onFailure) {
+                    try { onFailure(gameRef, true); } catch (err) { console.error('Puzzle onFailure error:', err); }
                 }
                 this.close();
             }, 2000);
@@ -477,6 +502,15 @@ class PasswordPuzzle {
      * Close the puzzle
      */
     close() {
+        // Remove ESC handler
+        this._removeEscHandler();
+        
+        // Clear pending timeout
+        if (this._pendingTimeout) {
+            clearTimeout(this._pendingTimeout);
+            this._pendingTimeout = null;
+        }
+
         const puzzle = document.getElementById('password-puzzle');
         if (puzzle) {
             puzzle.style.animation = 'fadeOut 0.3s ease';

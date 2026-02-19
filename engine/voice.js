@@ -6,176 +6,65 @@
 
 class VoiceManager {
     constructor() {
-        this.synth = window.speechSynthesis;
+        this.synth = (typeof window !== 'undefined' && window.speechSynthesis) ? window.speechSynthesis : null;
         this.voices = [];
         this.enabled = true;
         this.volume = 0.8;
         this.currentUtterance = null;
         this.voicesLoaded = false;
         this.useFallback = false;
+        this.subtitleTimeout = null;
+        this._utteranceTimeout = null; // Chrome long-utterance safety timeout
         
         // Try to load voices multiple times
         this.loadVoicesWithRetry();
         
+        // Voice archetypes to reduce duplication
+        const britishMale = { voicePreference: ['Google UK English Male', 'Microsoft David', 'Daniel', 'male'], lang: 'en-GB' };
+        const britishFemale = { voicePreference: ['Google UK English Female', 'Microsoft Zira', 'Samantha', 'Karen', 'female'], lang: 'en-GB' };
+        const americanFemale = { voicePreference: ['Google US English Female', 'Microsoft Zira', 'Samantha', 'female'], lang: 'en-US' };
+
         // Character voice profiles (pitch, rate, voice preference)
         this.characterProfiles = {
             // Main protagonist - Dutch male, mature
-            'Ryan': {
-                pitch: 0.9,
-                rate: 0.95,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'Daniel', 'Alex', 'male'],
-                lang: 'en-GB'
-            },
-            "Ryan's Thoughts": {
-                pitch: 0.85,
-                rate: 0.9,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'Daniel', 'male'],
-                lang: 'en-GB'
-            },
-            'Ryan observes': {
-                pitch: 0.9,
-                rate: 0.85,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'Daniel', 'male'],
-                lang: 'en-GB'
-            },
-            'Ryan analyzes': {
-                pitch: 0.9,
-                rate: 0.85,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'Daniel', 'male'],
-                lang: 'en-GB'
-            },
+            'Ryan':                { ...britishMale, pitch: 0.9, rate: 0.95 },
+            "Ryan's Thoughts":     { ...britishMale, pitch: 0.85, rate: 0.9 },
+            'Ryan observes':       { ...britishMale, pitch: 0.9, rate: 0.85 },
+            'Ryan analyzes':       { ...britishMale, pitch: 0.9, rate: 0.85 },
             
             // German female intelligence agent
-            'Eva': {
-                pitch: 1.15,
-                rate: 0.9,
-                voicePreference: ['Google UK English Female', 'Microsoft Zira', 'Samantha', 'Karen', 'female'],
-                lang: 'en-GB'
-            },
-            'Eva Weber': {
-                pitch: 1.15,
-                rate: 0.9,
-                voicePreference: ['Google UK English Female', 'Microsoft Zira', 'Samantha', 'Karen', 'female'],
-                lang: 'en-GB'
-            },
+            'Eva':                 { ...britishFemale, pitch: 1.15, rate: 0.9 },
+            'Eva Weber':           { ...britishFemale, pitch: 1.15, rate: 0.9 },
             
             // Chris Kubecka - American female expert
-            'Chris': {
-                pitch: 1.1,
-                rate: 1.0,
-                voicePreference: ['Google US English Female', 'Microsoft Zira', 'Samantha', 'female'],
-                lang: 'en-US'
-            },
-            'Chris Kubecka': {
-                pitch: 1.1,
-                rate: 1.0,
-                voicePreference: ['Google US English Female', 'Microsoft Zira', 'Samantha', 'female'],
-                lang: 'en-US'
-            },
+            'Chris':               { ...americanFemale, pitch: 1.1, rate: 1.0 },
+            'Chris Kubecka':       { ...americanFemale, pitch: 1.1, rate: 1.0 },
             
             // Dmitri Volkov - Russian antagonist (deep, menacing)
-            'Volkov': {
-                pitch: 0.7,
-                rate: 0.85,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'Daniel', 'male'],
-                lang: 'en-GB'
-            },
-            'Dmitri Volkov': {
-                pitch: 0.7,
-                rate: 0.85,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'Daniel', 'male'],
-                lang: 'en-GB'
-            },
+            'Volkov':              { ...britishMale, pitch: 0.7, rate: 0.85 },
+            'Dmitri Volkov':       { ...britishMale, pitch: 0.7, rate: 0.85 },
             
             // Dutch friends - varied male voices
-            'David Prinsloo': {
-                pitch: 0.95,
-                rate: 1.0,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'male'],
-                lang: 'en-GB'
-            },
-            'Pieter': {
-                pitch: 1.05,
-                rate: 0.95,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'male'],
-                lang: 'en-GB'
-            },
-            'Cees Bassa': {
-                pitch: 1.2,
-                rate: 0.95,
-                voicePreference: ['Google UK English Female', 'Microsoft Zira', 'Samantha', 'female'],
-                lang: 'en-GB'
-            },
+            'David Prinsloo':      { ...britishMale, pitch: 0.95, rate: 1.0 },
+            'Pieter':              { ...britishMale, pitch: 1.05, rate: 0.95 },
+            'Cees Bassa':          { ...britishFemale, pitch: 1.2, rate: 0.95 },
             
             // Ryan's wife - Dutch female, warm voice
-            'Ies': {
-                pitch: 1.15,
-                rate: 0.95,
-                voicePreference: ['Google UK English Female', 'Microsoft Zira', 'Samantha', 'Karen', 'female'],
-                lang: 'en-GB'
-            },
+            'Ies':                 { ...britishFemale, pitch: 1.15, rate: 0.95 },
             
-            // Meeting scene
-            'Meeting': {
-                pitch: 1.0,
-                rate: 0.9,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'male'],
-                lang: 'en-GB'
-            },
-            
-            // Infiltration
-            'Infiltration': {
-                pitch: 0.95,
-                rate: 0.95,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'male'],
-                lang: 'en-GB'
-            },
-            
-            // Confrontation
-            'Confrontation': {
-                pitch: 0.9,
-                rate: 0.9,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'male'],
-                lang: 'en-GB'
-            },
-            
-            // Team Check-in
-            'Team Check-in': {
-                pitch: 1.0,
-                rate: 0.95,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'male'],
-                lang: 'en-GB'
-            },
-            
-            // Epilogue
-            'Epilogue': {
-                pitch: 0.95,
-                rate: 0.85,
-                voicePreference: ['Google UK English Male', 'Microsoft David', 'male'],
-                lang: 'en-GB'
-            },
+            // Scene voices
+            'Meeting':             { ...britishMale, pitch: 1.0, rate: 0.9 },
+            'Infiltration':        { ...britishMale, pitch: 0.95, rate: 0.95 },
+            'Confrontation':       { ...britishMale, pitch: 0.9, rate: 0.9 },
+            'Team Check-in':       { ...britishMale, pitch: 1.0, rate: 0.95 },
+            'Epilogue':            { ...britishMale, pitch: 0.95, rate: 0.85 },
             
             // Narrator - neutral, clear voice
-            '': {
-                pitch: 1.0,
-                rate: 0.9,
-                voicePreference: ['Google UK English Female', 'Microsoft Zira', 'Samantha', 'Karen', 'female'],
-                lang: 'en-GB'
-            },
-            'Narrator': {
-                pitch: 1.0,
-                rate: 0.9,
-                voicePreference: ['Google UK English Female', 'Microsoft Zira', 'Samantha', 'Karen', 'female'],
-                lang: 'en-GB'
-            },
+            '':                    { ...britishFemale, pitch: 1.0, rate: 0.9 },
+            'Narrator':            { ...britishFemale, pitch: 1.0, rate: 0.9 },
             
             // System messages
-            'System': {
-                pitch: 1.0,
-                rate: 1.0,
-                voicePreference: ['Google UK English Female', 'Microsoft Zira', 'female'],
-                lang: 'en-GB'
-            }
+            'System':              { ...britishFemale, pitch: 1.0, rate: 1.0, voicePreference: ['Google UK English Female', 'Microsoft Zira', 'female'] }
         };
         
         // Default profile for unknown speakers
@@ -250,8 +139,8 @@ class VoiceManager {
         tryLoad();
         
         // Also listen for voiceschanged event
-        if (this.synth && speechSynthesis.onvoiceschanged !== undefined) {
-            speechSynthesis.onvoiceschanged = () => {
+        if (this.synth && typeof this.synth.onvoiceschanged !== 'undefined') {
+            this.synth.onvoiceschanged = () => {
                 this.voices = this.synth.getVoices();
                 if (this.voices.length > 0) {
                     this.voicesLoaded = true;
@@ -371,6 +260,12 @@ class VoiceManager {
         return new Promise((resolve) => {
             this.synth.cancel();
             
+            // Clear any previous safety timeout
+            if (this._utteranceTimeout) {
+                clearTimeout(this._utteranceTimeout);
+                this._utteranceTimeout = null;
+            }
+            
             const utterance = new SpeechSynthesisUtterance(cleanText);
             const { voice, profile } = this.getVoiceForCharacter(character);
             
@@ -386,27 +281,44 @@ class VoiceManager {
             utterance.rate = profile.rate;
             utterance.volume = this.volume;
             
-            utterance.onend = () => {
+            const cleanup = () => {
                 this.currentUtterance = null;
+                if (this._utteranceTimeout) {
+                    clearTimeout(this._utteranceTimeout);
+                    this._utteranceTimeout = null;
+                }
                 resolve();
             };
+            
+            utterance.onend = cleanup;
             
             utterance.onerror = (e) => {
                 if (e.error !== 'canceled' && e.error !== 'interrupted') {
                     console.warn('TTS error:', e.error);
                 }
-                this.currentUtterance = null;
-                resolve();
+                cleanup();
             };
             
             this.currentUtterance = utterance;
+            
+            // Chrome safety: resolve after max duration if onend never fires
+            // Estimate ~150ms per word as max speaking time
+            const wordCount = cleanText.split(/\s+/).length;
+            const maxDuration = Math.max(10000, wordCount * 300);
+            this._utteranceTimeout = setTimeout(() => {
+                if (this.currentUtterance === utterance) {
+                    console.warn('TTS utterance timed out (Chrome bug workaround)');
+                    try { this.synth.cancel(); } catch (e) { /* ignore */ }
+                    cleanup();
+                }
+            }, maxDuration);
             
             setTimeout(() => {
                 try {
                     if (this.synth.paused) this.synth.resume();
                     this.synth.speak(utterance);
                 } catch (err) {
-                    resolve();
+                    cleanup();
                 }
             }, 50);
         });
@@ -490,6 +402,18 @@ class VoiceManager {
             this.synth.cancel();
         }
         this.currentUtterance = null;
+        
+        // Clear utterance safety timeout
+        if (this._utteranceTimeout) {
+            clearTimeout(this._utteranceTimeout);
+            this._utteranceTimeout = null;
+        }
+        
+        // Clear subtitle timeout
+        if (this.subtitleTimeout) {
+            clearTimeout(this.subtitleTimeout);
+            this.subtitleTimeout = null;
+        }
         
         // Also hide subtitle
         const subtitle = document.getElementById('voice-subtitle');

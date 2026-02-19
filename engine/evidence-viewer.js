@@ -12,6 +12,7 @@ class EvidenceViewer {
         this.currentPage = 1;
         this.totalPages = 1;
         this.documentHistory = []; // Track viewed documents for quests
+        this._escHandler = null; // Track ESC handler for cleanup
     }
 
     /**
@@ -155,15 +156,18 @@ class EvidenceViewer {
     getCurrentPageContent() {
         const content = this.currentDocument.content;
         if (Array.isArray(content)) {
-            return content[this.currentPage - 1];
+            // Clamp to valid range
+            const idx = Math.max(0, Math.min(this.currentPage - 1, content.length - 1));
+            return content[idx] || '';
         }
-        return content;
+        return content || '';
     }
 
     /**
      * Format text content with paragraphs
      */
     formatTextContent(text) {
+        if (!text) return '';
         // Convert newlines to paragraphs
         return text
             .split('\n\n')
@@ -175,13 +179,16 @@ class EvidenceViewer {
      * Format email content
      */
     formatEmailContent(email) {
+        if (!email || typeof email !== 'object') {
+            return '<div class="ev-text-content"><p>Invalid email content</p></div>';
+        }
         return `
             <div class="ev-email">
                 <div class="ev-email-header">
-                    <div class="ev-email-row"><strong>From:</strong> ${email.from}</div>
-                    <div class="ev-email-row"><strong>To:</strong> ${email.to}</div>
-                    <div class="ev-email-row"><strong>Subject:</strong> ${email.subject}</div>
-                    <div class="ev-email-row"><strong>Date:</strong> ${email.date}</div>
+                    <div class="ev-email-row"><strong>From:</strong> ${email.from || 'Unknown'}</div>
+                    <div class="ev-email-row"><strong>To:</strong> ${email.to || 'Unknown'}</div>
+                    <div class="ev-email-row"><strong>Subject:</strong> ${email.subject || '(no subject)'}</div>
+                    <div class="ev-email-row"><strong>Date:</strong> ${email.date || ''}</div>
                 </div>
                 <div class="ev-email-body">
                     ${this.formatTextContent(email.body)}
@@ -223,7 +230,7 @@ class EvidenceViewer {
     }
 
     /**
-     * Apply CSS styles to viewer
+     * Apply CSS styles to viewer (only inserts once, identified by ID)
      */
     applyStyles(viewer) {
         viewer.style.cssText = `
@@ -240,8 +247,10 @@ class EvidenceViewer {
             font-family: 'Courier New', monospace;
         `;
 
-        // Add embedded styles
+        // Only add styles once
+        if (!document.getElementById('evidence-viewer-styles')) {
         const styleSheet = document.createElement('style');
+        styleSheet.id = 'evidence-viewer-styles';
         styleSheet.textContent = `
             .ev-container {
                 background: #1a1a1a;
@@ -443,10 +452,11 @@ class EvidenceViewer {
             }
         `;
         document.head.appendChild(styleSheet);
+        }
     }
 
     /**
-     * Attach event listeners to buttons
+     * Attach event listeners to buttons (only called on createViewerUI, not page turns)
      */
     attachEventListeners() {
         const closeBtn = document.getElementById('ev-close-btn');
@@ -456,6 +466,22 @@ class EvidenceViewer {
             closeBtn.addEventListener('touchend', closeHandler);
         }
 
+        this._attachPageNavListeners();
+
+        // ESC key to close (tracked for cleanup)
+        this._removeEscHandler();
+        this._escHandler = (e) => {
+            if (e.key === 'Escape' && this.isOpen) {
+                this.close();
+            }
+        };
+        document.addEventListener('keydown', this._escHandler);
+    }
+    
+    /**
+     * Attach listeners to page navigation buttons (safe to call on page turns).
+     */
+    _attachPageNavListeners() {
         const prevBtn = document.getElementById('ev-prev-btn');
         if (prevBtn) {
             const prevHandler = (e) => { e.preventDefault(); this.previousPage(); };
@@ -469,13 +495,65 @@ class EvidenceViewer {
             nextBtn.addEventListener('click', nextHandler);
             nextBtn.addEventListener('touchend', nextHandler);
         }
+    }
+    
+    /**
+     * Remove tracked ESC handler.
+     */
+    _removeEscHandler() {
+        if (this._escHandler) {
+            document.removeEventListener('keydown', this._escHandler);
+            this._escHandler = null;
+        }
+    }
 
-        // ESC key to close
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && this.isOpen) {
-                this.close();
-            }
-        });
+    /**
+     * Update content and pagination without rebuilding the entire UI.
+     * Avoids re-attaching event listeners and re-adding styles.
+     */
+    _updatePageContent() {
+        const doc = this.currentDocument;
+        const content = this.getCurrentPageContent();
+        const contentEl = document.querySelector('#evidence-viewer .ev-content');
+        if (!contentEl) return;
+        
+        let contentHTML = '';
+        switch (doc.type) {
+            case 'text':
+            case 'report':
+                contentHTML = `<div class="ev-text-content">${this.formatTextContent(content)}</div>`;
+                break;
+            case 'email':
+                contentHTML = this.formatEmailContent(content);
+                break;
+            case 'image':
+                contentHTML = `<div class="ev-image-content"><img src="${content}" alt="${doc.title}" /></div>`;
+                break;
+            case 'schematic':
+                contentHTML = this.formatSchematicContent(content);
+                break;
+            default:
+                contentHTML = `<div class="ev-text-content">${content}</div>`;
+        }
+        contentEl.innerHTML = contentHTML;
+        
+        // Update footer pagination
+        const footerContainer = document.querySelector('#evidence-viewer .ev-container');
+        if (!footerContainer) return;
+        const oldFooter = footerContainer.querySelector('.ev-footer');
+        if (oldFooter) oldFooter.remove();
+        
+        if (this.totalPages > 1) {
+            const footerEl = document.createElement('div');
+            footerEl.className = 'ev-footer';
+            footerEl.innerHTML = `
+                <button class="ev-nav-btn" id="ev-prev-btn" ${this.currentPage === 1 ? 'disabled' : ''}>← Previous</button>
+                <span class="ev-page-info">Page ${this.currentPage} of ${this.totalPages}</span>
+                <button class="ev-nav-btn" id="ev-next-btn" ${this.currentPage === this.totalPages ? 'disabled' : ''}>Next →</button>
+            `;
+            footerContainer.appendChild(footerEl);
+            this._attachPageNavListeners();
+        }
     }
 
     /**
@@ -484,7 +562,7 @@ class EvidenceViewer {
     previousPage() {
         if (this.currentPage > 1) {
             this.currentPage--;
-            this.createViewerUI();
+            this._updatePageContent();
         }
     }
 
@@ -494,7 +572,7 @@ class EvidenceViewer {
     nextPage() {
         if (this.currentPage < this.totalPages) {
             this.currentPage++;
-            this.createViewerUI();
+            this._updatePageContent();
         }
     }
 
@@ -502,10 +580,15 @@ class EvidenceViewer {
      * Close the viewer
      */
     close() {
+        this._removeEscHandler();
         const viewer = document.getElementById('evidence-viewer');
         if (viewer) {
             viewer.remove();
         }
+        // Clean up styles
+        const styles = document.getElementById('evidence-viewer-styles');
+        if (styles) styles.remove();
+        
         this.isOpen = false;
         this.currentDocument = null;
     }

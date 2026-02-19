@@ -54,10 +54,10 @@ const FacilityServerScene = {
         {
             id: 'override_panel',
             name: 'Maintenance Override',
-            x: 2.60,
-            y: 77.78,
-            width: 1.82,
-            height: 5.56,
+            x: 1.26,
+            y: 77.06,
+            width: 4.50,
+            height: 7.00,
             cursor: 'pointer',
             enabled: () => !FacilityServerScene.state.doorUnlocked,
             action: function(game) {

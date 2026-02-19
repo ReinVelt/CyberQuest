@@ -12,6 +12,18 @@ class ChatInterface {
         this.conversations = {}; // Store conversations by ID
         this.messageQueue = [];
         this.isTyping = false;
+        this._escHandler = null; // Track ESC handler for cleanup
+    }
+
+    /**
+     * Sanitize text for safe HTML insertion (prevent XSS).
+     * @param {string} text
+     * @returns {string}
+     */
+    _sanitizeHTML(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     }
 
     /**
@@ -27,8 +39,17 @@ class ChatInterface {
      * @param {Function} config.onClose - Optional callback when conversation closes
      */
     showConversation(config) {
+        if (!config || !config.id || !config.type || !config.contact) {
+            console.error('showConversation: config must include id, type, and contact', config);
+            return;
+        }
+
+        // Synchronously remove old UI to avoid close race condition
         if (this.isOpen) {
-            this.close();
+            this._removeEscHandler();
+            const existing = document.getElementById('chat-interface');
+            if (existing) existing.remove();
+            this.isOpen = false;
         }
 
         this.currentConversation = {
@@ -85,6 +106,9 @@ class ChatInterface {
      */
     async sendMessagesWithDelay(conversationId, messages, delayBetween = 2000) {
         for (const message of messages) {
+            // Stop if chat was closed mid-sequence
+            if (!this.isOpen || this.currentConversation?.id !== conversationId) break;
+
             // Show typing indicator
             if (this.isOpen && this.currentConversation?.id === conversationId) {
                 this.showTypingIndicator(message.from !== 'Ryan');
@@ -96,6 +120,8 @@ class ChatInterface {
             // Hide typing indicator and add message
             if (this.isOpen && this.currentConversation?.id === conversationId) {
                 this.hideTypingIndicator();
+            } else {
+                break; // Chat closed during delay
             }
 
             this.addMessage(conversationId, message, true);
@@ -232,9 +258,12 @@ class ChatInterface {
 
     /**
      * Format message text (support for line breaks, code blocks, etc.)
+     * Text is sanitized to prevent XSS.
      */
     formatMessageText(text) {
-        return text
+        if (!text) return '';
+        const safe = this._sanitizeHTML(text);
+        return safe
             .replace(/\n/g, '<br>')
             .replace(/`([^`]+)`/g, '<code>$1</code>');
     }
@@ -631,13 +660,14 @@ class ChatInterface {
             closeBtn.addEventListener('touchend', closeHandler);
         }
 
-        // ESC to close
-        const escHandler = (e) => {
+        // ESC to close (tracked for cleanup)
+        this._removeEscHandler();
+        this._escHandler = (e) => {
             if (e.key === 'Escape' && this.isOpen) {
                 this.close();
             }
         };
-        document.addEventListener('keydown', escHandler);
+        document.addEventListener('keydown', this._escHandler);
 
         // Send button (if reply is enabled)
         const sendBtn = document.getElementById('chat-send-btn');
@@ -680,9 +710,21 @@ class ChatInterface {
     }
 
     /**
+     * Remove the tracked ESC key handler.
+     */
+    _removeEscHandler() {
+        if (this._escHandler) {
+            document.removeEventListener('keydown', this._escHandler);
+            this._escHandler = null;
+        }
+    }
+
+    /**
      * Close the chat interface
      */
     close() {
+        this._removeEscHandler();
+
         const chat = document.getElementById('chat-interface');
         if (chat) {
             chat.style.animation = 'fadeOut 0.3s ease';
@@ -691,7 +733,11 @@ class ChatInterface {
 
         // Callback
         if (this.currentConversation?.onClose) {
-            this.currentConversation.onClose(this.game);
+            try {
+                this.currentConversation.onClose(this.game);
+            } catch (err) {
+                console.error('Error in chat onClose callback:', err);
+            }
         }
 
         this.isOpen = false;

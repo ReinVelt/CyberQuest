@@ -122,11 +122,11 @@ const FacilityScene = {
             id: 'camera',
             name: 'Surveillance Camera',
             // SVG: translate(350,500), camera body x=-20 to x=25, y=-15 to y=50
-            // Absolute: x=330 to x=375, y=485 to y=550
-            x: (330 / 1920) * 100,    // 17.19%
-            y: (485 / 1080) * 100,    // 44.91%
-            width: (45 / 1920) * 100,  // 2.34%
-            height: (65 / 1080) * 100, // 6.02%
+            // Clickable area enlarged for usability (centered on visual element)
+            x: 15.86,
+            y: 43.92,
+            width: 5,
+            height: 8,
             cursor: 'pointer',
             action: function(game) {
                 if (game.hasItem('flipper_zero')) {

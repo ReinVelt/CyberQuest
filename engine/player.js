@@ -20,11 +20,14 @@ class PlayerCharacter {
         this.isWalking = false;
         this.isThinking = false;
         this.facing = 'right'; // 'left' or 'right'
-        this.walkSpeed = 15; // pixels per frame at 60fps
+        this.walkSpeed = 0.5; // percent per frame
         
         // Animation
         this.walkAnimationFrame = 0;
         this.animationInterval = null;
+        
+        // Walk bounds
+        this.walkBounds = { minY: 60, maxY: 92, minX: 5, maxX: 95 };
         
         // Idle thoughts - Ryan thinks out loud randomly (South Park style: short and punchy)
         this.idleThoughts = [
@@ -37,6 +40,7 @@ class PlayerCharacter {
         ];
         this.lastIdleThought = 0;
         this.idleThoughtInterval = null;
+        this._thinkTimeout = null; // Track thought timeout for cleanup
         
         // Walking queue
         this.targetX = null;
@@ -108,9 +112,14 @@ class PlayerCharacter {
     
     // Walk to a position
     walkTo(targetX, targetY, callback = null) {
+        if (!this.element) {
+            console.warn('Player element not created yet');
+            if (callback) callback();
+            return;
+        }
         // Clamp target to valid range
-        this.targetX = Math.max(5, Math.min(95, targetX));
-        this.targetY = Math.max(60, Math.min(92, targetY)); // Keep in walkable area
+        this.targetX = Math.max(this.walkBounds.minX, Math.min(this.walkBounds.maxX, targetX));
+        this.targetY = Math.max(this.walkBounds.minY, Math.min(this.walkBounds.maxY, targetY)); // Keep in walkable area
         this.onArrival = callback;
         
         // Determine facing direction
@@ -147,7 +156,7 @@ class PlayerCharacter {
             }
             
             // Move towards target
-            const moveSpeed = 0.5; // percent per frame
+            const moveSpeed = this.walkSpeed; // percent per frame
             const ratio = moveSpeed / distance;
             
             this.x += dx * ratio;
@@ -169,8 +178,10 @@ class PlayerCharacter {
     
     stopWalking() {
         this.isWalking = false;
-        this.element.classList.remove('walking');
-        this.element.style.transform = '';
+        if (this.element) {
+            this.element.classList.remove('walking');
+            this.element.style.transform = '';
+        }
         
         if (this.animationInterval) {
             cancelAnimationFrame(this.animationInterval);
@@ -188,28 +199,43 @@ class PlayerCharacter {
     // Think out loud with voice
     think(thought, duration = 4000) {
         if (this.isThinking) return;
+        if (!this.thoughtBubble) {
+            console.warn('Thought bubble not initialized');
+            return;
+        }
         
         this.isThinking = true;
         
         // Show thought bubble
         const textEl = this.thoughtBubble.querySelector('.thought-text');
-        textEl.textContent = thought;
+        if (textEl) textEl.textContent = thought;
         this.thoughtBubble.classList.remove('hidden');
         this.thoughtBubble.classList.add('visible');
         
         // Speak the thought
         this.game.speakText(thought, "Ryan's Thoughts");
         
+        // Clear any previous think timeout
+        if (this._thinkTimeout) {
+            clearTimeout(this._thinkTimeout);
+        }
+        
         // Hide after duration
-        setTimeout(() => {
-            this.thoughtBubble.classList.remove('visible');
-            this.thoughtBubble.classList.add('hidden');
+        this._thinkTimeout = setTimeout(() => {
+            if (this.thoughtBubble) {
+                this.thoughtBubble.classList.remove('visible');
+                this.thoughtBubble.classList.add('hidden');
+            }
             this.isThinking = false;
+            this._thinkTimeout = null;
         }, duration);
     }
     
     // Random idle thoughts
     startIdleThoughts() {
+        // Prevent duplicate intervals
+        this.stopIdleThoughts();
+        
         // Think randomly every 30-60 seconds when idle
         this.idleThoughtInterval = setInterval(() => {
             if (!this.isWalking && !this.isThinking && !this.game.isDialogueActive) {
@@ -265,11 +291,21 @@ class PlayerCharacter {
     destroy() {
         this.stopIdleThoughts();
         this.stopWalking();
+        
+        // Clear thought timeout
+        if (this._thinkTimeout) {
+            clearTimeout(this._thinkTimeout);
+            this._thinkTimeout = null;
+        }
+        this.isThinking = false;
+        
         if (this.element) {
             this.element.remove();
+            this.element = null;
         }
         if (this.thoughtBubble) {
             this.thoughtBubble.remove();
+            this.thoughtBubble = null;
         }
     }
 }

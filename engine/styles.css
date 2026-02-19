@@ -49,35 +49,65 @@ body {
     line-height: 1.6;
 }
 
-/* Game Container */
+/* Game Container — grid: top-bar | scene | bottom-bar */
 #game-container {
     position: relative;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
     background-color: #000;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 1fr;
+}
+
+/* Top toolbar — inventory, time, quests */
+#game-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 6px 12px;
+    background: linear-gradient(180deg, rgba(26,26,46,0.95) 0%, rgba(22,33,62,0.90) 100%);
+    z-index: var(--z-ui);
+}
+
+/* Bottom toolbar — game-menu buttons */
+#game-bottom-bar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 6px 12px;
+    background: linear-gradient(0deg, rgba(26,26,46,0.95) 0%, rgba(22,33,62,0.90) 100%);
+    z-index: var(--z-ui);
+}
+
+/* Scene wrapper — fills the middle grid row, centres the 16:9 scene */
+#scene-wrapper {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    min-height: 0;          /* allow shrink inside grid */
+    background-color: #000; /* letterbox bars */
+    container-type: size;   /* enable cq units for children */
 }
 
-/* Scene Container - maintains 16:9 aspect ratio, centered with letterboxing */
+/* Scene Container - largest 16:9 box that fits the wrapper, centred */
 #scene-container {
     position: relative;
-    width: 100vw;
-    height: calc(100vw * 9 / 16);
-    max-height: 100vh;
+    /*
+     * Explicit 16:9 sizing using container-query units.
+     * Width  = min(wrapper width, wrapper height × 16/9)
+     * Height = min(wrapper height, wrapper width × 9/16)
+     * This is mathematically exact and avoids reliance on
+     * aspect-ratio transfer through max-height (CSS Sizing L4).
+     */
+    width:  min(100cqw, calc(100cqh / 9 * 16));
+    height: min(100cqh, calc(100cqw / 16 * 9));
     z-index: var(--z-scene);
     transition: opacity var(--transition-slow);
     overflow: hidden;
-}
-
-/* If height-constrained, switch to width based on height */
-@media (min-aspect-ratio: 16/9) {
-    #scene-container {
-        width: calc(100vh * 16 / 9);
-        height: 100vh;
-    }
 }
 
 #scene-container.fade-out {
@@ -94,9 +124,10 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
+    /* Use !important to survive shorthand resets from .scene-* classes */
+    background-size: 100% 100% !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
 }
 
 #scene-hotspots {
@@ -228,11 +259,9 @@ body {
     50% { opacity: 1; }
 }
 
-/* Inventory Bar */
+/* Inventory Bar — now lives in #game-top-bar (flow layout) */
 #inventory-bar {
-    position: absolute;
-    top: 20px;
-    left: 20px;
+    position: relative;
 }
 
 #inventory-toggle {
@@ -313,11 +342,9 @@ body {
     font-style: italic;
 }
 
-/* Quest Log */
+/* Quest Log — now lives in #game-top-bar (flow layout) */
 #quest-log {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    position: relative;
 }
 
 #quest-toggle {
@@ -402,11 +429,8 @@ body {
     font-style: italic;
 }
 
-/* Game Menu */
+/* Game Menu — now lives in #game-bottom-bar (flow layout) */
 #game-menu {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
     display: flex;
     gap: 10px;
 }
@@ -436,12 +460,8 @@ body {
     border-color: var(--color-text-dim);
 }
 
-/* Time Display */
+/* Time Display — centred in #game-top-bar */
 #time-display {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
     gap: 20px;
     padding: 10px 20px;
@@ -748,7 +768,7 @@ body {
     }
     
     #game-menu {
-        flex-direction: column;
+        gap: 6px;
     }
     
     .frequency-display {
@@ -781,11 +801,6 @@ body {
         font-size: 13px;
     }
     
-    #inventory-bar {
-        top: 10px;
-        left: 10px;
-    }
-    
     #inventory-toggle {
         padding: 8px 12px;
     }
@@ -798,11 +813,6 @@ body {
         grid-template-columns: repeat(3, 50px);
         gap: 8px;
         padding: 12px;
-    }
-    
-    #quest-log {
-        top: 10px;
-        right: 10px;
     }
     
     #quest-toggle {
@@ -828,10 +838,7 @@ body {
     }
     
     #game-menu {
-        bottom: 10px;
-        right: 10px;
-        flex-direction: column;
-        gap: 8px;
+        gap: 6px;
     }
     
     #game-menu button {
@@ -843,6 +850,11 @@ body {
         font-size: 12px;
         padding: 8px 12px;
         gap: 12px;
+    }
+
+    #game-top-bar,
+    #game-bottom-bar {
+        padding: 4px 8px;
     }
     
     .puzzle {
@@ -914,17 +926,9 @@ body {
         height: 50px;
     }
     
-    #time-display {
-        top: 5px;
-    }
-    
-    #inventory-bar,
-    #quest-log {
-        top: 5px;
-    }
-    
-    #game-menu {
-        bottom: 5px;
+    #game-top-bar,
+    #game-bottom-bar {
+        padding: 3px 8px;
     }
 }
 
@@ -1532,11 +1536,6 @@ button,
     }
     
     /* Inventory adjustments */
-    #inventory-bar {
-        top: 10px;
-        left: 10px;
-    }
-    
     #inventory-toggle {
         padding: 8px 12px;
         gap: 6px;
@@ -1566,11 +1565,6 @@ button,
     }
     
     /* Quest log adjustments */
-    #quest-log {
-        top: 10px;
-        right: 10px;
-    }
-    
     #quest-toggle {
         padding: 8px 12px;
         gap: 6px;
@@ -1605,8 +1599,6 @@ button,
     
     /* Game menu adjustments */
     #game-menu {
-        bottom: 10px;
-        right: 10px;
         gap: 5px;
         flex-wrap: wrap;
         max-width: calc(100vw - 20px);
@@ -1624,7 +1616,6 @@ button,
     
     /* Time display adjustments */
     #time-display {
-        top: 10px;
         padding: 8px 16px;
         gap: 15px;
         font-size: 14px;

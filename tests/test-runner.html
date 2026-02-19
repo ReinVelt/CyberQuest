@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CyberQuest Test Suite</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Courier New', monospace; 
+            background: #0a0a0a; 
+            color: #00ff88;
+            padding: 20px;
+        }
+        h1 { 
+            color: #00ff88; 
+            margin-bottom: 20px;
+            border-bottom: 2px solid #00ff88;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #4a90e2;
+            margin: 20px 0 10px;
+        }
+        .test-suite { margin: 10px 0; }
+        .test-case { padding: 4px 0 4px 20px; }
+        .pass { color: #00ff88; }
+        .fail { color: #ff3333; }
+        .error-detail { 
+            color: #ff9800; 
+            font-size: 0.85em; 
+            padding-left: 40px; 
+        }
+        .summary {
+            margin-top: 30px;
+            padding: 15px;
+            border: 2px solid #00ff88;
+            font-size: 1.2em;
+        }
+        .summary.all-pass { border-color: #00ff88; }
+        .summary.has-fail { border-color: #ff3333; }
+    </style>
+</head>
+<body>
+    <!-- Minimal DOM for engine tests -->
+    <div id="game-container"></div>
+    
+    <h1>🎮 CyberQuest Engine Test Suite</h1>
+    <div id="test-output"></div>
+    <div id="test-summary" class="summary"></div>
+    
+    <!-- Load engine modules -->
+    <script src="../engine/voice.js"></script>
+    <script src="../engine/player.js"></script>
+    <script src="../engine/evidence-viewer.js"></script>
+    <script src="../engine/puzzles/password-puzzle.js"></script>
+    <script src="../engine/chat-interface.js"></script>
+    <script src="../engine/game.js"></script>
+    
+    <!-- Test framework -->
+    <script src="test-engine.js"></script>
+</body>
+</html>

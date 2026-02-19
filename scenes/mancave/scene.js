@@ -1528,7 +1528,7 @@ SUPERVISOR NOTES:
             name: 'Video Conference Terminal',
             x: 65.1,
             y: 25.9,
-            width: 15.6,
+            width: 12.5,
             height: 18.5,
             cursor: 'pointer',
             lookMessage: 'Secure video terminal for encrypted calls with my contacts.',

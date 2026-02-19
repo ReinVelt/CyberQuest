@@ -3,30 +3,73 @@
  * Sierra-style adventure game engine
  */
 
+/** @type {Object} Engine configuration constants */
+const ENGINE_CONFIG = Object.freeze({
+    TRANSITION_DURATION: 500,
+    SCENE_CHANGE_DELAY: 300,
+    INVENTORY_AUTO_CLOSE: 2000,
+    TYPEWRITER_SPEED: 30,
+    NOTIFICATION_DURATION: 3000,
+    NOTIFICATION_FADE: 500,
+    DEFAULT_TIME: '08:00',
+    DEFAULT_DAY: 1,
+    HOURS_IN_DAY: 24,
+    MINUTES_IN_HOUR: 60,
+});
+
+/**
+ * Utility: attach both click and touchend handlers to an element.
+ * @param {HTMLElement} el
+ * @param {Function} handler
+ */
+function addInteractionHandler(el, handler) {
+    if (!el) return;
+    el.addEventListener('click', handler);
+    el.addEventListener('touchend', handler);
+}
+
 class CyberQuestEngine {
-    constructor() {
+    /**
+     * @param {Object} [deps] - Optional dependency overrides for testing
+     * @param {Object} [deps.voiceManager]
+     * @param {Function} [deps.PlayerCharacter]
+     * @param {Function} [deps.EvidenceViewer]
+     * @param {Function} [deps.PasswordPuzzle]
+     * @param {Function} [deps.ChatInterface]
+     * @param {Storage} [deps.storage] - Storage backend (default: localStorage)
+     */
+    constructor(deps = {}) {
         this.currentScene = null;
         this.scenes = {};
         this.inventory = [];
-        this.gameState = {
+        this._defaultGameState = Object.freeze({
             storyPart: 0,
             questsCompleted: [],
             activeQuests: [],
             flags: {},
-            time: '08:00',
-            day: 1
-        };
+            time: ENGINE_CONFIG.DEFAULT_TIME,
+            day: ENGINE_CONFIG.DEFAULT_DAY
+        });
+        this.gameState = JSON.parse(JSON.stringify(this._defaultGameState));
         this.dialogueQueue = [];
         this.isDialogueActive = false;
         this.isPuzzleActive = false;
         this.initialized = false;
+        this._sceneLoading = false;
         this.voiceEnabled = true;
-        this.voiceManager = window.voiceManager || null;
+        this.voiceManager = null;
         this.player = null;
         this.evidenceViewer = null;
         this.passwordPuzzle = null;
         this.chatInterface = null;
         this.typewriterAbortController = null;
+        
+        // Dependency injection for testing
+        this._deps = deps;
+        this._storage = deps.storage || (typeof localStorage !== 'undefined' ? localStorage : null);
+        
+        // Track event handlers for cleanup
+        this._boundHandlers = [];
     }
     
     init() {
@@ -39,7 +82,7 @@ class CyberQuestEngine {
         this.loadGameState();
         
         // Initialize voice manager (ensure it's connected)
-        this.voiceManager = window.voiceManager || null;
+        this.voiceManager = this._resolveDep('voiceManager', 'voiceManager');
         if (this.voiceManager) {
             console.log('Voice system connected');
         } else {
@@ -50,29 +93,42 @@ class CyberQuestEngine {
         this.initPlayer();
         
         // Initialize evidence viewer
-        if (window.EvidenceViewer) {
-            this.evidenceViewer = new EvidenceViewer(this);
+        const EvidenceViewerClass = this._resolveDep('EvidenceViewer', 'EvidenceViewer');
+        if (EvidenceViewerClass) {
+            this.evidenceViewer = new EvidenceViewerClass(this);
             console.log('Evidence viewer initialized');
         }
         
         // Initialize password puzzle system
-        if (window.PasswordPuzzle) {
-            this.passwordPuzzle = new PasswordPuzzle(this);
+        const PasswordPuzzleClass = this._resolveDep('PasswordPuzzle', 'PasswordPuzzle');
+        if (PasswordPuzzleClass) {
+            this.passwordPuzzle = new PasswordPuzzleClass(this);
             console.log('Password puzzle system initialized');
         }
         
         // Initialize chat interface
-        if (window.ChatInterface) {
-            this.chatInterface = new ChatInterface(this);
+        const ChatInterfaceClass = this._resolveDep('ChatInterface', 'ChatInterface');
+        if (ChatInterfaceClass) {
+            this.chatInterface = new ChatInterfaceClass(this);
             console.log('Chat interface initialized');
         }
         
         console.log('CyberQuest Engine initialized');
     }
     
+    /**
+     * Resolve a dependency: if explicitly provided (even as null), use it;
+     * otherwise fall back to the window global.
+     */
+    _resolveDep(depKey, globalKey) {
+        if (depKey in this._deps) return this._deps[depKey];
+        return (typeof window !== 'undefined' ? window[globalKey] : null) || null;
+    }
+
     initPlayer() {
-        if (window.PlayerCharacter) {
-            this.player = new window.PlayerCharacter(this);
+        const PlayerCharacterClass = this._resolveDep('PlayerCharacter', 'PlayerCharacter');
+        if (PlayerCharacterClass) {
+            this.player = new PlayerCharacterClass(this);
             this.player.init();
             console.log('Player character initialized');
         }
@@ -86,26 +142,17 @@ class CyberQuestEngine {
         }
         
         container.innerHTML = `
-            <div id="scene-container">
-                <div id="scene-background"></div>
-                <div id="scene-hotspots"></div>
-                <div id="scene-characters"></div>
-            </div>
-            <div id="ui-overlay">
-                <div id="dialogue-box" class="hidden">
-                    <div id="dialogue-portrait"></div>
-                    <div id="dialogue-content">
-                        <div id="dialogue-speaker"></div>
-                        <div id="dialogue-text"></div>
-                    </div>
-                    <div id="dialogue-continue">Click to continue...</div>
-                </div>
+            <div id="game-top-bar">
                 <div id="inventory-bar">
                     <div id="inventory-toggle">
                         <span class="icon">🎒</span>
                         <span class="label">Inventory</span>
                     </div>
                     <div id="inventory-items" class="hidden"></div>
+                </div>
+                <div id="time-display">
+                    <span id="game-day">Day 1</span>
+                    <span id="game-time">08:00</span>
                 </div>
                 <div id="quest-log">
                     <div id="quest-toggle">
@@ -114,6 +161,28 @@ class CyberQuestEngine {
                     </div>
                     <div id="quest-list" class="hidden"></div>
                 </div>
+            </div>
+            <div id="scene-wrapper">
+                <div id="scene-container">
+                    <div id="scene-background"></div>
+                    <div id="scene-hotspots"></div>
+                    <div id="scene-characters"></div>
+                    <div id="ui-overlay">
+                        <div id="dialogue-box" class="hidden">
+                            <div id="dialogue-portrait"></div>
+                            <div id="dialogue-content">
+                                <div id="dialogue-speaker"></div>
+                                <div id="dialogue-text"></div>
+                            </div>
+                            <div id="dialogue-continue">Click to continue...</div>
+                        </div>
+                    </div>
+                    <div id="puzzle-overlay" class="hidden">
+                        <div id="puzzle-container"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="game-bottom-bar">
                 <div id="game-menu">
                     <button id="menu-voice" title="Toggle Voice">🔊 Voice</button>
                     <button id="menu-save">💾 Save</button>
@@ -121,15 +190,20 @@ class CyberQuestEngine {
                     <button id="menu-settings">⚙️ Settings</button>
                 </div>
             </div>
-            <div id="puzzle-overlay" class="hidden">
-                <div id="puzzle-container"></div>
-            </div>
             <div id="notification-area"></div>
-            <div id="time-display">
-                <span id="game-day">Day 1</span>
-                <span id="game-time">08:00</span>
-            </div>
         `;
+    }
+    
+    /**
+     * Register a global event handler and track it for cleanup.
+     * @param {EventTarget} target
+     * @param {string} event
+     * @param {Function} handler
+     * @param {Object} [options]
+     */
+    _addTrackedListener(target, event, handler, options) {
+        target.addEventListener(event, handler, options);
+        this._boundHandlers.push({ target, event, handler, options });
     }
     
     bindEvents() {
@@ -140,8 +214,8 @@ class CyberQuestEngine {
                 this.advanceDialogue();
             }
         };
-        document.addEventListener('click', handleDialogueInteraction);
-        document.addEventListener('touchend', handleDialogueInteraction);
+        this._addTrackedListener(document, 'click', handleDialogueInteraction);
+        this._addTrackedListener(document, 'touchend', handleDialogueInteraction);
         
         // Scene interaction for walking (click and touch)
         const handleSceneInteraction = (e) => {
@@ -149,16 +223,20 @@ class CyberQuestEngine {
             if (this.isDialogueActive || this.isPuzzleActive) return;
             if (e.target.closest('.hotspot')) return;
             if (e.target.closest('#ui-overlay')) return;
+            if (e.target.closest('#game-top-bar')) return;
+            if (e.target.closest('#game-bottom-bar')) return;
             
             e.preventDefault();
             
             // Calculate position as percentage
             const sceneContainer = document.getElementById('scene-container');
+            if (!sceneContainer) return;
             const rect = sceneContainer.getBoundingClientRect();
             
-            // Handle both touch and mouse events
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            // Handle both touch and mouse events — use changedTouches for touchend
+            const touch = e.touches?.[0] || e.changedTouches?.[0];
+            const clientX = touch ? touch.clientX : e.clientX;
+            const clientY = touch ? touch.clientY : e.clientY;
             
             const x = ((clientX - rect.left) / rect.width) * 100;
             const y = ((clientY - rect.top) / rect.height) * 100;
@@ -168,8 +246,11 @@ class CyberQuestEngine {
                 this.player.walkTo(x, y);
             }
         };
-        document.getElementById('scene-container')?.addEventListener('click', handleSceneInteraction);
-        document.getElementById('scene-container')?.addEventListener('touchstart', handleSceneInteraction);
+        const sceneEl = document.getElementById('scene-container');
+        if (sceneEl) {
+            this._addTrackedListener(sceneEl, 'click', handleSceneInteraction);
+            this._addTrackedListener(sceneEl, 'touchstart', handleSceneInteraction);
+        }
         
         // Inventory toggle (click and touch)
         const inventoryToggle = document.getElementById('inventory-toggle');
@@ -201,7 +282,7 @@ class CyberQuestEngine {
         addButtonHandler('menu-voice', () => this.toggleVoice());
         
         // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
+        const keyHandler = (e) => {
             if (e.key === 'Escape') {
                 this.closePuzzle();
             }
@@ -220,7 +301,8 @@ class CyberQuestEngine {
                     this.toggleDebugPanel();
                 }
             }
-        });
+        };
+        this._addTrackedListener(document, 'keydown', keyHandler);
     }
     
     // Scene Management
@@ -242,17 +324,33 @@ class CyberQuestEngine {
             return;
         }
         
+        // Guard against overlapping scene loads
+        if (this._sceneLoading) {
+            console.warn(`Scene load already in progress, ignoring request for: ${sceneId}`);
+            return;
+        }
+        this._sceneLoading = true;
+        
+        try {
         // Call onExit for the current scene before leaving
         if (this.currentScene && this.scenes[this.currentScene] && this.scenes[this.currentScene].onExit) {
-            this.scenes[this.currentScene].onExit(this);
+            try {
+                this.scenes[this.currentScene].onExit(this);
+            } catch (err) {
+                console.error(`Error in onExit for scene ${this.currentScene}:`, err);
+            }
         }
         
         const sceneContainer = document.getElementById('scene-container');
+        if (!sceneContainer) {
+            console.error('Scene container not found');
+            return;
+        }
         
         // Transition out
         if (transition === 'fade') {
             sceneContainer.classList.add('fade-out');
-            await this.wait(500);
+            await this.wait(ENGINE_CONFIG.TRANSITION_DURATION);
         }
         
         this.currentScene = sceneId;
@@ -269,6 +367,9 @@ class CyberQuestEngine {
         
         if (scene.background) {
             bgElement.style.backgroundImage = `url('${scene.background}')`;
+            bgElement.style.backgroundSize = '100% 100%';
+            bgElement.style.backgroundRepeat = 'no-repeat';
+            bgElement.style.backgroundPosition = 'center';
         } else {
             bgElement.style.backgroundImage = 'none';
         }
@@ -301,25 +402,38 @@ class CyberQuestEngine {
         
         // Execute scene entry script
         if (scene.onEnter) {
-            scene.onEnter(this);
+            try {
+                scene.onEnter(this);
+            } catch (err) {
+                console.error(`Error in onEnter for scene ${sceneId}:`, err);
+            }
         }
         
         // Transition in
         if (transition === 'fade') {
             sceneContainer.classList.remove('fade-out');
             sceneContainer.classList.add('fade-in');
-            await this.wait(500);
+            await this.wait(ENGINE_CONFIG.TRANSITION_DURATION);
             sceneContainer.classList.remove('fade-in');
         }
         
         // Update URL hash for navigation
-        window.location.hash = sceneId;
+        if (typeof window !== 'undefined') {
+            window.location.hash = sceneId;
+        }
         
         console.log(`Scene loaded: ${sceneId}`);
+        } finally {
+            this._sceneLoading = false;
+        }
     }
     
     loadHotspots(hotspots) {
         const container = document.getElementById('scene-hotspots');
+        if (!container) {
+            console.error('Hotspot container not found');
+            return;
+        }
         container.innerHTML = '';
         
         hotspots.forEach(hotspot => {
@@ -351,8 +465,7 @@ class CyberQuestEngine {
                 e.stopPropagation();
                 this.handleHotspotClick(hotspot);
             };
-            element.addEventListener('click', handleHotspotInteraction);
-            element.addEventListener('touchstart', handleHotspotInteraction);
+            addInteractionHandler(element, handleHotspotInteraction);
             
             container.appendChild(element);
         });
@@ -360,6 +473,17 @@ class CyberQuestEngine {
     
     handleHotspotClick(hotspot) {
         if (this.isDialogueActive || this.isPuzzleActive) return;
+        
+        // Check 'enabled' property (function or boolean)
+        if (hotspot.enabled !== undefined) {
+            const isEnabled = typeof hotspot.enabled === 'function' ? hotspot.enabled(this) : hotspot.enabled;
+            if (!isEnabled) {
+                if (hotspot.disabledMessage) {
+                    this.playerThink(hotspot.disabledMessage);
+                }
+                return;
+            }
+        }
         
         // Check conditions
         if (hotspot.condition && !this.checkCondition(hotspot.condition)) {
@@ -392,6 +516,15 @@ class CyberQuestEngine {
             this.playerThink(message);
         }
         
+        // Support 'interactions' pattern used by some scenes
+        if (hotspot.interactions) {
+            const interaction = hotspot.interactions.look || hotspot.interactions.use || hotspot.interactions.default;
+            if (typeof interaction === 'function') {
+                interaction(this);
+                return; // interactions pattern handles its own actions
+            }
+        }
+        
         // Execute action
         if (hotspot.action) {
             hotspot.action(this);
@@ -402,7 +535,7 @@ class CyberQuestEngine {
             // Short delay for scene transitions
             setTimeout(() => {
                 this.loadScene(hotspot.targetScene);
-            }, 300);
+            }, ENGINE_CONFIG.SCENE_CHANGE_DELAY);
         }
         
         // Collect item
@@ -433,15 +566,21 @@ class CyberQuestEngine {
     
     // Inventory System
     addToInventory(item) {
+        if (!item || !item.id) {
+            console.error('addToInventory: item must have an id', item);
+            return;
+        }
         if (!this.inventory.find(i => i.id === item.id)) {
             this.inventory.push(item);
             this.updateInventoryUI();
-            this.showNotification(`Added to inventory: ${item.name}`);
+            this.showNotification(`Added to inventory: ${item.name || item.id}`);
             
             // Auto-open inventory briefly
             const inventoryItems = document.getElementById('inventory-items');
-            inventoryItems.classList.remove('hidden');
-            setTimeout(() => inventoryItems.classList.add('hidden'), 2000);
+            if (inventoryItems) {
+                inventoryItems.classList.remove('hidden');
+                setTimeout(() => inventoryItems.classList.add('hidden'), ENGINE_CONFIG.INVENTORY_AUTO_CLOSE);
+            }
         }
     }
     
@@ -456,6 +595,7 @@ class CyberQuestEngine {
     
     updateInventoryUI() {
         const container = document.getElementById('inventory-items');
+        if (!container) return;
         container.innerHTML = '';
         
         if (this.inventory.length === 0) {
@@ -475,8 +615,7 @@ class CyberQuestEngine {
                 e.preventDefault();
                 this.useItem(item);
             };
-            element.addEventListener('click', useItemHandler);
-            element.addEventListener('touchend', useItemHandler);
+            addInteractionHandler(element, useItemHandler);
             container.appendChild(element);
         });
     }
@@ -491,9 +630,14 @@ class CyberQuestEngine {
     
     // Dialogue System
     startDialogue(dialogue) {
+        if (!dialogue) {
+            console.error('startDialogue: dialogue is required');
+            return;
+        }
         this.dialogueQueue = Array.isArray(dialogue) ? [...dialogue] : [dialogue];
         this.isDialogueActive = true;
-        document.getElementById('dialogue-box').classList.remove('hidden');
+        const dialogueBox = document.getElementById('dialogue-box');
+        if (dialogueBox) dialogueBox.classList.remove('hidden');
         this.showCurrentDialogue();
     }
     
@@ -520,9 +664,17 @@ class CyberQuestEngine {
         const textEl = document.getElementById('dialogue-text');
         const portraitEl = document.getElementById('dialogue-portrait');
         
+        if (!speakerEl || !textEl) {
+            console.error('Dialogue DOM elements not found');
+            this.endDialogue();
+            return;
+        }
+        
         const speaker = current.speaker || 'Ryan';
         speakerEl.textContent = speaker;
-        portraitEl.style.backgroundImage = current.portrait ? `url('${current.portrait}')` : '';
+        if (portraitEl) {
+            portraitEl.style.backgroundImage = current.portrait ? `url('${current.portrait}')` : '';
+        }
         
         // Execute action callback if provided (for visual changes, etc.)
         if (current.action && typeof current.action === 'function') {
@@ -530,7 +682,7 @@ class CyberQuestEngine {
         }
         
         // Typewriter effect
-        this.typeText(textEl, current.text, 30, this.typewriterAbortController.signal);
+        this.typeText(textEl, current.text || '', ENGINE_CONFIG.TYPEWRITER_SPEED, this.typewriterAbortController.signal);
         
         // Speak the dialogue
         this.speakText(current.text, speaker);
@@ -579,7 +731,8 @@ class CyberQuestEngine {
             this.typewriterAbortController = null;
         }
         
-        document.getElementById('dialogue-box').classList.add('hidden');
+        const dialogueBox = document.getElementById('dialogue-box');
+        if (dialogueBox) dialogueBox.classList.add('hidden');
     }
     
     // Voice System Methods
@@ -650,10 +803,15 @@ class CyberQuestEngine {
             quest = { id: questOrId, name: name || questOrId, description: description || '' };
         }
         
+        if (!quest.id) {
+            console.error('addQuest: quest must have an id', quest);
+            return;
+        }
+        
         if (!this.gameState.activeQuests.find(q => q.id === quest.id)) {
             this.gameState.activeQuests.push(quest);
             this.updateQuestUI();
-            this.showNotification(`New Quest: ${quest.name}`);
+            this.showNotification(`New Quest: ${quest.name || quest.id}`);
         }
     }
     
@@ -678,6 +836,7 @@ class CyberQuestEngine {
     
     updateQuestUI() {
         const container = document.getElementById('quest-list');
+        if (!container) return;
         container.innerHTML = '';
         
         if (this.gameState.activeQuests.length === 0) {
@@ -932,8 +1091,10 @@ class CyberQuestEngine {
     
     closePuzzle() {
         this.isPuzzleActive = false;
-        document.getElementById('puzzle-overlay').classList.add('hidden');
-        document.getElementById('puzzle-container').innerHTML = '';
+        const overlay = document.getElementById('puzzle-overlay');
+        const container = document.getElementById('puzzle-container');
+        if (overlay) overlay.classList.add('hidden');
+        if (container) container.innerHTML = '';
     }
     
     // Game State
@@ -956,19 +1117,26 @@ class CyberQuestEngine {
     }
     
     advanceTime(minutes) {
+        if (typeof minutes !== 'number' || isNaN(minutes) || minutes < 0) {
+            console.warn('advanceTime: invalid minutes value', minutes);
+            return;
+        }
         const [hours, mins] = this.gameState.time.split(':').map(Number);
         let totalMins = hours * 60 + mins + minutes;
+        const dayMinutes = ENGINE_CONFIG.HOURS_IN_DAY * ENGINE_CONFIG.MINUTES_IN_HOUR;
         
-        if (totalMins >= 24 * 60) {
-            totalMins -= 24 * 60;
+        if (totalMins >= dayMinutes) {
+            totalMins -= dayMinutes;
             this.gameState.day++;
-            document.getElementById('game-day').textContent = `Day ${this.gameState.day}`;
+            const dayEl = document.getElementById('game-day');
+            if (dayEl) dayEl.textContent = `Day ${this.gameState.day}`;
         }
         
         const newHours = Math.floor(totalMins / 60);
         const newMins = totalMins % 60;
         this.gameState.time = `${String(newHours).padStart(2, '0')}:${String(newMins).padStart(2, '0')}`;
-        document.getElementById('game-time').textContent = this.gameState.time;
+        const timeEl = document.getElementById('game-time');
+        if (timeEl) timeEl.textContent = this.gameState.time;
     }
     
     setStoryPart(part) {
@@ -976,8 +1144,12 @@ class CyberQuestEngine {
     }
     
     // Notifications
-    showNotification(message, duration = 3000) {
+    showNotification(message, duration = ENGINE_CONFIG.NOTIFICATION_DURATION) {
         const area = document.getElementById('notification-area');
+        if (!area) {
+            console.log(`[Notification] ${message}`);
+            return;
+        }
         const notification = document.createElement('div');
         notification.className = 'notification';
         notification.textContent = message;
@@ -985,7 +1157,7 @@ class CyberQuestEngine {
         
         setTimeout(() => {
             notification.classList.add('fade-out');
-            setTimeout(() => notification.remove(), 500);
+            setTimeout(() => notification.remove(), ENGINE_CONFIG.NOTIFICATION_FADE);
         }, duration);
     }
     
@@ -1041,32 +1213,53 @@ class CyberQuestEngine {
     
     // Save/Load
     saveGame() {
-        const saveData = {
-            currentScene: this.currentScene,
-            inventory: this.inventory,
-            gameState: this.gameState,
-            timestamp: new Date().toISOString()
-        };
-        localStorage.setItem('cyberquest_save', JSON.stringify(saveData));
-        this.showNotification('Game saved!');
+        try {
+            const saveData = {
+                currentScene: this.currentScene,
+                inventory: this.inventory,
+                gameState: this.gameState,
+                timestamp: new Date().toISOString()
+            };
+            if (this._storage) {
+                this._storage.setItem('cyberquest_save', JSON.stringify(saveData));
+            }
+            this.showNotification('Game saved!');
+        } catch (err) {
+            console.error('Failed to save game:', err);
+            this.showNotification('Failed to save game.');
+        }
     }
     
     loadGame() {
-        const saveData = localStorage.getItem('cyberquest_save');
-        if (saveData) {
-            const data = JSON.parse(saveData);
-            this.inventory = data.inventory || [];
-            this.gameState = data.gameState || this.gameState;
-            this.updateInventoryUI();
-            this.updateQuestUI();
-            document.getElementById('game-day').textContent = `Day ${this.gameState.day}`;
-            document.getElementById('game-time').textContent = this.gameState.time;
-            if (data.currentScene) {
-                this.loadScene(data.currentScene);
+        try {
+            const saveData = this._storage ? this._storage.getItem('cyberquest_save') : null;
+            if (saveData) {
+                const data = JSON.parse(saveData);
+                this.inventory = Array.isArray(data.inventory) ? data.inventory : [];
+                // Merge with defaults to ensure all fields exist
+                const defaults = JSON.parse(JSON.stringify(this._defaultGameState));
+                this.gameState = { ...defaults, ...data.gameState };
+                // Ensure nested structures exist
+                this.gameState.flags = this.gameState.flags || {};
+                this.gameState.activeQuests = Array.isArray(this.gameState.activeQuests) ? this.gameState.activeQuests : [];
+                this.gameState.questsCompleted = Array.isArray(this.gameState.questsCompleted) ? this.gameState.questsCompleted : [];
+                
+                this.updateInventoryUI();
+                this.updateQuestUI();
+                const dayEl = document.getElementById('game-day');
+                const timeEl = document.getElementById('game-time');
+                if (dayEl) dayEl.textContent = `Day ${this.gameState.day}`;
+                if (timeEl) timeEl.textContent = this.gameState.time;
+                if (data.currentScene) {
+                    this.loadScene(data.currentScene);
+                }
+                this.showNotification('Game loaded!');
+            } else {
+                this.showNotification('No save file found.');
             }
-            this.showNotification('Game loaded!');
-        } else {
-            this.showNotification('No save file found.');
+        } catch (err) {
+            console.error('Failed to load game:', err);
+            this.showNotification('Failed to load saved game. Save data may be corrupted.');
         }
     }
     
@@ -1080,10 +1273,14 @@ class CyberQuestEngine {
     
     // Character Display System
     showCharacter(characterName, x, y, scale = 0.3) {
+        if (!characterName) {
+            console.error('showCharacter: characterName is required');
+            return null;
+        }
         const charactersContainer = document.getElementById('scene-characters');
         if (!charactersContainer) {
             console.error('Characters container not found');
-            return;
+            return null;
         }
         
         // Create character image element
@@ -1133,6 +1330,7 @@ class CyberQuestEngine {
         const panel = document.createElement('div');
         panel.id = 'debug-panel';
         panel.className = 'debug-panel';
+        /* eslint-disable no-script-url */
         panel.innerHTML = `
             <div class="debug-header">🛠️ DEBUG PANEL (Press D to close)</div>
             <div class="debug-content">
@@ -1185,8 +1383,10 @@ class CyberQuestEngine {
             </div>
         `;
         
-        // Add CSS
+        // Add CSS (only once)
+        if (!document.getElementById('debug-panel-styles')) {
         const style = document.createElement('style');
+        style.id = 'debug-panel-styles';
         style.textContent = `
             .debug-panel {
                 position: fixed;
@@ -1246,8 +1446,44 @@ class CyberQuestEngine {
             }
         `;
         document.head.appendChild(style);
+        }
         document.body.appendChild(panel);
         return panel;
+    }
+    
+    /**
+     * Clean up all engine resources. Call when the engine is being destroyed.
+     */
+    destroy() {
+        // Remove all tracked event listeners
+        for (const { target, event, handler, options } of this._boundHandlers) {
+            target.removeEventListener(event, handler, options);
+        }
+        this._boundHandlers = [];
+        
+        // Stop speech
+        this.stopSpeech();
+        
+        // Abort typewriter
+        if (this.typewriterAbortController) {
+            this.typewriterAbortController.abort();
+            this.typewriterAbortController = null;
+        }
+        
+        // Destroy player
+        if (this.player) {
+            this.player.destroy();
+            this.player = null;
+        }
+        
+        // Clean up debug panel styles
+        const debugStyles = document.getElementById('debug-panel-styles');
+        if (debugStyles) debugStyles.remove();
+        const debugPanel = document.getElementById('debug-panel');
+        if (debugPanel) debugPanel.remove();
+        
+        this.initialized = false;
+        console.log('CyberQuest Engine destroyed');
     }
     
     setupKloosterTest() {

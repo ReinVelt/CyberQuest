@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberQuest - Tester Manual & Cheat Guide</title>
+    <style>
+        :root {
+            --cyber-green: #00ff88;
+            --cyber-blue: #00d4ff;
+            --cyber-purple: #b366ff;
+            --cyber-red: #ff3366;
+            --cyber-yellow: #ffd700;
+            --dark-bg: #0a0a0a;
+            --dark-panel: #1a1a1a;
+            --dark-border: #333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: var(--dark-bg);
+            color: var(--cyber-green);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--cyber-green);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--cyber-green);
+            text-shadow: 0 0 10px var(--cyber-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--cyber-blue);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .quick-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .quick-nav button {
+            background: var(--dark-panel);
+            color: var(--cyber-blue);
+            border: 1px solid var(--cyber-blue);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .quick-nav button:hover {
+            background: var(--cyber-blue);
+            color: var(--dark-bg);
+            transform: scale(1.05);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section {
+            background: var(--dark-panel);
+            border: 2px solid var(--dark-border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .section h2 {
+            color: var(--cyber-blue);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 5px var(--cyber-blue);
+            border-bottom: 2px solid var(--cyber-blue);
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3 {
+            color: var(--cyber-purple);
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .section h4 {
+            color: var(--cyber-yellow);
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .scene-card {
+            background: #0d0d0d;
+            border: 2px solid var(--cyber-green);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+
+        .scene-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+        }
+
+        .scene-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .scene-title {
+            font-size: 1.8rem;
+            color: var(--cyber-green);
+        }
+
+        .scene-id {
+            font-size: 0.9rem;
+            color: var(--cyber-blue);
+            background: var(--dark-panel);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+        }
+
+        .scene-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border: 2px solid var(--dark-border);
+            border-radius: 4px;
+            margin: 1rem 0;
+            background: #000;
+        }
+
+        .hotspot-list {
+            background: rgba(0, 255, 136, 0.05);
+            border-left: 4px solid var(--cyber-green);
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .hotspot-item {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-bottom: 1px solid var(--dark-border);
+        }
+
+        .hotspot-name {
+            color: var(--cyber-yellow);
+            font-weight: bold;
+        }
+
+        .hotspot-action {
+            color: var(--cyber-blue);
+            margin-left: 1rem;
+        }
+
+        .puzzle-box {
+            background: rgba(255, 51, 102, 0.1);
+            border: 2px solid var(--cyber-red);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .puzzle-title {
+            color: var(--cyber-red);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .solution {
+            background: rgba(255, 215, 0, 0.1);
+            border-left: 4px solid var(--cyber-yellow);
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .cheat-code {
+            background: rgba(179, 102, 255, 0.1);
+            border: 2px dashed var(--cyber-purple);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .cheat-code code {
+            color: var(--cyber-purple);
+            display: block;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 4px;
+        }
+
+        .checklist {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .checklist li {
+            margin: 0.5rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .checklist li:before {
+            content: "☐ ";
+            position: absolute;
+            left: 0;
+            color: var(--cyber-blue);
+            font-size: 1.2rem;
+        }
+
+        .flag-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .flag-table th,
+        .flag-table td {
+            border: 1px solid var(--dark-border);
+            padding: 0.8rem;
+            text-align: left;
+        }
+
+        .flag-table th {
+            background: var(--dark-panel);
+            color: var(--cyber-yellow);
+        }
+
+        .flag-table tr:nth-child(even) {
+            background: rgba(0, 255, 136, 0.05);
+        }
+
+        .warning {
+            background: rgba(255, 51, 102, 0.2);
+            border-left: 4px solid var(--cyber-red);
+            padding: 1rem;
+            margin: 1rem 0;
+            color: var(--cyber-red);
+        }
+
+        .tip {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid var(--cyber-blue);
+            padding: 1rem;
+            margin: 1rem 0;
+            color: var(--cyber-blue);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .scene-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .evidence-item {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid var(--cyber-green);
+            border-radius: 4px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .evidence-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-diagram {
+            background: #000;
+            border: 2px solid var(--cyber-blue);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .flow-diagram pre {
+            color: var(--cyber-blue);
+            line-height: 1.4;
+        }
+
+        .toc {
+            background: rgba(0, 212, 255, 0.05);
+            border: 2px solid var(--cyber-blue);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .toc h3 {
+            color: var(--cyber-blue);
+            margin-bottom: 1rem;
+        }
+
+        .toc a {
+            color: var(--cyber-green);
+            text-decoration: none;
+            display: block;
+            padding: 0.3rem 0;
+            transition: all 0.3s;
+        }
+
+        .toc a:hover {
+            color: var(--cyber-yellow);
+            padding-left: 1rem;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--cyber-green);
+            color: var(--dark-bg);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.5);
+            transition: all 0.3s;
+        }
+
+        .scroll-top:hover {
+            transform: scale(1.1);
+        }
+
+        .scroll-top.visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⚡ CYBERQUEST ⚡</h1>
+        <div class="subtitle">TESTER MANUAL & CHEAT GUIDE</div>
+        <div class="subtitle" style="color: var(--cyber-purple);">A Sierra-style Techno-Thriller Adventure</div>
+        
+        <div class="quick-nav">
+            <button onclick="scrollToSection('overview')">Overview</button>
+            <button onclick="scrollToSection('scenes')">Scenes</button>
+            <button onclick="scrollToSection('puzzles')">Puzzles</button>
+            <button onclick="scrollToSection('flags')">Flags & State</button>
+            <button onclick="scrollToSection('cheats')">Cheat Codes</button>
+            <button onclick="scrollToSection('testing')">Testing Guide</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- TABLE OF CONTENTS -->
+        <div class="toc">
+            <h3>📑 TABLE OF CONTENTS</h3>
+            <a href="#overview">1. Game Overview</a>
+            <a href="#scenes">2. Scene-by-Scene Guide</a>
+            <a href="#puzzles">3. Puzzle Solutions</a>
+            <a href="#flags">4. Flags & Game State</a>
+            <a href="#cheats">5. Cheat Codes</a>
+            <a href="#testing">6. Testing Checklist</a>
+        </div>
+
+        <!-- SECTION 1: OVERVIEW -->
+        <div id="overview" class="section">
+            <h2>🎮 GAME OVERVIEW</h2>
+            
+            <h3>Story Synopsis</h3>
+            <p>You are Ryan Weylant, a 55-year-old MacGyver-style hacker and software developer living in Compascuum, Netherlands. When a mysterious SSTV transmission appears on your equipment, it leads you down a rabbit hole involving a Russian electromagnetic weapon project, international espionage, and a race against time to prevent a catastrophic attack.</p>
+
+            <h3>Game Statistics</h3>
+            <div class="grid-2">
+                <div>
+                    <strong>Total Scenes:</strong> 18<br>
+                    <strong>Puzzles:</strong> 3 major (ROT1 cipher, 2 passwords)<br>
+                    <strong>Evidence Items:</strong> 8<br>
+                    <strong>Key NPCs:</strong> 7<br>
+                </div>
+                <div>
+                    <strong>Estimated Playtime:</strong> 2-4 hours<br>
+                    <strong>Locations:</strong> Netherlands + Germany<br>
+                    <strong>Story Parts:</strong> 0-20<br>
+                    <strong>Game Flags:</strong> 40+<br>
+                </div>
+            </div>
+
+            <h3>Game Flow</h3>
+            <div class="flow-diagram">
+                <pre>
+INTRO → HOME → LIVINGROOM/MANCAVE → GARDEN
+           ↓               ↓
+      TV DOCU (opt)   PLANBOARD (hub)
+                           ↓
+                    DECODE SSTV (ROT1)
+                           ↓
+                    REGIONAL MAP
+                           ↓
+                    DRIVE TO KLOOSTER
+                           ↓
+                    FIND USB STICK
+                           ↓
+                    ANALYZE USB (password)
+                           ↓
+                    VIDEO CALL (allies)
+                           ↓
+                    DRIVE TO FACILITY
+                           ↓
+                    STEALTH INFILTRATION
+                           ↓
+                    SERVER ROOM (password)
+                           ↓
+                    DOWNLOAD EVIDENCE
+                           ↓
+                    CONFRONTATION
+                           ↓
+                    DEBRIEF → EPILOGUE → CREDITS
+                </pre>
+            </div>
+
+            <h3>Key Features to Test</h3>
+            <ul class="checklist">
+                <li>Voice synthesis (optional feature)</li>
+                <li>Evidence viewer system</li>
+                <li>Password puzzle interface</li>
+                <li>Chat/mesh interface</li>
+                <li>Scene transitions</li>
+                <li>Hotspot interactions</li>
+                <li>Inventory system</li>
+                <li>Game state persistence</li>
+            </ul>
+        </div>
+
+        <!-- SECTION 2: SCENES -->
+        <div id="scenes" class="section">
+            <h2>🗺️ SCENE-BY-SCENE GUIDE</h2>
+
+            <!-- SCENE 1: INTRO -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 1: INTRO</div>
+                    <div class="scene-id">intro</div>
+                </div>
+                <img src="assets/images/scenes/intro.svg" alt="Intro Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Noir-style text introduction with Star Wars-style crawl. Sets the tone for the techno-thriller adventure.</p>
+                
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>Text animation plays smoothly</li>
+                    <li>Click anywhere to skip works</li>
+                    <li>Auto-transitions to home scene after 60s</li>
+                    <li>Sets intro_complete flag</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Skip Intro:</strong>
+                    <code>game.loadScene('home');</code>
+                </div>
+            </div>
+
+            <!-- SCENE 2: HOME -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 2: HOME (Kitchen)</div>
+                    <div class="scene-id">home</div>
+                </div>
+                <img src="assets/images/scenes/home.svg" alt="Home Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Ryan's farmhouse kitchen in Compascuum. Tutorial scene introducing game controls.</p>
+                
+                <h4>Hotspots</h4>
+                <div class="hotspot-list">
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Espresso Machine</span>
+                        <span class="hotspot-action">→ Make coffee (required for mancave)</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Door to Livingroom</span>
+                        <span class="hotspot-action">→ Go to livingroom</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Door to Mancave</span>
+                        <span class="hotspot-action">→ Go to mancave (needs espresso)</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Backdoor to Garden</span>
+                        <span class="hotspot-action">→ Go to garden</span>
+                    </div>
+                </div>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>Espresso machine adds ☕ to inventory</li>
+                    <li>Mancave door blocks without coffee</li>
+                    <li>All 4 doors lead to correct scenes</li>
+                    <li>Player character moves correctly</li>
+                    <li>Idle thoughts appear randomly</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Skip Coffee Requirement:</strong>
+                    <code>game.setFlag('espresso_made', true);</code>
+                    <code>game.addToInventory({id: 'espresso', name: '☕ Espresso'});</code>
+                </div>
+            </div>
+
+            <!-- SCENE 3: LIVINGROOM -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 3: LIVINGROOM</div>
+                    <div class="scene-id">livingroom</div>
+                </div>
+                <img src="assets/images/scenes/livingroom.svg" alt="Livingroom Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Cozy living room with TV, wife Ies, and ET the pug. Optional documentary viewing.</p>
+                
+                <h4>Hotspots</h4>
+                <div class="hotspot-list">
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">TV</span>
+                        <span class="hotspot-action">→ Watch documentary (optional)</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Ies (Wife)</span>
+                        <span class="hotspot-action">→ Talk to wife</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">ET the Pug</span>
+                        <span class="hotspot-action">→ Pet dog (4 random responses)</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Door to Kitchen</span>
+                        <span class="hotspot-action">→ Return to home</span>
+                    </div>
+                </div>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>TV launches documentary scene</li>
+                    <li>Ies dialogue varies if documentary watched</li>
+                    <li>Dog has 4 cycling pet responses</li>
+                    <li>All NPCs have correct portraits</li>
+                </ul>
+
+                <div class="tip">
+                    <strong>💡 Tip:</strong> The TV documentary is optional but provides background on key NPCs (Dr. Prinsloo, Cees Bassa, Jaap Haartsen) who appear later.
+                </div>
+            </div>
+
+            <!-- SCENE 4: TV DOCUMENTARY -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 4: TV DOCUMENTARY</div>
+                    <div class="scene-id">tvdocumentary</div>
+                </div>
+                <img src="assets/images/scenes/tvdocumentary.svg" alt="TV Documentary Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Full-screen documentary about Drenthe's wireless technology pioneers. Educational content.</p>
+                
+                <h4>Chapters</h4>
+                <div class="hotspot-list">
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Chapter 1</span>
+                        <span class="hotspot-action">→ Modern Antenna Tech (Dr. David Prinsloo)</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Chapter 2</span>
+                        <span class="hotspot-action">→ LOFAR Digital Telescope (Cees Bassa)</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Chapter 3</span>
+                        <span class="hotspot-action">→ Bluetooth Protocol (Jaap Haartsen)</span>
+                    </div>
+                </div>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>Skip button works</li>
+                    <li>Chapter images display correctly</li>
+                    <li>Text is readable on all backgrounds</li>
+                    <li>Returns to livingroom when complete</li>
+                    <li>Sets tv_documentary_watched flag</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Skip Documentary:</strong>
+                    <code>game.setFlag('tv_documentary_watched', true);</code>
+                    <code>game.loadScene('livingroom');</code>
+                </div>
+            </div>
+
+            <!-- SCENE 5: MANCAVE -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 5: MANCAVE (HUB)</div>
+                    <div class="scene-id">mancave</div>
+                </div>
+                <img src="assets/images/scenes/mancave.svg" alt="Mancave Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Ryan's workshop/lab - the main hub of the game. Contains all hacking equipment.</p>
+                
+                <h4>Major Hotspots</h4>
+                <div class="hotspot-list">
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Laptop</span>
+                        <span class="hotspot-action">→ Decrypt SSTV, analyze USB, review evidence</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">SSTV Terminal</span>
+                        <span class="hotspot-action">→ Receive encrypted message (ROT1)</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">HackRF Portapack</span>
+                        <span class="hotspot-action">→ Scan frequencies</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Planboard</span>
+                        <span class="hotspot-action">→ View investigation board</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Regional Map</span>
+                        <span class="hotspot-action">→ View area map with locations</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Meshtastic Radio</span>
+                        <span class="hotspot-action">→ Secure communications</span>
+                    </div>
+                </div>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>SSTV triggers at correct story part</li>
+                    <li>Laptop has different states based on progress</li>
+                    <li>Planboard shows/hides evidence slots correctly</li>
+                    <li>Regional map displays all locations</li>
+                    <li>Door returns to home/garden</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Unlock All Mancave Features:</strong>
+                    <code>game.setFlag('sstv_received', true);</code>
+                    <code>game.setFlag('sstv_decoded', true);</code>
+                    <code>game.setFlag('usb_analyzed', true);</code>
+                </div>
+            </div>
+
+            <!-- SCENE 6: PLANBOARD -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 6: PLANBOARD</div>
+                    <div class="scene-id">planboard</div>
+                </div>
+                <img src="assets/images/scenes/planboard.svg" alt="Planboard Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Detective-style investigation board showing all discovered clues and connections.</p>
+                
+                <h4>Evidence Dossiers</h4>
+                <div class="evidence-grid">
+                    <div class="evidence-item">
+                        <div class="evidence-icon">📡</div>
+                        <strong>SSTV</strong><br>
+                        Encrypted transmission
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-icon">💾</div>
+                        <strong>USB</strong><br>
+                        Eva's dead drop
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-icon">👤</div>
+                        <strong>EVA</strong><br>
+                        Russian whistleblower
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-icon">🏢</div>
+                        <strong>FACILITY</strong><br>
+                        German R&D site
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-icon">⚡</div>
+                        <strong>WEAPON</strong><br>
+                        EMP device schematics
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-icon">📄</div>
+                        <strong>README</strong><br>
+                        USB instructions
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-icon">👥</div>
+                        <strong>EXPERTS</strong><br>
+                        Allied contacts
+                    </div>
+                    <div class="evidence-item">
+                        <div class="evidence-icon">📅</div>
+                        <strong>TIMELINE</strong><br>
+                        Event chronology
+                    </div>
+                </div>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>Evidence slots appear based on game flags</li>
+                    <li>Clicking dossiers opens evidence viewer</li>
+                    <li>Evidence viewer displays text + images</li>
+                    <li>Close button returns to planboard</li>
+                    <li>Back button returns to mancave</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Unlock All Evidence:</strong>
+                    <code>game.setFlag('sstv_decoded', true);</code>
+                    <code>game.setFlag('picked_up_usb', true);</code>
+                    <code>game.setFlag('usb_analyzed', true);</code>
+                    <code>game.setFlag('viewed_schematics', true);</code>
+                    <code>game.setFlag('visited_videocall', true);</code>
+                </div>
+            </div>
+
+            <!-- SCENE 7: REGIONAL MAP -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 7: REGIONAL MAP</div>
+                    <div class="scene-id">regional_map</div>
+                </div>
+                <img src="assets/images/scenes/regional_map.svg" alt="Regional Map Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Michelin-style paper map showing Northern Netherlands and Germany border region.</p>
+                
+                <h4>Locations</h4>
+                <div class="hotspot-list">
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Compascuum (Home)</span>
+                        <span class="hotspot-action">52.81°N, 6.97°E - Base of operations</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Ter Apel (Monastery)</span>
+                        <span class="hotspot-action">52.9°N, 7.1°E - USB dead drop location</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">LOFAR Station</span>
+                        <span class="hotspot-action">52.91°N, 6.50°E - Cees Bassa's workplace</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Westerbork Telescope</span>
+                        <span class="hotspot-action">52.9°N, 6.6°E - Historic radio telescope</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Facility (Target)</span>
+                        <span class="hotspot-action">53.3°N, 7.4°E - Enemy R&D facility</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Meppen</span>
+                        <span class="hotspot-action">52.69°N, 7.29°E - German border town</span>
+                    </div>
+                </div>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>All location markers are clickable</li>
+                    <li>Info popups show correct data</li>
+                    <li>Toggle distances button works</li>
+                    <li>Distance indicators display correctly</li>
+                    <li>Map scales properly on different screens</li>
+                    <li>Back button returns to mancave</li>
+                </ul>
+            </div>
+
+            <!-- SCENE 8: VIDEOCALL -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 8: VIDEOCALL</div>
+                    <div class="scene-id">videocall</div>
+                </div>
+                <img src="assets/images/scenes/videocall.svg" alt="Videocall Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Secure video conference with allied experts to plan facility infiltration.</p>
+                
+                <h4>Participants</h4>
+                <div class="grid-2">
+                    <div>
+                        <strong>Dr. David Prinsloo</strong> - Antenna expert<br>
+                        <strong>Cees Bassa</strong> - LOFAR specialist<br>
+                        <strong>Jaap Haartsen</strong> - Bluetooth inventor
+                    </div>
+                    <div>
+                        <strong>Chris Kubecka</strong> - OSINT expert<br>
+                        <strong>Pieter</strong> - Underground network<br>
+                        <strong>Ryan</strong> - Player character
+                    </div>
+                </div>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>All 6 participants appear in grid</li>
+                    <li>Dialogue advances through full discussion</li>
+                    <li>Equipment recommendations are given</li>
+                    <li>Sets visited_videocall flag</li>
+                    <li>Can proceed to facility after call</li>
+                </ul>
+            </div>
+
+            <!-- SCENE 9: GARDEN -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 9: GARDEN</div>
+                    <div class="scene-id">garden</div>
+                </div>
+                <img src="assets/images/scenes/garden.svg" alt="Garden Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Backyard with view of windmills and mysterious antenna. Access to Volvo for travel.</p>
+                
+                <h4>Hotspots</h4>
+                <div class="hotspot-list">
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Volvo V70</span>
+                        <span class="hotspot-action">→ Drive to Klooster or Facility</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Windmills</span>
+                        <span class="hotspot-action">→ Observe flickering lights</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Antenna</span>
+                        <span class="hotspot-action">→ Mysterious transmission source</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Door to Home</span>
+                        <span class="hotspot-action">→ Return to kitchen</span>
+                    </div>
+                </div>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>Volvo is locked until klooster_unlocked flag</li>
+                    <li>Driving to Klooster works when unlocked</li>
+                    <li>Driving to Facility works after USB analyzed</li>
+                    <li>Windmill observations provide story hints</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Unlock Klooster Travel:</strong>
+                    <code>game.setFlag('klooster_unlocked', true);</code>
+                    <strong>Unlock Facility Travel:</strong>
+                    <code>game.questManager.addQuest({id: 'infiltrate_facility', name: 'Infiltrate Facility'});</code>
+                </div>
+            </div>
+
+            <!-- SCENE 10: DRIVING -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 10: DRIVING</div>
+                    <div class="scene-id">driving</div>
+                </div>
+                <img src="assets/images/scenes/driving.svg" alt="Driving Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Cinematic driving sequence showing route to destination with inner monologue.</p>
+                
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>Scene adapts to destination (Klooster or Facility)</li>
+                    <li>Auto-advances after timer completes</li>
+                    <li>Appropriate thoughts appear during drive</li>
+                    <li>Transitions to correct destination scene</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Skip Driving:</strong>
+                    <code>// Depends on destination flag</code>
+                    <code>game.loadScene('klooster'); // OR</code>
+                    <code>game.loadScene('facility');</code>
+                </div>
+            </div>
+
+            <!-- SCENE 11: KLOOSTER -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 11: KLOOSTER (Monastery)</div>
+                    <div class="scene-id">klooster</div>
+                </div>
+                <img src="assets/images/scenes/klooster.svg" alt="Klooster Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Medieval monastery at night. USB stick dead drop location.</p>
+                
+                <h4>Hotspots</h4>
+                <div class="hotspot-list">
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Monastery Entrance</span>
+                        <span class="hotspot-action">→ Examine old doors</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Bench (USB)</span>
+                        <span class="hotspot-action">→ Find USB stick!</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Look Around</span>
+                        <span class="hotspot-action">→ Survey courtyard</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Volvo (Leave)</span>
+                        <span class="hotspot-action">→ Return home (triggers car_discovery)</span>
+                    </div>
+                </div>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>Finding USB stick sets found_usb_stick flag</li>
+                    <li>Clicking car leads to car_discovery scene</li>
+                    <li>Atmosphere is appropriately tense</li>
+                    <li>Player can't leave without checking bench</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Get USB Immediately:</strong>
+                    <code>game.setFlag('found_usb_stick', true);</code>
+                    <code>game.loadScene('car_discovery');</code>
+                </div>
+            </div>
+
+            <!-- SCENE 12: CAR DISCOVERY -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 12: CAR DISCOVERY</div>
+                    <div class="scene-id">car_discovery</div>
+                </div>
+                
+                <h4>Description</h4>
+                <p>Close-up of Volvo interior. Ryan examines and picks up the USB stick.</p>
+                
+                <h4>Hotspots</h4>
+                <div class="hotspot-list">
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">USB Stick</span>
+                        <span class="hotspot-action">→ Pick up USB (adds to inventory)</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Dashboard</span>
+                        <span class="hotspot-action">→ Examine car interior</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Drive Home</span>
+                        <span class="hotspot-action">→ Return to base</span>
+                    </div>
+                </div>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>USB adds to inventory correctly</li>
+                    <li>Sets picked_up_usb flag</li>
+                    <li>Can't leave without taking USB</li>
+                    <li>Drive home triggers driving scene</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Auto-pickup USB:</strong>
+                    <code>game.setFlag('picked_up_usb', true);</code>
+                    <code>game.addToInventory({id: 'usb_stick', name: '💾 USB Stick'});</code>
+                </div>
+            </div>
+
+            <!-- SCENE 13: FACILITY -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 13: FACILITY (Exterior)</div>
+                    <div class="scene-id">facility</div>
+                </div>
+                <img src="assets/images/scenes/facility.svg" alt="Facility Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>German military R&D facility exterior. Stealth infiltration begins.</p>
+                
+                <h4>Key Objective</h4>
+                <div class="puzzle-box">
+                    <div class="puzzle-title">🎯 Infiltration Task</div>
+                    <p>Find a security badge to enter the facility. Check the trash bin near the loading dock.</p>
+                    <div class="solution">
+                        <strong>Solution:</strong> Click trash bin → Find discarded badge → Clone with Flipper Zero
+                    </div>
+                </div>
+
+                <h4>Hotspots</h4>
+                <div class="hotspot-list">
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Trash Bin</span>
+                        <span class="hotspot-action">→ Find security badge!</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Main Entrance</span>
+                        <span class="hotspot-action">→ Enter facility (needs badge)</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Return to Car</span>
+                        <span class="hotspot-action">→ Abort mission</span>
+                    </div>
+                </div>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>Trash bin only appears after story part 17</li>
+                    <li>Finding badge adds to inventory</li>
+                    <li>Badge cloning dialogue plays</li>
+                    <li>Entrance requires badge to open</li>
+                    <li>Entering sets entered_facility flag</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Skip Badge Hunt:</strong>
+                    <code>game.gameState.storyPart = 17;</code>
+                    <code>game.setFlag('badge_cloned', true);</code>
+                    <code>game.addToInventory({id: 'security_badge', name: '🎫 Cloned Badge'});</code>
+                </div>
+            </div>
+
+            <!-- SCENE 14: FACILITY INTERIOR -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 14: FACILITY INTERIOR</div>
+                    <div class="scene-id">facility_interior</div>
+                </div>
+                <img src="assets/images/scenes/facility_interior.svg" alt="Facility Interior Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Inside the facility. Navigate through corridors to reach the server room.</p>
+                
+                <h4>Hotspots</h4>
+                <div class="hotspot-list">
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Corridor to Server Room</span>
+                        <span class="hotspot-action">→ Proceed to objective</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Security Camera</span>
+                        <span class="hotspot-action">→ Avoid detection</span>
+                    </div>
+                    <div class="hotspot-item">
+                        <span class="hotspot-name">Lab Equipment</span>
+                        <span class="hotspot-action">→ Observe research</span>
+                    </div>
+                </div>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>Stealth mechanics work (if implemented)</li>
+                    <li>Camera avoidance sequences function</li>
+                    <li>Dialogue reflects tension</li>
+                    <li>Server room entrance is accessible</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Skip to Server Room:</strong>
+                    <code>game.loadScene('facility_server');</code>
+                </div>
+            </div>
+
+            <!-- SCENE 15: FACILITY SERVER -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 15: FACILITY SERVER (CLIMAX)</div>
+                    <div class="scene-id">facility_server</div>
+                </div>
+                
+                <h4>Description</h4>
+                <p>The server room - climactic scene where Ryan downloads evidence and confronts villains.</p>
+                
+                <h4>Major Puzzle</h4>
+                <div class="puzzle-box">
+                    <div class="puzzle-title">🔐 PASSWORD PUZZLE #2</div>
+                    <p><strong>Challenge:</strong> Access Dr. Volkov's account to download evidence</p>
+                    <p><strong>Account:</strong> Dr. V. Volkov - Personal Account</p>
+                    <div class="solution">
+                        <strong>Hint from Eva:</strong> "His password is SPEKTR - the Soviet program."<br>
+                        <strong>Alternative:</strong> username "volkov_d", password "Moskau_1991"<br>
+                        <strong>Correct Password:</strong> <code>SPEKTR</code>
+                    </div>
+                </div>
+
+                <h4>Sequence of Events</h4>
+                <ol>
+                    <li>Access server terminal</li>
+                    <li>Enter password puzzle</li>
+                    <li>Download evidence files</li>
+                    <li>Confrontation with Volkov begins</li>
+                    <li>Eva arrives via mesh network</li>
+                    <li>Chris Kubecka provides OSINT support</li>
+                    <li>Evidence uploaded to secure servers</li>
+                    <li>Escape sequence</li>
+                </ol>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>Password puzzle interface displays</li>
+                    <li>Correct password grants access</li>
+                    <li>Wrong password shows error</li>
+                    <li>Evidence download animation plays</li>
+                    <li>Confrontation dialogue sequence works</li>
+                    <li>Eva and Kubecka appear correctly</li>
+                    <li>Sets data_extracted flag</li>
+                    <li>Transitions to debrief</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Skip Password Puzzle:</strong>
+                    <code>game.setFlag('volkov_account_accessed', true);</code>
+                    <strong>Skip to Debrief:</strong>
+                    <code>game.gameState.storyPart = 20;</code>
+                    <code>game.loadScene('debrief');</code>
+                </div>
+            </div>
+
+            <!-- SCENE 16: DEBRIEF -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 16: DEBRIEF</div>
+                    <div class="scene-id">debrief</div>
+                </div>
+                <img src="assets/images/scenes/debrief.svg" alt="Debrief Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Mission debrief showing what was accomplished and the aftermath.</p>
+                
+                <h4>Content</h4>
+                <ul>
+                    <li>Mission objectives completed checklist</li>
+                    <li>Evidence collected summary</li>
+                    <li>Impact on conspiracy revealed</li>
+                    <li>Authorities notified status</li>
+                    <li>Personal reflections from Ryan</li>
+                </ul>
+
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>All completed objectives shown</li>
+                    <li>Evidence list matches collected items</li>
+                    <li>Terminal-style aesthetic works</li>
+                    <li>Continue button leads to epilogue</li>
+                </ul>
+            </div>
+
+            <!-- SCENE 17: EPILOGUE -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 17: EPILOGUE</div>
+                    <div class="scene-id">epilogue</div>
+                </div>
+                
+                <h4>Description</h4>
+                <p>Resolution scene showing the consequences of the mission and life afterward.</p>
+                
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>Epilogue text displays correctly</li>
+                    <li>Character fates are described</li>
+                    <li>Transitions to credits</li>
+                </ul>
+            </div>
+
+            <!-- SCENE 18: CREDITS -->
+            <div class="scene-card">
+                <div class="scene-header">
+                    <div class="scene-title">Scene 18: CREDITS</div>
+                    <div class="scene-id">credits</div>
+                </div>
+                <img src="assets/images/scenes/credits.svg" alt="Credits Scene" class="scene-image" onerror="this.style.display='none'">
+                
+                <h4>Description</h4>
+                <p>Game credits with team acknowledgments and thanks.</p>
+                
+                <h4>Testing Points</h4>
+                <ul class="checklist">
+                    <li>Credits scroll smoothly</li>
+                    <li>All team members listed</li>
+                    <li>Music plays (if implemented)</li>
+                    <li>Can restart game from credits</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SECTION 3: PUZZLES -->
+        <div id="puzzles" class="section">
+            <h2>🧩 PUZZLE SOLUTIONS</h2>
+
+            <h3>Puzzle 1: ROT1 Cipher (SSTV Decryption)</h3>
+            <div class="puzzle-box">
+                <div class="puzzle-title">🔐 Caesar Cipher - Shift of 1</div>
+                
+                <h4>Location</h4>
+                <p>Mancave → Laptop → Decrypt SSTV Message</p>
+                
+                <h4>Encrypted Message</h4>
+                <code style="display: block; background: #000; padding: 1rem; color: var(--cyber-red);">
+XBSOJOH - QSPKFDU FDIP JT DPNQSPNJTFE - NPWF UP CBDLVQ DIBOOFM - DPPSEJOBUFT GPMMPX - USVTU OP POF
+                </code>
+                
+                <h4>How to Solve</h4>
+                <p>ROT1 cipher means each letter is shifted back by 1 position in the alphabet:</p>
+                <ul>
+                    <li>A → Z</li>
+                    <li>B → A</li>
+                    <li>C → B</li>
+                    <li>etc.</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Decrypted Message</h4>
+                    <code style="display: block; background: #000; padding: 1rem; color: var(--cyber-green);">
+WARNING - PROJECT ECHO IS COMPROMISED - MOVE TO BACKUP CHANNEL - COORDINATES FOLLOW - TRUST NO ONE
+                    </code>
+                </div>
+
+                <h4>In-Game Solution</h4>
+                <p>The game provides a decryption interface on the laptop. Players must recognize it's a simple shift cipher and decode it.</p>
+
+                <div class="cheat-code">
+                    <strong>Skip ROT1 Puzzle:</strong>
+                    <code>game.setFlag('sstv_decoded', true);</code>
+                    <code>game.setFlag('klooster_unlocked', true);</code>
+                </div>
+            </div>
+
+            <h3>Puzzle 2: USB Password</h3>
+            <div class="puzzle-box">
+                <div class="puzzle-title">🔐 Password Protection</div>
+                
+                <h4>Location</h4>
+                <p>Mancave → Laptop → Analyze USB Stick</p>
+                
+                <h4>Challenge</h4>
+                <p>The USB stick is encrypted and requires a password to access its contents.</p>
+                
+                <h4>Hints</h4>
+                <ul>
+                    <li>The README file mentions Eva</li>
+                    <li>Russian connection from SSTV</li>
+                    <li>Common passwords related to Russian space program</li>
+                </ul>
+                
+                <div class="solution">
+                    <h4>Accepted Passwords</h4>
+                    <code style="display: block; background: #000; padding: 1rem; color: var(--cyber-green);">
+                        Primary: SPUTNIK<br>
+                        Alternative: sputnik, Sputnik
+                    </code>
+                    <p>(Password is case-insensitive in most implementations)</p>
+                </div>
+
+                <h4>Reward</h4>
+                <p>Unlocks USB contents including:</p>
+                <ul>
+                    <li>Eva's identity and backstory</li>
+                    <li>Facility location coordinates</li>
+                    <li>EMP weapon schematics</li>
+                    <li>Infiltration instructions</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Skip USB Password:</strong>
+                    <code>game.setFlag('usb_analyzed', true);</code>
+                    <code>game.setFlag('viewed_schematics', true);</code>
+                </div>
+            </div>
+
+            <h3>Puzzle 3: Volkov's Account Password</h3>
+            <div class="puzzle-box">
+                <div class="puzzle-title">🔐 Server Access</div>
+                
+                <h4>Location</h4>
+                <p>Facility Server Room → Main Terminal</p>
+                
+                <h4>Challenge</h4>
+                <p>Access Dr. Dmitri Volkov's personal account to download evidence of Project ZERFALL.</p>
+                
+                <h4>Hint from Eva</h4>
+                <p>"His password is SPEKTR - the Soviet program."</p>
+                
+                <div class="solution">
+                    <h4>Accepted Credentials</h4>
+                    <code style="display: block; background: #000; padding: 1rem; color: var(--cyber-green);">
+                        Password: SPEKTR<br>
+                        Username: volkov_d<br>
+                        Alternative Password: Moskau_1991
+                    </code>
+                </div>
+
+                <h4>Background</h4>
+                <p>SPEKTR was a Soviet/Russian space program module on Mir space station, fitting the theme of Russian technology.</p>
+
+                <h4>Reward</h4>
+                <p>Grants access to:</p>
+                <ul>
+                    <li>Financial transfer records</li>
+                    <li>FSB routing codes</li>
+                    <li>Target coordinates</li>
+                    <li>Activation timeline</li>
+                    <li>Project ZERFALL documentation</li>
+                </ul>
+
+                <div class="cheat-code">
+                    <strong>Skip Server Password:</strong>
+                    <code>game.setFlag('volkov_account_accessed', true);</code>
+                    <code>game.setFlag('data_extracted', true);</code>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 4: FLAGS & STATE -->
+        <div id="flags" class="section">
+            <h2>🚩 FLAGS & GAME STATE</h2>
+
+            <h3>Critical Game Flags</h3>
+            <p>These flags control major game progression:</p>
+
+            <table class="flag-table">
+                <thead>
+                    <tr>
+                        <th>Flag Name</th>
+                        <th>Trigger</th>
+                        <th>Effect</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>intro_complete</td>
+                        <td>Finish intro scene</td>
+                        <td>Allows game to start</td>
+                    </tr>
+                    <tr>
+                        <td>espresso_made</td>
+                        <td>Use espresso machine</td>
+                        <td>Unlocks mancave access</td>
+                    </tr>
+                    <tr>
+                        <td>sstv_received</td>
+                        <td>Story progression</td>
+                        <td>SSTV terminal shows message</td>
+                    </tr>
+                    <tr>
+                        <td>sstv_decoded</td>
+                        <td>Solve ROT1 puzzle</td>
+                        <td>Unlocks Klooster location</td>
+                    </tr>
+                    <tr>
+                        <td>klooster_unlocked</td>
+                        <td>Decode SSTV</td>
+                        <td>Can drive to monastery</td>
+                    </tr>
+                    <tr>
+                        <td>found_usb_stick</td>
+                        <td>Discover USB at Klooster</td>
+                        <td>Triggers car_discovery scene</td>
+                    </tr>
+                    <tr>
+                        <td>picked_up_usb</td>
+                        <td>Take USB in car</td>
+                        <td>Adds USB to inventory</td>
+                    </tr>
+                    <tr>
+                        <td>usb_analyzed</td>
+                        <td>Decrypt USB password</td>
+                        <td>Unlocks facility location & evidence</td>
+                    </tr>
+                    <tr>
+                        <td>viewed_schematics</td>
+                        <td>Read weapon documentation</td>
+                        <td>Reveals weapon dossier</td>
+                    </tr>
+                    <tr>
+                        <td>visited_videocall</td>
+                        <td>Complete video conference</td>
+                        <td>Unlocks experts dossier</td>
+                    </tr>
+                    <tr>
+                        <td>badge_cloned</td>
+                        <td>Clone security badge</td>
+                        <td>Allows facility entry</td>
+                    </tr>
+                    <tr>
+                        <td>entered_facility</td>
+                        <td>Enter main building</td>
+                        <td>Progresses to interior</td>
+                    </tr>
+                    <tr>
+                        <td>volkov_account_accessed</td>
+                        <td>Enter correct password</td>
+                        <td>Grants server access</td>
+                    </tr>
+                    <tr>
+                        <td>data_extracted</td>
+                        <td>Download evidence</td>
+                        <td>Triggers confrontation</td>
+                    </tr>
+                    <tr>
+                        <td>kubecka_arrived</td>
+                        <td>Confrontation sequence</td>
+                        <td>Chris joins remotely</td>
+                    </tr>
+                    <tr>
+                        <td>eva_arrived</td>
+                        <td>Confrontation sequence</td>
+                        <td>Eva provides testimony</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Story Parts</h3>
+            <p>The game uses a storyPart system (0-20) to track overall progression:</p>
+
+            <table class="flag-table">
+                <thead>
+                    <tr>
+                        <th>Part</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>0</td><td>Intro sequence</td></tr>
+                    <tr><td>1</td><td>Morning routine, meet Ies</td></tr>
+                    <tr><td>2</td><td>SSTV transmission appears</td></tr>
+                    <tr><td>3</td><td>Analyze encrypted message</td></tr>
+                    <tr><td>4-6</td><td>Decode ROT1 cipher</td></tr>
+                    <tr><td>7-9</td><td>Travel to Klooster</td></tr>
+                    <tr><td>10-12</td><td>Find and analyze USB</td></tr>
+                    <tr><td>13-15</td><td>Video call with experts</td></tr>
+                    <tr><td>16-17</td><td>Infiltrate facility</td></tr>
+                    <tr><td>18-19</td><td>Server room, download evidence</td></tr>
+                    <tr><td>20</td><td>Debrief and epilogue</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Inventory Items</h3>
+            <div class="evidence-grid">
+                <div class="evidence-item">
+                    <div class="evidence-icon">☕</div>
+                    <strong>Espresso</strong><br>
+                    Morning fuel
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-icon">💾</div>
+                    <strong>USB Stick</strong><br>
+                    Eva's evidence
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-icon">🎫</div>
+                    <strong>Security Badge</strong><br>
+                    Cloned access card
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-icon">📡</div>
+                    <strong>Flipper Zero</strong><br>
+                    Hacking tool
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-icon">📻</div>
+                    <strong>Meshtastic</strong><br>
+                    Secure comms
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-icon">🎧</div>
+                    <strong>Night Vision</strong><br>
+                    Stealth equipment
+                </div>
+            </div>
+
+            <div class="cheat-code">
+                <h4>Useful Console Commands for Flag Management</h4>
+                <code>// View all flags</code>
+                <code>console.log(game.gameState.flags);</code>
+                <code></code>
+                <code>// Set a flag</code>
+                <code>game.setFlag('flag_name', true);</code>
+                <code></code>
+                <code>// Check a flag</code>
+                <code>game.getFlag('flag_name');</code>
+                <code></code>
+                <code>// Set story part</code>
+                <code>game.gameState.storyPart = 10;</code>
+                <code></code>
+                <code>// View inventory</code>
+                <code>console.log(game.inventory);</code>
+            </div>
+        </div>
+
+        <!-- SECTION 5: CHEAT CODES -->
+        <div id="cheats" class="section">
+            <h2>🎮 CHEAT CODES</h2>
+
+            <div class="warning">
+                <strong>⚠️ WARNING:</strong> These cheats are for testing only! Using them will skip content and may break the game experience. Open browser console (F12) to use these commands.
+            </div>
+
+            <h3>Quick Scene Access</h3>
+            <div class="cheat-code">
+                <code>// Jump to any scene</code>
+                <code>game.loadScene('intro');</code>
+                <code>game.loadScene('home');</code>
+                <code>game.loadScene('livingroom');</code>
+                <code>game.loadScene('tvdocumentary');</code>
+                <code>game.loadScene('mancave');</code>
+                <code>game.loadScene('garden');</code>
+                <code>game.loadScene('planboard');</code>
+                <code>game.loadScene('regional_map');</code>
+                <code>game.loadScene('videocall');</code>
+                <code>game.loadScene('driving');</code>
+                <code>game.loadScene('klooster');</code>
+                <code>game.loadScene('car_discovery');</code>
+                <code>game.loadScene('facility');</code>
+                <code>game.loadScene('facility_interior');</code>
+                <code>game.loadScene('facility_server');</code>
+                <code>game.loadScene('debrief');</code>
+                <code>game.loadScene('epilogue');</code>
+                <code>game.loadScene('credits');</code>
+            </div>
+
+            <h3>Unlock All Content</h3>
+            <div class="cheat-code">
+                <code>// Unlock everything</code>
+                <code>game.setFlag('espresso_made', true);</code>
+                <code>game.setFlag('sstv_received', true);</code>
+                <code>game.setFlag('sstv_decoded', true);</code>
+                <code>game.setFlag('klooster_unlocked', true);</code>
+                <code>game.setFlag('picked_up_usb', true);</code>
+                <code>game.setFlag('usb_analyzed', true);</code>
+                <code>game.setFlag('viewed_schematics', true);</code>
+                <code>game.setFlag('visited_videocall', true);</code>
+                <code>game.setFlag('badge_cloned', true);</code>
+                <code>game.setFlag('volkov_account_accessed', true);</code>
+                <code>game.gameState.storyPart = 20;</code>
+            </div>
+
+            <h3>Skip to Specific Milestones</h3>
+            <div class="cheat-code">
+                <h4>Start with SSTV Message</h4>
+                <code>game.setFlag('espresso_made', true);</code>
+                <code>game.setFlag('sstv_received', true);</code>
+                <code>game.gameState.storyPart = 2;</code>
+                <code>game.loadScene('mancave');</code>
+            </div>
+
+            <div class="cheat-code">
+                <h4>Start at Klooster Mission</h4>
+                <code>game.setFlag('sstv_decoded', true);</code>
+                <code>game.setFlag('klooster_unlocked', true);</code>
+                <code>game.gameState.storyPart = 7;</code>
+                <code>game.loadScene('garden');</code>
+            </div>
+
+            <div class="cheat-code">
+                <h4>Start at USB Analysis</h4>
+                <code>game.setFlag('picked_up_usb', true);</code>
+                <code>game.addToInventory({id: 'usb_stick', name: '💾 USB Stick'});</code>
+                <code>game.gameState.storyPart = 10;</code>
+                <code>game.loadScene('mancave');</code>
+            </div>
+
+            <div class="cheat-code">
+                <h4>Start at Facility Infiltration</h4>
+                <code>game.setFlag('usb_analyzed', true);</code>
+                <code>game.setFlag('visited_videocall', true);</code>
+                <code>game.addToInventory({id: 'flipper_zero', name: '📡 Flipper Zero'});</code>
+                <code>game.addToInventory({id: 'night_vision', name: '🎧 Night Vision'});</code>
+                <code>game.gameState.storyPart = 17;</code>
+                <code>game.loadScene('facility');</code>
+            </div>
+
+            <div class="cheat-code">
+                <h4>Start at Server Room Climax</h4>
+                <code>game.setFlag('badge_cloned', true);</code>
+                <code>game.setFlag('entered_facility', true);</code>
+                <code>game.gameState.storyPart = 18;</code>
+                <code>game.loadScene('facility_server');</code>
+            </div>
+
+            <h3>Inventory Cheats</h3>
+            <div class="cheat-code">
+                <code>// Add all items</code>
+                <code>game.addToInventory({id: 'espresso', name: '☕ Espresso'});</code>
+                <code>game.addToInventory({id: 'usb_stick', name: '💾 USB Stick'});</code>
+                <code>game.addToInventory({id: 'security_badge', name: '🎫 Security Badge'});</code>
+                <code>game.addToInventory({id: 'flipper_zero', name: '📡 Flipper Zero'});</code>
+                <code>game.addToInventory({id: 'meshtastic', name: '📻 Meshtastic'});</code>
+                <code>game.addToInventory({id: 'night_vision', name: '🎧 Night Vision'});</code>
+                <code></code>
+                <code>// Clear inventory</code>
+                <code>game.inventory = [];</code>
+            </div>
+
+            <h3>Puzzle Bypass</h3>
+            <div class="cheat-code">
+                <code>// Skip ROT1 decryption</code>
+                <code>game.setFlag('sstv_decoded', true);</code>
+                <code>game.setFlag('klooster_unlocked', true);</code>
+                <code></code>
+                <code>// Skip USB password</code>
+                <code>game.setFlag('usb_analyzed', true);</code>
+                <code></code>
+                <code>// Skip Volkov password</code>
+                <code>game.setFlag('volkov_account_accessed', true);</code>
+            </div>
+
+            <h3>Debug Helpers</h3>
+            <div class="cheat-code">
+                <code>// Show current game state</code>
+                <code>console.log('Scene:', game.currentScene?.id);</code>
+                <code>console.log('Story Part:', game.gameState.storyPart);</code>
+                <code>console.log('Flags:', game.gameState.flags);</code>
+                <code>console.log('Inventory:', game.inventory);</code>
+                <code></code>
+                <code>// Reset game (clears localStorage)</code>
+                <code>localStorage.clear();</code>
+                <code>location.reload();</code>
+                <code></code>
+                <code>// Toggle voice</code>
+                <code>game.voiceEnabled = false; // Disable</code>
+                <code>game.voiceEnabled = true;  // Enable</code>
+            </div>
+
+            <h3>Testing Specific Features</h3>
+            <div class="cheat-code">
+                <h4>Test Evidence Viewer</h4>
+                <code>game.setFlag('sstv_decoded', true);</code>
+                <code>game.setFlag('usb_analyzed', true);</code>
+                <code>game.loadScene('planboard');</code>
+                <code>// Click any evidence dossier to test viewer</code>
+            </div>
+
+            <div class="cheat-code">
+                <h4>Test Password Puzzle</h4>
+                <code>game.setFlag('picked_up_usb', true);</code>
+                <code>game.loadScene('mancave');</code>
+                <code>// Click laptop → Analyze USB</code>
+            </div>
+
+            <div class="cheat-code">
+                <h4>Test Chat Interface</h4>
+                <code>game.setFlag('usb_analyzed', true);</code>
+                <code>game.loadScene('videocall');</code>
+            </div>
+        </div>
+
+        <!-- SECTION 6: TESTING GUIDE -->
+        <div id="testing" class="section">
+            <h2>✅ TESTING CHECKLIST</h2>
+
+            <h3>Core Engine Testing</h3>
+            <ul class="checklist">
+                <li>Game initializes without errors</li>
+                <li>DOM structure creates correctly</li>
+                <li>Voice system connects (if available)</li>
+                <li>Evidence viewer initializes</li>
+                <li>Password puzzle system initializes</li>
+                <li>Chat interface initializes</li>
+                <li>Player character initializes</li>
+            </ul>
+
+            <h3>Scene System Testing</h3>
+            <ul class="checklist">
+                <li>All 18 scenes load without errors</li>
+                <li>Scene backgrounds display correctly</li>
+                <li>Scene transitions work (fade effect)</li>
+                <li>Player spawn positions are correct</li>
+                <li>Player character visible in correct scenes</li>
+                <li>Camera follows player appropriately</li>
+            </ul>
+
+            <h3>Hotspot System Testing</h3>
+            <ul class="checklist">
+                <li>Hotspots highlight on hover</li>
+                <li>Correct cursor appears for each type</li>
+                <li>Tooltips show hotspot names</li>
+                <li>Click actions execute correctly</li>
+                <li>Scene transitions work from doors</li>
+                <li>Conditional hotspots appear/hide based on flags</li>
+                <li>skipWalk property respects player movement</li>
+            </ul>
+
+            <h3>Dialogue System Testing</h3>
+            <ul class="checklist">
+                <li>Dialogue box appears correctly</li>
+                <li>Speaker names display</li>
+                <li>Portraits load correctly</li>
+                <li>Text appears with typewriter effect</li>
+                <li>Click advances dialogue</li>
+                <li>Dialogue queue processes in order</li>
+                <li>Voice synthesis works (if enabled)</li>
+                <li>Can skip dialogue with click</li>
+            </ul>
+
+            <h3>Inventory System Testing</h3>
+            <ul class="checklist">
+                <li>Items add to inventory correctly</li>
+                <li>Inventory UI updates when items added</li>
+                <li>Item icons display</li>
+                <li>Can remove items</li>
+                <li>hasItem() check works for conditionals</li>
+                <li>Inventory persists across scenes</li>
+            </ul>
+
+            <h3>Puzzle System Testing</h3>
+            <h4>ROT1 Cipher</h4>
+            <ul class="checklist">
+                <li>Puzzle interface appears</li>
+                <li>Encrypted text displays</li>
+                <li>Input field accepts text</li>
+                <li>Correct solution advances game</li>
+                <li>Wrong solution shows error</li>
+                <li>Sets sstv_decoded flag on success</li>
+            </ul>
+
+            <h4>USB Password</h4>
+            <ul class="checklist">
+                <li>Password puzzle UI appears</li>
+                <li>Input field accepts password</li>
+                <li>"SPUTNIK" unlocks USB</li>
+                <li>Case insensitivity works</li>
+                <li>Wrong password shows error</li>
+                <li>Sets usb_analyzed flag on success</li>
+                <li>Evidence viewer opens after unlock</li>
+            </ul>
+
+            <h4>Volkov's Password</h4>
+            <ul class="checklist">
+                <li>Server terminal interface appears</li>
+                <li>"SPEKTR" grants access</li>
+                <li>Alternative credentials work</li>
+                <li>Wrong password shows error</li>
+                <li>Sets volkov_account_accessed flag</li>
+                <li>Evidence download sequence plays</li>
+            </ul>
+
+            <h3>Evidence Viewer Testing</h3>
+            <ul class="checklist">
+                <li>Opens from planboard dossiers</li>
+                <li>Displays images correctly</li>
+                <li>Displays text documents</li>
+                <li>Scrolling works for long content</li>
+                <li>Close button returns to planboard</li>
+                <li>Different evidence types render correctly</li>
+            </ul>
+
+            <h3>State Management Testing</h3>
+            <ul class="checklist">
+                <li>Game state persists to localStorage</li>
+                <li>State loads on page refresh</li>
+                <li>Flags set correctly</li>
+                <li>Flags persist across scenes</li>
+                <li>Story part increments appropriately</li>
+                <li>Conditional content appears based on state</li>
+            </ul>
+
+            <h3>UI/UX Testing</h3>
+            <ul class="checklist">
+                <li>Responsive design works on mobile</li>
+                <li>Responsive design works on tablet</li>
+                <li>Responsive design works on desktop</li>
+                <li>Touch controls work</li>
+                <li>Keyboard controls work (if implemented)</li>
+                <li>Text is readable on all backgrounds</li>
+                <li>No UI elements overlap</li>
+                <li>Smooth animations throughout</li>
+            </ul>
+
+            <h3>Audio/Voice Testing</h3>
+            <ul class="checklist">
+                <li>Voice synthesis initializes</li>
+                <li>Dialogue speaks correctly</li>
+                <li>Can toggle voice on/off</li>
+                <li>Voice queue doesn't overlap</li>
+                <li>Background music plays (if added)</li>
+                <li>Sound effects work (if added)</li>
+            </ul>
+
+            <h3>Performance Testing</h3>
+            <ul class="checklist">
+                <li>Game loads in under 3 seconds</li>
+                <li>Scene transitions are smooth</li>
+                <li>No memory leaks during extended play</li>
+                <li>SVG images load quickly</li>
+                <li>No console errors during normal play</li>
+                <li>Frame rate stays above 30 FPS</li>
+            </ul>
+
+            <h3>Story Flow Testing</h3>
+            <ul class="checklist">
+                <li>Complete full playthrough without cheats</li>
+                <li>All scenes accessible in order</li>
+                <li>No progression blockers</li>
+                <li>Optional content skippable</li>
+                <li>Branching paths work correctly</li>
+                <li>Ending reachable</li>
+                <li>Credits roll properly</li>
+            </ul>
+
+            <h3>Edge Cases & Bugs</h3>
+            <ul class="checklist">
+                <li>Can't access locked areas prematurely</li>
+                <li>Required items can't be missed</li>
+                <li>Dialogue doesn't break on rapid clicking</li>
+                <li>Inventory doesn't overflow</li>
+                <li>State doesn't corrupt on browser back/forward</li>
+                <li>Game handles missing assets gracefully</li>
+                <li>Password inputs trim whitespace</li>
+                <li>Flag dependencies prevent sequence breaking</li>
+            </ul>
+
+            <div class="tip">
+                <h4>💡 Testing Tips</h4>
+                <ul>
+                    <li>Test on multiple browsers (Chrome, Firefox, Safari, Edge)</li>
+                    <li>Test with voice enabled and disabled</li>
+                    <li>Test with fast clicking to find race conditions</li>
+                    <li>Use cheats to test different game states quickly</li>
+                    <li>Check console for warnings and errors</li>
+                    <li>Verify all images load using Network tab</li>
+                    <li>Test localStorage persistence across sessions</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- APPENDIX: QUICK REFERENCE -->
+        <div class="section">
+            <h2>📚 QUICK REFERENCE</h2>
+
+            <h3>Puzzle Answers at a Glance</h3>
+            <div class="grid-2">
+                <div class="solution">
+                    <strong>ROT1 Cipher:</strong><br>
+                    Shift each letter back by 1<br>
+                    Result: "WARNING - PROJECT ECHO..."
+                </div>
+                <div class="solution">
+                    <strong>USB Password:</strong><br>
+                    SPUTNIK
+                </div>
+                <div class="solution">
+                    <strong>Volkov Password:</strong><br>
+                    SPEKTR
+                </div>
+                <div class="solution">
+                    <strong>Alternative:</strong><br>
+                    volkov_d / Moskau_1991
+                </div>
+            </div>
+
+            <h3>Critical Path</h3>
+            <ol>
+                <li>Start game → Intro</li>
+                <li>Make espresso in kitchen</li>
+                <li>Go to mancave</li>
+                <li>Receive SSTV transmission</li>
+                <li>Decode ROT1 cipher on laptop</li>
+                <li>Drive to Klooster monastery</li>
+                <li>Find USB stick on bench</li>
+                <li>Return home, analyze USB (password: SPUTNIK)</li>
+                <li>Video call with experts</li>
+                <li>Drive to facility</li>
+                <li>Find security badge in trash</li>
+                <li>Enter facility</li>
+                <li>Reach server room</li>
+                <li>Access Volkov's account (password: SPEKTR)</li>
+                <li>Download evidence</li>
+                <li>Confrontation scene</li>
+                <li>Debrief → Epilogue → Credits</li>
+            </ol>
+
+            <h3>All Scene IDs</h3>
+            <div class="grid-2">
+                <div>
+                    <code>intro</code><br>
+                    <code>home</code><br>
+                    <code>livingroom</code><br>
+                    <code>tvdocumentary</code><br>
+                    <code>mancave</code><br>
+                    <code>garden</code><br>
+                    <code>planboard</code><br>
+                    <code>regional_map</code><br>
+                    <code>videocall</code>
+                </div>
+                <div>
+                    <code>driving</code><br>
+                    <code>klooster</code><br>
+                    <code>car_discovery</code><br>
+                    <code>facility</code><br>
+                    <code>facility_interior</code><br>
+                    <code>facility_server</code><br>
+                    <code>debrief</code><br>
+                    <code>epilogue</code><br>
+                    <code>credits</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="scroll-top" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // Smooth scrolling for navigation
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Scroll to top button
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Show/hide scroll to top button
+        window.addEventListener('scroll', function() {
+            const scrollButton = document.querySelector('.scroll-top');
+            if (window.scrollY > 500) {
+                scrollButton.classList.add('visible');
+            } else {
+                scrollButton.classList.remove('visible');
+            }
+        });
+
+        // Add click-to-copy for code blocks
+        document.querySelectorAll('.cheat-code code').forEach(code => {
+            code.style.cursor = 'pointer';
+            code.title = 'Click to copy';
+            code.addEventListener('click', function() {
+                const text = this.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalBg = this.style.backgroundColor;
+                    this.style.backgroundColor = 'rgba(0, 255, 136, 0.3)';
+                    setTimeout(() => {
+                        this.style.backgroundColor = originalBg;
+                    }, 200);
+                });
+            });
+        });
+
+        // Interactive checklist
+        document.querySelectorAll('.checklist li').forEach(item => {
+            item.style.cursor = 'pointer';
+            item.addEventListener('click', function() {
+                if (this.style.textDecoration === 'line-through') {
+                    this.style.textDecoration = '';
+                    this.style.opacity = '1';
+                    this.querySelector('::before')?.replaceWith('☐ ');
+                } else {
+                    this.style.textDecoration = 'line-through';
+                    this.style.opacity = '0.5';
+                }
+            });
+        });
+
+        console.log('%c🎮 CyberQuest Tester Manual Loaded!', 'color: #00ff88; font-size: 20px; font-weight: bold;');
+        console.log('%cClick any cheat code to copy it to clipboard', 'color: #00d4ff; font-size: 14px;');
+        console.log('%cClick checklist items to mark them complete', 'color: #b366ff; font-size: 14px;');
+    </script>
+</body>
+</html>
