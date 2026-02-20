@@ -485,11 +485,190 @@
 
 ---
 
+## SCENE 05A: THE SDR BENCH
+
+### Panel 5A.1
+**Shot Type:** WIDE — SDR WORKBENCH
+**Duration:** 4 sec
+**Description:** Ryan rolls his chair from the main desk to the SDR bench in the corner. Two monitors glow: left = green spectrum analyzer, right = scrolling waterfall display in purple/yellow.
+**Sound:** Electronic hum, a faint warbling tone
+**Camera Move:** Slow push-in from behind
+
+### Panel 5A.2
+**Shot Type:** INSERT — LEFT MONITOR
+**Duration:** 3 sec
+**Description:** Spectrum analyzer shows 14.000–14.500 MHz range. A sharp green spike dominates at 14.230 MHz, well above the noise floor.
+**Sound:** Soft digital beep marking the peak
+**Text overlay:** "14.230 MHz — ACTIVE"
+
+### Panel 5A.3
+**Shot Type:** INSERT — RIGHT MONITOR
+**Duration:** 4 sec
+**Description:** Waterfall scrolls downward: dense horizontal bands indicating SSTV burst activity in the recent past. A second, fainter repeating stripe below them pulses every 90 seconds.
+**Sound:** Low drone that matches the signal rhythm
+**Notes:** Colour gradient: silent = dark purple, active = bright yellow
+
+### Panel 5A.4
+**Shot Type:** CLOSE-UP — SSTV DECODER PANEL
+**Duration:** 5 sec
+**Description:** Ryan clicks "DECODE — Martin M2". A progress bar fills. The image renders line by line: his farmhouse, across the canal. But this time, bottom-right corner visible: GPS coordinates + timestamp.
+**Sound:** Classic SSTV scan-line warble (authentic sound)
+**Dialogue:** "There you are. 52.918°N, 7.053°E. Tonight. That's the Klooster."
+
+### Panel 5A.5
+**Shot Type:** MEDIUM — RYAN LEANING BACK
+**Duration:** 3 sec
+**Description:** Ryan stares at the decoded image. He saves it to the air-gapped drive.
+**Dialogue:** "Martin M2. They know their protocols. This is no amateur."
+**Character Animation:** Thoughtful, a hint of respect for the sender
+
+---
+
+## SCENE 07A: DRIVING DAY — THE N34 SOUTH
+
+### Panel 7A.1
+**Shot Type:** WIDE — EXTERIOR VOLVO
+**Duration:** 2 sec
+**Description:** The beige Volvo 740 estate pulls out of the gravel drive in afternoon sun. Flat Drenthe fields in every direction.
+**Sound:** Diesel rumble, birdsong fading as car accelerates
+**Notes:** Daytime colour grade — warm yellows, pale blue sky
+
+### Panel 7A.2
+**Shot Type:** INTERIOR — DRIVER'S POV
+**Duration:** 4 sec
+**Description:** N34 road ahead through a clean windscreen. Roadside fence posts blur past. A blue N34 sign flashes by.
+**Sound:** Tyre hum on tarmac
+**Camera Move:** Static POV — the world scrolls toward us
+
+### Panel 7A.3
+**Shot Type:** MEDIUM — RYAN DRIVING
+**Duration:** 5 sec
+**Description:** Ryan in profile, left hand on wheel, right resting on gear lever. Afternoon light cuts warm shadows across his face. He's thinking.
+**Dialogue (V.O.):** "Cees. Meshtastic message, six words: 'Get over here. Now.' That's not good news."
+**Character Animation:** Jaw set, occasional glance at mirrors
+
+### Panel 7A.4
+**Shot Type:** WIDE — WSRT DISHES OVER TREELINE
+**Duration:** 4 sec
+**Description:** The landscape opens up. Above a line of elms, fourteen white parabolic dishes appear in a perfect east–west line, glinting in afternoon sun.
+**Sound:** Music lifts slightly — sense of awe
+**Dialogue (V.O.):** "There they are. Fourteen ears, all pointed the same way."
+
+### Panel 7A.5 — RETURN DRIVE (evening)
+**Shot Type:** REAR WINDOW — DISHES RECEDING
+**Duration:** 3 sec
+**Description:** The dishes shrink in the rear-view mirror. Sky turns orange.
+**Dialogue (V.O.):** "Confirmed. 53.28 north, 7.42 east. Steckerdoser Heide. Right across the border."
+**Camera Move:** Slow zoom on mirror reflection
+
+---
+
+## SCENE 12A: DWINGELOO RADIO OBSERVATORY
+
+### Panel 12A.1
+**Shot Type:** WIDE ESTABLISHING
+**Duration:** 5 sec
+**Description:** A clear Drenthe afternoon. The Dwingeloo 25-metre dish dominates the frame — a massive parabolic bowl on a yoke mount, cream-white concrete pedestal. A low brick control building to the right reads "DWINGELOO RADIO OBSERVATORY". Trees ring the perimeter fence.
+**Sound:** Wind, birdsong, distant hum of motors tracking the dish
+**Camera Move:** Slow push-in from outside the gate
+
+### Panel 12A.2
+**Shot Type:** CLOSE-UP — INFORMATION SIGN
+**Duration:** 3 sec
+**Description:** A weather-beaten metal plaque: "1951 — First detection of the spiral arm structure of the Milky Way at 1420 MHz. Jan Oort, Henk van de Hulst." Ryan reads it.
+**Dialogue:** "The hydrogen line. The fingerprint of the universe."
+**Character Animation:** Brief respectful pause
+
+### Panel 12A.3
+**Shot Type:** INTERIOR — CONTROL BUILDING
+**Duration:** 4 sec
+**Description:** Low ceilings, old equipment, dusty frequency charts on walls. Ryan's RTL-SDR dongle lights up. On his laptop: a clear spike at 1420.500 MHz, pulsing every 90 seconds.
+**Sound:** Short repeating digital ping
+**Dialogue:** "That's not a star. Stars don't transmit on 90-second intervals."
+
+### Panel 12A.4
+**Shot Type:** CLOSE-UP — DISH BASE / YOKE MOUNT
+**Duration:** 3 sec
+**Description:** Ryan crouches at the base of the dish pedestal. Partially hidden behind a cable conduit: a grey weatherproofed box, cable-tied to the concrete. A tiny LED blinks green every 3 seconds.
+**Sound:** Camera shutter click (Ryan photographs it)
+**Dialogue:** "There you are. Using Dwingeloo as a relay. Bold."
+**Notes:** The box is small — easily missed unless you're looking
+
+### Panel 12A.5
+**Shot Type:** MEDIUM — RYAN STANDING AT DISH
+**Duration:** 4 sec
+**Description:** Ryan stands under the huge dish, looking up at the reflector bowl above him. Scale is emphasised — he's tiny. The dish tracks slowly.
+**Dialogue (V.O.):** "In 1951, this dish listened to the Milky Way for the first time. Now it's repeating encrypted military traffic. Some heritage."
+**Character Animation:** Looks up, then down at his phone, then back up
+
+---
+
+## SCENE 12B: WESTERBORK MEMORIAL
+
+### Panel 12B.1
+**Shot Type:** WIDE ESTABLISHING
+**Duration:** 6 sec
+**Description:** Overcast sky. A flat, windswept site. Railway tracks enter frame from the left, running across open ground before ending abruptly at red stop-blocks. Memorial stone columns with Stars of David stand on either side of the track. In the far background, barely visible through mist: the white arcs of WSRT dishes. A weeping willow moves in the wind.
+**Sound:** Wind. Silence. No birds. A distant train in another direction.
+**Camera Move:** Slow lateral pan — the track leading nowhere
+
+### Panel 12B.2
+**Shot Type:** CLOSE-UP — RAILWAY TERMINUS
+**Duration:** 4 sec
+**Description:** The red stop-blocks at the end of the track. Beyond them, just grass. The track simply ends.
+**Sound:** Wind through grass
+**Dialogue (V.O.):** "Every Thursday morning, 1942 to 1945. Same tracks. Same direction. 97 transports."
+**Notes:** No dialogue from Ryan. Internal monologue only. Quiet.
+
+### Panel 12B.3
+**Shot Type:** MEDIUM — RYAN AT MEMORIAL STONES
+**Duration:** 5 sec
+**Description:** Ryan stands between the stone columns. He's not investigating — he's just standing. Looking.
+**Character Animation:** Very still. Hands in pockets. Unusual for him.
+**Sound:** Almost total silence
+
+### Panel 12B.4
+**Shot Type:** MEDIUM — WSRT DISHES ON HORIZON
+**Duration:** 3 sec
+**Description:** Ryan turns and looks south. The WSRT dishes are a pale grey line above the fields, barely distinguishable from cloud.
+**Dialogue (V.O.):** "After the war, they pointed telescopes at the same sky the trains left under. Listening for something better."
+
+### Panel 12B.5
+**Shot Type:** CLOSE-UP — SURVEILLANCE CAMERA
+**Duration:** 3 sec
+**Description:** Ryan spots it. A modern surveillance camera on a freshly planted pole. Too new. Wrong design for a heritage site. And: a small red LED pulsing every 2 seconds.
+**Sound:** Subtle electronic pulse matches the LED rhythm
+**Character Animation:** Ryan's eyes narrow. Goes from mourning to alert.
+
+### Panel 12B.6
+**Shot Type:** INSERT — FLIPPER ZERO SCREEN
+**Duration:** 4 sec
+**Description:** The Flipper Zero Bluetooth scanner populates with a device entry. A long hexadecimal UUID. Ryan's thumb hovers over "ANALYSE".
+**Sound:** Soft Flipper Zero interface sounds
+**Dialogue:** "Custom service UUID. I've seen this pattern before. In the evidence.zip."
+
+### Panel 12B.7
+**Shot Type:** MEDIUM — RYAN CRACKING THE NODE
+**Duration:** 5 sec
+**Description:** Ryan cycles through the Flipper attack sequence. The camera LED changes: from red pulse to solid green. Node owned.
+**Sound:** Short success chime from Flipper Zero
+**Dialogue:** "ZERFALL node number three. Hidden at a Holocaust memorial site."
+**Character Animation:** Ryan's expression does not change. That deliberate anger again.
+
+### Panel 12B.8
+**Shot Type:** WIDE — RYAN WALKING BACK TO VOLVO
+**Duration:** 4 sec
+**Description:** Ryan walks back across the site toward the car park. Small figure against the vast flat landscape. The railway tracks visible in the background.
+**Dialogue (V.O.):** "I wonder if whoever placed this camera ever thought about what this ground is. Probably not. That's how it works — atrocities hide in plain sight, surrounded by people who simply don't think."
+**Camera Move:** Static — watching him go
+
+---
+
 ## EPISODE 2 STORYBOARD PREVIEW
 
 **Key Scenes:**
 1. Ryan meeting David at radio telescope facilities
-2. Cees's workspace filled with Meshtastic devices
-3. Pieter's apartment (tin foil everywhere)
-4. EVA revealed in shadow
-5. Surveillance montage - someone watching Ryan
+2. Cees's workspace filled with Meshtastic devices and signal data
+3. Eva revealed in shadow via Meshtastic text exchange
+4. Surveillance montage — the ZERFALL BT network mapped across Drenthe
+5. Drive to Steckerdoser Heide at night — border crossing, red lights through trees

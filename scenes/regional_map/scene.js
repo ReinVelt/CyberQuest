@@ -483,7 +483,33 @@ const RegionalMapScene = {
         game.currentScene.showLocationInfo('wsrt');
       }
     },
-    
+
+    {
+      id: 'location-dwingeloo-hotspot',
+      name: 'Dwingeloo Observatory',
+      x: 11.5,
+      y: 51,
+      width: 8,
+      height: 8,
+      cursor: 'pointer',
+      action: function(game) {
+        game.loadScene('dwingeloo');
+      }
+    },
+
+    {
+      id: 'location-westerbork-memorial-hotspot',
+      name: 'Westerbork Memorial',
+      x: 19.96,
+      y: 54,
+      width: 8,
+      height: 8,
+      cursor: 'pointer',
+      action: function(game) {
+        game.loadScene('westerbork_memorial');
+      }
+    },
+
     {
       id: 'location-lofar-hotspot',
       name: 'LOFAR',

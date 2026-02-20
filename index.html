@@ -244,13 +244,17 @@
     <script src="scenes/livingroom/scene.js?v=2"></script>
     <script src="scenes/tvdocumentary/scene.js"></script>
     <script src="scenes/mancave/scene.js?v=3"></script>
+    <script src="scenes/sdr_bench/scene.js"></script>
     <script src="scenes/planboard/scene.js"></script>
     <script src="scenes/regional_map/scene.js"></script>
+    <script src="scenes/dwingeloo/scene.js"></script>
     <script src="scenes/videocall/scene.js?v=2"></script>
     <script src="scenes/garden/scene.js"></script>
     <script src="scenes/klooster/scene.js"></script>
+    <script src="scenes/westerbork_memorial/scene.js"></script>
     <script src="scenes/car_discovery/scene.js"></script>
     <script src="scenes/driving/scene.js"></script>
+    <script src="scenes/driving_day/scene.js"></script>
     <script src="scenes/astron/scene.js"></script>
     <script src="scenes/facility/scene.js?v=3"></script>
     <script src="scenes/facility_interior/scene.js?v=3"></script>
@@ -326,6 +330,10 @@
             game.registerScene(KloosterScene);
             game.registerScene(CarDiscoveryScene);
             game.registerScene(DrivingScene);
+            game.registerScene(DrivingDayScene);
+            game.registerScene(DwingelooScene);
+            game.registerScene(SdrBenchScene);
+            game.registerScene(WesterborkMemorialScene);
             game.registerScene(AstronScene);
             game.registerScene(FacilityScene);
             game.registerScene(FacilityInteriorScene);
@@ -344,16 +352,23 @@
             // Clear any existing save
             localStorage.removeItem('cyberquest_save');
             
+            // Clear URL hash so loadGameState() inside init() does not
+            // race against our explicit loadScene('intro') call below.
+            window.location.hash = '';
+            
             // Initialize and start
             initGame();
             
             // Load starting scene (intro prologue)
-            // The intro scene's onEnter function will handle the prologue dialogue
             game.loadScene('intro');
         }
         
         function continueGame() {
             titleScreen.classList.remove('visible');
+            
+            // Clear URL hash so loadGameState() inside init() does not
+            // interfere with loadGame() restoring the proper saved scene.
+            window.location.hash = '';
             
             // Initialize game
             initGame();

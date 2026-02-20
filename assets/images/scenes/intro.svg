@@ -1,127 +1,793 @@
 <svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
-  <!-- Intro/Prologue Scene - Atmospheric establishing shot -->
-  
+  <!--
+    Intro scene: Compascuum, Drenthe — early February morning, just after sunrise
+    Cold, damp, misty Drenthe polder landscape.
+    Canal runs parallel to the road. Trees line both sides.
+    De Viertorenbrug (four white pillar bridge) spans the canal on the right.
+  -->
+
   <defs>
-    <!-- Sky gradient -->
-    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#B0D4E3;stop-opacity:1" />
+    <!-- Pre-dawn cold sky: dark blue top → lavender → warm orange horizon glow -->
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1A2744"/>
+      <stop offset="30%"  stop-color="#3D5080"/>
+      <stop offset="60%"  stop-color="#8B7BAA"/>
+      <stop offset="80%"  stop-color="#D4956A"/>
+      <stop offset="92%"  stop-color="#F0C060"/>
+      <stop offset="100%" stop-color="#E8A848"/>
     </linearGradient>
-    
-    <!-- Ground gradient -->
-    <linearGradient id="groundGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#7CB342;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#5A8F2F;stop-opacity:1" />
+
+    <!-- Sunrise glow blob low on horizon -->
+    <radialGradient id="sunGlow" cx="28%" cy="100%" r="50%">
+      <stop offset="0%"   stop-color="#FFE066" stop-opacity="0.7"/>
+      <stop offset="40%"  stop-color="#FF9933" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#FF6600" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Field gradients — cold damp grey-green -->
+    <linearGradient id="farFieldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#7A8C6E"/>
+      <stop offset="100%" stop-color="#5C6E52"/>
     </linearGradient>
-    
-    <!-- Canal water gradient -->
-    <linearGradient id="canalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#2E5C8A;stop-opacity:1" />
+    <linearGradient id="nearFieldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#5A6E4A"/>
+      <stop offset="100%" stop-color="#3E5230"/>
     </linearGradient>
+
+    <!-- Canal: cold grey-blue with subtle orange sunrise reflection -->
+    <linearGradient id="canalGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#8AAABB"/>
+      <stop offset="50%"  stop-color="#5C8AA0"/>
+      <stop offset="100%" stop-color="#406070"/>
+    </linearGradient>
+    <linearGradient id="canalReflect" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#C07030" stop-opacity="0.0"/>
+      <stop offset="25%"  stop-color="#E09040" stop-opacity="0.35"/>
+      <stop offset="40%"  stop-color="#FFD060" stop-opacity="0.5"/>
+      <stop offset="60%"  stop-color="#E09040" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#C07030" stop-opacity="0.0"/>
+    </linearGradient>
+
+    <!-- Road asphalt -->
+    <linearGradient id="roadGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#3A3A3A"/>
+      <stop offset="100%" stop-color="#2A2A2A"/>
+    </linearGradient>
+
+    <!-- Tree crown: bare winter, desaturated -->
+    <radialGradient id="crownFar" cx="50%" cy="60%" r="50%">
+      <stop offset="0%"   stop-color="#5A6640"/>
+      <stop offset="100%" stop-color="#3A4428"/>
+    </radialGradient>
+    <radialGradient id="crownNear" cx="50%" cy="60%" r="50%">
+      <stop offset="0%"   stop-color="#4A5835"/>
+      <stop offset="100%" stop-color="#2E3820"/>
+    </radialGradient>
+
+    <!-- Mist / fog filter -->
+    <filter id="mistBlur">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <filter id="softBlur">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <filter id="tinyBlur">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+
+    <!-- Bridge pillar gradient -->
+    <linearGradient id="pillarGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#D8D8D8"/>
+      <stop offset="40%"  stop-color="#F5F5F5"/>
+      <stop offset="70%"  stop-color="#E8E8E8"/>
+      <stop offset="100%" stop-color="#BEBEBE"/>
+    </linearGradient>
+
+    <!-- CSS animations for birds, vehicles, mist drift -->
+    <style>
+      /* ── Birds ── */
+      @keyframes birdFly1 {
+        0%   { transform: translate(0px,   0px); }
+        50%  { transform: translate(420px,-35px); }
+        100% { transform: translate(900px, 10px); }
+      }
+      @keyframes birdFly2 {
+        0%   { transform: translate(0px, 0px); }
+        100% { transform: translate(780px, 20px); }
+      }
+      @keyframes birdFly3 {
+        0%   { transform: translate(0px,  0px); }
+        50%  { transform: translate(-200px, 30px); }
+        100% { transform: translate(-500px, 15px); }
+      }
+      @keyframes birdFlap {
+        0%,100% { d: path("M0,0 Q5,-5 10,0 Q5,-3 0,0"); }
+        50%      { d: path("M0,0 Q5,-2 10,0 Q5,-6 0,0"); }
+      }
+      .bird-g1 { animation: birdFly1 22s ease-in-out infinite; }
+      .bird-g2 { animation: birdFly2 30s ease-in-out 5s infinite; }
+      .bird-g3 { animation: birdFly3 18s ease-in-out 12s infinite; }
+
+      /* ── Tractor ── slow, left-bound on far lane */
+      @keyframes tractorMove {
+        0%   { transform: translateX(1700px); }
+        100% { transform: translateX(-260px); }
+      }
+      .tractor { animation: tractorMove 55s linear 3s infinite; }
+
+      /* ── Car 1 ── right-bound, near lane -->
+      @keyframes car1Move {
+        0%   { transform: translateX(-220px); }
+        100% { transform: translateX(1960px); }
+      }
+      .car1 { animation: car1Move 18s linear 1s infinite; }
+
+      /* ── Car 2 ── left-bound, far lane -->
+      @keyframes car2Move {
+        0%   { transform: translateX(1960px); }
+        100% { transform: translateX(-220px); }
+      }
+      .car2 { animation: car2Move 25s linear 8s infinite; }
+
+      /* ── Car 3 ── right-bound, faster -->
+      @keyframes car3Move {
+        0%   { transform: translateX(-180px); }
+        100% { transform: translateX(1960px); }
+      }
+      .car3 { animation: car3Move 14s linear 20s infinite; }
+
+      /* ── Mist drift ── */
+      @keyframes mistDrift1 {
+        0%,100% { transform: translateX(0px);   opacity: 0.55; }
+        50%     { transform: translateX(80px);  opacity: 0.35; }
+      }
+      @keyframes mistDrift2 {
+        0%,100% { transform: translateX(0px);   opacity: 0.45; }
+        50%     { transform: translateX(-60px); opacity: 0.65; }
+      }
+      @keyframes mistDrift3 {
+        0%,100% { transform: translateX(0px);   opacity: 0.35; }
+        50%     { transform: translateX(50px);  opacity: 0.5; }
+      }
+      .mist1 { animation: mistDrift1 20s ease-in-out infinite; }
+      .mist2 { animation: mistDrift2 28s ease-in-out 6s infinite; }
+      .mist3 { animation: mistDrift3 24s ease-in-out 2s infinite; }
+
+      /* Wheel spin */
+      @keyframes wheelSpin {
+        from { transform-origin: center; transform: rotate(0deg); }
+        to   { transform-origin: center; transform: rotate(360deg); }
+      }
+    </style>
   </defs>
-  
-  <!-- Sky -->
-  <rect x="0" y="0" width="1920" height="650" fill="url(#skyGradient)"/>
-  
-  <!-- Distant horizon -->
-  <rect x="0" y="580" width="1920" height="70" fill="#6B9548" opacity="0.6"/>
-  
-  <!-- Ground/fields -->
-  <rect x="0" y="650" width="1920" height="430" fill="url(#groundGradient)"/>
-  
-  <!-- Canal -->
-  <ellipse cx="960" cy="850" rx="800" ry="60" fill="url(#canalGradient)" opacity="0.8"/>
-  <ellipse cx="960" cy="850" rx="750" ry="50" fill="#6BB0E8" opacity="0.3"/>
-  
-  <!-- Distant windturbines (very small on horizon) -->
-  <g id="windturbines" opacity="0.7">
-    <!-- Turbine 1 -->
-    <rect x="1650" y="500" width="8" height="80" fill="#E0E0E0" stroke="#AAA" stroke-width="2"/>
-    <circle cx="1654" cy="500" r="12" fill="#FFF" stroke="#AAA" stroke-width="2"/>
-    <line x1="1654" y1="500" x2="1654" y2="460" stroke="#DDD" stroke-width="3"/>
-    <line x1="1654" y1="500" x2="1690" y2="515" stroke="#DDD" stroke-width="3"/>
-    <line x1="1654" y1="500" x2="1620" y2="515" stroke="#DDD" stroke-width="3"/>
-    
-    <!-- Turbine 2 -->
-    <rect x="1750" y="510" width="7" height="70" fill="#E0E0E0" stroke="#AAA" stroke-width="2"/>
-    <circle cx="1753" cy="510" r="10" fill="#FFF" stroke="#AAA" stroke-width="2"/>
-    <line x1="1753" y1="510" x2="1753" y2="475" stroke="#DDD" stroke-width="2.5"/>
-    <line x1="1753" y1="510" x2="1785" y2="523" stroke="#DDD" stroke-width="2.5"/>
-    <line x1="1753" y1="510" x2="1722" y2="523" stroke="#DDD" stroke-width="2.5"/>
-    
-    <!-- Turbine 3 -->
-    <rect x="1830" y="515" width="6" height="65" fill="#E0E0E0" stroke="#AAA" stroke-width="2"/>
-    <circle cx="1833" cy="515" r="9" fill="#FFF" stroke="#AAA" stroke-width="2"/>
-    <line x1="1833" y1="515" x2="1833" y2="483" stroke="#DDD" stroke-width="2"/>
-    <line x1="1833" y1="515" x2="1863" y2="527" stroke="#DDD" stroke-width="2"/>
-    <line x1="1833" y1="515" x2="1805" y2="527" stroke="#DDD" stroke-width="2"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  SKY                                                -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <rect x="0" y="0" width="1920" height="640" fill="url(#skyGrad)"/>
+
+  <!-- Sunrise radial glow low left-centre horizon -->
+  <rect x="0" y="480" width="1920" height="160" fill="url(#sunGlow)"/>
+
+  <!-- Cold clouds — layered flat streaks at dawn -->
+  <g id="clouds" opacity="0.55">
+    <!-- High thin wisps -->
+    <ellipse cx="600"  cy="80"  rx="340" ry="18" fill="#9BA8C0" filter="url(#softBlur)"/>
+    <ellipse cx="1300" cy="60"  rx="280" ry="14" fill="#8A98B5" filter="url(#softBlur)"/>
+    <ellipse cx="250"  cy="140" rx="200" ry="12" fill="#9BA8C0" filter="url(#softBlur)"/>
+    <ellipse cx="1650" cy="120" rx="320" ry="16" fill="#8A98B5" filter="url(#softBlur)"/>
+
+    <!-- Mid-sky clouds lit from below by sunrise — orange-pink undersides -->
+    <ellipse cx="800"  cy="260" rx="420" ry="35" fill="#B8A090" filter="url(#softBlur)" opacity="0.7"/>
+    <ellipse cx="780"  cy="250" rx="360" ry="28" fill="#C8987A" filter="url(#softBlur)" opacity="0.5"/>
+
+    <ellipse cx="1600" cy="300" rx="350" ry="30" fill="#B89080" filter="url(#softBlur)" opacity="0.7"/>
+    <ellipse cx="1580" cy="290" rx="280" ry="22" fill="#C8906A" filter="url(#softBlur)" opacity="0.5"/>
+
+    <!-- Lower horizon cloud bank -->
+    <ellipse cx="400"  cy="410" rx="500" ry="55" fill="#A89080" filter="url(#mistBlur)" opacity="0.5"/>
+    <ellipse cx="1400" cy="430" rx="600" ry="60" fill="#A08070" filter="url(#mistBlur)" opacity="0.45"/>
+    <ellipse cx="960"  cy="445" rx="800" ry="50" fill="#C4A880" filter="url(#mistBlur)" opacity="0.3"/>
   </g>
-  
-  <!-- Ryan's house in distance -->
-  <g id="house" transform="translate(700, 700)">
-    <!-- House body -->
-    <rect x="0" y="40" width="140" height="90" fill="#FAFAFA" stroke="#000" stroke-width="3"/>
-    
-    <!-- Red roof -->
-    <polygon points="70,0 -10,40 150,40" fill="#C83232" stroke="#000" stroke-width="3"/>
-    
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  BIRDS (animated groups of V-shapes)                -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- Group 1 — starts left, flies right-ish -->
+  <g class="bird-g1" transform="translate(50, 200)">
+    <path d="M0,0 Q7,-8 14,0"  stroke="#1A2030" stroke-width="2.5" fill="none"/>
+    <path d="M18,3 Q25,-5 32,3" stroke="#1A2030" stroke-width="2.5" fill="none"/>
+    <path d="M36,1 Q43,-7 50,1" stroke="#1A2030" stroke-width="2.5" fill="none"/>
+    <path d="M9,10 Q16,2 23,10" stroke="#1A2030" stroke-width="2" fill="none"/>
+    <path d="M26,12 Q33,4 40,12" stroke="#1A2030" stroke-width="2" fill="none"/>
+  </g>
+  <!-- Group 2 — different height, slower -->
+  <g class="bird-g2" transform="translate(300, 140)">
+    <path d="M0,0 Q6,-7 12,0"  stroke="#151C2A" stroke-width="2" fill="none"/>
+    <path d="M15,2 Q21,-5 27,2" stroke="#151C2A" stroke-width="2" fill="none"/>
+    <path d="M30,0 Q36,-6 42,0" stroke="#151C2A" stroke-width="2" fill="none"/>
+    <path d="M7,8  Q13,1 19,8"  stroke="#151C2A" stroke-width="1.5" fill="none"/>
+  </g>
+  <!-- Group 3 — far right, flies left slowly -->
+  <g class="bird-g3" transform="translate(1700, 180)">
+    <path d="M0,0 Q5,-6 10,0"  stroke="#1A2030" stroke-width="2" fill="none"/>
+    <path d="M13,2 Q18,-4 23,2" stroke="#1A2030" stroke-width="2" fill="none"/>
+    <path d="M5,8  Q10,2 15,8"  stroke="#1A2030" stroke-width="1.5" fill="none"/>
+    <path d="M18,9 Q23,3 28,9"  stroke="#1A2030" stroke-width="1.5" fill="none"/>
+  </g>
+  <!-- Lone bird high centre -->
+  <path d="M950,95 Q957,88 964,95" stroke="#1A2030" stroke-width="2" fill="none" opacity="0.7"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  HORIZON MIST BAND                                  -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <rect x="0" y="570" width="1920" height="80" fill="#C8C8BC" opacity="0.35" filter="url(#mistBlur)"/>
+  <rect x="0" y="600" width="1920" height="50" fill="#D5D8C8" opacity="0.25" filter="url(#mistBlur)"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  FAR FIELDS — cold damp polder                      -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <rect x="0" y="620" width="1920" height="200" fill="url(#farFieldGrad)"/>
+  <!-- Field texture — subtle furrows -->
+  <g stroke="#4A5838" stroke-width="1" opacity="0.25">
+    <line x1="0" y1="640" x2="1920" y2="640"/>
+    <line x1="0" y1="660" x2="1920" y2="660"/>
+    <line x1="0" y1="680" x2="1920" y2="680"/>
+    <line x1="0" y1="700" x2="1920" y2="700"/>
+    <line x1="0" y1="720" x2="1920" y2="720"/>
+    <line x1="0" y1="740" x2="1920" y2="740"/>
+  </g>
+  <!-- Damp puddle reflections in field -->
+  <ellipse cx="300"  cy="710" rx="90" ry="12" fill="#8AAABB" opacity="0.3" filter="url(#tinyBlur)"/>
+  <ellipse cx="1100" cy="725" rx="70" ry="10" fill="#8AAABB" opacity="0.25" filter="url(#tinyBlur)"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  FAR TREE ROW — behind canal, small, bare winter    -->
+  <!--  (South Park style: round-ish canopies, bare trunks)-->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <g id="farTrees" opacity="0.85">
+    <!-- Repeat pattern of bare winter trees, smaller (far side) -->
+    <!-- Tree macro: trunk + sparse bare crown -->
+    <!-- x positions spread evenly, y-base at canal far bank ~745 -->
+
+    <g transform="translate(30,650)"><rect x="6" y="50" width="7" height="45" fill="#3A3020"/><ellipse cx="9" cy="44" rx="18" ry="28" fill="#3A4428" opacity="0.9"/><ellipse cx="2" cy="38" rx="12" ry="18" fill="#2E3820" opacity="0.8"/><ellipse cx="18" cy="40" rx="11" ry="16" fill="#3A4428" opacity="0.7"/></g>
+    <g transform="translate(100,660)"><rect x="5" y="38" width="6" height="38" fill="#3A3020"/><ellipse cx="8" cy="32" rx="14" ry="22" fill="#3A4428" opacity="0.85"/><ellipse cx="15" cy="28" rx="10" ry="15" fill="#2E3820" opacity="0.7"/></g>
+    <g transform="translate(165,645)"><rect x="7" y="55" width="8" height="48" fill="#3A3020"/><ellipse cx="11" cy="48" rx="20" ry="30" fill="#3A4428" opacity="0.9"/><ellipse cx="4" cy="42" rx="13" ry="19" fill="#2E3820" opacity="0.75"/><ellipse cx="20" cy="44" rx="12" ry="17" fill="#3A4428" opacity="0.7"/></g>
+    <g transform="translate(250,658)"><rect x="5" y="40" width="7" height="40" fill="#3A3020"/><ellipse cx="9" cy="34" rx="16" ry="25" fill="#3A4428" opacity="0.85"/><ellipse cx="16" cy="30" rx="11" ry="16" fill="#2E3820" opacity="0.7"/></g>
+    <g transform="translate(330,648)"><rect x="6" y="50" width="8" height="46" fill="#3A3020"/><ellipse cx="10" cy="44" rx="19" ry="28" fill="#3A4428" opacity="0.9"/><ellipse cx="3" cy="39" rx="12" ry="18" fill="#2E3820" opacity="0.75"/></g>
+    <g transform="translate(415,655)"><rect x="5" y="43" width="7" height="42" fill="#3A3020"/><ellipse cx="9" cy="37" rx="17" ry="26" fill="#3A4428" opacity="0.85"/><ellipse cx="17" cy="33" rx="12" ry="17" fill="#2E3820" opacity="0.7"/></g>
+    <g transform="translate(495,646)"><rect x="6" y="52" width="8" height="48" fill="#3A3020"/><ellipse cx="10" cy="46" rx="20" ry="30" fill="#3A4428" opacity="0.9"/><ellipse cx="4" cy="40" rx="13" ry="19" fill="#2E3820" opacity="0.75"/><ellipse cx="19" cy="42" rx="12" ry="17" fill="#3A4428" opacity="0.7"/></g>
+    <g transform="translate(580,657)"><rect x="5" y="41" width="7" height="40" fill="#3A3020"/><ellipse cx="9" cy="35" rx="15" ry="24" fill="#3A4428" opacity="0.85"/><ellipse cx="15" cy="31" rx="10" ry="15" fill="#2E3820" opacity="0.7"/></g>
+    <g transform="translate(655,648)"><rect x="6" y="50" width="8" height="46" fill="#3A3020"/><ellipse cx="10" cy="44" rx="18" ry="27" fill="#3A4428" opacity="0.9"/><ellipse cx="3" cy="39" rx="11" ry="17" fill="#2E3820" opacity="0.75"/></g>
+    <g transform="translate(735,652)"><rect x="5" y="46" width="7" height="43" fill="#3A3020"/><ellipse cx="9" cy="40" rx="16" ry="25" fill="#3A4428" opacity="0.85"/><ellipse cx="16" cy="36" rx="11" ry="16" fill="#2E3820" opacity="0.7"/></g>
+    <g transform="translate(815,645)"><rect x="6" y="53" width="8" height="49" fill="#3A3020"/><ellipse cx="10" cy="47" rx="20" ry="30" fill="#3A4428" opacity="0.9"/><ellipse cx="4" cy="41" rx="13" ry="19" fill="#2E3820" opacity="0.75"/><ellipse cx="20" cy="43" rx="12" ry="18" fill="#3A4428" opacity="0.7"/></g>
+    <g transform="translate(895,656)"><rect x="5" y="42" width="7" height="41" fill="#3A3020"/><ellipse cx="9" cy="36" rx="15" ry="23" fill="#3A4428" opacity="0.85"/><ellipse cx="15" cy="32" rx="10" ry="15" fill="#2E3820" opacity="0.7"/></g>
+    <g transform="translate(970,646)"><rect x="6" y="52" width="8" height="47" fill="#3A3020"/><ellipse cx="10" cy="46" rx="19" ry="28" fill="#3A4428" opacity="0.9"/><ellipse cx="3" cy="40" rx="12" ry="18" fill="#2E3820" opacity="0.75"/></g>
+    <!-- Bridge area gap (right side, ~1350-1920) — trees on far bank interrupted by bridge -->
+    <g transform="translate(1055,653)"><rect x="5" y="44" width="7" height="43" fill="#3A3020"/><ellipse cx="9" cy="38" rx="16" ry="25" fill="#3A4428" opacity="0.85"/><ellipse cx="16" cy="34" rx="11" ry="16" fill="#2E3820" opacity="0.7"/></g>
+    <g transform="translate(1135,647)"><rect x="6" y="51" width="8" height="47" fill="#3A3020"/><ellipse cx="10" cy="45" rx="19" ry="29" fill="#3A4428" opacity="0.9"/><ellipse cx="4" cy="39" rx="12" ry="18" fill="#2E3820" opacity="0.75"/><ellipse cx="19" cy="41" rx="11" ry="17" fill="#3A4428" opacity="0.7"/></g>
+    <g transform="translate(1215,654)"><rect x="5" y="43" width="7" height="42" fill="#3A3020"/><ellipse cx="9" cy="37" rx="15" ry="23" fill="#3A4428" opacity="0.85"/><ellipse cx="15" cy="33" rx="10" ry="15" fill="#2E3820" opacity="0.7"/></g>
+    <g transform="translate(1295,646)"><rect x="6" y="52" width="8" height="48" fill="#3A3020"/><ellipse cx="10" cy="46" rx="19" ry="29" fill="#3A4428" opacity="0.9"/><ellipse cx="3" cy="40" rx="12" ry="18" fill="#2E3820" opacity="0.75"/></g>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  CANAL — horizontal, parallel to road               -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- Far bank (top of canal strip) -->
+  <rect x="0" y="748" width="1920" height="6" fill="#4A5A38"/>
+  <!-- Canal water body -->
+  <rect x="0" y="754" width="1920" height="55" fill="url(#canalGrad)"/>
+  <!--  Canal sunrise reflection stripe -->
+  <rect x="0" y="762" width="1920" height="18" fill="url(#canalReflect)"/>
+  <!-- Canal ripples -->
+  <g stroke="#6090A8" stroke-width="1" opacity="0.3">
+    <path d="M80,768 Q160,764 240,768"/>
+    <path d="M340,774 Q430,770 520,774"/>
+    <path d="M620,767 Q700,763 780,767"/>
+    <path d="M870,773 Q950,769 1030,773"/>
+    <path d="M1120,768 Q1200,764 1280,768"/>
+    <path d="M150,782 Q250,778 350,782"/>
+    <path d="M500,785 Q600,781 700,785"/>
+    <path d="M850,779 Q950,775 1050,779"/>
+  </g>
+  <!-- Near bank (bottom of canal) -->
+  <rect x="0" y="809" width="1920" height="8" fill="#4A5A38"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  NEAR TREE ROW — this side of canal, road edge      -->
+  <!--  Larger (closer to viewer)                          -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <g id="nearTrees" opacity="0.95">
+    <!-- Trees on near bank / road edge, taller (y-base around 817) -->
+    <g transform="translate(10,720)"><rect x="9" y="70" width="11" height="70" fill="#2A2010"/><ellipse cx="14" cy="60" rx="28" ry="42" fill="#2E3820" opacity="0.95"/><ellipse cx="3" cy="50" rx="18" ry="26" fill="#222C18" opacity="0.8"/><ellipse cx="26" cy="52" rx="17" ry="24" fill="#344028" opacity="0.75"/></g>
+    <g transform="translate(80,728)"><rect x="8" y="58" width="10" height="62" fill="#2A2010"/><ellipse cx="13" cy="50" rx="23" ry="36" fill="#304025" opacity="0.9"/><ellipse cx="22" cy="44" rx="16" ry="22" fill="#222C18" opacity="0.75"/></g>
+    <g transform="translate(158,718)"><rect x="10" y="74" width="12" height="74" fill="#2A2010"/><ellipse cx="16" cy="64" rx="30" ry="46" fill="#2E3820" opacity="0.95"/><ellipse cx="5" cy="54" rx="19" ry="28" fill="#222C18" opacity="0.8"/><ellipse cx="30" cy="56" rx="18" ry="25" fill="#344028" opacity="0.7"/></g>
+    <g transform="translate(248,725)"><rect x="8" y="62" width="10" height="64" fill="#2A2010"/><ellipse cx="13" cy="54" rx="24" ry="38" fill="#304025" opacity="0.9"/><ellipse cx="22" cy="48" rx="17" ry="23" fill="#222C18" opacity="0.75"/></g>
+    <g transform="translate(330,717)"><rect x="9" y="72" width="12" height="73" fill="#2A2010"/><ellipse cx="15" cy="62" rx="29" ry="44" fill="#2E3820" opacity="0.95"/><ellipse cx="4" cy="53" rx="18" ry="26" fill="#222C18" opacity="0.8"/><ellipse cx="28" cy="54" rx="17" ry="24" fill="#344028" opacity="0.72"/></g>
+    <g transform="translate(415,723)"><rect x="8" y="63" width="11" height="65" fill="#2A2010"/><ellipse cx="13" cy="55" rx="25" ry="39" fill="#304025" opacity="0.9"/><ellipse cx="21" cy="49" rx="16" ry="22" fill="#222C18" opacity="0.75"/></g>
+    <g transform="translate(500,716)"><rect x="10" y="76" width="12" height="76" fill="#2A2010"/><ellipse cx="16" cy="66" rx="31" ry="47" fill="#2E3820" opacity="0.95"/><ellipse cx="5" cy="56" rx="20" ry="29" fill="#222C18" opacity="0.8"/><ellipse cx="31" cy="58" rx="19" ry="26" fill="#344028" opacity="0.7"/></g>
+    <g transform="translate(592,724)"><rect x="8" y="61" width="10" height="63" fill="#2A2010"/><ellipse cx="13" cy="53" rx="23" ry="37" fill="#304025" opacity="0.9"/><ellipse cx="21" cy="47" rx="15" ry="21" fill="#222C18" opacity="0.75"/></g>
+    <g transform="translate(672,717)"><rect x="9" y="73" width="11" height="73" fill="#2A2010"/><ellipse cx="15" cy="63" rx="28" ry="43" fill="#2E3820" opacity="0.95"/><ellipse cx="4" cy="54" rx="18" ry="25" fill="#222C18" opacity="0.8"/><ellipse cx="27" cy="55" rx="17" ry="23" fill="#344028" opacity="0.72"/></g>
+    <g transform="translate(755,722)"><rect x="8" y="64" width="10" height="65" fill="#2A2010"/><ellipse cx="13" cy="56" rx="24" ry="38" fill="#304025" opacity="0.9"/><ellipse cx="22" cy="50" rx="16" ry="22" fill="#222C18" opacity="0.75"/></g>
+    <g transform="translate(838,715)"><rect x="10" y="77" width="12" height="78" fill="#2A2010"/><ellipse cx="16" cy="67" rx="30" ry="46" fill="#2E3820" opacity="0.95"/><ellipse cx="5" cy="57" rx="19" ry="27" fill="#222C18" opacity="0.8"/><ellipse cx="29" cy="59" rx="18" ry="25" fill="#344028" opacity="0.7"/></g>
+    <g transform="translate(928,723)"><rect x="8" y="62" width="10" height="64" fill="#2A2010"/><ellipse cx="13" cy="54" rx="23" ry="36" fill="#304025" opacity="0.9"/><ellipse cx="21" cy="48" rx="15" ry="21" fill="#222C18" opacity="0.75"/></g>
+    <g transform="translate(1010,716)"><rect x="9" y="74" width="11" height="74" fill="#2A2010"/><ellipse cx="15" cy="64" rx="28" ry="43" fill="#2E3820" opacity="0.95"/><ellipse cx="4" cy="55" rx="18" ry="26" fill="#222C18" opacity="0.8"/></g>
+    <g transform="translate(1095,724)"><rect x="8" y="62" width="10" height="63" fill="#2A2010"/><ellipse cx="13" cy="54" rx="23" ry="36" fill="#304025" opacity="0.9"/><ellipse cx="20" cy="48" rx="15" ry="21" fill="#222C18" opacity="0.75"/></g>
+    <g transform="translate(1175,716)"><rect x="10" y="76" width="12" height="75" fill="#2A2010"/><ellipse cx="16" cy="66" rx="30" ry="45" fill="#2E3820" opacity="0.95"/><ellipse cx="5" cy="56" rx="19" ry="27" fill="#222C18" opacity="0.8"/><ellipse cx="29" cy="58" rx="17" ry="24" fill="#344028" opacity="0.7"/></g>
+    <!-- Bridge area gap ~1350..1920 — no near-bank trees to leave bridge visible -->
+  </g>
+
+  <!-- Grass verge between canal and road -->
+  <rect x="0" y="817" width="1920" height="22" fill="#4A5A38"/>
+  <rect x="0" y="817" width="1920" height="10" fill="#3A4A2A" opacity="0.5"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  ROAD — asphalt, runs full width                    -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <rect x="0" y="839" width="1920" height="70" fill="url(#roadGrad)"/>
+  <!-- Road centre line dashes -->
+  <line x1="0" y1="874" x2="1920" y2="874" stroke="#D4C060" stroke-width="3" stroke-dasharray="55,38" opacity="0.75"/>
+  <!-- Road edge lines -->
+  <line x1="0" y1="843" x2="1920" y2="843" stroke="#E0E0C0" stroke-width="2" opacity="0.5"/>
+  <line x1="0" y1="905" x2="1920" y2="905" stroke="#E0E0C0" stroke-width="2" opacity="0.5"/>
+  <!-- Wet road sheen — faint orange sunrise reflection -->
+  <rect x="0" y="850" width="1920" height="24" fill="#E09040" opacity="0.07"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  ROAD SHOULDER + FOREGROUND FIELD                   -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <rect x="0" y="909" width="1920" height="171" fill="url(#nearFieldGrad)"/>
+  <!-- Grass texture lines -->
+  <g stroke="#3A4A2A" stroke-width="1" opacity="0.3">
+    <line x1="0" y1="930" x2="1920" y2="930"/>
+    <line x1="0" y1="960" x2="1920" y2="960"/>
+    <line x1="0" y1="990" x2="1920" y2="990"/>
+    <line x1="0" y1="1020" x2="1920" y2="1020"/>
+    <line x1="0" y1="1055" x2="1920" y2="1055"/>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  TRACTOR — slow, far lane, left-bound               -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <g class="tractor" transform="translate(0,0)">
+    <!-- Tractor body at y=848 (far road lane) — flipped to face left (animation moves left) -->
+    <g transform="translate(140, 848) scale(-1,1)">
+      <!-- Main body -->
+      <rect x="30" y="-34" width="85" height="38" rx="4" fill="#2E6B22" stroke="#1A4010" stroke-width="2"/>
+      <!-- Hood / engine -->
+      <rect x="90" y="-28" width="40" height="24" rx="3" fill="#3A7A28" stroke="#1A4010" stroke-width="2"/>
+      <!-- Exhaust pipe -->
+      <rect x="122" y="-42" width="5" height="18" fill="#1A1A1A" rx="1"/>
+      <!-- Cab -->
+      <rect x="32" y="-52" width="44" height="22" rx="3" fill="#4A8C32" stroke="#1A4010" stroke-width="2"/>
+      <!-- Cab window -->
+      <rect x="38" y="-48" width="32" height="14" rx="2" fill="#88B8D0" opacity="0.8" stroke="#1A4010" stroke-width="1"/>
+      <!-- Rear large wheel -->
+      <circle cx="50" cy="6" r="20" fill="#1A1A1A" stroke="#333" stroke-width="3"/>
+      <circle cx="50" cy="6" r="14" fill="#2A2A2A" stroke="#444" stroke-width="2"/>
+      <circle cx="50" cy="6" r="5" fill="#3A3A3A"/>
+      <!-- Front small wheel -->
+      <circle cx="115" cy="4" r="12" fill="#1A1A1A" stroke="#333" stroke-width="2"/>
+      <circle cx="115" cy="4" r="7" fill="#2A2A2A" stroke="#444" stroke-width="1.5"/>
+      <!-- Headlights (early morning) -->
+      <ellipse cx="133" cy="-14" rx="5" ry="4" fill="#FFE080" opacity="0.9"/>
+      <ellipse cx="133" cy="-14" rx="12" ry="8" fill="#FFE080" opacity="0.15" filter="url(#softBlur)"/>
+    </g>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  CARS (animated)                                    -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- Car 1 — near lane, going right -->
+  <g class="car1">
+    <g transform="translate(0, 878)">
+      <!-- Body -->
+      <rect x="5" y="-24" width="80" height="26" rx="5" fill="#6A6A8A" stroke="#3A3A5A" stroke-width="2"/>
+      <!-- Roof -->
+      <rect x="18" y="-38" width="46" height="16" rx="5" fill="#7A7A9A" stroke="#3A3A5A" stroke-width="1.5"/>
+      <!-- Windscreen -->
+      <rect x="52" y="-36" width="22" height="13" rx="2" fill="#A8C8D8" opacity="0.85" stroke="#3A3A5A" stroke-width="1"/>
+      <!-- Rear window -->
+      <rect x="12" y="-36" width="20" height="13" rx="2" fill="#A8C8D8" opacity="0.85" stroke="#3A3A5A" stroke-width="1"/>
+      <!-- Wheels -->
+      <circle cx="22" cy="4"  r="9" fill="#1A1A1A" stroke="#333" stroke-width="2"/>
+      <circle cx="22" cy="4"  r="4" fill="#333"/>
+      <circle cx="68" cy="4"  r="9" fill="#1A1A1A" stroke="#333" stroke-width="2"/>
+      <circle cx="68" cy="4"  r="4" fill="#333"/>
+      <!-- Headlights -->
+      <ellipse cx="85" cy="-10" rx="4" ry="3" fill="#FFFAE0" opacity="0.95"/>
+      <ellipse cx="85" cy="-10" rx="10" ry="6" fill="#FFFAE0" opacity="0.2" filter="url(#softBlur)"/>
+      <!-- Tail lights -->
+      <rect x="5" cy="-14" width="5" height="6" rx="1" fill="#CC2020" opacity="0.85"/>
+    </g>
+  </g>
+
+  <!-- Car 2 — far lane, going left -->
+  <g class="car2">
+    <g transform="translate(0, 860)">
+      <rect x="5" y="-22" width="72" height="23" rx="5" fill="#8A5A3A" stroke="#5A3A1A" stroke-width="2"/>
+      <rect x="16" y="-35" width="40" height="15" rx="4" fill="#9A6A4A" stroke="#5A3A1A" stroke-width="1.5"/>
+      <rect x="46" y="-33" width="19" height="12" rx="2" fill="#A8C0C8" opacity="0.85" stroke="#5A3A1A" stroke-width="1"/>
+      <rect x="11" y="-33" width="18" height="12" rx="2" fill="#A8C0C8" opacity="0.85" stroke="#5A3A1A" stroke-width="1"/>
+      <circle cx="18" cy="3" r="8" fill="#1A1A1A" stroke="#333" stroke-width="2"/>
+      <circle cx="18" cy="3" r="3" fill="#333"/>
+      <circle cx="59" cy="3" r="8" fill="#1A1A1A" stroke="#333" stroke-width="2"/>
+      <circle cx="59" cy="3" r="3" fill="#333"/>
+      <!-- Headlights (going left, so on right side) -->
+      <ellipse cx="77" cy="-9" rx="4" ry="3" fill="#FFFAE0" opacity="0.9"/>
+      <ellipse cx="77" cy="-9" rx="9" ry="5" fill="#FFFAE0" opacity="0.2" filter="url(#softBlur)"/>
+    </g>
+  </g>
+
+  <!-- Car 3 — near lane, going right, faster -->
+  <g class="car3">
+    <g transform="translate(0, 882)">
+      <rect x="5" y="-20" width="68" height="22" rx="5" fill="#3A5A7A" stroke="#1A3A5A" stroke-width="2"/>
+      <rect x="15" y="-32" width="38" height="14" rx="4" fill="#4A6A8A" stroke="#1A3A5A" stroke-width="1.5"/>
+      <rect x="46" y="-31" width="17" height="11" rx="2" fill="#A8CCD8" opacity="0.85" stroke="#1A3A5A" stroke-width="1"/>
+      <rect x="11" y="-31" width="17" height="11" rx="2" fill="#A8CCD8" opacity="0.85" stroke="#1A3A5A" stroke-width="1"/>
+      <circle cx="18" cy="3" r="8" fill="#1A1A1A" stroke="#333" stroke-width="2"/>
+      <circle cx="18" cy="3" r="3" fill="#333"/>
+      <circle cx="55" cy="3" r="8" fill="#1A1A1A" stroke="#333" stroke-width="2"/>
+      <circle cx="55" cy="3" r="3" fill="#333"/>
+      <ellipse cx="73" cy="-8" rx="4" ry="3" fill="#FFFAE0" opacity="0.9"/>
+      <ellipse cx="73" cy="-8" rx="9" ry="5" fill="#FFFAE0" opacity="0.2" filter="url(#softBlur)"/>
+    </g>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  DE VIERTORENBRUG — hefbrug (vertical lift bridge)  -->
+  <!--  Right side of screen, spans the canal              -->
+  <!--  ~x 1380..1800                                      -->
+  <!--  Tower heights reduced 50% from original design     -->
+  <!--  Far-bank towers: base y=748, top ~y=506 (h=242)    -->
+  <!--  Near-bank towers: base y=810, top ~y=475 (h=335)   -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <g id="viertorenbrug">
+    <!-- Bridge deck over canal: y 754..809 (canal span) -->
+
+    <!-- Approach ramps on both sides of canal -->
+    <rect x="1375" y="839" width="430" height="70" fill="#383838" stroke="#2A2A2A" stroke-width="1"/>
+    <!-- Lift span (lowered/closed — bridge deck over canal) -->
+    <rect x="1375" y="754" width="430" height="55" fill="#3C3C3C" stroke="#2A2A2A" stroke-width="1.5"/>
+    <!-- Lift span structural I-beam look, bottom edge -->
+    <rect x="1375" y="802" width="430" height="7"  fill="#2A2A2A"/>
+    <!-- Bridge centre dashes -->
+    <line x1="1375" y1="782" x2="1805" y2="782" stroke="#D4C060" stroke-width="2.5" stroke-dasharray="40,28" opacity="0.7"/>
+    <!-- Bridge edge railings -->
+    <rect x="1375" y="752" width="430" height="5" fill="#C8C8C8" stroke="#AAA" stroke-width="1"/>
+    <rect x="1375" y="806" width="430" height="5" fill="#C8C8C8" stroke="#AAA" stroke-width="1"/>
+    <!-- Railing posts on lift span -->
+    <g stroke="#AAAAAA" stroke-width="2">
+      <line x1="1415" y1="757" x2="1415" y2="807"/>
+      <line x1="1450" y1="757" x2="1450" y2="807"/>
+      <line x1="1485" y1="757" x2="1485" y2="807"/>
+      <line x1="1520" y1="757" x2="1520" y2="807"/>
+      <line x1="1555" y1="757" x2="1555" y2="807"/>
+      <line x1="1590" y1="757" x2="1590" y2="807"/>
+      <line x1="1625" y1="757" x2="1625" y2="807"/>
+      <line x1="1660" y1="757" x2="1660" y2="807"/>
+      <line x1="1695" y1="757" x2="1695" y2="807"/>
+      <line x1="1730" y1="757" x2="1730" y2="807"/>
+      <line x1="1765" y1="757" x2="1765" y2="807"/>
+    </g>
+
+    <!--
+      HEFBRUG TOWER LAYOUT:
+      Two tower pairs — one pair at LEFT edge of bridge (x≈1405-1447),
+      one pair at RIGHT edge (x≈1735-1777).
+      Each pair has a FAR tower (near-bank of canal, y-base 748)
+      and a NEAR tower (near-bank of road, y-base 810).
+      Towers are connected at the top by a horizontal crossbeam.
+      The lift span cables run up to the crossbeam pulleys.
+      Counterweights hang behind the towers above the road side.
+    -->
+
+    <!-- ── LEFT TOWER PAIR ──────────────────────────── -->
+
+    <!-- Left-Far tower (far canal bank, base y=748) height=242 top y=506 -->
+    <g id="tower-left-far">
+      <rect x="1405" y="508" width="42" height="240" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="2"/>
+      <!-- Taper just below cap -->
+      <polygon points="1405,508 1447,508 1443,488 1409,488" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="1.5"/>
+      <!-- Cap -->
+      <rect x="1403" y="474" width="46" height="16" rx="3" fill="#F0F0F0" stroke="#AAAAAA" stroke-width="2"/>
+      <!-- Cap top -->
+      <rect x="1409" y="462" width="34" height="13" rx="2" fill="#EEEEEE" stroke="#BBBBBB" stroke-width="1.5"/>
+      <!-- Pulley housing at very top -->
+      <rect x="1416" y="452" width="20" height="12" rx="2" fill="#D8D8D8" stroke="#AAAAAA" stroke-width="1.5"/>
+      <!-- Horizontal ribs on shaft -->
+      <rect x="1405" y="548" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1405" y="610" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1405" y="672" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1405" y="724" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <!-- Shadow -->
+      <rect x="1440" y="488" width="7" height="260" fill="#00000018"/>
+      <!-- Base footing -->
+      <rect x="1398" y="748" width="56" height="16" rx="2" fill="#D8D8D8" stroke="#AAA" stroke-width="2"/>
+    </g>
+
+    <!-- Left-Near tower (road near bank, base y=810) height=335 top y=475 -->
+    <g id="tower-left-near">
+      <rect x="1405" y="482" width="42" height="328" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="2"/>
+      <polygon points="1405,482 1447,482 1443,462 1409,462" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="1.5"/>
+      <!-- Cap -->
+      <rect x="1403" y="448" width="46" height="16" rx="3" fill="#F0F0F0" stroke="#AAAAAA" stroke-width="2"/>
+      <!-- Cap top -->
+      <rect x="1409" y="436" width="34" height="13" rx="3" fill="#EEEEEE" stroke="#BBBBBB" stroke-width="1.5"/>
+      <!-- Pyramid top -->
+      <polygon points="1411,436 1441,436 1426,420" fill="#E8E8E8" stroke="#BBBBBB" stroke-width="1.5"/>
+      <!-- Pulley housing -->
+      <rect x="1416" y="425" width="20" height="12" rx="2" fill="#D8D8D8" stroke="#AAAAAA" stroke-width="1.5"/>
+      <!-- Ribs -->
+      <rect x="1405" y="540" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1405" y="612" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1405" y="684" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1405" y="755" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <!-- Shadow -->
+      <rect x="1440" y="462" width="7" height="348" fill="#00000018"/>
+      <!-- Base footing near bank -->
+      <rect x="1398" y="810" width="56" height="18" rx="2" fill="#D8D8D8" stroke="#AAA" stroke-width="2"/>
+    </g>
+
+    <!-- Left pair horizontal crossbeam (connects tops of both left towers) -->
+    <rect x="1403" y="450" width="46" height="14" rx="2" fill="#E0E0DC" stroke="#AAAAAA" stroke-width="2"/>
+    <!-- Left crossbeam cable/chain to lift span — two lines from crossbeam down to deck edges -->
+    <line x1="1416" y1="464" x2="1416" y2="757" stroke="#888888" stroke-width="2.5" opacity="0.8"/>
+    <line x1="1436" y1="464" x2="1436" y2="757" stroke="#888888" stroke-width="2.5" opacity="0.8"/>
+    <!-- Left counterweight (behind near tower, hangs above road) -->
+    <rect x="1408" y="475" width="32" height="28" rx="3" fill="#B0B0A8" stroke="#888" stroke-width="2"/>
+    <!-- Counterweight cable going up over pulley -->
+    <line x1="1424" y1="475" x2="1424" y2="452" stroke="#888888" stroke-width="2" opacity="0.8"/>
+
+    <!-- ── RIGHT TOWER PAIR ─────────────────────────── -->
+
+    <!-- Right-Far tower (far canal bank, base y=748) -->
+    <g id="tower-right-far">
+      <rect x="1735" y="508" width="42" height="240" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="2"/>
+      <polygon points="1735,508 1777,508 1773,488 1739,488" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="1.5"/>
+      <rect x="1733" y="474" width="46" height="16" rx="3" fill="#F0F0F0" stroke="#AAAAAA" stroke-width="2"/>
+      <rect x="1739" y="462" width="34" height="13" rx="2" fill="#EEEEEE" stroke="#BBBBBB" stroke-width="1.5"/>
+      <rect x="1746" y="452" width="20" height="12" rx="2" fill="#D8D8D8" stroke="#AAAAAA" stroke-width="1.5"/>
+      <rect x="1735" y="548" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1735" y="610" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1735" y="672" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1735" y="724" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1770" y="488" width="7" height="260" fill="#00000018"/>
+      <rect x="1728" y="748" width="56" height="16" rx="2" fill="#D8D8D8" stroke="#AAA" stroke-width="2"/>
+    </g>
+
+    <!-- Right-Near tower (road near bank, base y=810) -->
+    <g id="tower-right-near">
+      <rect x="1735" y="482" width="42" height="328" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="2"/>
+      <polygon points="1735,482 1777,482 1773,462 1739,462" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="1.5"/>
+      <rect x="1733" y="448" width="46" height="16" rx="3" fill="#F0F0F0" stroke="#AAAAAA" stroke-width="2"/>
+      <rect x="1739" y="436" width="34" height="13" rx="3" fill="#EEEEEE" stroke="#BBBBBB" stroke-width="1.5"/>
+      <polygon points="1741,436 1771,436 1756,420" fill="#E8E8E8" stroke="#BBBBBB" stroke-width="1.5"/>
+      <rect x="1746" y="425" width="20" height="12" rx="2" fill="#D8D8D8" stroke="#AAAAAA" stroke-width="1.5"/>
+      <rect x="1735" y="540" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1735" y="612" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1735" y="684" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1735" y="755" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1770" y="462" width="7" height="348" fill="#00000018"/>
+      <rect x="1728" y="810" width="56" height="18" rx="2" fill="#D8D8D8" stroke="#AAA" stroke-width="2"/>
+    </g>
+
+    <!-- Right pair crossbeam -->
+    <rect x="1733" y="450" width="46" height="14" rx="2" fill="#E0E0DC" stroke="#AAAAAA" stroke-width="2"/>
+    <!-- Right cables to lift span -->
+    <line x1="1746" y1="464" x2="1746" y2="757" stroke="#888888" stroke-width="2.5" opacity="0.8"/>
+    <line x1="1766" y1="464" x2="1766" y2="757" stroke="#888888" stroke-width="2.5" opacity="0.8"/>
+    <!-- Right counterweight -->
+    <rect x="1738" y="475" width="32" height="28" rx="3" fill="#B0B0A8" stroke="#888" stroke-width="2"/>
+    <line x1="1754" y1="475" x2="1754" y2="452" stroke="#888888" stroke-width="2" opacity="0.8"/>
+
+    <!-- Bridge name plaque -->
+    <rect x="1480" y="818" width="220" height="16" rx="3" fill="#E8E8E0" stroke="#AAAAAA" stroke-width="1" opacity="0.9"/>
+    <text x="1590" y="830" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#444" font-weight="bold">DE VIERTORENBRUG</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  PLAATSNAAMBORD — Compascuum / Gemeente Emmen       -->
+  <!--  Dutch road sign, left of bridge on road shoulder   -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <g id="plaatsnaambord" transform="translate(1295, 820)">
+    <!-- Post -->
+    <rect x="18" y="0" width="6" height="90" rx="2" fill="#D0D0C8" stroke="#AAAAAA" stroke-width="1"/>
+    <!-- Sign board — standard Dutch blue plaatsnaambord -->
+    <!-- Outer white border frame -->
+    <rect x="0" y="-72" width="96" height="62" rx="4" fill="white" stroke="#BBBBBB" stroke-width="1"/>
+    <!-- Blue background -->
+    <rect x="4" y="-68" width="88" height="54" rx="3" fill="#003082"/>
+    <!-- White inner border line -->
+    <rect x="7" y="-65" width="82" height="48" rx="2" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Place name text -->
+    <text x="48" y="-40" text-anchor="middle"
+          font-family="'FHWA Series D', 'Highway Gothic', Arial, sans-serif"
+          font-size="16" font-weight="bold" fill="white" letter-spacing="0.5">Compascuum</text>
+    <!-- Gemeente line -->
+    <text x="48" y="-24" text-anchor="middle"
+          font-family="'FHWA Series D', 'Highway Gothic', Arial, sans-serif"
+          font-size="9" fill="white" opacity="0.85">Gemeente Emmen</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  RYAN'S FARMHOUSE (left-centre background)         -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <g id="house" transform="translate(240, 620)">
+    <!-- House body — white Dutch farmhouse -->
+    <rect x="0" y="55" width="130" height="80" fill="#F0EEE8" stroke="#2A2020" stroke-width="2.5"/>
+    <!-- Gabled roof (Dutch style) -->
+    <polygon points="65,-5 -8,55 138,55" fill="#9A2020" stroke="#2A2020" stroke-width="2.5"/>
+    <!-- Gable end detail -->
+    <rect x="50" y="5" width="30" height="30" fill="#E8E6E0" stroke="#2A2020" stroke-width="1.5"/>
     <!-- Door -->
-    <rect x="55" y="85" width="30" height="45" fill="#654321" stroke="#000" stroke-width="2"/>
-    
-    <!-- Windows -->
-    <rect x="15" y="60" width="25" height="25" fill="#87CEEB" stroke="#000" stroke-width="2"/>
-    <rect x="100" y="60" width="25" height="25" fill="#87CEEB" stroke="#000" stroke-width="2"/>
+    <rect x="52" y="95" width="26" height="40" rx="2" fill="#5A3A1A" stroke="#2A2020" stroke-width="2"/>
+    <!-- Windows - warm light inside (early morning, still on) -->
+    <rect x="8"  y="72" width="24" height="22" fill="#FFD890" opacity="0.9" stroke="#2A2020" stroke-width="2"/>
+    <rect x="98" y="72" width="24" height="22" fill="#FFD890" opacity="0.9" stroke="#2A2020" stroke-width="2"/>
+    <!-- Window glow halos -->
+    <rect x="4"  y="68" width="32" height="30" fill="#FFD060" opacity="0.15" filter="url(#softBlur)"/>
+    <rect x="94" y="68" width="32" height="30" fill="#FFD060" opacity="0.15" filter="url(#softBlur)"/>
+    <!-- Chimney smoke hints -->
+    <rect x="92" y="-20" width="12" height="25" fill="#3A3030" stroke="#2A2020" stroke-width="1.5"/>
+    <ellipse cx="98" cy="-22" rx="8" ry="5" fill="#C8C0B0" opacity="0.35" filter="url(#softBlur)"/>
+    <ellipse cx="102" cy="-30" rx="10" ry="6" fill="#C8C0B0" opacity="0.25" filter="url(#softBlur)"/>
   </g>
-  
-  <!-- Garage/mancave next to house -->
-  <g id="garage" transform="translate(850, 730)">
-    <rect x="0" y="50" width="100" height="80" fill="#D0D0D0" stroke="#000" stroke-width="3"/>
-    <polygon points="50,20 0,50 100,50" fill="#999" stroke="#000" stroke-width="3"/>
-    
-    <!-- Garage door -->
-    <rect x="20" y="70" width="60" height="60" fill="#8B4513" stroke="#000" stroke-width="2"/>
-    <line x1="20" y1="90" x2="80" y2="90" stroke="#654321" stroke-width="1"/>
-    <line x1="20" y1="110" x2="80" y2="110" stroke="#654321" stroke-width="1"/>
+
+  <!-- Garage / mancave annex -->
+  <g id="garage" transform="translate(382, 643)">
+    <rect x="0" y="42" width="90" height="62" fill="#D0CCC4" stroke="#2A2020" stroke-width="2"/>
+    <polygon points="45,16 -4,42 94,42" fill="#808080" stroke="#2A2020" stroke-width="2"/>
+    <rect x="14" y="60" width="62" height="44" rx="2" fill="#7A5030" stroke="#2A2020" stroke-width="1.5"/>
+    <line x1="14" y1="78" x2="76" y2="78" stroke="#604028" stroke-width="1"/>
+    <line x1="14" y1="94" x2="76" y2="94" stroke="#604028" stroke-width="1"/>
+    <!-- Dim light from garage window -->
+    <rect x="16" y="62" width="26" height="16" fill="#FFD060" opacity="0.5" stroke="#2A2020" stroke-width="1"/>
   </g>
-  
-  <!-- Trees (simple South Park style) -->
-  <g id="trees">
-    <!-- Tree 1 -->
-    <rect x="450" y="750" width="15" height="60" fill="#654321" stroke="#000" stroke-width="2"/>
-    <circle cx="457" cy="740" r="40" fill="#2E7D32" stroke="#000" stroke-width="2"/>
-    <circle cx="440" cy="730" r="35" fill="#388E3C" stroke="#000" stroke-width="2"/>
-    <circle cx="475" cy="730" r="35" fill="#388E3C" stroke="#000" stroke-width="2"/>
-    
-    <!-- Tree 2 -->
-    <rect x="1050" y="760" width="15" height="50" fill="#654321" stroke="#000" stroke-width="2"/>
-    <circle cx="1057" cy="750" r="35" fill="#2E7D32" stroke="#000" stroke-width="2"/>
-    <circle cx="1042" cy="742" r="30" fill="#388E3C" stroke="#000" stroke-width="2"/>
-    <circle cx="1072" cy="742" r="30" fill="#388E3C" stroke="#000" stroke-width="2"/>
-    
-    <!-- Tree 3 -->
-    <rect x="1300" y="745" width="18" height="65" fill="#654321" stroke="#000" stroke-width="2"/>
-    <circle cx="1309" cy="735" r="45" fill="#2E7D32" stroke="#000" stroke-width="2"/>
-    <circle cx="1290" cy="723" r="38" fill="#388E3C" stroke="#000" stroke-width="2"/>
-    <circle cx="1328" cy="723" r="38" fill="#388E3C" stroke="#000" stroke-width="2"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  MIST PATCHES — animated, canal + field             -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <g class="mist1">
+    <ellipse cx="400"  cy="790" rx="280" ry="28" fill="#E4E8E0" opacity="0.55" filter="url(#mistBlur)"/>
+    <ellipse cx="700"  cy="820" rx="200" ry="22" fill="#DDE2DA" opacity="0.45" filter="url(#mistBlur)"/>
   </g>
-  
-  <!-- Road -->
-  <rect x="0" y="820" width="1920" height="40" fill="#555" opacity="0.6"/>
-  <line x1="0" y1="840" x2="1920" y2="840" stroke="#FFF" stroke-width="3" stroke-dasharray="40,30" opacity="0.6"/>
-  
-  <!-- Birds in sky -->
-  <g id="birds" opacity="0.5">
-    <path d="M 300 200 Q 310 195 320 200 M 315 200 Q 315 190 315 200" stroke="#000" stroke-width="2" fill="none"/>
-    <path d="M 500 250 Q 510 245 520 250 M 515 250 Q 515 240 515 250" stroke="#000" stroke-width="2" fill="none"/>
-    <path d="M 1400 180 Q 1410 175 1420 180 M 1415 180 Q 1415 170 1415 180" stroke="#000" stroke-width="2" fill="none"/>
+  <g class="mist2">
+    <ellipse cx="1000" cy="785" rx="320" ry="32" fill="#E4E8E0" opacity="0.5"  filter="url(#mistBlur)"/>
+    <ellipse cx="1250" cy="815" rx="220" ry="24" fill="#DDE2DA" opacity="0.4"  filter="url(#mistBlur)"/>
   </g>
-  
-  <!-- Text overlay area (dark vignette for text readability) -->
-  <rect x="0" y="0" width="1920" height="1080" fill="#000" opacity="0.2"/>
-  
-  <!-- Title text area (will be handled by dialogue system but leave space) -->
-  <g id="titleSpace" opacity="0">
-    <rect x="460" y="400" width="1000" height="280" rx="20" fill="#000" opacity="0.8"/>
+  <g class="mist3">
+    <ellipse cx="160"  cy="805" rx="160" ry="20" fill="#E4E8E0" opacity="0.45" filter="url(#mistBlur)"/>
+    <ellipse cx="850"  cy="800" rx="250" ry="26" fill="#E0E4DC" opacity="0.38" filter="url(#mistBlur)"/>
   </g>
+  <!-- Field mist — low ground -->
+  <ellipse cx="600"  cy="730" rx="400" ry="30" fill="#D8DCD4" opacity="0.3" filter="url(#mistBlur)"/>
+  <ellipse cx="1300" cy="720" rx="350" ry="25" fill="#D8DCD4" opacity="0.25" filter="url(#mistBlur)"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  WIND TURBINES — 12 spread across far horizon       -->
+  <!--  Vary height slightly for depth, low opacity/mist   -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- Macro: each turbine = mast rect + 3 blade lines from hub -->
+  <!-- Hub y = mast top. Blades: up, lower-left, lower-right -->
+  <g id="windturbines" opacity="0.42">
+    <!-- Turbine 1  x=85   large -->
+    <rect x="83"   y="535" width="6" height="80" fill="#C8C8C0"/>
+    <line x1="86"  y1="535" x2="86"  y2="497" stroke="#C8C8C0" stroke-width="3"/>
+    <line x1="86"  y1="535" x2="118" y2="548" stroke="#C8C8C0" stroke-width="3"/>
+    <line x1="86"  y1="535" x2="54"  y2="548" stroke="#C8C8C0" stroke-width="3"/>
+    <!-- Turbine 2  x=175  medium -->
+    <rect x="173"  y="548" width="5" height="67" fill="#C8C8C0"/>
+    <line x1="175" y1="548" x2="175" y2="516" stroke="#C8C8C0" stroke-width="2.5"/>
+    <line x1="175" y1="548" x2="203" y2="559" stroke="#C8C8C0" stroke-width="2.5"/>
+    <line x1="175" y1="548" x2="147" y2="559" stroke="#C8C8C0" stroke-width="2.5"/>
+    <!-- Turbine 3  x=255  small (further away) -->
+    <rect x="253"  y="556" width="4" height="59" fill="#C8C8C0"/>
+    <line x1="255" y1="556" x2="255" y2="527" stroke="#C0C0B8" stroke-width="2"/>
+    <line x1="255" y1="556" x2="280" y2="566" stroke="#C0C0B8" stroke-width="2"/>
+    <line x1="255" y1="556" x2="230" y2="566" stroke="#C0C0B8" stroke-width="2"/>
+    <!-- Turbine 4  x=350  medium, rotated blades phase -->
+    <rect x="348"  y="544" width="5" height="71" fill="#C8C8C0"/>
+    <line x1="350" y1="544" x2="370" y2="519" stroke="#C8C8C0" stroke-width="2.5"/>
+    <line x1="350" y1="544" x2="374" y2="562" stroke="#C8C8C0" stroke-width="2.5"/>
+    <line x1="350" y1="544" x2="326" y2="553" stroke="#C8C8C0" stroke-width="2.5"/>
+    <!-- Turbine 5  x=560  large, centre-left -->
+    <rect x="558"  y="530" width="6" height="85" fill="#C8C8C0"/>
+    <line x1="561" y1="530" x2="561" y2="490" stroke="#C8C8C0" stroke-width="3"/>
+    <line x1="561" y1="530" x2="596" y2="545" stroke="#C8C8C0" stroke-width="3"/>
+    <line x1="561" y1="530" x2="526" y2="545" stroke="#C8C8C0" stroke-width="3"/>
+    <!-- Turbine 6  x=660  small -->
+    <rect x="658"  y="553" width="4" height="62" fill="#C8C8C0"/>
+    <line x1="660" y1="553" x2="660" y2="524" stroke="#C0C0B8" stroke-width="2"/>
+    <line x1="660" y1="553" x2="685" y2="563" stroke="#C0C0B8" stroke-width="2"/>
+    <line x1="660" y1="553" x2="635" y2="563" stroke="#C0C0B8" stroke-width="2"/>
+    <!-- Turbine 7  x=790  medium, different blade angle -->
+    <rect x="788"  y="542" width="5" height="73" fill="#C8C8C0"/>
+    <line x1="790" y1="542" x2="812" y2="517" stroke="#C8C8C0" stroke-width="2.5"/>
+    <line x1="790" y1="542" x2="814" y2="560" stroke="#C8C8C0" stroke-width="2.5"/>
+    <line x1="790" y1="542" x2="766" y2="549" stroke="#C8C8C0" stroke-width="2.5"/>
+    <!-- Turbine 8  x=920  large -->
+    <rect x="918"  y="528" width="6" height="87" fill="#C8C8C0"/>
+    <line x1="921" y1="528" x2="921" y2="488" stroke="#C8C8C0" stroke-width="3"/>
+    <line x1="921" y1="528" x2="957" y2="543" stroke="#C8C8C0" stroke-width="3"/>
+    <line x1="921" y1="528" x2="885" y2="543" stroke="#C8C8C0" stroke-width="3"/>
+    <!-- Turbine 9  x=1065 medium -->
+    <rect x="1063" y="546" width="5" height="69" fill="#C8C8C0"/>
+    <line x1="1065" y1="546" x2="1065" y2="514" stroke="#C8C8C0" stroke-width="2.5"/>
+    <line x1="1065" y1="546" x2="1093" y2="557" stroke="#C8C8C0" stroke-width="2.5"/>
+    <line x1="1065" y1="546" x2="1037" y2="557" stroke="#C8C8C0" stroke-width="2.5"/>
+    <!-- Turbine 10 x=1180 small (further) -->
+    <rect x="1178" y="555" width="4" height="60" fill="#C8C8C0"/>
+    <line x1="1180" y1="555" x2="1200" y2="530" stroke="#C0C0B8" stroke-width="2"/>
+    <line x1="1180" y1="555" x2="1202" y2="573" stroke="#C0C0B8" stroke-width="2"/>
+    <line x1="1180" y1="555" x2="1158" y2="562" stroke="#C0C0B8" stroke-width="2"/>
+    <!-- Turbine 11 x=1310 medium -->
+    <rect x="1308" y="543" width="5" height="72" fill="#C8C8C0"/>
+    <line x1="1310" y1="543" x2="1310" y2="511" stroke="#C8C8C0" stroke-width="2.5"/>
+    <line x1="1310" y1="543" x2="1338" y2="554" stroke="#C8C8C0" stroke-width="2.5"/>
+    <line x1="1310" y1="543" x2="1282" y2="554" stroke="#C8C8C0" stroke-width="2.5"/>
+    <!-- Turbine 12 x=1860 large, far right (past bridge) -->
+    <rect x="1858" y="532" width="6" height="83" fill="#C8C8C0"/>
+    <line x1="1861" y1="532" x2="1861" y2="492" stroke="#C8C8C0" stroke-width="3"/>
+    <line x1="1861" y1="532" x2="1897" y2="547" stroke="#C8C8C0" stroke-width="3"/>
+    <line x1="1861" y1="532" x2="1825" y2="547" stroke="#C8C8C0" stroke-width="3"/>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  FARM — Dutch boerderij in far background           -->
+  <!--  Centre-right, y≈636 (behind far-tree row)         -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <g id="farm" transform="translate(1030, 636)" opacity="0.88">
+    <!-- Main barn (lange schuur) — low long Dutch barn, red roof -->
+    <rect x="0"   y="32" width="150" height="52" fill="#E8E4DC" stroke="#5A4830" stroke-width="1.5"/>
+    <!-- Barn roof — dark red/maroon gabled -->
+    <polygon points="-4,32 154,32 140,8 10,8" fill="#7A2020" stroke="#5A1A10" stroke-width="1.5"/>
+    <!-- Barn doors (large) -->
+    <rect x="60"  y="46" width="38" height="38" rx="1" fill="#5A3A1A" stroke="#3A2010" stroke-width="1.5"/>
+    <line x1="79" y1="46" x2="79" y2="84" stroke="#3A2010" stroke-width="1"/>
+    <!-- Barn window hay loft -->
+    <rect x="14"  y="20" width="20" height="12" rx="1" fill="#9A7A30" opacity="0.7" stroke="#5A1A10" stroke-width="1"/>
+    <rect x="116" y="20" width="20" height="12" rx="1" fill="#9A7A30" opacity="0.7" stroke="#5A1A10" stroke-width="1"/>
+
+    <!-- Farmhouse (woonhuis) attached left end -->
+    <rect x="-68" y="24" width="72" height="60" fill="#F0EEE6" stroke="#5A4830" stroke-width="1.5"/>
+    <!-- Farmhouse roof -->
+    <polygon points="-72,24 8,24 4,-4 -68,-4" fill="#8A2020" stroke="#5A1A10" stroke-width="1.5"/>
+    <!-- Farmhouse window (warm light) -->
+    <rect x="-56" y="38" width="18" height="16" fill="#FFD880" opacity="0.9" stroke="#5A4830" stroke-width="1"/>
+    <rect x="-24" y="38" width="18" height="16" fill="#FFD880" opacity="0.9" stroke="#5A4830" stroke-width="1"/>
+    <!-- Farmhouse door -->
+    <rect x="-44" y="56" width="16" height="28" rx="1" fill="#5A3A1A" stroke="#3A2010" stroke-width="1"/>
+    <!-- Chimney -->
+    <rect x="-20" y="-14" width="8" height="18" fill="#4A3A28" stroke="#3A2010" stroke-width="1"/>
+
+    <!-- Silo / grain tower -->
+    <rect x="158" y="8"  width="22" height="76" rx="4" fill="#C8C0A8" stroke="#8A7A60" stroke-width="1.5"/>
+    <!-- Silo dome cap -->
+    <ellipse cx="169" cy="8" rx="11" ry="6" fill="#A89880" stroke="#8A7A60" stroke-width="1"/>
+    <!-- Silo bands -->
+    <line x1="158" y1="28" x2="180" y2="28" stroke="#A89878" stroke-width="1" opacity="0.6"/>
+    <line x1="158" y1="48" x2="180" y2="48" stroke="#A89878" stroke-width="1" opacity="0.6"/>
+    <line x1="158" y1="68" x2="180" y2="68" stroke="#A89878" stroke-width="1" opacity="0.6"/>
+
+    <!-- Small outbuilding / haystack shed -->
+    <rect x="190" y="54" width="44" height="30" fill="#C8B888" stroke="#7A6840" stroke-width="1.5"/>
+    <polygon points="188,54 236,54 232,38 192,38" fill="#A08838" stroke="#7A6840" stroke-width="1.5"/>
+
+    <!-- Muddy farmyard track from barn towards road -->
+    <path d="M68,84 Q72,102 74,115" stroke="#8A7050" stroke-width="4" fill="none" opacity="0.5"/>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  ATMOSPHERIC OVERLAYS                               -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- Soft dark vignette edges -->
+  <rect x="0"    y="0" width="120"  height="1080" fill="#000" opacity="0.12"/>
+  <rect x="1800" y="0" width="120"  height="1080" fill="#000" opacity="0.08"/>
+  <!-- Very subtle overall cool-blue tint for cold morning atmosphere -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#2A4466" opacity="0.07"/>
+  <!-- Bottom fade to dark (ground) -->
+  <rect x="0" y="950" width="1920" height="130" fill="#000" opacity="0.18"/>
+
 </svg>

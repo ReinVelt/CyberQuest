@@ -16,10 +16,10 @@ const LivingroomScene = {
         {
             id: 'tv',
             name: 'Watch TV',
-            x: 45,
-            y: 17,
-            width: 30,
-            height: 38,
+            x: 46,
+            y: 7,
+            width: 22,
+            height: 32,
             cursor: 'pointer',
             action: (game) => {
                 if (!game.getFlag('saw_tv_documentary')) {
@@ -29,14 +29,14 @@ const LivingroomScene = {
                         { speaker: '', text: '*"Drenthe: The Unexpected Tech Hub"*' },
                         { speaker: 'Ryan', text: 'WSRT, LOFAR, and Bluetooth... might be worth watching.' }
                     ]);
-                    setTimeout(() => {
+                    game.sceneTimeout(() => {
                         game.loadScene('tvdocumentary');
                     }, 2000);
                 } else {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'The documentary is playing. Should I watch it again?' }
                     ]);
-                    setTimeout(() => {
+                    game.sceneTimeout(() => {
                         game.loadScene('tvdocumentary');
                     }, 1500);
                 }
@@ -44,10 +44,10 @@ const LivingroomScene = {
         },
         {
             id: 'ies',
-            x: 12,
-            y: 48,
+            x: 17,
+            y: 37,
             width: 15,
-            height: 20,
+            height: 30,
             cursor: 'pointer',
             action: (game) => {
                 if (!game.getFlag('talked_to_ies')) {
@@ -86,28 +86,28 @@ const LivingroomScene = {
             }
         },
         {
-            id: 'couch_dogs',
-            x: 73,
-            y: 48,
-            width: 18,
-            height: 22,
+            id: 'fireplace_dogs',
+            x: 33,
+            y: 71,
+            width: 12,
+            height: 8,
             cursor: 'pointer',
             action: (game) => {
                 const responses = [
                     [
-                        { speaker: 'Ryan', text: 'Hey Kino and Kessy! Sleeping well?' },
-                        { speaker: '', text: '*Both dogs are curled up, peaceful and content*' },
+                        { speaker: 'Ryan', text: 'Hey Tino and Kessy! Warm enough by the fire?' },
+                        { speaker: '', text: '*Both dogs are curled up on the rug, basking in the warmth*' },
                         { speaker: '', text: '*Tino yawns softly without opening his eyes*' }
                     ],
                     [
-                        { speaker: 'Ryan', text: 'You two are spoiled, you know that?' },
-                        { speaker: '', text: '*Kessy shifts slightly in her sleep*' },
-                        { speaker: '', text: '*Perfect spots on the couch, as always*' }
+                        { speaker: 'Ryan', text: 'You two are spoiled, you know that? Best spot in the house.' },
+                        { speaker: '', text: '*Kessy shifts slightly, stretching closer to the fireplace*' },
+                        { speaker: '', text: '*The fire crackles gently*' }
                     ],
                     [
-                        { speaker: 'Ryan', text: 'Sound asleep, both of them.' },
+                        { speaker: 'Ryan', text: 'Sound asleep by the fire, both of them.' },
                         { speaker: '', text: '*Tino\'s ear twitches at Ryan\'s voice but he stays asleep*' },
-                        { speaker: 'Ies', text: 'They\'ve been napping all afternoon!' }
+                        { speaker: 'Ies', text: 'They love that spot! Been there all afternoon.' }
                     ]
                 ];
                 
@@ -117,11 +117,39 @@ const LivingroomScene = {
             }
         },
         {
+            id: 'fireplace',
+            name: 'Fireplace',
+            x: 33,
+            y: 22,
+            width: 11,
+            height: 45,
+            cursor: 'pointer',
+            action: (game) => {
+                const responses = [
+                    [
+                        { speaker: 'Ryan', text: 'Nice fire going. The old brick fireplace really warms the room.' },
+                        { speaker: '', text: '*The flames dance and crackle softly*' }
+                    ],
+                    [
+                        { speaker: 'Ryan', text: 'That mantel clock has been there since we moved in.' },
+                        { speaker: '', text: '*The fire pops, sending a tiny spark up the chimney*' }
+                    ],
+                    [
+                        { speaker: 'Ryan', text: 'Nothing beats a real fire on a Drenthe evening.' },
+                        { speaker: 'Ies', text: 'The dogs agree with you!' }
+                    ]
+                ];
+                const idx = (game.getFlag('fireplace_interactions') || 0) % responses.length;
+                game.setFlag('fireplace_interactions', (game.getFlag('fireplace_interactions') || 0) + 1);
+                game.startDialogue(responses[idx]);
+            }
+        },
+        {
             id: 'pug',
-            x: 30,
-            y: 72,
-            width: 30,
-            height: 12,
+            x: 32,
+            y: 80,
+            width: 20,
+            height: 10,
             cursor: 'pointer',
             action: (game) => {
                 const responses = [
@@ -155,10 +183,10 @@ const LivingroomScene = {
         {
             id: 'to_home',
             name: 'Door to Kitchen',
-            x: 0.5,
-            y: 45,
-            width: 11,
-            height: 32,
+            x: 1,
+            y: 17,
+            width: 10,
+            height: 50,
             cursor: 'pointer',
             targetScene: 'home'
         }
@@ -172,20 +200,20 @@ const LivingroomScene = {
             npcCharacters.forEach(npc => npc.remove());
         }
         
-        // Add Ies sitting on armchair watching TV (smaller than Ryan - 14% scale)
+        // Add Ies sitting on armchair watching TV
         setTimeout(() => {
-            game.showCharacter('ies', 15, 62, 0.14);
+            game.showCharacter('ies', 20, 55, 0.14);
         }, 100);
         
-        // Add two white dogs on the couch (smaller - 13% scale)
+        // Add two white dogs on the rug by the fireplace
         setTimeout(() => {
-            game.showCharacter('dog_white', 75, 52, 0.13);
-            game.showCharacter('dog_white', 85, 52, 0.13);
+            game.showCharacter('dog_white', 35, 77, 0.13);
+            game.showCharacter('dog_white', 40, 78, 0.13);
         }, 200);
         
-        // Add pug on the floor (smallest - 11% scale, will walk around via CSS)
+        // Add pug on the floor (smallest - walks around)
         setTimeout(() => {
-            game.showCharacter('pug', 30, 75, 0.11);
+            game.showCharacter('pug', 38, 82, 0.11);
         }, 300);
         
         // Welcome message
@@ -195,7 +223,7 @@ const LivingroomScene = {
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'The living room. Ies is watching TV.' },
                     { speaker: '', text: '*On screen: "Drenthe: The Unexpected Tech Hub" - Documentary*' },
-                    { speaker: '', text: '*Tino and Kessy are sleeping peacefully on the couch*' },
+                    { speaker: '', text: '*Tino and Kessy are sleeping peacefully on the rug by the fireplace*' },
                     { speaker: '', text: '*ET the pug waddles around exploring*' },
                     { speaker: 'Ryan', text: 'That documentary looks interesting... wireless technology from Drenthe?' },
                     { speaker: 'Ryan', text: 'I should watch this before heading to the mancave. Might learn something.' }

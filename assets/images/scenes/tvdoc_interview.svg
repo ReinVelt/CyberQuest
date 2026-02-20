@@ -1,99 +1,120 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-  <!-- Interview studio background -->
+  <!-- TV Interview studio — neutral, no person silhouette -->
   <defs>
     <linearGradient id="studioGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a2838;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#2a3848;stop-opacity:1" />
+      <stop offset="0%"   stop-color="#12202e"/>
+      <stop offset="100%" stop-color="#1e2e3e"/>
     </linearGradient>
-    <radialGradient id="spotlight">
-      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.3"/>
-      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0"/>
+    <radialGradient id="spotlight" cx="35%" cy="0%" r="70%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="floorGlow" cx="50%" cy="100%" r="60%">
+      <stop offset="0%"   stop-color="#1a6090" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  
+
+  <!-- Background -->
   <rect width="1600" height="900" fill="url(#studioGrad)"/>
-  
-  <!-- Spotlight effect -->
-  <ellipse cx="500" cy="200" rx="400" ry="300" fill="url(#spotlight)"/>
-  
-  <!-- Studio background blur effect (bokeh) -->
-  <circle cx="200" cy="250" r="40" fill="#4a6a8a" opacity="0.3"/>
-  <circle cx="1200" cy="200" r="50" fill="#5a7a9a" opacity="0.2"/>
-  <circle cx="1400" cy="350" r="35" fill="#3a5a7a" opacity="0.25"/>
-  <circle cx="300" cy="450" r="45" fill="#4a6a8a" opacity="0.2"/>
-  
-  <!-- Chair/sitting position -->
-  <ellipse cx="500" cy="720" rx="120" ry="30" fill="#1a2530" opacity="0.6"/>
-  
-  <!-- Person silhouette (engineer being interviewed) -->
-  <g transform="translate(500, 550)">
-    <!-- Chair back -->
-    <rect x="-80" y="50" width="160" height="15" rx="5" fill="#334455"/>
-    <rect x="-80" y="65" width="160" height="80" rx="8" fill="#2a3a4a"/>
-    
-    <!-- Body -->
-    <ellipse cx="0" cy="80" rx="70" ry="90" fill="#3a4a5a"/>
-    <!-- Shoulders -->
-    <path d="M -70,50 Q -80,30 -60,20 L -40,40" fill="#3a4a5a"/>
-    <path d="M 70,50 Q 80,30 60,20 L 40,40" fill="#3a4a5a"/>
-    
-    <!-- Arms -->
-    <rect x="-75" y="80" width="25" height="80" rx="12" fill="#3a4a5a"/>
-    <rect x="50" y="80" width="25" height="80" rx="12" fill="#3a4a5a"/>
-    
-    <!-- Hands on armrests -->
-    <ellipse cx="-62" cy="165" rx="18" ry="12" fill="#4a5a6a"/>
-    <ellipse cx="62" cy="165" rx="18" ry="12" fill="#4a5a6a"/>
-    
-    <!-- Neck -->
-    <rect x="-15" y="-25" width="30" height="30" rx="5" fill="#4a5a6a"/>
-    
-    <!-- Head -->
-    <ellipse cx="0" cy="-45" rx="40" ry="50" fill="#5a6a7a"/>
-    <!-- Ear -->
-    <ellipse cx="38" cy="-40" rx="8" ry="12" fill="#5a6a7a"/>
-    
-    <!-- Glasses -->
-    <rect x="-30" y="-50" width="25" height="18" rx="4" fill="none" stroke="#88aacc" stroke-width="2"/>
-    <rect x="5" y="-50" width="25" height="18" rx="4" fill="none" stroke="#88aacc" stroke-width="2"/>
-    <line x1="-5" y1="-45" x2="5" y2="-45" stroke="#88aacc" stroke-width="2"/>
-    
-    <!-- Minimal facial features -->
-    <circle cx="-15" cy="-48" r="3" fill="#2a3a4a" opacity="0.6"/>
-    <circle cx="15" cy="-48" r="3" fill="#2a3a4a" opacity="0.6"/>
-    
-    <!-- Nose -->
-    <line x1="0" y1="-45" x2="0" y2="-35" stroke="#4a5a6a" stroke-width="2"/>
-    
-    <!-- Mouth (slight smile) -->
-    <path d="M -12,-25 Q 0,-20 12,-25" fill="none" stroke="#3a4a5a" stroke-width="2"/>
+
+  <!-- Floor -->
+  <rect x="0" y="700" width="1600" height="200" fill="#0e1820"/>
+  <!-- Floor reflection line -->
+  <line x1="0" y1="700" x2="1600" y2="700" stroke="#2a4060" stroke-width="2" opacity="0.6"/>
+  <!-- Floor glow -->
+  <rect x="0" y="700" width="1600" height="200" fill="url(#floorGlow)"/>
+
+  <!-- Studio back-wall panels (vertical accent strips) -->
+  <g opacity="0.35">
+    <rect x="0"    y="0" width="8"  height="700" fill="#2a5080"/>
+    <rect x="180"  y="0" width="6"  height="700" fill="#2a5080"/>
+    <rect x="360"  y="0" width="6"  height="700" fill="#2a5080"/>
+    <rect x="540"  y="0" width="8"  height="700" fill="#1a4070"/>
+    <rect x="720"  y="0" width="6"  height="700" fill="#2a5080"/>
+    <rect x="900"  y="0" width="6"  height="700" fill="#2a5080"/>
+    <rect x="1080" y="0" width="8"  height="700" fill="#1a4070"/>
+    <rect x="1260" y="0" width="6"  height="700" fill="#2a5080"/>
+    <rect x="1440" y="0" width="6"  height="700" fill="#2a5080"/>
+    <rect x="1594" y="0" width="6"  height="700" fill="#2a5080"/>
   </g>
-  
-  <!-- Microphone on lapel -->
-  <circle cx="480" cy="600" r="6" fill="#555"/>
-  <rect x="477" y="606" width="6" height="20" rx="2" fill="#333"/>
-  
-  <!-- Equipment/technology in background (blurred) -->
-  <g opacity="0.3">
-    <rect x="1100" y="300" width="200" height="150" rx="10" fill="#3a4a5a"/>
-    <rect x="1120" y="320" width="160" height="90" fill="#1a2a3a"/>
-    <circle cx="1140" cy="380" r="8" fill="#00ff88" opacity="0.5"/>
-    <circle cx="1170" cy="380" r="8" fill="#00ff88" opacity="0.5"/>
-    <circle cx="1200" cy="380" r="8" fill="#ffaa00" opacity="0.5"/>
-  </g>
-  
-  <!-- Name plate / caption -->
-  <rect x="50" y="800" width="600" height="80" fill="#000000" opacity="0.75" rx="5"/>
-  <text x="350" y="835" font-family="Arial, sans-serif" font-size="22" fill="#00ff88" text-anchor="middle" font-weight="bold">
-    Interview Segment
-  </text>
-  <text x="350" y="865" font-family="Arial, sans-serif" font-size="16" fill="#cccccc" text-anchor="middle" id="interviewName">
-    Engineering Pioneer
-  </text>
-  
-  <!-- Recording indicator -->
-  <circle cx="1500" cy="50" r="15" fill="#ff3333">
-    <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+
+  <!-- Spotlight cone from above-left (for interview subject position) -->
+  <ellipse cx="400" cy="0" rx="480" ry="360" fill="url(#spotlight)"/>
+
+  <!-- Bokeh background lights (out-of-focus dots, right side of studio) -->
+  <circle cx="1050" cy="180" r="55" fill="#4a8ab0" opacity="0.18"/>
+  <circle cx="1200" cy="130" r="38" fill="#6aaad0" opacity="0.14"/>
+  <circle cx="1380" cy="220" r="48" fill="#3a7aa0" opacity="0.16"/>
+  <circle cx="1480" cy="100" r="30" fill="#5aaac0" opacity="0.13"/>
+  <circle cx="1100" cy="340" r="42" fill="#3a6a90" opacity="0.15"/>
+  <circle cx="1320" cy="400" r="36" fill="#4a8ab0" opacity="0.12"/>
+  <circle cx="1520" cy="350" r="28" fill="#2a5a80" opacity="0.16"/>
+
+  <!-- Empty interview chair (the South Park character will stand in front) -->
+  <!-- Chair seat -->
+  <rect x="300" y="600" width="180" height="22" rx="8" fill="#223344" stroke="#334455" stroke-width="2"/>
+  <!-- Chair back -->
+  <rect x="320" y="490" width="140" height="115" rx="10" fill="#1e2e3e" stroke="#2a3e50" stroke-width="2"/>
+  <!-- Chair armrests -->
+  <rect x="295" y="555" width="28" height="55" rx="6" fill="#223344" stroke="#334455" stroke-width="1.5"/>
+  <rect x="458" y="555" width="28" height="55" rx="6" fill="#223344" stroke="#334455" stroke-width="1.5"/>
+  <!-- Chair legs -->
+  <line x1="330" y1="622" x2="318" y2="700" stroke="#334455" stroke-width="5" stroke-linecap="round"/>
+  <line x1="450" y1="622" x2="462" y2="700" stroke="#334455" stroke-width="5" stroke-linecap="round"/>
+  <!-- Chair back cushion detail -->
+  <rect x="334" y="504" width="112" height="88" rx="6" fill="#253545" opacity="0.7"/>
+
+  <!-- Small side table / prop table next to chair -->
+  <rect x="520" y="630" width="90" height="10" rx="4" fill="#1e3045" stroke="#2a4060" stroke-width="1.5"/>
+  <rect x="553" y="640" width="22" height="60" fill="#1a2a38" stroke="#2a3a4a" stroke-width="1"/>
+  <!-- Water glass on table -->
+  <rect x="548" y="600" width="20" height="32" rx="3" fill="#88c0d8" opacity="0.4" stroke="#aad8f0" stroke-width="1.5"/>
+  <!-- Water reflection -->
+  <rect x="551" y="604" width="10" height="4" rx="1" fill="#ffffff" opacity="0.25"/>
+
+  <!-- NTR broadcast logo — top right -->
+  <rect x="1420" y="30" width="140" height="65" rx="6" fill="#003366" stroke="#0055aa" stroke-width="2"/>
+  <text x="1490" y="76" font-family="Arial, sans-serif" font-size="36" font-weight="bold"
+        fill="#ffffff" text-anchor="middle">NTR</text>
+
+  <!-- Recording indicator — blinking red dot -->
+  <circle cx="1550" cy="120" r="12" fill="#ff2222">
+    <animate attributeName="opacity" values="1;0.25;1" dur="1.4s" repeatCount="indefinite"/>
   </circle>
-  <text x="1450" y="56" font-family="Arial, sans-serif" font-size="16" fill="#ff3333" text-anchor="end">REC</text>
+  <text x="1532" y="125" font-family="Arial, sans-serif" font-size="15" fill="#ff4444"
+        text-anchor="end" font-weight="bold">REC</text>
+
+  <!-- Studio equipment rack (background right) -->
+  <g opacity="0.28" transform="translate(1130, 280)">
+    <rect x="0" y="0" width="180" height="280" rx="8" fill="#1a2a3a" stroke="#2a3a4a" stroke-width="2"/>
+    <rect x="10" y="15" width="160" height="35" rx="3" fill="#0a1a28" stroke="#1a3a50" stroke-width="1"/>
+    <rect x="10" y="58" width="160" height="35" rx="3" fill="#0a1a28" stroke="#1a3a50" stroke-width="1"/>
+    <rect x="10" y="101" width="160" height="35" rx="3" fill="#0a1a28" stroke="#1a3a50" stroke-width="1"/>
+    <!-- Status LEDs -->
+    <circle cx="150" cy="32"  r="5" fill="#00ff88" opacity="0.8"/>
+    <circle cx="163" cy="32"  r="5" fill="#00ff88" opacity="0.6"/>
+    <circle cx="150" cy="75"  r="5" fill="#ffaa00" opacity="0.7"/>
+    <circle cx="163" cy="75"  r="5" fill="#00ff88" opacity="0.8"/>
+    <circle cx="150" cy="118" r="5" fill="#00ff88" opacity="0.6"/>
+    <circle cx="163" cy="118" r="5" fill="#ff3333" opacity="0.7"/>
+  </g>
+
+  <!-- Camera/teleprompter outline (left of frame, pointing at chair) -->
+  <g opacity="0.3" transform="translate(80, 520)">
+    <rect x="0" y="20" width="60" height="45" rx="5" fill="#223344" stroke="#334455" stroke-width="2"/>
+    <circle cx="60" cy="42" r="20" fill="#1a2a38" stroke="#2a3a4a" stroke-width="2"/>
+    <circle cx="60" cy="42" r="12" fill="#0a1a28"/>
+    <circle cx="60" cy="42" r="5"  fill="#1a3a58"/>
+    <rect x="-30" y="30" width="32" height="26" rx="3" fill="#1e2e3e" stroke="#2a3e50" stroke-width="1.5"/>
+    <!-- Tripod -->
+    <line x1="30" y1="65" x2="10"  y2="120" stroke="#334455" stroke-width="4" stroke-linecap="round"/>
+    <line x1="30" y1="65" x2="50"  y2="120" stroke="#334455" stroke-width="4" stroke-linecap="round"/>
+    <line x1="30" y1="65" x2="30"  y2="120" stroke="#334455" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- Subtle scan-line overlay for TV feel -->
+  <rect width="1600" height="900" fill="none"
+        style="background: repeating-linear-gradient(0deg, rgba(0,0,0,0.04) 0px, transparent 1px, transparent 3px, rgba(0,0,0,0.04) 4px)"
+        opacity="0.5"/>
 </svg>

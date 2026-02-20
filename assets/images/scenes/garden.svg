@@ -250,21 +250,82 @@
   </g>
   
   <!-- ============ GARDEN PATH ============ -->
-  <path d="M380,550 Q500,600 550,700 Q580,800 600,900 L700,900 Q680,800 650,700 Q600,600 480,550 Z" 
+  <path d="M510,550 Q580,600 610,700 Q640,800 660,900 L760,900 Q740,800 710,700 Q660,600 590,550 Z" 
         fill="url(#pathGrad)" filter="url(#shadow)"/>
   
   <!-- Path stones texture -->
   <g fill="#8D6E63" opacity="0.3">
-    <ellipse cx="420" cy="570" rx="20" ry="10"/>
-    <ellipse cx="480" cy="600" rx="25" ry="12"/>
-    <ellipse cx="530" cy="650" rx="22" ry="11"/>
-    <ellipse cx="570" cy="720" rx="24" ry="12"/>
-    <ellipse cx="600" cy="800" rx="26" ry="13"/>
+    <ellipse cx="540" cy="570" rx="20" ry="10"/>
+    <ellipse cx="580" cy="600" rx="25" ry="12"/>
+    <ellipse cx="610" cy="650" rx="22" ry="11"/>
+    <ellipse cx="640" cy="720" rx="24" ry="12"/>
+    <ellipse cx="660" cy="800" rx="26" ry="13"/>
+  </g>
+
+  <!-- ============ MANCAVE / GARAGE (attached to right of house) ============ -->
+  <g transform="translate(400, 370)">
+    <!-- Foundation shadow -->
+    <rect x="-5" y="285" width="230" height="8" fill="#000" opacity="0.2" rx="2"/>
+
+    <!-- Main walls (slightly darker than house, a garage look) -->
+    <rect y="80" width="220" height="200" fill="#D0D0D0" filter="url(#shadow)"/>
+    <!-- Side wall shadow (depth) -->
+    <rect y="80" width="8" height="200" fill="#B0B0B0"/>
+
+    <!-- Flat/low-pitched roof -->
+    <polygon points="-10,80 110,20 230,80" fill="#5D4037"/>
+    <polygon points="-10,80 110,20 110,80" fill="#4A3528" opacity="0.3"/>
+    <!-- Roof ridge cap -->
+    <line x1="50" y1="50" x2="170" y2="50" stroke="#4E342E" stroke-width="3" opacity="0.0"/>
+
+    <!-- Garage door (large, closed, dark) -->
+    <rect x="20" y="110" width="120" height="170" fill="#3A3A3A" rx="2"/>
+    <!-- Garage door panel lines -->
+    <line x1="20" y1="152" x2="140" y2="152" stroke="#2A2A2A" stroke-width="1.5"/>
+    <line x1="20" y1="194" x2="140" y2="194" stroke="#2A2A2A" stroke-width="1.5"/>
+    <line x1="20" y1="236" x2="140" y2="236" stroke="#2A2A2A" stroke-width="1.5"/>
+    <!-- Garage door handle -->
+    <rect x="70" y="260" width="20" height="4" fill="#666" rx="1"/>
+
+    <!-- Small side window (dimly lit from screens inside) -->
+    <rect x="155" y="130" width="50" height="50" fill="#1A2A3A" stroke="#5D4037" stroke-width="5"/>
+    <line x1="180" y1="130" x2="180" y2="180" stroke="#5D4037" stroke-width="3"/>
+    <line x1="155" y1="155" x2="205" y2="155" stroke="#5D4037" stroke-width="3"/>
+    <!-- Glow from monitors inside -->
+    <rect x="158" y="133" width="19" height="19" fill="#2a4a6a" opacity="0.5"/>
+    <rect x="183" y="133" width="19" height="19" fill="#1a3a2a" opacity="0.4"/>
+    <rect x="158" y="158" width="19" height="19" fill="#2a4a1a" opacity="0.3"/>
+    <rect x="183" y="158" width="19" height="19" fill="#2a2a5a" opacity="0.4"/>
+
+    <!-- Antenna/aerial on mancave roof (small secondary) -->
+    <g transform="translate(180, 10)">
+      <rect x="-2" y="-60" width="4" height="70" fill="#616161"/>
+      <!-- Small dipole -->
+      <line x1="-25" y1="-55" x2="25" y2="-55" stroke="#757575" stroke-width="2.5"/>
+      <circle cy="-55" r="3" fill="#888"/>
+    </g>
+
+    <!-- Ventilation duct on side wall -->
+    <rect x="160" y="210" width="40" height="30" fill="#999" rx="2"/>
+    <g stroke="#777" stroke-width="1.5">
+      <line x1="165" y1="210" x2="165" y2="240"/>
+      <line x1="172" y1="210" x2="172" y2="240"/>
+      <line x1="179" y1="210" x2="179" y2="240"/>
+      <line x1="186" y1="210" x2="186" y2="240"/>
+      <line x1="193" y1="210" x2="193" y2="240"/>
+    </g>
+
+    <!-- Cable running from house to mancave roof -->
+    <path d="M-10,60 Q20,45 50,55" stroke="#333" stroke-width="2" fill="none"/>
+
+    <!-- "MANCAVE" sticker on door (subtle, personality detail) -->
+    <rect x="50" y="115" width="60" height="14" fill="#222" rx="2"/>
+    <text x="80" y="126" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="9" opacity="0.8">MANCAVE</text>
   </g>
   
   <!-- ============ FLOWER BEDS ============ -->
   <!-- Left flower bed -->
-  <g transform="translate(450, 500)">
+  <g transform="translate(650, 500)">
     <ellipse cx="80" cy="30" rx="100" ry="40" fill="#3E2723"/>
     <ellipse cx="80" cy="25" rx="95" ry="35" fill="#5D4037"/>
     

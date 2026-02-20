@@ -380,7 +380,7 @@ const TvdocumentaryScene = {
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdocumentary.svg');"></div>
                     <div class="docu-title-card">
-                        <h1>🎬 DRENTHE: THE UNEXPECTED TECH HUB</h1>
+                        <h1>DRENTHE: THE UNEXPECTED TECH HUB</h1>
                         <h2>A Documentary About Wireless Innovation</h2>
                     </div>
                 `
@@ -389,12 +389,7 @@ const TvdocumentaryScene = {
                 duration: 7000,
                 background: 'assets/images/scenes/tvdoc_wsrt.svg',
                 content: `
-                    <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_wsrt.svg');"></div>
-                    <div class="docu-chapter">📡 CHAPTER 1: MODERN ANTENNA TECHNOLOGY</div>
-                    <div class="docu-text-overlay">
-                        <p>The Netherlands has a rich history of radio astronomy...</p>
-                        <p>From WSRT's massive dishes to cutting-edge digital antennas.</p>
-                    </div>
+                    <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_wsrt.svg'); filter: brightness(1.0);"></div>
                 `
             },
             {
@@ -441,12 +436,7 @@ const TvdocumentaryScene = {
                 duration: 7000,
                 background: 'assets/images/scenes/tvdoc_lofar.svg',
                 content: `
-                    <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_lofar.svg');"></div>
-                    <div class="docu-chapter">🌐 CHAPTER 2: LOFAR - THE LOW-FREQUENCY ARRAY</div>
-                    <div class="docu-text-overlay">
-                        <p>Over 50,000 antennas across Europe.</p>
-                        <p>Its core right here in Drenthe - listening to the cosmos.</p>
-                    </div>
+                    <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_lofar.svg'); filter: brightness(1.0);"></div>
                 `
             },
             {
@@ -494,10 +484,10 @@ const TvdocumentaryScene = {
                 background: 'assets/images/scenes/tvdoc_bluetooth.svg',
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_bluetooth.svg');"></div>
-                    <div class="docu-chapter">📱 CHAPTER 3: BLUETOOTH - CONNECTING THE WORLD</div>
+                    <div class="docu-chapter">CHAPTER 3: BLUETOOTH — CONNECTING THE WORLD</div>
                     <div class="docu-text-overlay">
-                        <p>In 1994, a Dutch engineer invented a revolutionary protocol.</p>
-                        <p>His name: Jaap Haartsen. His invention: Bluetooth.</p>
+                        <p>In 1994, Groningen-born engineer Jaap Haartsen invented a short-range wireless protocol while working at Ericsson.</p>
+                        <p>Named after Viking king Harald Blåtand — the man who united the tribes of Denmark.</p>
                     </div>
                 `
             },
@@ -551,7 +541,7 @@ const TvdocumentaryScene = {
                         { speaker: 'Ryan', text: 'Now I really need to check my radio equipment.' }
                     ]);
                     
-                    setTimeout(() => {
+                    game.sceneTimeout(() => {
                         game.loadScene('livingroom');
                     }, 3000);
                 }, 1000);
@@ -622,7 +612,7 @@ const TvdocumentaryScene = {
                 { speaker: 'Ryan', text: 'I\'ve already seen this documentary.' },
                 { speaker: 'Ryan', text: 'Those engineers are incredible. Time to get back to work.' }
             ]);
-            setTimeout(() => {
+            game.sceneTimeout(() => {
                 game.loadScene('livingroom');
             }, 2000);
         }

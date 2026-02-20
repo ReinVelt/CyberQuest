@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="skyGradDay" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3a7fc1"/>
+      <stop offset="55%" style="stop-color:#87ceeb"/>
+      <stop offset="100%" style="stop-color:#b8dcf0"/>
+    </linearGradient>
+    <linearGradient id="roadGradDay" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#5a5a5a"/>
+      <stop offset="100%" style="stop-color:#3a3a3a"/>
+    </linearGradient>
+    <linearGradient id="carBodyDay" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8a7a6a"/>
+      <stop offset="100%" style="stop-color:#6a5a4a"/>
+    </linearGradient>
+    <linearGradient id="fieldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#5a8a3a"/>
+      <stop offset="100%" style="stop-color:#4a7a2a"/>
+    </linearGradient>
+    <radialGradient id="sunGlow">
+      <stop offset="0%" style="stop-color:#fff8e0;stop-opacity:1"/>
+      <stop offset="30%" style="stop-color:#ffe066;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#ffe066;stop-opacity:0"/>
+    </radialGradient>
+
+    <!-- Filters -->
+    <filter id="glowDay" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softBlur">
+      <feGaussianBlur stdDeviation="1.5"/>
+    </filter>
+
+    <!-- Clip to viewport -->
+    <clipPath id="viewClipDay">
+      <rect x="0" y="0" width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+
+  <!-- Daytime sky -->
+  <rect width="1920" height="620" fill="url(#skyGradDay)"/>
+
+  <!-- Sun -->
+  <circle cx="1500" cy="110" r="80" fill="url(#sunGlow)" opacity="0.85"/>
+  <circle cx="1500" cy="110" r="42" fill="#fff8d0" opacity="0.95">
+    <animate attributeName="opacity" values="0.95;0.90;0.95" dur="5s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Clouds - slow drift layer -->
+  <g clip-path="url(#viewClipDay)" opacity="0.82">
+    <g>
+      <animateTransform attributeName="transform" type="translate"
+        values="0,0; -3200,0" dur="120s" repeatCount="indefinite" calcMode="linear"/>
+      <!-- Cloud A -->
+      <ellipse cx="200"  cy="80"  rx="130" ry="48" fill="#fff" opacity="0.9"/>
+      <ellipse cx="150"  cy="95"  rx="90"  ry="38" fill="#fff" opacity="0.85"/>
+      <ellipse cx="270"  cy="90"  rx="80"  ry="34" fill="#fff" opacity="0.8"/>
+      <!-- Cloud B -->
+      <ellipse cx="720"  cy="130" rx="100" ry="42" fill="#fff" opacity="0.88"/>
+      <ellipse cx="660"  cy="145" rx="70"  ry="35" fill="#fff" opacity="0.82"/>
+      <!-- Cloud C -->
+      <ellipse cx="1050" cy="70"  rx="150" ry="55" fill="#fff" opacity="0.92"/>
+      <ellipse cx="970"  cy="88"  rx="100" ry="40" fill="#fff" opacity="0.85"/>
+      <ellipse cx="1160" cy="82"  rx="90"  ry="38" fill="#fff" opacity="0.8"/>
+      <!-- Cloud D -->
+      <ellipse cx="1580" cy="150" rx="110" ry="44" fill="#fff" opacity="0.86"/>
+      <ellipse cx="1520" cy="164" rx="80"  ry="36" fill="#fff" opacity="0.80"/>
+      <!-- Cloud E -->
+      <ellipse cx="1900" cy="95"  rx="120" ry="46" fill="#fff" opacity="0.88"/>
+      <!-- Tile B (duplicate at +3200) -->
+      <ellipse cx="3400" cy="80"  rx="130" ry="48" fill="#fff" opacity="0.9"/>
+      <ellipse cx="3350" cy="95"  rx="90"  ry="38" fill="#fff" opacity="0.85"/>
+      <ellipse cx="3520" cy="90"  rx="80"  ry="34" fill="#fff" opacity="0.8"/>
+      <ellipse cx="3920" cy="130" rx="100" ry="42" fill="#fff" opacity="0.88"/>
+      <ellipse cx="3860" cy="145" rx="70"  ry="35" fill="#fff" opacity="0.82"/>
+      <ellipse cx="4250" cy="70"  rx="150" ry="55" fill="#fff" opacity="0.92"/>
+      <ellipse cx="4170" cy="88"  rx="100" ry="40" fill="#fff" opacity="0.85"/>
+      <ellipse cx="4360" cy="82"  rx="90"  ry="38" fill="#fff" opacity="0.8"/>
+      <ellipse cx="4780" cy="150" rx="110" ry="44" fill="#fff" opacity="0.86"/>
+      <ellipse cx="4720" cy="164" rx="80"  ry="36" fill="#fff" opacity="0.80"/>
+    </g>
+  </g>
+
+  <!-- Horizon haze / distant fields -->
+  <rect x="0" y="440" width="1920" height="60" fill="#c2ddb0" opacity="0.4"/>
+  <rect x="0" y="460" width="1920" height="40" fill="#9ec47e" opacity="0.35"/>
+
+  <!-- Green field ground strip above road -->
+  <rect x="0" y="490" width="1920" height="220" fill="url(#fieldGrad)"/>
+
+  <!-- ================================================================ -->
+  <!-- PARALLAX LAYERS                                                   -->
+  <!-- ================================================================ -->
+
+  <!-- ============ LAYER 1: FAR BACKGROUND - WSRT dishes + windmills (tile=2400, dur=90s) ============ -->
+  <g clip-path="url(#viewClipDay)" opacity="0.7">
+    <g>
+      <animateTransform attributeName="transform" type="translate"
+        values="0,0; -2400,0" dur="90s" repeatCount="indefinite" calcMode="linear"/>
+
+      <!-- Tile A -->
+      <!-- WSRT dish 1 (small, far) -->
+      <g transform="translate(180,395)">
+        <rect x="-3" y="0" width="6" height="50" fill="#8a9090"/>
+        <path d="M -28,-5 Q 0,-28 28,-5 Z" fill="#c5cece" stroke="#8a9090" stroke-width="1.5"/>
+        <line x1="-28" y1="-5" x2="28" y2="-5" stroke="#8a9090" stroke-width="1.5"/>
+      </g>
+      <!-- WSRT dish 2 -->
+      <g transform="translate(430,390)">
+        <rect x="-3" y="0" width="6" height="55" fill="#8a9090"/>
+        <path d="M -30,-6 Q 0,-30 30,-6 Z" fill="#c5cece" stroke="#8a9090" stroke-width="1.5"/>
+        <line x1="-30" y1="-6" x2="30" y2="-6" stroke="#8a9090" stroke-width="1.5"/>
+      </g>
+      <!-- WSRT dish 3 -->
+      <g transform="translate(700,400)">
+        <rect x="-3" y="0" width="6" height="48" fill="#8a9090"/>
+        <path d="M -26,-5 Q 0,-26 26,-5 Z" fill="#c5cece" stroke="#8a9090" stroke-width="1.5"/>
+        <line x1="-26" y1="-5" x2="26" y2="-5" stroke="#8a9090" stroke-width="1.5"/>
+      </g>
+      <!-- WSRT dish 4 -->
+      <g transform="translate(950,395)">
+        <rect x="-3" y="0" width="6" height="52" fill="#8a9090"/>
+        <path d="M -28,-5 Q 0,-28 28,-5 Z" fill="#c5cece" stroke="#8a9090" stroke-width="1.5"/>
+        <line x1="-28" y1="-5" x2="28" y2="-5" stroke="#8a9090" stroke-width="1.5"/>
+      </g>
+
+      <!-- Modern wind turbine 1 (tall, white) -->
+      <rect x="1200" y="280" width="7" height="170" fill="#d0d0d0"/>
+      <g transform="translate(1203,280)">
+        <animateTransform attributeName="transform" type="rotate"
+          values="0 0 0; 360 0 0" dur="7s" repeatCount="indefinite"/>
+        <line x1="0" y1="-70" x2="0" y2="0" stroke="#e0e0e0" stroke-width="5"/>
+        <line x1="0" y1="0" x2="60" y2="20" stroke="#e0e0e0" stroke-width="5"/>
+        <line x1="0" y1="0" x2="-60" y2="20" stroke="#e0e0e0" stroke-width="5"/>
+      </g>
+
+      <!-- Wind turbine 2 -->
+      <rect x="1550" y="300" width="7" height="155" fill="#d0d0d0"/>
+      <g transform="translate(1553,300)">
+        <animateTransform attributeName="transform" type="rotate"
+          values="0 0 0; -360 0 0" dur="9s" repeatCount="indefinite"/>
+        <line x1="0" y1="-65" x2="0" y2="0" stroke="#e0e0e0" stroke-width="5"/>
+        <line x1="0" y1="0" x2="55" y2="18" stroke="#e0e0e0" stroke-width="5"/>
+        <line x1="0" y1="0" x2="-55" y2="18" stroke="#e0e0e0" stroke-width="5"/>
+      </g>
+
+      <!-- Church/village spire -->
+      <rect x="1900" y="380" width="14" height="80" fill="#7a8888"/>
+      <path d="M 1895,380 L 1907,348 L 1919,380" fill="#6a7878"/>
+
+      <!-- Tile B (duplicate at +2400) -->
+      <g transform="translate(2580,395)">
+        <rect x="-3" y="0" width="6" height="50" fill="#8a9090"/>
+        <path d="M -28,-5 Q 0,-28 28,-5 Z" fill="#c5cece" stroke="#8a9090" stroke-width="1.5"/>
+        <line x1="-28" y1="-5" x2="28" y2="-5" stroke="#8a9090" stroke-width="1.5"/>
+      </g>
+      <g transform="translate(2830,390)">
+        <rect x="-3" y="0" width="6" height="55" fill="#8a9090"/>
+        <path d="M -30,-6 Q 0,-30 30,-6 Z" fill="#c5cece" stroke="#8a9090" stroke-width="1.5"/>
+        <line x1="-30" y1="-6" x2="30" y2="-6" stroke="#8a9090" stroke-width="1.5"/>
+      </g>
+      <g transform="translate(3100,400)">
+        <rect x="-3" y="0" width="6" height="48" fill="#8a9090"/>
+        <path d="M -26,-5 Q 0,-26 26,-5 Z" fill="#c5cece" stroke="#8a9090" stroke-width="1.5"/>
+        <line x1="-26" y1="-5" x2="26" y2="-5" stroke="#8a9090" stroke-width="1.5"/>
+      </g>
+      <g transform="translate(3350,395)">
+        <rect x="-3" y="0" width="6" height="52" fill="#8a9090"/>
+        <path d="M -28,-5 Q 0,-28 28,-5 Z" fill="#c5cece" stroke="#8a9090" stroke-width="1.5"/>
+        <line x1="-28" y1="-5" x2="28" y2="-5" stroke="#8a9090" stroke-width="1.5"/>
+      </g>
+      <rect x="3600" y="280" width="7" height="170" fill="#d0d0d0"/>
+      <g transform="translate(3603,280)">
+        <animateTransform attributeName="transform" type="rotate"
+          values="0 0 0; 360 0 0" dur="7s" repeatCount="indefinite"/>
+        <line x1="0" y1="-70" x2="0" y2="0" stroke="#e0e0e0" stroke-width="5"/>
+        <line x1="0" y1="0" x2="60" y2="20" stroke="#e0e0e0" stroke-width="5"/>
+        <line x1="0" y1="0" x2="-60" y2="20" stroke="#e0e0e0" stroke-width="5"/>
+      </g>
+      <rect x="3950" y="300" width="7" height="155" fill="#d0d0d0"/>
+      <g transform="translate(3953,300)">
+        <animateTransform attributeName="transform" type="rotate"
+          values="0 0 0; -360 0 0" dur="9s" repeatCount="indefinite"/>
+        <line x1="0" y1="-65" x2="0" y2="0" stroke="#e0e0e0" stroke-width="5"/>
+        <line x1="0" y1="0" x2="55" y2="18" stroke="#e0e0e0" stroke-width="5"/>
+        <line x1="0" y1="0" x2="-55" y2="18" stroke="#e0e0e0" stroke-width="5"/>
+      </g>
+      <rect x="4300" y="380" width="14" height="80" fill="#7a8888"/>
+      <path d="M 4295,380 L 4307,348 L 4319,380" fill="#6a7878"/>
+    </g>
+  </g>
+
+  <!-- ============ LAYER 2: MID BACKGROUND - tree line + farms (tile=1800, dur=48s) ============ -->
+  <g clip-path="url(#viewClipDay)" opacity="0.9">
+    <g>
+      <animateTransform attributeName="transform" type="translate"
+        values="0,0; -1800,0" dur="48s" repeatCount="indefinite" calcMode="linear"/>
+
+      <!-- Tile A -->
+      <!-- Trees cluster 1 -->
+      <rect x="80"  y="445" width="16" height="65" fill="#4a6e2a"/>
+      <ellipse cx="88"  cy="432" rx="32" ry="40" fill="#3a5e1a"/>
+      <rect x="160" y="450" width="13" height="60" fill="#4a6e2a"/>
+      <ellipse cx="166" cy="438" rx="26" ry="34" fill="#3a5e1a"/>
+      <rect x="220" y="448" width="14" height="62" fill="#5a7e3a"/>
+      <ellipse cx="227" cy="436" rx="28" ry="36" fill="#4a6e2a"/>
+
+      <!-- Red barn -->
+      <rect x="480" y="435" width="90" height="60" fill="#8a3a2a"/>
+      <path d="M 474,435 L 525,405 L 576,435 Z" fill="#6a2a1a"/>
+      <rect x="495" y="448" width="18" height="22" fill="#5c2a1a" opacity="0.5"/>
+      <rect x="530" y="448" width="22" height="35" fill="#7a3a2a"/>
+
+      <!-- Trees cluster 2 -->
+      <rect x="880" y="440" width="18" height="70" fill="#4a6e2a"/>
+      <ellipse cx="889" cy="424" rx="35" ry="44" fill="#3a5e1a"/>
+      <rect x="940" y="446" width="14" height="64" fill="#5a7e3a"/>
+      <ellipse cx="947" cy="432" rx="28" ry="38" fill="#4a6e2a"/>
+
+      <!-- White farmhouse -->
+      <rect x="1200" y="438" width="70" height="55" fill="#e8ddc0"/>
+      <path d="M 1194,438 L 1235,410 L 1276,438 Z" fill="#c8380c"/>
+      <rect x="1210" y="452" width="14" height="18" fill="#7a9ab0" opacity="0.8"/>
+      <rect x="1238" y="452" width="14" height="18" fill="#7a9ab0" opacity="0.8"/>
+      <rect x="1226" y="462" width="16" height="31" fill="#6a4a2a"/>
+
+      <!-- Trees cluster 3 -->
+      <rect x="1530" y="445" width="15" height="65" fill="#4a6e2a"/>
+      <ellipse cx="1537" cy="432" rx="30" ry="40" fill="#3a5e1a"/>
+      <rect x="1630" y="448" width="16" height="62" fill="#5a7e3a"/>
+      <ellipse cx="1638" cy="434" rx="32" ry="42" fill="#4a6e2a"/>
+
+      <!-- Tile B (duplicate at +1800) -->
+      <rect x="1880" y="445" width="16" height="65" fill="#4a6e2a"/>
+      <ellipse cx="1888" cy="432" rx="32" ry="40" fill="#3a5e1a"/>
+      <rect x="1960" y="450" width="13" height="60" fill="#4a6e2a"/>
+      <ellipse cx="1966" cy="438" rx="26" ry="34" fill="#3a5e1a"/>
+      <rect x="2020" y="448" width="14" height="62" fill="#5a7e3a"/>
+      <ellipse cx="2027" cy="436" rx="28" ry="36" fill="#4a6e2a"/>
+
+      <rect x="2280" y="435" width="90" height="60" fill="#8a3a2a"/>
+      <path d="M 2274,435 L 2325,405 L 2376,435 Z" fill="#6a2a1a"/>
+      <rect x="2295" y="448" width="18" height="22" fill="#5c2a1a" opacity="0.5"/>
+      <rect x="2330" y="448" width="22" height="35" fill="#7a3a2a"/>
+
+      <rect x="2680" y="440" width="18" height="70" fill="#4a6e2a"/>
+      <ellipse cx="2689" cy="424" rx="35" ry="44" fill="#3a5e1a"/>
+      <rect x="2740" y="446" width="14" height="64" fill="#5a7e3a"/>
+      <ellipse cx="2747" cy="432" rx="28" ry="38" fill="#4a6e2a"/>
+
+      <rect x="3000" y="438" width="70" height="55" fill="#e8ddc0"/>
+      <path d="M 2994,438 L 3035,410 L 3076,438 Z" fill="#c8380c"/>
+      <rect x="3010" y="452" width="14" height="18" fill="#7a9ab0" opacity="0.8"/>
+      <rect x="3038" y="452" width="14" height="18" fill="#7a9ab0" opacity="0.8"/>
+      <rect x="3026" y="462" width="16" height="31" fill="#6a4a2a"/>
+
+      <rect x="3330" y="445" width="15" height="65" fill="#4a6e2a"/>
+      <ellipse cx="3337" cy="432" rx="30" ry="40" fill="#3a5e1a"/>
+      <rect x="3430" y="448" width="16" height="62" fill="#5a7e3a"/>
+      <ellipse cx="3438" cy="434" rx="32" ry="42" fill="#4a6e2a"/>
+    </g>
+  </g>
+
+  <!-- ============ LAYER 3: NEAR BACKGROUND - canal, big trees (tile=1600, dur=26s) ============ -->
+  <g clip-path="url(#viewClipDay)" opacity="0.95">
+    <g>
+      <animateTransform attributeName="transform" type="translate"
+        values="0,0; -1600,0" dur="26s" repeatCount="indefinite" calcMode="linear"/>
+
+      <!-- Tile A -->
+      <!-- Big roadside tree 1 -->
+      <rect x="70"  y="490" width="22" height="90" fill="#5a7a2a"/>
+      <ellipse cx="81"  cy="470" rx="48" ry="56" fill="#3a6a1a"/>
+
+      <!-- Canal (Drenthe veenkanaal) -->
+      <rect x="290" y="532" width="180" height="28" fill="#6ab0c8" opacity="0.85"/>
+      <line x1="290" y1="540" x2="470" y2="540" stroke="#90c8d8" stroke-width="1" opacity="0.5"/>
+      <!-- Canal bridge -->
+      <rect x="440" y="518" width="32" height="42" fill="#c8b870"/>
+      <rect x="436" y="514" width="40" height="8" fill="#b0a060"/>
+
+      <!-- Bike path marker -->
+      <rect x="340" y="560" width="6" height="72" fill="#c8a050"/>
+      <circle cx="343" cy="557" r="6" fill="#e8c060"/>
+
+      <!-- Big roadside tree 2 -->
+      <rect x="780" y="492" width="24" height="88" fill="#5a7a2a"/>
+      <ellipse cx="792" cy="470" rx="50" ry="54" fill="#3a6a1a"/>
+
+      <!-- Power line pole (Dutch style) -->
+      <rect x="1090" y="420" width="10" height="170" fill="#787070"/>
+      <line x1="1045" y1="432" x2="1135" y2="432" stroke="#686060" stroke-width="3"/>
+      <line x1="1058" y1="446" x2="1122" y2="446" stroke="#686060" stroke-width="3"/>
+
+      <!-- Big roadside tree 3 -->
+      <rect x="1340" y="488" width="20" height="92" fill="#5a7a2a"/>
+      <ellipse cx="1350" cy="466" rx="46" ry="58" fill="#3a6a1a"/>
+
+      <!-- Tile B (duplicate at +1600) -->
+      <rect x="1670" y="490" width="22" height="90" fill="#5a7a2a"/>
+      <ellipse cx="1681" cy="470" rx="48" ry="56" fill="#3a6a1a"/>
+
+      <rect x="1890" y="532" width="180" height="28" fill="#6ab0c8" opacity="0.85"/>
+      <line x1="1890" y1="540" x2="2070" y2="540" stroke="#90c8d8" stroke-width="1" opacity="0.5"/>
+      <rect x="2040" y="518" width="32" height="42" fill="#c8b870"/>
+      <rect x="2036" y="514" width="40" height="8" fill="#b0a060"/>
+
+      <rect x="1940" y="560" width="6" height="72" fill="#c8a050"/>
+      <circle cx="1943" cy="557" r="6" fill="#e8c060"/>
+
+      <rect x="2380" y="492" width="24" height="88" fill="#5a7a2a"/>
+      <ellipse cx="2392" cy="470" rx="50" ry="54" fill="#3a6a1a"/>
+
+      <rect x="2690" y="420" width="10" height="170" fill="#787070"/>
+      <line x1="2645" y1="432" x2="2735" y2="432" stroke="#686060" stroke-width="3"/>
+      <line x1="2658" y1="446" x2="2722" y2="446" stroke="#686060" stroke-width="3"/>
+
+      <rect x="2940" y="488" width="20" height="92" fill="#5a7a2a"/>
+      <ellipse cx="2950" cy="466" rx="46" ry="58" fill="#3a6a1a"/>
+    </g>
+  </g>
+
+  <!-- ============ LAYER 4: ROADSIDE - fence + road signs (tile=800, dur=10s) ============ -->
+  <g clip-path="url(#viewClipDay)" opacity="0.95">
+    <g>
+      <animateTransform attributeName="transform" type="translate"
+        values="0,0; -800,0" dur="10s" repeatCount="indefinite" calcMode="linear"/>
+
+      <!-- Tile A: wooden fence posts -->
+      <rect x="0"   y="668" width="10" height="48" fill="#8a7050"/>
+      <rect x="160" y="668" width="10" height="48" fill="#8a7050"/>
+      <rect x="320" y="668" width="10" height="48" fill="#8a7050"/>
+      <rect x="480" y="668" width="10" height="48" fill="#8a7050"/>
+      <rect x="640" y="668" width="10" height="48" fill="#8a7050"/>
+      <!-- Horizontal rails -->
+      <rect x="0" y="678" width="800" height="4" fill="#7a6040"/>
+      <rect x="0" y="698" width="800" height="3" fill="#7a6040" opacity="0.7"/>
+
+      <!-- Dutch road sign (N34 route) -->
+      <rect x="390" y="628" width="7" height="88" fill="#888"/>
+      <rect x="375" y="624" width="38" height="26" rx="3" fill="#003DA5" stroke="#fff" stroke-width="2"/>
+      <text x="394" y="641" font-size="11" fill="#fff" text-anchor="middle" font-family="sans-serif" font-weight="bold">N34</text>
+
+      <!-- Tile B (duplicate at +800) -->
+      <rect x="800"  y="668" width="10" height="48" fill="#8a7050"/>
+      <rect x="960"  y="668" width="10" height="48" fill="#8a7050"/>
+      <rect x="1120" y="668" width="10" height="48" fill="#8a7050"/>
+      <rect x="1280" y="668" width="10" height="48" fill="#8a7050"/>
+      <rect x="1440" y="668" width="10" height="48" fill="#8a7050"/>
+      <rect x="800" y="678" width="800" height="4" fill="#7a6040"/>
+      <rect x="800" y="698" width="800" height="3" fill="#7a6040" opacity="0.7"/>
+
+      <rect x="1190" y="628" width="7" height="88" fill="#888"/>
+      <rect x="1175" y="624" width="38" height="26" rx="3" fill="#003DA5" stroke="#fff" stroke-width="2"/>
+      <text x="1194" y="641" font-size="11" fill="#fff" text-anchor="middle" font-family="sans-serif" font-weight="bold">N34</text>
+    </g>
+  </g>
+
+  <!-- ============ ROAD (static base) ============ -->
+  <rect y="706" width="1920" height="374" fill="url(#roadGradDay)"/>
+
+  <!-- Road edge white line (Dutch style: solid white) -->
+  <rect x="0" y="706" width="1920" height="4" fill="#ccc" opacity="0.7"/>
+  <!-- Road shoulder -->
+  <rect x="0" y="700" width="1920" height="8" fill="#6a6050"/>
+
+  <!-- ============ ROAD CENTER DASHES (tile=250, dur=1.5s) ============ -->
+  <g clip-path="url(#viewClipDay)" opacity="0.75">
+    <g>
+      <animateTransform attributeName="transform" type="translate"
+        values="0,0; -250,0" dur="1.5s" repeatCount="indefinite" calcMode="linear"/>
+      <rect x="0"    y="848" width="100" height="5" fill="#e8e800"/>
+      <rect x="250"  y="848" width="100" height="5" fill="#e8e800"/>
+      <rect x="500"  y="848" width="100" height="5" fill="#e8e800"/>
+      <rect x="750"  y="848" width="100" height="5" fill="#e8e800"/>
+      <rect x="1000" y="848" width="100" height="5" fill="#e8e800"/>
+      <rect x="1250" y="848" width="100" height="5" fill="#e8e800"/>
+      <rect x="1500" y="848" width="100" height="5" fill="#e8e800"/>
+      <rect x="1750" y="848" width="100" height="5" fill="#e8e800"/>
+      <rect x="2000" y="848" width="100" height="5" fill="#e8e800"/>
+    </g>
+  </g>
+
+  <!-- ============ ROAD EDGE DASHES - right side ============ -->
+  <g clip-path="url(#viewClipDay)" opacity="0.5">
+    <g>
+      <animateTransform attributeName="transform" type="translate"
+        values="0,0; -250,0" dur="1.5s" repeatCount="indefinite" calcMode="linear"/>
+      <rect x="0"    y="1058" width="60" height="4" fill="#fff"/>
+      <rect x="250"  y="1058" width="60" height="4" fill="#fff"/>
+      <rect x="500"  y="1058" width="60" height="4" fill="#fff"/>
+      <rect x="750"  y="1058" width="60" height="4" fill="#fff"/>
+      <rect x="1000" y="1058" width="60" height="4" fill="#fff"/>
+      <rect x="1250" y="1058" width="60" height="4" fill="#fff"/>
+      <rect x="1500" y="1058" width="60" height="4" fill="#fff"/>
+      <rect x="1750" y="1058" width="60" height="4" fill="#fff"/>
+      <rect x="2000" y="1058" width="60" height="4" fill="#fff"/>
+    </g>
+  </g>
+
+  <!-- ============ ROAD SURFACE TEXTURE ============ -->
+  <g clip-path="url(#viewClipDay)" opacity="0.07">
+    <g>
+      <animateTransform attributeName="transform" type="translate"
+        values="0,0; -600,0" dur="2.5s" repeatCount="indefinite" calcMode="linear"/>
+      <rect x="50"  y="760" width="40" height="15" fill="#2a2a2a"/>
+      <rect x="200" y="920" width="60" height="12" fill="#2a2a2a"/>
+      <rect x="380" y="810" width="30" height="18" fill="#2a2a2a"/>
+      <rect x="520" y="980" width="50" height="14" fill="#2a2a2a"/>
+      <rect x="650"  y="760" width="40" height="15" fill="#2a2a2a"/>
+      <rect x="800"  y="920" width="60" height="12" fill="#2a2a2a"/>
+      <rect x="980"  y="810" width="30" height="18" fill="#2a2a2a"/>
+      <rect x="1120" y="980" width="50" height="14" fill="#2a2a2a"/>
+    </g>
+  </g>
+
+  <!-- ============ VOLVO 740 (same boxy shape - daytime colors) ============ -->
+  <g>
+    <animateTransform attributeName="transform" type="translate"
+      values="700,746; 700,748; 700,746; 700,745; 700,746" dur="0.8s" repeatCount="indefinite" calcMode="linear"/>
+
+    <!-- Car body shadow on road -->
+    <ellipse cx="900" cy="915" rx="185" ry="12" fill="#0a0a0a" opacity="0.25"/>
+
+    <!-- Wheels -->
+    <!-- Rear wheel -->
+    <circle cx="780" cy="908" r="36" fill="#2a2a2a" stroke="#444" stroke-width="4"/>
+    <circle cx="780" cy="908" r="22" fill="#3a3a3a"/>
+    <circle cx="780" cy="908" r="9" fill="#555"/>
+    <g transform="translate(780,908)">
+      <animateTransform attributeName="transform" type="rotate"
+        values="0 0 0; 360 0 0" dur="0.5s" repeatCount="indefinite"/>
+      <line x1="0" y1="-18" x2="0" y2="18" stroke="#444" stroke-width="2.5"/>
+      <line x1="-18" y1="0" x2="18" y2="0" stroke="#444" stroke-width="2.5"/>
+      <line x1="-13" y1="-13" x2="13" y2="13" stroke="#444" stroke-width="2.5"/>
+      <line x1="13" y1="-13" x2="-13" y2="13" stroke="#444" stroke-width="2.5"/>
+    </g>
+
+    <!-- Front wheel -->
+    <circle cx="1020" cy="908" r="36" fill="#2a2a2a" stroke="#444" stroke-width="4"/>
+    <circle cx="1020" cy="908" r="22" fill="#3a3a3a"/>
+    <circle cx="1020" cy="908" r="9" fill="#555"/>
+    <g transform="translate(1020,908)">
+      <animateTransform attributeName="transform" type="rotate"
+        values="0 0 0; 360 0 0" dur="0.5s" repeatCount="indefinite"/>
+      <line x1="0" y1="-18" x2="0" y2="18" stroke="#444" stroke-width="2.5"/>
+      <line x1="-18" y1="0" x2="18" y2="0" stroke="#444" stroke-width="2.5"/>
+      <line x1="-13" y1="-13" x2="13" y2="13" stroke="#444" stroke-width="2.5"/>
+      <line x1="13" y1="-13" x2="-13" y2="13" stroke="#444" stroke-width="2.5"/>
+    </g>
+
+    <!-- Car body (classic Volvo 740 boxy shape) - dark silver/graphite day color -->
+    <!-- Lower body -->
+    <path d="M 730,900 L 730,858 L 762,838 L 1042,838 L 1072,858 L 1072,900 Z" fill="url(#carBodyDay)" stroke="#4a3a2a" stroke-width="2"/>
+
+    <!-- Upper body/cabin -->
+    <path d="M 772,838 L 792,796 L 852,786 L 952,786 L 1012,796 L 1032,838 Z" fill="url(#carBodyDay)" stroke="#4a3a2a" stroke-width="2"/>
+
+    <!-- Roof -->
+    <rect x="792" y="784" width="220" height="5" fill="#7a6a5a"/>
+
+    <!-- Windows (lighter in daytime - sky reflection) -->
+    <path d="M 797,796 L 857,788 L 857,834 L 797,834 Z" fill="#6a9cc0" opacity="0.65"/>
+    <path d="M 862,788 L 902,788 L 902,834 L 862,834 Z" fill="#6a9cc0" opacity="0.7"/>
+    <path d="M 907,788 L 947,788 L 947,834 L 907,834 Z" fill="#6a9cc0" opacity="0.7"/>
+    <path d="M 952,788 L 1007,796 L 1007,834 L 952,834 Z" fill="#6a9cc0" opacity="0.65"/>
+
+    <!-- Window reflections (sun glare streak) -->
+    <path d="M 800,795 L 840,788" stroke="#fff" stroke-width="2" opacity="0.35"/>
+    <path d="M 907,790 L 945,790" stroke="#fff" stroke-width="2" opacity="0.3"/>
+
+    <!-- Window trim -->
+    <path d="M 792,796 L 852,786 L 952,786 L 1012,796" fill="none" stroke="#3a2a1a" stroke-width="3"/>
+    <path d="M 792,834 L 1012,834" fill="none" stroke="#3a2a1a" stroke-width="2"/>
+
+    <!-- Door lines -->
+    <line x1="872" y1="838" x2="872" y2="895" stroke="#4a3a2a" stroke-width="2"/>
+    <line x1="932" y1="838" x2="932" y2="895" stroke="#4a3a2a" stroke-width="2"/>
+    <!-- Door handles -->
+    <rect x="867" y="865" width="14" height="4" fill="#3a2a1a"/>
+    <rect x="927" y="865" width="14" height="4" fill="#3a2a1a"/>
+
+    <!-- Side mirror -->
+    <rect x="765" y="812" width="9" height="16" fill="#7a6a5a"/>
+    <rect x="759" y="815" width="6" height="10" fill="#6a9cc0" opacity="0.5"/>
+
+    <!-- Front bumper -->
+    <rect x="1042" y="852" width="36" height="32" fill="#7a6a5a"/>
+    <rect x="1072" y="858" width="9" height="24" fill="#5a4a3a"/>
+
+    <!-- Rear bumper -->
+    <rect x="730" y="852" width="14" height="32" fill="#7a6a5a"/>
+
+    <!-- No headlights (daytime) - just dim marker lights -->
+    <rect x="1062" y="844" width="18" height="22" fill="#ffee99" opacity="0.25"/>
+
+    <!-- Taillights (off - daytime) -->
+    <rect x="730" y="862" width="10" height="14" fill="#cc4444" opacity="0.3"/>
+
+    <!-- Body panel highlights (sunlight from upper right) -->
+    <path d="M 760,840 L 1040,840" stroke="#b09070" stroke-width="1.5" opacity="0.5"/>
+    <path d="M 772,850 L 1032,850" stroke="#a08060" stroke-width="1" opacity="0.4"/>
+  </g>
+
+  <!-- Road bottom edge green verge -->
+  <rect x="0" y="1068" width="1920" height="12" fill="#3a5a1a" opacity="0.4"/>
+</svg>

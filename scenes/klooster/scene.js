@@ -95,7 +95,7 @@ const KloosterScene = {
             height: (350 / 1080) * 100, // 32.41%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "A carefully maintained hedge maze, part of the monastery historic gardens.",
                         "Good for hiding. Bad for quick escapes."
@@ -114,7 +114,7 @@ const KloosterScene = {
             height: (150 / 1080) * 100, // 13.89%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "An old stone well, probably medieval.",
                         "I wonder how many secrets have been dropped down there over the centuries."
@@ -132,16 +132,10 @@ const KloosterScene = {
             height: (65 / 1080) * 100, // 6.02%
             cursor: 'use',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "A cold stone bench. Monks used these for meditation.",
                         "I use it for waiting."
-                    ], "Ryan");
-                },
-                use: () => {
-                    game.showDialogue([
-                        "I sit and wait...",
-                        "The cold stone reminds me to stay alert."
                     ], "Ryan");
                 }
             }
@@ -175,7 +169,7 @@ const KloosterScene = {
                     console.log('[Klooster] Setting found_usb_stick flag and loading car_discovery scene');
                     
                     // Transition to the close-up car discovery scene
-                    setTimeout(() => {
+                    game.sceneTimeout(() => {
                         console.log('[Klooster] Now calling loadScene for car_discovery');
                         game.loadScene('car_discovery');
                     }, 500);
@@ -186,7 +180,7 @@ const KloosterScene = {
                         { speaker: '', text: '*Engine starts. Time to head home.*' }
                     ]);
                     
-                    setTimeout(() => {
+                    game.sceneTimeout(() => {
                         console.log('Klooster: Setting driving_destination to home');
                         game.setFlag('driving_destination', 'home');
                         console.log('Klooster: Loading driving scene');
@@ -208,7 +202,7 @@ const KloosterScene = {
             height: (600 / 1080) * 100, // 55.56%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "The left wing of the monastery. Gothic architecture at its finest.",
                         "The windows glow faintly. Some kind of security lighting inside."
@@ -226,7 +220,7 @@ const KloosterScene = {
             height: (550 / 1080) * 100, // 50.93%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "The right wing. More Gothic windows.",
                         "The architecture is impressive, even in the dark."
@@ -244,7 +238,7 @@ const KloosterScene = {
             height: (400 / 1080) * 100, // 37.04%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "The central tower rises into the night sky.",
                         "A cross at the top. A rose window beneath it.",
@@ -263,12 +257,29 @@ const KloosterScene = {
             height: (160 / 1080) * 100, // 14.81%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "A nearly full moon.",
                         "Perfect for clandestine meetings, ironically."
                     ], "Ryan");
                 }
+            }
+        },
+        {
+            id: 'westerbork-sign',
+            name: 'Road Sign: Westerbork Memorial',
+            x: 2,
+            y: 50,
+            width: 10,
+            height: 20,
+            cursor: 'pointer',
+            action: (game) => {
+                game.startDialogue([
+                    { speaker: 'Ryan', text: 'The road sign. Westerbork — 12 km. The memorial is just down the road from here.' },
+                    { speaker: 'Ryan', text: 'I\'ve been meaning to go. Something about this whole situation keeps pulling me toward that place.' },
+                ], () => {
+                    game.loadScene('westerbork_memorial');
+                });
             }
         }
     ],

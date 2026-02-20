@@ -201,14 +201,16 @@ body {
     transform: translateX(-50%);
     width: calc(100% - 40px);
     max-width: 800px;
-    background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-primary) 100%);
-    border: 2px solid var(--color-accent);
+    background: linear-gradient(135deg, rgba(22, 33, 62, 0.60) 0%, rgba(26, 26, 46, 0.60) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(15, 52, 96, 0.7);
     border-radius: 12px;
     padding: 20px;
     display: flex;
     gap: 20px;
     z-index: var(--z-dialogue);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
 }
 
 #dialogue-box.hidden {
@@ -219,11 +221,13 @@ body {
     width: 100px;
     height: 100px;
     flex-shrink: 0;
-    background-color: var(--color-accent);
-    background-size: cover;
-    background-position: center;
+    background-color: rgba(15, 52, 96, 0.5);
+    background-size: contain;
+    background-position: center bottom;
+    background-repeat: no-repeat;
     border-radius: 8px;
     border: 2px solid var(--color-highlight);
+    overflow: hidden;
 }
 
 #dialogue-content {

@@ -1,33 +1,88 @@
-You are Ryan Weylant, macGyver style person, software developer and hacker. 55 years old. Living on the planet Earth, Europe, Netherlands, Drenthe, Compascuum.
+You are Ryan Weylant, macGyver style person, software developer and hacker. 55 years old. Living on the planet Earth, Europe, Netherlands, Drenthe, Compascuum. Partner: Ies. Dogs: Tino, Kessy (white), and ET (pug).
 
 
-Scene 1: Home (Exterior)
-The start of the story is at home. Ryan has a small farm-like house in Compascuum. In front of the house is the road and a small canal where in the summertime sometimes boats are passing by. The house is white with a red roof.
+Scene 1: Intro (Cinematic)
+A noir-style scrolling text introduction that sets the tone, introduces Ryan, the date (February 9, 2026), and foreshadows the events to come. Title: CYBERQUEST: OPERATION ZERFALL.
 
-Scene 2: Livingroom (Interior)
-Inside the house is a cozy livingroom with a couch, TV, and family photos. Ryan's wife Ies is here, watching shows and offering commentary. The TV can be clicked to watch the documentary about Drenthe's wireless technology pioneers.
+Scene 2: Home / Kitchen (Interior)
+The start of the story is at home. Ryan has a small farm-like house in Compascuum. The kitchen has an espresso machine, a view of the canal through the window. Doors lead to the livingroom, the garden, and the mancave (mancave requires watching the documentary first).
 
-Scene 3: TV Documentary
+Scene 3: Livingroom (Interior)
+Inside the house is a cozy livingroom with a couch, TV, and family photos. Ryan's wife Ies is here in an armchair. Tino and Kessy (the white dogs) sleep on the couch, ET (the pug) snores on the floor. The TV can be clicked to watch the documentary about Drenthe's wireless technology pioneers.
+
+Scene 4: TV Documentary
 An immersive full-screen TV viewing experience where Ryan watches a documentary about three revolutionary technologies invented in the Netherlands:
-- Modern Antenna Technology and Radio Astronomy - featuring Dr. David Prinsloo (TU Eindhoven)
+- Modern Antenna Technology and Radio Astronomy / WSRT - featuring Dr. David Prinsloo (TU Eindhoven)
 - LOFAR (Low-Frequency Array) - featuring Cees Bassa (ASTRON)
 - Bluetooth Protocol - featuring Jaap Haartsen
-The documentary provides context about Ryan's contacts and their expertise in radio technology and signal processing.
+The documentary provides context about Ryan's contacts and their expertise in radio technology and signal processing. Watching it is required to unlock the mancave.
 
-Scene 4: Garage/Mancave
-Next to the house is a small garage, Ryan's mancave. In this cave you can see a 3dprinter, lasercutter, led displays, oscilloscoop, routers, hubs a server with a terminal and a laptop. Soldering iron and everything for an electronics and software lab. And a lot of wireless hacking devices: hackrf one, flipper-zero, Wifi-pineapple, Meshtastic, Meshcore and a SSTV sat terminal giving only snow/noise.
+Scene 5: Garage/Mancave (Investigation Hub)
+Next to the house is a small garage, Ryan's mancave. In this cave you can see a 3dprinter, lasercutter, led displays, oscilloscoop, routers, hubs a server with a terminal and a laptop. Soldering iron and everything for an electronics and software lab. And a lot of wireless hacking devices: hackrf one, flipper-zero, Wifi-pineapple, Meshtastic, Meshcore and a SSTV sat terminal giving only snow/noise. This is the central hub for the investigation, with access to the videocall terminal, planboard, and regional map.
 
-Scene 5: Garden
-Behind the house is a garden with flowers, grass, an enormous far sight over the acres and the 16 windturbines near the german border 500 meters in the east. The windturbines have flickering lights in the top. The environment is quiet. Some birds singing. There is also a large antenna near the windturbines.
+Scene 5a: SDR Bench (Signal Analysis Lab)
+A dedicated Software-Defined Radio workbench accessible from the mancave. Features a dual-monitor setup: left screen shows a spectrum analyzer (14.000–14.500 MHz with a strong spike at 14.230 MHz), right screen shows a scrolling waterfall display revealing SSTV bursts. An RTL-SDR dongle with blinking LED sits connected between the monitors. A frequency control panel and SSTV decoder (Martin M2 mode) complete the station. This is where Ryan decodes the SSTV transmission and extracts the image carrying the Klooster coordinates. Educational hotspots explain SDR technology, the SSTV protocol, and the connection to LOFAR signal processing.
+
+Scene 6: Garden
+Behind the house is a garden with flowers, grass, an enormous far sight over the acres and the 16 windturbines near the german border 500 meters in the east. The windturbines have flickering lights in the top. The environment is quiet. Some birds singing. There is also a large antenna near the windturbines. Ryan's Volvo estate is parked here — the car is the way to travel to other locations.
+
+Scene 7: Driving Night (Cinematic Transition)
+Interior view of Ryan's Volvo. Night-time internal monologue for three routes: (1) Compascuum → Ter Apel Klooster — anxious, uncertain, unable to turn back; (2) Klooster → Compascuum — processing the USB delivery, the weight of the files; (3) Compascuum → Steckerdoser Heide — full infiltration tension, border crossing, military lights through the trees.
+
+Scene 7a: Driving Day (Cinematic Transition)
+Interior view of Ryan's Volvo in daylight. Afternoon sun on the N34, flat Drenthe fields, white WSRT dishes appearing above the treeline. Two routes: (1) Compascuum → WSRT Westerbork — anticipation, trust in Cees Bassa, the dishes glinting in afternoon sun; (2) WSRT → Compascuum — golden evening return, Cees's findings confirmed, Steckerdoser Heide coordinates locked.
+
+Scene 8: Klooster (Ter Apel Monastery)
+The medieval monastery at night. Ryan arrives at 22:55, finds nobody, explores the courtyard, and eventually finds a USB stick taped under a bench.
+
+Scene 9: Car Discovery
+Close-up of the Volvo. After finding the USB, Ryan returns to the car and drives home.
+
+Scene 10: WSRT / Astron (Westerbork Synthesis Radio Telescope)
+Ryan visits the WSRT observatory between Westerbork and Hooghalen. Cees Bassa verifies the schematics, confirms weaponised radio technology with Russian-school algorithms, and helps triangulate the signal to Steckerdoser Heide (53.28°N, 7.42°E). This visit unlocks the facility infiltration.
+
+Scene 11: Planboard (Investigation Board)
+Detective-style evidence board with dossiers on suspects, locations, evidence, and timeline.
+
+Scene 12: Regional Map
+Michelin-style road map showing Compascuum, Ter Apel, WSRT, LOFAR, Steckerdoser Heide, and Meppen. Hotspots for all field locations, including two newly added: Dwingeloo and Westerbork Memorial.
+
+Scene 12a: Dwingeloo Radio Observatory
+The historic Dwingeloo 25-metre parabolic dish in bright daylight — the telescope that first mapped the spiral arms of the Milky Way in 1951. A yoke-mounted dish on a concrete pedestal, a low control building marked "DWINGELOO RADIO OBSERVATORY", an information sign, and a perimeter fence. Ryan investigates the control building and discovers a structured transmission at 1420.500 MHz (the hydrogen line) containing encoded data. He finds a covert relay transmitter hidden on the dish structure — evidence that someone is using the historic telescope as a clandestine repeater node. The site teaches the hydrogen line, radio astronomy history, and signal relay concepts.
+
+Scene 12b: Westerbork Memorial (Herinneringscentrum Kamp Westerbork)
+A windswept, overcast memorial site combining two histories: the WWII transit camp (1942–1945) and the nearby WSRT dishes visible on the horizon. Railway tracks end abruptly in open ground with red stop-blocks. Memorial stone columns carry a Star of David. A sign reads "Herinneringscentrum Kamp Westerbork 1942–1945". Barbed wire remnants and barrack foundation outlines (Barak 65, Barak 51) are visible. A modified surveillance camera on a pole has a pulsing red Bluetooth LED — the key gameplay hotspot. Inspecting it reveals a covert ZERFALL network node; using the Flipper Zero cracks its pairing and maps the broader BT mesh. The scene carries deliberate moral weight: surveillance technology and state violence are placed in direct proximity to a site of historical atrocity. Accessible from both the regional map and the Klooster (a sign in the klooster courtyard points south).
+
+Scene 13: Videocall (Secure Calls)
+Video conference with three expert allies: Dr. David Prinsloo, Cees Bassa, and Jaap Haartsen.
+
+Scene 14: Facility Exterior (Stealth)
+Steckerdoser Heide military R&D facility at night. Disable security camera with Flipper Zero, hack gate with captured RFID.
+
+Scene 15: Facility Interior (Stealth)
+Corridor navigation. Eva guides via Meshtastic to basement server room.
+
+Scene 16: Facility Server Room (Climax)
+The climax. Access Volkov's terminal, download evidence, confront Volkov. Chris Kubecka and Bundeswehr MPs arrive. Eva arrests Volkov.
+
+Scene 17: Debrief (AIVD Headquarters, Zoetermeer)
+Ryan is driven to AIVD headquarters in Zoetermeer for debriefing by Agent Van der Berg. The debrief covers the full operation. Van der Berg makes a recruitment offer.
+
+Scene 18: Epilogue (Three Months Later)
+Spring in Compascuum, May 2026. Narrator summarizes character fates: facility shut down, Volkov awaiting trial outside Munich, Hoffmann in witness protection in Canada, Eva testified to parliament, Chris published ZERFALL report, Cees back at ASTRON, Jaap started security consulting firm. Ryan took the AIVD offer.
+
+Scene 19: Credits
+Scrolling credits with developer and character information.
 
 Story part 0: Intro
+A cinematic Star Wars-style text scroll introduces Ryan Weylant, his location in Compascuum, his equipment, and his contacts. Sets the date: February 9, 2026, 07:45 AM.
 
 Story part 1: Introducing Ryan Weylant
 Ryan is making an espresso in his kitchen in the house. He needs an espresso before he starts. Extra strong double dose.
 
-He walks into the livingroom where his wife Ies is watching TV. She mentions a documentary about Drenthe's wireless technology pioneers - featuring engineers like Dr. David Prinsloo from TU Eindhoven, Cees Bassa from ASTRON, and Jaap Haartsen who invented Bluetooth. Ryan can watch the documentary to learn about these local technology heroes.
+He walks into the livingroom where his wife Ies is watching TV with the dogs (Tino, Kessy, and ET the pug). She mentions a documentary about Drenthe's wireless technology pioneers - featuring engineers like Dr. David Prinsloo from TU Eindhoven, Cees Bassa from ASTRON, and Jaap Haartsen who invented Bluetooth. Ryan must watch the documentary before accessing the mancave — it unlocks the door.
 
-After chatting with Ies, Ryan heads to his mancave to start his day. In his mancave he does his usual things. First checking email and looking for messages and appointments. If not busy, he starts coding on a software project.
+After watching the documentary and chatting with Ies, Ryan heads to his mancave to start his day. In his mancave he does his usual things. First checking email and looking for messages and appointments. If not busy, he starts coding on a software project.
 
 Story part 1a: The Documentary (Optional)
 If Ryan clicks the TV in the livingroom, he can watch the full documentary about Drenthe's wireless technology innovations:
@@ -110,6 +165,20 @@ The Klooster in Ter Apel - the medieval monastery, one of the oldest buildings i
 
 He has a choice to make. And only a few hours to make it.
 
+Story part 5a: The SDR Bench
+Before he acts on the meeting, Ryan wants to squeeze everything out of that SSTV signal. He moves to his dedicated SDR workbench in the corner of the mancave — a dual-monitor setup with a spectrum analyzer on the left and a real-time waterfall display on the right, fed by an RTL-SDR dongle.
+
+The spectrum display shows a clear spike at 14.230 MHz, well above the noise floor. The waterfall shows the signal history: a dense band of SSTV bursts in the last hour, and ahead of them, something else — a loose, repeating pattern that could be a data beacon.
+
+Ryan engages the SSTV decoder (Martin M2 mode). The image that emerges confirms what he saw on the main monitor: his house, from across the canal. But now, at full decode resolution, he notices something he missed the first time: in the bottom-right corner of the image, a set of GPS coordinates and a timestamp. The Klooster location matches. The timestamp is tonight.
+
+Quest: Decode the SSTV transmission at the SDR bench
+- Player clicks the SSTV decoder panel
+- Requires `sstv_transmission_received` flag (set after the second wave on the main terminal)
+- Rewards: `sstv_decoded` flag, `sstv_coordinates_known` flag, evidence item `sstv_decoded_image`
+
+Ryan saves the image. Someone has an SDR setup themselves to send this. Someone who knows the Martin M2 slow-scan format. Someone technical. The sender isn't just any whistleblower — they're a signals engineer.
+
 Story part 6: Preparations
 Ryan decides he's going. He's not stupid - he knows this could be a trap. But he's also not the type to walk away from a mystery, especially one that literally showed up on his doorstep.
 
@@ -148,15 +217,15 @@ Ryan feels foolish. Was this the prank after all? Did someone go through all tha
 
 Frustrated, he makes his way back to the Volvo. The walk feels longer in the dark, his footsteps too loud on the gravel path. He's already thinking about what he'll do when he gets home - maybe trace the signal origin, analyze the photo metadata...
 
-He reaches the car and stops dead.
-
-There's something stuck under the door handle. A USB stick, wedged firmly beneath the lock mechanism. Small, black, unremarkable - except for a piece of tape wrapped around it with handwritten text:
+Then he spots something. A bench near the courtyard. Something is taped underneath it — a small, black USB stick with a piece of tape wrapped around it:
 
 "TRUST THE PROCESS - PLUG IN ONLY ON AIR-GAPPED MACHINE"
 
-Someone was here. Someone watched him walk to the Klooster and back. They were never going to meet him face to face - this was the meeting.
+Someone was here. Someone left this for him to find. They were never going to meet him face to face - this was the meeting.
 
 Ryan carefully removes the USB stick, holding it like it might explode. Whatever is on this drive, someone went to a lot of trouble to deliver it. And they knew exactly what kind of person Ryan is - the kind who would have an air-gapped machine ready for exactly this situation.
+
+He heads back to the Volvo and drives home through the dark countryside.
 
 Story part 8: The Contents
 The drive home feels endless. Ryan keeps checking his mirrors, half-expecting to see headlights following him through the dark countryside. But the roads are empty. Just him, the Volvo, and a USB stick that could contain anything from malware to state secrets.
@@ -257,14 +326,14 @@ Dr. David Prinsloo is a brilliant antenna engineer at TU Eindhoven's Electrical 
 Second: ASTRON and the LOFAR veterans.
 The Low-Frequency Array is even more impressive - thousands of antennas spread across Europe, with its core right here in Drenthe at ASTRON's facility near Dwingeloo. The engineers who built that system understand signal processing like nobody else. Ryan knows a scientist named Cees Bassa who works on the LOFAR system at ASTRON. He discovered SpaceX satellite interference and understands signal processing better than anyone.
 
-Third: The Ericsson old guard.
-Back in the day, Ericsson had a major Bluetooth R&D center in the Netherlands. When they downsized, a lot of brilliant engineers scattered. Some went to startups. Some became consultants. And some, like Ryan's old friend Pieter, became disillusioned. Pieter spent fifteen years developing wireless protocols and knows every vulnerability, every weakness in modern RF systems. He lives in Groningen now, fixing vintage synthesizers and ranting about corporate surveillance.
+Third: Jaap Haartsen, the Bluetooth inventor.
+Jaap Haartsen invented the Bluetooth protocol while working at Ericsson in the 1990s. He's a legend in wireless engineering and understands frequency-hopping spread spectrum, wireless protocols, and every vulnerability in modern RF systems. Ryan saw him in the documentary and they share mutual contacts in the radio community.
 
 Ryan composes three carefully worded messages. No details about Project Echo - just enough to pique curiosity:
 
 "Old friend - I've stumbled onto something big. RF weaponization. Need expert eyes on some schematics. Secure channel only. Coffee soon? - R"
 
-He sends them through three different channels: an encrypted email for David, a Meshtastic ping for Cees (he's careful about digital communication), and a dead drop on an old BBS that Pieter still checks out of nostalgia.
+He sends them through three different channels: an encrypted email for David, a Meshtastic ping for Cees (he's careful about digital communication), and a secure message for Jaap through an old colleague network.
 
 Now he waits. And hopes he's not the only one who thinks this is worth fighting for.
 
@@ -272,7 +341,49 @@ Quest: Wait for responses from potential allies
 - Each ally requires a different approach to convince them
 - David needs scientific proof this isn't a hoax
 - Cees needs assurance this won't endanger his research
-- Pieter needs to know there's a real enemy to fight, not just corporate greed
+- Jaap needs to know there's a real enemy to fight, not just corporate greed
+
+Story part 10a: The Dwingeloo Detour
+While waiting for his allies to respond, Ryan drives to the Dwingeloo Radio Observatory — the historic 25-metre dish that first mapped the Milky Way's spiral arms. It's only twenty minutes from Compascuum. He's always meant to visit. Today he has a reason.
+
+On the regional map he spots Dwingeloo, just west of the WSRT cluster. The Camras Foundation runs it as a heritage science site. Ryan parks at the control building and starts poking around.
+
+The information sign explains the telescope's history: 1951, a Dutch team led by Jan Oort scanned the sky at 1420 MHz — the hydrogen line — and hear the Milky Way for the first time in radio light. The dish is now used by amateurs and educational groups. Except someone has modified it.
+
+Inside the control building, Ryan's SDR picks up a structured signal at exactly 1420.500 MHz, offset from the pure hydrogen line by 500 Hz. The pattern repeats on a 90-second cycle. It's not astrophysics — it's a handshake beacon. Someone is using this historic dish as a relay node.
+
+A closer look at the dish mount reveals it: a small rectangular box cable-tied to the base of the yoke. Weatherproofed, painted grey to match the concrete, easily missed. A covert radio relay transmitter. Someone has turned the Netherlands' oldest radio telescope into part of their clandestine communications infrastructure.
+
+Quest: Investigate the Dwingeloo transmitter
+- Click control building: discover structured 1420.500 MHz beacon, evidence `dwingeloo_signal_log`
+- Click fence/dish mount: find the relay hardware, evidence `relay_transmitter`, flag `dwingeloo_transmitter_found`
+- Educational hotspot on the dish teaches hydrogen line and radio astronomy history
+
+Ryan photographs the transmitter and marks the frequencies. The ZERFALL network is bigger than he thought — and it's hiding in plain sight, using scientific heritage infrastructure as cover.
+
+Story part 10b: Westerbork — Two Kinds of History
+The road south from Dwingeloo takes Ryan past a sign he's seen a hundred times without stopping: "Herinneringscentrum Kamp Westerbork — 3 km". Today he turns in.
+
+From the Klooster courtyard earlier, he'd noticed a small wooden sign at the base of the garden wall: "Westerbork Herinneringscentrum 18 km →". Someone had placed it recently — the paint was too fresh, the positioning too deliberate. A breadcrumb.
+
+The memorial site is quiet on a weekday morning. The railway tracks end abruptly in open ground where red stop-blocks sit in the grass. Memorial stone columns bear the Star of David. In the far background, across flat polder fields, the white WSRT dishes stand silently.
+
+Two kinds of history share this ground. Between 1942 and 1945, 97 transports left from this spot to Auschwitz, Sobibor, Theresienstadt. After the war, the site sat unused until 1970, when astronomers pointed dishes at the same sky.
+
+Ryan stands at the railway terminus for a long minute.
+
+Then he notices the camera. A modern surveillance camera on a freshly-planted pole near the entrance — except it has a small red LED pulsing at 2-second intervals. That's not a power indicator. That's a Bluetooth advertisement beacon.
+
+He pulls out the Flipper Zero.
+
+The Bluetooth scanner finds it immediately: a custom service UUID that matches a partial pattern from the evidence.zip files. This is a ZERFALL node. Hidden at a memorial site, powered by a solar cell disguised as a bird box. Whoever built this network has no shame.
+
+Quest: Crack the Westerbork surveillance camera
+- First visit: inspect camera, add evidence `modified_camera`, set flag `westerbork_camera_inspected`, start quest `trace_bluetooth_network`
+- Second visit (with Flipper Zero): crack the BT pairing, add evidence `zerfall_bt_node`, set flag `westerbork_bt_cracked`
+- This evidence is critical for mapping the ZERFALL network before the facility infiltration
+
+Ryan drives back north in silence. He thinks about the people who left on those trains, and wonders if the scientist who hid a surveillance node here ever thought about that. Probably not. That's how atrocities hide in plain sight — surrounded by people who simply don't think.
 
 Story part 11: The Designer
 While waiting for his allies to respond, Ryan digs deeper into the files. There has to be a trail. Someone designed this thing. Engineers leave fingerprints - coding styles, naming conventions, documentation habits.
@@ -318,7 +429,7 @@ But which is it? Ryan needs more information. The schematics show the hardware, 
 Quest: Investigate Volkov's identity
 - Search for "Volkov" in academic papers related to RF signal research
 - Check old conference proceedings from wireless security events
-- Cross-reference with known Russian intelligence operatives (if Pieter's old contacts can help)
+- Cross-reference with known Russian intelligence operatives (if Jaap's old contacts can help)
 
 The 72-hour clock is ticking. 47 hours remaining.
 
@@ -411,7 +522,7 @@ Where does this technology go once it's complete? Into German hands? Sold to the
 
 Ryan slams his fist on the desk. He's a hacker, not a spy. He can crack systems, trace signals, decode messages. But this? This is geopolitics. Shadow games played by people with resources he can't imagine.
 
-His allies haven't responded yet. David, Cees, Pieter - radio silence. Maybe they're being cautious. Maybe they're scared. Maybe his messages never reached them.
+His allies haven't responded yet. David, Cees, Jaap - radio silence. Maybe they're being cautious. Maybe they're scared. Maybe his messages never reached them.
 
 Chris's intel on Volkov was valuable, but it only raised more questions. The SPEKTR connection suggests this technology has been in development for decades. That means powerful people have been protecting it for a long time.
 
@@ -825,7 +936,7 @@ He types back: "I need someone monitoring emergency frequencies tomorrow night, 
 
 "I can do that. I'll be listening. Stay safe."
 
-A second buzz. Pieter, through the old BBS:
+A second buzz. Jaap, through the colleague network:
 
 "Heard you're poking dragons. Count me in as backup. What's the fallback plan?"
 
@@ -837,7 +948,7 @@ Ryan thinks. If he's caught, if the script fails, if Eva's distraction doesn't w
 
 Quest: Coordinate with allies
 - Cees: monitoring emergency frequencies during operation
-- Pieter: dead man's switch for evidence release
+- Jaap: dead man's switch for evidence release
 - Chris: on standby for OSINT support if needed
 - Update dead man's switch with latest evidence package
 
@@ -1062,7 +1173,7 @@ Ryan allows himself one moment of relief. Then he starts the long walk back to h
 Quest: Extraction complete
 - Return to vehicle without being detected
 - Check evidence files are intact
-- Disable dead man's switch with Pieter
+- Disable dead man's switch with Jaap
 - Wait for confirmation the test fails
 
 The operation is complete. But the night isn't over yet.
@@ -1105,7 +1216,7 @@ This is enough. This is more than enough.
 
 23:32.
 
-Ryan messages Pieter through the BBS: "Stand down. Package delivered. Cancel release."
+Ryan messages Jaap through their secure channel: "Stand down. Package delivered. Cancel release."
 
 The reply comes quickly: "Confirmed. Standing down. What happened out there?"
 
@@ -1159,7 +1270,7 @@ The connection goes quiet.
 
 Ryan compiles the evidence package. All the original files from the USB. All the exfiltrated logs. A detailed timeline he writes himself, explaining how he was contacted, what he discovered, what he did. Full transparency.
 
-He uploads encrypted copies to three different secure locations - a server in Iceland, a Tor hidden service, and an encrypted partition on the BBS that Pieter maintains. Belt and suspenders and duct tape.
+He uploads encrypted copies to three different secure locations - a server in Iceland, a Tor hidden service, and an encrypted partition that Jaap maintains. Belt and suspenders and duct tape.
 
 He prepares the press release. A summary of Project Echo, Operation ZERFALL, the civilian casualties, Hoffmann's treachery, Volkov's identity. He attaches the key documents. He drafts a list of recipients: investigative journalists who've proven they can handle sensitive material.
 
@@ -1332,7 +1443,7 @@ His allies check in.
 
 Cees: "You crazy bastard. You actually did it. The LOFAR guys are calling you a hero."
 
-Pieter: "Told you the old underground still had some fight left. Drinks are on me when this settles down."
+Jaap: "Told you the old underground still had some fight left. Drinks are on me when this settles down."
 
 Chris Kubecka: "Nice work, Ryan. The OSINT community is going wild over these documents. You've given us enough material to keep digging for months. Volkov's network is bigger than just Germany - we're already finding connections in Poland, Czech Republic, maybe France. This is just the beginning."
 
@@ -1476,7 +1587,7 @@ Chris Kubecka published a report on Operation ZERFALL that traced Russian influe
 
 Cees went back to his LOFAR research but keeps his radio equipment tuned to interesting frequencies. Just in case.
 
-Pieter started a security consulting firm. His first client: a German defense contractor looking to improve their vetting procedures.
+Jaap Haartsen started a security consulting firm. His first client: a German defense contractor looking to improve their vetting procedures.
 
 Eva Weber testified before a closed session of the German parliament. Her identity remains classified. Rumors say she's working for a European cybersecurity agency now, but no one can confirm it.
 

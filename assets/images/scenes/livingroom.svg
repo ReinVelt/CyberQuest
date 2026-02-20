@@ -1,386 +1,363 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
-  <!-- Living room scene - Enhanced South Park style -->
-  
+  <!-- Living room scene - South Park style, native 1920x1080 -->
+
   <defs>
-    <!-- Gradients for depth -->
     <linearGradient id="wallGradient" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" style="stop-color:#F5E6D3;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#E8DCC0;stop-opacity:1" />
     </linearGradient>
-    
     <linearGradient id="floorGradient" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" style="stop-color:#9B8568;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#8B7355;stop-opacity:1" />
     </linearGradient>
-    
     <linearGradient id="couchGradient" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" style="stop-color:#A0522D;stop-opacity:1" />
       <stop offset="50%" style="stop-color:#8B4513;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#6B3410;stop-opacity:1" />
     </linearGradient>
-    
     <linearGradient id="chairGradient" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" style="stop-color:#8B5A3C;stop-opacity:1" />
       <stop offset="50%" style="stop-color:#654321;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#4A2F1A;stop-opacity:1" />
     </linearGradient>
-    
     <radialGradient id="tvGlow" cx="50%" cy="50%" r="50%">
       <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:0.3" />
       <stop offset="100%" style="stop-color:#001a33;stop-opacity:0" />
     </radialGradient>
-    
     <linearGradient id="tvFrame" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" style="stop-color:#3A3A3A;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#1A1A1A;stop-opacity:1" />
     </linearGradient>
   </defs>
-  
-  <g transform="scale(1.6, 1.35)">
-  <!-- Background wall with gradient -->
-  <rect x="0" y="0" width="1200" height="600" fill="url(#wallGradient)"/>
-  
-  <!-- Baseboard -->
-  <rect x="0" y="580" width="1200" height="20" fill="#8B7355" stroke="#5C4033" stroke-width="2"/>
-  
-  <!-- Floor with gradient -->
-  <rect x="0" y="600" width="1200" height="200" fill="url(#floorGradient)"/>
-  
-  <!-- Door to kitchen (left side) -->
-  <g id="doorToKitchen">
-    <!-- Door frame -->
-    <rect x="10" y="380" width="110" height="220" rx="8" fill="#654321" stroke="#3D2817" stroke-width="5"/>
-    <!-- Door panel -->
-    <rect x="20" y="390" width="90" height="200" rx="5" fill="#8B6F47" stroke="#654321" stroke-width="3"/>
-    <!-- Door panels detail -->
-    <rect x="30" y="405" width="70" height="75" rx="3" fill="#A0826D" stroke="#654321" stroke-width="2"/>
-    <rect x="30" y="495" width="70" height="85" rx="3" fill="#A0826D" stroke="#654321" stroke-width="2"/>
-    <!-- Door handle -->
-    <ellipse cx="95" cy="490" rx="6" ry="8" fill="#C0C0C0" stroke="#888" stroke-width="2"/>
-    <circle cx="95" cy="490" r="3" fill="#FFD700"/>
-    <!-- Door shadow -->
-    <rect x="15" y="395" width="8" height="190" fill="#000" opacity="0.2"/>
-  </g>
-  
-  <!-- Enhanced wood floor planks with depth -->
+
+  <!-- ==================== ROOM STRUCTURE ==================== -->
+  <rect x="0" y="0" width="1920" height="720" fill="url(#wallGradient)"/>
+  <rect x="0" y="700" width="1920" height="20" fill="#8B7355" stroke="#5C4033" stroke-width="2"/>
+  <rect x="0" y="720" width="1920" height="360" fill="url(#floorGradient)"/>
+
+  <!-- Floor planks -->
   <g id="floorPlanks">
-    <line x1="0" y1="630" x2="1200" y2="630" stroke="#6B5845" stroke-width="3" opacity="0.8"/>
-    <line x1="0" y1="660" x2="1200" y2="660" stroke="#7B6855" stroke-width="2" opacity="0.6"/>
-    <line x1="0" y1="690" x2="1200" y2="690" stroke="#6B5845" stroke-width="3" opacity="0.8"/>
-    <line x1="0" y1="720" x2="1200" y2="720" stroke="#7B6855" stroke-width="2" opacity="0.6"/>
-    <line x1="0" y1="750" x2="1200" y2="750" stroke="#6B5845" stroke-width="3" opacity="0.8"/>
-    <line x1="0" y1="780" x2="1200" y2="780" stroke="#7B6855" stroke-width="2" opacity="0.6"/>
-    
-    <!-- Vertical wood planks variation -->
-    <line x1="150" y1="600" x2="150" y2="800" stroke="#6B5845" stroke-width="2" opacity="0.5"/>
-    <line x1="350" y1="600" x2="350" y2="800" stroke="#6B5845" stroke-width="2" opacity="0.5"/>
-    <line x1="550" y1="600" x2="550" y2="800" stroke="#6B5845" stroke-width="2" opacity="0.5"/>
-    <line x1="750" y1="600" x2="750" y2="800" stroke="#6B5845" stroke-width="2" opacity="0.5"/>
-    <line x1="950" y1="600" x2="950" y2="800" stroke="#6B5845" stroke-width="2" opacity="0.5"/>
+    <line x1="0" y1="770" x2="1920" y2="770" stroke="#6B5845" stroke-width="3" opacity="0.8"/>
+    <line x1="0" y1="820" x2="1920" y2="820" stroke="#7B6855" stroke-width="2" opacity="0.6"/>
+    <line x1="0" y1="870" x2="1920" y2="870" stroke="#6B5845" stroke-width="3" opacity="0.8"/>
+    <line x1="0" y1="920" x2="1920" y2="920" stroke="#7B6855" stroke-width="2" opacity="0.6"/>
+    <line x1="0" y1="970" x2="1920" y2="970" stroke="#6B5845" stroke-width="3" opacity="0.8"/>
+    <line x1="0" y1="1020" x2="1920" y2="1020" stroke="#7B6855" stroke-width="2" opacity="0.6"/>
+    <line x1="240" y1="720" x2="240" y2="1080" stroke="#6B5845" stroke-width="2" opacity="0.5"/>
+    <line x1="560" y1="720" x2="560" y2="1080" stroke="#6B5845" stroke-width="2" opacity="0.5"/>
+    <line x1="880" y1="720" x2="880" y2="1080" stroke="#6B5845" stroke-width="2" opacity="0.5"/>
+    <line x1="1200" y1="720" x2="1200" y2="1080" stroke="#6B5845" stroke-width="2" opacity="0.5"/>
+    <line x1="1520" y1="720" x2="1520" y2="1080" stroke="#6B5845" stroke-width="2" opacity="0.5"/>
   </g>
-  
-  <!-- Enhanced window with better frame -->
+
+  <!-- ==================== DOOR (left wall, person-sized) ==================== -->
+  <g id="doorToKitchen">
+    <rect x="25" y="185" width="195" height="535" rx="8" fill="#654321" stroke="#3D2817" stroke-width="5"/>
+    <rect x="40" y="200" width="165" height="510" rx="5" fill="#8B6F47" stroke="#654321" stroke-width="3"/>
+    <rect x="55" y="225" width="135" height="195" rx="3" fill="#A0826D" stroke="#654321" stroke-width="2"/>
+    <rect x="55" y="440" width="135" height="245" rx="3" fill="#A0826D" stroke="#654321" stroke-width="2"/>
+    <ellipse cx="175" cy="490" rx="8" ry="12" fill="#C0C0C0" stroke="#888" stroke-width="2"/>
+    <circle cx="175" cy="490" r="4" fill="#FFD700"/>
+    <rect x="45" y="205" width="10" height="495" fill="#000" opacity="0.2"/>
+  </g>
+
+  <!-- ==================== WINDOW ==================== -->
   <g id="window">
-    <!-- Window frame outer -->
-    <rect x="40" y="90" width="220" height="270" rx="8" fill="#654321" stroke="#3D2817" stroke-width="5"/>
-    <!-- Window glass -->
-    <rect x="55" y="105" width="190" height="240" rx="5" fill="#87CEEB" stroke="#5C8FB7" stroke-width="3"/>
-    <!-- Sky reflection -->
-    <rect x="60" y="110" width="85" height="110" fill="#A0D5F5" opacity="0.6"/>
-    <!-- Window cross bars (South Park style) -->
-    <line x1="150" y1="105" x2="150" y2="345" stroke="#654321" stroke-width="8"/>
-    <line x1="55" y1="225" x2="245" y2="225" stroke="#654321" stroke-width="8"/>
-    <!-- Glass highlights -->
-    <rect x="65" y="115" width="30" height="40" fill="#FFFFFF" opacity="0.4"/>
-    <rect x="160" y="120" width="25" height="35" fill="#FFFFFF" opacity="0.4"/>
+    <rect x="320" y="80" width="270" height="340" rx="8" fill="#654321" stroke="#3D2817" stroke-width="5"/>
+    <rect x="340" y="100" width="230" height="300" rx="5" fill="#87CEEB" stroke="#5C8FB7" stroke-width="3"/>
+    <rect x="345" y="105" width="105" height="140" fill="#A0D5F5" opacity="0.6"/>
+    <line x1="455" y1="100" x2="455" y2="400" stroke="#654321" stroke-width="8"/>
+    <line x1="340" y1="250" x2="570" y2="250" stroke="#654321" stroke-width="8"/>
+    <rect x="350" y="112" width="40" height="50" fill="#FFFFFF" opacity="0.4"/>
+    <rect x="465" y="115" width="35" height="45" fill="#FFFFFF" opacity="0.4"/>
   </g>
-  
-  <!-- Enhanced curtains -->
+
+  <!-- Curtains -->
   <g id="curtains">
-    <path d="M 35 85 Q 42 110 35 140 Q 42 170 35 200 Q 42 230 35 260 Q 42 290 35 320 Q 42 350 35 365 L 52 365 L 52 85 Z" 
+    <path d="M 310 72 Q 320 115 310 160 Q 320 205 310 250 Q 320 295 310 340 Q 320 385 310 430 L 338 430 L 338 72 Z"
           fill="#A0522D" stroke="#654321" stroke-width="3" opacity="0.85"/>
-    <path d="M 265 85 Q 258 110 265 140 Q 258 170 265 200 Q 258 230 265 260 Q 258 290 265 320 Q 258 350 265 365 L 248 365 L 248 85 Z" 
+    <path d="M 600 72 Q 590 115 600 160 Q 590 205 600 250 Q 590 295 600 340 Q 590 385 600 430 L 572 430 L 572 72 Z"
           fill="#A0522D" stroke="#654321" stroke-width="3" opacity="0.85"/>
-    <!-- Curtain rod -->
-    <rect x="25" y="80" width="255" height="8" rx="4" fill="#654321" stroke="#3D2817" stroke-width="2"/>
+    <rect x="300" y="65" width="310" height="10" rx="5" fill="#654321" stroke="#3D2817" stroke-width="2"/>
   </g>
-  
-  <!-- Enhanced TV setup -->
-  <g id="television">
-    <!-- TV outer frame with gradient -->
-    <rect x="440" y="140" width="400" height="300" rx="12" fill="url(#tvFrame)" stroke="#000" stroke-width="6"/>
-    <!-- TV bezel -->
-    <rect x="455" y="155" width="370" height="270" rx="8" fill="#1a1a1a" stroke="#0D0D0D" stroke-width="3"/>
-    <!-- TV screen glow effect -->
-    <ellipse cx="640" cy="290" rx="200" ry="150" fill="url(#tvGlow)"/>
-    <!-- TV screen -->
-    <rect x="470" y="170" width="340" height="240" rx="5" fill="#001a33" stroke="#00274D" stroke-width="2"/>
-    
-    <!-- Enhanced documentary content -->
-    <g id="documentary">
-      <!-- Background -->
-      <rect x="475" y="175" width="330" height="230" fill="#001a33"/>
-      
-      <!-- LOFAR antenna illustration with more detail -->
-      <g id="lofar-antenna">
-        <!-- Antenna dish -->
-        <ellipse cx="550" cy="250" rx="45" ry="40" fill="#3A6EA5" opacity="0.7"/>
-        <ellipse cx="550" cy="250" rx="35" ry="30" fill="#4A90E2" opacity="0.8"/>
-        <ellipse cx="550" cy="250" rx="20" ry="18" fill="#5AA5FF" opacity="0.9"/>
-        <!-- Antenna structure -->
-        <line x1="550" y1="210" x2="550" y2="295" stroke="#E0E0E0" stroke-width="4"/>
-        <line x1="515" y1="250" x2="585" y2="250" stroke="#E0E0E0" stroke-width="4"/>
-        <line x1="530" y1="225" x2="570" y2="275" stroke="#E0E0E0" stroke-width="3"/>
-        <line x1="530" y1="275" x2="570" y2="225" stroke="#E0E0E0" stroke-width="3"/>
-        <!-- Center receiver -->
-        <circle cx="550" cy="250" r="18" fill="#FFFFFF" stroke="#CCC" stroke-width="2"/>
-        <circle cx="550" cy="250" r="10" fill="#4A90E2"/>
-        <!-- Signal waves -->
-        <path d="M 520 230 Q 530 220 540 230" stroke="#00FF00" stroke-width="2" fill="none" opacity="0.7"/>
-        <path d="M 560 230 Q 570 220 580 230" stroke="#00FF00" stroke-width="2" fill="none" opacity="0.7"/>
-      </g>
-      
-      <!-- Documentary title and info -->
-      <g id="doc-text">
-        <rect x="615" y="195" width="175" height="185" fill="#000033" opacity="0.7" rx="5"/>
-        <text x="628" y="215" font-family="Arial, sans-serif" font-size="19" fill="#FFFFFF" font-weight="bold">DRENTHE:</text>
-        <text x="628" y="240" font-family="Arial, sans-serif" font-size="16" fill="#00FF41" font-weight="bold">Wireless Tech</text>
-        <text x="628" y="261" font-family="Arial, sans-serif" font-size="16" fill="#00FF41" font-weight="bold">Revolution</text>
-        
-        <line x1="625" y1="275" x2="785" y2="275" stroke="#00FF41" stroke-width="1"/>
-        
-        <text x="628" y="298" font-family="Arial, sans-serif" font-size="13" fill="#FFD700">📡 WSRT</text>
-        <text x="628" y="318" font-family="Arial, sans-serif" font-size="13" fill="#87CEEB">🌐 LOFAR</text>
-        <text x="628" y="338" font-family="Arial, sans-serif" font-size="13" fill="#90EE90">📱 Bluetooth</text>
-        
-        <line x1="625" y1="350" x2="785" y2="350" stroke="#444" stroke-width="1"/>
-        
-        <text x="628" y="370" font-family="Arial, sans-serif" font-size="11" fill="#CCC">Featuring:</text>
-        <text x="628" y="385" font-family="Arial, sans-serif" font-size="10" fill="#AAA">David • Cees • Jaap</text>
-      </g>
-      
-      <!-- TV scanlines for realism -->
-      <g id="scanlines" opacity="0.1">
-        <line x1="470" y1="180" x2="810" y2="180" stroke="#FFFFFF" stroke-width="1"/>
-        <line x1="470" y1="190" x2="810" y2="190" stroke="#FFFFFF" stroke-width="1"/>
-        <line x1="470" y1="200" x2="810" y2="200" stroke="#FFFFFF" stroke-width="1"/>
-        <line x1="470" y1="220" x2="810" y2="220" stroke="#FFFFFF" stroke-width="1"/>
-        <line x1="470" y1="240" x2="810" y2="240" stroke="#FFFFFF" stroke-width="1"/>
-        <line x1="470" y1="260" x2="810" y2="260" stroke="#FFFFFF" stroke-width="1"/>
-        <line x1="470" y1="280" x2="810" y2="280" stroke="#FFFFFF" stroke-width="1"/>
-        <line x1="470" y1="300" x2="810" y2="300" stroke="#FFFFFF" stroke-width="1"/>
-        <line x1="470" y1="320" x2="810" y2="320" stroke="#FFFFFF" stroke-width="1"/>
-        <line x1="470" y1="340" x2="810" y2="340" stroke="#FFFFFF" stroke-width="1"/>
-        <line x1="470" y1="360" x2="810" y2="360" stroke="#FFFFFF" stroke-width="1"/>
-        <line x1="470" y1="380" x2="810" y2="380" stroke="#FFFFFF" stroke-width="1"/>
-        <line x1="470" y1="400" x2="810" y2="400" stroke="#FFFFFF" stroke-width="1"/>
-      </g>
-    </g>
-    
-    <!-- TV brand logo -->
-    <text x="620" y="430" font-family="Arial" font-size="12" fill="#666" font-weight="bold">SONY</text>
-    
-    <!-- Enhanced TV stand -->
-    <rect x="520" y="440" width="240" height="20" rx="5" fill="#654321" stroke="#3D2817" stroke-width="3"/>
-    <rect x="570" y="460" width="140" height="140" fill="#654321" stroke="#3D2817" stroke-width="3"/>
-    <!-- Stand wood grain detail -->
-    <line x1="580" y1="470" x2="700" y2="470" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
-    <line x1="580" y1="490" x2="700" y2="490" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
-    <line x1="580" y1="510" x2="700" y2="510" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
-    <line x1="580" y1="530" x2="700" y2="530" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
-    <line x1="580" y1="550" x2="700" y2="550" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
-    <line x1="580" y1="570" x2="700" y2="570" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
-  </g>
-  
-  <!-- Enhanced couch (right side) -->
-  <g id="couch">
-    <!-- Couch shadow -->
-    <ellipse cx="1000" cy="590" rx="160" ry="20" fill="#000" opacity="0.2"/>
-    
-    <!-- Main couch body -->
-    <rect x="840" y="390" width="320" height="190" rx="25" fill="url(#couchGradient)" stroke="#3D2817" stroke-width="5"/>
-    
-    <!-- Couch back cushions -->
-    <rect x="855" y="400" width="85" height="100" rx="12" fill="#A0522D" stroke="#654321" stroke-width="3"/>
-    <rect x="955" y="400" width="85" height="100" rx="12" fill="#A0522D" stroke="#654321" stroke-width="3"/>
-    <rect x="1055" y="400" width="85" height="100" rx="12" fill="#A0522D" stroke="#654321" stroke-width="3"/>
-    
-    <!-- Couch seat cushions -->
-    <rect x="860" y="500" width="85" height="65" rx="10" fill="#CD853F" stroke="#654321" stroke-width="3"/>
-    <ellipse cx="902.5" cy="510" rx="35" ry="20" fill="#DEB887" opacity="0.5"/>
-    
-    <rect x="960" y="500" width="85" height="65" rx="10" fill="#CD853F" stroke="#654321" stroke-width="3"/>
-    <ellipse cx="1002.5" cy="510" rx="35" ry="20" fill="#DEB887" opacity="0.5"/>
-    
-    <rect x="1060" y="500" width="85" height="65" rx="10" fill="#CD853F" stroke="#654321" stroke-width="3"/>
-    <ellipse cx="1102.5" cy="510" rx="35" ry="20" fill="#DEB887" opacity="0.5"/>
-    
-    <!-- Couch armrests with detail -->
-    <rect x="825" y="390" width="50" height="165" rx="12" fill="#8B4513" stroke="#3D2817" stroke-width="4"/>
-    <rect x="835" y="405" width="30" height="60" rx="8" fill="#A0522D" opacity="0.7"/>
-    
-    <rect x="1145" y="390" width="50" height="165" rx="12" fill="#8B4513" stroke="#3D2817" stroke-width="4"/>
-    <rect x="1155" y="405" width="30" height="60" rx="8" fill="#A0522D" opacity="0.7"/>
-    
-    <!-- Couch stitching details -->
-    <line x1="945" y1="400" x2="945" y2="500" stroke="#654321" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
-    <line x1="1045" y1="400" x2="1045" y2="500" stroke="#654321" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
-  </g>
-  
-  <!-- Enhanced armchair (left side, where Ies sits) -->
+
+  <!-- ==================== ARMCHAIR (where Ies sits) ==================== -->
   <g id="armchair">
-    <!-- Chair shadow -->
-    <ellipse cx="190" cy="590" rx="100" ry="15" fill="#000" opacity="0.2"/>
-    
-    <!-- Chair back -->
-    <rect x="95" y="370" width="190" height="60" rx="12" fill="url(#chairGradient)" stroke="#3D2817" stroke-width="4"/>
-    <rect x="110" y="380" width="160" height="40" rx="8" fill="#8B5A3C" stroke="#5C4033" stroke-width="2"/>
-    
-    <!-- Chair main body -->
-    <rect x="95" y="415" width="190" height="170" rx="18" fill="url(#chairGradient)" stroke="#3D2817" stroke-width="5"/>
-    
-    <!-- Chair seat cushion -->
-    <rect x="110" y="470" width="160" height="95" rx="12" fill="#8B5A3C" stroke="#5C4033" stroke-width="3"/>
-    <rect x="120" y="480" width="140" height="75" rx="10" fill="#A0826D" stroke="#5C4033" stroke-width="2"/>
-    <!-- Cushion indent -->
-    <ellipse cx="190" cy="505" rx="55" ry="30" fill="#8B5A3C" opacity="0.4"/>
-    
-    <!-- Chair armrests with detail -->
-    <rect x="75" y="415" width="45" height="130" rx="10" fill="#654321" stroke="#3D2817" stroke-width="4"/>
-    <rect x="85" y="430" width="25" height="50" rx="6" fill="#8B5A3C" opacity="0.7"/>
-    
-    <rect x="260" y="415" width="45" height="130" rx="10" fill="#654321" stroke="#3D2817" stroke-width="4"/>
-    <rect x="270" y="430" width="25" height="50" rx="6" fill="#8B5A3C" opacity="0.7"/>
-    
-    <!-- Chair stitching -->
-    <line x1="115" y1="425" x2="265" y2="425" stroke="#5C4033" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
-    <line x1="190" y1="380" x2="190" y2="420" stroke="#5C4033" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
+    <ellipse cx="440" cy="720" rx="130" ry="18" fill="#000" opacity="0.2"/>
+    <rect x="340" y="400" width="240" height="70" rx="14" fill="url(#chairGradient)" stroke="#3D2817" stroke-width="4"/>
+    <rect x="358" y="412" width="204" height="48" rx="9" fill="#8B5A3C" stroke="#5C4033" stroke-width="2"/>
+    <rect x="340" y="460" width="240" height="260" rx="20" fill="url(#chairGradient)" stroke="#3D2817" stroke-width="5"/>
+    <rect x="360" y="530" width="200" height="170" rx="14" fill="#8B5A3C" stroke="#5C4033" stroke-width="3"/>
+    <rect x="375" y="545" width="170" height="140" rx="12" fill="#A0826D" stroke="#5C4033" stroke-width="2"/>
+    <ellipse cx="460" cy="590" rx="65" ry="45" fill="#8B5A3C" opacity="0.4"/>
+    <rect x="315" y="460" width="55" height="200" rx="12" fill="#654321" stroke="#3D2817" stroke-width="4"/>
+    <rect x="328" y="480" width="30" height="70" rx="7" fill="#8B5A3C" opacity="0.7"/>
+    <rect x="550" y="460" width="55" height="200" rx="12" fill="#654321" stroke="#3D2817" stroke-width="4"/>
+    <rect x="563" y="480" width="30" height="70" rx="7" fill="#8B5A3C" opacity="0.7"/>
+    <line x1="365" y1="472" x2="555" y2="472" stroke="#5C4033" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
+    <line x1="460" y1="412" x2="460" y2="465" stroke="#5C4033" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
   </g>
-  
-  <!-- Enhanced coffee table - Side View -->
-  <g id="coffeeTable">
-    <!-- Table shadow -->
-    <ellipse cx="500" cy="595" rx="140" ry="18" fill="#000" opacity="0.2"/>
-    
-    <!-- Table top (side view) -->
-    <rect x="360" y="510" width="280" height="25" rx="5" fill="#A0522D" stroke="#3D2817" stroke-width="4"/>
-    <rect x="365" y="513" width="270" height="19" rx="3" fill="#8B4513" stroke="#654321" stroke-width="2"/>
-    <!-- Wood grain lines -->
-    <line x1="370" y1="520" x2="630" y2="520" stroke="#654321" stroke-width="1" opacity="0.4"/>
-    <line x1="370" y1="525" x2="630" y2="525" stroke="#654321" stroke-width="1" opacity="0.3"/>
-    <!-- Table edge highlight -->
-    <rect x="365" y="513" width="270" height="5" fill="#CD853F" opacity="0.5"/>
-    
-    <!-- Table legs (visible from side) -->
-    <rect x="390" y="535" width="25" height="65" rx="3" fill="#654321" stroke="#3D2817" stroke-width="3"/>
-    <rect x="585" y="535" width="25" height="65" rx="3" fill="#654321" stroke="#3D2817" stroke-width="3"/>
-    <!-- Leg detail/shading -->
-    <rect x="395" y="540" width="15" height="55" fill="#8B5A3C" opacity="0.5"/>
-    <rect x="590" y="540" width="15" height="55" fill="#8B5A3C" opacity="0.5"/>
-    
-    <!-- Items on table (adjusted for side view) -->
-    <!-- Glass of water -->
-    <rect x="450" y="490" width="28" height="22" rx="3" fill="#87CEEB" stroke="#4682B4" stroke-width="2" opacity="0.8"/>
-    <rect x="453" y="493" width="22" height="16" rx="2" fill="#B0E0E6" opacity="0.6"/>
-    <ellipse cx="464" cy="496" rx="6" ry="4" fill="#FFFFFF" opacity="0.7"/>
-    
-    <!-- Book -->
-    <rect x="530" y="488" width="35" height="24" rx="2" fill="#8B0000" stroke="#000" stroke-width="2"/>
-    <line x1="535" y1="492" x2="560" y2="492" stroke="#A52A2A" stroke-width="1"/>
-    <line x1="535" y1="496" x2="560" y2="496" stroke="#A52A2A" stroke-width="1"/>
-    <line x1="535" y1="500" x2="560" y2="500" stroke="#A52A2A" stroke-width="1"/>
-    <rect x="532" y="490" width="31" height="4" fill="#A52A2A" opacity="0.5"/>
-    
-    <!-- Remote control with detail -->
-    <rect x="410" y="495" width="32" height="18" rx="4" fill="#2C2C2C" stroke="#000" stroke-width="2"/>
-    <rect x="413" y="498" width="26" height="12" rx="2" fill="#1A1A1A"/>
-    <!-- Remote buttons -->
-    <circle cx="418" cy="504" r="2" fill="#444"/>
-    <circle cx="424" cy="504" r="2" fill="#444"/>
-    <circle cx="430" cy="504" r="2" fill="#444"/>
-    <circle cx="436" cy="504" r="2" fill="#FF0000"/>
-  </g>
-  
-  <!-- Enhanced floor lamp in corner -->
-  <g id="floorLamp">
-    <!-- Lamp base -->
-    <ellipse cx="1107.5" cy="600" rx="35" ry="8" fill="#654321" stroke="#3D2817" stroke-width="2"/>
-    <!-- Lamp pole -->
-    <rect x="1100" y="495" width="15" height="105" fill="#654321" stroke="#3D2817" stroke-width="2"/>
-    <rect x="1102" y="500" width="11" height="95" fill="#8B5A3C"/>
-    <!-- Lamp shade -->
-    <path d="M 1065 470 L 1100 495 L 1100 500 L 1115 500 L 1115 495 L 1150 470 Z" 
-          fill="#FFD700" stroke="#DAA520" stroke-width="3"/>
-    <path d="M 1070 475 L 1100 495 L 1115 495 L 1145 475 Z" 
-          fill="#FFA500" opacity="0.5"/>
-    <!-- Light bulb glow -->
-    <ellipse cx="1107.5" cy="485" rx="45" ry="25" fill="#FFFF00" opacity="0.3"/>
-    <circle cx="1107.5" cy="485" r="14" fill="#FFFFAA" stroke="#FFD700" stroke-width="2" opacity="0.8"/>
-  </g>
-  
-  <!-- Enhanced picture frame on wall -->
-  <g id="pictureFrame">
-    <!-- Frame outer -->
-    <rect x="940" y="170" width="140" height="105" rx="5" fill="#654321" stroke="#3D2817" stroke-width="5"/>
-    <!-- Frame inner -->
-    <rect x="952" y="182" width="116" height="81" rx="3" fill="#87CEEB" stroke="#5C4033" stroke-width="2"/>
-    
-    <!-- Landscape painting -->
-    <g id="landscape">
-      <!-- Sky -->
-      <rect x="955" y="185" width="110" height="40" fill="#87CEEB"/>
-      <ellipse cx="980" cy="200" rx="18" ry="16" fill="#FFD700"/>
-      <ellipse cx="978" cy="198" rx="15" ry="13" fill="#FFEB3B"/>
-      
-      <!-- Clouds -->
-      <ellipse cx="1025" cy="195" rx="12" ry="8" fill="#FFFFFF" opacity="0.8"/>
-      <ellipse cx="1035" cy="198" rx="10" ry="7" fill="#FFFFFF" opacity="0.8"/>
-      
-      <!-- Mountains/hills -->
-      <path d="M 955 225 L 970 205 L 985 220 L 1000 200 L 1020 215 L 1040 205 L 1060 220 L 1065 225 Z" 
-            fill="#228B22" stroke="#1B5E1B" stroke-width="1"/>
-      <path d="M 955 235 L 975 220 L 995 230 L 1015 218 L 1035 228 L 1050 222 L 1065 235 Z" 
-            fill="#32CD32" stroke="#228B22" stroke-width="1"/>
-      
-      <!-- Ground/grass -->
-      <rect x="955" y="235" width="110" height="25" fill="#90EE90"/>
-      
-      <!-- Tree -->
-      <rect x="1005" y="238" width="8" height="20" fill="#654321"/>
-      <circle cx="1009" cy="238" r="10" fill="#228B22" stroke="#1B5E1B" stroke-width="1"/>
-      <circle cx="1015" cy="235" r="9" fill="#32CD32" stroke="#228B22" stroke-width="1"/>
-      <circle cx="1003" cy="233" r="8" fill="#2E7D32" stroke="#1B5E1B" stroke-width="1"/>
+
+  <!-- ==================== FIREPLACE ==================== -->
+  <g id="fireplace">
+    <rect x="640" y="250" width="190" height="470" rx="4" fill="#8B7355" stroke="#5C4033" stroke-width="4"/>
+    <rect x="652" y="262" width="166" height="380" rx="3" fill="#6B5845" stroke="#4A3B2A" stroke-width="3"/>
+    <rect x="664" y="320" width="142" height="310" rx="5" fill="#1A1008" stroke="#2A2010" stroke-width="2"/>
+    <rect x="670" y="326" width="130" height="298" rx="3" fill="#2A1A0A"/>
+    <!-- Brick pattern -->
+    <g stroke="#7A6850" stroke-width="1" opacity="0.5">
+      <line x1="646" y1="290" x2="826" y2="290"/>
+      <line x1="646" y1="340" x2="664" y2="340"/>
+      <line x1="806" y1="340" x2="826" y2="340"/>
+      <line x1="646" y1="390" x2="664" y2="390"/>
+      <line x1="806" y1="390" x2="826" y2="390"/>
+      <line x1="646" y1="440" x2="664" y2="440"/>
+      <line x1="806" y1="440" x2="826" y2="440"/>
+      <line x1="646" y1="490" x2="664" y2="490"/>
+      <line x1="806" y1="490" x2="826" y2="490"/>
+      <line x1="646" y1="540" x2="664" y2="540"/>
+      <line x1="806" y1="540" x2="826" y2="540"/>
+      <line x1="646" y1="590" x2="664" y2="590"/>
+      <line x1="806" y1="590" x2="826" y2="590"/>
+      <line x1="646" y1="640" x2="826" y2="640"/>
+      <line x1="735" y1="262" x2="735" y2="290"/>
+      <line x1="710" y1="640" x2="710" y2="720"/>
+      <line x1="760" y1="640" x2="760" y2="720"/>
     </g>
-    
-    <!-- Frame highlight -->
-    <line x1="945" y1="175" x2="1075" y2="175" stroke="#8B5A3C" stroke-width="2" opacity="0.6"/>
-    <line x1="945" y1="175" x2="945" y2="270" stroke="#8B5A3C" stroke-width="2" opacity="0.6"/>
+    <!-- Mantelpiece -->
+    <rect x="625" y="235" width="220" height="22" rx="4" fill="#654321" stroke="#3D2817" stroke-width="3"/>
+    <rect x="630" y="239" width="210" height="14" fill="#8B6F47" rx="2"/>
+    <!-- Clock -->
+    <circle cx="735" cy="226" r="14" fill="#F5F5DC" stroke="#654321" stroke-width="2"/>
+    <circle cx="735" cy="226" r="11" fill="#FFFFF0"/>
+    <line x1="735" y1="226" x2="735" y2="218" stroke="#333" stroke-width="1.5"/>
+    <line x1="735" y1="226" x2="741" y2="226" stroke="#333" stroke-width="1"/>
+    <!-- Left candle -->
+    <rect x="670" y="220" width="12" height="18" fill="#DAA520" rx="1"/>
+    <rect x="673" y="211" width="6" height="12" fill="#F5F5DC" rx="1"/>
+    <ellipse cx="676" cy="208" rx="4" ry="6" fill="#FF6600" opacity="0.8"/>
+    <ellipse cx="676" cy="205" rx="3" ry="4" fill="#FFCC00" opacity="0.9"/>
+    <!-- Right candle -->
+    <rect x="788" y="220" width="12" height="18" fill="#DAA520" rx="1"/>
+    <rect x="791" y="211" width="6" height="12" fill="#F5F5DC" rx="1"/>
+    <ellipse cx="794" cy="208" rx="4" ry="6" fill="#FF6600" opacity="0.8"/>
+    <ellipse cx="794" cy="205" rx="3" ry="4" fill="#FFCC00" opacity="0.9"/>
+    <!-- Logs -->
+    <ellipse cx="710" cy="610" rx="35" ry="12" fill="#4A2F1A" stroke="#3D2817" stroke-width="1.5" transform="rotate(-10 710 610)"/>
+    <ellipse cx="760" cy="607" rx="30" ry="10" fill="#5C4033" stroke="#3D2817" stroke-width="1.5" transform="rotate(10 760 607)"/>
+    <ellipse cx="735" cy="603" rx="28" ry="9" fill="#654321" stroke="#4A2F1A" stroke-width="1"/>
+    <!-- Flames -->
+    <path d="M 700 598 Q 697 565 708 545 Q 715 525 722 545 Q 728 510 735 535 Q 742 520 746 540 Q 755 520 760 598 Z"
+          fill="#FF4500" opacity="0.85"/>
+    <path d="M 707 598 Q 705 575 714 558 Q 720 540 728 558 Q 735 540 740 560 Q 747 548 750 598 Z"
+          fill="#FF6600" opacity="0.8"/>
+    <path d="M 712 598 Q 713 580 720 568 Q 726 555 732 570 Q 738 556 742 570 Q 747 560 747 598 Z"
+          fill="#FFB300" opacity="0.9"/>
+    <path d="M 718 598 Q 720 583 726 575 Q 730 565 736 578 Q 740 570 740 598 Z"
+          fill="#FFDD00" opacity="0.8"/>
+    <!-- Floor glow -->
+    <ellipse cx="735" cy="730" rx="110" ry="30" fill="#FF6600" opacity="0.06"/>
+    <ellipse cx="735" cy="722" rx="70" ry="18" fill="#FFCC00" opacity="0.04"/>
+    <!-- Hearth -->
+    <rect x="630" y="710" width="210" height="14" rx="2" fill="#7A6850" stroke="#5C4033" stroke-width="2"/>
   </g>
-  
-  <!-- Small plant in corner -->
+
+  <!-- Fireplace rug -->
+  <g id="fireplaceRug">
+    <ellipse cx="735" cy="810" rx="110" ry="40" fill="#8B0000" opacity="0.7" stroke="#5C0000" stroke-width="2"/>
+    <ellipse cx="735" cy="810" rx="95" ry="32" fill="#A52A2A" opacity="0.5"/>
+    <ellipse cx="735" cy="810" rx="75" ry="24" fill="#CD5C5C" opacity="0.3"/>
+    <g stroke="#8B0000" stroke-width="1.5" opacity="0.5">
+      <line x1="630" y1="810" x2="623" y2="816"/>
+      <line x1="638" y1="822" x2="630" y2="830"/>
+      <line x1="650" y1="832" x2="642" y2="842"/>
+      <line x1="820" y1="832" x2="828" y2="842"/>
+      <line x1="832" y1="822" x2="840" y2="830"/>
+      <line x1="840" y1="810" x2="847" y2="816"/>
+    </g>
+  </g>
+
+  <!-- ==================== TV SETUP ==================== -->
+  <g id="television">
+    <rect x="880" y="80" width="430" height="340" rx="15" fill="url(#tvFrame)" stroke="#000" stroke-width="6"/>
+    <rect x="900" y="100" width="390" height="300" rx="10" fill="#1a1a1a" stroke="#0D0D0D" stroke-width="3"/>
+    <ellipse cx="1095" cy="250" rx="210" ry="160" fill="url(#tvGlow)"/>
+    <rect x="918" y="118" width="354" height="264" rx="5" fill="#001a33" stroke="#00274D" stroke-width="2"/>
+    <!-- Documentary content -->
+    <g id="documentary">
+      <rect x="922" y="122" width="346" height="256" fill="#001a33"/>
+      <!-- LOFAR antenna -->
+      <g id="lofar-antenna">
+        <ellipse cx="1000" cy="210" rx="50" ry="45" fill="#3A6EA5" opacity="0.7"/>
+        <ellipse cx="1000" cy="210" rx="40" ry="35" fill="#4A90E2" opacity="0.8"/>
+        <ellipse cx="1000" cy="210" rx="24" ry="22" fill="#5AA5FF" opacity="0.9"/>
+        <line x1="1000" y1="165" x2="1000" y2="260" stroke="#E0E0E0" stroke-width="4"/>
+        <line x1="960" y1="210" x2="1040" y2="210" stroke="#E0E0E0" stroke-width="4"/>
+        <line x1="975" y1="183" x2="1025" y2="237" stroke="#E0E0E0" stroke-width="3"/>
+        <line x1="975" y1="237" x2="1025" y2="183" stroke="#E0E0E0" stroke-width="3"/>
+        <circle cx="1000" cy="210" r="20" fill="#FFFFFF" stroke="#CCC" stroke-width="2"/>
+        <circle cx="1000" cy="210" r="12" fill="#4A90E2"/>
+        <path d="M 968 188 Q 980 176 992 188" stroke="#00FF00" stroke-width="2" fill="none" opacity="0.7"/>
+        <path d="M 1008 188 Q 1020 176 1032 188" stroke="#00FF00" stroke-width="2" fill="none" opacity="0.7"/>
+      </g>
+      <!-- Documentary text panel -->
+      <g id="doc-text">
+        <rect x="1068" y="142" width="190" height="215" fill="#000033" opacity="0.7" rx="5"/>
+        <text x="1082" y="165" font-family="Arial, sans-serif" font-size="20" fill="#FFFFFF" font-weight="bold">DRENTHE:</text>
+        <text x="1082" y="192" font-family="Arial, sans-serif" font-size="17" fill="#00FF41" font-weight="bold">Wireless Tech</text>
+        <text x="1082" y="215" font-family="Arial, sans-serif" font-size="17" fill="#00FF41" font-weight="bold">Revolution</text>
+        <line x1="1078" y1="228" x2="1248" y2="228" stroke="#00FF41" stroke-width="1"/>
+        <text x="1082" y="252" font-family="Arial, sans-serif" font-size="14" fill="#FFD700">📡 WSRT</text>
+        <text x="1082" y="274" font-family="Arial, sans-serif" font-size="14" fill="#87CEEB">🌐 LOFAR</text>
+        <text x="1082" y="296" font-family="Arial, sans-serif" font-size="14" fill="#90EE90">📱 Bluetooth</text>
+        <line x1="1078" y1="308" x2="1248" y2="308" stroke="#444" stroke-width="1"/>
+        <text x="1082" y="328" font-family="Arial, sans-serif" font-size="12" fill="#CCC">Featuring:</text>
+        <text x="1082" y="345" font-family="Arial, sans-serif" font-size="11" fill="#AAA">David · Cees · Jaap</text>
+      </g>
+      <!-- Scanlines -->
+      <g id="scanlines" opacity="0.1">
+        <line x1="918" y1="130" x2="1272" y2="130" stroke="#FFF" stroke-width="1"/>
+        <line x1="918" y1="155" x2="1272" y2="155" stroke="#FFF" stroke-width="1"/>
+        <line x1="918" y1="180" x2="1272" y2="180" stroke="#FFF" stroke-width="1"/>
+        <line x1="918" y1="210" x2="1272" y2="210" stroke="#FFF" stroke-width="1"/>
+        <line x1="918" y1="240" x2="1272" y2="240" stroke="#FFF" stroke-width="1"/>
+        <line x1="918" y1="270" x2="1272" y2="270" stroke="#FFF" stroke-width="1"/>
+        <line x1="918" y1="300" x2="1272" y2="300" stroke="#FFF" stroke-width="1"/>
+        <line x1="918" y1="330" x2="1272" y2="330" stroke="#FFF" stroke-width="1"/>
+        <line x1="918" y1="360" x2="1272" y2="360" stroke="#FFF" stroke-width="1"/>
+      </g>
+    </g>
+    <!-- TV brand -->
+    <text x="1075" y="408" font-family="Arial" font-size="14" fill="#666" font-weight="bold">SONY</text>
+    <!-- TV stand shelf -->
+    <rect x="960" y="420" width="270" height="24" rx="5" fill="#654321" stroke="#3D2817" stroke-width="3"/>
+    <!-- TV stand cabinet -->
+    <rect x="990" y="444" width="210" height="276" fill="#654321" stroke="#3D2817" stroke-width="3"/>
+    <line x1="1005" y1="460" x2="1185" y2="460" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
+    <line x1="1005" y1="490" x2="1185" y2="490" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
+    <line x1="1005" y1="520" x2="1185" y2="520" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
+    <line x1="1005" y1="550" x2="1185" y2="550" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
+    <line x1="1005" y1="580" x2="1185" y2="580" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
+    <line x1="1005" y1="610" x2="1185" y2="610" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
+    <line x1="1005" y1="640" x2="1185" y2="640" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
+    <line x1="1005" y1="670" x2="1185" y2="670" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
+    <line x1="1005" y1="700" x2="1185" y2="700" stroke="#5C4033" stroke-width="1" opacity="0.5"/>
+  </g>
+
+  <!-- ==================== COUCH (right side) ==================== -->
+  <g id="couch">
+    <ellipse cx="1530" cy="720" rx="200" ry="22" fill="#000" opacity="0.2"/>
+    <rect x="1350" y="380" width="380" height="310" rx="28" fill="url(#couchGradient)" stroke="#3D2817" stroke-width="5"/>
+    <!-- Back cushions -->
+    <rect x="1370" y="395" width="105" height="140" rx="14" fill="#A0522D" stroke="#654321" stroke-width="3"/>
+    <rect x="1490" y="395" width="105" height="140" rx="14" fill="#A0522D" stroke="#654321" stroke-width="3"/>
+    <rect x="1610" y="395" width="105" height="140" rx="14" fill="#A0522D" stroke="#654321" stroke-width="3"/>
+    <!-- Seat cushions -->
+    <rect x="1375" y="535" width="105" height="95" rx="12" fill="#CD853F" stroke="#654321" stroke-width="3"/>
+    <ellipse cx="1427" cy="548" rx="42" ry="28" fill="#DEB887" opacity="0.5"/>
+    <rect x="1495" y="535" width="105" height="95" rx="12" fill="#CD853F" stroke="#654321" stroke-width="3"/>
+    <ellipse cx="1547" cy="548" rx="42" ry="28" fill="#DEB887" opacity="0.5"/>
+    <rect x="1615" y="535" width="105" height="95" rx="12" fill="#CD853F" stroke="#654321" stroke-width="3"/>
+    <ellipse cx="1667" cy="548" rx="42" ry="28" fill="#DEB887" opacity="0.5"/>
+    <!-- Armrests -->
+    <rect x="1325" y="380" width="58" height="260" rx="14" fill="#8B4513" stroke="#3D2817" stroke-width="4"/>
+    <rect x="1338" y="400" width="34" height="80" rx="10" fill="#A0522D" opacity="0.7"/>
+    <rect x="1715" y="380" width="58" height="260" rx="14" fill="#8B4513" stroke="#3D2817" stroke-width="4"/>
+    <rect x="1728" y="400" width="34" height="80" rx="10" fill="#A0522D" opacity="0.7"/>
+    <!-- Stitching -->
+    <line x1="1480" y1="395" x2="1480" y2="535" stroke="#654321" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
+    <line x1="1600" y1="395" x2="1600" y2="535" stroke="#654321" stroke-width="2" stroke-dasharray="5,5" opacity="0.5"/>
+  </g>
+
+  <!-- ==================== COFFEE TABLE (on floor) ==================== -->
+  <g id="coffeeTable">
+    <ellipse cx="735" cy="920" rx="170" ry="22" fill="#000" opacity="0.15"/>
+    <rect x="580" y="870" width="310" height="28" rx="5" fill="#A0522D" stroke="#3D2817" stroke-width="4"/>
+    <rect x="585" y="873" width="300" height="22" rx="3" fill="#8B4513" stroke="#654321" stroke-width="2"/>
+    <line x1="590" y1="882" x2="880" y2="882" stroke="#654321" stroke-width="1" opacity="0.4"/>
+    <line x1="590" y1="888" x2="880" y2="888" stroke="#654321" stroke-width="1" opacity="0.3"/>
+    <rect x="585" y="873" width="300" height="6" fill="#CD853F" opacity="0.5"/>
+    <!-- Legs -->
+    <rect x="615" y="898" width="26" height="60" rx="3" fill="#654321" stroke="#3D2817" stroke-width="3"/>
+    <rect x="829" y="898" width="26" height="60" rx="3" fill="#654321" stroke="#3D2817" stroke-width="3"/>
+    <rect x="620" y="903" width="16" height="50" fill="#8B5A3C" opacity="0.5"/>
+    <rect x="834" y="903" width="16" height="50" fill="#8B5A3C" opacity="0.5"/>
+    <!-- Glass of water -->
+    <rect x="680" y="848" width="30" height="24" rx="3" fill="#87CEEB" stroke="#4682B4" stroke-width="2" opacity="0.8"/>
+    <rect x="683" y="851" width="24" height="18" rx="2" fill="#B0E0E6" opacity="0.6"/>
+    <ellipse cx="695" cy="855" rx="7" ry="5" fill="#FFFFFF" opacity="0.7"/>
+    <!-- Book -->
+    <rect x="772" y="846" width="38" height="26" rx="2" fill="#8B0000" stroke="#000" stroke-width="2"/>
+    <line x1="777" y1="851" x2="805" y2="851" stroke="#A52A2A" stroke-width="1"/>
+    <line x1="777" y1="856" x2="805" y2="856" stroke="#A52A2A" stroke-width="1"/>
+    <line x1="777" y1="861" x2="805" y2="861" stroke="#A52A2A" stroke-width="1"/>
+    <rect x="774" y="848" width="34" height="5" fill="#A52A2A" opacity="0.5"/>
+    <!-- Remote control -->
+    <rect x="630" y="852" width="34" height="20" rx="4" fill="#2C2C2C" stroke="#000" stroke-width="2"/>
+    <rect x="634" y="855" width="26" height="14" rx="2" fill="#1A1A1A"/>
+    <circle cx="640" cy="862" r="2.5" fill="#444"/>
+    <circle cx="648" cy="862" r="2.5" fill="#444"/>
+    <circle cx="656" cy="862" r="2.5" fill="#444"/>
+    <circle cx="662" cy="862" r="2.5" fill="#FF0000"/>
+  </g>
+
+  <!-- ==================== FLOOR LAMP (right corner) ==================== -->
+  <g id="floorLamp">
+    <ellipse cx="1800" cy="720" rx="40" ry="10" fill="#654321" stroke="#3D2817" stroke-width="2"/>
+    <rect x="1793" y="560" width="15" height="160" fill="#654321" stroke="#3D2817" stroke-width="2"/>
+    <rect x="1796" y="566" width="10" height="148" fill="#8B5A3C"/>
+    <path d="M 1755 530 L 1793 560 L 1793 566 L 1808 566 L 1808 560 L 1845 530 Z"
+          fill="#FFD700" stroke="#DAA520" stroke-width="3"/>
+    <path d="M 1760 535 L 1793 560 L 1808 560 L 1840 535 Z"
+          fill="#FFA500" opacity="0.5"/>
+    <ellipse cx="1800" cy="545" rx="50" ry="28" fill="#FFFF00" opacity="0.3"/>
+    <circle cx="1800" cy="545" r="16" fill="#FFFFAA" stroke="#FFD700" stroke-width="2" opacity="0.8"/>
+  </g>
+
+  <!-- ==================== PICTURE FRAME (above couch) ==================== -->
+  <g id="pictureFrame">
+    <rect x="1430" y="110" width="180" height="130" rx="5" fill="#654321" stroke="#3D2817" stroke-width="5"/>
+    <rect x="1445" y="125" width="150" height="100" rx="3" fill="#87CEEB" stroke="#5C4033" stroke-width="2"/>
+    <g id="landscape">
+      <rect x="1448" y="128" width="144" height="50" fill="#87CEEB"/>
+      <ellipse cx="1478" cy="148" rx="20" ry="18" fill="#FFD700"/>
+      <ellipse cx="1476" cy="146" rx="17" ry="15" fill="#FFEB3B"/>
+      <ellipse cx="1535" cy="140" rx="14" ry="9" fill="#FFFFFF" opacity="0.8"/>
+      <ellipse cx="1548" cy="143" rx="12" ry="8" fill="#FFFFFF" opacity="0.8"/>
+      <path d="M 1448 178 L 1466 155 L 1484 170 L 1502 150 L 1524 165 L 1546 155 L 1568 170 L 1592 178 Z"
+            fill="#228B22" stroke="#1B5E1B" stroke-width="1"/>
+      <path d="M 1448 190 L 1472 172 L 1496 182 L 1518 170 L 1542 180 L 1562 174 L 1592 190 Z"
+            fill="#32CD32" stroke="#228B22" stroke-width="1"/>
+      <rect x="1448" y="190" width="144" height="30" fill="#90EE90"/>
+      <rect x="1508" y="193" width="9" height="22" fill="#654321"/>
+      <circle cx="1512" cy="193" r="12" fill="#228B22" stroke="#1B5E1B" stroke-width="1"/>
+      <circle cx="1520" cy="190" r="11" fill="#32CD32" stroke="#228B22" stroke-width="1"/>
+      <circle cx="1505" cy="188" r="10" fill="#2E7D32" stroke="#1B5E1B" stroke-width="1"/>
+    </g>
+    <line x1="1435" y1="115" x2="1605" y2="115" stroke="#8B5A3C" stroke-width="2" opacity="0.6"/>
+    <line x1="1435" y1="115" x2="1435" y2="235" stroke="#8B5A3C" stroke-width="2" opacity="0.6"/>
+  </g>
+
+  <!-- ==================== PLANT (right corner) ==================== -->
   <g id="plant">
-    <!-- Pot -->
-    <ellipse cx="1110" cy="598" rx="25" ry="5" fill="#8B4513"/>
-    <path d="M 1085 585 L 1085 598 L 1135 598 L 1135 585 Z" fill="#A0522D" stroke="#654321" stroke-width="2"/>
-    <ellipse cx="1110" cy="585" rx="25" ry="8" fill="#CD853F" stroke="#654321" stroke-width="2"/>
-    <!-- Soil -->
-    <ellipse cx="1110" cy="585" rx="20" ry="5" fill="#654321"/>
-    <!-- Plant leaves -->
-    <ellipse cx="1100" cy="570" rx="8" ry="20" fill="#228B22" stroke="#1B5E1B" stroke-width="1" transform="rotate(-20 1100 570)"/>
-    <ellipse cx="1110" cy="565" rx="8" ry="22" fill="#32CD32" stroke="#228B22" stroke-width="1"/>
-    <ellipse cx="1120" cy="570" rx="8" ry="20" fill="#228B22" stroke="#1B5E1B" stroke-width="1" transform="rotate(20 1120 570)"/>
-    <ellipse cx="1108" cy="575" rx="7" ry="18" fill="#2E7D32" stroke="#1B5E1B" stroke-width="1" transform="rotate(-10 1108 575)"/>
+    <ellipse cx="1850" cy="720" rx="28" ry="6" fill="#8B4513"/>
+    <path d="M 1822 705 L 1822 720 L 1878 720 L 1878 705 Z" fill="#A0522D" stroke="#654321" stroke-width="2"/>
+    <ellipse cx="1850" cy="705" rx="28" ry="9" fill="#CD853F" stroke="#654321" stroke-width="2"/>
+    <ellipse cx="1850" cy="705" rx="22" ry="6" fill="#654321"/>
+    <ellipse cx="1838" cy="685" rx="10" ry="24" fill="#228B22" stroke="#1B5E1B" stroke-width="1" transform="rotate(-20 1838 685)"/>
+    <ellipse cx="1850" cy="678" rx="10" ry="26" fill="#32CD32" stroke="#228B22" stroke-width="1"/>
+    <ellipse cx="1862" cy="685" rx="10" ry="24" fill="#228B22" stroke="#1B5E1B" stroke-width="1" transform="rotate(20 1862 685)"/>
+    <ellipse cx="1847" cy="690" rx="9" ry="22" fill="#2E7D32" stroke="#1B5E1B" stroke-width="1" transform="rotate(-10 1847 690)"/>
   </g>
-  
-  <!-- Ceiling light fixture -->
+
+  <!-- ==================== CEILING LIGHT ==================== -->
   <g id="ceilingLight">
-    <ellipse cx="600" cy="50" rx="60" ry="15" fill="#F5F5DC" stroke="#DDD" stroke-width="2" opacity="0.8"/>
-    <ellipse cx="600" cy="48" rx="55" ry="12" fill="#FFFACD" opacity="0.6"/>
-    <rect x="595" y="35" width="10" height="15" fill="#AAA" stroke="#888" stroke-width="1"/>
+    <ellipse cx="960" cy="50" rx="75" ry="18" fill="#F5F5DC" stroke="#DDD" stroke-width="2" opacity="0.8"/>
+    <ellipse cx="960" cy="48" rx="68" ry="14" fill="#FFFACD" opacity="0.6"/>
+    <rect x="954" y="32" width="12" height="18" fill="#AAA" stroke="#888" stroke-width="1"/>
   </g>
-  
-  <!-- Room ambient lighting effect -->
-  </g>
-  <ellipse cx="600" cy="300" rx="600" ry="400" fill="#FFFFFF" opacity="0.03"/>
-  
+
+  <!-- Ambient light -->
+  <ellipse cx="960" cy="400" rx="800" ry="500" fill="#FFFFFF" opacity="0.03"/>
+
 </svg>

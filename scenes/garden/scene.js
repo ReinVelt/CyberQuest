@@ -190,6 +190,18 @@ const GardenScene = {
             targetScene: 'home'
         },
         {
+            id: 'mancave',
+            name: 'Mancave',
+            // SVG: translate(400,370), garage door at x=20,y=110 w=120 h=170
+            // Actual: x=400+20=420, y=370+110=480, w=120, h=170
+            x: (420 / 1920) * 100,    // 21.88%
+            y: (480 / 1080) * 100,    // 44.44%
+            width: (120 / 1920) * 100, // 6.25%
+            height: (170 / 1080) * 100, // 15.74%
+            cursor: 'pointer',
+            targetScene: 'mancave'
+        },
+        {
             id: 'volvo',
             name: 'Old Volvo',
             // SVG: Parked near the shed on right side
@@ -206,9 +218,9 @@ const GardenScene = {
                         { speaker: 'Ryan', text: 'He said he\'d run the schematics through ASTRON\'s pipeline. Let\'s see what he found.' }
                     ]);
                     
-                    setTimeout(() => {
+                    game.sceneTimeout(() => {
                         game.setFlag('driving_destination', 'astron');
-                        game.loadScene('driving');
+                        game.loadScene('driving_day');
                     }, 2500);
                     return;
                 }
@@ -222,7 +234,7 @@ const GardenScene = {
                         { speaker: 'Ryan', text: 'Eva is waiting. Let\'s do this.' }
                     ]);
                     
-                    setTimeout(() => {
+                    game.sceneTimeout(() => {
                         game.setFlag('driving_destination', 'facility');
                         game.loadScene('driving');
                     }, 3000);
@@ -238,7 +250,7 @@ const GardenScene = {
                         { speaker: 'Ryan', text: 'Ter Apel is 20 minutes from here. Time to go.' }
                     ]);
                     
-                    setTimeout(() => {
+                    game.sceneTimeout(() => {
                         console.log('Garden: Setting driving_destination to klooster');
                         game.setFlag('driving_destination', 'klooster');
                         console.log('Garden: Loading driving scene');

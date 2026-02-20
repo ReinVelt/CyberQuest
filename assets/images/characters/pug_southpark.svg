@@ -1,52 +1,114 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 110" width="140" height="110">
-  <!-- Pug - South Park style -->
-  
-  <!-- Body - small and compact -->
-  <ellipse cx="70" cy="75" rx="35" ry="22" fill="#D4A574" stroke="#000" stroke-width="2"/>
-  
-  <!-- Legs - short stubby legs -->
-  <rect x="50" y="90" width="10" height="15" rx="2" fill="#D4A574" stroke="#000" stroke-width="1.5"/>
-  <rect x="65" y="90" width="10" height="15" rx="2" fill="#D4A574" stroke="#000" stroke-width="1.5"/>
-  <rect x="80" y="90" width="10" height="15" rx="2" fill="#D4A574" stroke="#000" stroke-width="1.5"/>
-  <rect x="95" y="90" width="10" height="15" rx="2" fill="#D4A574" stroke="#000" stroke-width="1.5"/>
-  
-  <!-- Paws -->
-  <ellipse cx="55" cy="105" rx="6" ry="4" fill="#8B7355" stroke="#000" stroke-width="1"/>
-  <ellipse cx="70" cy="105" rx="6" ry="4" fill="#8B7355" stroke="#000" stroke-width="1"/>
-  <ellipse cx="85" cy="105" rx="6" ry="4" fill="#8B7355" stroke="#000" stroke-width="1"/>
-  <ellipse cx="100" cy="105" rx="6" ry="4" fill="#8B7355" stroke="#000" stroke-width="1"/>
-  
-  <!-- Head - distinctive pug face -->
-  <circle cx="70" cy="50" r="23" fill="#D4A574" stroke="#000" stroke-width="2"/>
-  
-  <!-- Black face mask -->
-  <ellipse cx="70" cy="55" rx="18" ry="15" fill="#2C2416" stroke="#000" stroke-width="1.5"/>
-  
-  <!-- Wrinkles on forehead -->
-  <path d="M 55 42 Q 60 40 65 42" fill="none" stroke="#000" stroke-width="1.5"/>
-  <path d="M 75 42 Q 80 40 85 42" fill="none" stroke="#000" stroke-width="1.5"/>
-  <path d="M 60 38 Q 70 36 80 38" fill="none" stroke="#000" stroke-width="1.5"/>
-  
-  <!-- Ears - small folded -->
-  <ellipse cx="50" cy="45" rx="8" ry="12" fill="#8B7355" stroke="#000" stroke-width="1.5" transform="rotate(-30 50 45)"/>
-  <ellipse cx="90" cy="45" rx="8" ry="12" fill="#8B7355" stroke="#000" stroke-width="1.5" transform="rotate(30 90 45)"/>
-  
-  <!-- Eyes - big round pug eyes -->
-  <circle cx="62" cy="50" r="6" fill="#000"/>
-  <circle cx="60" cy="48" r="2" fill="#FFFFFF"/>
-  <circle cx="78" cy="50" r="6" fill="#000"/>
-  <circle cx="76" cy="48" r="2" fill="#FFFFFF"/>
-  
-  <!-- Snout - flat pug nose -->
-  <ellipse cx="70" cy="62" rx="8" ry="6" fill="#1A1410" stroke="#000" stroke-width="1.5"/>
-  
-  <!-- Nostrils -->
-  <ellipse cx="67" cy="62" rx="2" ry="3" fill="#000"/>
-  <ellipse cx="73" cy="62" rx="2" ry="3" fill="#000"/>
-  
-  <!-- Tongue out (classic pug) -->
-  <ellipse cx="70" cy="70" rx="4" ry="3" fill="#FF69B4" stroke="#000" stroke-width="1"/>
-  
-  <!-- Curly tail -->
-  <path d="M 105 72 Q 115 68 118 73 Q 120 78 115 80 Q 110 82 108 77" fill="#D4A574" stroke="#000" stroke-width="1.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 120" width="140" height="120">
+  <!-- Pug - South Park style, realistic pug proportions -->
+
+  <!-- Body - compact barrel chest -->
+  <ellipse cx="70" cy="78" rx="32" ry="20" fill="#D4A574"/>
+  <!-- Belly lighter underside -->
+  <ellipse cx="70" cy="85" rx="26" ry="12" fill="#E0BB90" opacity="0.6"/>
+  <!-- Back dorsal stripe (darker fawn) -->
+  <path d="M45,68 Q70,62 95,68" stroke="#B08850" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Legs - short, sturdy -->
+  <!-- Front legs -->
+  <rect x="48" y="92" width="11" height="16" rx="3" fill="#D4A574"/>
+  <rect x="64" y="92" width="11" height="16" rx="3" fill="#D4A574"/>
+  <!-- Back legs (slightly thicker thigh) -->
+  <path d="M80,88 Q78,96 80,108 L90,108 Q92,96 88,88 Z" fill="#D4A574"/>
+  <path d="M94,88 Q92,96 94,108 L104,108 Q106,96 102,88 Z" fill="#D4A574"/>
+  <!-- Darker fur on legs -->
+  <rect x="48" y="92" width="11" height="5" rx="3" fill="#C09060" opacity="0.4"/>
+  <rect x="64" y="92" width="11" height="5" rx="3" fill="#C09060" opacity="0.4"/>
+
+  <!-- Paws - small rounded dark nails -->
+  <ellipse cx="53" cy="108" rx="7" ry="4" fill="#C09A6A"/>
+  <ellipse cx="69" cy="108" rx="7" ry="4" fill="#C09A6A"/>
+  <ellipse cx="85" cy="108" rx="7" ry="4" fill="#C09A6A"/>
+  <ellipse cx="99" cy="108" rx="7" ry="4" fill="#C09A6A"/>
+  <!-- Toe lines -->
+  <line x1="51" y1="106" x2="51" y2="110" stroke="#8B7355" stroke-width="0.8"/>
+  <line x1="55" y1="106" x2="55" y2="110" stroke="#8B7355" stroke-width="0.8"/>
+  <line x1="67" y1="106" x2="67" y2="110" stroke="#8B7355" stroke-width="0.8"/>
+  <line x1="71" y1="106" x2="71" y2="110" stroke="#8B7355" stroke-width="0.8"/>
+  <line x1="83" y1="106" x2="83" y2="110" stroke="#8B7355" stroke-width="0.8"/>
+  <line x1="87" y1="106" x2="87" y2="110" stroke="#8B7355" stroke-width="0.8"/>
+  <line x1="97" y1="106" x2="97" y2="110" stroke="#8B7355" stroke-width="0.8"/>
+  <line x1="101" y1="106" x2="101" y2="110" stroke="#8B7355" stroke-width="0.8"/>
+
+  <!-- Curly tail (tight spiral, characteristic pug curl) -->
+  <path d="M102,72 Q112,64 116,70 Q120,76 114,80 Q108,84 106,78 Q104,74 108,72" fill="none" stroke="#C09060" stroke-width="4" stroke-linecap="round"/>
+  <path d="M102,72 Q112,64 116,70 Q120,76 114,80 Q108,84 106,78 Q104,74 108,72" fill="#D4A574" opacity="0.7"/>
+
+  <!-- Neck -->
+  <path d="M55,65 Q70,72 85,65" fill="#D4A574"/>
+
+  <!-- HEAD - large and round, pug-flat face -->
+  <circle cx="70" cy="42" r="26" fill="#D4A574"/>
+
+  <!-- Black muzzle mask (the distinctive pug dark face) -->
+  <ellipse cx="70" cy="52" rx="16" ry="14" fill="#2C2416"/>
+  <!-- Mask blends up between eyes -->
+  <path d="M62,42 Q70,38 78,42 L78,50 Q70,46 62,50 Z" fill="#3A3020" opacity="0.7"/>
+
+  <!-- Forehead wrinkles (deep, characteristic) -->
+  <path d="M56,32 Q63,28 70,32" stroke="#B08850" stroke-width="1.8" fill="none"/>
+  <path d="M70,32 Q77,28 84,32" stroke="#B08850" stroke-width="1.8" fill="none"/>
+  <path d="M58,36 Q70,31 82,36" stroke="#B08850" stroke-width="1.5" fill="none"/>
+  <path d="M60,40 Q70,36 80,40" stroke="#B08850" stroke-width="1.2" fill="none" opacity="0.7"/>
+  <!-- Nose bridge wrinkle roll (the big fold) -->
+  <path d="M62,43 Q70,40 78,43" stroke="#9A7A50" stroke-width="2.2" fill="none"/>
+
+  <!-- Ears - soft, thin, folded-over "button" ears -->
+  <path d="M46,36 Q38,22 42,32 Q44,38 48,40 Z" fill="#8B7355"/>
+  <path d="M94,36 Q102,22 98,32 Q96,38 92,40 Z" fill="#8B7355"/>
+  <!-- Inner ear pink -->
+  <path d="M46,34 Q41,26 43,32 Q45,36 47,38 Z" fill="#C4988A" opacity="0.5"/>
+  <path d="M94,34 Q99,26 97,32 Q95,36 93,38 Z" fill="#C4988A" opacity="0.5"/>
+
+  <!-- Eyes - large, round, bulging (signature pug look) -->
+  <!-- White sclera visible around iris -->
+  <circle cx="60" cy="44" r="7" fill="#FAFAFA"/>
+  <circle cx="80" cy="44" r="7" fill="#FAFAFA"/>
+  <!-- Dark brown iris, very large -->
+  <circle cx="60" cy="44" r="5.5" fill="#1A1208"/>
+  <circle cx="80" cy="44" r="5.5" fill="#1A1208"/>
+  <!-- Warm brown ring around pupil -->
+  <circle cx="60" cy="44" r="4" fill="#3A2A10"/>
+  <circle cx="80" cy="44" r="4" fill="#3A2A10"/>
+  <!-- Pupil -->
+  <circle cx="60" cy="44" r="2.5" fill="#000"/>
+  <circle cx="80" cy="44" r="2.5" fill="#000"/>
+  <!-- Reflections (big wet pug eyes) -->
+  <circle cx="58" cy="42" r="1.8" fill="#fff" opacity="0.85"/>
+  <circle cx="78" cy="42" r="1.8" fill="#fff" opacity="0.85"/>
+  <circle cx="62" cy="46" r="0.8" fill="#fff" opacity="0.5"/>
+  <circle cx="82" cy="46" r="0.8" fill="#fff" opacity="0.5"/>
+  <!-- Lower eyelid line -->
+  <path d="M53,48 Q60,51 67,48" stroke="#2C2416" stroke-width="1" fill="none"/>
+  <path d="M73,48 Q80,51 87,48" stroke="#2C2416" stroke-width="1" fill="none"/>
+
+  <!-- Flat snout/nose (very flat, wide, pug-typical) -->
+  <ellipse cx="70" cy="55" rx="8" ry="5" fill="#1A1410"/>
+  <!-- Nostrils (wide, open, flat) -->
+  <ellipse cx="66" cy="55" rx="2.5" ry="2.8" fill="#000"/>
+  <ellipse cx="74" cy="55" rx="2.5" ry="2.8" fill="#000"/>
+  <!-- Nose highlight -->
+  <ellipse cx="70" cy="53" rx="3" ry="1.5" fill="#3A3020" opacity="0.5"/>
+
+  <!-- Mouth (slight underbite, jowly) -->
+  <path d="M62,60 Q66,63 70,61 Q74,63 78,60" stroke="#1A1410" stroke-width="1.2" fill="none"/>
+  <!-- Lower lip droop -->
+  <path d="M64,61 Q70,66 76,61" stroke="#2A1A10" stroke-width="1" fill="none" opacity="0.6"/>
+
+  <!-- Tongue poking out (classic happy pug) -->
+  <ellipse cx="70" cy="65" rx="4" ry="3.5" fill="#E87090"/>
+  <ellipse cx="70" cy="66" rx="3" ry="2" fill="#F090A8" opacity="0.6"/>
+  <!-- Tongue center line -->
+  <line x1="70" y1="63" x2="70" y2="67" stroke="#D06080" stroke-width="0.6"/>
+
+  <!-- Cheek/jowl pouches -->
+  <path d="M52,52 Q48,56 52,60" stroke="#B08850" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M88,52 Q92,56 88,60" stroke="#B08850" stroke-width="1" fill="none" opacity="0.5"/>
+
+  <!-- Chest tuft (lighter fur between front legs) -->
+  <ellipse cx="60" cy="88" rx="10" ry="6" fill="#E0C090" opacity="0.5"/>
 </svg>

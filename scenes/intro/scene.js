@@ -143,6 +143,7 @@ const IntroScene = {
                 font-family: 'Courier New', monospace !important;
                 cursor: pointer !important;
                 display: block !important;
+                transition: opacity 4s ease-in-out !important;
                 visibility: visible !important;
                 opacity: 1 !important;
                 pointer-events: auto !important;
@@ -187,7 +188,7 @@ const IntroScene = {
             
             @keyframes introScroll {
                 0% {
-                    top: 100%;
+                    top: 30%;
                     opacity: 1;
                 }
                 95% {
@@ -200,7 +201,7 @@ const IntroScene = {
             }
             
             .intro-spacer {
-                height: 20vh;
+                height: 2vh;
             }
             
             .intro-end-spacer {
@@ -440,42 +441,109 @@ const IntroScene = {
             });
         });
         
-        // Click to skip to home scene
+        // Phase tracking: false = scroller showing, true = background revealed
+        let scrollerDone = false;
+
+        // Click handler — two phases
         introOverlay.addEventListener('click', () => {
-            introOverlay.remove();
-            
-            // Remove style element
-            const styleElement = document.getElementById('intro-scroll-style');
-            if (styleElement) {
-                styleElement.remove();
-            }
-            
-            // Restore character visibility
-            if (charactersContainer) {
-                charactersContainer.style.display = '';
-            }
-            
-            // Restore voice state
-            game.voiceEnabled = originalVoiceState;
-            
-            // Transition to home scene
-            game.loadScene('home');
+            if (scrollerDone) return; // ignore clicks during fade
+            scrollerDone = true;
+
+            // Phase 1: fade out the dark scroller to reveal SVG background
+            introOverlay.style.opacity = '0';
+            introOverlay.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                // Remove scroller and its styles
+                introOverlay.remove();
+                const styleElement = document.getElementById('intro-scroll-style');
+                if (styleElement) styleElement.remove();
+
+                // Show a dark veil over the background that fades out,
+                // plus a "click to continue" prompt
+                const bgPrompt = document.createElement('div');
+                bgPrompt.id = 'intro-bg-prompt';
+                bgPrompt.innerHTML = `
+                    <div class="ibp-inner">
+                        <div class="ibp-location">📍 Compascuum, Drenthe</div>
+                        <div class="ibp-click">▶ &nbsp; CLICK TO CONTINUE</div>
+                    </div>`;
+                bgPrompt.style.cssText = [
+                    'position:fixed', 'inset:0', 'z-index:9998',
+                    'background:rgba(0,0,0,0.85)',
+                    'display:flex', 'align-items:center', 'justify-content:center',
+                    'cursor:pointer',
+                    'transition:background 3s ease-out'
+                ].join(';');
+
+                // Inner text styles injected via a tiny style block
+                const ps = document.createElement('style');
+                ps.id = 'intro-prompt-style';
+                ps.textContent = `
+                    #intro-bg-prompt .ibp-inner {
+                        text-align: center;
+                        font-family: 'Courier New', monospace;
+                        color: #ffffffcc;
+                        user-select: none;
+                    }
+                    #intro-bg-prompt .ibp-location {
+                        font-size: 1.1em;
+                        letter-spacing: 4px;
+                        color: #80ccdd;
+                        margin-bottom: 28px;
+                        opacity: 0;
+                        animation: ibpFadeIn 2s ease-out 1.5s forwards;
+                    }
+                    #intro-bg-prompt .ibp-click {
+                        font-size: 1.5em;
+                        letter-spacing: 6px;
+                        font-weight: bold;
+                        color: #ffffff;
+                        opacity: 0;
+                        animation: ibpFadeIn 1.5s ease-out 2.5s forwards,
+                                   ibpPulse 2s ease-in-out 4s infinite;
+                    }
+                    @keyframes ibpFadeIn {
+                        from { opacity: 0; transform: translateY(10px); }
+                        to   { opacity: 1; transform: translateY(0); }
+                    }
+                    @keyframes ibpPulse {
+                        0%,100% { opacity: 1; }
+                        50%     { opacity: 0.45; }
+                    }
+                `;
+                document.head.appendChild(ps);
+                document.body.appendChild(bgPrompt);
+
+                // Slowly lift the dark veil to reveal the scene
+                requestAnimationFrame(() => {
+                    bgPrompt.style.background = 'rgba(0,0,0,0.0)';
+                });
+
+                // Phase 2: click anywhere to continue to home
+                bgPrompt.addEventListener('click', () => {
+                    bgPrompt.style.transition = 'opacity 0.6s ease-in';
+                    bgPrompt.style.opacity = '0';
+                    setTimeout(() => {
+                        bgPrompt.remove();
+                        document.getElementById('intro-prompt-style')?.remove();
+                        if (charactersContainer) charactersContainer.style.display = '';
+                        game.voiceEnabled = originalVoiceState;
+                        game.loadScene('home');
+                    }, 650);
+                });
+
+            }, 4100); // wait for 4s transition + tiny buffer
         });
     },
     
     onExit: function(game) {
-        // Clean up intro overlay if it exists
-        const introOverlay = document.getElementById('intro-scroll');
-        if (introOverlay) {
-            introOverlay.remove();
-        }
-        
-        // Clean up style element
-        const styleElement = document.getElementById('intro-scroll-style');
-        if (styleElement) {
-            styleElement.remove();
-        }
-        
+        // Clean up all intro elements
+        document.getElementById('intro-scroll')?.remove();
+        document.getElementById('intro-scroll-style')?.remove();
+        document.getElementById('intro-bg-prompt')?.remove();
+        document.getElementById('intro-prompt-style')?.remove();
+
         // Ensure characters are visible when leaving intro scene
         const charactersContainer = document.getElementById('scene-characters');
         if (charactersContainer) {

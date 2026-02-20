@@ -1,0 +1,283 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="roomBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0d18"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="deskGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3d2b1a"/>
+      <stop offset="100%" stop-color="#2a1d10"/>
+    </linearGradient>
+    <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#000d1a"/>
+      <stop offset="100%" stop-color="#001428"/>
+    </linearGradient>
+    <radialGradient id="deskLight" cx="50%" cy="0%" r="70%">
+      <stop offset="0%" stop-color="#1a2a40" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Room background -->
+  <rect width="1600" height="900" fill="url(#roomBg)"/>
+
+  <!-- Back wall -->
+  <rect x="0" y="0" width="1600" height="580" fill="#0d1117"/>
+  <rect x="0" y="575" width="1600" height="5" fill="#1a2030" opacity="0.6"/>
+
+  <!-- Wall shelves with equipment -->
+  <rect x="100" y="80" width="300" height="20" fill="#2a1d10" rx="3"/>
+  <rect x="80" y="60" width="10" height="40" fill="#1a1208"/>
+  <rect x="400" y="60" width="10" height="40" fill="#1a1208"/>
+  <!-- Shelf items: books and boxes -->
+  <rect x="110" y="40" width="30" height="40" fill="#1a3a5c" rx="2"/>
+  <rect x="148" y="45" width="25" height="35" fill="#2a4a6c" rx="2"/>
+  <rect x="180" y="38" width="35" height="42" fill="#0f2a40" rx="2"/>
+  <rect x="222" y="50" width="20" height="30" fill="#3a2010" rx="2"/>
+  <rect x="250" y="42" width="40" height="38" fill="#1a1a1a" rx="2"/>
+  <text x="255" y="67" font-family="monospace" font-size="9" fill="#00d9ff" opacity="0.7">SDR</text>
+  <rect x="298" y="48" width="28" height="32" fill="#2a3010" rx="2"/>
+  <rect x="333" y="44" width="50" height="36" fill="#1a1a2e" rx="2"/>
+
+  <!-- Right shelf -->
+  <rect x="1200" y="80" width="300" height="20" fill="#2a1d10" rx="3"/>
+  <rect x="1180" y="60" width="10" height="40" fill="#1a1208"/>
+  <rect x="1500" y="60" width="10" height="40" fill="#1a1208"/>
+  <rect x="1210" y="40" width="40" height="40" fill="#1a2a1a" rx="2"/>
+  <rect x="1258" y="46" width="30" height="34" fill="#0a1a0a" rx="2"/>
+  <rect x="1296" y="38" width="50" height="42" fill="#2a1020" rx="2"/>
+  <rect x="1354" y="50" width="25" height="30" fill="#1a3a1a" rx="2"/>
+  <!-- Antenna on shelf -->
+  <rect x="1440" y="25" width="5" height="75" fill="#888"/>
+  <rect x="1435" y="95" width="15" height="8" fill="#555" rx="2"/>
+
+  <!-- ── MAIN MONITOR (left) — Spectrum Analyzer ── -->
+  <rect x="100" y="150" width="640" height="410" fill="#111" stroke="#00d9ff" stroke-width="3" rx="8"/>
+  <rect x="100" y="150" width="640" height="410" fill="url(#screenGrad)" rx="8"/>
+  <!-- Screen bezel -->
+  <rect x="115" y="165" width="610" height="380" fill="#000d1a" rx="4"/>
+  <!-- Spectrum header -->
+  <text x="420" y="195" font-family="monospace" font-size="16" fill="#00d9ff" text-anchor="middle" font-weight="bold">SPECTRUM ANALYZER — 14.000–14.500 MHz</text>
+  <line x1="115" y1="200" x2="725" y2="200" stroke="#00d9ff" stroke-width="1" opacity="0.4"/>
+  <!-- Grid lines -->
+  <line x1="115" y1="260" x2="725" y2="260" stroke="#00d9ff" stroke-width="0.5" opacity="0.15"/>
+  <line x1="115" y1="310" x2="725" y2="310" stroke="#00d9ff" stroke-width="0.5" opacity="0.15"/>
+  <line x1="115" y1="360" x2="725" y2="360" stroke="#00d9ff" stroke-width="0.5" opacity="0.15"/>
+  <line x1="115" y1="410" x2="725" y2="410" stroke="#00d9ff" stroke-width="0.5" opacity="0.15"/>
+  <line x1="115" y1="460" x2="725" y2="460" stroke="#00d9ff" stroke-width="0.5" opacity="0.15"/>
+  <!-- Vertical grid -->
+  <line x1="238" y1="200" x2="238" y2="530" stroke="#00d9ff" stroke-width="0.5" opacity="0.15"/>
+  <line x1="360" y1="200" x2="360" y2="530" stroke="#00d9ff" stroke-width="0.5" opacity="0.15"/>
+  <line x1="482" y1="200" x2="482" y2="530" stroke="#00d9ff" stroke-width="0.5" opacity="0.15"/>
+  <line x1="604" y1="200" x2="604" y2="530" stroke="#00d9ff" stroke-width="0.5" opacity="0.15"/>
+  <!-- Noise floor -->
+  <polyline points="115,470 145,465 175,468 205,462 235,469 265,464 295,467 325,461 355,466 385,463 415,467 445,462 475,465 505,460 535,464 555,461 575,464 605,459 635,463 665,461 695,465 725,468" stroke="#004466" stroke-width="1.5" fill="none"/>
+  <!-- Signal spike at 14.23 MHz — SSTV frequency -->
+  <polyline points="380,462 390,450 400,410 408,330 414,230 418,210 422,230 428,340 435,420 445,455 455,462" stroke="#00ff88" stroke-width="2" fill="none"/>
+  <line x1="418" y1="200" x2="418" y2="530" stroke="#00ff88" stroke-width="1" stroke-dasharray="4,3" opacity="0.5"/>
+  <text x="418" y="548" font-family="monospace" font-size="12" fill="#00ff88" text-anchor="middle">14.23 MHz ▲</text>
+  <!-- Smaller signals -->
+  <polyline points="190,462 196,440 202,420 208,440 214,462" stroke="#00aaff" stroke-width="1.5" fill="none"/>
+  <polyline points="560,462 566,445 572,435 578,445 584,462" stroke="#00aaff" stroke-width="1.5" fill="none"/>
+  <polyline points="640,460 646,448 650,442 654,448 660,460" stroke="#0066ff" stroke-width="1.5" fill="none"/>
+  <!-- Frequency axis labels -->
+  <text x="115" y="545" font-family="monospace" font-size="11" fill="#667" text-anchor="start">14.000</text>
+  <text x="238" y="545" font-family="monospace" font-size="11" fill="#667" text-anchor="middle">14.125</text>
+  <text x="360" y="545" font-family="monospace" font-size="11" fill="#667" text-anchor="middle">14.250</text>
+  <text x="482" y="545" font-family="monospace" font-size="11" fill="#667" text-anchor="middle">14.375</text>
+  <text x="604" y="545" font-family="monospace" font-size="11" fill="#667" text-anchor="middle">14.425</text>
+  <text x="725" y="545" font-family="monospace" font-size="11" fill="#667" text-anchor="end">14.500</text>
+  <!-- dBm axis -->
+  <text x="108" y="265" font-family="monospace" font-size="10" fill="#445" text-anchor="end">-20</text>
+  <text x="108" y="365" font-family="monospace" font-size="10" fill="#445" text-anchor="end">-60</text>
+  <text x="108" y="465" font-family="monospace" font-size="10" fill="#445" text-anchor="end">-100</text>
+
+  <!-- ── MAIN MONITOR (right) — Waterfall Display ── -->
+  <rect x="860" y="150" width="640" height="410" fill="#111" stroke="#00d9ff" stroke-width="3" rx="8"/>
+  <rect x="875" y="165" width="610" height="380" fill="#000509" rx="4"/>
+  <text x="1180" y="195" font-family="monospace" font-size="16" fill="#00d9ff" text-anchor="middle" font-weight="bold">WATERFALL — TIME vs FREQUENCY</text>
+  <line x1="875" y1="200" x2="1485" y2="200" stroke="#00d9ff" stroke-width="1" opacity="0.4"/>
+  <!-- Waterfall rows (simulated) -->
+  <rect x="875" y="200" width="610" height="340" fill="#000509"/>
+  <!-- Background rf noise bands -->
+  <rect x="875" y="200" width="610" height="340" fill="none"/>
+  <!-- Simulate waterfall with rectangles of varying color -->
+  <!-- Each 'row' is 8px tall, 43 rows -->
+  <g opacity="0.85">
+    <!-- Rows with SSTV signal at x≈1133-1153 (14.23 MHz mapped) -->
+    <rect x="875" y="200" width="610" height="8" fill="#000820"/>
+    <rect x="1133" y="200" width="20" height="8" fill="#00aa44"/>
+    <rect x="875" y="208" width="610" height="8" fill="#000820"/>
+    <rect x="1133" y="208" width="20" height="8" fill="#009940"/>
+    <rect x="875" y="216" width="610" height="8" fill="#000820"/>
+    <rect x="1133" y="216" width="22" height="8" fill="#00cc55"/>
+    <rect x="875" y="224" width="610" height="8" fill="#000820"/>
+    <rect x="1133" y="224" width="18" height="8" fill="#00ee66"/>
+    <rect x="875" y="232" width="610" height="8" fill="#000820"/>
+    <rect x="1133" y="232" width="22" height="8" fill="#00ff77"/>
+    <rect x="875" y="240" width="610" height="8" fill="#000820"/>
+    <rect x="1133" y="240" width="20" height="8" fill="#00ff88"/>
+    <rect x="875" y="248" width="610" height="8" fill="#000820"/>
+    <rect x="1133" y="248" width="19" height="8" fill="#00ee77"/>
+    <rect x="875" y="256" width="610" height="8" fill="#000820"/>
+    <rect x="1133" y="256" width="21" height="8" fill="#00dd66"/>
+    <rect x="875" y="264" width="610" height="8" fill="#000820"/>
+    <rect x="1133" y="264" width="20" height="8" fill="#00cc55"/>
+    <rect x="875" y="272" width="610" height="8" fill="#000820"/>
+    <rect x="1133" y="272" width="20" height="8" fill="#00bb44"/>
+    <rect x="875" y="280" width="610" height="8" fill="#000820"/>
+    <rect x="1133" y="280" width="18" height="8" fill="#00aa33"/>
+    <rect x="875" y="288" width="610" height="8" fill="#000820"/>
+    <rect x="875" y="296" width="610" height="8" fill="#000820"/>
+    <rect x="875" y="304" width="610" height="8" fill="#000510"/>
+    <rect x="875" y="312" width="610" height="8" fill="#000510"/>
+    <rect x="875" y="320" width="610" height="8" fill="#000510"/>
+    <rect x="875" y="328" width="610" height="8" fill="#000510"/>
+    <!-- Quiet period -->
+    <rect x="875" y="336" width="610" height="40" fill="#000308"/>
+    <!-- Second burst, SSTV image data -->
+    <rect x="875" y="376" width="610" height="8" fill="#000510"/>
+    <rect x="1130" y="376" width="25" height="8" fill="#33ff99"/>
+    <rect x="875" y="384" width="610" height="8" fill="#000510"/>
+    <rect x="1130" y="384" width="25" height="8" fill="#55ffaa"/>
+    <rect x="875" y="392" width="610" height="8" fill="#000510"/>
+    <rect x="1129" y="392" width="26" height="8" fill="#44ffaa"/>
+    <rect x="875" y="400" width="610" height="8" fill="#000510"/>
+    <rect x="1131" y="400" width="24" height="8" fill="#66ffbb"/>
+    <rect x="875" y="408" width="610" height="8" fill="#000510"/>
+    <rect x="1130" y="408" width="25" height="8" fill="#55ffaa"/>
+    <rect x="875" y="416" width="610" height="8" fill="#000510"/>
+    <rect x="1130" y="416" width="23" height="8" fill="#44ff99"/>
+    <rect x="875" y="424" width="610" height="8" fill="#000510"/>
+    <rect x="875" y="432" width="610" height="8" fill="#000308"/>
+    <rect x="875" y="440" width="610" height="8" fill="#000308"/>
+    <rect x="875" y="448" width="610" height="8" fill="#000308"/>
+    <rect x="875" y="456" width="610" height="8" fill="#000308"/>
+    <rect x="875" y="464" width="610" height="8" fill="#000308"/>
+    <rect x="875" y="472" width="610" height="8" fill="#000308"/>
+    <rect x="875" y="480" width="610" height="8" fill="#000308"/>
+    <rect x="875" y="488" width="610" height="8" fill="#000308"/>
+    <rect x="875" y="496" width="610" height="8" fill="#000308"/>
+    <rect x="875" y="504" width="610" height="8" fill="#000308"/>
+    <rect x="875" y="512" width="610" height="8" fill="#000308"/>
+    <rect x="875" y="520" width="610" height="8" fill="#000308"/>
+    <rect x="875" y="528" width="610" height="8" fill="#000308"/>
+  </g>
+  <!-- Marker line -->
+  <line x1="1143" y1="200" x2="1143" y2="540" stroke="#00ff88" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+  <text x="1143" y="555" font-family="monospace" font-size="11" fill="#00ff88" text-anchor="middle">14.23 MHz — SSTV</text>
+  <!-- Time axis -->
+  <text x="875" y="555" font-family="monospace" font-size="11" fill="#667">-8 min</text>
+  <text x="1180" y="555" font-family="monospace" font-size="11" fill="#667" text-anchor="middle">-4 min</text>
+  <text x="1485" y="555" font-family="monospace" font-size="11" fill="#667" text-anchor="end">NOW</text>
+
+  <!-- ── SDR DONGLE DEVICE ── -->
+  <rect x="510" y="595" width="180" height="55" fill="#1a1a1a" stroke="#444" stroke-width="2" rx="6"/>
+  <rect x="516" y="601" width="100" height="43" fill="#0a0a0a" rx="3"/>
+  <circle cx="570" cy="622" r="8" fill="#001122" stroke="#00d9ff" stroke-width="1"/>
+  <circle cx="570" cy="622" r="3" fill="#00d9ff">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <text x="624" y="618" font-family="monospace" font-size="10" fill="#888">RTL-SDR</text>
+  <text x="624" y="632" font-family="monospace" font-size="9" fill="#555">R820T2</text>
+  <!-- USB cable -->
+  <path d="M510,622 Q480,622 465,622" stroke="#333" stroke-width="6" fill="none"/>
+  <rect x="455" y="616" width="15" height="12" fill="#222" rx="2"/>
+  <!-- Antenna SMA connector -->
+  <rect x="686" y="615" width="8" height="25" fill="#888" rx="2"/>
+  <line x1="690" y1="600" x2="690" y2="615" stroke="#aaa" stroke-width="3"/>
+  <line x1="680" y1="595" x2="700" y2="595" stroke="#aaa" stroke-width="2"/>
+  <line x1="685" y1="590" x2="695" y2="590" stroke="#aaa" stroke-width="2"/>
+
+  <!-- ── FREQUENCY CONTROL PANEL ── -->
+  <rect x="100" y="595" width="380" height="160" fill="#0f1520" stroke="#334" stroke-width="2" rx="6"/>
+  <text x="290" y="618" font-family="monospace" font-size="14" fill="#00d9ff" text-anchor="middle" font-weight="bold">SDR CONTROLS</text>
+  <line x1="110" y1="622" x2="470" y2="622" stroke="#334" stroke-width="1"/>
+  <!-- Tuning label -->
+  <text x="120" y="645" font-family="monospace" font-size="12" fill="#888">FREQ:</text>
+  <rect x="165" y="632" width="180" height="22" fill="#000d1a" stroke="#00d9ff" stroke-width="1" rx="3"/>
+  <text x="255" y="648" font-family="monospace" font-size="13" fill="#00ff88" text-anchor="middle">14.230.000 Hz</text>
+  <text x="355" y="645" font-family="monospace" font-size="11" fill="#555">20 MHz</text>
+  <!-- Gain -->
+  <text x="120" y="672" font-family="monospace" font-size="12" fill="#888">GAIN:</text>
+  <rect x="165" y="659" width="200" height="10" fill="#001428" stroke="#334" stroke-width="1" rx="5"/>
+  <rect x="165" y="659" width="148" height="10" fill="#0066aa" rx="5"/>
+  <circle cx="313" cy="664" r="7" fill="#00d9ff"/>
+  <text x="375" y="670" font-family="monospace" font-size="11" fill="#667">74%</text>
+  <!-- Mode -->
+  <text x="120" y="698" font-family="monospace" font-size="12" fill="#888">MODE:</text>
+  <rect x="165" y="685" width="70" height="20" fill="#003344" stroke="#00d9ff" stroke-width="1" rx="3"/>
+  <text x="200" y="699" font-family="monospace" font-size="12" fill="#00d9ff" text-anchor="middle">USB</text>
+  <rect x="242" y="685" width="70" height="20" fill="#001a22" stroke="#334" stroke-width="1" rx="3"/>
+  <text x="277" y="699" font-family="monospace" font-size="12" fill="#445" text-anchor="middle">AM</text>
+  <rect x="319" y="685" width="70" height="20" fill="#001a22" stroke="#334" stroke-width="1" rx="3"/>
+  <text x="354" y="699" font-family="monospace" font-size="12" fill="#445" text-anchor="middle">FM</text>
+  <!-- BW -->
+  <text x="120" y="726" font-family="monospace" font-size="12" fill="#888">BW:</text>
+  <text x="165" y="726" font-family="monospace" font-size="12" fill="#00aaff">3.0 kHz</text>
+  <text x="230" y="726" font-family="monospace" font-size="12" fill="#445">SQUELCH: -85 dBm</text>
+
+  <!-- ── SSTV DECODE PANEL ── -->
+  <rect x="860" y="595" width="380" height="160" fill="#0a1208" stroke="#00aa44" stroke-width="2" rx="6"/>
+  <text x="1050" y="618" font-family="monospace" font-size="14" fill="#00ff88" text-anchor="middle" font-weight="bold">SSTV DECODER — RX</text>
+  <line x1="870" y1="622" x2="1230" y2="622" stroke="#00aa44" stroke-width="1"/>
+  <text x="880" y="642" font-family="monospace" font-size="12" fill="#667">MODE:</text>
+  <text x="930" y="642" font-family="monospace" font-size="12" fill="#00ff88">Martin M2</text>
+  <text x="880" y="660" font-family="monospace" font-size="12" fill="#667">STATUS:</text>
+  <text x="935" y="660" font-family="monospace" font-size="12" fill="#ffaa00">SIGNAL DETECTED</text>
+  <circle cx="1090" cy="655" r="6" fill="#ffaa00">
+    <animate attributeName="opacity" values="1;0.2;1" dur="0.8s" repeatCount="indefinite"/>
+  </circle>
+  <text x="880" y="678" font-family="monospace" font-size="12" fill="#667">FREQ:</text>
+  <text x="930" y="678" font-family="monospace" font-size="12" fill="#00ff88">14.230.000 Hz</text>
+  <text x="880" y="696" font-family="monospace" font-size="12" fill="#667">SNR:</text>
+  <text x="930" y="696" font-family="monospace" font-size="12" fill="#00ff88">+18.4 dB</text>
+  <text x="880" y="714" font-family="monospace" font-size="12" fill="#667">CALLSIGN:</text>
+  <text x="960" y="714" font-family="monospace" font-size="12" fill="#ff6644">UNKNOWN / ENCRYPTED</text>
+  <!-- Decode button area -->
+  <rect x="880" y="724" width="120" height="24" fill="#003322" stroke="#00ff88" stroke-width="1.5" rx="4"/>
+  <text x="940" y="740" font-family="monospace" font-size="12" fill="#00ff88" text-anchor="middle">▶ DECODE</text>
+  <rect x="1010" y="724" width="120" height="24" fill="#220011" stroke="#ff3366" stroke-width="1" rx="4"/>
+  <text x="1070" y="740" font-family="monospace" font-size="12" fill="#ff3366" text-anchor="middle">■ CLEAR</text>
+
+  <!-- ── DESK ── -->
+  <rect x="0" y="580" width="1600" height="40" fill="url(#deskGrad)"/>
+  <rect x="0" y="617" width="1600" height="18" fill="#1f1208"/>
+  <rect x="0" y="580" width="1600" height="4" fill="#5a3d22"/>
+
+  <!-- Desk items: coffee mug, notebook -->
+  <ellipse cx="760" cy="600" rx="22" ry="10" fill="#1a1010"/>
+  <rect x="738" y="575" width="44" height="30" fill="#2a1515" rx="3"/>
+  <ellipse cx="760" cy="575" rx="22" ry="6" fill="#3a1515"/>
+  <text x="760" y="578" font-family="monospace" font-size="8" fill="#884444" text-anchor="middle">HAM</text>
+
+  <!-- Notebook -->
+  <rect x="1310" y="572" width="120" height="88" fill="#eee8d0" rx="3" transform="rotate(-5,1370,616)"/>
+  <rect x="1312" y="572" width="8" height="88" fill="#cc8844" rx="2" transform="rotate(-5,1370,616)"/>
+  <text x="1360" y="600" font-family="monospace" font-size="8" fill="#888" transform="rotate(-5,1370,616)">14.230 MHz</text>
+  <text x="1360" y="612" font-family="monospace" font-size="8" fill="#888" transform="rotate(-5,1370,616)">SSTV Martin M2</text>
+  <text x="1360" y="624" font-family="monospace" font-size="8" fill="#888" transform="rotate(-5,1370,616)">????</text>
+
+  <!-- Floor -->
+  <rect x="0" y="635" width="1600" height="265" fill="#080c10"/>
+
+  <!-- Desk light (lamp) -->
+  <rect x="1250" y="400" width="8" height="180" fill="#333" rx="3"/>
+  <ellipse cx="1254" cy="400" rx="60" ry="18" fill="#444" stroke="#555" stroke-width="2"/>
+  <ellipse cx="1254" cy="395" rx="55" ry="14" fill="#ffeeaa" opacity="0.08"/>
+  <!-- Light cone -->
+  <polygon points="1194,418 1314,418 1370,580 1138,580" fill="#ffeeaa" opacity="0.04"/>
+
+  <!-- Desk lamp base -->
+  <rect x="1230" y="575" width="50" height="10" fill="#333" rx="3"/>
+
+  <!-- Cable management mess -->
+  <path d="M600,618 Q620,640 700,635 Q800,630 860,625" stroke="#222" stroke-width="4" fill="none"/>
+  <path d="M740,618 Q760,650 820,645 Q870,640 900,630" stroke="#1a3300" stroke-width="3" fill="none"/>
+
+  <!-- Status bar at top -->
+  <rect x="0" y="0" width="1600" height="35" fill="#050810" opacity="0.95"/>
+  <text x="20" y="22" font-family="monospace" font-size="13" fill="#00d9ff">SDR WORKBENCH v2.4</text>
+  <text x="700" y="22" font-family="monospace" font-size="13" fill="#00ff88" text-anchor="middle">● RECEIVING   14.230.000 MHz   USB   BW: 3kHz</text>
+  <text x="1580" y="22" font-family="monospace" font-size="13" fill="#667" text-anchor="end">SESSION: ACTIVE</text>
+</svg>

@@ -70,6 +70,7 @@ const FacilityServerScene = {
                 ]);
                 
                 FacilityServerScene.state.doorUnlocked = true;
+                game.setFlag('facility_password_solved', true);
                 
                 setTimeout(() => {
                     game.showNotification('Server room unlocked - Find the terminal');
@@ -135,6 +136,8 @@ const FacilityServerScene = {
                     
                     setTimeout(() => {
                         FacilityServerScene.state.evidenceDownloaded = true;
+                        game.setFlag('data_extracted', true);
+                        game.setFlag('collected_evidence', true);
                         
                         game.startDialogue([
                             { speaker: '', text: '*100% COMPLETE*' },
@@ -191,7 +194,7 @@ const FacilityServerScene = {
             width: 5.2,
             height: 18,
             cursor: 'pointer',
-            enabled: () => FacilityServerScene.state.confrontationStarted && game.getFlag('kubecka_arrived'),
+            enabled: (game) => FacilityServerScene.state.confrontationStarted && game.getFlag('kubecka_arrived'),
             action: function(game) {
                 game.showDialogue([
                     "Chris Kubecka. American cybersecurity expert.",
@@ -208,7 +211,7 @@ const FacilityServerScene = {
             width: 5.2,
             height: 18,
             cursor: 'pointer',
-            enabled: () => FacilityServerScene.state.confrontationStarted && game.getFlag('eva_arrived'),
+            enabled: (game) => FacilityServerScene.state.confrontationStarted && game.getFlag('eva_arrived'),
             action: function(game) {
                 game.showDialogue([
                     "Eva Weber. BND agent. Klaus's daughter.",
@@ -300,7 +303,7 @@ function startVolkovConfrontation(game) {
         { speaker: '', text: '*Volkov reaches into his jacket—*' }
     ]);
     
-    setTimeout(() => {
+    game.sceneTimeout(() => {
         // Show Kubecka character
         const kubeckaChar = document.getElementById('kubecka_character');
         if (kubeckaChar) {
@@ -319,7 +322,7 @@ function startVolkovConfrontation(game) {
             { speaker: '', text: '*Tactical gear. Automatic weapons.*' }
         ]);
         
-        setTimeout(() => {
+        game.sceneTimeout(() => {
             // Show Eva character
             const evaChar = document.getElementById('eva_character');
             if (evaChar) {
@@ -339,7 +342,7 @@ function startVolkovConfrontation(game) {
                 { speaker: '', text: '*Military police handcuff Volkov. Lead him out.*' }
             ]);
             
-            setTimeout(() => {
+            game.sceneTimeout(() => {
                 game.startDialogue([
                     { speaker: 'Kubecka', text: '*To Ryan* Nice work. You got the evidence?' },
                     { speaker: 'Ryan', text: '*Holds up USB drive* Everything.' },
@@ -356,7 +359,7 @@ function startVolkovConfrontation(game) {
                 game.questManager.complete('infiltrate_facility');
                 
                 // Epilogue
-                setTimeout(() => {
+                game.sceneTimeout(() => {
                     showEpilogue(game);
                 }, 3000);
             }, 3000);
@@ -375,7 +378,7 @@ function showEpilogue(game) {
         { speaker: '', text: 'Three months later.' },
         { speaker: '', text: '' },
         { speaker: 'Ryan', text: '*Back in my mancave. Coffee in hand. Radio frequencies humming.*' },
-        { speaker: 'Ryan', text: 'Volkov is awaiting trial in Berlin. High-security wing.' },
+        { speaker: 'Ryan', text: 'Volkov is awaiting trial outside Munich. Maximum-security wing.' },
         { speaker: 'Ryan', text: 'The evidence held up. Ironclad.' },
         { speaker: 'Ryan', text: 'ZERFALL never launched. Hamburg, Amsterdam, Berlin—all safe.' },
         { speaker: 'Ryan', text: '1.2 million people who don\'t know how close they came.' },
@@ -413,7 +416,7 @@ function showEpilogue(game) {
     ]);
     
     // Transition to AIVD debrief
-    setTimeout(() => {
+    game.sceneTimeout(() => {
         game.loadScene('debrief');
     }, 5000);
 }

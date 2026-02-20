@@ -126,7 +126,7 @@ const FacilityInteriorScene = {
                     { speaker: '', text: '*Descends. Fluorescent lights hum. Air is colder.*' }
                 ]);
                 
-                setTimeout(() => {
+                game.sceneTimeout(() => {
                     game.loadScene('facility_server');
                 }, 3000);
             }
@@ -153,6 +153,7 @@ const FacilityInteriorScene = {
         
         if (!game.getFlag('facility_interior_entered')) {
             game.setFlag('facility_interior_entered', true);
+            game.setFlag('entered_facility', true);
             
             setTimeout(() => {
                 game.startDialogue([

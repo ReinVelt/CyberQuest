@@ -184,6 +184,20 @@ const MancaveScene = {
             }
         },
         {
+            id: 'sdr-workbench',
+            name: 'SDR Workbench',
+            // PortaPack H2 display – SVG translate(1360,500), rect 120x140
+            // on 1920x1080 canvas: x=70.8%, y=46.3%, w=6.25%, h=13%
+            x: 70.8,
+            y: 46.3,
+            width: 6.5,
+            height: 13.0,
+            cursor: 'pointer',
+            action: function(game) {
+                game.loadScene('sdr_bench');
+            }
+        },
+        {
             id: 'laptop',
             name: 'Laptop',
             // On desk - translate(0, 20) relative to desk at (250, 450)
@@ -1541,7 +1555,7 @@ SUPERVISOR NOTES:
                     { speaker: 'Ryan', text: 'Video terminal - encrypted connection to David Prinsloo, Cees Bassa, and Jaap Haartsen.' },
                     { speaker: 'Ryan', text: 'Let\'s see who\'s available...' }
                 ]);
-                setTimeout(() => {
+                game.sceneTimeout(() => {
                     game.loadScene('videocall');
                 }, 1000);
             }
@@ -1571,14 +1585,14 @@ SUPERVISOR NOTES:
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Time to head out. The Volvo is parked in the back.' }
                     ]);
-                    setTimeout(() => {
+                    game.sceneTimeout(() => {
                         game.loadScene('garden');
                     }, 1500);
                 } else {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'The side door leads to the garden. Nice for some fresh air.' }
                     ]);
-                    setTimeout(() => {
+                    game.sceneTimeout(() => {
                         game.loadScene('garden');
                     }, 1500);
                 }
@@ -1608,7 +1622,7 @@ SUPERVISOR NOTES:
                     { speaker: 'Ryan', text: 'Let me check what I\'ve got so far...' }
                 ]);
                 
-                setTimeout(() => {
+                game.sceneTimeout(() => {
                     game.loadScene('planboard');
                 }, 1500);
             }
@@ -1628,7 +1642,7 @@ SUPERVISOR NOTES:
                     { speaker: 'Ryan', text: 'Let me check the map. See where everything is...' }
                 ]);
                 
-                setTimeout(() => {
+                game.sceneTimeout(() => {
                     game.loadScene('regional_map');
                 }, 1500);
             }

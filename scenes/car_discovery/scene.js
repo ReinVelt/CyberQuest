@@ -111,7 +111,7 @@ const CarDiscoveryScene = {
                         { speaker: '', text: '*Engine starts. Time to head home.*' }
                     ]);
                     
-                    setTimeout(() => {
+                    game.sceneTimeout(() => {
                         console.log('Car Discovery: Setting driving_destination to home');
                         game.setFlag('driving_destination', 'home');
                         console.log('Car Discovery: Loading driving scene');

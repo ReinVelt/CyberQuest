@@ -45,7 +45,7 @@ const FacilityScene = {
             width: (70 / 1920) * 100,   // 3.65%
             height: (80 / 1080) * 100,  // 7.41%
             cursor: 'pointer',
-            enabled: () => game.gameState.storyPart >= 17,
+            enabled: (game) => game.gameState.storyPart >= 17,
             action: function(game) {
                 if (!game.hasItem('security_badge')) {
                     game.startDialogue([
@@ -90,7 +90,7 @@ const FacilityScene = {
             height: (440 / 1080) * 100, // 40.74%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "The main research building. 'FORSCHUNGSZENTRUM' - Research Center.",
                         "Multiple floors, lots of lit windows. People working late.",
@@ -109,7 +109,7 @@ const FacilityScene = {
             height: (150 / 1080) * 100, // 13.89%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "Military-grade fencing. Razor wire on top.",
                         "Sensors embedded in the mesh - touching it would trigger alarms.",
@@ -168,7 +168,7 @@ const FacilityScene = {
             height: (350 / 1080) * 100, // 32.41%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "The guard tower. Searchlight sweeping the perimeter.",
                         "Military police - Feldjäger. Not people to mess with.",
@@ -187,7 +187,7 @@ const FacilityScene = {
             height: (370 / 1080) * 100, // 34.26%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "Radar and antenna array. Probably for drone research.",
                         "The dish is rotating slowly. Scanning something."
@@ -205,7 +205,7 @@ const FacilityScene = {
             height: (300 / 1080) * 100, // 27.78%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "Hangar B-7. I can see the shadow of something inside.",
                         "That's the drone prototype. The target of Operation ZERFALL."
@@ -260,11 +260,12 @@ const FacilityScene = {
                         ]);
                         
                         state.gateOpen = true;
+                        game.setFlag('badge_cloned', true);
                         game.setStoryPart(18);
                         game.questManager.updateProgress('infiltrate_facility', 'gate_opened');
                         
                         // Load interior scene
-                        setTimeout(() => {
+                        game.sceneTimeout(() => {
                             game.loadScene('facility_interior');
                         }, 3000);
                     } else {
@@ -284,7 +285,7 @@ const FacilityScene = {
             height: (200 / 1080) * 100, // 18.52%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "The main checkpoint. Barrier gate, control booth.",
                         "Two ways in: through the gate, or not at all."
@@ -302,7 +303,7 @@ const FacilityScene = {
             height: (500 / 1080) * 100, // 46.30%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "Communications tower. Multiple antenna arrays.",
                         "Probably handles encrypted military comms. Maybe drone control signals too."
@@ -320,7 +321,7 @@ const FacilityScene = {
             height: (140 / 1080) * 100, // 12.96%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "'SPERRGEBIET - BETRETEN VERBOTEN'",
                         "Restricted area - entry forbidden. The Germans are very direct."
@@ -338,7 +339,7 @@ const FacilityScene = {
             height: (115 / 1080) * 100, // 10.65%
             cursor: 'look',
             interactions: {
-                look: () => {
+                look: (game) => {
                     game.showDialogue([
                         "Bundeswehr transport vehicle. Military-grade.",
                         "I'd rather not have to explain myself to whoever drives that."
@@ -355,24 +356,18 @@ const FacilityScene = {
             width: (560 / 1920) * 100, // 29.17%
             height: (100 / 1080) * 100, // 9.26%
             cursor: 'exit',
-            interactions: {
-                look: () => {
+            action: function(game) {
+                const state = FacilityScene.state;
+                if (state.alarmTriggered) {
+                    game.showDialogue([
+                        "No time for retreat now - we have to see this through!"
+                    ], "Ryan");
+                } else {
                     game.showDialogue([
                         "The path back to the van.",
-                        "If things go wrong, this is our exit."
+                        "If things go wrong, this is our exit.",
+                        "Not yet. We're too close to turn back now."
                     ], "Ryan");
-                },
-                use: () => {
-                    const state = FacilityScene.state;
-                    if (state.alarmTriggered) {
-                        game.showDialogue([
-                            "No time for retreat now - we have to see this through!"
-                        ], "Ryan");
-                    } else {
-                        game.showDialogue([
-                            "Not yet. We're too close to turn back now."
-                        ], "Ryan");
-                    }
                 }
             }
         }
@@ -381,6 +376,7 @@ const FacilityScene = {
     // Scene entry
     onEnter: (game) => {
         const storyPart = game.gameState.storyPart;
+        game.setFlag('visited_facility', true);
         
         if (storyPart === 17 && !game.hasItem('security_badge')) {
             // Part 17: Arrival and badge pickup
