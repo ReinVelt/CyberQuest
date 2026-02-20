@@ -199,6 +199,20 @@ const GardenScene = {
             height: 15,
             cursor: 'pointer',
             action: function(game) {
+                // Drive to WSRT to meet Cees Bassa
+                if (game.getFlag('astron_unlocked') && !game.getFlag('visited_astron')) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'Cees is expecting me at the WSRT. Westerbork, 40 minutes south-west.' },
+                        { speaker: 'Ryan', text: 'He said he\'d run the schematics through ASTRON\'s pipeline. Let\'s see what he found.' }
+                    ]);
+                    
+                    setTimeout(() => {
+                        game.setFlag('driving_destination', 'astron');
+                        game.loadScene('driving');
+                    }, 2500);
+                    return;
+                }
+                
                 // Part 17: Drive to facility for infiltration
                 if (game.questManager.hasQuest('infiltrate_facility') && !game.getFlag('drove_to_facility')) {
                     game.setFlag('drove_to_facility', true);

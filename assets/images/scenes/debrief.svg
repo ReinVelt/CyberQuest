@@ -1,294 +1,542 @@
-<!-- Ryan's Dining Room - AIVD Debrief Scene -->
-<!-- Two black AIVD cars visible through window, formal meeting -->
+<!-- AIVD Headquarters - Formal Debrief Conference Room -->
+<!-- Modern government building, Zoetermeer near Den Haag -->
 <svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <style>
       .sp-stroke { stroke: #000; stroke-width: 3px; stroke-linecap: round; stroke-linejoin: round; }
     </style>
-    
-    <!-- Window light gradient -->
-    <linearGradient id="windowLight" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#e0f7ff;stop-opacity:0.8" />
-      <stop offset="100%" style="stop-color:#fff;stop-opacity:0.3" />
+
+    <!-- Floor gradient (polished concrete/stone) -->
+    <linearGradient id="floorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#b0b0b0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#909090;stop-opacity:1" />
     </linearGradient>
-    
-    <!-- Floor gradient -->
-    <linearGradient id="floorGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#d4a574;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#b8935c;stop-opacity:1" />
+
+    <!-- Wall gradient (cool government grey-blue) -->
+    <linearGradient id="wallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8ecf0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d0d8e0;stop-opacity:1" />
     </linearGradient>
-    
-    <!-- Wall gradient -->
-    <linearGradient id="wallGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#f5f5dc;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#e6e6c8;stop-opacity:1" />
+
+    <!-- Table gradient (dark conference table) -->
+    <linearGradient id="tableGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2c2c2c;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f0f0f;stop-opacity:1" />
     </linearGradient>
-    
-    <!-- Table wood gradient -->
-    <linearGradient id="tableWood" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#8b4513;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#654321;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#4a2f1a;stop-opacity:1" />
+
+    <!-- Window sky gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b0d4e8;stop-opacity:1" />
     </linearGradient>
+
+    <!-- Chair leather gradient -->
+    <linearGradient id="chairLeather" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a2a2a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1a1a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Coffee gradient -->
+    <radialGradient id="coffeeGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#4a2f1a" />
+      <stop offset="100%" style="stop-color:#2d1a0e" />
+    </radialGradient>
+
+    <!-- Floor reflection -->
+    <linearGradient id="floorReflect" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff;stop-opacity:0.06" />
+      <stop offset="100%" style="stop-color:#fff;stop-opacity:0" />
+    </linearGradient>
+
+    <!-- Panel accent -->
+    <linearGradient id="panelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c8d0d8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b0b8c4;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Screen glow -->
+    <filter id="screenGlow" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+    </filter>
+
+    <!-- Soft light -->
+    <filter id="softLight" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" />
+    </filter>
   </defs>
-  
-  <!-- Background wall -->
-  <rect x="0" y="0" width="800" height="400" fill="url(#wallGradient)"/>
-  
-  <!-- Floor - wooden -->
-  <rect x="0" y="400" width="800" height="200" fill="url(#floorGradient)"/>
-  
-  <!-- Floor planks -->
-  <line x1="0" y1="430" x2="800" y2="430" stroke="#a0824a" stroke-width="2"/>
-  <line x1="0" y1="470" x2="800" y2="470" stroke="#a0824a" stroke-width="2"/>
-  <line x1="0" y1="510" x2="800" y2="510" stroke="#a0824a" stroke-width="2"/>
-  <line x1="0" y1="550" x2="800" y2="550" stroke="#a0824a" stroke-width="2"/>
-  
-  <!-- Window on left - showing driveway with black cars -->
-  <rect x="50" y="80" width="220" height="180" rx="8" fill="#87CEEB" class="sp-stroke"/>
-  
-  <!-- Window frame cross -->
-  <line x1="160" y1="80" x2="160" y2="260" stroke="#654321" stroke-width="6"/>
-  <line x1="50" y1="170" x2="270" y2="170" stroke="#654321" stroke-width="6"/>
-  
-  <!-- View through window: Two black AIVD cars -->
-  <!-- Driveway -->
-  <rect x="55" y="200" width="100" height="55" fill="#696969"/>
-  
-  <!-- First black car (closer) -->
-  <rect x="60" y="215" width="40" height="20" rx="3" fill="#0a0a0a" stroke="#000" stroke-width="2"/>
-  <rect x="63" y="219" width="7" height="8" fill="#4a90e2" stroke="#000" stroke-width="1"/>
-  <circle cx="68" cy="236" r="4" fill="#333" stroke="#000" stroke-width="1"/>
-  <circle cx="92" cy="236" r="4" fill="#333" stroke="#000" stroke-width="1"/>
-  
-  <!-- Second black car (further back) -->
-  <rect x="105" y="210" width="35" height="17" rx="3" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
-  <rect x="108" y="213" width="6" height="7" fill="#4a90e2" stroke="#000" stroke-width="1"/>
-  <circle cx="113" cy="228" r="3" fill="#333" stroke="#000" stroke-width="1"/>
-  <circle cx="132" cy="228" r="3" fill="#333" stroke="#000" stroke-width="1"/>
-  
-  <!-- Dutch house visible in window (neighbor) -->
-  <rect x="170" y="120" width="90" height="60" fill="#c86428" stroke="#000" stroke-width="2"/>
-  <path d="M 165 120 L 215 90 L 265 120 Z" fill="#8b0000" stroke="#000" stroke-width="2"/>
-  <rect x="195" y="140" width="15" height="20" fill="#4a3020" stroke="#000" stroke-width="2"/>
-  <rect x="180" y="130" width="12" height="12" fill="#87CEEB" stroke="#000" stroke-width="2"/>
-  <rect x="230" y="130" width="12" height="12" fill="#87CEEB" stroke="#000" stroke-width="2"/>
-  
-  <!-- Sky in window -->
-  <rect x="55" y="85" width="100" height="80" fill="#87CEEB"/>
-  <rect x="165" y="85" width="100" height="80" fill="#b0e0e6"/>
-  
-  <!-- Window sill -->
-  <rect x="45" y="258" width="230" height="12" fill="#654321" class="sp-stroke"/>
-  
-  <!-- Small plant on window sill -->
-  <ellipse cx="250" cy="265" rx="12" ry="6" fill="#8b4513" stroke="#000" stroke-width="2"/>
-  <circle cx="250" cy="252" r="15" fill="#228b22" stroke="#000" stroke-width="2"/>
-  <circle cx="245" cy="248" r="8" fill="#32cd32"/>
-  <circle cx="255" cy="248" r="8" fill="#32cd32"/>
-  
-  <!-- Dining cabinet/hutch on right wall -->
-  <g id="diningCabinet">
-    <!-- Cabinet base -->
-    <rect x="580" y="280" width="180" height="120" fill="#6d4c41" class="sp-stroke"/>
-    <rect x="585" y="285" width="170" height="110" fill="#8b6f47" stroke="#654321" stroke-width="2"/>
-    
-    <!-- Cabinet doors -->
-    <rect x="590" y="290" width="75" height="100" rx="3" fill="#a0826d" stroke="#654321" stroke-width="2"/>
-    <rect x="675" y="290" width="75" height="100" rx="3" fill="#a0826d" stroke="#654321" stroke-width="2"/>
-    
-    <!-- Door handles -->
-    <circle cx="655" cy="340" r="4" fill="#c0c0c0" stroke="#888" stroke-width="1"/>
-    <circle cx="685" cy="340" r="4" fill="#c0c0c0" stroke="#888" stroke-width="1"/>
-    
-    <!-- Top shelf with decorative items -->
-    <rect x="580" y="240" width="180" height="35" fill="#8b6f47" class="sp-stroke"/>
-    <rect x="585" y="245" width="170" height="25" fill="#a0826d" stroke="#654321" stroke-width="2"/>
-    
-    <!-- Decorative vase on shelf -->
-    <ellipse cx="630" cy="270" rx="8" ry="4" fill="#8b4513"/>
-    <path d="M 622 258 L 622 270 L 638 270 L 638 258 Z" fill="#4169e1" stroke="#000" stroke-width="2"/>
-    <ellipse cx="630" cy="258" rx="8" ry="4" fill="#5583d4" stroke="#000" stroke-width="2"/>
-    
-    <!-- Decorative plate -->
-    <circle cx="700" cy="260" r="15" fill="#fff" stroke="#003DA5" stroke-width="2"/>
-    <circle cx="700" cy="260" r="10" fill="none" stroke="#003DA5" stroke-width="1"/>
-    <circle cx="700" cy="260" r="3" fill="#003DA5"/>
+
+  <!-- ========== WALLS ========== -->
+  <!-- Back wall -->
+  <rect x="0" y="0" width="1920" height="660" fill="url(#wallGrad)"/>
+
+  <!-- Subtle wall panels (modern government style) -->
+  <rect x="0" y="0" width="1920" height="660" fill="none" stroke="#c0c8d0" stroke-width="1"/>
+  <!-- Horizontal wall division -->
+  <line x1="0" y1="80" x2="1920" y2="80" stroke="#c8d0d8" stroke-width="2"/>
+  <!-- Upper wall accent strip (dark blue-grey) -->
+  <rect x="0" y="0" width="1920" height="80" fill="#3a4a5c" opacity="0.15"/>
+
+  <!-- Vertical wall panel lines -->
+  <line x1="480" y1="80" x2="480" y2="660" stroke="#c0c8d0" stroke-width="1" opacity="0.6"/>
+  <line x1="960" y1="80" x2="960" y2="660" stroke="#c0c8d0" stroke-width="1" opacity="0.6"/>
+  <line x1="1440" y1="80" x2="1440" y2="660" stroke="#c0c8d0" stroke-width="1" opacity="0.6"/>
+
+  <!-- ========== FLOOR ========== -->
+  <rect x="0" y="660" width="1920" height="420" fill="url(#floorGrad)"/>
+  <!-- Floor tile lines -->
+  <line x1="0" y1="730" x2="1920" y2="730" stroke="#999" stroke-width="1" opacity="0.3"/>
+  <line x1="0" y1="810" x2="1920" y2="810" stroke="#999" stroke-width="1" opacity="0.3"/>
+  <line x1="0" y1="900" x2="1920" y2="900" stroke="#999" stroke-width="1" opacity="0.3"/>
+  <line x1="0" y1="1000" x2="1920" y2="1000" stroke="#999" stroke-width="1" opacity="0.3"/>
+  <line x1="384" y1="660" x2="384" y2="1080" stroke="#999" stroke-width="1" opacity="0.2"/>
+  <line x1="768" y1="660" x2="768" y2="1080" stroke="#999" stroke-width="1" opacity="0.2"/>
+  <line x1="1152" y1="660" x2="1152" y2="1080" stroke="#999" stroke-width="1" opacity="0.2"/>
+  <line x1="1536" y1="660" x2="1536" y2="1080" stroke="#999" stroke-width="1" opacity="0.2"/>
+  <!-- Floor reflection strip -->
+  <rect x="0" y="660" width="1920" height="60" fill="url(#floorReflect)"/>
+
+  <!-- ========== WINDOWS (wide, modern) ========== -->
+  <!-- Left window bank -->
+  <g id="windowLeft">
+    <rect x="60" y="120" width="360" height="480" fill="url(#skyGrad)" stroke="#6a7a8a" stroke-width="4"/>
+    <!-- Window mullions -->
+    <line x1="180" y1="120" x2="180" y2="600" stroke="#6a7a8a" stroke-width="3"/>
+    <line x1="300" y1="120" x2="300" y2="600" stroke="#6a7a8a" stroke-width="3"/>
+    <line x1="60" y1="360" x2="420" y2="360" stroke="#6a7a8a" stroke-width="3"/>
+
+    <!-- Sky and clouds -->
+    <ellipse cx="150" cy="200" rx="60" ry="20" fill="#fff" opacity="0.6"/>
+    <ellipse cx="170" cy="195" rx="40" ry="15" fill="#fff" opacity="0.7"/>
+    <ellipse cx="340" cy="240" rx="45" ry="16" fill="#fff" opacity="0.5"/>
+
+    <!-- Distant Den Haag skyline visible -->
+    <!-- Tall buildings silhouette -->
+    <rect x="70" y="420" width="30" height="120" fill="#8899aa" opacity="0.4"/>
+    <rect x="108" y="440" width="24" height="100" fill="#8899aa" opacity="0.35"/>
+    <rect x="140" y="400" width="20" height="140" fill="#8899aa" opacity="0.45"/>
+    <rect x="170" y="430" width="35" height="110" fill="#8899aa" opacity="0.35"/>
+    <rect x="220" y="450" width="28" height="90" fill="#8899aa" opacity="0.3"/>
+    <rect x="260" y="410" width="18" height="130" fill="#8899aa" opacity="0.4"/>
+    <rect x="290" y="460" width="40" height="80" fill="#8899aa" opacity="0.3"/>
+    <rect x="340" y="440" width="22" height="100" fill="#8899aa" opacity="0.35"/>
+    <rect x="370" y="470" width="30" height="70" fill="#8899aa" opacity="0.25"/>
+    <!-- The Hague skyline marker - church spire -->
+    <path d="M 155 400 L 160 370 L 165 400" fill="#7a8a9a" opacity="0.4"/>
+
+    <!-- Trees/greenery at base -->
+    <rect x="60" y="530" width="360" height="70" fill="#5a8a5a" opacity="0.35"/>
+    <ellipse cx="120" cy="520" rx="40" ry="25" fill="#4a7a4a" opacity="0.35"/>
+    <ellipse cx="240" cy="530" rx="50" ry="20" fill="#4a7a4a" opacity="0.3"/>
+    <ellipse cx="360" cy="525" rx="35" ry="22" fill="#4a7a4a" opacity="0.35"/>
+
+    <!-- Window sill -->
+    <rect x="50" y="598" width="380" height="10" fill="#8090a0" stroke="#6a7a8a" stroke-width="2"/>
   </g>
-  
-  <!-- Dining chairs - FAR SIDE (drawn before table so table is in front) -->
-  <!-- Chair 1 - far side of table (left) -->
-  <g id="chair1">
-    <!-- Back legs -->
-    <rect x="208" y="325" width="8" height="70" rx="2" fill="#654321" class="sp-stroke"/>
-    <rect x="240" y="325" width="8" height="70" rx="2" fill="#654321" class="sp-stroke"/>
+
+  <!-- ========== AIVD LOGO / COAT OF ARMS on Wall (center) ========== -->
+  <g id="aivdWallSeal" transform="translate(960, 280)">
+    <!-- Frame -->
+    <rect x="-100" y="-120" width="200" height="240" rx="4" fill="#e0e4e8" stroke="#8090a0" stroke-width="3"/>
+    <rect x="-92" y="-112" width="184" height="224" fill="#f0f2f5" stroke="#a0a8b0" stroke-width="1"/>
+
+    <!-- Dutch Royal Coat of Arms (simplified) -->
+    <!-- Shield -->
+    <path d="M -50 -70 L -50 10 Q 0 60 50 10 L 50 -70 Z" fill="#003DA5" stroke="#c0981e" stroke-width="3"/>
+    <!-- Lion (simplified heraldic) -->
+    <g fill="#c0981e" stroke="#8a6e14" stroke-width="1">
+      <!-- Body -->
+      <ellipse cx="0" cy="-20" rx="28" ry="22"/>
+      <!-- Head -->
+      <circle cx="-5" cy="-50" r="16"/>
+      <!-- Crown on lion -->
+      <path d="M -16 -64 L -16 -72 L -10 -66 L -5 -76 L 0 -66 L 6 -72 L 6 -64 Z" fill="#c0981e"/>
+      <!-- Mane -->
+      <ellipse cx="-5" cy="-42" rx="12" ry="8" fill="#a07a14"/>
+      <!-- Raised paw (left) -->
+      <path d="M -24 -30 L -40 -55 L -35 -58 L -20 -35" fill="#c0981e" stroke="#8a6e14" stroke-width="1.5"/>
+      <!-- Raised paw (right) -->
+      <path d="M 20 -30 L 36 -55 L 31 -58 L 16 -35" fill="#c0981e" stroke="#8a6e14" stroke-width="1.5"/>
+      <!-- Tail -->
+      <path d="M 25 -10 Q 42 -25 35 -45" fill="none" stroke="#c0981e" stroke-width="4"/>
+      <!-- Hind legs -->
+      <path d="M -15 2 L -20 20 L -12 20" fill="#c0981e" stroke="#8a6e14" stroke-width="1"/>
+      <path d="M 15 2 L 20 20 L 12 20" fill="#c0981e" stroke="#8a6e14" stroke-width="1"/>
+    </g>
+    <!-- Shield motto banner -->
+    <path d="M -55 25 Q 0 35 55 25 Q 0 42 -55 25" fill="#c0981e" stroke="#8a6e14" stroke-width="1"/>
+
+    <!-- AIVD text -->
+    <text x="0" y="68" font-family="Arial, sans-serif" font-size="22" fill="#2a3a4a" font-weight="bold" text-anchor="middle" letter-spacing="6">AIVD</text>
+    <!-- Full name -->
+    <text x="0" y="88" font-family="Arial, sans-serif" font-size="9" fill="#5a6a7a" text-anchor="middle" letter-spacing="1">ALGEMENE INLICHTINGEN- EN VEILIGHEIDSDIENST</text>
+  </g>
+
+  <!-- ========== RIGHT WINDOW BANK ========== -->
+  <g id="windowRight">
+    <rect x="1480" y="120" width="380" height="480" fill="url(#skyGrad)" stroke="#6a7a8a" stroke-width="4"/>
+    <!-- Mullions -->
+    <line x1="1607" y1="120" x2="1607" y2="600" stroke="#6a7a8a" stroke-width="3"/>
+    <line x1="1733" y1="120" x2="1733" y2="600" stroke="#6a7a8a" stroke-width="3"/>
+    <line x1="1480" y1="360" x2="1860" y2="360" stroke="#6a7a8a" stroke-width="3"/>
+
+    <!-- Clouds -->
+    <ellipse cx="1550" cy="220" rx="50" ry="18" fill="#fff" opacity="0.5"/>
+    <ellipse cx="1750" cy="190" rx="55" ry="20" fill="#fff" opacity="0.6"/>
+
+    <!-- Parking lot with black government cars visible -->
+    <rect x="1480" y="480" width="380" height="120" fill="#707070" opacity="0.4"/>
+    <!-- Parked black cars (tiny, far away) -->
+    <rect x="1510" y="510" width="30" height="14" rx="2" fill="#111" opacity="0.5"/>
+    <rect x="1555" y="510" width="30" height="14" rx="2" fill="#111" opacity="0.5"/>
+    <rect x="1600" y="510" width="30" height="14" rx="2" fill="#111" opacity="0.5"/>
+    <rect x="1510" y="535" width="30" height="14" rx="2" fill="#111" opacity="0.5"/>
+    <rect x="1555" y="535" width="30" height="14" rx="2" fill="#111" opacity="0.5"/>
+    <!-- White line markings -->
+    <line x1="1545" y1="500" x2="1545" y2="560" stroke="#fff" stroke-width="1" opacity="0.3"/>
+    <line x1="1590" y1="500" x2="1590" y2="560" stroke="#fff" stroke-width="1" opacity="0.3"/>
+    <line x1="1635" y1="500" x2="1635" y2="560" stroke="#fff" stroke-width="1" opacity="0.3"/>
+
+    <!-- Trees -->
+    <ellipse cx="1700" cy="520" rx="45" ry="28" fill="#4a7a4a" opacity="0.35"/>
+    <ellipse cx="1800" cy="530" rx="40" ry="22" fill="#4a7a4a" opacity="0.3"/>
+
+    <!-- Window sill -->
+    <rect x="1470" y="598" width="400" height="10" fill="#8090a0" stroke="#6a7a8a" stroke-width="2"/>
+  </g>
+
+  <!-- ========== FLAT SCREEN TV / PRESENTATION SCREEN (left of seal) ========== -->
+  <g id="flatscreen" transform="translate(620, 340)">
+    <!-- Screen bezel -->
+    <rect x="-130" y="-120" width="260" height="180" rx="4" fill="#111" stroke="#333" stroke-width="3"/>
+    <!-- Screen -->
+    <rect x="-122" y="-112" width="244" height="164" fill="#1a2a3a"/>
+    <!-- "CLASSIFIED" screen content -->
+    <rect x="-100" y="-90" width="200" height="30" fill="#003DA5" opacity="0.6"/>
+    <text x="0" y="-70" font-family="Courier, monospace" font-size="14" fill="#fff" text-anchor="middle" opacity="0.8">OPERATION DOSSIER</text>
+    <!-- Data lines on screen -->
+    <line x1="-100" y1="-50" x2="-10" y2="-50" stroke="#4a90e2" stroke-width="2" opacity="0.5"/>
+    <line x1="-100" y1="-35" x2="30" y2="-35" stroke="#4a90e2" stroke-width="2" opacity="0.5"/>
+    <line x1="-100" y1="-20" x2="-30" y2="-20" stroke="#4a90e2" stroke-width="2" opacity="0.5"/>
+    <line x1="-100" y1="-5" x2="60" y2="-5" stroke="#4a90e2" stroke-width="2" opacity="0.5"/>
+    <line x1="-100" y1="10" x2="10" y2="10" stroke="#4a90e2" stroke-width="2" opacity="0.5"/>
+    <!-- Map outline (Netherlands) -->
+    <rect x="40" y="-50" width="60" height="50" fill="#0a1a2a" stroke="#4a90e2" stroke-width="1" opacity="0.4"/>
+    <circle cx="70" cy="-25" r="4" fill="#ff4444" opacity="0.7"/>
+    <!-- Red classification bar -->
+    <rect x="-100" y="25" width="200" height="16" fill="#cc0000" opacity="0.5"/>
+    <text x="0" y="37" font-family="Courier, monospace" font-size="10" fill="#fff" text-anchor="middle" opacity="0.8">STAATSGEHEIM</text>
+    <!-- Screen glow effect -->
+    <rect x="-130" y="-120" width="260" height="180" fill="#4a90e2" opacity="0.03" filter="url(#screenGlow)"/>
+    <!-- Wall mount -->
+    <rect x="-15" y="62" width="30" height="20" fill="#444" stroke="#333" stroke-width="1"/>
+  </g>
+
+  <!-- ========== PRESENTATION SCREEN (right of seal) ========== -->
+  <g id="flatscreen2" transform="translate(1300, 340)">
+    <rect x="-130" y="-120" width="260" height="180" rx="4" fill="#111" stroke="#333" stroke-width="3"/>
+    <rect x="-122" y="-112" width="244" height="164" fill="#1a2a3a"/>
+    <!-- Signal analysis display -->
+    <rect x="-100" y="-90" width="200" height="30" fill="#003DA5" opacity="0.6"/>
+    <text x="0" y="-70" font-family="Courier, monospace" font-size="14" fill="#fff" text-anchor="middle" opacity="0.8">SIGNAL ANALYSIS</text>
+    <!-- Waveform -->
+    <polyline points="-100,-40 -80,-30 -60,-50 -40,-25 -20,-45 0,-30 20,-50 40,-28 60,-42 80,-30 100,-40"
+              fill="none" stroke="#4aff4a" stroke-width="2" opacity="0.6"/>
+    <!-- Frequency bars -->
+    <rect x="-90" y="-5" width="12" height="30" fill="#4a90e2" opacity="0.4"/>
+    <rect x="-70" y="5" width="12" height="20" fill="#4a90e2" opacity="0.4"/>
+    <rect x="-50" y="-10" width="12" height="35" fill="#4a90e2" opacity="0.4"/>
+    <rect x="-30" y="0" width="12" height="25" fill="#4a90e2" opacity="0.4"/>
+    <rect x="-10" y="-15" width="12" height="40" fill="#4a90e2" opacity="0.4"/>
+    <rect x="10" y="5" width="12" height="20" fill="#4a90e2" opacity="0.4"/>
+    <rect x="30" y="-5" width="12" height="30" fill="#4a90e2" opacity="0.4"/>
+    <rect x="50" y="10" width="12" height="15" fill="#4a90e2" opacity="0.4"/>
+    <rect x="70" y="-8" width="12" height="33" fill="#4a90e2" opacity="0.4"/>
+    <!-- Red bar -->
+    <rect x="-100" y="30" width="200" height="16" fill="#cc0000" opacity="0.5"/>
+    <text x="0" y="42" font-family="Courier, monospace" font-size="10" fill="#fff" text-anchor="middle" opacity="0.8">VERTROUWELIJK</text>
+    <rect x="-130" y="-120" width="260" height="180" fill="#4a90e2" opacity="0.03" filter="url(#screenGlow)"/>
+    <rect x="-15" y="62" width="30" height="20" fill="#444" stroke="#333" stroke-width="1"/>
+  </g>
+
+  <!-- ========== CEILING LIGHTS (recessed modern strips) ========== -->
+  <rect x="300" y="0" width="8" height="80" fill="#fff" opacity="0.3"/>
+  <rect x="600" y="0" width="8" height="80" fill="#fff" opacity="0.3"/>
+  <rect x="900" y="0" width="8" height="80" fill="#fff" opacity="0.3"/>
+  <rect x="1200" y="0" width="8" height="80" fill="#fff" opacity="0.3"/>
+  <rect x="1500" y="0" width="8" height="80" fill="#fff" opacity="0.3"/>
+  <!-- Ambient light pools on table area -->
+  <ellipse cx="700" cy="600" rx="200" ry="40" fill="#fff" opacity="0.04" filter="url(#softLight)"/>
+  <ellipse cx="1200" cy="600" rx="200" ry="40" fill="#fff" opacity="0.04" filter="url(#softLight)"/>
+
+  <!-- ========== FAR-SIDE CHAIRS (modern office, dark leather) ========== -->
+  <!-- Chair 1 far -->
+  <g transform="translate(500, 510)">
+    <!-- Chrome base -->
+    <ellipse cx="0" cy="70" rx="24" ry="6" fill="#888" stroke="#666" stroke-width="1"/>
     <!-- Seat -->
-    <ellipse cx="228" cy="330" rx="22" ry="10" fill="#8b4513" class="sp-stroke"/>
-    <rect x="206" y="330" width="44" height="8" fill="#8b4513"/>
-    <!-- Chair back -->
-    <path d="M 210 285 Q 228 280 246 285 L 244 325 L 212 325 Z" fill="#654321" class="sp-stroke"/>
-    <rect x="215" y="290" width="26" height="30" rx="3" fill="#8b6f47" stroke="#654321" stroke-width="2"/>
-    <!-- Front legs (shorter, perspective) -->
-    <rect x="210" y="338" width="7" height="57" rx="2" fill="#7d5a3a" class="sp-stroke"/>
-    <rect x="239" y="338" width="7" height="57" rx="2" fill="#7d5a3a" class="sp-stroke"/>
+    <rect x="-24" y="30" width="48" height="40" rx="4" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <!-- Back rest -->
+    <rect x="-22" y="-30" width="44" height="64" rx="6" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-16" y="-22" width="32" height="48" rx="3" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+    <!-- Arm rests -->
+    <rect x="-28" y="20" width="8" height="30" rx="2" fill="#333" stroke="#222" stroke-width="1"/>
+    <rect x="20" y="20" width="8" height="30" rx="2" fill="#333" stroke="#222" stroke-width="1"/>
   </g>
-  
-  <!-- Chair 2 - far side (center-left) -->
-  <g id="chair2">
-    <!-- Back legs -->
-    <rect x="328" y="325" width="8" height="70" rx="2" fill="#654321" class="sp-stroke"/>
-    <rect x="360" y="325" width="8" height="70" rx="2" fill="#654321" class="sp-stroke"/>
-    <!-- Seat -->
-    <ellipse cx="348" cy="330" rx="22" ry="10" fill="#8b4513" class="sp-stroke"/>
-    <rect x="326" y="330" width="44" height="8" fill="#8b4513"/>
-    <!-- Chair back -->
-    <path d="M 330 285 Q 348 280 366 285 L 364 325 L 332 325 Z" fill="#654321" class="sp-stroke"/>
-    <rect x="335" y="290" width="26" height="30" rx="3" fill="#8b6f47" stroke="#654321" stroke-width="2"/>
-    <!-- Front legs (shorter, perspective) -->
-    <rect x="330" y="338" width="7" height="57" rx="2" fill="#7d5a3a" class="sp-stroke"/>
-    <rect x="359" y="338" width="7" height="57" rx="2" fill="#7d5a3a" class="sp-stroke"/>
+
+  <!-- Chair 2 far -->
+  <g transform="translate(720, 510)">
+    <ellipse cx="0" cy="70" rx="24" ry="6" fill="#888" stroke="#666" stroke-width="1"/>
+    <rect x="-24" y="30" width="48" height="40" rx="4" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-22" y="-30" width="44" height="64" rx="6" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-16" y="-22" width="32" height="48" rx="3" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+    <rect x="-28" y="20" width="8" height="30" rx="2" fill="#333" stroke="#222" stroke-width="1"/>
+    <rect x="20" y="20" width="8" height="30" rx="2" fill="#333" stroke="#222" stroke-width="1"/>
   </g>
-  
-  <!-- Chair 3 - far side (right) -->
-  <g id="chair3">
-    <!-- Back legs -->
-    <rect x="448" y="325" width="8" height="70" rx="2" fill="#654321" class="sp-stroke"/>
-    <rect x="480" y="325" width="8" height="70" rx="2" fill="#654321" class="sp-stroke"/>
-    <!-- Seat -->
-    <ellipse cx="468" cy="330" rx="22" ry="10" fill="#8b4513" class="sp-stroke"/>
-    <rect x="446" y="330" width="44" height="8" fill="#8b4513"/>
-    <!-- Chair back -->
-    <path d="M 450 285 Q 468 280 486 285 L 484 325 L 452 325 Z" fill="#654321" class="sp-stroke"/>
-    <rect x="455" y="290" width="26" height="30" rx="3" fill="#8b6f47" stroke="#654321" stroke-width="2"/>
-    <!-- Front legs (shorter, perspective) -->
-    <rect x="450" y="338" width="7" height="57" rx="2" fill="#7d5a3a" class="sp-stroke"/>
-    <rect x="479" y="338" width="7" height="57" rx="2" fill="#7d5a3a" class="sp-stroke"/>
+
+  <!-- Chair 3 far -->
+  <g transform="translate(960, 510)">
+    <ellipse cx="0" cy="70" rx="24" ry="6" fill="#888" stroke="#666" stroke-width="1"/>
+    <rect x="-24" y="30" width="48" height="40" rx="4" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-22" y="-30" width="44" height="64" rx="6" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-16" y="-22" width="32" height="48" rx="3" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+    <rect x="-28" y="20" width="8" height="30" rx="2" fill="#333" stroke="#222" stroke-width="1"/>
+    <rect x="20" y="20" width="8" height="30" rx="2" fill="#333" stroke="#222" stroke-width="1"/>
   </g>
-  
-  <!-- Dining table - SIDE VIEW (more formal) -->
-  <g id="diningTable">
-    <!-- Table top (side perspective) -->
-    <rect x="180" y="380" width="380" height="25" rx="3" fill="url(#tableWood)" class="sp-stroke"/>
-    <!-- Table top highlight -->
-    <rect x="185" y="383" width="370" height="8" fill="#a0826d" opacity="0.4"/>
-    
-    <!-- Table apron/frame -->
-    <rect x="185" y="405" width="370" height="12" fill="#654321" class="sp-stroke"/>
-    
-    <!-- Table legs (side view - show 4 legs) -->
-    <!-- Far left leg -->
-    <rect x="195" y="417" width="18" height="183" rx="2" fill="#654321" class="sp-stroke"/>
-    <rect x="198" y="420" width="12" height="175" fill="#7d5a3a"/>
-    <!-- Near left leg -->
-    <rect x="230" y="417" width="20" height="183" rx="2" fill="#543210" class="sp-stroke"/>
-    <rect x="233" y="420" width="14" height="175" fill="#654321"/>
-    <!-- Far right leg -->
-    <rect x="520" y="417" width="18" height="183" rx="2" fill="#654321" class="sp-stroke"/>
-    <rect x="523" y="420" width="12" height="175" fill="#7d5a3a"/>
-    <!-- Near right leg -->
-    <rect x="492" y="417" width="20" height="183" rx="2" fill="#543210" class="sp-stroke"/>
-    <rect x="495" y="420" width="14" height="175" fill="#654321"/>
-    
-    <!-- Leg feet -->
-    <ellipse cx="204" cy="598" rx="12" ry="5" fill="#4a2f1a" stroke="#000" stroke-width="2"/>
-    <ellipse cx="240" cy="598" rx="13" ry="6" fill="#4a2f1a" stroke="#000" stroke-width="2"/>
-    <ellipse cx="529" cy="598" rx="12" ry="5" fill="#4a2f1a" stroke="#000" stroke-width="2"/>
-    <ellipse cx="502" cy="598" rx="13" ry="6" fill="#4a2f1a" stroke="#000" stroke-width="2"/>
+
+  <!-- Chair 4 far -->
+  <g transform="translate(1200, 510)">
+    <ellipse cx="0" cy="70" rx="24" ry="6" fill="#888" stroke="#666" stroke-width="1"/>
+    <rect x="-24" y="30" width="48" height="40" rx="4" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-22" y="-30" width="44" height="64" rx="6" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-16" y="-22" width="32" height="48" rx="3" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+    <rect x="-28" y="20" width="8" height="30" rx="2" fill="#333" stroke="#222" stroke-width="1"/>
+    <rect x="20" y="20" width="8" height="30" rx="2" fill="#333" stroke="#222" stroke-width="1"/>
   </g>
-  
-  <!-- Espresso cups and saucers on table (5 settings) -->
-  <!-- Cup 1 (left) -->
-  <ellipse cx="220" cy="393" rx="8" ry="4" fill="#f5f5f5" stroke="#000" stroke-width="1"/>
-  <ellipse cx="220" cy="388" rx="10" ry="6" fill="#fff" class="sp-stroke"/>
-  <ellipse cx="220" cy="385" rx="7" ry="4" fill="#3e2723"/>
-  <path d="M 230 388 Q 235 388 235 391 Q 235 393 230 393" fill="none" stroke="#000" stroke-width="1.5"/>
-  
-  <!-- Cup 2 -->
-  <ellipse cx="290" cy="393" rx="8" ry="4" fill="#f5f5f5" stroke="#000" stroke-width="1"/>
-  <ellipse cx="290" cy="388" rx="10" ry="6" fill="#fff" class="sp-stroke"/>
-  <ellipse cx="290" cy="385" rx="7" ry="4" fill="#3e2723"/>
-  <path d="M 300 388 Q 305 388 305 391 Q 305 393 300 393" fill="none" stroke="#000" stroke-width="1.5"/>
-  
-  <!-- Cup 3 (center) -->
-  <ellipse cx="360" cy="393" rx="8" ry="4" fill="#f5f5f5" stroke="#000" stroke-width="1"/>
-  <ellipse cx="360" cy="388" rx="10" ry="6" fill="#fff" class="sp-stroke"/>
-  <ellipse cx="360" cy="385" rx="7" ry="4" fill="#3e2723"/>
-  <path d="M 370 388 Q 375 388 375 391 Q 375 393 370 393" fill="none" stroke="#000" stroke-width="1.5"/>
-  
-  <!-- Cup 4 -->
-  <ellipse cx="430" cy="393" rx="8" ry="4" fill="#f5f5f5" stroke="#000" stroke-width="1"/>
-  <ellipse cx="430" cy="388" rx="10" ry="6" fill="#fff" class="sp-stroke"/>
-  <ellipse cx="430" cy="385" rx="7" ry="4" fill="#3e2723"/>
-  <path d="M 440 388 Q 445 388 445 391 Q 445 393 440 393" fill="none" stroke="#000" stroke-width="1.5"/>
-  
-  <!-- Cup 5 (right) -->
-  <ellipse cx="500" cy="393" rx="8" ry="4" fill="#f5f5f5" stroke="#000" stroke-width="1"/>
-  <ellipse cx="500" cy="388" rx="10" ry="6" fill="#fff" class="sp-stroke"/>
-  <ellipse cx="500" cy="385" rx="7" ry="4" fill="#3e2723"/>
-  <path d="M 510 388 Q 515 388 515 391 Q 515 393 510 393" fill="none" stroke="#000" stroke-width="1.5"/>
-  
-  <!-- Van der Berg's business card on table -->
-  <rect x="332" y="390" width="36" height="24" rx="2" fill="#fff" class="sp-stroke"/>
-  <rect x="335" y="392" width="30" height="8" fill="#003DA5"/>
-  <line x1="337" y1="403" x2="363" y2="403" stroke="#333" stroke-width="0.8"/>
-  <line x1="337" y1="406" x2="363" y2="406" stroke="#333" stroke-width="0.8"/>
-  <line x1="337" y1="409" x2="355" y2="409" stroke="#333" stroke-width="0.8"/>
-  <text x="339" y="399" font-family="Arial" font-size="5" fill="#fff" font-weight="bold">AIVD</text>
-  
-  <!-- Chairs on near side (front view, partially hidden by table) -->
-  <!-- Chair 4 - near side left -->
-  <g id="chair4">
-    <!-- Chair back (taller, closer to viewer) -->
-    <path d="M 248 425 Q 268 420 288 425 L 286 480 L 250 480 Z" fill="#543210" class="sp-stroke"/>
-    <rect x="254" y="432" width="28" height="42" rx="3" fill="#654321" stroke="#4a2f1a" stroke-width="2"/>
-    <!-- Front legs visible below table -->
-    <rect x="254" y="480" width="9" height="120" rx="2" fill="#4a2f1a" class="sp-stroke"/>
-    <rect x="277" y="480" width="9" height="120" rx="2" fill="#4a2f1a" class="sp-stroke"/>
+
+  <!-- Chair 5 far (head of table right) -->
+  <g transform="translate(1420, 510)">
+    <ellipse cx="0" cy="70" rx="24" ry="6" fill="#888" stroke="#666" stroke-width="1"/>
+    <rect x="-24" y="30" width="48" height="40" rx="4" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-22" y="-30" width="44" height="64" rx="6" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-16" y="-22" width="32" height="48" rx="3" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+    <rect x="-28" y="20" width="8" height="30" rx="2" fill="#333" stroke="#222" stroke-width="1"/>
+    <rect x="20" y="20" width="8" height="30" rx="2" fill="#333" stroke="#222" stroke-width="1"/>
   </g>
-  
-  <!-- Chair 5 - near side right -->
-  <g id="chair5">
-    <!-- Chair back (taller, closer to viewer) -->
-    <path d="M 438 425 Q 458 420 478 425 L 476 480 L 440 480 Z" fill="#543210" class="sp-stroke"/>
-    <rect x="444" y="432" width="28" height="42" rx="3" fill="#654321" stroke="#4a2f1a" stroke-width="2"/>
-    <!-- Front legs visible below table -->
-    <rect x="444" y="480" width="9" height="120" rx="2" fill="#4a2f1a" class="sp-stroke"/>
-    <rect x="467" y="480" width="9" height="120" rx="2" fill="#4a2f1a" class="sp-stroke"/>
+
+  <!-- ========== CONFERENCE TABLE ========== -->
+  <g id="confTable">
+    <!-- Table top (large, dark, polished) -->
+    <rect x="360" y="590" width="1200" height="50" rx="6" fill="url(#tableGrad)" class="sp-stroke"/>
+    <!-- Table surface highlight -->
+    <rect x="370" y="595" width="1180" height="14" fill="#fff" opacity="0.06" rx="3"/>
+    <!-- Chrome edge trim -->
+    <rect x="360" y="638" width="1200" height="4" fill="#888" opacity="0.5"/>
+
+    <!-- Table legs (modern chrome tube) -->
+    <rect x="400" y="642" width="16" height="240" rx="2" fill="#999" stroke="#777" stroke-width="1"/>
+    <rect x="400" y="642" width="16" height="240" fill="#aaa" opacity="0.3"/>
+    <rect x="1504" y="642" width="16" height="240" rx="2" fill="#999" stroke="#777" stroke-width="1"/>
+    <rect x="1504" y="642" width="16" height="240" fill="#aaa" opacity="0.3"/>
+    <!-- Cross bar -->
+    <rect x="410" y="760" width="1100" height="6" rx="2" fill="#888" stroke="#666" stroke-width="1"/>
+
+    <!-- Table feet -->
+    <rect x="380" y="878" width="56" height="6" rx="2" fill="#777" stroke="#555" stroke-width="1"/>
+    <rect x="1484" y="878" width="56" height="6" rx="2" fill="#777" stroke="#555" stroke-width="1"/>
   </g>
-  
-  <!-- Dutch tile decoration on wall (typical Dutch kitchen) -->
-  <rect x="350" y="150" width="120" height="80" fill="#fff" stroke="#003DA5" stroke-width="3"/>
-  <g id="delftTile">
-    <circle cx="380" cy="180" r="15" fill="none" stroke="#003DA5" stroke-width="2"/>
-    <path d="M 380 165 L 380 195" stroke="#003DA5" stroke-width="2"/>
-    <path d="M 365 180 L 395 180" stroke="#003DA5" stroke-width="2"/>
-    <circle cx="380" cy="180" r="5" fill="#003DA5"/>
+
+  <!-- ========== ITEMS ON TABLE ========== -->
+  <!-- Water glasses -->
+  <g transform="translate(520, 600)">
+    <ellipse cx="0" cy="4" rx="10" ry="5" fill="#c8e0f0" opacity="0.5" stroke="#aaa" stroke-width="1"/>
+    <rect x="-8" y="-14" width="16" height="18" rx="2" fill="#d0e8f8" opacity="0.3" stroke="#aaa" stroke-width="1"/>
   </g>
-  <g id="delftTile2">
-    <circle cx="440" cy="180" r="15" fill="none" stroke="#003DA5" stroke-width="2"/>
-    <path d="M 425 180 Q 440 165 455 180 Q 440 195 425 180" fill="#003DA5" opacity="0.3"/>
+  <g transform="translate(740, 600)">
+    <ellipse cx="0" cy="4" rx="10" ry="5" fill="#c8e0f0" opacity="0.5" stroke="#aaa" stroke-width="1"/>
+    <rect x="-8" y="-14" width="16" height="18" rx="2" fill="#d0e8f8" opacity="0.3" stroke="#aaa" stroke-width="1"/>
   </g>
-  <line x1="410" y1="150" x2="410" y2="230" stroke="#003DA5" stroke-width="3"/>
-  
-  <!-- Clock on wall (11:00 AM - debrief time) -->
-  <circle cx="700" cy="90" r="35" fill="#fff" class="sp-stroke"/>
-  <circle cx="700" cy="90" r="30" fill="#f5f5f5" stroke="#000" stroke-width="2"/>
-  <line x1="700" y1="90" x2="700" y2="70" stroke="#000" stroke-width="3"/>
-  <line x1="700" y1="90" x2="715" y2="90" stroke="#000" stroke-width="3"/>
-  <circle cx="700" cy="90" r="3" fill="#000"/>
-  
-  <!-- Small details for atmosphere -->
-  <!-- Light switch -->
-  <rect x="30" y="280" width="15" height="25" rx="2" fill="#f5f5dc" stroke="#000" stroke-width="2"/>
-  <rect x="34" y="290" width="7" height="10" rx="1" fill="#fff" stroke="#000" stroke-width="1"/>
-  
-  <!-- Baseboards -->
-  <rect x="0" y="395" width="800" height="8" fill="#654321" stroke="#4a2f1a" stroke-width="1"/>
-  
-  <!-- Light rays from window (morning light) -->
-  <path d="M 160 170 L 350 400" stroke="#ffffcc" stroke-width="80" opacity="0.12"/>
-  <path d="M 160 170 L 280 380" stroke="#ffffcc" stroke-width="50" opacity="0.08"/>
-  
-  <!-- Ceiling molding -->
-  <rect x="0" y="0" width="800" height="12" fill="#e8dcc0" stroke="#d4c9a8" stroke-width="2"/>
+  <g transform="translate(960, 600)">
+    <ellipse cx="0" cy="4" rx="10" ry="5" fill="#c8e0f0" opacity="0.5" stroke="#aaa" stroke-width="1"/>
+    <rect x="-8" y="-14" width="16" height="18" rx="2" fill="#d0e8f8" opacity="0.3" stroke="#aaa" stroke-width="1"/>
+  </g>
+  <g transform="translate(1180, 600)">
+    <ellipse cx="0" cy="4" rx="10" ry="5" fill="#c8e0f0" opacity="0.5" stroke="#aaa" stroke-width="1"/>
+    <rect x="-8" y="-14" width="16" height="18" rx="2" fill="#d0e8f8" opacity="0.3" stroke="#aaa" stroke-width="1"/>
+  </g>
+  <g transform="translate(1400, 600)">
+    <ellipse cx="0" cy="4" rx="10" ry="5" fill="#c8e0f0" opacity="0.5" stroke="#aaa" stroke-width="1"/>
+    <rect x="-8" y="-14" width="16" height="18" rx="2" fill="#d0e8f8" opacity="0.3" stroke="#aaa" stroke-width="1"/>
+  </g>
+
+  <!-- Coffee cups (espresso, formal china) -->
+  <g transform="translate(580, 605)">
+    <ellipse cx="0" cy="5" rx="12" ry="5" fill="#e0e0e0" stroke="#999" stroke-width="1"/>
+    <ellipse cx="0" cy="0" rx="14" ry="7" fill="#f0f0f0" stroke="#999" stroke-width="1.5"/>
+    <ellipse cx="0" cy="-3" rx="10" ry="5" fill="url(#coffeeGrad)"/>
+    <path d="M 14 0 Q 20 0 20 4 Q 20 7 14 7" fill="none" stroke="#999" stroke-width="1.5"/>
+  </g>
+  <g transform="translate(800, 605)">
+    <ellipse cx="0" cy="5" rx="12" ry="5" fill="#e0e0e0" stroke="#999" stroke-width="1"/>
+    <ellipse cx="0" cy="0" rx="14" ry="7" fill="#f0f0f0" stroke="#999" stroke-width="1.5"/>
+    <ellipse cx="0" cy="-3" rx="10" ry="5" fill="url(#coffeeGrad)"/>
+    <path d="M 14 0 Q 20 0 20 4 Q 20 7 14 7" fill="none" stroke="#999" stroke-width="1.5"/>
+  </g>
+  <g transform="translate(1100, 605)">
+    <ellipse cx="0" cy="5" rx="12" ry="5" fill="#e0e0e0" stroke="#999" stroke-width="1"/>
+    <ellipse cx="0" cy="0" rx="14" ry="7" fill="#f0f0f0" stroke="#999" stroke-width="1.5"/>
+    <ellipse cx="0" cy="-3" rx="10" ry="5" fill="url(#coffeeGrad)"/>
+    <path d="M 14 0 Q 20 0 20 4 Q 20 7 14 7" fill="none" stroke="#999" stroke-width="1.5"/>
+  </g>
+  <g transform="translate(1340, 605)">
+    <ellipse cx="0" cy="5" rx="12" ry="5" fill="#e0e0e0" stroke="#999" stroke-width="1"/>
+    <ellipse cx="0" cy="0" rx="14" ry="7" fill="#f0f0f0" stroke="#999" stroke-width="1.5"/>
+    <ellipse cx="0" cy="-3" rx="10" ry="5" fill="url(#coffeeGrad)"/>
+    <path d="M 14 0 Q 20 0 20 4 Q 20 7 14 7" fill="none" stroke="#999" stroke-width="1.5"/>
+  </g>
+
+  <!-- AIVD Business card (prominent, center table) -->
+  <g transform="translate(960, 618)">
+    <rect x="-44" y="-16" width="88" height="54" rx="3" fill="#fff" stroke="#666" stroke-width="1.5"/>
+    <!-- Blue AIVD banner -->
+    <rect x="-40" y="-12" width="80" height="18" fill="#003DA5"/>
+    <text x="0" y="2" font-family="Arial, sans-serif" font-size="12" fill="#fff" font-weight="bold" text-anchor="middle">AIVD</text>
+    <!-- Contact lines -->
+    <line x1="-34" y1="14" x2="34" y2="14" stroke="#666" stroke-width="0.8"/>
+    <line x1="-34" y1="21" x2="34" y2="21" stroke="#666" stroke-width="0.8"/>
+    <line x1="-34" y1="28" x2="18" y2="28" stroke="#666" stroke-width="0.8"/>
+    <!-- Lion watermark -->
+    <circle cx="24" cy="22" r="8" fill="#003DA5" opacity="0.06"/>
+  </g>
+
+  <!-- Classified folder -->
+  <g transform="translate(680, 614)">
+    <rect x="-34" y="-10" width="68" height="46" rx="2" fill="#c8c4b8" stroke="#999" stroke-width="1.5"/>
+    <rect x="-30" y="-6" width="60" height="4" fill="#d8d4c8"/>
+    <!-- Red diagonal stripe -->
+    <line x1="-30" y1="32" x2="30" y2="-6" stroke="#cc0000" stroke-width="3" opacity="0.5"/>
+    <rect x="-24" y="8" width="48" height="14" rx="1" fill="none" stroke="#cc0000" stroke-width="1.5"/>
+    <text x="0" y="18" font-family="Arial, sans-serif" font-size="8" fill="#cc0000" font-weight="bold" text-anchor="middle">STAATSGEHEIM</text>
+  </g>
+
+  <!-- Laptop (partially open, near one seat) -->
+  <g transform="translate(1240, 608)">
+    <!-- Base -->
+    <rect x="-30" y="0" width="60" height="36" rx="3" fill="#333" stroke="#222" stroke-width="1.5"/>
+    <!-- Screen (at angle) -->
+    <rect x="-28" y="-28" width="56" height="30" rx="2" fill="#1a2a3a" stroke="#444" stroke-width="1"/>
+    <rect x="-24" y="-24" width="48" height="22" fill="#0a1520"/>
+    <!-- Screen content hint -->
+    <line x1="-18" y1="-18" x2="10" y2="-18" stroke="#4a90e2" stroke-width="1" opacity="0.6"/>
+    <line x1="-18" y1="-12" x2="18" y2="-12" stroke="#4a90e2" stroke-width="1" opacity="0.6"/>
+    <line x1="-18" y1="-6" x2="4" y2="-6" stroke="#4a90e2" stroke-width="1" opacity="0.6"/>
+  </g>
+
+  <!-- ========== NEAR-SIDE CHAIRS ========== -->
+  <!-- Chair near-left -->
+  <g transform="translate(600, 740)">
+    <rect x="-24" y="-50" width="48" height="64" rx="6" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-18" y="-42" width="36" height="48" rx="3" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+    <!-- Seat bottom and legs peek -->
+    <rect x="-26" y="14" width="52" height="10" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+    <!-- Chrome legs -->
+    <rect x="-22" y="24" width="6" height="180" rx="1" fill="#999" stroke="#777" stroke-width="1"/>
+    <rect x="16" y="24" width="6" height="180" rx="1" fill="#999" stroke="#777" stroke-width="1"/>
+  </g>
+
+  <!-- Chair near-center-left -->
+  <g transform="translate(840, 740)">
+    <rect x="-24" y="-50" width="48" height="64" rx="6" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-18" y="-42" width="36" height="48" rx="3" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+    <rect x="-26" y="14" width="52" height="10" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+    <rect x="-22" y="24" width="6" height="180" rx="1" fill="#999" stroke="#777" stroke-width="1"/>
+    <rect x="16" y="24" width="6" height="180" rx="1" fill="#999" stroke="#777" stroke-width="1"/>
+  </g>
+
+  <!-- Chair near-center-right -->
+  <g transform="translate(1080, 740)">
+    <rect x="-24" y="-50" width="48" height="64" rx="6" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-18" y="-42" width="36" height="48" rx="3" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+    <rect x="-26" y="14" width="52" height="10" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+    <rect x="-22" y="24" width="6" height="180" rx="1" fill="#999" stroke="#777" stroke-width="1"/>
+    <rect x="16" y="24" width="6" height="180" rx="1" fill="#999" stroke="#777" stroke-width="1"/>
+  </g>
+
+  <!-- Chair near-right -->
+  <g transform="translate(1320, 740)">
+    <rect x="-24" y="-50" width="48" height="64" rx="6" fill="url(#chairLeather)" stroke="#333" stroke-width="2"/>
+    <rect x="-18" y="-42" width="36" height="48" rx="3" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="1"/>
+    <rect x="-26" y="14" width="52" height="10" rx="3" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+    <rect x="-22" y="24" width="6" height="180" rx="1" fill="#999" stroke="#777" stroke-width="1"/>
+    <rect x="16" y="24" width="6" height="180" rx="1" fill="#999" stroke="#777" stroke-width="1"/>
+  </g>
+
+  <!-- ========== SECURITY CAMERA (top right corner) ========== -->
+  <g transform="translate(1850, 50)">
+    <circle cx="0" cy="0" r="12" fill="#333" stroke="#222" stroke-width="2"/>
+    <circle cx="0" cy="0" r="6" fill="#1a1a1a" stroke="#444" stroke-width="1"/>
+    <circle cx="2" cy="-2" r="2" fill="#ff0000" opacity="0.6"/>
+    <!-- Mount -->
+    <rect x="-3" y="12" width="6" height="14" fill="#444" stroke="#333" stroke-width="1"/>
+  </g>
+
+  <!-- ========== DOOR (left wall) ========== -->
+  <g id="door" transform="translate(440, 300)">
+    <!-- Door frame -->
+    <rect x="-50" y="-180" width="100" height="360" fill="#8090a0" stroke="#6a7a8a" stroke-width="3"/>
+    <!-- Door panel -->
+    <rect x="-44" y="-174" width="88" height="348" fill="#a0aab4" stroke="#8090a0" stroke-width="2"/>
+    <!-- Upper panel inset -->
+    <rect x="-36" y="-164" width="72" height="120" rx="2" fill="#b0bac4" stroke="#8a94a0" stroke-width="1"/>
+    <!-- Lower panel inset -->
+    <rect x="-36" y="-24" width="72" height="140" rx="2" fill="#b0bac4" stroke="#8a94a0" stroke-width="1"/>
+    <!-- Door handle (modern lever) -->
+    <rect x="26" y="10" width="12" height="6" rx="2" fill="#c0c0c0" stroke="#888" stroke-width="1.5"/>
+    <rect x="32" y="4" width="6" height="18" rx="2" fill="#c0c0c0" stroke="#888" stroke-width="1.5"/>
+    <!-- Card reader -->
+    <rect x="54" y="-10" width="14" height="28" rx="2" fill="#333" stroke="#222" stroke-width="1"/>
+    <rect x="57" y="-4" width="8" height="4" fill="#4CAF50" opacity="0.7"/>
+    <circle cx="61" cy="8" r="2" fill="#ff0000" opacity="0.5"/>
+  </g>
+
+  <!-- ========== WATER DISPENSER (near door) ========== -->
+  <g transform="translate(530, 520)">
+    <!-- Body -->
+    <rect x="-18" y="-60" width="36" height="120" rx="3" fill="#e0e4e8" stroke="#c0c4c8" stroke-width="2"/>
+    <!-- Water bottle on top -->
+    <rect x="-10" y="-90" width="20" height="32" rx="8" fill="#c8e8f8" stroke="#a0c0d0" stroke-width="1.5" opacity="0.6"/>
+    <ellipse cx="0" cy="-90" rx="10" ry="4" fill="#a0d0e8" opacity="0.4"/>
+    <!-- Dispensing area -->
+    <rect x="-14" y="-10" width="28" height="20" fill="#333" stroke="#222" stroke-width="1"/>
+    <!-- Buttons -->
+    <circle cx="-4" cy="20" r="4" fill="#4a90e2" stroke="#3a7ad0" stroke-width="1"/>
+    <circle cx="8" cy="20" r="4" fill="#ff6666" stroke="#cc4444" stroke-width="1"/>
+    <!-- Drip tray -->
+    <rect x="-16" y="46" width="32" height="6" fill="#999" stroke="#777" stroke-width="1"/>
+  </g>
+
+  <!-- ========== VISITOR BADGE ON TABLE (Ryan's) ========== -->
+  <g transform="translate(840, 622)">
+    <!-- Lanyard -->
+    <path d="M 0 -20 Q -15 -30 -10 -40" fill="none" stroke="#003DA5" stroke-width="2"/>
+    <!-- Badge -->
+    <rect x="-16" y="-18" width="32" height="40" rx="2" fill="#fff" stroke="#888" stroke-width="1.5"/>
+    <rect x="-12" y="-14" width="24" height="10" fill="#003DA5"/>
+    <text x="0" y="-7" font-family="Arial" font-size="5" fill="#fff" text-anchor="middle">BEZOEKER</text>
+    <!-- Photo area -->
+    <rect x="-8" y="0" width="16" height="14" fill="#ddd" stroke="#bbb" stroke-width="0.5"/>
+    <circle cx="0" cy="5" r="4" fill="#aaa"/>
+  </g>
+
+  <!-- ========== BASEBOARD / WALL BASE ========== -->
+  <rect x="0" y="652" width="1920" height="10" fill="#8090a0" stroke="#6a7a8a" stroke-width="1"/>
+
+  <!-- ========== SUBTLE FLOOR REFLECTIONS ========== -->
+  <!-- Table reflection -->
+  <rect x="380" y="884" width="1160" height="30" fill="#1a1a1a" opacity="0.05"/>
+  <!-- Chair reflections -->
+  <ellipse cx="600" cy="930" rx="20" ry="4" fill="#000" opacity="0.04"/>
+  <ellipse cx="840" cy="930" rx="20" ry="4" fill="#000" opacity="0.04"/>
+  <ellipse cx="1080" cy="930" rx="20" ry="4" fill="#000" opacity="0.04"/>
+  <ellipse cx="1320" cy="930" rx="20" ry="4" fill="#000" opacity="0.04"/>
 </svg>

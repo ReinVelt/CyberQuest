@@ -1134,6 +1134,15 @@ body {
     50% { opacity: 0.7; }
 }
 
+/* WSRT / ASTRON SCENE */
+#scene-background.scene-astron {
+    background: linear-gradient(180deg,
+        #2a5a8c 0%,
+        #5a8ab4 40%,
+        #3a5c2a 40%,
+        #2e4a22 100%);
+}
+
 /* GARDEN SCENE */
 #scene-background.scene-garden {
     background: linear-gradient(180deg, 

@@ -359,11 +359,15 @@ const MancaveScene = {
                             ],
                             onClose: (game) => {
                                 game.setFlag('cees_contacted', true);
+                                game.setFlag('astron_unlocked', true);
                                 game.showNotification('Cees Bassa will analyze signal patterns');
                                 
                                 setTimeout(() => {
-                                    game.showNotification('Click laptop again to contact Jaap Haartsen');
+                                    game.showNotification('Cees wants you at the WSRT — head to the garden when ready');
                                 }, 2000);
+                                setTimeout(() => {
+                                    game.showNotification('Click laptop again to contact Jaap Haartsen');
+                                }, 5000);
                             }
                         });
                     }, 500);
