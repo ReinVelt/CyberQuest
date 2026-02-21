@@ -486,7 +486,7 @@ const TvdocumentaryScene = {
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_bluetooth.svg');"></div>
                     <div class="docu-chapter">CHAPTER 3: BLUETOOTH — CONNECTING THE WORLD</div>
                     <div class="docu-text-overlay">
-                        <p>In 1994, Groningen-born engineer Jaap Haartsen invented a short-range wireless protocol while working at Ericsson.</p>
+                        <p>In the early 1990s, The Hague-born engineer Jaap Haartsen developed a short-range wireless protocol while working at Ericsson in Sweden.</p>
                         <p>Named after Viking king Harald Blåtand — the man who united the tribes of Denmark.</p>
                     </div>
                 `

@@ -211,61 +211,461 @@ const GardenScene = {
             height: 15,
             cursor: 'pointer',
             action: function(game) {
-                // Drive to WSRT to meet Cees Bassa
-                if (game.getFlag('astron_unlocked') && !game.getFlag('visited_astron')) {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'Cees is expecting me at the WSRT. Westerbork, 40 minutes south-west.' },
-                        { speaker: 'Ryan', text: 'He said he\'d run the schematics through ASTRON\'s pipeline. Let\'s see what he found.' }
-                    ]);
-                    
-                    game.sceneTimeout(() => {
-                        game.setFlag('driving_destination', 'astron');
-                        game.loadScene('driving_day');
-                    }, 2500);
-                    return;
-                }
-                
-                // Part 17: Drive to facility for infiltration
-                if (game.questManager.hasQuest('infiltrate_facility') && !game.getFlag('drove_to_facility')) {
-                    game.setFlag('drove_to_facility', true);
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: '11 PM. Time to go.' },
-                        { speaker: 'Ryan', text: 'Flipper Zero - check. Tools - check. Meshtastic - check.' },
-                        { speaker: 'Ryan', text: 'Eva is waiting. Let\'s do this.' }
-                    ]);
-                    
-                    game.sceneTimeout(() => {
-                        game.setFlag('driving_destination', 'facility');
-                        game.loadScene('driving');
-                    }, 3000);
-                    return;
-                }
-                
-                // Part 7: Drive to Klooster
-                console.log('[Garden] Volvo clicked. klooster_unlocked:', game.getFlag('klooster_unlocked'));
-                
-                if (game.getFlag('klooster_unlocked')) {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'My old Volvo. Reliable, anonymous, untraceable.' },
-                        { speaker: 'Ryan', text: 'Ter Apel is 20 minutes from here. Time to go.' }
-                    ]);
-                    
-                    game.sceneTimeout(() => {
-                        console.log('Garden: Setting driving_destination to klooster');
-                        game.setFlag('driving_destination', 'klooster');
-                        console.log('Garden: Loading driving scene');
-                        game.loadScene('driving');
-                    }, 2000);
-                } else {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'My old Volvo. Parked behind the shed.' },
-                        { speaker: 'Ryan', text: 'No reason to go anywhere right now.' }
-                    ]);
-                }
+                GardenScene._showVolvoDestinations(game);
             }
         }
     ],
-    
+
+    /* ─── Volvo Destination Picker ─────────────────────────────── */
+
+    _injectPickerStyles: function() {
+        if (document.getElementById('volvo-picker-style')) return;
+        const style = document.createElement('style');
+        style.id = 'volvo-picker-style';
+        style.textContent = `
+/* === VOLVO DESTINATION PICKER === */
+#volvo-picker-overlay {
+    position: fixed; inset: 0; z-index: 8000;
+    background: rgba(0,0,0,0.85);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.4s ease;
+    cursor: default;
+}
+#volvo-picker-overlay.visible { opacity: 1; }
+
+.volvo-picker {
+    background: linear-gradient(180deg, #0a1520 0%, #070d14 100%);
+    border: 1px solid rgba(0,255,255,0.15);
+    border-radius: 4px; padding: 0; width: 480px; max-width: 92vw;
+    max-height: 85vh; overflow-y: auto;
+    box-shadow: 0 0 60px rgba(0,255,255,0.08), 0 0 1px rgba(0,255,255,0.3);
+    position: relative;
+}
+
+/* Header */
+.vp-header {
+    padding: 22px 28px 16px;
+    border-bottom: 1px solid rgba(0,255,255,0.08);
+    text-align: center;
+}
+.vp-car-ascii {
+    font-family: 'Courier New', monospace;
+    font-size: 0.55em; line-height: 1.15;
+    color: rgba(0,255,255,0.25);
+    margin-bottom: 12px; white-space: pre;
+    letter-spacing: 1px;
+}
+.vp-title {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1em; letter-spacing: 6px;
+    color: rgba(0,255,255,0.7);
+    text-transform: uppercase; margin: 0;
+}
+.vp-subtitle {
+    font-family: 'Georgia', serif;
+    font-size: 0.78em; color: rgba(255,255,255,0.3);
+    margin-top: 6px; letter-spacing: 1px;
+}
+
+/* Destination list */
+.vp-destinations {
+    padding: 8px 12px 12px;
+}
+
+.vp-dest {
+    display: flex; align-items: stretch; gap: 14px;
+    padding: 14px 16px; margin: 6px 0;
+    background: rgba(0,255,255,0.02);
+    border: 1px solid rgba(0,255,255,0.06);
+    border-radius: 3px; cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative; overflow: hidden;
+}
+.vp-dest:hover {
+    background: rgba(0,255,255,0.06);
+    border-color: rgba(0,255,255,0.2);
+    transform: translateX(3px);
+}
+.vp-dest:hover .vp-dest-name { color: #00ffff; }
+.vp-dest:active { transform: translateX(3px) scale(0.99); }
+
+/* Scan line on hover */
+.vp-dest::before {
+    content: ''; position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,255,255,0.04), transparent);
+    transition: left 0.4s ease;
+    pointer-events: none;
+}
+.vp-dest:hover::before { left: 100%; }
+
+/* Completed / visited */
+.vp-dest.visited {
+    opacity: 0.35; cursor: default;
+    border-color: rgba(255,255,255,0.04);
+}
+.vp-dest.visited:hover {
+    background: rgba(0,255,255,0.02);
+    border-color: rgba(255,255,255,0.06);
+    transform: none;
+}
+.vp-dest.visited .vp-dest-name { color: rgba(255,255,255,0.4) !important; }
+
+/* Urgent / recommended */
+.vp-dest.urgent {
+    border-color: rgba(255,215,0,0.2);
+    background: rgba(255,215,0,0.03);
+}
+.vp-dest.urgent:hover {
+    border-color: rgba(255,215,0,0.35);
+    background: rgba(255,215,0,0.06);
+}
+.vp-dest.urgent .vp-dest-name { color: #ffd700; }
+.vp-dest.urgent:hover .vp-dest-name { color: #ffe44d; }
+
+/* Icon */
+.vp-dest-icon {
+    font-size: 1.6em; min-width: 36px;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* Text block */
+.vp-dest-info { flex: 1; min-width: 0; }
+.vp-dest-name {
+    font-family: 'Courier New', monospace;
+    font-size: 0.88em; letter-spacing: 2px;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    transition: color 0.25s ease;
+    margin: 0 0 3px;
+}
+.vp-dest-desc {
+    font-family: 'Georgia', serif;
+    font-size: 0.78em; color: rgba(255,255,255,0.35);
+    line-height: 1.5; margin: 0;
+}
+.vp-dest-meta {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 6px;
+}
+.vp-dest-distance {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65em; letter-spacing: 1px;
+    color: rgba(0,255,255,0.45);
+}
+.vp-dest-tag {
+    font-family: 'Courier New', monospace;
+    font-size: 0.55em; letter-spacing: 2px;
+    padding: 2px 8px; border-radius: 2px;
+    text-transform: uppercase;
+}
+.vp-tag-night {
+    color: rgba(100,140,255,0.7);
+    background: rgba(100,140,255,0.08);
+    border: 1px solid rgba(100,140,255,0.15);
+}
+.vp-tag-day {
+    color: rgba(255,200,80,0.7);
+    background: rgba(255,200,80,0.08);
+    border: 1px solid rgba(255,200,80,0.15);
+}
+.vp-tag-visited {
+    color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+.vp-tag-urgent {
+    color: rgba(255,80,80,0.8);
+    background: rgba(255,80,80,0.08);
+    border: 1px solid rgba(255,80,80,0.15);
+    animation: vp-urgent-pulse 2s ease-in-out infinite;
+}
+@keyframes vp-urgent-pulse {
+    0%,100% { opacity: 1; }
+    50%     { opacity: 0.5; }
+}
+
+/* Arrow */
+.vp-dest-arrow {
+    display: flex; align-items: center;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1em; color: rgba(0,255,255,0.15);
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+.vp-dest:hover .vp-dest-arrow { color: rgba(0,255,255,0.5); transform: translateX(3px); }
+.vp-dest.visited .vp-dest-arrow { display: none; }
+
+/* Footer */
+.vp-footer {
+    padding: 12px 28px 18px;
+    border-top: 1px solid rgba(0,255,255,0.06);
+    text-align: center;
+}
+.vp-stay-btn {
+    font-family: 'Courier New', monospace;
+    font-size: 0.72em; letter-spacing: 3px;
+    color: rgba(255,255,255,0.25);
+    background: none; border: 1px solid rgba(255,255,255,0.08);
+    padding: 8px 24px; cursor: pointer;
+    border-radius: 2px; text-transform: uppercase;
+    transition: all 0.25s ease;
+}
+.vp-stay-btn:hover {
+    color: rgba(255,255,255,0.6);
+    border-color: rgba(255,255,255,0.2);
+}
+
+/* Responsive */
+@media (max-width: 520px) {
+    .volvo-picker { width: 96vw; }
+    .vp-header { padding: 16px 18px 12px; }
+    .vp-dest { padding: 10px 12px; }
+    .vp-dest-icon { font-size: 1.3em; min-width: 28px; }
+    .vp-dest-name { font-size: 0.78em; }
+    .vp-car-ascii { font-size: 0.45em; }
+}
+`;
+        document.head.appendChild(style);
+    },
+
+    _getAvailableDestinations: function(game) {
+        const destinations = [];
+
+        // Ter Apel Klooster — night drive east
+        if (game.getFlag('klooster_unlocked')) {
+            const visited = !!game.getFlag('visited_klooster');
+            destinations.push({
+                id: 'klooster',
+                name: 'Ter Apel Klooster',
+                desc: 'Medieval monastery. Someone is watching.',
+                distance: '20 min · East',
+                icon: '🏛',
+                drivingScene: 'driving',
+                drivingDest: 'klooster',
+                night: true,
+                visited: visited,
+                urgent: !visited
+            });
+        }
+
+        // ASTRON / WSRT — day drive south-west
+        if (game.getFlag('astron_unlocked')) {
+            const visited = !!game.getFlag('visited_astron');
+            destinations.push({
+                id: 'astron',
+                name: 'ASTRON / WSRT',
+                desc: 'Westerbork Synthesis Radio Telescope. Cees Bassa.',
+                distance: '40 min · South-west',
+                icon: '📡',
+                drivingScene: 'driving_day',
+                drivingDest: 'astron',
+                night: false,
+                visited: visited,
+                urgent: !visited
+            });
+        }
+
+        // Steckerdoser Heide — night infiltration
+        if (game.questManager && game.questManager.hasQuest('infiltrate_facility')) {
+            const visited = !!game.getFlag('drove_to_facility');
+            destinations.push({
+                id: 'facility',
+                name: 'Steckerdoser Heide',
+                desc: 'German military research facility. Eva is waiting.',
+                distance: '15 min · South (border)',
+                icon: '⚠️',
+                drivingScene: 'driving',
+                drivingDest: 'facility',
+                night: true,
+                visited: visited,
+                urgent: !visited,
+                onSelect: function() { game.setFlag('drove_to_facility', true); }
+            });
+        }
+
+        // Dwingeloo Observatory — accessible after visiting ASTRON or via story flag
+        if (game.getFlag('dwingeloo_unlocked') || game.getFlag('visited_astron')) {
+            destinations.push({
+                id: 'dwingeloo',
+                name: 'Dwingeloo Observatory',
+                desc: 'Historic 25-metre radio telescope, deep in the forest.',
+                distance: '35 min · South-west',
+                icon: '🔭',
+                directScene: 'dwingeloo',
+                night: false,
+                visited: !!game.getFlag('visited_dwingeloo'),
+                urgent: false
+            });
+        }
+
+        // Westerbork Memorial — accessible after visiting klooster or via flag
+        if (game.getFlag('visited_klooster') || game.getFlag('westerbork_unlocked')) {
+            destinations.push({
+                id: 'westerbork',
+                name: 'Westerbork Memorial',
+                desc: 'Camp Westerbork. A place to remember.',
+                distance: '30 min · South-west',
+                icon: '✡️',
+                directScene: 'westerbork_memorial',
+                night: false,
+                visited: !!game.getFlag('visited_westerbork'),
+                urgent: false
+            });
+        }
+
+        return destinations;
+    },
+
+    _showVolvoDestinations: function(game) {
+        this._injectPickerStyles();
+
+        const destinations = this._getAvailableDestinations(game);
+
+        // No destinations unlocked yet
+        if (destinations.length === 0) {
+            game.startDialogue([
+                { speaker: 'Ryan', text: 'My old Volvo 240. She\'s parked behind the shed.' },
+                { speaker: 'Ryan', text: 'No reason to go anywhere right now.' }
+            ]);
+            return;
+        }
+
+        // Check if anything is actually available (not visited)
+        const available = destinations.filter(function(d) { return !d.visited; });
+        if (available.length === 0) {
+            game.startDialogue([
+                { speaker: 'Ryan', text: 'My old Volvo 240. She\'s earned her rest today.' },
+                { speaker: 'Ryan', text: 'Already been everywhere I need to go.' }
+            ]);
+            return;
+        }
+
+        // Remove existing picker if any
+        var existing = document.getElementById('volvo-picker-overlay');
+        if (existing) existing.remove();
+
+        // Build the overlay
+        var overlay = document.createElement('div');
+        overlay.id = 'volvo-picker-overlay';
+
+        var picker = document.createElement('div');
+        picker.className = 'volvo-picker';
+
+        // Header with ASCII Volvo
+        picker.innerHTML =
+            '<div class="vp-header">' +
+                '<div class="vp-car-ascii">' +
+                    '        _______________\n' +
+                    '       //  ___   ___   \\\\\n' +
+                    '  ____//__|___|_|___|__\\\\____\n' +
+                    ' |  _     VOLVO 240     _   |\n' +
+                    ' |_( )_________________( )__|\n' +
+                    '   (___) PD-55-NL  (___)\n' +
+                '</div>' +
+                '<div class="vp-title">Where to, Ryan?</div>' +
+                '<div class="vp-subtitle">Choose your destination</div>' +
+            '</div>' +
+            '<div class="vp-destinations" id="vp-dest-list"></div>' +
+            '<div class="vp-footer">' +
+                '<button class="vp-stay-btn" id="vp-stay-btn">Stay here</button>' +
+            '</div>';
+
+        overlay.appendChild(picker);
+        document.body.appendChild(overlay);
+
+        // Populate destinations
+        var destList = document.getElementById('vp-dest-list');
+        var self = this;
+
+        destinations.forEach(function(dest) {
+            var card = document.createElement('div');
+            card.className = 'vp-dest';
+            if (dest.visited) card.classList.add('visited');
+            if (dest.urgent && !dest.visited) card.classList.add('urgent');
+
+            // Tags
+            var tags = '';
+            if (dest.visited) {
+                tags += '<span class="vp-dest-tag vp-tag-visited">Visited</span>';
+            } else {
+                if (dest.night) {
+                    tags += '<span class="vp-dest-tag vp-tag-night">Night</span>';
+                } else {
+                    tags += '<span class="vp-dest-tag vp-tag-day">Day</span>';
+                }
+                if (dest.urgent) {
+                    tags += '<span class="vp-dest-tag vp-tag-urgent">Story</span>';
+                }
+            }
+
+            card.innerHTML =
+                '<div class="vp-dest-icon">' + dest.icon + '</div>' +
+                '<div class="vp-dest-info">' +
+                    '<div class="vp-dest-name">' + dest.name + '</div>' +
+                    '<div class="vp-dest-desc">' + dest.desc + '</div>' +
+                    '<div class="vp-dest-meta">' +
+                        '<span class="vp-dest-distance">' + dest.distance + '</span>' +
+                        tags +
+                    '</div>' +
+                '</div>' +
+                '<div class="vp-dest-arrow">&#9654;</div>';
+
+            if (!dest.visited) {
+                card.addEventListener('click', function() {
+                    self._closePicker();
+
+                    // Pre-drive callback (e.g. set flags)
+                    if (dest.onSelect) dest.onSelect();
+
+                    if (dest.drivingScene) {
+                        // Full driving scene with monologue
+                        game.setFlag('driving_destination', dest.drivingDest);
+                        game.loadScene(dest.drivingScene);
+                    } else if (dest.directScene) {
+                        // Direct scene load (no driving monologue)
+                        game.loadScene(dest.directScene);
+                    }
+                });
+            }
+
+            destList.appendChild(card);
+        });
+
+        // Stay button
+        document.getElementById('vp-stay-btn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            self._closePicker();
+        });
+
+        // Click overlay background to close
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) self._closePicker();
+        });
+
+        // Escape key to close
+        self._pickerEscHandler = function(e) {
+            if (e.key === 'Escape') self._closePicker();
+        };
+        document.addEventListener('keydown', self._pickerEscHandler);
+
+        // Fade in
+        requestAnimationFrame(function() {
+            overlay.classList.add('visible');
+        });
+    },
+
+    _closePicker: function() {
+        var overlay = document.getElementById('volvo-picker-overlay');
+        if (overlay) {
+            overlay.classList.remove('visible');
+            setTimeout(function() { overlay.remove(); }, 400);
+        }
+        if (this._pickerEscHandler) {
+            document.removeEventListener('keydown', this._pickerEscHandler);
+            this._pickerEscHandler = null;
+        }
+    },
+
     onEnter: function(game) {
         document.getElementById('scene-background').className = 'scene-garden';
         

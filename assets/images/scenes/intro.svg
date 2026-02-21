@@ -115,21 +115,21 @@
       }
       .tractor { animation: tractorMove 55s linear 3s infinite; }
 
-      /* ── Car 1 ── right-bound, near lane -->
+      /* ── Car 1 ── right-bound, near lane */
       @keyframes car1Move {
         0%   { transform: translateX(-220px); }
         100% { transform: translateX(1960px); }
       }
       .car1 { animation: car1Move 18s linear 1s infinite; }
 
-      /* ── Car 2 ── left-bound, far lane -->
+      /* ── Car 2 ── left-bound, far lane */
       @keyframes car2Move {
         0%   { transform: translateX(1960px); }
         100% { transform: translateX(-220px); }
       }
       .car2 { animation: car2Move 25s linear 8s infinite; }
 
-      /* ── Car 3 ── right-bound, faster -->
+      /* ── Car 3 ── right-bound, faster */
       @keyframes car3Move {
         0%   { transform: translateX(-180px); }
         100% { transform: translateX(1960px); }
@@ -317,21 +317,25 @@
     <!-- Bridge area gap ~1350..1920 — no near-bank trees to leave bridge visible -->
   </g>
 
-  <!-- Grass verge between canal and road -->
-  <rect x="0" y="817" width="1920" height="22" fill="#4A5A38"/>
-  <rect x="0" y="817" width="1920" height="10" fill="#3A4A2A" opacity="0.5"/>
+  <!-- Grass verge between canal and road (south bank, gap for bridge crossing at x=1550-1630) -->
+  <rect x="0" y="817" width="1550" height="22" fill="#4A5A38"/>
+  <rect x="0" y="817" width="1550" height="10" fill="#3A4A2A" opacity="0.5"/>
+  <rect x="1630" y="817" width="290" height="22" fill="#4A5A38"/>
+  <rect x="1630" y="817" width="290" height="10" fill="#3A4A2A" opacity="0.5"/>
+  <!-- Green field east of bridge on south bank (road crossed to far bank) -->
+  <rect x="1630" y="839" width="290" height="70" fill="#4A5A38"/>
 
   <!-- ═══════════════════════════════════════════════════ -->
-  <!--  ROAD — asphalt, runs full width                    -->
+  <!--  ROAD — south bank, runs east then crosses bridge   -->
   <!-- ═══════════════════════════════════════════════════ -->
-  <rect x="0" y="839" width="1920" height="70" fill="url(#roadGrad)"/>
-  <!-- Road centre line dashes -->
-  <line x1="0" y1="874" x2="1920" y2="874" stroke="#D4C060" stroke-width="3" stroke-dasharray="55,38" opacity="0.75"/>
+  <rect x="0" y="839" width="1630" height="70" fill="url(#roadGrad)"/>
+  <!-- Road centre line dashes (stop before bridge center) -->
+  <line x1="0" y1="874" x2="1550" y2="874" stroke="#D4C060" stroke-width="3" stroke-dasharray="55,38" opacity="0.75"/>
   <!-- Road edge lines -->
-  <line x1="0" y1="843" x2="1920" y2="843" stroke="#E0E0C0" stroke-width="2" opacity="0.5"/>
-  <line x1="0" y1="905" x2="1920" y2="905" stroke="#E0E0C0" stroke-width="2" opacity="0.5"/>
+  <line x1="0" y1="843" x2="1550" y2="843" stroke="#E0E0C0" stroke-width="2" opacity="0.5"/>
+  <line x1="0" y1="905" x2="1550" y2="905" stroke="#E0E0C0" stroke-width="2" opacity="0.5"/>
   <!-- Wet road sheen — faint orange sunrise reflection -->
-  <rect x="0" y="850" width="1920" height="24" fill="#E09040" opacity="0.07"/>
+  <rect x="0" y="850" width="1550" height="24" fill="#E09040" opacity="0.07"/>
 
   <!-- ═══════════════════════════════════════════════════ -->
   <!--  ROAD SHOULDER + FOREGROUND FIELD                   -->
@@ -344,35 +348,6 @@
     <line x1="0" y1="990" x2="1920" y2="990"/>
     <line x1="0" y1="1020" x2="1920" y2="1020"/>
     <line x1="0" y1="1055" x2="1920" y2="1055"/>
-  </g>
-
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!--  TRACTOR — slow, far lane, left-bound               -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <g class="tractor" transform="translate(0,0)">
-    <!-- Tractor body at y=848 (far road lane) — flipped to face left (animation moves left) -->
-    <g transform="translate(140, 848) scale(-1,1)">
-      <!-- Main body -->
-      <rect x="30" y="-34" width="85" height="38" rx="4" fill="#2E6B22" stroke="#1A4010" stroke-width="2"/>
-      <!-- Hood / engine -->
-      <rect x="90" y="-28" width="40" height="24" rx="3" fill="#3A7A28" stroke="#1A4010" stroke-width="2"/>
-      <!-- Exhaust pipe -->
-      <rect x="122" y="-42" width="5" height="18" fill="#1A1A1A" rx="1"/>
-      <!-- Cab -->
-      <rect x="32" y="-52" width="44" height="22" rx="3" fill="#4A8C32" stroke="#1A4010" stroke-width="2"/>
-      <!-- Cab window -->
-      <rect x="38" y="-48" width="32" height="14" rx="2" fill="#88B8D0" opacity="0.8" stroke="#1A4010" stroke-width="1"/>
-      <!-- Rear large wheel -->
-      <circle cx="50" cy="6" r="20" fill="#1A1A1A" stroke="#333" stroke-width="3"/>
-      <circle cx="50" cy="6" r="14" fill="#2A2A2A" stroke="#444" stroke-width="2"/>
-      <circle cx="50" cy="6" r="5" fill="#3A3A3A"/>
-      <!-- Front small wheel -->
-      <circle cx="115" cy="4" r="12" fill="#1A1A1A" stroke="#333" stroke-width="2"/>
-      <circle cx="115" cy="4" r="7" fill="#2A2A2A" stroke="#444" stroke-width="1.5"/>
-      <!-- Headlights (early morning) -->
-      <ellipse cx="133" cy="-14" rx="5" ry="4" fill="#FFE080" opacity="0.9"/>
-      <ellipse cx="133" cy="-14" rx="12" ry="8" fill="#FFE080" opacity="0.15" filter="url(#softBlur)"/>
-    </g>
   </g>
 
   <!-- ═══════════════════════════════════════════════════ -->
@@ -436,177 +411,185 @@
   </g>
 
   <!-- ═══════════════════════════════════════════════════ -->
+  <!--  FAR BANK ROAD — north side, continues east         -->
+  <!--  Drawn BEFORE bridge so bridge layers on top        -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <rect x="1550" y="710" width="370" height="38" fill="url(#roadGrad)"/>
+  <line x1="1630" y1="729" x2="1920" y2="729" stroke="#D4C060" stroke-width="2" stroke-dasharray="30,22" opacity="0.6"/>
+  <line x1="1630" y1="713" x2="1920" y2="713" stroke="#E0E0C0" stroke-width="1.5" opacity="0.4"/>
+  <line x1="1630" y1="745" x2="1920" y2="745" stroke="#E0E0C0" stroke-width="1.5" opacity="0.4"/>
+  <!-- Far bank grass verge east of bridge (between road and canal) -->
+  <rect x="1630" y="748" width="290" height="6" fill="#4A5A38"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
   <!--  DE VIERTORENBRUG — hefbrug (vertical lift bridge)  -->
-  <!--  Right side of screen, spans the canal              -->
-  <!--  ~x 1380..1800                                      -->
-  <!--  Tower heights reduced 50% from original design     -->
-  <!--  Far-bank towers: base y=748, top ~y=506 (h=242)    -->
-  <!--  Near-bank towers: base y=810, top ~y=475 (h=335)   -->
+  <!--  Road crosses canal NORTH-SOUTH at x=1550..1630     -->
+  <!--  Four towers at corners of lift span, flanking road -->
+  <!--  West towers: x≈1504-1546   East towers: x≈1634-1676 -->
+  <!--  South bank towers: base y=817   North: base y=748  -->
   <!-- ═══════════════════════════════════════════════════ -->
   <g id="viertorenbrug">
-    <!-- Bridge deck over canal: y 754..809 (canal span) -->
 
-    <!-- Approach ramps on both sides of canal -->
-    <rect x="1375" y="839" width="430" height="70" fill="#383838" stroke="#2A2A2A" stroke-width="1"/>
-    <!-- Lift span (lowered/closed — bridge deck over canal) -->
-    <rect x="1375" y="754" width="430" height="55" fill="#3C3C3C" stroke="#2A2A2A" stroke-width="1.5"/>
-    <!-- Lift span structural I-beam look, bottom edge -->
-    <rect x="1375" y="802" width="430" height="7"  fill="#2A2A2A"/>
-    <!-- Bridge centre dashes -->
-    <line x1="1375" y1="782" x2="1805" y2="782" stroke="#D4C060" stroke-width="2.5" stroke-dasharray="40,28" opacity="0.7"/>
-    <!-- Bridge edge railings -->
-    <rect x="1375" y="752" width="430" height="5" fill="#C8C8C8" stroke="#AAA" stroke-width="1"/>
-    <rect x="1375" y="806" width="430" height="5" fill="#C8C8C8" stroke="#AAA" stroke-width="1"/>
-    <!-- Railing posts on lift span -->
-    <g stroke="#AAAAAA" stroke-width="2">
-      <line x1="1415" y1="757" x2="1415" y2="807"/>
-      <line x1="1450" y1="757" x2="1450" y2="807"/>
-      <line x1="1485" y1="757" x2="1485" y2="807"/>
-      <line x1="1520" y1="757" x2="1520" y2="807"/>
-      <line x1="1555" y1="757" x2="1555" y2="807"/>
-      <line x1="1590" y1="757" x2="1590" y2="807"/>
-      <line x1="1625" y1="757" x2="1625" y2="807"/>
-      <line x1="1660" y1="757" x2="1660" y2="807"/>
-      <line x1="1695" y1="757" x2="1695" y2="807"/>
-      <line x1="1730" y1="757" x2="1730" y2="807"/>
-      <line x1="1765" y1="757" x2="1765" y2="807"/>
+    <!-- ── NORTH BANK TOWERS (far bank, drawn first = behind) ── -->
+
+    <!-- NW tower (far bank, west of road) -->
+    <g id="tower-nw">
+      <rect x="1508" y="660" width="36" height="88" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="2"/>
+      <rect x="1504" y="649" width="44" height="12" rx="2" fill="#F0F0F0" stroke="#AAAAAA" stroke-width="1.5"/>
+      <rect x="1512" y="641" width="28" height="9" rx="2" fill="#D8D8D8" stroke="#AAAAAA" stroke-width="1.5"/>
+      <rect x="1508" y="698" width="36" height="5" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1508" y="726" width="36" height="5" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1538" y="649" width="6" height="99" fill="#00000018"/>
+      <rect x="1502" y="748" width="48" height="10" rx="2" fill="#D8D8D8" stroke="#AAA" stroke-width="1.5"/>
     </g>
 
-    <!--
-      HEFBRUG TOWER LAYOUT:
-      Two tower pairs — one pair at LEFT edge of bridge (x≈1405-1447),
-      one pair at RIGHT edge (x≈1735-1777).
-      Each pair has a FAR tower (near-bank of canal, y-base 748)
-      and a NEAR tower (near-bank of road, y-base 810).
-      Towers are connected at the top by a horizontal crossbeam.
-      The lift span cables run up to the crossbeam pulleys.
-      Counterweights hang behind the towers above the road side.
-    -->
-
-    <!-- ── LEFT TOWER PAIR ──────────────────────────── -->
-
-    <!-- Left-Far tower (far canal bank, base y=748) height=242 top y=506 -->
-    <g id="tower-left-far">
-      <rect x="1405" y="508" width="42" height="240" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="2"/>
-      <!-- Taper just below cap -->
-      <polygon points="1405,508 1447,508 1443,488 1409,488" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="1.5"/>
-      <!-- Cap -->
-      <rect x="1403" y="474" width="46" height="16" rx="3" fill="#F0F0F0" stroke="#AAAAAA" stroke-width="2"/>
-      <!-- Cap top -->
-      <rect x="1409" y="462" width="34" height="13" rx="2" fill="#EEEEEE" stroke="#BBBBBB" stroke-width="1.5"/>
-      <!-- Pulley housing at very top -->
-      <rect x="1416" y="452" width="20" height="12" rx="2" fill="#D8D8D8" stroke="#AAAAAA" stroke-width="1.5"/>
-      <!-- Horizontal ribs on shaft -->
-      <rect x="1405" y="548" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1405" y="610" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1405" y="672" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1405" y="724" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <!-- Shadow -->
-      <rect x="1440" y="488" width="7" height="260" fill="#00000018"/>
-      <!-- Base footing -->
-      <rect x="1398" y="748" width="56" height="16" rx="2" fill="#D8D8D8" stroke="#AAA" stroke-width="2"/>
+    <!-- NE tower (far bank, east of road) -->
+    <g id="tower-ne">
+      <rect x="1636" y="660" width="36" height="88" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="2"/>
+      <rect x="1632" y="649" width="44" height="12" rx="2" fill="#F0F0F0" stroke="#AAAAAA" stroke-width="1.5"/>
+      <rect x="1640" y="641" width="28" height="9" rx="2" fill="#D8D8D8" stroke="#AAAAAA" stroke-width="1.5"/>
+      <rect x="1636" y="698" width="36" height="5" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1636" y="726" width="36" height="5" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1666" y="649" width="6" height="99" fill="#00000018"/>
+      <rect x="1630" y="748" width="48" height="10" rx="2" fill="#D8D8D8" stroke="#AAA" stroke-width="1.5"/>
     </g>
 
-    <!-- Left-Near tower (road near bank, base y=810) height=335 top y=475 -->
-    <g id="tower-left-near">
-      <rect x="1405" y="482" width="42" height="328" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="2"/>
-      <polygon points="1405,482 1447,482 1443,462 1409,462" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="1.5"/>
-      <!-- Cap -->
-      <rect x="1403" y="448" width="46" height="16" rx="3" fill="#F0F0F0" stroke="#AAAAAA" stroke-width="2"/>
-      <!-- Cap top -->
-      <rect x="1409" y="436" width="34" height="13" rx="3" fill="#EEEEEE" stroke="#BBBBBB" stroke-width="1.5"/>
-      <!-- Pyramid top -->
-      <polygon points="1411,436 1441,436 1426,420" fill="#E8E8E8" stroke="#BBBBBB" stroke-width="1.5"/>
-      <!-- Pulley housing -->
-      <rect x="1416" y="425" width="20" height="12" rx="2" fill="#D8D8D8" stroke="#AAAAAA" stroke-width="1.5"/>
-      <!-- Ribs -->
-      <rect x="1405" y="540" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1405" y="612" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1405" y="684" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1405" y="755" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <!-- Shadow -->
-      <rect x="1440" y="462" width="7" height="348" fill="#00000018"/>
-      <!-- Base footing near bank -->
-      <rect x="1398" y="810" width="56" height="18" rx="2" fill="#D8D8D8" stroke="#AAA" stroke-width="2"/>
+    <!-- North crossbeam (connects NW + NE towers above road, east-west) -->
+    <rect x="1504" y="643" width="168" height="10" rx="2" fill="#E0E0DC" stroke="#AAAAAA" stroke-width="1.5"/>
+
+    <!-- Cables from north crossbeam to lift span north edge -->
+    <line x1="1526" y1="653" x2="1553" y2="754" stroke="#888888" stroke-width="2" opacity="0.7"/>
+    <line x1="1652" y1="653" x2="1627" y2="754" stroke="#888888" stroke-width="2" opacity="0.7"/>
+
+    <!-- ── BRIDGE ROAD SURFACE (north-south crossing) ───── -->
+
+    <!-- Road surface from far bank to south bank (covers canal, banks, verge) -->
+    <rect x="1550" y="710" width="80" height="199" fill="url(#roadGrad)"/>
+
+    <!-- Lift span deck (over canal water, y=752..812, raised detail) -->
+    <rect x="1547" y="752" width="86" height="60" fill="#3C3C3C" stroke="#2A2A2A" stroke-width="1.5"/>
+    <!-- Structural I-beam edges on lift span (east & west) -->
+    <rect x="1547" y="752" width="5" height="60" fill="#2A2A2A"/>
+    <rect x="1628" y="752" width="5" height="60" fill="#2A2A2A"/>
+
+    <!-- Road centre dashes (NORTH-SOUTH) -->
+    <line x1="1590" y1="716" x2="1590" y2="903" stroke="#D4C060" stroke-width="2.5" stroke-dasharray="16,12" opacity="0.7"/>
+
+    <!-- Road edge lines (north-south) -->
+    <line x1="1553" y1="710" x2="1553" y2="909" stroke="#E0E0C0" stroke-width="1.5" opacity="0.4"/>
+    <line x1="1627" y1="710" x2="1627" y2="909" stroke="#E0E0C0" stroke-width="1.5" opacity="0.4"/>
+
+    <!-- Railings on lift span (over canal only, east & west edges) -->
+    <rect x="1547" y="752" width="5" height="60" rx="1" fill="#C8C8C8" stroke="#AAA" stroke-width="1"/>
+    <rect x="1628" y="752" width="5" height="60" rx="1" fill="#C8C8C8" stroke="#AAA" stroke-width="1"/>
+
+    <!-- Railing posts (horizontal ticks on both edges over canal) -->
+    <g stroke="#AAAAAA" stroke-width="1.5">
+      <line x1="1547" y1="762" x2="1554" y2="762"/>
+      <line x1="1547" y1="774" x2="1554" y2="774"/>
+      <line x1="1547" y1="786" x2="1554" y2="786"/>
+      <line x1="1547" y1="798" x2="1554" y2="798"/>
+      <line x1="1547" y1="810" x2="1554" y2="810"/>
+      <line x1="1626" y1="762" x2="1633" y2="762"/>
+      <line x1="1626" y1="774" x2="1633" y2="774"/>
+      <line x1="1626" y1="786" x2="1633" y2="786"/>
+      <line x1="1626" y1="798" x2="1633" y2="798"/>
+      <line x1="1626" y1="810" x2="1633" y2="810"/>
     </g>
 
-    <!-- Left pair horizontal crossbeam (connects tops of both left towers) -->
-    <rect x="1403" y="450" width="46" height="14" rx="2" fill="#E0E0DC" stroke="#AAAAAA" stroke-width="2"/>
-    <!-- Left crossbeam cable/chain to lift span — two lines from crossbeam down to deck edges -->
-    <line x1="1416" y1="464" x2="1416" y2="757" stroke="#888888" stroke-width="2.5" opacity="0.8"/>
-    <line x1="1436" y1="464" x2="1436" y2="757" stroke="#888888" stroke-width="2.5" opacity="0.8"/>
-    <!-- Left counterweight (behind near tower, hangs above road) -->
-    <rect x="1408" y="475" width="32" height="28" rx="3" fill="#B0B0A8" stroke="#888" stroke-width="2"/>
-    <!-- Counterweight cable going up over pulley -->
-    <line x1="1424" y1="475" x2="1424" y2="452" stroke="#888888" stroke-width="2" opacity="0.8"/>
+    <!-- ── SOUTH BANK TOWERS (near bank, drawn later = in front) ── -->
 
-    <!-- ── RIGHT TOWER PAIR ─────────────────────────── -->
-
-    <!-- Right-Far tower (far canal bank, base y=748) -->
-    <g id="tower-right-far">
-      <rect x="1735" y="508" width="42" height="240" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="2"/>
-      <polygon points="1735,508 1777,508 1773,488 1739,488" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="1.5"/>
-      <rect x="1733" y="474" width="46" height="16" rx="3" fill="#F0F0F0" stroke="#AAAAAA" stroke-width="2"/>
-      <rect x="1739" y="462" width="34" height="13" rx="2" fill="#EEEEEE" stroke="#BBBBBB" stroke-width="1.5"/>
-      <rect x="1746" y="452" width="20" height="12" rx="2" fill="#D8D8D8" stroke="#AAAAAA" stroke-width="1.5"/>
-      <rect x="1735" y="548" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1735" y="610" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1735" y="672" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1735" y="724" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1770" y="488" width="7" height="260" fill="#00000018"/>
-      <rect x="1728" y="748" width="56" height="16" rx="2" fill="#D8D8D8" stroke="#AAA" stroke-width="2"/>
+    <!-- SW tower (near bank, west of road) -->
+    <g id="tower-sw">
+      <rect x="1504" y="650" width="42" height="167" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="2"/>
+      <rect x="1500" y="637" width="50" height="14" rx="2" fill="#F0F0F0" stroke="#AAAAAA" stroke-width="2"/>
+      <rect x="1510" y="628" width="30" height="10" rx="2" fill="#D8D8D8" stroke="#AAAAAA" stroke-width="1.5"/>
+      <rect x="1504" y="700" width="42" height="6" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1504" y="740" width="42" height="6" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1504" y="780" width="42" height="6" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1540" y="637" width="6" height="180" fill="#00000018"/>
+      <rect x="1498" y="817" width="54" height="14" rx="2" fill="#D8D8D8" stroke="#AAA" stroke-width="2"/>
     </g>
 
-    <!-- Right-Near tower (road near bank, base y=810) -->
-    <g id="tower-right-near">
-      <rect x="1735" y="482" width="42" height="328" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="2"/>
-      <polygon points="1735,482 1777,482 1773,462 1739,462" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="1.5"/>
-      <rect x="1733" y="448" width="46" height="16" rx="3" fill="#F0F0F0" stroke="#AAAAAA" stroke-width="2"/>
-      <rect x="1739" y="436" width="34" height="13" rx="3" fill="#EEEEEE" stroke="#BBBBBB" stroke-width="1.5"/>
-      <polygon points="1741,436 1771,436 1756,420" fill="#E8E8E8" stroke="#BBBBBB" stroke-width="1.5"/>
-      <rect x="1746" y="425" width="20" height="12" rx="2" fill="#D8D8D8" stroke="#AAAAAA" stroke-width="1.5"/>
-      <rect x="1735" y="540" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1735" y="612" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1735" y="684" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1735" y="755" width="42" height="7" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
-      <rect x="1770" y="462" width="7" height="348" fill="#00000018"/>
-      <rect x="1728" y="810" width="56" height="18" rx="2" fill="#D8D8D8" stroke="#AAA" stroke-width="2"/>
+    <!-- SE tower (near bank, east of road) -->
+    <g id="tower-se">
+      <rect x="1634" y="650" width="42" height="167" fill="url(#pillarGrad)" stroke="#AAAAAA" stroke-width="2"/>
+      <rect x="1630" y="637" width="50" height="14" rx="2" fill="#F0F0F0" stroke="#AAAAAA" stroke-width="2"/>
+      <rect x="1640" y="628" width="30" height="10" rx="2" fill="#D8D8D8" stroke="#AAAAAA" stroke-width="1.5"/>
+      <rect x="1634" y="700" width="42" height="6" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1634" y="740" width="42" height="6" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1634" y="780" width="42" height="6" fill="#E0E0E0" stroke="#BBBBBB" stroke-width="1"/>
+      <rect x="1670" y="637" width="6" height="180" fill="#00000018"/>
+      <rect x="1628" y="817" width="54" height="14" rx="2" fill="#D8D8D8" stroke="#AAA" stroke-width="2"/>
     </g>
 
-    <!-- Right pair crossbeam -->
-    <rect x="1733" y="450" width="46" height="14" rx="2" fill="#E0E0DC" stroke="#AAAAAA" stroke-width="2"/>
-    <!-- Right cables to lift span -->
-    <line x1="1746" y1="464" x2="1746" y2="757" stroke="#888888" stroke-width="2.5" opacity="0.8"/>
-    <line x1="1766" y1="464" x2="1766" y2="757" stroke="#888888" stroke-width="2.5" opacity="0.8"/>
-    <!-- Right counterweight -->
-    <rect x="1738" y="475" width="32" height="28" rx="3" fill="#B0B0A8" stroke="#888" stroke-width="2"/>
-    <line x1="1754" y1="475" x2="1754" y2="452" stroke="#888888" stroke-width="2" opacity="0.8"/>
+    <!-- South crossbeam (connects SW + SE above road, east-west) -->
+    <rect x="1500" y="630" width="180" height="14" rx="2" fill="#E0E0DC" stroke="#AAAAAA" stroke-width="2"/>
 
-    <!-- Bridge name plaque -->
-    <rect x="1480" y="818" width="220" height="16" rx="3" fill="#E8E8E0" stroke="#AAAAAA" stroke-width="1" opacity="0.9"/>
-    <text x="1590" y="830" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#444" font-weight="bold">DE VIERTORENBRUG</text>
+    <!-- Cables from south crossbeam to lift span south edge -->
+    <line x1="1525" y1="644" x2="1553" y2="810" stroke="#888888" stroke-width="2.5" opacity="0.8"/>
+    <line x1="1655" y1="644" x2="1627" y2="810" stroke="#888888" stroke-width="2.5" opacity="0.8"/>
+
+    <!-- Counterweights (below south crossbeam, flanking road) -->
+    <rect x="1510" y="648" width="30" height="20" rx="3" fill="#B0B0A8" stroke="#888" stroke-width="2"/>
+    <line x1="1525" y1="648" x2="1525" y2="632" stroke="#888888" stroke-width="2" opacity="0.8"/>
+    <rect x="1640" y="648" width="30" height="20" rx="3" fill="#B0B0A8" stroke="#888" stroke-width="2"/>
+    <line x1="1655" y1="648" x2="1655" y2="632" stroke="#888888" stroke-width="2" opacity="0.8"/>
+
+    <!-- Bridge name plaque (on grass verge west of bridge) -->
+    <rect x="1456" y="824" width="86" height="14" rx="2" fill="#E8E8E0" stroke="#AAAAAA" stroke-width="1" opacity="0.9"/>
+    <text x="1499" y="834" text-anchor="middle" font-family="Arial, sans-serif" font-size="7" fill="#444" font-weight="bold">VIERTORENBRUG</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!--  TRACTOR — highest layer (except sign)              -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <g class="tractor" transform="translate(0,0)">
+    <!-- Tractor body at y=848 (far road lane) — flipped to face left (animation moves left) -->
+    <g transform="translate(140, 848) scale(-1,1)">
+      <!-- Main body -->
+      <rect x="30" y="-34" width="85" height="38" rx="4" fill="#2E6B22" stroke="#1A4010" stroke-width="2"/>
+      <!-- Hood / engine -->
+      <rect x="90" y="-28" width="40" height="24" rx="3" fill="#3A7A28" stroke="#1A4010" stroke-width="2"/>
+      <!-- Exhaust pipe -->
+      <rect x="122" y="-42" width="5" height="18" fill="#1A1A1A" rx="1"/>
+      <!-- Cab -->
+      <rect x="32" y="-52" width="44" height="22" rx="3" fill="#4A8C32" stroke="#1A4010" stroke-width="2"/>
+      <!-- Cab window -->
+      <rect x="38" y="-48" width="32" height="14" rx="2" fill="#88B8D0" opacity="0.8" stroke="#1A4010" stroke-width="1"/>
+      <!-- Rear large wheel -->
+      <circle cx="50" cy="6" r="20" fill="#1A1A1A" stroke="#333" stroke-width="3"/>
+      <circle cx="50" cy="6" r="14" fill="#2A2A2A" stroke="#444" stroke-width="2"/>
+      <circle cx="50" cy="6" r="5" fill="#3A3A3A"/>
+      <!-- Front small wheel -->
+      <circle cx="115" cy="4" r="12" fill="#1A1A1A" stroke="#333" stroke-width="2"/>
+      <circle cx="115" cy="4" r="7" fill="#2A2A2A" stroke="#444" stroke-width="1.5"/>
+      <!-- Headlights (early morning) -->
+      <ellipse cx="133" cy="-14" rx="5" ry="4" fill="#FFE080" opacity="0.9"/>
+      <ellipse cx="133" cy="-14" rx="12" ry="8" fill="#FFE080" opacity="0.15" filter="url(#softBlur)"/>
+    </g>
   </g>
 
   <!-- ═══════════════════════════════════════════════════ -->
   <!--  PLAATSNAAMBORD — Compascuum / Gemeente Emmen       -->
   <!--  Dutch road sign, left of bridge on road shoulder   -->
   <!-- ═══════════════════════════════════════════════════ -->
-  <g id="plaatsnaambord" transform="translate(1295, 820)">
+  <g id="plaatsnaambord" transform="translate(1230, 820)">
     <!-- Post -->
-    <rect x="18" y="0" width="6" height="90" rx="2" fill="#D0D0C8" stroke="#AAAAAA" stroke-width="1"/>
+    <rect x="65" y="0" width="6" height="90" rx="2" fill="#D0D0C8" stroke="#AAAAAA" stroke-width="1"/>
     <!-- Sign board — standard Dutch blue plaatsnaambord -->
     <!-- Outer white border frame -->
-    <rect x="0" y="-72" width="96" height="62" rx="4" fill="white" stroke="#BBBBBB" stroke-width="1"/>
+    <rect x="0" y="-72" width="136" height="62" rx="4" fill="white" stroke="#BBBBBB" stroke-width="1"/>
     <!-- Blue background -->
-    <rect x="4" y="-68" width="88" height="54" rx="3" fill="#003082"/>
+    <rect x="4" y="-68" width="128" height="54" rx="3" fill="#003082"/>
     <!-- White inner border line -->
-    <rect x="7" y="-65" width="82" height="48" rx="2" fill="none" stroke="white" stroke-width="2"/>
+    <rect x="7" y="-65" width="122" height="48" rx="2" fill="none" stroke="white" stroke-width="2"/>
     <!-- Place name text -->
-    <text x="48" y="-40" text-anchor="middle"
+    <text x="68" y="-40" text-anchor="middle"
           font-family="'FHWA Series D', 'Highway Gothic', Arial, sans-serif"
           font-size="16" font-weight="bold" fill="white" letter-spacing="0.5">Compascuum</text>
     <!-- Gemeente line -->
-    <text x="48" y="-24" text-anchor="middle"
+    <text x="68" y="-24" text-anchor="middle"
           font-family="'FHWA Series D', 'Highway Gothic', Arial, sans-serif"
           font-size="9" fill="white" opacity="0.85">Gemeente Emmen</text>
   </g>

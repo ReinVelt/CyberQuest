@@ -119,11 +119,18 @@ const EpilogueScene = {
                 { speaker: 'Narrator', text: 'Just in case.' }
             ],
 
+            // ── David Prinsloo ──
+            [
+                { speaker: 'Narrator', text: 'David Prinsloo returned to his antenna research at TU Eindhoven.' },
+                { speaker: 'Narrator', text: 'But Operation ZERFALL gave him a new perspective on RF security.' },
+                { speaker: 'Narrator', text: 'He now advises Dutch defence on electromagnetic vulnerabilities. Between lectures.' }
+            ],
+
             // ── Jaap Haartsen ──
             [
-                { speaker: 'Narrator', text: 'Jaap Haartsen started a security consulting firm.' },
+                { speaker: 'Narrator', text: 'Jaap Haartsen started a wireless security consulting firm.' },
                 { speaker: 'Narrator', text: 'His first client: a German defence contractor.' },
-                { speaker: 'Narrator', text: 'Improving their vetting procedures. The irony isn\'t lost on him.' }
+                { speaker: 'Narrator', text: 'The father of Bluetooth, improving their wireless vetting procedures. The irony isn\'t lost on him.' }
             ],
 
             // ── Eva Weber ──
@@ -138,10 +145,14 @@ const EpilogueScene = {
             [
                 { speaker: 'Narrator', text: 'And Ryan Weylant?' },
                 { speaker: 'Narrator', text: 'He took the meeting with Agent Van der Berg.' },
-                { speaker: 'Narrator', text: 'Then another meeting. Then a training programme in The Hague.' },
+                { speaker: 'Narrator', text: 'Then politely declined the job offer.' },
+                { speaker: 'Narrator', text: 'Ryan Weylant doesn\'t do offices. Doesn\'t do chains of command.' },
+                { speaker: 'Narrator', text: 'But he left his number. "If the shit really hits the fan… call me."' },
+                { speaker: 'Narrator', text: 'Van der Berg smiled. She\'d expected nothing less.' },
                 { speaker: 'Narrator', text: 'These days, when strange signals appear on his SSTV terminal…' },
-                { speaker: 'Narrator', text: '…he doesn\'t investigate alone.' },
-                { speaker: 'Narrator', text: 'He has backup now.' }
+                { speaker: 'Narrator', text: '…he still investigates. On his own terms.' },
+                { speaker: 'Narrator', text: 'Freelance. Independent. Dangerous when needed.' },
+                { speaker: 'Narrator', text: 'Some people can\'t be tamed. Just aimed.' }
             ],
 
             // ── Closing ──

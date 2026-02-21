@@ -1,0 +1,946 @@
+/**
+ * Intro Scene - Cinematic Hollywood-style Multi-Act Prologue
+ * A dramatic, movie-like opening sequence with multiple visual scenes
+ */
+
+const IntroScene = {
+    id: 'intro',
+    name: 'Prologue',
+    
+    background: 'assets/images/scenes/intro.svg',
+    
+    description: 'A quiet morning in Compascuum, Drenthe. The world is about to change.',
+    
+    playerStart: { x: 50, y: 85 },
+    
+    idleThoughts: [],
+    
+    hotspots: [],
+
+    // Track timeouts for cleanup
+    _timeoutIds: [],
+    _animFrameId: null,
+
+    // ── Utility helpers ──────────────────────────────────────────
+    _clearTimeouts: function() {
+        this._timeoutIds.forEach(id => clearTimeout(id));
+        this._timeoutIds = [];
+        if (this._animFrameId) { cancelAnimationFrame(this._animFrameId); this._animFrameId = null; }
+    },
+
+    _schedule: function(fn, ms) {
+        const id = setTimeout(fn, ms);
+        this._timeoutIds.push(id);
+        return id;
+    },
+
+    onEnter: function(game) {
+        // Hide characters & dialogue during cinematic
+        const charactersContainer = document.getElementById('scene-characters');
+        if (charactersContainer) charactersContainer.style.display = 'none';
+        const originalVoiceState = game.voiceEnabled;
+        game.voiceEnabled = false;
+        const dialogueBox = document.getElementById('dialogue-box');
+        if (dialogueBox) dialogueBox.classList.add('hidden');
+
+        const self = this;
+        self._clearTimeouts();
+
+        // ── Inject all styles ────────────────────────────────────
+        const style = document.createElement('style');
+        style.id = 'intro-cinematic-style';
+        style.textContent = `
+            /* ═══ BASE OVERLAY ═══ */
+            #cinematic-intro {
+                position: fixed; inset: 0; z-index: 9999;
+                background: #000; color: #fff;
+                font-family: 'Courier New', monospace;
+                overflow: hidden; cursor: pointer;
+                user-select: none;
+            }
+            #cinematic-intro * { box-sizing: border-box; }
+
+            /* ═══ CINEMATIC BARS (letterbox) ═══ */
+            .cine-bar { position: absolute; left: 0; right: 0; height: 8vh; background: #000; z-index: 10; }
+            .cine-bar-top { top: 0; }
+            .cine-bar-bot { bottom: 0; }
+
+            /* ═══ SCENE CONTAINERS ═══ */
+            .cine-scene {
+                position: absolute; inset: 0;
+                display: flex; flex-direction: column;
+                align-items: center; justify-content: center;
+                opacity: 0; transition: opacity 1.8s ease-in-out;
+                padding: 10vh 8vw;
+                text-align: center;
+            }
+            .cine-scene.active { opacity: 1; }
+            .cine-scene.fade-out { opacity: 0; transition: opacity 1.2s ease-in; }
+
+            /* ═══ PARTICLE CANVAS ═══ */
+            #cine-particles {
+                position: absolute; inset: 0; z-index: 1; pointer-events: none;
+            }
+
+            /* ═══ SCANLINE OVERLAY ═══ */
+            .cine-scanlines {
+                position: absolute; inset: 0; z-index: 2; pointer-events: none;
+                background: repeating-linear-gradient(
+                    0deg,
+                    rgba(0,255,255,0.015) 0px, transparent 1px,
+                    transparent 3px, rgba(0,255,255,0.015) 4px
+                );
+                animation: cine-scan-drift 10s linear infinite;
+            }
+            @keyframes cine-scan-drift {
+                0% { transform: translateY(0); }
+                100% { transform: translateY(12px); }
+            }
+
+            /* ═══ VIGNETTE ═══ */
+            .cine-vignette {
+                position: absolute; inset: 0; z-index: 3; pointer-events: none;
+                background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.7) 100%);
+            }
+
+            /* ═══ SKIP BUTTON ═══ */
+            .cine-skip {
+                position: fixed; bottom: 3vh; right: 3vw; z-index: 9999;
+                font-family: 'Courier New', monospace;
+                font-size: 0.85em; letter-spacing: 3px;
+                color: rgba(255,255,255,0.35); background: none; border: 1px solid rgba(255,255,255,0.15);
+                padding: 8px 20px; cursor: pointer; border-radius: 2px;
+                transition: color 0.3s, border-color 0.3s;
+            }
+            .cine-skip:hover { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.5); }
+
+            /* ═══ ACT 1: COLD OPEN — SURVEILLANCE BUNKER ═══ */
+            .scene-bunker { background: #000; }
+            .bunker-terminal {
+                font-family: 'Courier New', monospace;
+                color: #00ff41; font-size: 1em; line-height: 2;
+                text-align: left; max-width: 700px; width: 100%;
+                text-shadow: 0 0 8px rgba(0,255,65,0.6);
+                position: relative; z-index: 5;
+            }
+            .bunker-terminal .term-line {
+                opacity: 0; transform: translateX(-10px);
+                white-space: nowrap; overflow: hidden;
+            }
+            .bunker-terminal .term-line.typed {
+                animation: term-type 0.6s ease-out forwards;
+            }
+            @keyframes term-type {
+                to { opacity: 1; transform: translateX(0); }
+            }
+            .bunker-cursor {
+                display: inline-block; width: 10px; height: 1.1em;
+                background: #00ff41; vertical-align: text-bottom;
+                animation: blink-cursor 0.7s step-end infinite;
+            }
+            @keyframes blink-cursor {
+                0%, 100% { opacity: 1; } 50% { opacity: 0; }
+            }
+            .term-warning { color: #ff3333; text-shadow: 0 0 12px rgba(255,51,51,0.8); }
+            .term-highlight { color: #00ffff; text-shadow: 0 0 10px rgba(0,255,255,0.6); }
+            .term-classified { color: #ff6600; text-shadow: 0 0 10px rgba(255,102,0,0.6); }
+            .bunker-label {
+                position: absolute; top: 10vh; left: 5vw; z-index: 5;
+                font-size: 0.75em; letter-spacing: 5px; text-transform: uppercase;
+                color: rgba(0,255,65,0.4);
+                opacity: 0; animation: term-type 1s ease-out 0.5s forwards;
+            }
+            .bunker-stamp {
+                position: absolute; z-index: 5;
+                font-size: 4em; color: rgba(255,0,0,0.12);
+                transform: rotate(-18deg);
+                letter-spacing: 15px; font-weight: bold;
+                text-transform: uppercase;
+                pointer-events: none;
+                opacity: 0;
+            }
+            .bunker-stamp.visible {
+                animation: stamp-slam 0.3s ease-out forwards;
+            }
+            @keyframes stamp-slam {
+                0% { opacity: 0; transform: rotate(-18deg) scale(2.5); }
+                60% { opacity: 0.18; transform: rotate(-18deg) scale(0.95); }
+                100% { opacity: 0.14; transform: rotate(-18deg) scale(1); }
+            }
+
+            /* ═══ ACT 2: SMASH CUT — LOCATION / DATE ═══ */
+            .scene-location {
+                background: linear-gradient(180deg, #020a14 0%, #0a1628 50%, #020a14 100%);
+            }
+            .loc-text {
+                letter-spacing: 8px; text-transform: uppercase;
+                font-size: 1.1em; color: rgba(255,255,255,0.6);
+                opacity: 0; transform: scale(1.2);
+                transition: opacity 1.5s, transform 1.5s ease-out;
+                position: relative; z-index: 5;
+            }
+            .loc-text.visible { opacity: 1; transform: scale(1); }
+            .loc-place {
+                font-size: 2.8em; letter-spacing: 18px; color: #fff;
+                margin: 20px 0; font-weight: 300;
+                opacity: 0; transform: translateY(20px);
+                transition: opacity 1.2s ease 0.4s, transform 1.2s ease 0.4s;
+                text-shadow: 0 0 40px rgba(255,255,255,0.2);
+                position: relative; z-index: 5;
+            }
+            .loc-place.visible { opacity: 1; transform: translateY(0); }
+            .loc-date {
+                font-size: 1em; letter-spacing: 6px;
+                color: rgba(128,204,221,0.8);
+                opacity: 0; transform: translateY(10px);
+                transition: opacity 1s ease 0.9s, transform 1s ease 0.9s;
+                position: relative; z-index: 5;
+            }
+            .loc-date.visible { opacity: 1; transform: translateY(0); }
+            .loc-separator {
+                width: 120px; height: 1px;
+                background: linear-gradient(90deg, transparent, rgba(0,255,255,0.4), transparent);
+                margin: 25px auto;
+                opacity: 0; transition: opacity 1.5s ease 0.6s;
+                position: relative; z-index: 5;
+            }
+            .loc-separator.visible { opacity: 1; }
+
+            /* ═══ ACT 3: AERIAL — DRENTHE LANDSCAPE ═══ */
+            .scene-aerial {
+                background: linear-gradient(180deg, #0c1a2e 0%, #162d50 30%, #1a3a5c 50%, #0d1f35 100%);
+                overflow: hidden;
+            }
+            .aerial-horizon {
+                position: absolute; bottom: 35%; left: 0; right: 0; height: 2px;
+                background: linear-gradient(90deg, transparent 5%, rgba(0,255,255,0.15) 50%, transparent 95%);
+                z-index: 4;
+            }
+            .aerial-ground {
+                position: absolute; bottom: 8vh; left: 0; right: 0; height: 30%;
+                background: linear-gradient(180deg, #0a1a0a 0%, #050d05 100%);
+                z-index: 3;
+            }
+            .aerial-dishes {
+                position: absolute; bottom: calc(8vh + 28%); left: 15%; z-index: 4;
+                display: flex; gap: 40px; opacity: 0;
+                transition: opacity 3s ease 1s;
+            }
+            .aerial-dishes.visible { opacity: 0.25; }
+            .dish {
+                width: 30px; height: 40px;
+                border-top: 2px solid rgba(200,220,255,0.6);
+                border-left: 1px solid transparent; border-right: 1px solid transparent;
+                border-radius: 50% 50% 0 0;
+                position: relative;
+            }
+            .dish::after {
+                content: ''; position: absolute;
+                bottom: -20px; left: 50%; width: 1px; height: 20px;
+                background: rgba(200,220,255,0.4);
+                transform: translateX(-50%);
+            }
+            .aerial-stars {
+                position: absolute; inset: 0; z-index: 2;
+            }
+            .aerial-star {
+                position: absolute; width: 2px; height: 2px;
+                background: #fff; border-radius: 50%;
+                animation: twinkle 3s ease-in-out infinite alternate;
+            }
+            @keyframes twinkle {
+                0% { opacity: 0.2; } 100% { opacity: 0.9; }
+            }
+            .aerial-text {
+                position: relative; z-index: 5;
+                max-width: 900px; text-align: center;
+            }
+            .aerial-text p {
+                font-size: 1.5em; line-height: 2;
+                color: rgba(224,230,240,0.9);
+                margin: 18px 0;
+                opacity: 0; transform: translateY(15px);
+                transition: opacity 1.5s ease, transform 1.5s ease;
+                letter-spacing: 1px;
+            }
+            .aerial-text p.visible { opacity: 1; transform: translateY(0); }
+            .aerial-text .emphasis {
+                color: #ffd700;
+                text-shadow: 0 0 25px rgba(255,215,0,0.5);
+                font-weight: bold;
+            }
+
+            /* ═══ ACT 4: TURBINES ═══ */
+            .scene-turbines {
+                background: linear-gradient(180deg, #0a0f1a 0%, #111b2e 50%, #070d18 100%);
+                overflow: hidden;
+            }
+            .turbine-row {
+                position: absolute; bottom: 15%; left: 0; right: 0;
+                display: flex; justify-content: center; gap: 5vw; z-index: 4;
+                opacity: 0; transition: opacity 2s ease;
+            }
+            .turbine-row.visible { opacity: 1; }
+            .turbine {
+                display: flex; flex-direction: column; align-items: center;
+            }
+            .turbine-light {
+                width: 4px; height: 4px; border-radius: 50%;
+                background: #ff2222;
+                box-shadow: 0 0 8px #ff2222, 0 0 20px rgba(255,34,34,0.4);
+                animation: turbine-blink 2.5s ease-in-out infinite;
+            }
+            @keyframes turbine-blink {
+                0%, 100% { opacity: 0.3; } 50% { opacity: 1; }
+            }
+            .turbine-pole {
+                width: 2px; height: 60px;
+                background: linear-gradient(180deg, rgba(150,170,200,0.3), rgba(150,170,200,0.05));
+            }
+            .turbine-text {
+                position: relative; z-index: 5;
+                max-width: 850px;
+            }
+            .turbine-text p {
+                font-size: 1.5em; line-height: 2; color: rgba(200,210,230,0.85);
+                margin: 16px 0; opacity: 0; transform: translateY(12px);
+                transition: opacity 1.2s ease, transform 1.2s ease;
+                letter-spacing: 1px;
+            }
+            .turbine-text p.visible { opacity: 1; transform: translateY(0); }
+
+            /* ═══ ACT 5: MEET RYAN ═══ */
+            .scene-ryan {
+                background: radial-gradient(ellipse at 30% 70%, #1a1408 0%, #0d0a04 40%, #000 100%);
+            }
+            .ryan-name {
+                font-size: 4.5em; font-weight: 200; letter-spacing: 20px;
+                color: #00ffff;
+                text-shadow: 0 0 60px rgba(0,255,255,0.6), 0 0 120px rgba(0,255,255,0.2);
+                opacity: 0; transform: scale(0.85);
+                transition: opacity 2s ease, transform 2s ease;
+                position: relative; z-index: 5;
+                margin-bottom: 10px;
+            }
+            .ryan-name.visible { opacity: 1; transform: scale(1); }
+            .ryan-tagline {
+                font-size: 1.1em; letter-spacing: 6px; text-transform: uppercase;
+                color: rgba(255,215,0,0.7); margin-top: 15px;
+                opacity: 0; transition: opacity 1.5s ease 0.6s;
+                position: relative; z-index: 5;
+            }
+            .ryan-tagline.visible { opacity: 1; }
+            .ryan-details {
+                position: relative; z-index: 5;
+                max-width: 800px; margin-top: 40px;
+            }
+            .ryan-details p {
+                font-size: 1.25em; line-height: 2.2;
+                color: rgba(224,224,224,0.85);
+                margin: 12px 0;
+                opacity: 0; transform: translateY(10px);
+                transition: opacity 1.2s ease, transform 1.2s ease;
+            }
+            .ryan-details p.visible { opacity: 1; transform: translateY(0); }
+            .ryan-details .glow { color: #ffd700; text-shadow: 0 0 15px rgba(255,215,0,0.5); }
+
+            /* ═══ ACT 6: MANCAVE / EQUIPMENT ═══ */
+            .scene-mancave {
+                background: radial-gradient(ellipse at center, #060d12 0%, #000 100%);
+                overflow: hidden;
+            }
+            .mc-grid {
+                display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 10px; max-width: 650px; width: 100%;
+                position: relative; z-index: 5; margin-top: 25px;
+            }
+            .mc-item {
+                background: rgba(0,255,255,0.04);
+                border: 1px solid rgba(0,255,255,0.12);
+                padding: 12px 8px; text-align: center;
+                font-size: 0.75em; letter-spacing: 2px;
+                color: rgba(0,255,255,0.7);
+                opacity: 0; transform: scale(0.8);
+                transition: opacity 0.5s ease, transform 0.5s ease;
+            }
+            .mc-item.visible { opacity: 1; transform: scale(1); }
+            .mc-title {
+                font-size: 1.5em; letter-spacing: 8px; text-transform: uppercase;
+                color: rgba(0,255,255,0.5);
+                margin-bottom: 20px;
+                opacity: 0; transition: opacity 1.5s ease;
+                position: relative; z-index: 5;
+            }
+            .mc-title.visible { opacity: 1; }
+            .mc-subtitle {
+                font-size: 1.15em; color: rgba(255,215,0,0.7);
+                margin-top: 25px; max-width: 700px;
+                opacity: 0; transition: opacity 1.5s ease;
+                position: relative; z-index: 5;
+                line-height: 2;
+            }
+            .mc-subtitle.visible { opacity: 1; }
+
+            /* ═══ ACT 7: THE THREAT ═══ */
+            .scene-threat {
+                background: radial-gradient(ellipse at center, #1a0000 0%, #000 100%);
+            }
+            .threat-text {
+                position: relative; z-index: 5; max-width: 850px;
+            }
+            .threat-text p {
+                font-size: 1.6em; line-height: 2.2;
+                margin: 20px 0;
+                opacity: 0; transform: translateY(15px);
+                transition: opacity 1.5s ease, transform 1.5s ease;
+            }
+            .threat-text p.visible { opacity: 1; transform: translateY(0); }
+            .t-sinister { color: rgba(153,153,255,0.9); font-style: italic; text-shadow: 0 0 15px rgba(153,153,255,0.4); }
+            .t-warn { color: #ff4444; text-shadow: 0 0 20px rgba(255,68,68,0.6); font-weight: bold; }
+            .t-gold { color: #ffd700; text-shadow: 0 0 20px rgba(255,215,0,0.5); font-weight: bold; }
+            .t-defiant {
+                color: #00ffff !important;
+                text-shadow: 0 0 30px rgba(0,255,255,0.8) !important;
+                font-size: 1.8em !important; font-weight: bold;
+            }
+
+            /* ═══ ACT 8: TITLE REVEAL ═══ */
+            .scene-title {
+                background: #000;
+            }
+            .title-main {
+                font-size: 6em; font-weight: bold; letter-spacing: 30px;
+                text-transform: uppercase;
+                color: transparent;
+                -webkit-text-stroke: 2px rgba(0,255,255,0.7);
+                position: relative; z-index: 5;
+                opacity: 0; transform: scale(0.6);
+                transition: opacity 2s ease, transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .title-main.visible {
+                opacity: 1; transform: scale(1);
+                color: #00ffff;
+                -webkit-text-stroke: 0;
+                text-shadow:
+                    0 0 60px rgba(0,255,255,0.8),
+                    0 0 120px rgba(0,255,255,0.4),
+                    0 0 200px rgba(0,255,255,0.2);
+                animation: title-breathe 3s ease-in-out infinite;
+            }
+            @keyframes title-breathe {
+                0%, 100% { text-shadow: 0 0 60px rgba(0,255,255,0.8), 0 0 120px rgba(0,255,255,0.4); }
+                50% { text-shadow: 0 0 80px rgba(0,255,255,1), 0 0 160px rgba(0,255,255,0.5), 0 0 240px rgba(0,255,255,0.2); }
+            }
+            .title-sub {
+                font-size: 2.2em; letter-spacing: 15px; font-weight: 300;
+                text-transform: uppercase;
+                color: #ffd700;
+                text-shadow: 0 0 40px rgba(255,215,0,0.6);
+                margin-top: 25px;
+                opacity: 0; transform: translateY(20px);
+                transition: opacity 1.5s ease 0.8s, transform 1.5s ease 0.8s;
+                position: relative; z-index: 5;
+            }
+            .title-sub.visible { opacity: 1; transform: translateY(0); }
+            .title-tagline {
+                font-size: 1.2em; letter-spacing: 5px;
+                color: rgba(255,235,59,0.7); font-style: italic;
+                margin-top: 30px;
+                opacity: 0; transition: opacity 2s ease 1.6s;
+                position: relative; z-index: 5;
+            }
+            .title-tagline.visible { opacity: 1; }
+            .title-line {
+                width: 200px; height: 1px;
+                background: linear-gradient(90deg, transparent, rgba(0,255,255,0.5), transparent);
+                margin: 30px auto 0;
+                opacity: 0; transition: opacity 2s ease 1.2s;
+                position: relative; z-index: 5;
+            }
+            .title-line.visible { opacity: 1; }
+            .title-begin {
+                font-size: 1.3em; letter-spacing: 6px; font-weight: bold;
+                color: #fff; margin-top: 50px;
+                opacity: 0; transition: opacity 2s ease 2.5s;
+                position: relative; z-index: 5;
+            }
+            .title-begin.visible {
+                opacity: 1;
+                animation: begin-pulse 2s ease-in-out infinite;
+            }
+            @keyframes begin-pulse {
+                0%, 100% { opacity: 1; } 50% { opacity: 0.4; }
+            }
+
+            /* ═══ FLASH / GLITCH FX ═══ */
+            .cine-flash {
+                position: absolute; inset: 0; z-index: 50;
+                background: #fff; opacity: 0; pointer-events: none;
+            }
+            .cine-flash.fire {
+                animation: flash-fire 0.15s ease-out forwards;
+            }
+            @keyframes flash-fire {
+                0% { opacity: 0.7; } 100% { opacity: 0; }
+            }
+            .cine-glitch-bar {
+                position: absolute; left: 0; right: 0; z-index: 40;
+                height: 3px; background: rgba(0,255,255,0.3);
+                pointer-events: none; opacity: 0;
+            }
+
+            /* ═══ RESPONSIVE ═══ */
+            @media (max-width: 700px) {
+                .title-main { font-size: 3em; letter-spacing: 12px; }
+                .title-sub { font-size: 1.4em; letter-spacing: 8px; }
+                .ryan-name { font-size: 2.8em; letter-spacing: 10px; }
+                .bunker-terminal { font-size: 0.75em; }
+                .aerial-text p, .turbine-text p, .threat-text p { font-size: 1.15em; }
+                .mc-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
+                .loc-place { font-size: 1.8em; letter-spacing: 10px; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // ── Build the cinematic container ─────────────────────────
+        const cine = document.createElement('div');
+        cine.id = 'cinematic-intro';
+        cine.innerHTML = `
+            <div class="cine-bar cine-bar-top"></div>
+            <div class="cine-bar cine-bar-bot"></div>
+            <canvas id="cine-particles"></canvas>
+            <div class="cine-scanlines"></div>
+            <div class="cine-vignette"></div>
+            <div class="cine-flash" id="cine-flash"></div>
+            <button class="cine-skip" id="cine-skip">SKIP ▸▸</button>
+
+            <!-- ACT 1: COLD OPEN — SURVEILLANCE BUNKER -->
+            <div class="cine-scene scene-bunker" id="scene-1">
+                <div class="bunker-label">AIVD // CLASSIFIED // ECHELON-NL NODE 7</div>
+                <div class="bunker-terminal" id="bunker-term">
+                    <div class="term-line">root@sigint-den-haag:~$ <span class="bunker-cursor"></span></div>
+                    <div class="term-line">> INITIALIZING ZERFALL MONITORING GRID...</div>
+                    <div class="term-line">> SCANNING FREQ RANGE: 0.1 MHz — 24.000 GHz</div>
+                    <div class="term-line">> LOFAR ARRAY STATUS: <span class="term-highlight">ONLINE</span> [50,412 ANTENNAS]</div>
+                    <div class="term-line">> WSRT ARRAY STATUS: <span class="term-highlight">ONLINE</span> [14 DISHES]</div>
+                    <div class="term-line">> AI ANOMALY DETECTION: <span class="term-highlight">ACTIVE</span></div>
+                    <div class="term-line">&nbsp;</div>
+                    <div class="term-line term-warning">⚠ FLAGGED SUBJECT — FILE #VK-7291</div>
+                    <div class="term-line term-classified">   NAME: WEYLANT, RYAN</div>
+                    <div class="term-line term-classified">   LOC:  52.7924°N, 7.0281°E — COMPASCUUM</div>
+                    <div class="term-line term-classified">   STATUS: MONITORING</div>
+                    <div class="term-line term-classified">   THREAT LEVEL: <span class="term-warning">UNDETERMINED</span></div>
+                    <div class="term-line">&nbsp;</div>
+                    <div class="term-line term-warning">⚠ INCOMING ANOMALY DETECTED — 14.230 MHz</div>
+                    <div class="term-line term-warning">⚠ SSTV BURST — UNSCHEDULED — ORIGIN: UNKNOWN</div>
+                    <div class="term-line">&nbsp;</div>
+                    <div class="term-line">root@sigint-den-haag:~$ INITIATING COUNTERMEASURES...<span class="bunker-cursor"></span></div>
+                </div>
+                <div class="bunker-stamp" id="bunker-stamp">GEHEIM</div>
+            </div>
+
+            <!-- ACT 2: SMASH CUT — LOCATION / DATE -->
+            <div class="cine-scene scene-location" id="scene-2">
+                <div class="loc-text" id="loc-region">THE NETHERLANDS</div>
+                <div class="loc-separator" id="loc-sep"></div>
+                <div class="loc-place" id="loc-place">COMPASCUUM</div>
+                <div class="loc-separator" id="loc-sep2"></div>
+                <div class="loc-text" id="loc-prov">PROVINCE OF DRENTHE</div>
+                <div class="loc-date" id="loc-date">FEBRUARY 9, 2026 &nbsp; | &nbsp; 07:45</div>
+            </div>
+
+            <!-- ACT 3: AERIAL — DRENTHE LANDSCAPE -->
+            <div class="cine-scene scene-aerial" id="scene-3">
+                <div class="aerial-stars" id="aerial-stars"></div>
+                <div class="aerial-horizon"></div>
+                <div class="aerial-ground"></div>
+                <div class="aerial-dishes" id="aerial-dishes">
+                    <div class="dish"></div><div class="dish"></div><div class="dish"></div>
+                    <div class="dish"></div><div class="dish"></div><div class="dish"></div>
+                </div>
+                <div class="aerial-text" id="aerial-text">
+                    <p>The province everyone forgets.</p>
+                    <p>Quiet heathlands stretching to the horizon. Ancient dolmens. Narrow canals reflecting the first light of dawn.</p>
+                    <p class="emphasis">But beneath this peaceful surface lies something extraordinary.</p>
+                    <p>Hidden in these fields: the Westerbork Radio Telescope. LOFAR's 50,000 antennas. Listening posts that pierce the cosmos itself.</p>
+                </div>
+            </div>
+
+            <!-- ACT 4: TURBINES / TECHNOLOGY -->
+            <div class="cine-scene scene-turbines" id="scene-4">
+                <div class="turbine-row" id="turbine-row">
+                    <div class="turbine"><div class="turbine-light"></div><div class="turbine-pole"></div></div>
+                    <div class="turbine"><div class="turbine-light" style="animation-delay:0.4s"></div><div class="turbine-pole"></div></div>
+                    <div class="turbine"><div class="turbine-light" style="animation-delay:0.9s"></div><div class="turbine-pole"></div></div>
+                    <div class="turbine"><div class="turbine-light" style="animation-delay:1.3s"></div><div class="turbine-pole"></div></div>
+                    <div class="turbine"><div class="turbine-light" style="animation-delay:0.2s"></div><div class="turbine-pole"></div></div>
+                    <div class="turbine"><div class="turbine-light" style="animation-delay:0.7s"></div><div class="turbine-pole"></div></div>
+                    <div class="turbine"><div class="turbine-light" style="animation-delay:1.6s"></div><div class="turbine-pole"></div></div>
+                    <div class="turbine"><div class="turbine-light" style="animation-delay:1.1s"></div><div class="turbine-pole"></div></div>
+                </div>
+                <div class="turbine-text" id="turbine-text">
+                    <p>Bluetooth. WiFi mesh networks. 5G beam-forming algorithms.</p>
+                    <p>Technology connecting five billion devices worldwide — all rooted in these forgotten northern fields.</p>
+                </div>
+            </div>
+
+            <!-- ACT 5: MEET RYAN -->
+            <div class="cine-scene scene-ryan" id="scene-5">
+                <div class="ryan-name" id="ryan-name">RYAN WEYLANT</div>
+                <div class="ryan-tagline" id="ryan-tagline">SOFTWARE ARCHITECT &nbsp; · &nbsp; RADIO SPECIALIST &nbsp; · &nbsp; HACKER</div>
+                <div class="ryan-details" id="ryan-details">
+                    <p>Age 55. A man who never met a signal he couldn't decode.</p>
+                    <p>A puzzle he couldn't solve. A system he couldn't break.</p>
+                    <p>Home: a white farmhouse by the canal. Partner: Ies. Three dogs — Tino, Kessy, and ET the pug.</p>
+                    <p class="glow">When the brightest minds in the country face impossible problems, they call Ryan.</p>
+                </div>
+            </div>
+
+            <!-- ACT 6: MANCAVE / EQUIPMENT -->
+            <div class="cine-scene scene-mancave" id="scene-6">
+                <div class="mc-title" id="mc-title">HIS ARSENAL</div>
+                <div class="mc-grid" id="mc-grid">
+                    <div class="mc-item">HACKRF ONE</div>
+                    <div class="mc-item">FLIPPER ZERO</div>
+                    <div class="mc-item">WIFI PINEAPPLE</div>
+                    <div class="mc-item">MESHTASTIC</div>
+                    <div class="mc-item">SSTV TERMINAL</div>
+                    <div class="mc-item">3D PRINTERS</div>
+                    <div class="mc-item">OSCILLOSCOPE</div>
+                    <div class="mc-item">LORA NODES</div>
+                </div>
+                <div class="mc-subtitle" id="mc-subtitle">
+                    His network spans the nation's sharpest minds:<br>
+                    <span style="color:#00ffff">Dr. David Prinsloo</span> · TU Eindhoven &nbsp; | &nbsp;
+                    <span style="color:#00ffff">Cees Bassa</span> · ASTRON &nbsp; | &nbsp;
+                    <span style="color:#00ffff">Jaap Haartsen</span> · Inventor of Bluetooth
+                </div>
+            </div>
+
+            <!-- ACT 7: THE THREAT -->
+            <div class="cine-scene scene-threat" id="scene-7">
+                <div class="threat-text" id="threat-text">
+                    <p class="t-sinister">Deep beneath The Hague, in a bunker that doesn't officially exist—</p>
+                    <p class="t-sinister">Screens glow in the darkness. AI systems monitor every frequency. Every transmission. Every anomaly.</p>
+                    <p class="t-sinister">People in dark suits have protocols. Response teams on standby. Methods that leave no trace.</p>
+                    <p class="t-warn">In eighteen minutes, everything changes.</p>
+                    <p class="t-warn">A transmission that shouldn't exist. Encrypted with algorithms no civilian should possess.</p>
+                    <p class="t-gold">A conspiracy at the highest levels of power. A secret nations have killed to protect.</p>
+                    <p class="t-defiant">But they don't know about Ryan Weylant.</p>
+                    <p class="t-gold">They don't know what he's capable of when pushed.</p>
+                    <p class="t-gold">They've just made their last mistake.</p>
+                </div>
+            </div>
+
+            <!-- ACT 8: TITLE REVEAL -->
+            <div class="cine-scene scene-title" id="scene-8">
+                <div class="title-main" id="title-main">CYBERQUEST</div>
+                <div class="title-line" id="title-line"></div>
+                <div class="title-sub" id="title-sub">OPERATION ZERFALL</div>
+                <div class="title-tagline" id="title-tagline">The truth is hidden in the signal.</div>
+                <div class="title-begin" id="title-begin">▶ &nbsp; CLICK TO BEGIN YOUR MISSION &nbsp; ◀</div>
+            </div>
+        `;
+        document.body.appendChild(cine);
+
+        // ── Particle system ──────────────────────────────────────
+        const canvas = document.getElementById('cine-particles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+        for (let i = 0; i < 60; i++) {
+            particles.push({
+                x: Math.random() * window.innerWidth,
+                y: Math.random() * window.innerHeight,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: -Math.random() * 0.4 - 0.1,
+                size: Math.random() * 1.5 + 0.5,
+                alpha: Math.random() * 0.3 + 0.05
+            });
+        }
+        let particlesRunning = true;
+        function animateParticles() {
+            if (!particlesRunning) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
+                if (p.x < -10) p.x = canvas.width + 10;
+                if (p.x > canvas.width + 10) p.x = -10;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0,255,255,${p.alpha})`;
+                ctx.fill();
+            });
+            self._animFrameId = requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // ── Stars for aerial scene ───────────────────────────────
+        const starsContainer = document.getElementById('aerial-stars');
+        for (let i = 0; i < 80; i++) {
+            const star = document.createElement('div');
+            star.className = 'aerial-star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 60 + '%';
+            star.style.animationDelay = Math.random() * 3 + 's';
+            star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
+            starsContainer.appendChild(star);
+        }
+
+        // ── Glitch effect helper ─────────────────────────────────
+        function triggerFlash() {
+            const flash = document.getElementById('cine-flash');
+            if (flash) {
+                flash.classList.remove('fire');
+                void flash.offsetWidth; // force reflow
+                flash.classList.add('fire');
+            }
+        }
+
+        function triggerGlitch() {
+            const container = document.getElementById('cinematic-intro');
+            if (!container) return;
+            for (let i = 0; i < 3; i++) {
+                const bar = document.createElement('div');
+                bar.className = 'cine-glitch-bar';
+                bar.style.top = Math.random() * 100 + '%';
+                bar.style.opacity = '0.4';
+                container.appendChild(bar);
+                setTimeout(() => bar.remove(), 120 + Math.random() * 80);
+            }
+        }
+
+        // ── Scene sequencer ──────────────────────────────────────
+        let currentAct = 0;
+        let finished = false;
+        const totalActs = 8;
+
+        // Per-act timings (how long each act stays visible in ms)
+        const actDurations = [
+            10000,  // Act 1: Bunker terminal (10s — needs time for typing)
+            5000,   // Act 2: Location/date (5s)
+            10000,  // Act 3: Aerial landscape (10s)
+            7000,   // Act 4: Turbines/technology (7s)
+            9000,   // Act 5: Meet Ryan (9s)
+            8000,   // Act 6: Mancave/equipment (8s)
+            12000,  // Act 7: The threat (12s)
+            0       // Act 8: Title (stays until click)
+        ];
+
+        function showAct(n) {
+            if (n < 1 || n > totalActs || finished) return;
+            currentAct = n;
+
+            // Deactivate all scenes
+            document.querySelectorAll('.cine-scene').forEach(s => {
+                s.classList.remove('active');
+                s.classList.add('fade-out');
+            });
+
+            // Flash between scenes (except first)
+            if (n > 1) {
+                triggerFlash();
+                triggerGlitch();
+            }
+
+            // Activate target scene after brief gap
+            const delay = n > 1 ? 300 : 0;
+            self._schedule(() => {
+                const scene = document.getElementById('scene-' + n);
+                if (!scene) return;
+                scene.classList.remove('fade-out');
+                scene.classList.add('active');
+
+                // Run per-act reveals
+                if (n === 1) revealBunker();
+                if (n === 2) revealLocation();
+                if (n === 3) revealAerial();
+                if (n === 4) revealTurbines();
+                if (n === 5) revealRyan();
+                if (n === 6) revealMancave();
+                if (n === 7) revealThreat();
+                if (n === 8) revealTitle();
+
+                // Auto-advance (except final act)
+                if (actDurations[n - 1] > 0) {
+                    self._schedule(() => showAct(n + 1), actDurations[n - 1]);
+                }
+            }, delay);
+        }
+
+        // ── Per-act reveal animations ────────────────────────────
+
+        function revealBunker() {
+            const lines = document.querySelectorAll('#bunker-term .term-line');
+            lines.forEach((line, i) => {
+                self._schedule(() => line.classList.add('typed'), 400 + i * 500);
+            });
+            // GEHEIM stamp slams down near end
+            self._schedule(() => {
+                const stamp = document.getElementById('bunker-stamp');
+                if (stamp) stamp.classList.add('visible');
+                triggerFlash();
+            }, 400 + lines.length * 500 + 200);
+        }
+
+        function revealLocation() {
+            self._schedule(() => {
+                document.getElementById('loc-region')?.classList.add('visible');
+                document.getElementById('loc-sep')?.classList.add('visible');
+                document.getElementById('loc-place')?.classList.add('visible');
+                document.getElementById('loc-sep2')?.classList.add('visible');
+                document.getElementById('loc-prov')?.classList.add('visible');
+                document.getElementById('loc-date')?.classList.add('visible');
+            }, 200);
+        }
+
+        function revealAerial() {
+            const paras = document.querySelectorAll('#aerial-text p');
+            paras.forEach((p, i) => {
+                self._schedule(() => p.classList.add('visible'), 600 + i * 2000);
+            });
+            self._schedule(() => {
+                document.getElementById('aerial-dishes')?.classList.add('visible');
+            }, 1000);
+        }
+
+        function revealTurbines() {
+            self._schedule(() => {
+                document.getElementById('turbine-row')?.classList.add('visible');
+            }, 300);
+            const paras = document.querySelectorAll('#turbine-text p');
+            paras.forEach((p, i) => {
+                self._schedule(() => p.classList.add('visible'), 800 + i * 2000);
+            });
+        }
+
+        function revealRyan() {
+            self._schedule(() => {
+                document.getElementById('ryan-name')?.classList.add('visible');
+            }, 300);
+            self._schedule(() => {
+                document.getElementById('ryan-tagline')?.classList.add('visible');
+            }, 800);
+            const paras = document.querySelectorAll('#ryan-details p');
+            paras.forEach((p, i) => {
+                self._schedule(() => p.classList.add('visible'), 1500 + i * 1600);
+            });
+        }
+
+        function revealMancave() {
+            self._schedule(() => {
+                document.getElementById('mc-title')?.classList.add('visible');
+            }, 300);
+            const items = document.querySelectorAll('#mc-grid .mc-item');
+            items.forEach((item, i) => {
+                self._schedule(() => item.classList.add('visible'), 600 + i * 350);
+            });
+            self._schedule(() => {
+                document.getElementById('mc-subtitle')?.classList.add('visible');
+            }, 600 + items.length * 350 + 300);
+        }
+
+        function revealThreat() {
+            const paras = document.querySelectorAll('#threat-text p');
+            paras.forEach((p, i) => {
+                self._schedule(() => {
+                    p.classList.add('visible');
+                    // Extra glitch on the defiant line
+                    if (p.classList.contains('t-defiant')) {
+                        triggerFlash();
+                        triggerGlitch();
+                    }
+                }, 500 + i * 1200);
+            });
+        }
+
+        function revealTitle() {
+            self._schedule(() => {
+                document.getElementById('title-main')?.classList.add('visible');
+                triggerFlash();
+            }, 400);
+            self._schedule(() => {
+                document.getElementById('title-line')?.classList.add('visible');
+                document.getElementById('title-sub')?.classList.add('visible');
+            }, 800);
+            self._schedule(() => {
+                document.getElementById('title-tagline')?.classList.add('visible');
+            }, 1600);
+            self._schedule(() => {
+                document.getElementById('title-begin')?.classList.add('visible');
+            }, 2500);
+        }
+
+        // ── Cleanup helper ───────────────────────────────────────
+        function cleanupAndContinue() {
+            if (finished) return;
+            finished = true;
+            particlesRunning = false;
+            self._clearTimeouts();
+            window.removeEventListener('resize', resizeCanvas);
+
+            const c = document.getElementById('cinematic-intro');
+            if (c) {
+                c.style.transition = 'opacity 1.5s ease-in';
+                c.style.opacity = '0';
+                setTimeout(() => {
+                    c.remove();
+                    document.getElementById('intro-cinematic-style')?.remove();
+                    if (charactersContainer) charactersContainer.style.display = '';
+                    game.voiceEnabled = originalVoiceState;
+                    game.loadScene('home');
+                }, 1600);
+            }
+        }
+
+        // ── Click on title-begin → continue to game ──────────────
+        cine.addEventListener('click', (e) => {
+            // Only the final act's click-to-begin should proceed
+            if (currentAct === totalActs) {
+                cleanupAndContinue();
+            } else if (e.target.id !== 'cine-skip') {
+                // Click to advance to next act early
+                self._clearTimeouts();
+                showAct(currentAct + 1);
+            }
+        });
+
+        // ── Skip button → jump straight to game ─────────────────
+        document.getElementById('cine-skip')?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            cleanupAndContinue();
+        });
+
+        // ── Start the show! ──────────────────────────────────────
+        self._schedule(() => showAct(1), 800);
+    },
+    
+    onExit: function(game) {
+        // Clean up all intro elements
+        this._clearTimeouts();
+        document.getElementById('cinematic-intro')?.remove();
+        document.getElementById('intro-cinematic-style')?.remove();
+        // Legacy cleanup
+        document.getElementById('intro-scroll')?.remove();
+        document.getElementById('intro-scroll-style')?.remove();
+        document.getElementById('intro-bg-prompt')?.remove();
+        document.getElementById('intro-prompt-style')?.remove();
+
+        // Ensure characters are visible when leaving intro scene
+        const charactersContainer = document.getElementById('scene-characters');
+        if (charactersContainer) {
+            charactersContainer.style.display = '';
+        }
+    }
+};
+
+// Register scene
+if (typeof window.game !== 'undefined') {
+    window.game.registerScene(IntroScene);
+}
