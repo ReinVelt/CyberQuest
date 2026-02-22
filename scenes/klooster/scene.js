@@ -284,11 +284,388 @@ const KloosterScene = {
         }
     ],
     
+    // ======= WEB AUDIO: CREEPY NIGHT AMBIENCE =======
+    _audioCtx: null,
+    _audioNodes: [],
+    _audioIntervals: [],
+    _audioTimeouts: [],
+
+    _getAudioCtx: function() {
+        if (!this._audioCtx || this._audioCtx.state === 'closed') {
+            this._audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (this._audioCtx.state === 'suspended') {
+            this._audioCtx.resume();
+        }
+        return this._audioCtx;
+    },
+
+    _startCreepyAudio: function() {
+        try {
+            const ctx = this._getAudioCtx();
+            const nodes = this._audioNodes;
+            const intervals = this._audioIntervals;
+            const timeouts = this._audioTimeouts;
+            const now = ctx.currentTime;
+
+            // === 1. LOW RUMBLING DRONE (ominous sub-bass) ===
+            const droneOsc = ctx.createOscillator();
+            const droneGain = ctx.createGain();
+            const droneFilter = ctx.createBiquadFilter();
+            droneOsc.type = 'sawtooth';
+            droneOsc.frequency.setValueAtTime(38, now);
+            // Slow pitch drift for unease
+            droneOsc.frequency.setValueAtTime(38, now);
+            droneOsc.frequency.linearRampToValueAtTime(42, now + 15);
+            droneOsc.frequency.linearRampToValueAtTime(36, now + 30);
+            droneOsc.frequency.linearRampToValueAtTime(40, now + 45);
+            droneFilter.type = 'lowpass';
+            droneFilter.frequency.setValueAtTime(80, now);
+            droneGain.gain.setValueAtTime(0, now);
+            droneGain.gain.linearRampToValueAtTime(0.06, now + 4);
+            droneOsc.connect(droneFilter);
+            droneFilter.connect(droneGain);
+            droneGain.connect(ctx.destination);
+            droneOsc.start(now);
+            nodes.push(droneOsc, droneGain, droneFilter);
+
+            // === 2. WIND HOWLING (filtered noise with LFO modulation) ===
+            const windBufferSize = ctx.sampleRate * 4;
+            const windBuffer = ctx.createBuffer(1, windBufferSize, ctx.sampleRate);
+            const windData = windBuffer.getChannelData(0);
+            for (let i = 0; i < windBufferSize; i++) {
+                windData[i] = (Math.random() * 2 - 1);
+            }
+            const windSrc = ctx.createBufferSource();
+            windSrc.buffer = windBuffer;
+            windSrc.loop = true;
+            const windFilter = ctx.createBiquadFilter();
+            windFilter.type = 'bandpass';
+            windFilter.frequency.setValueAtTime(300, now);
+            windFilter.Q.setValueAtTime(1.5, now);
+            const windGain = ctx.createGain();
+            windGain.gain.setValueAtTime(0, now);
+            windGain.gain.linearRampToValueAtTime(0.04, now + 3);
+            // Wind LFO for gusting
+            const windLfo = ctx.createOscillator();
+            const windLfoGain = ctx.createGain();
+            windLfo.type = 'sine';
+            windLfo.frequency.setValueAtTime(0.15, now);
+            windLfoGain.gain.setValueAtTime(0.025, now);
+            windLfo.connect(windLfoGain);
+            windLfoGain.connect(windGain.gain);
+            windLfo.start(now);
+            // Wind filter sweep
+            const windFilterLfo = ctx.createOscillator();
+            const windFilterLfoGain = ctx.createGain();
+            windFilterLfo.type = 'sine';
+            windFilterLfo.frequency.setValueAtTime(0.07, now);
+            windFilterLfoGain.gain.setValueAtTime(150, now);
+            windFilterLfo.connect(windFilterLfoGain);
+            windFilterLfoGain.connect(windFilter.frequency);
+            windFilterLfo.start(now);
+            windSrc.connect(windFilter);
+            windFilter.connect(windGain);
+            windGain.connect(ctx.destination);
+            windSrc.start(now);
+            nodes.push(windSrc, windFilter, windGain, windLfo, windLfoGain, windFilterLfo, windFilterLfoGain);
+
+            // === 3. OWL HOOTING (periodic, two-note hoot) ===
+            const scheduleOwl = () => {
+                const t = ctx.currentTime;
+                const owlGain = ctx.createGain();
+                owlGain.gain.setValueAtTime(0, t);
+                owlGain.connect(ctx.destination);
+                // First hoot
+                const owl1 = ctx.createOscillator();
+                owl1.type = 'sine';
+                owl1.frequency.setValueAtTime(380, t);
+                owl1.frequency.exponentialRampToValueAtTime(320, t + 0.35);
+                const owl1Gain = ctx.createGain();
+                owl1Gain.gain.setValueAtTime(0, t);
+                owl1Gain.gain.linearRampToValueAtTime(0.04, t + 0.05);
+                owl1Gain.gain.setValueAtTime(0.04, t + 0.25);
+                owl1Gain.gain.linearRampToValueAtTime(0, t + 0.4);
+                owl1.connect(owl1Gain);
+                owl1Gain.connect(ctx.destination);
+                owl1.start(t);
+                owl1.stop(t + 0.45);
+                // Second hoot (lower, longer)
+                const owl2 = ctx.createOscillator();
+                owl2.type = 'sine';
+                owl2.frequency.setValueAtTime(300, t + 0.6);
+                owl2.frequency.exponentialRampToValueAtTime(260, t + 1.2);
+                const owl2Gain = ctx.createGain();
+                owl2Gain.gain.setValueAtTime(0, t + 0.6);
+                owl2Gain.gain.linearRampToValueAtTime(0.05, t + 0.7);
+                owl2Gain.gain.setValueAtTime(0.05, t + 1.0);
+                owl2Gain.gain.linearRampToValueAtTime(0, t + 1.3);
+                owl2.connect(owl2Gain);
+                owl2Gain.connect(ctx.destination);
+                owl2.start(t + 0.6);
+                owl2.stop(t + 1.4);
+            };
+            // First owl after 5s, then every 12-25s
+            timeouts.push(setTimeout(() => {
+                scheduleOwl();
+                intervals.push(setInterval(() => {
+                    if (Math.random() < 0.7) scheduleOwl();
+                }, 12000 + Math.random() * 13000));
+            }, 5000));
+
+            // === 4. DISTANT CHURCH BELL (single toll, rare) ===
+            const scheduleBell = () => {
+                const t = ctx.currentTime;
+                const bellOsc = ctx.createOscillator();
+                bellOsc.type = 'sine';
+                bellOsc.frequency.setValueAtTime(220, t);
+                const bellOsc2 = ctx.createOscillator();
+                bellOsc2.type = 'sine';
+                bellOsc2.frequency.setValueAtTime(440, t);
+                const bellGain = ctx.createGain();
+                bellGain.gain.setValueAtTime(0, t);
+                bellGain.gain.linearRampToValueAtTime(0.03, t + 0.1);
+                bellGain.gain.exponentialRampToValueAtTime(0.001, t + 4);
+                const bellFilter = ctx.createBiquadFilter();
+                bellFilter.type = 'bandpass';
+                bellFilter.frequency.setValueAtTime(300, t);
+                bellFilter.Q.setValueAtTime(2, t);
+                bellOsc.connect(bellFilter);
+                bellOsc2.connect(bellFilter);
+                bellFilter.connect(bellGain);
+                bellGain.connect(ctx.destination);
+                bellOsc.start(t);
+                bellOsc2.start(t);
+                bellOsc.stop(t + 4.5);
+                bellOsc2.stop(t + 4.5);
+            };
+            // Bell every 30-60s
+            timeouts.push(setTimeout(() => {
+                scheduleBell();
+                intervals.push(setInterval(() => {
+                    if (Math.random() < 0.5) scheduleBell();
+                }, 30000 + Math.random() * 30000));
+            }, 15000));
+
+            // === 5. CRICKETS (rapid clicking chirps) ===
+            const scheduleCricket = () => {
+                const t = ctx.currentTime;
+                const cricketGain = ctx.createGain();
+                cricketGain.gain.setValueAtTime(0.02, t);
+                cricketGain.connect(ctx.destination);
+                for (let i = 0; i < 6; i++) {
+                    const cOsc = ctx.createOscillator();
+                    cOsc.type = 'square';
+                    cOsc.frequency.setValueAtTime(4200 + Math.random() * 800, t + i * 0.06);
+                    const cGain = ctx.createGain();
+                    cGain.gain.setValueAtTime(0, t + i * 0.06);
+                    cGain.gain.linearRampToValueAtTime(0.015, t + i * 0.06 + 0.01);
+                    cGain.gain.linearRampToValueAtTime(0, t + i * 0.06 + 0.04);
+                    cOsc.connect(cGain);
+                    cGain.connect(ctx.destination);
+                    cOsc.start(t + i * 0.06);
+                    cOsc.stop(t + i * 0.06 + 0.05);
+                }
+            };
+            intervals.push(setInterval(() => {
+                if (Math.random() < 0.6) scheduleCricket();
+            }, 2000 + Math.random() * 1500));
+
+            // === 6. CREAKING WOOD / GATE (metallic groan) ===
+            const scheduleCreak = () => {
+                const t = ctx.currentTime;
+                const creakOsc = ctx.createOscillator();
+                creakOsc.type = 'sawtooth';
+                creakOsc.frequency.setValueAtTime(80, t);
+                creakOsc.frequency.linearRampToValueAtTime(120, t + 0.3);
+                creakOsc.frequency.linearRampToValueAtTime(60, t + 0.8);
+                creakOsc.frequency.linearRampToValueAtTime(100, t + 1.2);
+                const creakFilter = ctx.createBiquadFilter();
+                creakFilter.type = 'bandpass';
+                creakFilter.frequency.setValueAtTime(600, t);
+                creakFilter.Q.setValueAtTime(8, t);
+                const creakGain = ctx.createGain();
+                creakGain.gain.setValueAtTime(0, t);
+                creakGain.gain.linearRampToValueAtTime(0.02, t + 0.15);
+                creakGain.gain.setValueAtTime(0.015, t + 0.8);
+                creakGain.gain.linearRampToValueAtTime(0, t + 1.5);
+                creakOsc.connect(creakFilter);
+                creakFilter.connect(creakGain);
+                creakGain.connect(ctx.destination);
+                creakOsc.start(t);
+                creakOsc.stop(t + 1.6);
+            };
+            // Creak every 20-45s
+            intervals.push(setInterval(() => {
+                if (Math.random() < 0.4) scheduleCreak();
+            }, 20000 + Math.random() * 25000));
+
+            // === 7. DISTANT DOG BARK (very far away) ===
+            const scheduleDog = () => {
+                const t = ctx.currentTime;
+                const barkCount = 2 + Math.floor(Math.random() * 3);
+                for (let i = 0; i < barkCount; i++) {
+                    const bark = ctx.createOscillator();
+                    bark.type = 'sawtooth';
+                    bark.frequency.setValueAtTime(250, t + i * 0.35);
+                    bark.frequency.exponentialRampToValueAtTime(180, t + i * 0.35 + 0.12);
+                    const barkFilter = ctx.createBiquadFilter();
+                    barkFilter.type = 'bandpass';
+                    barkFilter.frequency.setValueAtTime(400, t);
+                    barkFilter.Q.setValueAtTime(3, t);
+                    const barkGain = ctx.createGain();
+                    barkGain.gain.setValueAtTime(0, t + i * 0.35);
+                    barkGain.gain.linearRampToValueAtTime(0.012, t + i * 0.35 + 0.03);
+                    barkGain.gain.linearRampToValueAtTime(0, t + i * 0.35 + 0.15);
+                    bark.connect(barkFilter);
+                    barkFilter.connect(barkGain);
+                    barkGain.connect(ctx.destination);
+                    bark.start(t + i * 0.35);
+                    bark.stop(t + i * 0.35 + 0.2);
+                }
+            };
+            // Dog every 25-50s
+            timeouts.push(setTimeout(() => {
+                scheduleDog();
+                intervals.push(setInterval(() => {
+                    if (Math.random() < 0.35) scheduleDog();
+                }, 25000 + Math.random() * 25000));
+            }, 20000));
+
+            // === 8. EERIE TONAL WHISPERS (dissonant pad) ===
+            const scheduleWhisper = () => {
+                const t = ctx.currentTime;
+                const freqs = [180, 185, 270, 275]; // slightly detuned for unease
+                freqs.forEach(f => {
+                    const osc = ctx.createOscillator();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(f, t);
+                    const g = ctx.createGain();
+                    g.gain.setValueAtTime(0, t);
+                    g.gain.linearRampToValueAtTime(0.008, t + 2);
+                    g.gain.setValueAtTime(0.008, t + 4);
+                    g.gain.linearRampToValueAtTime(0, t + 6);
+                    osc.connect(g);
+                    g.connect(ctx.destination);
+                    osc.start(t);
+                    osc.stop(t + 6.5);
+                });
+            };
+            // Whisper pad every 30-60s
+            timeouts.push(setTimeout(() => {
+                scheduleWhisper();
+                intervals.push(setInterval(() => {
+                    if (Math.random() < 0.45) scheduleWhisper();
+                }, 30000 + Math.random() * 30000));
+            }, 10000));
+
+            // === 9. RANDOM TWIG SNAP (sharp transient) ===
+            const scheduleSnap = () => {
+                const t = ctx.currentTime;
+                const snapBuffer = ctx.createBuffer(1, ctx.sampleRate * 0.08, ctx.sampleRate);
+                const snapData = snapBuffer.getChannelData(0);
+                for (let i = 0; i < snapData.length; i++) {
+                    snapData[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ctx.sampleRate * 0.01));
+                }
+                const snapSrc = ctx.createBufferSource();
+                snapSrc.buffer = snapBuffer;
+                const snapFilter = ctx.createBiquadFilter();
+                snapFilter.type = 'highpass';
+                snapFilter.frequency.setValueAtTime(2000, t);
+                const snapGain = ctx.createGain();
+                snapGain.gain.setValueAtTime(0.04, t);
+                snapGain.gain.linearRampToValueAtTime(0, t + 0.08);
+                snapSrc.connect(snapFilter);
+                snapFilter.connect(snapGain);
+                snapGain.connect(ctx.destination);
+                snapSrc.start(t);
+            };
+            // Snap every 15-40s
+            intervals.push(setInterval(() => {
+                if (Math.random() < 0.3) scheduleSnap();
+            }, 15000 + Math.random() * 25000));
+
+            // === 10. WATER DRIP IN WELL (occasional hollow plop) ===
+            const scheduleDrip = () => {
+                const t = ctx.currentTime;
+                const dripOsc = ctx.createOscillator();
+                dripOsc.type = 'sine';
+                dripOsc.frequency.setValueAtTime(1200, t);
+                dripOsc.frequency.exponentialRampToValueAtTime(400, t + 0.08);
+                const dripGain = ctx.createGain();
+                dripGain.gain.setValueAtTime(0.025, t);
+                dripGain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+                const dripFilter = ctx.createBiquadFilter();
+                dripFilter.type = 'bandpass';
+                dripFilter.frequency.setValueAtTime(800, t);
+                dripFilter.Q.setValueAtTime(5, t);
+                dripOsc.connect(dripFilter);
+                dripFilter.connect(dripGain);
+                dripGain.connect(ctx.destination);
+                dripOsc.start(t);
+                dripOsc.stop(t + 0.4);
+            };
+            // Drip every 5-12s
+            intervals.push(setInterval(() => {
+                if (Math.random() < 0.5) scheduleDrip();
+            }, 5000 + Math.random() * 7000));
+
+            // === 11. HEARTBEAT-LIKE PULSE (very subtle, builds tension) ===
+            const heartOsc = ctx.createOscillator();
+            heartOsc.type = 'sine';
+            heartOsc.frequency.setValueAtTime(40, now);
+            const heartGain = ctx.createGain();
+            heartGain.gain.setValueAtTime(0, now);
+            const heartLfo = ctx.createOscillator();
+            heartLfo.type = 'sine';
+            heartLfo.frequency.setValueAtTime(1.1, now); // ~66 bpm
+            const heartLfoGain = ctx.createGain();
+            heartLfoGain.gain.setValueAtTime(0.012, now);
+            heartLfo.connect(heartLfoGain);
+            heartLfoGain.connect(heartGain.gain);
+            heartOsc.connect(heartGain);
+            heartGain.connect(ctx.destination);
+            heartOsc.start(now);
+            heartLfo.start(now);
+            nodes.push(heartOsc, heartGain, heartLfo, heartLfoGain);
+
+            console.log('[Klooster] Creepy ambient audio started (11 layers)');
+        } catch (e) {
+            console.warn('[Klooster] Audio failed:', e);
+        }
+    },
+
+    _stopCreepyAudio: function() {
+        // Stop all intervals
+        this._audioIntervals.forEach(id => clearInterval(id));
+        this._audioIntervals = [];
+        // Stop all timeouts
+        this._audioTimeouts.forEach(id => clearTimeout(id));
+        this._audioTimeouts = [];
+        // Stop all audio nodes
+        this._audioNodes.forEach(node => {
+            try {
+                if (node.stop) node.stop();
+                if (node.disconnect) node.disconnect();
+            } catch (e) { /* already stopped */ }
+        });
+        this._audioNodes = [];
+        // Close context
+        if (this._audioCtx && this._audioCtx.state !== 'closed') {
+            this._audioCtx.close().catch(() => {});
+            this._audioCtx = null;
+        }
+        console.log('[Klooster] Creepy ambient audio stopped');
+    },
+
     // Scene entry
     onEnter: function(game) {
         console.log('[Klooster] Scene entered');
         console.log('[Klooster] Hotspots:', this.hotspots.map(h => h.id));
         game.showNotification('Arrived at Ter Apel Klooster - Click the Volvo (bottom right)');
+
+        // Start creepy ambient audio
+        this._startCreepyAudio();
         
         if (!game.getFlag('first_klooster_visit')) {
             game.setFlag('first_klooster_visit', true);
@@ -306,6 +683,7 @@ const KloosterScene = {
     
     // Scene exit
     onExit: function(game) {
+        this._stopCreepyAudio();
         console.log('[Klooster] Scene exited');
     }
 };

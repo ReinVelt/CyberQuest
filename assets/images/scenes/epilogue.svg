@@ -1,190 +1,985 @@
-<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
-  <!-- Epilogue Scene - Spring at Ryan's house, peaceful resolution -->
-  
-  <defs>
-    <!-- Spring sky gradient -->
-    <linearGradient id="springSkyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#87CEEB;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#B0E0E6;stop-opacity:1" />
-    </linearGradient>
-    
-    <!-- Grass gradient (brighter spring green) -->
-    <linearGradient id="springGrassGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#7CFC00;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#00FF00;stop-opacity:0.8" />
-    </linearGradient>
-    
-    <!-- Canal gradient -->
-    <linearGradient id="springCanalGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#5DADE2;stop-opacity:1" />
-    </linearGradient>
-  </defs>
-  
-  <!-- Bright spring sky -->
-  <rect x="0" y="0" width="1920" height="650" fill="url(#springSkyGradient)"/>
-  
-  <!-- White fluffy clouds -->
-  <g id="clouds" opacity="0.8">
-    <!-- Cloud 1 -->
-    <ellipse cx="300" cy="150" rx="80" ry="40" fill="#FFFFFF"/>
-    <ellipse cx="250" cy="160" rx="60" ry="35" fill="#FFFFFF"/>
-    <ellipse cx="350" cy="155" rx="70" ry="38" fill="#FFFFFF"/>
-    
-    <!-- Cloud 2 -->
-    <ellipse cx="800" cy="200" rx="100" ry="50" fill="#FFFFFF"/>
-    <ellipse cx="740" cy="210" rx="75" ry="42" fill="#FFFFFF"/>
-    <ellipse cx="860" cy="205" rx="85" ry="45" fill="#FFFFFF"/>
-    
-    <!-- Cloud 3 -->
-    <ellipse cx="1400" cy="120" rx="90" ry="45" fill="#FFFFFF"/>
-    <ellipse cx="1350" cy="130" rx="70" ry="38" fill="#FFFFFF"/>
-    <ellipse cx="1450" cy="125" rx="75" ry="40" fill="#FFFFFF"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+<defs>
+  <!-- ═══════════════════════════════════════════════ -->
+  <!--  GRADIENTS                                      -->
+  <!-- ═══════════════════════════════════════════════ -->
+
+  <!-- Cinematic spring sky — warm golden hour tones -->
+  <linearGradient id="springSky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#1a3a5c"/>
+    <stop offset="18%"  stop-color="#3d6d9e"/>
+    <stop offset="40%"  stop-color="#7FB3D8"/>
+    <stop offset="65%"  stop-color="#B5DAF0"/>
+    <stop offset="82%"  stop-color="#E0C9A8"/>
+    <stop offset="100%" stop-color="#F5D194"/>
+  </linearGradient>
+
+  <!-- Rich grass -->
+  <linearGradient id="springGrass" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#5DAF34"/>
+    <stop offset="30%"  stop-color="#4A9A28"/>
+    <stop offset="70%"  stop-color="#3D8020"/>
+    <stop offset="100%" stop-color="#2D5F15"/>
+  </linearGradient>
+
+  <!-- Canal water — deep cinematic blue -->
+  <linearGradient id="canalWater" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#3A7BBF"/>
+    <stop offset="50%"  stop-color="#2A5F9E"/>
+    <stop offset="100%" stop-color="#1A4A80"/>
+  </linearGradient>
+
+  <!-- Road surface -->
+  <linearGradient id="roadGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#555"/>
+    <stop offset="40%"  stop-color="#444"/>
+    <stop offset="100%" stop-color="#383838"/>
+  </linearGradient>
+
+  <!-- Sun glow — large cinematic flare -->
+  <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%"   stop-color="#FFFBE8" stop-opacity="1"/>
+    <stop offset="15%"  stop-color="#FFE882" stop-opacity="0.95"/>
+    <stop offset="40%"  stop-color="#FFD54F" stop-opacity="0.5"/>
+    <stop offset="70%"  stop-color="#FFB74D" stop-opacity="0.15"/>
+    <stop offset="100%" stop-color="#FF8F00" stop-opacity="0"/>
+  </radialGradient>
+
+  <!-- Lens flare gradient -->
+  <radialGradient id="lensFlare1" cx="50%" cy="50%" r="50%">
+    <stop offset="0%"  stop-color="#FFFFFF" stop-opacity="0.7"/>
+    <stop offset="30%" stop-color="#FFE082" stop-opacity="0.3"/>
+    <stop offset="100%" stop-color="#FFB74D" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="lensFlare2" cx="50%" cy="50%" r="50%">
+    <stop offset="0%"  stop-color="#89CFF0" stop-opacity="0.5"/>
+    <stop offset="50%" stop-color="#4FC3F7" stop-opacity="0.15"/>
+    <stop offset="100%" stop-color="#0288D1" stop-opacity="0"/>
+  </radialGradient>
+
+  <!-- God ray gradient -->
+  <linearGradient id="godRayGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#FFF8E1" stop-opacity="0.25"/>
+    <stop offset="60%"  stop-color="#FFE082" stop-opacity="0.06"/>
+    <stop offset="100%" stop-color="#FFD54F" stop-opacity="0"/>
+  </linearGradient>
+
+  <!-- Atmospheric haze -->
+  <linearGradient id="hazeGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#B8D8F0" stop-opacity="0"/>
+    <stop offset="60%"  stop-color="#C8E0F4" stop-opacity="0.15"/>
+    <stop offset="100%" stop-color="#D4E8F8" stop-opacity="0.35"/>
+  </linearGradient>
+
+  <!-- Vignette gradient -->
+  <radialGradient id="vignetteGrad" cx="50%" cy="50%" r="70%">
+    <stop offset="0%"   stop-color="#000000" stop-opacity="0"/>
+    <stop offset="65%"  stop-color="#000000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000000" stop-opacity="0.45"/>
+  </radialGradient>
+
+  <!-- Water reflection gradient -->
+  <linearGradient id="waterReflection" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#7FB3D8" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="#3A7BBF" stop-opacity="0.1"/>
+  </linearGradient>
+
+  <!-- Chimney smoke gradient -->
+  <radialGradient id="smokeGrad" cx="50%" cy="50%" r="50%">
+    <stop offset="0%"  stop-color="#CCCCCC" stop-opacity="0.3"/>
+    <stop offset="100%" stop-color="#999999" stop-opacity="0"/>
+  </radialGradient>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!--  FILTERS                                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+
+  <!-- Water shimmer -->
+  <filter id="waterShimmer" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.015 0.06" numOctaves="3" seed="7">
+      <animate attributeName="seed" values="1;3;5;7;9;7;5;3;1" dur="8s" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" scale="5"/>
+  </filter>
+
+  <!-- Depth-of-field blur for distant elements -->
+  <filter id="distantBlur" x="-2%" y="-2%" width="104%" height="104%">
+    <feGaussianBlur stdDeviation="1.8"/>
+  </filter>
+
+  <!-- Soft glow filter -->
+  <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+    <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+  </filter>
+
+  <!-- Bloom filter for bright areas -->
+  <filter id="bloomFilter" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="12" result="bloom"/>
+    <feComposite in="SourceGraphic" in2="bloom" operator="over"/>
+  </filter>
+
+  <!-- Film grain -->
+  <filter id="filmGrain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise">
+      <animate attributeName="seed" values="0;100" dur="0.5s" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+    <feBlend in="SourceGraphic" in2="grayNoise" mode="multiply" result="grainBlend"/>
+    <feComponentTransfer in="grainBlend">
+      <feFuncA type="linear" slope="0.06"/>
+    </feComponentTransfer>
+  </filter>
+
+  <!-- Drop shadow for trees -->
+  <filter id="treeShadow" x="-20%" y="-10%" width="140%" height="130%">
+    <feDropShadow dx="8" dy="12" stdDeviation="6" flood-color="#1a3a0a" flood-opacity="0.25"/>
+  </filter>
+
+  <!-- House shadow -->
+  <filter id="houseShadow" x="-15%" y="-10%" width="135%" height="130%">
+    <feDropShadow dx="10" dy="15" stdDeviation="8" flood-color="#1a3a0a" flood-opacity="0.3"/>
+  </filter>
+
+  <!-- Sun bloom -->
+  <filter id="sunBloom" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="25" result="largeBl"/>
+    <feComposite in="SourceGraphic" in2="largeBl" operator="over"/>
+  </filter>
+
+  <!-- Petal shadow -->
+  <filter id="petalShadow">
+    <feDropShadow dx="1" dy="2" stdDeviation="1" flood-color="#000" flood-opacity="0.15"/>
+  </filter>
+</defs>
+
+<style>
+  /* ═══════════════════════════════════════════════ */
+  /*  ANIMATIONS                                     */
+  /* ═══════════════════════════════════════════════ */
+
+  @keyframes cloudDrift1 {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(220px); }
+  }
+  @keyframes cloudDrift2 {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-180px); }
+  }
+  @keyframes cloudDrift3 {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(150px); }
+  }
+  @keyframes cloudDrift4 {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-250px); }
+  }
+
+  @keyframes birdFly1 { 0%{transform:translateX(0)} 100%{transform:translateX(400px)} }
+  @keyframes birdFly2 { 0%{transform:translateX(0)} 100%{transform:translateX(-350px)} }
+  @keyframes birdFlap { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(-1)} }
+
+  @keyframes waterGlint {
+    0%,100% { opacity: 0; transform: scale(0.5); }
+    50%     { opacity: 0.85; transform: scale(1.2); }
+  }
+
+  @keyframes boatDrift {
+    0%,100% { transform: translateX(0); }
+    50%     { transform: translateX(25px); }
+  }
+
+  @keyframes waveHand {
+    0%,100% { transform: rotate(0deg); }
+    25%     { transform: rotate(-18deg); }
+    75%     { transform: rotate(18deg); }
+  }
+
+  @keyframes leafSway {
+    0%,100% { transform: rotate(0deg) scale(1); }
+    25%     { transform: rotate(2.5deg) scale(1.02); }
+    75%     { transform: rotate(-2.5deg) scale(0.98); }
+  }
+
+  @keyframes turbineSpin1 { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+  @keyframes turbineSpin2 { 0%{transform:rotate(0deg)} 100%{transform:rotate(-360deg)} }
+
+  @keyframes flowerBob {
+    0%,100% { transform: translateY(0) rotate(0deg); }
+    30%     { transform: translateY(-4px) rotate(3deg); }
+    70%     { transform: translateY(-2px) rotate(-3deg); }
+  }
+
+  @keyframes sunPulse {
+    0%,100% { r: 120; opacity: 0.6; }
+    50%     { r: 145; opacity: 0.75; }
+  }
+
+  @keyframes godRayPulse {
+    0%,100% { opacity: 0.12; }
+    50%     { opacity: 0.25; }
+  }
+
+  @keyframes godRaySway {
+    0%,100% { transform: rotate(0deg); }
+    50%     { transform: rotate(3deg); }
+  }
+
+  @keyframes lensFlareFloat {
+    0%,100% { opacity: 0.3; transform: scale(1); }
+    50%     { opacity: 0.6; transform: scale(1.15); }
+  }
+
+  @keyframes petalDrift1 {
+    0%   { transform: translate(0,0) rotate(0deg); opacity: 0.8; }
+    25%  { transform: translate(35px,80px) rotate(90deg); opacity: 0.9; }
+    50%  { transform: translate(20px,180px) rotate(200deg); opacity: 0.7; }
+    75%  { transform: translate(55px,300px) rotate(310deg); opacity: 0.5; }
+    100% { transform: translate(40px,420px) rotate(400deg); opacity: 0; }
+  }
+  @keyframes petalDrift2 {
+    0%   { transform: translate(0,0) rotate(0deg); opacity: 0.7; }
+    25%  { transform: translate(-30px,70px) rotate(-80deg); opacity: 0.85; }
+    50%  { transform: translate(-15px,160px) rotate(-180deg); opacity: 0.6; }
+    75%  { transform: translate(-40px,280px) rotate(-280deg); opacity: 0.4; }
+    100% { transform: translate(-25px,400px) rotate(-380deg); opacity: 0; }
+  }
+  @keyframes petalDrift3 {
+    0%   { transform: translate(0,0) rotate(0deg); opacity: 0.6; }
+    30%  { transform: translate(25px,100px) rotate(120deg); opacity: 0.8; }
+    60%  { transform: translate(10px,220px) rotate(240deg); opacity: 0.5; }
+    100% { transform: translate(30px,380px) rotate(360deg); opacity: 0; }
+  }
+
+  @keyframes pollenFloat {
+    0%   { transform: translate(0,0); opacity: 0; }
+    15%  { opacity: 0.6; }
+    50%  { transform: translate(40px, -60px); opacity: 0.4; }
+    85%  { opacity: 0.5; }
+    100% { transform: translate(80px, -30px); opacity: 0; }
+  }
+
+  @keyframes smokeRise {
+    0%   { transform: translate(0,0) scale(1); opacity: 0.25; }
+    50%  { transform: translate(15px,-40px) scale(1.5); opacity: 0.15; }
+    100% { transform: translate(30px,-80px) scale(2.2); opacity: 0; }
+  }
+
+  @keyframes butterflyPath {
+    0%   { transform: translate(0,0); }
+    15%  { transform: translate(40px,-20px); }
+    30%  { transform: translate(90px,-10px); }
+    45%  { transform: translate(120px,-35px); }
+    60%  { transform: translate(160px,-15px); }
+    75%  { transform: translate(200px,-30px); }
+    90%  { transform: translate(230px,-5px); }
+    100% { transform: translate(260px,-20px); }
+  }
+  @keyframes butterflyWing {
+    0%,100% { transform: scaleX(1); }
+    50%     { transform: scaleX(0.3); }
+  }
+
+  @keyframes waterRipple {
+    0%,100% { rx: 4; ry: 1.5; opacity: 0.3; }
+    50%     { rx: 12; ry: 3; opacity: 0; }
+  }
+
+  @keyframes grassWave {
+    0%,100% { transform: skewX(0deg); }
+    50%     { transform: skewX(2deg); }
+  }
+
+  @keyframes warmPulse {
+    0%,100% { opacity: 0.04; }
+    50%     { opacity: 0.07; }
+  }
+
+  @keyframes starTwinkle {
+    0%,100% { opacity: 0; }
+    50%     { opacity: 0.6; }
+  }
+
+  /* Class assignments */
+  .cloud-1  { animation: cloudDrift1 50s linear infinite; }
+  .cloud-2  { animation: cloudDrift2 65s linear infinite; }
+  .cloud-3  { animation: cloudDrift3 45s linear infinite; }
+  .cloud-4  { animation: cloudDrift4 55s linear infinite; }
+
+  .bird-g1  { animation: birdFly1 30s linear infinite; }
+  .bird-g2  { animation: birdFly2 35s linear infinite; }
+  .bird-wing { animation: birdFlap 0.6s ease-in-out infinite; }
+
+  .water-glint { animation: waterGlint 3s ease-in-out infinite; }
+  .boat-drift  { animation: boatDrift 8s ease-in-out infinite; }
+  .wave-hand   { animation: waveHand 2s ease-in-out infinite; transform-origin: 50% 100%; }
+
+  .leaf-sway { animation: leafSway 4s ease-in-out infinite; transform-origin: 50% 100%; }
+  .flower-bob { animation: flowerBob 3.5s ease-in-out infinite; }
+
+  .god-ray { animation: godRayPulse 6s ease-in-out infinite; }
+  .god-ray-sway { animation: godRaySway 8s ease-in-out infinite; transform-origin: 50% 0%; }
+
+  .lens-flare { animation: lensFlareFloat 5s ease-in-out infinite; }
+
+  .petal-1 { animation: petalDrift1 8s ease-in-out infinite; }
+  .petal-2 { animation: petalDrift2 10s ease-in-out infinite; }
+  .petal-3 { animation: petalDrift3 9s ease-in-out infinite; }
+
+  .pollen { animation: pollenFloat 7s ease-in-out infinite; }
+
+  .smoke-wisp { animation: smokeRise 5s ease-out infinite; }
+
+  .butterfly-path { animation: butterflyPath 12s ease-in-out infinite alternate; }
+  .butterfly-wing { animation: butterflyWing 0.2s ease-in-out infinite; }
+
+  .water-ripple { animation: waterRipple 4s ease-out infinite; }
+
+  .grass-wave { animation: grassWave 5s ease-in-out infinite; }
+
+  .warm-pulse { animation: warmPulse 8s ease-in-out infinite; }
+</style>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  SKY — cinematic golden-hour spring sky                -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<rect x="0" y="0" width="1920" height="660" fill="url(#springSky)"/>
+
+<!-- Horizon warmth band -->
+<rect x="0" y="560" width="1920" height="100" fill="#F5D194" opacity="0.12"/>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  SUN with cinematic bloom                              -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g filter="url(#sunBloom)">
+  <!-- Outer glow -->
+  <circle cx="350" cy="180" r="180" fill="url(#sunGlow)" opacity="0.5"/>
+  <!-- Breathing glow -->
+  <circle cx="350" cy="180" r="120" fill="url(#sunGlow)" opacity="0.6">
+    <animate attributeName="r" values="120;145;120" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.6;0.75;0.6" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Sun core -->
+  <circle cx="350" cy="180" r="50" fill="#FFF8E1" opacity="0.95"/>
+  <circle cx="350" cy="180" r="35" fill="#FFFFFF"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  GOD RAYS — volumetric light shafts from sun           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g opacity="0.18">
+  <g class="god-ray-sway">
+    <polygon points="350,180 100,700 200,700" fill="url(#godRayGrad)" class="god-ray" style="animation-delay:0s;"/>
+    <polygon points="350,180 280,750 400,750" fill="url(#godRayGrad)" class="god-ray" style="animation-delay:1.5s;"/>
+    <polygon points="350,180 500,800 620,800" fill="url(#godRayGrad)" class="god-ray" style="animation-delay:3s;"/>
+    <polygon points="350,180 680,850 780,850" fill="url(#godRayGrad)" class="god-ray" style="animation-delay:0.8s;"/>
   </g>
-  
-  <!-- Sun -->
-  <circle cx="1700" cy="200" r="80" fill="#FFD700" opacity="0.6"/>
-  <circle cx="1700" cy="200" r="60" fill="#FFFF00" opacity="0.8"/>
-  
-  <!-- Distant horizon -->
-  <rect x="0" y="600" width="1920" height="50" fill="#90EE90" opacity="0.5"/>
-  
-  <!-- Lush spring grass -->
-  <rect x="0" y="650" width="1920" height="430" fill="url(#springGrassGradient)"/>
-  
-  <!-- Flowers in grass (colorful spring blooms) -->
-  <g id="flowers">
-    <!-- Flower cluster 1 -->
-    <circle cx="250" cy="750" r="8" fill="#FF69B4"/>
-    <circle cx="270" cy="755" r="7" fill="#FF1493"/>
-    <circle cx="290" cy="752" r="8" fill="#FF69B4"/>
-    <circle cx="260" cy="770" r="6" fill="#FFB6C1"/>
-    
-<!--    Flower cluster 2 -->
-    <circle cx="600" cy="820" r="7" fill="#FFFF00"/>
-    <circle cx="620" cy="825" r="8" fill="#FFD700"/>
-    <circle cx="640" cy="822" r="7" fill="#FFFF00"/>
-    
-    <!-- Flower cluster 3 -->
-    <circle cx="1100" cy="780" r="8" fill="#9370DB"/>
-    <circle cx="1120" cy="785" r="7" fill="#8A2BE2"/>
-    <circle cx="1140" cy="782" r="8" fill="#9370DB"/>
-    
-    <!-- Flower cluster 4 -->
-    <circle cx="1500" cy="850" r="7" fill="#FF6347"/>
-    <circle cx="1520" cy="855" r="8" fill="#FF4500"/>
-    <circle cx="1540" cy="852" r="7" fill="#FF6347"/>
+  <g class="god-ray-sway" style="animation-delay:2s;">
+    <polygon points="350,180 900,900 1020,900" fill="url(#godRayGrad)" class="god-ray" style="animation-delay:2.2s;"/>
+    <polygon points="350,180 1150,850 1280,850" fill="url(#godRayGrad)" class="god-ray" style="animation-delay:4s;"/>
   </g>
-  
-  <!-- Canal (brighter in spring) -->
-  <ellipse cx="960" cy="850" rx="800" ry="60" fill="url(#springCanalGradient)" opacity="0.9"/>
-  <ellipse cx="960" cy="850" rx="750" ry="50" fill="#ADD8E6" opacity="0.4"/>
-  
-  <!-- Boat on canal (someone waving) -->
-  <g id="boat" transform="translate(650, 840)">
-    <ellipse cx="0" cy="0" rx="60" ry="18" fill="#8B4513" stroke="#654321" stroke-width="3"/>
-    <rect x="-50" y="-8" width="100" height="12" fill="#D2691E" stroke="#654321" stroke-width="2"/>
-    
-    <!-- Person waving -->
-    <circle cx="15" cy="-25" r="8" fill="#FDB" stroke="#000" stroke-width="2"/>
-    <rect x="12" y="-15" width="6" height="15" fill="#4169E1" stroke="#000" stroke-width="1"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  LENS FLARE ARTIFACTS                                  -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g opacity="0.5">
+  <circle cx="550" cy="340" r="25" fill="url(#lensFlare1)" class="lens-flare"/>
+  <circle cx="700" cy="430" r="15" fill="url(#lensFlare2)" class="lens-flare" style="animation-delay:1s;"/>
+  <circle cx="850" cy="500" r="35" fill="url(#lensFlare1)" class="lens-flare" style="animation-delay:2.5s;" opacity="0.25"/>
+  <circle cx="1000" cy="560" r="10" fill="url(#lensFlare2)" class="lens-flare" style="animation-delay:1.8s;"/>
+  <!-- Anamorphic streak -->
+  <ellipse cx="350" cy="180" rx="400" ry="3" fill="#FFFFFF" opacity="0.15">
+    <animate attributeName="rx" values="400;500;400" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.15;0.25;0.15" dur="6s" repeatCount="indefinite"/>
+  </ellipse>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CLOUDS — volumetric, layered, cinematic               -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g opacity="0.7">
+  <!-- Cloud 1 — large foreground cloud -->
+  <g class="cloud-1">
+    <ellipse cx="280" cy="200" rx="110" ry="40" fill="#FFFFFF" opacity="0.85"/>
+    <ellipse cx="330" cy="190" rx="80" ry="35" fill="#FFFFFF" opacity="0.9"/>
+    <ellipse cx="240" cy="195" rx="70" ry="30" fill="#F8F8FF" opacity="0.8"/>
+    <ellipse cx="310" cy="210" rx="60" ry="22" fill="#FFF8E1" opacity="0.3"/>
+  </g>
+
+  <!-- Cloud 2 -->
+  <g class="cloud-2">
+    <ellipse cx="900" cy="150" rx="130" ry="45" fill="#FFFFFF" opacity="0.8"/>
+    <ellipse cx="960" cy="140" rx="90" ry="38" fill="#FFFFFF" opacity="0.85"/>
+    <ellipse cx="840" cy="145" rx="75" ry="32" fill="#F0F8FF" opacity="0.75"/>
+    <ellipse cx="920" cy="165" rx="70" ry="24" fill="#FFF3E0" opacity="0.25"/>
+  </g>
+
+  <!-- Cloud 3 — far, small -->
+  <g class="cloud-3" filter="url(#distantBlur)">
+    <ellipse cx="1500" cy="180" rx="90" ry="32" fill="#FFFFFF" opacity="0.6"/>
+    <ellipse cx="1545" cy="172" rx="65" ry="26" fill="#FFFFFF" opacity="0.65"/>
+    <ellipse cx="1465" cy="175" rx="55" ry="22" fill="#F0F8FF" opacity="0.55"/>
+  </g>
+
+  <!-- Cloud 4 — wisps -->
+  <g class="cloud-4" filter="url(#distantBlur)">
+    <ellipse cx="1700" cy="250" rx="100" ry="25" fill="#FFFFFF" opacity="0.45"/>
+    <ellipse cx="1750" cy="245" rx="70" ry="20" fill="#FFFFFF" opacity="0.5"/>
+  </g>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  DISTANT HORIZON — atmospheric haze + wind turbines    -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g filter="url(#distantBlur)">
+  <!-- Far fields with atmospheric perspective -->
+  <rect x="0" y="610" width="1920" height="50" fill="#8FBC6B" opacity="0.5"/>
+  <rect x="0" y="620" width="1920" height="40" fill="#7DAF55" opacity="0.4"/>
+
+  <!-- Wind turbines (3) -->
+  <g opacity="0.3">
+    <!-- Turbine 1 -->
+    <g transform="translate(500,600)">
+      <rect x="-2" y="0" width="4" height="55" fill="#AAA"/>
+      <g style="animation: turbineSpin1 8s linear infinite; transform-origin: 0 0;">
+        <line x1="0" y1="0" x2="0" y2="-28" stroke="#BBB" stroke-width="2.5"/>
+        <line x1="0" y1="0" x2="24" y2="14" stroke="#BBB" stroke-width="2.5"/>
+        <line x1="0" y1="0" x2="-24" y2="14" stroke="#BBB" stroke-width="2.5"/>
+      </g>
+    </g>
+    <!-- Turbine 2 -->
+    <g transform="translate(1100,605)">
+      <rect x="-2" y="0" width="4" height="50" fill="#AAA"/>
+      <g style="animation: turbineSpin2 10s linear infinite; transform-origin: 0 0;">
+        <line x1="0" y1="0" x2="0" y2="-26" stroke="#BBB" stroke-width="2.5"/>
+        <line x1="0" y1="0" x2="22" y2="13" stroke="#BBB" stroke-width="2.5"/>
+        <line x1="0" y1="0" x2="-22" y2="13" stroke="#BBB" stroke-width="2.5"/>
+      </g>
+    </g>
+    <!-- Turbine 3 -->
+    <g transform="translate(1600,608)">
+      <rect x="-2" y="0" width="4" height="48" fill="#AAA"/>
+      <g style="animation: turbineSpin1 12s linear infinite; transform-origin: 0 0;">
+        <line x1="0" y1="0" x2="0" y2="-24" stroke="#BBB" stroke-width="2.5"/>
+        <line x1="0" y1="0" x2="20" y2="12" stroke="#BBB" stroke-width="2.5"/>
+        <line x1="0" y1="0" x2="-20" y2="12" stroke="#BBB" stroke-width="2.5"/>
+      </g>
+    </g>
+  </g>
+</g>
+
+<!-- Atmospheric haze layer over horizon -->
+<rect x="0" y="580" width="1920" height="100" fill="url(#hazeGrad)"/>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  MAIN GRASS FIELD                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<rect x="0" y="655" width="1920" height="425" fill="url(#springGrass)"/>
+
+<!-- Grass colour variation strips with wind animation -->
+<g class="grass-wave">
+  <rect x="0" y="680" width="1920" height="18" fill="#60B838" opacity="0.25"/>
+</g>
+<g class="grass-wave" style="animation-delay: 1s;">
+  <rect x="0" y="720" width="1920" height="14" fill="#4A9A28" opacity="0.2"/>
+</g>
+<g class="grass-wave" style="animation-delay: 2s;">
+  <rect x="0" y="750" width="1920" height="20" fill="#55A530" opacity="0.18"/>
+</g>
+<g class="grass-wave" style="animation-delay: 0.5s;">
+  <rect x="0" y="790" width="1920" height="16" fill="#4D9D2D" opacity="0.15"/>
+</g>
+
+<!-- Sun light stripe on grass -->
+<rect x="100" y="700" width="400" height="80" fill="#FFE082" opacity="0.06" rx="40"/>
+<rect x="1200" y="730" width="300" height="60" fill="#FFE082" opacity="0.04" rx="30"/>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  NORTH TREE ROW (above canal, y < 820)                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g id="northTrees" filter="url(#treeShadow)">
+  <!-- Tree N1 — pink blossoms (far left) -->
+  <rect x="70" y="760" width="16" height="60" fill="#654321"/>
+  <g class="leaf-sway" style="animation-delay: 0.3s;">
+    <circle cx="78" cy="748" r="38" fill="#FFB6C1" opacity="0.9"/>
+    <circle cx="60" cy="736" r="30" fill="#FFC0CB" opacity="0.85"/>
+    <circle cx="96" cy="736" r="30" fill="#FFC0CB" opacity="0.85"/>
+    <circle cx="78" cy="724" r="20" fill="#FFD1DC" opacity="0.5"/>
+  </g>
+
+  <!-- Tree N2 — green oak -->
+  <rect x="260" y="758" width="18" height="62" fill="#5A3A1A"/>
+  <g class="leaf-sway" style="animation-delay: 1.0s;">
+    <circle cx="269" cy="744" r="42" fill="#32CD32"/>
+    <circle cx="250" cy="732" r="34" fill="#228B22"/>
+    <circle cx="288" cy="732" r="34" fill="#228B22"/>
+    <circle cx="269" cy="718" r="22" fill="#3AE03A" opacity="0.4"/>
+  </g>
+
+  <!-- Tree N3 — white blossoms -->
+  <rect x="480" y="762" width="16" height="58" fill="#654321"/>
+  <g class="leaf-sway" style="animation-delay: 1.7s;">
+    <circle cx="488" cy="750" r="39" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="470" cy="738" r="31" fill="#F0F8FF" opacity="0.85"/>
+    <circle cx="506" cy="738" r="31" fill="#F0F8FF" opacity="0.85"/>
+    <circle cx="488" cy="726" r="20" fill="#FFFFFF" opacity="0.4"/>
+  </g>
+
+  <!-- Tree N4 — green -->
+  <rect x="620" y="756" width="17" height="64" fill="#5A3A1A"/>
+  <g class="leaf-sway" style="animation-delay: 0.6s;">
+    <circle cx="628" cy="742" r="40" fill="#3CB371"/>
+    <circle cx="610" cy="730" r="32" fill="#2E8B57"/>
+    <circle cx="646" cy="730" r="32" fill="#2E8B57"/>
+  </g>
+
+  <!-- Tree N5 — pink blossoms -->
+  <rect x="1100" y="760" width="16" height="60" fill="#654321"/>
+  <g class="leaf-sway" style="animation-delay: 2.0s;">
+    <circle cx="1108" cy="748" r="38" fill="#FFB6C1" opacity="0.9"/>
+    <circle cx="1090" cy="736" r="30" fill="#FFC0CB" opacity="0.85"/>
+    <circle cx="1126" cy="736" r="30" fill="#FFC0CB" opacity="0.85"/>
+    <circle cx="1108" cy="724" r="18" fill="#FFD1DC" opacity="0.45"/>
+  </g>
+
+  <!-- Tree N6 — large green oak -->
+  <rect x="1310" y="754" width="20" height="66" fill="#5A3A1A"/>
+  <g class="leaf-sway" style="animation-delay: 0.9s;">
+    <circle cx="1320" cy="740" r="46" fill="#3CB371"/>
+    <circle cx="1300" cy="726" r="38" fill="#2E8B57"/>
+    <circle cx="1340" cy="726" r="38" fill="#2E8B57"/>
+    <circle cx="1320" cy="712" r="28" fill="#4ACA80" opacity="0.5"/>
+  </g>
+
+  <!-- Tree N7 — white blossoms -->
+  <rect x="1560" y="762" width="16" height="58" fill="#654321"/>
+  <g class="leaf-sway" style="animation-delay: 1.5s;">
+    <circle cx="1568" cy="750" r="39" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="1550" cy="738" r="31" fill="#F0F8FF" opacity="0.85"/>
+    <circle cx="1586" cy="738" r="31" fill="#F0F8FF" opacity="0.85"/>
+  </g>
+
+  <!-- Tree N8 — green (far right) -->
+  <rect x="1790" y="757" width="17" height="63" fill="#5A3A1A"/>
+  <g class="leaf-sway" style="animation-delay: 2.4s;">
+    <circle cx="1798" cy="744" r="40" fill="#32CD32"/>
+    <circle cx="1780" cy="732" r="32" fill="#228B22"/>
+    <circle cx="1816" cy="732" r="32" fill="#228B22"/>
+  </g>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CANAL — full-width left→right (y=820..855)            -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- Canal banks -->
+<rect x="0" y="817" width="1920" height="4" fill="#6A5D3A" opacity="0.5"/>
+<rect x="0" y="855" width="1920" height="4" fill="#6A5D3A" opacity="0.5"/>
+
+<!-- Water body -->
+<rect x="0" y="820" width="1920" height="35" fill="url(#canalWater)" filter="url(#waterShimmer)"/>
+
+<!-- Sky reflection on water surface -->
+<rect x="0" y="820" width="1920" height="12" fill="url(#waterReflection)"/>
+
+<!-- Tree reflections in water (blurred, inverted) -->
+<g opacity="0.12" filter="url(#distantBlur)">
+  <circle cx="78"   cy="840" r="20" fill="#FFB6C1"/>
+  <circle cx="269"  cy="842" r="22" fill="#228B22"/>
+  <circle cx="488"  cy="841" r="20" fill="#E8E8E8"/>
+  <circle cx="628"  cy="840" r="21" fill="#2E8B57"/>
+  <circle cx="1108" cy="841" r="20" fill="#FFB6C1"/>
+  <circle cx="1320" cy="842" r="24" fill="#2E8B57"/>
+  <circle cx="1568" cy="841" r="20" fill="#E8E8E8"/>
+  <circle cx="1798" cy="840" r="21" fill="#228B22"/>
+</g>
+
+<!-- Animated water glints — sparkle -->
+<circle cx="180" cy="835" r="3" fill="#FFF" class="water-glint" style="animation-delay:0s;"/>
+<circle cx="520" cy="830" r="2.5" fill="#FFF" class="water-glint" style="animation-delay:0.8s;"/>
+<circle cx="850" cy="838" r="3" fill="#FFF" class="water-glint" style="animation-delay:1.6s;"/>
+<circle cx="1250" cy="832" r="2.5" fill="#FFF" class="water-glint" style="animation-delay:2.4s;"/>
+<circle cx="1600" cy="836" r="3" fill="#FFF" class="water-glint" style="animation-delay:3.2s;"/>
+<circle cx="400" cy="842" r="2" fill="#FFF" class="water-glint" style="animation-delay:1.2s;"/>
+<circle cx="1000" cy="828" r="2" fill="#FFF" class="water-glint" style="animation-delay:2s;"/>
+<circle cx="1700" cy="843" r="2.5" fill="#FFF" class="water-glint" style="animation-delay:0.4s;"/>
+
+<!-- Water ripples -->
+<ellipse cx="300" cy="837" rx="4" ry="1.5" fill="none" stroke="#FFF" stroke-width="0.8" class="water-ripple" style="animation-delay:0s;"/>
+<ellipse cx="750" cy="833" rx="4" ry="1.5" fill="none" stroke="#FFF" stroke-width="0.8" class="water-ripple" style="animation-delay:1.5s;"/>
+<ellipse cx="1400" cy="840" rx="4" ry="1.5" fill="none" stroke="#FFF" stroke-width="0.8" class="water-ripple" style="animation-delay:3s;"/>
+
+<!-- Boat with person — gentle drift -->
+<g class="boat-drift">
+  <g transform="translate(1100,825)">
+    <!-- Boat hull -->
+    <path d="M-25,8 L-20,0 L20,0 L25,8 Z" fill="#8B4513" stroke="#654321" stroke-width="1.5"/>
+    <line x1="-18" y1="3" x2="18" y2="3" stroke="#654321" stroke-width="0.8"/>
+    <!-- Person sitting -->
+    <circle cx="0" cy="-8" r="5" fill="#F4C99C"/>
+    <rect x="-4" y="-3" width="8" height="8" fill="#2E86C1" rx="1"/>
     <!-- Waving arm -->
-    <line x1="15" y1="-12" x2="25" y2="-28" stroke="#FDB" stroke-width="3"/>
-    <circle cx="25" cy="-28" r="3" fill="#FDB" stroke="#000" stroke-width="1"/>
+    <g class="wave-hand">
+      <line x1="4" y1="-2" x2="12" y2="-10" stroke="#F4C99C" stroke-width="2.5" stroke-linecap="round"/>
+    </g>
   </g>
-  
-  <!-- Ryan's house (brighter, peaceful) -->
-  <g id="house" transform="translate(700, 650)">
-    <!-- House body with shading -->
-    <rect x="0" y="40" width="180" height="120" fill="#FAFAFA" stroke="#000" stroke-width="4"/>
-    <rect x="5" y="45" width="170" height="110" fill="#FFFFFF" opacity="0.3"/>
-    
-    <!-- Red roof -->
-    <polygon points="90,0 -20,40 200,40" fill="#DC143C" stroke="#000" stroke-width="4"/>
-    <polygon points="90,5 -15,40 195,40" fill="#FF6347" opacity="0.3"/>
-    
-    <!-- Windows (sunlight glinting) -->
-    <rect x="20" y="70" width="35" height="35" fill="#87CEEB" stroke="#000" stroke-width="3"/>
-    <rect x="125" y="70" width="35" height="35" fill="#87CEEB" stroke="#000" stroke-width="3"/>
-    <line x1="37.5" y1="70" x2="37.5" y2="105" stroke="#000" stroke-width="2"/>
-    <line x1="20" y1="87.5" x2="55" y2="87.5" stroke="#000" stroke-width="2"/>
-    <line x1="142.5" y1="70" x2="142.5" y2="105" stroke="#000" stroke-width="2"/>
-    <line x1="125" y1="87.5" x2="160" y2="87.5" stroke="#000" stroke-width="2"/>
-    
-    <!-- Sunlight reflection on windows -->
-    <rect x="23" y="73" width="10" height="10" fill="#FFFFFF" opacity="0.6"/>
-    <rect x="128" y="73" width="10" height="10" fill="#FFFFFF" opacity="0.6"/>
-    
-    <!-- Door -->
-    <rect x="75" y="105" width="35" height="55" fill="#8B4513" stroke="#000" stroke-width="3"/>
-    <circle cx="102" cy="135" r="3" fill="#FFD700"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  FLOWERS between canal and road (y=859..920)           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g class="flower-bob" style="animation-delay: 0s;">
+  <circle cx="120" cy="880" r="5" fill="#FF69B4"/>
+  <circle cx="135" cy="883" r="6" fill="#FF1493"/>
+  <circle cx="150" cy="881" r="5" fill="#FF69B4"/>
+  <circle cx="142" cy="876" r="3" fill="#FFD700"/>
+</g>
+<g class="flower-bob" style="animation-delay: 0.7s;">
+  <circle cx="550" cy="890" r="5" fill="#FFFF00"/>
+  <circle cx="565" cy="893" r="6" fill="#FFD700"/>
+  <circle cx="580" cy="891" r="5" fill="#FFFF00"/>
+  <circle cx="572" cy="886" r="3" fill="#FF6347"/>
+</g>
+<g class="flower-bob" style="animation-delay: 1.2s;">
+  <circle cx="1000" cy="885" r="5" fill="#9370DB"/>
+  <circle cx="1015" cy="888" r="6" fill="#8A2BE2"/>
+  <circle cx="1030" cy="886" r="5" fill="#9370DB"/>
+  <circle cx="1022" cy="881" r="3" fill="#FFD700"/>
+</g>
+<g class="flower-bob" style="animation-delay: 1.5s;">
+  <circle cx="1650" cy="896" r="5" fill="#FF6347"/>
+  <circle cx="1665" cy="899" r="6" fill="#FF4500"/>
+  <circle cx="1680" cy="897" r="5" fill="#FF6347"/>
+  <circle cx="1672" cy="892" r="3" fill="#FFD700"/>
+</g>
+<g class="flower-bob" style="animation-delay: 0.3s;">
+  <circle cx="340" cy="876" r="4" fill="#FF69B4"/>
+  <circle cx="355" cy="879" r="5" fill="#FF1493"/>
+  <circle cx="370" cy="877" r="4" fill="#FF69B4"/>
+</g>
+<g class="flower-bob" style="animation-delay: 1.9s;">
+  <circle cx="1350" cy="893" r="4" fill="#FFFF00"/>
+  <circle cx="1365" cy="896" r="5" fill="#FFD700"/>
+  <circle cx="1380" cy="894" r="4" fill="#FFFF00"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RYAN'S HOUSE — with cinematic shadows                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g id="house" transform="translate(700, 650)" filter="url(#houseShadow)">
+  <!-- Ground shadow -->
+  <ellipse cx="90" cy="165" rx="120" ry="14" fill="#000" opacity="0.15"/>
+
+  <!-- House body -->
+  <rect x="0" y="40" width="180" height="120" fill="#FAFAFA" stroke="#555" stroke-width="3"/>
+  <rect x="4" y="44" width="172" height="112" fill="#FFFFFF" opacity="0.15"/>
+  <!-- Wall texture — subtle siding lines -->
+  <line x1="4" y1="60" x2="176" y2="60" stroke="#E0E0E0" stroke-width="0.5"/>
+  <line x1="4" y1="80" x2="176" y2="80" stroke="#E0E0E0" stroke-width="0.5"/>
+  <line x1="4" y1="100" x2="176" y2="100" stroke="#E0E0E0" stroke-width="0.5"/>
+  <line x1="4" y1="120" x2="176" y2="120" stroke="#E0E0E0" stroke-width="0.5"/>
+  <line x1="4" y1="140" x2="176" y2="140" stroke="#E0E0E0" stroke-width="0.5"/>
+
+  <!-- Red roof with highlights -->
+  <polygon points="90,-2 -22,40 202,40" fill="#C0392B" stroke="#555" stroke-width="3"/>
+  <polygon points="90,5 -16,40 196,40" fill="#E74C3C" opacity="0.25"/>
+  <!-- Roof shine -->
+  <polygon points="90,8 20,38 80,38" fill="#FFF" opacity="0.06"/>
+
+  <!-- Windows with warm interior glow -->
+  <rect x="20" y="70" width="35" height="35" fill="#87CEEB" stroke="#555" stroke-width="2"/>
+  <rect x="125" y="70" width="35" height="35" fill="#87CEEB" stroke="#555" stroke-width="2"/>
+  <!-- Window cross-mullions -->
+  <line x1="37.5" y1="70" x2="37.5" y2="105" stroke="#555" stroke-width="1.5"/>
+  <line x1="20" y1="87.5" x2="55" y2="87.5" stroke="#555" stroke-width="1.5"/>
+  <line x1="142.5" y1="70" x2="142.5" y2="105" stroke="#555" stroke-width="1.5"/>
+  <line x1="125" y1="87.5" x2="160" y2="87.5" stroke="#555" stroke-width="1.5"/>
+  <!-- Sunlight glint on glass -->
+  <rect x="22" y="72" width="12" height="12" fill="#fff" opacity="0.55"/>
+  <rect x="127" y="72" width="12" height="12" fill="#fff" opacity="0.55"/>
+  <!-- Warm interior glow -->
+  <rect x="22" y="90" width="31" height="13" fill="#FFE082" opacity="0.15"/>
+  <rect x="127" y="90" width="31" height="13" fill="#FFE082" opacity="0.15"/>
+
+  <!-- Door with warm light spill -->
+  <rect x="75" y="105" width="35" height="55" fill="#8B4513" stroke="#555" stroke-width="2"/>
+  <circle cx="102" cy="135" r="3" fill="#FFD700"/>
+  <!-- Door light spill on ground -->
+  <polygon points="75,160 110,160 120,172 65,172" fill="#FFE082" opacity="0.08"/>
+
+  <!-- Chimney -->
+  <rect x="140" y="10" width="20" height="30" fill="#AA3020" stroke="#555" stroke-width="2"/>
+  <!-- Chimney cap -->
+  <rect x="137" y="8" width="26" height="4" fill="#8B2015" stroke="#555" stroke-width="1"/>
+</g>
+
+<!-- Chimney smoke wisps -->
+<g transform="translate(850, 658)">
+  <circle cx="0" cy="0" r="8" fill="url(#smokeGrad)" class="smoke-wisp" style="animation-delay:0s;"/>
+  <circle cx="5" cy="-5" r="10" fill="url(#smokeGrad)" class="smoke-wisp" style="animation-delay:1.5s;"/>
+  <circle cx="-3" cy="-3" r="7" fill="url(#smokeGrad)" class="smoke-wisp" style="animation-delay:3s;"/>
+  <circle cx="8" cy="-8" r="12" fill="url(#smokeGrad)" class="smoke-wisp" style="animation-delay:4.5s;"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  GARAGE / MANCAVE                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g id="garage" transform="translate(895, 685)" filter="url(#houseShadow)">
+  <!-- Building -->
+  <rect x="0" y="50" width="120" height="95" fill="#D0D0D0" stroke="#555" stroke-width="2"/>
+  <polygon points="60,25 0,50 120,50" fill="#A9A9A9" stroke="#555" stroke-width="2"/>
+  <!-- Roof shine -->
+  <polygon points="60,30 25,48 60,48" fill="#FFF" opacity="0.05"/>
+
+  <!-- Garage door -->
+  <rect x="25" y="75" width="70" height="70" fill="#8B4513" stroke="#555" stroke-width="2"/>
+  <line x1="25" y1="93" x2="95" y2="93" stroke="#654321" stroke-width="1.5"/>
+  <line x1="25" y1="111" x2="95" y2="111" stroke="#654321" stroke-width="1.5"/>
+  <line x1="25" y1="129" x2="95" y2="129" stroke="#654321" stroke-width="1.5"/>
+
+  <!-- Side window -->
+  <rect x="100" y="70" width="15" height="20" fill="#87CEEB" stroke="#555" stroke-width="1.5"/>
+  <line x1="107.5" y1="70" x2="107.5" y2="90" stroke="#555" stroke-width="1"/>
+  <rect x="100" y="70" width="7" height="10" fill="#FFF" opacity="0.3"/>
+
+  <!-- Antenna on roof -->
+  <line x1="60" y1="25" x2="60" y2="-5" stroke="#555" stroke-width="3"/>
+  <circle cx="60" cy="-5" r="4" fill="#E74C3C"/>
+  <!-- Antenna blink -->
+  <circle cx="60" cy="-5" r="4" fill="#FF0000" opacity="0">
+    <animate attributeName="opacity" values="0;0.9;0" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Antenna glow -->
+  <circle cx="60" cy="-5" r="10" fill="#FF0000" opacity="0">
+    <animate attributeName="opacity" values="0;0.15;0" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  ROAD — left to right (y=920..965)                     -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- Road shoulders -->
+<rect x="0" y="916" width="1920" height="4" fill="#777" opacity="0.4"/>
+<rect x="0" y="965" width="1920" height="4" fill="#777" opacity="0.4"/>
+<!-- Road surface -->
+<rect x="0" y="920" width="1920" height="45" fill="url(#roadGrad)"/>
+<!-- Wet road reflections -->
+<rect x="300" y="922" width="200" height="40" fill="#FFF" opacity="0.02" rx="10"/>
+<rect x="800" y="922" width="150" height="40" fill="#FFF" opacity="0.02" rx="10"/>
+<rect x="1400" y="922" width="180" height="40" fill="#FFF" opacity="0.02" rx="10"/>
+<!-- Centre line dashes -->
+<line x1="0" y1="942" x2="1920" y2="942" stroke="#FFF" stroke-width="2.5" stroke-dasharray="50,35" opacity="0.65"/>
+<!-- Edge lines -->
+<line x1="0" y1="923" x2="1920" y2="923" stroke="#FFF" stroke-width="1.5" opacity="0.25"/>
+<line x1="0" y1="962" x2="1920" y2="962" stroke="#FFF" stroke-width="1.5" opacity="0.25"/>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  SOUTH TREE ROW (below road, y>970)                    -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g id="southTrees" filter="url(#treeShadow)">
+  <!-- Tree S1 — green (far left) -->
+  <rect x="50" y="975" width="17" height="65" fill="#5A3A1A"/>
+  <g class="leaf-sway" style="animation-delay: 0.8s;">
+    <circle cx="58" cy="964" r="40" fill="#32CD32"/>
+    <circle cx="40" cy="952" r="32" fill="#228B22"/>
+    <circle cx="76" cy="952" r="32" fill="#228B22"/>
+    <circle cx="58" cy="940" r="20" fill="#3AE03A" opacity="0.4"/>
   </g>
-  
-  <!-- Garage/mancave (antennas visible on roof) -->
-  <g id="garage" transform="translate(895, 685)">
-    <rect x="0" y="50" width="120" height="95" fill="#D0D0D0" stroke="#000" stroke-width="3"/>
-    <polygon points="60,25 0,50 120,50" fill="#A9A9A9" stroke="#000" stroke-width="3"/>
-    
-    <!-- Garage door -->
-    <rect x="25" y="75" width="70" height="70" fill="#8B4513" stroke="#000" stroke-width="3"/>
-    <line x1="25" y1="95" x2="95" y2="95" stroke="#654321" stroke-width="2"/>
-    <line x1="25" y1="115" x2="95" y2="115" stroke="#654321" stroke-width="2"/>
-    
-    <!-- Small antenna on roof -->
-    <line x1="60" y1="25" x2="60" y2="5" stroke="#333" stroke-width="3"/>
-    <circle cx="60" cy="5" r="4" fill="#FF0000"/>
+
+  <!-- Tree S2 — pink blossoms -->
+  <rect x="250" y="978" width="16" height="62" fill="#654321"/>
+  <g class="leaf-sway" style="animation-delay: 1.3s;">
+    <circle cx="258" cy="966" r="38" fill="#FFB6C1" opacity="0.9"/>
+    <circle cx="240" cy="954" r="30" fill="#FFC0CB" opacity="0.85"/>
+    <circle cx="276" cy="954" r="30" fill="#FFC0CB" opacity="0.85"/>
+    <circle cx="258" cy="942" r="18" fill="#FFD1DC" opacity="0.45"/>
   </g>
-  
-  <!-- Trees in full spring bloom -->
-  <g id="springTrees">
-    <!-- Tree 1 - pink blossoms -->
-    <rect x="350" y="720" width="20" height="80" fill="#654321" stroke="#000" stroke-width="2"/>
-    <circle cx="360" cy="710" r="50" fill="#FFB6C1" stroke="#000" stroke-width="2"/>
-    <circle cx="340" cy="695" r="42" fill="#FFC0CB" stroke="#000" stroke-width="2"/>
-    <circle cx="380" cy="695" r="42" fill="#FFC0CB" stroke="#000" stroke-width="2"/>
-    
-    <!-- Tree 2 - green leaves -->
-    <rect x="1150" y="730" width="20" height="75" fill="#654321" stroke="#000" stroke-width="2"/>
-    <circle cx="1160" cy="720" r="48" fill="#32CD32" stroke="#000" stroke-width="2"/>
-    <circle cx="1142" cy="707" r="40" fill="#3CB371" stroke="#000" stroke-width="2"/>
-    <circle cx="1178" cy="707" r="40" fill="#3CB371" stroke="#000" stroke-width="2"/>
-    
-    <!-- Tree 3 - white blossoms -->
-    <rect x="1450" y="710" width="22" height="85" fill="#654321" stroke="#000" stroke-width="2"/>
-    <circle cx="1461" cy="700" r="52" fill="#FFFFFF" stroke="#000" stroke-width="2"/>
-    <circle cx="1440" cy="685" r="44" fill="#F0F8FF" stroke="#000" stroke-width="2"/>
-    <circle cx="1482" cy="685" r="44" fill="#F0F8FF" stroke="#000" stroke-width="2"/>
+
+  <!-- Tree S3 — green oak -->
+  <rect x="480" y="972" width="18" height="68" fill="#5A3A1A"/>
+  <g class="leaf-sway" style="animation-delay: 0.2s;">
+    <circle cx="489" cy="960" r="42" fill="#3CB371"/>
+    <circle cx="470" cy="948" r="34" fill="#2E8B57"/>
+    <circle cx="508" cy="948" r="34" fill="#2E8B57"/>
+    <circle cx="489" cy="934" r="22" fill="#4ACA80" opacity="0.4"/>
   </g>
-  
-  <!-- Birds flying (freedom, new beginnings) -->
-  <g id="birds" opacity="0.6">
-    <path d="M 400 300 Q 415 290 430 300 M 420 300 Q 420 285 420 300" stroke="#000" stroke-width="3" fill="none"/>
-    <path d="M 450 320 Q 465 310 480 320 M 470 320 Q 470 305 470 320" stroke="#000" stroke-width="3" fill="none"/>
-    <path d="M 700 250 Q 715 240 730 250 M 720 250 Q 720 235 720 250" stroke="#000" stroke-width="3" fill="none"/>
-    <path d="M 1200 280 Q 1215 270 1230 280 M 1220 280 Q 1220 265 1220 280" stroke="#000" stroke-width="3" fill="none"/>
-    <path d="M 1550 230 Q 1565 220 1580 230 M 1570 230 Q 1570 215 1570 230" stroke="#000" stroke-width="3" fill="none"/>
+
+  <!-- Tree S4 — white blossoms -->
+  <rect x="700" y="976" width="16" height="64" fill="#654321"/>
+  <g class="leaf-sway" style="animation-delay: 1.8s;">
+    <circle cx="708" cy="964" r="39" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="692" cy="953" r="31" fill="#F0F8FF" opacity="0.85"/>
+    <circle cx="724" cy="953" r="31" fill="#F0F8FF" opacity="0.85"/>
+    <circle cx="708" cy="940" r="20" fill="#FFFFFF" opacity="0.4"/>
   </g>
-  
-  <!-- Windturbines in distance (peaceful now, no longer menacing) -->
-  <g id="windturbines" opacity="0.4">
-    <rect x="1680" y="530" width="6" height="70" fill="#DDD" stroke="#AAA" stroke-width="1"/>
-    <circle cx="1683" cy="530" r="8" fill="#FFF" stroke="#AAA" stroke-width="1"/>
-    <line x1="1683" y1="530" x2="1683" y2="500" stroke="#CCC" stroke-width="2"/>
-    <line x1="1683" y1="530" x2="1705" y2="540" stroke="#CCC" stroke-width="2"/>
-    
-    <rect x="1740" y="540" width="5" height="60" fill="#DDD" stroke="#AAA" stroke-width="1"/>
-    <circle cx="1742" cy="540" r="7" fill="#FFF" stroke="#AAA" stroke-width="1"/>
-    <line x1="1742" y1="540" x2="1742" y2="515" stroke="#CCC" stroke-width="1.5"/>
-    
-    <rect x="1800" y="545" width="5" height="55" fill="#DDD" stroke="#AAA" stroke-width="1"/>
-    <circle cx="1802" cy="545" r="6" fill="#FFF" stroke="#AAA" stroke-width="1"/>
-    <line x1="1802" y1="545" x2="1802" y2="523" stroke="#CCC" stroke-width="1.5"/>
+
+  <!-- Tree S5 — green -->
+  <rect x="940" y="974" width="17" height="66" fill="#5A3A1A"/>
+  <g class="leaf-sway" style="animation-delay: 0.6s;">
+    <circle cx="948" cy="962" r="41" fill="#32CD32"/>
+    <circle cx="930" cy="950" r="33" fill="#228B22"/>
+    <circle cx="966" cy="950" r="33" fill="#228B22"/>
   </g>
-  
-  <!-- Road -->
-  <rect x="0" y="920" width="1920" height="50" fill="#666" opacity="0.4"/>
-  <line x1="0" y1="945" x2="1920" y2="945" stroke="#FFF" stroke-width="3" stroke-dasharray="50,35" opacity="0.6"/>
-  
-  <!-- Light bloom effect (peaceful atmosphere) -->
-  <rect x="0" y="0" width="1920" height="1080" fill="url(#springSkyGradient)" opacity="0.1"/>
+
+  <!-- Tree S6 — pink -->
+  <rect x="1160" y="978" width="16" height="62" fill="#654321"/>
+  <g class="leaf-sway" style="animation-delay: 1.1s;">
+    <circle cx="1168" cy="966" r="38" fill="#FFB6C1" opacity="0.9"/>
+    <circle cx="1150" cy="954" r="30" fill="#FFC0CB" opacity="0.85"/>
+    <circle cx="1186" cy="954" r="30" fill="#FFC0CB" opacity="0.85"/>
+    <circle cx="1168" cy="942" r="18" fill="#FFD1DC" opacity="0.45"/>
+  </g>
+
+  <!-- Tree S7 — large green oak -->
+  <rect x="1380" y="970" width="20" height="70" fill="#5A3A1A"/>
+  <g class="leaf-sway" style="animation-delay: 2.2s;">
+    <circle cx="1390" cy="958" r="46" fill="#3CB371"/>
+    <circle cx="1370" cy="944" r="38" fill="#2E8B57"/>
+    <circle cx="1410" cy="944" r="38" fill="#2E8B57"/>
+    <circle cx="1390" cy="932" r="28" fill="#4ACA80" opacity="0.5"/>
+  </g>
+
+  <!-- Tree S8 — white blossoms (far right) -->
+  <rect x="1620" y="976" width="16" height="64" fill="#654321"/>
+  <g class="leaf-sway" style="animation-delay: 0.4s;">
+    <circle cx="1628" cy="964" r="40" fill="#FFFFFF" opacity="0.9"/>
+    <circle cx="1610" cy="952" r="32" fill="#F0F8FF" opacity="0.85"/>
+    <circle cx="1646" cy="952" r="32" fill="#F0F8FF" opacity="0.85"/>
+    <circle cx="1628" cy="940" r="20" fill="#FFFFFF" opacity="0.4"/>
+  </g>
+
+  <!-- Tree S9 — green (far right edge) -->
+  <rect x="1840" y="974" width="17" height="66" fill="#5A3A1A"/>
+  <g class="leaf-sway" style="animation-delay: 1.6s;">
+    <circle cx="1848" cy="962" r="38" fill="#32CD32"/>
+    <circle cx="1832" cy="950" r="30" fill="#228B22"/>
+    <circle cx="1864" cy="950" r="30" fill="#228B22"/>
+  </g>
+</g>
+
+<!-- Flowers south of road -->
+<g class="flower-bob" style="animation-delay: 2s;">
+  <circle cx="350" cy="1010" r="5" fill="#FF69B4"/>
+  <circle cx="365" cy="1013" r="6" fill="#FF1493"/>
+  <circle cx="380" cy="1011" r="5" fill="#FF69B4"/>
+  <circle cx="372" cy="1006" r="3" fill="#FFD700"/>
+</g>
+<g class="flower-bob" style="animation-delay: 0.8s;">
+  <circle cx="850" cy="1020" r="6" fill="#FFFF00"/>
+  <circle cx="865" cy="1023" r="5" fill="#FFD700"/>
+  <circle cx="880" cy="1021" r="6" fill="#FFFF00"/>
+  <circle cx="872" cy="1016" r="3" fill="#FF6347"/>
+</g>
+<g class="flower-bob" style="animation-delay: 1.3s;">
+  <circle cx="1500" cy="1015" r="5" fill="#9370DB"/>
+  <circle cx="1515" cy="1018" r="6" fill="#8A2BE2"/>
+  <circle cx="1530" cy="1016" r="5" fill="#9370DB"/>
+  <circle cx="1522" cy="1011" r="3" fill="#FFD700"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  FLOATING CHERRY BLOSSOM PETALS                        -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g filter="url(#petalShadow)">
+  <!-- Petal cluster 1 — from left blossoms -->
+  <ellipse cx="200" cy="500" rx="4" ry="2.5" fill="#FFC0CB" class="petal-1" style="animation-delay:0s;" opacity="0.8"/>
+  <ellipse cx="230" cy="480" rx="3" ry="2" fill="#FFB6C1" class="petal-2" style="animation-delay:1.5s;" opacity="0.7"/>
+  <ellipse cx="180" cy="520" rx="3.5" ry="2" fill="#FFD1DC" class="petal-3" style="animation-delay:3s;" opacity="0.6"/>
+
+  <!-- Petal cluster 2 — mid -->
+  <ellipse cx="600" cy="550" rx="4" ry="2.5" fill="#FFC0CB" class="petal-2" style="animation-delay:2s;" opacity="0.7"/>
+  <ellipse cx="640" cy="530" rx="3" ry="2" fill="#FFB6C1" class="petal-1" style="animation-delay:4s;" opacity="0.6"/>
+
+  <!-- Petal cluster 3 — right -->
+  <ellipse cx="1200" cy="490" rx="3.5" ry="2.5" fill="#FFD1DC" class="petal-3" style="animation-delay:1s;" opacity="0.7"/>
+  <ellipse cx="1250" cy="510" rx="4" ry="2" fill="#FFC0CB" class="petal-1" style="animation-delay:5s;" opacity="0.65"/>
+  <ellipse cx="1180" cy="530" rx="3" ry="2" fill="#FFB6C1" class="petal-2" style="animation-delay:3.5s;" opacity="0.6"/>
+
+  <!-- Petal cluster 4 — far right -->
+  <ellipse cx="1650" cy="500" rx="3.5" ry="2" fill="#FFC0CB" class="petal-3" style="animation-delay:2.5s;" opacity="0.65"/>
+  <ellipse cx="1700" cy="480" rx="4" ry="2.5" fill="#FFD1DC" class="petal-1" style="animation-delay:6s;" opacity="0.6"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  FLOATING POLLEN / DUST MOTES (in sunlight)           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g opacity="0.4">
+  <circle cx="300" cy="400" r="1.5" fill="#FFE082" class="pollen" style="animation-delay:0s;"/>
+  <circle cx="420" cy="350" r="1" fill="#FFF8E1" class="pollen" style="animation-delay:1s;"/>
+  <circle cx="250" cy="500" r="1.5" fill="#FFE082" class="pollen" style="animation-delay:2.5s;"/>
+  <circle cx="500" cy="450" r="1" fill="#FFF8E1" class="pollen" style="animation-delay:4s;"/>
+  <circle cx="380" cy="550" r="1.5" fill="#FFE082" class="pollen" style="animation-delay:5.5s;"/>
+  <circle cx="600" cy="380" r="1" fill="#FFF8E1" class="pollen" style="animation-delay:3s;"/>
+  <circle cx="150" cy="420" r="1" fill="#FFE082" class="pollen" style="animation-delay:6s;"/>
+  <circle cx="700" cy="500" r="1.5" fill="#FFF8E1" class="pollen" style="animation-delay:1.5s;"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  BUTTERFLY                                             -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g class="butterfly-path" transform="translate(600,750)">
+  <g class="butterfly-wing">
+    <!-- Left wing -->
+    <ellipse cx="-5" cy="0" rx="6" ry="4" fill="#FF8C00" stroke="#D2691E" stroke-width="0.5"/>
+    <circle cx="-6" cy="-1" r="1.5" fill="#FFD700" opacity="0.7"/>
+  </g>
+  <g class="butterfly-wing" style="animation-delay: 0.1s;">
+    <!-- Right wing -->
+    <ellipse cx="5" cy="0" rx="6" ry="4" fill="#FF8C00" stroke="#D2691E" stroke-width="0.5"/>
+    <circle cx="6" cy="-1" r="1.5" fill="#FFD700" opacity="0.7"/>
+  </g>
+  <!-- Body -->
+  <ellipse cx="0" cy="0" rx="1.5" ry="4" fill="#333"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  BIRDS — cinematic V-formations                       -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g opacity="0.5">
+  <g class="bird-g1">
+    <g class="bird-wing">
+      <path d="M400,300 Q415,285 430,300" stroke="#2C2C2C" stroke-width="2.5" fill="none"/>
+    </g>
+    <g class="bird-wing" style="animation-delay: 0.15s;">
+      <path d="M450,315 Q465,300 480,315" stroke="#2C2C2C" stroke-width="2.5" fill="none"/>
+    </g>
+    <g class="bird-wing" style="animation-delay: 0.3s;">
+      <path d="M425,305 Q440,290 455,305" stroke="#2C2C2C" stroke-width="2" fill="none"/>
+    </g>
+    <g class="bird-wing" style="animation-delay: 0.1s;">
+      <path d="M410,320 Q425,305 440,320" stroke="#2C2C2C" stroke-width="2" fill="none"/>
+    </g>
+  </g>
+  <g class="bird-g2">
+    <g class="bird-wing">
+      <path d="M1200,260 Q1215,245 1230,260" stroke="#2C2C2C" stroke-width="2.5" fill="none"/>
+    </g>
+    <g class="bird-wing" style="animation-delay: 0.2s;">
+      <path d="M1170,275 Q1185,260 1200,275" stroke="#2C2C2C" stroke-width="2" fill="none"/>
+    </g>
+    <g class="bird-wing" style="animation-delay: 0.35s;">
+      <path d="M1225,278 Q1240,263 1255,278" stroke="#2C2C2C" stroke-width="2" fill="none"/>
+    </g>
+  </g>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CINEMATIC OVERLAYS                                    -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<!-- Warm golden-hour colour grade -->
+<rect x="0" y="0" width="1920" height="1080" fill="#FFD54F" opacity="0.04" class="warm-pulse"/>
+
+<!-- Second warm layer — bottom heavy (ground warmth) -->
+<rect x="0" y="600" width="1920" height="480" fill="#FF8F00" opacity="0.03"/>
+
+<!-- Cinematic vignette -->
+<rect x="0" y="0" width="1920" height="1080" fill="url(#vignetteGrad)"/>
+
+<!-- Letterbox bars (subtle cinematic framing) -->
+<rect x="0" y="0" width="1920" height="20" fill="#000" opacity="0.35"/>
+<rect x="0" y="1060" width="1920" height="20" fill="#000" opacity="0.35"/>
+
+<!-- Film grain overlay (very subtle) -->
+<rect x="0" y="0" width="1920" height="1080" filter="url(#filmGrain)" fill="transparent" opacity="0.3" style="pointer-events:none;"/>
 </svg>

@@ -44,10 +44,10 @@ const LivingroomScene = {
         },
         {
             id: 'ies',
-            x: 17,
-            y: 37,
-            width: 15,
-            height: 30,
+            x: 21,
+            y: 30,
+            width: 12,
+            height: 35,
             cursor: 'pointer',
             action: (game) => {
                 if (!game.getFlag('talked_to_ies')) {
@@ -200,10 +200,7 @@ const LivingroomScene = {
             npcCharacters.forEach(npc => npc.remove());
         }
         
-        // Add Ies sitting on armchair watching TV
-        setTimeout(() => {
-            game.showCharacter('ies', 20, 55, 0.14);
-        }, 100);
+        // Ies is drawn directly in the livingroom SVG (sitting on armchair)
         
         // Add two white dogs on the rug by the fireplace
         setTimeout(() => {

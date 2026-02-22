@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="wallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#d0d0d0"/>
+      <stop offset="100%" style="stop-color:#a0a0a0"/>
+    </linearGradient>
+    <linearGradient id="floorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6a6a6a"/>
+      <stop offset="100%" style="stop-color:#4a4a4a"/>
+    </linearGradient>
+    <linearGradient id="doorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8a8a8a"/>
+      <stop offset="100%" style="stop-color:#5a5a5a"/>
+    </linearGradient>
+    <radialGradient id="lightGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0"/>
+    </radialGradient>
+    
+    <!-- Filters -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Ceiling -->
+  <rect width="1920" height="400" fill="#9a9a9a"/>
+  
+  <!-- Main corridor perspective -->
+  <!-- Back wall -->
+  <polygon points="600,400 1320,400 1320,700 600,700" fill="url(#wallGrad)"/>
+  
+  <!-- Left wall -->
+  <polygon points="0,0 600,400 600,700 0,1080" fill="#b5b5b5"/>
+  
+  <!-- Right wall -->
+  <polygon points="1920,0 1320,400 1320,700 1920,1080" fill="#a0a0a0"/>
+  
+  <!-- Floor -->
+  <polygon points="0,1080 600,700 1320,700 1920,1080" fill="url(#floorGrad)"/>
+  
+  <!-- Floor tiles -->
+  <g opacity="0.3">
+    <line x1="300" y1="850" x2="800" y2="700" stroke="#555" stroke-width="2"/>
+    <line x1="600" y1="900" x2="1000" y2="700" stroke="#555" stroke-width="2"/>
+    <line x1="900" y1="950" x2="1200" y2="700" stroke="#555" stroke-width="2"/>
+    <line x1="1200" y1="1000" x2="1320" y2="700" stroke="#555" stroke-width="2"/>
+  </g>
+  
+  <!-- Ceiling lights -->
+  <g opacity="0.8">
+    <rect x="850" y="200" width="220" height="40" fill="#ffffff" filter="url(#glow)">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="3s" repeatCount="indefinite"/>
+    </rect>
+    <ellipse cx="960" cy="220" rx="300" ry="150" fill="url(#lightGlow)"/>
+  </g>
+  
+  <!-- Security office door (left) -->
+  <g transform="translate(150, 480)">
+    <rect width="180" height="280" fill="url(#doorGrad)" stroke="#444" stroke-width="3"/>
+    <rect x="10" y="120" width="60" height="80" fill="#2a2a2a" opacity="0.4"/>
+    <circle cx="150" cy="140" r="8" fill="#666"/>
+    <rect x="20" y="20" width="140" height="40" fill="#666"/>
+    <text x="90" y="48" fill="#fff" font-family="sans-serif" font-size="18" text-anchor="middle" font-weight="bold">SICHERHEIT</text>
+    <!-- Light on -->
+    <rect x="140" y="30" width="20" height="20" fill="#00ff00" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.8;0.6" dur="2s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  
+  <!-- Lab 3 door (left side) -->
+  <g transform="translate(450, 500)">
+    <rect width="160" height="250" fill="url(#doorGrad)" stroke="#444" stroke-width="3"/>
+    <rect x="10" y="100" width="60" height="100" fill="#1a2a4a" opacity="0.5"/>
+    <circle cx="140" cy="130" r="7" fill="#666"/>
+    <rect x="15" y="15" width="130" height="35" fill="#666"/>
+    <text x="80" y="38" fill="#fff" font-family="sans-serif" font-size="16" text-anchor="middle">LABOR 3</text>
+    <text x="80" y="55" fill="#ffaa00" font-family="sans-serif" font-size="11" text-anchor="middle">ELEKTRONIK</text>
+  </g>
+  
+  <!-- Tech room door (right side) -->
+  <g transform="translate(1300, 500)">
+    <rect width="160" height="250" fill="url(#doorGrad)" stroke="#444" stroke-width="3"/>
+    <rect x="90" y="100" width="60" height="100" fill="#1a1a2a" opacity="0.4"/>
+    <circle cx="20" cy="130" r="7" fill="#666"/>
+    <rect x="15" y="15" width="130" height="35" fill="#666"/>
+    <text x="80" y="38" fill="#fff" font-family="sans-serif" font-size="16" text-anchor="middle">TECHNIK</text>
+    <text x="80" y="55" fill="#ff4444" font-family="sans-serif" font-size="11" text-anchor="middle">ZUTRITT VERBOTEN</text>
+  </g>
+  
+  <!-- Basement stairwell door (right far) -->
+  <g transform="translate(1550, 520)">
+    <rect width="140" height="220" fill="#4a4a4a" stroke="#333" stroke-width="3"/>
+    <rect x="10" y="80" width="50" height="90" fill="#1a1a1a" opacity="0.6"/>
+    <circle cx="120" cy="110" r="6" fill="#555"/>
+    <rect x="10" y="10" width="120" height="30" fill="#555"/>
+    <text x="70" y="30" fill="#ffcc00" font-family="sans-serif" font-size="14" text-anchor="middle" font-weight="bold">KELLER B</text>
+    <!-- Stairs visible through window -->
+    <g opacity="0.4">
+      <line x1="15" y1="85" x2="55" y2="100" stroke="#666" stroke-width="2"/>
+      <line x1="15" y1="100" x2="55" y2="115" stroke="#666" stroke-width="2"/>
+      <line x1="15" y1="115" x2="55" y2="130" stroke="#666" stroke-width="2"/>
+    </g>
+  </g>
+  
+  <!-- Back wall features -->
+  <g>
+    <!-- Fire extinguisher -->
+    <rect x="750" y="480" width="40" height="100" fill="#cc0000"/>
+    <rect x="755" y="485" width="30" height="20" fill="#fff"/>
+    <text x="770" y="502" fill="#cc0000" font-family="sans-serif" font-size="14" font-weight="bold">F</text>
+    
+    <!-- Warning signs -->
+    <rect x="900" y="450" width="80" height="60" fill="#ffcc00" stroke="#333" stroke-width="2"/>
+    <text x="940" y="485" fill="#000" font-family="sans-serif" font-size="32" text-anchor="middle">⚠</text>
+    
+    <!-- Clock -->
+    <circle cx="1100" cy="480" r="35" fill="#333" stroke="#555" stroke-width="3"/>
+    <circle cx="1100" cy="480" r="30" fill="#fff"/>
+    <line x1="1100" y1="480" x2="1100" y2="460" stroke="#000" stroke-width="3"/>
+    <line x1="1100" y1="480" x2="1115" y2="490" stroke="#000" stroke-width="2"/>
+    <circle cx="1100" cy="480" r="3" fill="#cc0000"/>
+  </g>
+  
+  <!-- Ventilation grilles -->
+  <g fill="#555" opacity="0.6">
+    <rect x="650" y="420" width="80" height="60" stroke="#444" stroke-width="2"/>
+    <line x1="655" y1="435" x2="725" y2="435" stroke="#444" stroke-width="1"/>
+    <line x1="655" y1="450" x2="725" y2="450" stroke="#444" stroke-width="1"/>
+    <line x1="655" y1="465" x2="725" y2="465" stroke="#444" stroke-width="1"/>
+    
+    <rect x="1190" y="420" width="80" height="60" stroke="#444" stroke-width="2"/>
+    <line x1="1195" y1="435" x2="1265" y2="435" stroke="#444" stroke-width="1"/>
+    <line x1="1195" y1="450" x2="1265" y2="450" stroke="#444" stroke-width="1"/>
+    <line x1="1195" y1="465" x2="1265" y2="465" stroke="#444" stroke-width="1"/>
+  </g>
+  
+  <!-- Emergency exit sign -->
+  <g transform="translate(1700, 100)">
+    <rect width="150" height="60" fill="#00aa00" stroke="#006600" stroke-width="2"/>
+    <text x="75" y="40" fill="#fff" font-family="sans-serif" font-size="32" text-anchor="middle" font-weight="bold">EXIT</text>
+  </g>
+  
+  <!-- Meshtastic indicator (top right HUD) -->
+  <g transform="translate(1750, 50)">
+    <rect width="140" height="80" fill="#1a1a1a" stroke="#00ff00" stroke-width="2" opacity="0.8"/>
+    <text x="70" y="25" fill="#00ff00" font-family="monospace" font-size="12" text-anchor="middle">MESHTASTIC</text>
+    <text x="70" y="45" fill="#00ff00" font-family="monospace" font-size="10" text-anchor="middle">EVA_W</text>
+    <circle cx="70" cy="60" r="8" fill="#00ff00" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;1;0.6" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>

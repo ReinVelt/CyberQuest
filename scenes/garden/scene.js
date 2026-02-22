@@ -666,8 +666,241 @@ const GardenScene = {
         }
     },
 
+    /* ═══════════════════════════════════════════════════════
+     *  AMBIENT NATURE AUDIO — Web Audio API synthesis
+     *  Birds singing, bees buzzing, wind, distant turbines
+     * ═══════════════════════════════════════════════════════ */
+    _audioCtx: null,
+    _audioNodes: [],
+    _audioIntervals: [],
+
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            this._audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+
+    _startAmbientAudio: function() {
+        var self = this;
+        try {
+            var ctx = self._getAudioCtx();
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 3);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+
+            // ── WIND (filtered noise via oscillators) ──
+            var windGain = ctx.createGain();
+            windGain.gain.value = 0.025;
+            var windFilter = ctx.createBiquadFilter();
+            windFilter.type = 'lowpass';
+            windFilter.frequency.value = 400;
+            // Simulate wind with detuned oscillators
+            for (var w = 0; w < 3; w++) {
+                var windOsc = ctx.createOscillator();
+                windOsc.type = 'sawtooth';
+                windOsc.frequency.value = 80 + w * 15;
+                windOsc.detune.value = Math.random() * 20 - 10;
+                var windOscGain = ctx.createGain();
+                windOscGain.gain.value = 0.01;
+                windOsc.connect(windOscGain).connect(windFilter);
+                windOsc.start();
+                self._audioNodes.push(windOsc, windOscGain);
+            }
+            windFilter.connect(windGain).connect(master);
+            self._audioNodes.push(windFilter, windGain);
+
+            // Wind modulation (gusts)
+            var windLfo = ctx.createOscillator();
+            windLfo.type = 'sine';
+            windLfo.frequency.value = 0.15;
+            var windLfoGain = ctx.createGain();
+            windLfoGain.gain.value = 0.012;
+            windLfo.connect(windLfoGain).connect(windGain.gain);
+            windLfo.start();
+            self._audioNodes.push(windLfo, windLfoGain);
+
+            // ── DISTANT TURBINE HUM ──
+            var turbGain = ctx.createGain();
+            turbGain.gain.value = 0.008;
+            var turbFilter = ctx.createBiquadFilter();
+            turbFilter.type = 'bandpass';
+            turbFilter.frequency.value = 120;
+            turbFilter.Q.value = 2;
+            var turbOsc = ctx.createOscillator();
+            turbOsc.type = 'sine';
+            turbOsc.frequency.value = 55;
+            turbOsc.connect(turbFilter).connect(turbGain).connect(master);
+            turbOsc.start();
+            self._audioNodes.push(turbOsc, turbFilter, turbGain);
+
+            // Turbine blade swoosh (very subtle LFO)
+            var turbLfo = ctx.createOscillator();
+            turbLfo.type = 'sine';
+            turbLfo.frequency.value = 0.8;
+            var turbLfoGain = ctx.createGain();
+            turbLfoGain.gain.value = 0.003;
+            turbLfo.connect(turbLfoGain).connect(turbGain.gain);
+            turbLfo.start();
+            self._audioNodes.push(turbLfo, turbLfoGain);
+
+            // ── BIRD SONGS (periodic chirps) ──
+            function chirpBird(delay, baseFreq, pattern) {
+                var interval = setInterval(function() {
+                    if (!self._audioCtx) return;
+                    try {
+                        var now = ctx.currentTime;
+                        var birdGain = ctx.createGain();
+                        var birdFilter = ctx.createBiquadFilter();
+                        birdFilter.type = 'bandpass';
+                        birdFilter.frequency.value = baseFreq;
+                        birdFilter.Q.value = 8;
+                        birdGain.gain.setValueAtTime(0, now);
+
+                        var noteTime = now;
+                        for (var n = 0; n < pattern.length; n++) {
+                            var note = pattern[n];
+                            var osc = ctx.createOscillator();
+                            osc.type = 'sine';
+                            osc.frequency.setValueAtTime(note.freq, noteTime);
+                            if (note.slide) {
+                                osc.frequency.linearRampToValueAtTime(note.slide, noteTime + note.dur);
+                            }
+                            osc.connect(birdFilter);
+                            birdGain.gain.setValueAtTime(0, noteTime);
+                            birdGain.gain.linearRampToValueAtTime(note.vol || 0.04, noteTime + 0.01);
+                            birdGain.gain.linearRampToValueAtTime(note.vol || 0.04, noteTime + note.dur - 0.02);
+                            birdGain.gain.linearRampToValueAtTime(0, noteTime + note.dur);
+                            osc.start(noteTime);
+                            osc.stop(noteTime + note.dur + 0.01);
+                            noteTime += note.dur + (note.gap || 0.05);
+                        }
+                        birdFilter.connect(birdGain).connect(master);
+                    } catch (e) { /* silent */ }
+                }, delay + Math.random() * 2000);
+                self._audioIntervals.push(interval);
+            }
+
+            // Robin song — descending trill
+            chirpBird(3000, 3000, [
+                { freq: 3200, slide: 3600, dur: 0.08, vol: 0.03 },
+                { freq: 3600, slide: 3200, dur: 0.1, vol: 0.035 },
+                { freq: 3400, slide: 2800, dur: 0.12, vol: 0.03 },
+                { freq: 2800, dur: 0.06, vol: 0.025, gap: 0.1 },
+                { freq: 3000, slide: 3500, dur: 0.08, vol: 0.03 },
+                { freq: 3500, slide: 2600, dur: 0.15, vol: 0.035 }
+            ]);
+
+            // Blackbird — slower melodic phrase
+            chirpBird(5000, 2200, [
+                { freq: 2200, slide: 2800, dur: 0.2, vol: 0.03, gap: 0.08 },
+                { freq: 2600, dur: 0.15, vol: 0.025, gap: 0.06 },
+                { freq: 2400, slide: 1800, dur: 0.25, vol: 0.03, gap: 0.15 },
+                { freq: 2000, slide: 2400, dur: 0.18, vol: 0.025 }
+            ]);
+
+            // Great tit — "teacher teacher" two-note
+            chirpBird(4000, 3800, [
+                { freq: 3800, dur: 0.12, vol: 0.025, gap: 0.08 },
+                { freq: 3200, dur: 0.12, vol: 0.025, gap: 0.2 },
+                { freq: 3800, dur: 0.12, vol: 0.025, gap: 0.08 },
+                { freq: 3200, dur: 0.12, vol: 0.025 }
+            ]);
+
+            // Distant cuckoo (low, periodic)
+            chirpBird(8000, 800, [
+                { freq: 700, dur: 0.3, vol: 0.015, gap: 0.25 },
+                { freq: 550, dur: 0.35, vol: 0.012 }
+            ]);
+
+            // Sparrow chatter (quick random chirps)
+            chirpBird(2500, 4500, [
+                { freq: 4200, dur: 0.04, vol: 0.02, gap: 0.03 },
+                { freq: 4800, dur: 0.03, vol: 0.018, gap: 0.04 },
+                { freq: 4500, dur: 0.04, vol: 0.02, gap: 0.03 },
+                { freq: 4000, dur: 0.05, vol: 0.015 }
+            ]);
+
+            // ── BEE BUZZ (continuous, subtle) ──
+            var beeGain = ctx.createGain();
+            beeGain.gain.value = 0.006;
+            var beeFilter = ctx.createBiquadFilter();
+            beeFilter.type = 'bandpass';
+            beeFilter.frequency.value = 220;
+            beeFilter.Q.value = 3;
+            var beeOsc1 = ctx.createOscillator();
+            beeOsc1.type = 'sawtooth';
+            beeOsc1.frequency.value = 190;
+            var beeOsc2 = ctx.createOscillator();
+            beeOsc2.type = 'square';
+            beeOsc2.frequency.value = 195;
+            beeOsc1.connect(beeFilter);
+            beeOsc2.connect(beeFilter);
+            beeFilter.connect(beeGain).connect(master);
+            beeOsc1.start();
+            beeOsc2.start();
+            self._audioNodes.push(beeOsc1, beeOsc2, beeFilter, beeGain);
+
+            // Bee buzz modulation (fly-by effect)
+            var beeLfo = ctx.createOscillator();
+            beeLfo.type = 'sine';
+            beeLfo.frequency.value = 0.3;
+            var beeLfoGain = ctx.createGain();
+            beeLfoGain.gain.value = 30;
+            beeLfo.connect(beeLfoGain).connect(beeOsc1.frequency);
+            beeLfo.start();
+            self._audioNodes.push(beeLfo, beeLfoGain);
+
+            // ── CRICKET CHIRPS (evening atmosphere) ──
+            var cricketInterval = setInterval(function() {
+                if (!self._audioCtx) return;
+                try {
+                    var now = ctx.currentTime;
+                    for (var c = 0; c < 3 + Math.floor(Math.random() * 3); c++) {
+                        var cOsc = ctx.createOscillator();
+                        var cGain = ctx.createGain();
+                        cOsc.type = 'sine';
+                        cOsc.frequency.value = 5500 + Math.random() * 1000;
+                        var t = now + c * 0.06;
+                        cGain.gain.setValueAtTime(0, t);
+                        cGain.gain.linearRampToValueAtTime(0.008, t + 0.01);
+                        cGain.gain.linearRampToValueAtTime(0, t + 0.04);
+                        cOsc.connect(cGain).connect(master);
+                        cOsc.start(t);
+                        cOsc.stop(t + 0.05);
+                    }
+                } catch (e) { /* silent */ }
+            }, 1200 + Math.random() * 800);
+            self._audioIntervals.push(cricketInterval);
+
+        } catch (e) {
+            console.log('[Garden] Audio init failed:', e);
+        }
+    },
+
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(node) {
+            try {
+                if (node.stop) node.stop();
+                if (node.disconnect) node.disconnect();
+            } catch (e) { /* already stopped */ }
+        });
+        this._audioNodes = [];
+    },
+
+    /* ═══════════════════════════════════════════════════════
+     *  SCENE LIFECYCLE
+     * ═══════════════════════════════════════════════════════ */
     onEnter: function(game) {
         document.getElementById('scene-background').className = 'scene-garden';
+
+        // Start ambient nature sounds
+        this._startAmbientAudio();
         
         if (!game.getFlag('visited_garden')) {
             game.setFlag('visited_garden', true);
@@ -677,6 +910,10 @@ const GardenScene = {
                 { speaker: 'Ryan', text: 'Almost.' }
             ]);
         }
+    },
+
+    onExit: function(game) {
+        this._stopAmbientAudio();
     }
 };
 

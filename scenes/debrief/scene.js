@@ -104,7 +104,7 @@ const DebriefScene = {
         // Show Van der Berg character
         const tid0 = setTimeout(() => {
             if (typeof game.showCharacter === 'function') {
-                game.showCharacter('vandeberg', 70, 65, 0.28);
+                game.showCharacter('vandeberg', 70, 65, 0.113);
             }
         }, 300);
         this._timeoutIds.push(tid0);

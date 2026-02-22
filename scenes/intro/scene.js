@@ -1402,15 +1402,30 @@ const IntroScene = {
 
             var c = document.getElementById('cinematic-intro');
             if (c) {
-                c.style.transition = 'opacity 1.5s ease-in';
+                // Slow 3s fade-out of the cinematic overlay to reveal the bg
+                c.style.transition = 'opacity 3s ease-in-out';
                 c.style.opacity = '0';
+
+                // Make the scene background fade in nicely
+                var sceneBg = document.getElementById('scene-background');
+                if (sceneBg) {
+                    sceneBg.style.opacity = '0';
+                    sceneBg.style.transition = 'opacity 3s ease-in-out';
+                    setTimeout(function() { sceneBg.style.opacity = '1'; }, 100);
+                }
+
                 setTimeout(function() {
                     c.remove();
                     document.getElementById('intro-cinematic-style')?.remove();
-                    if (charactersContainer) charactersContainer.style.display = '';
+                    // Keep Ryan hidden — first appearance is the home scene
                     game.voiceEnabled = originalVoiceState;
-                    game.loadScene('home');
-                }, 1600);
+
+                    // Hold on the background for 10 seconds before continuing
+                    setTimeout(function() {
+                        if (charactersContainer) charactersContainer.style.display = '';
+                        game.loadScene('home');
+                    }, 10000);
+                }, 3200);
             }
         }
 

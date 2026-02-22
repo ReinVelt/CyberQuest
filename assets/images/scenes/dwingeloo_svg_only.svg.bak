@@ -1,0 +1,843 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- ── GRADIENTS ── -->
+    <linearGradient id="dw-skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a6a9e"/>
+      <stop offset="30%" stop-color="#7aa0c8"/>
+      <stop offset="60%" stop-color="#a8c8e0"/>
+      <stop offset="85%" stop-color="#c8dce8"/>
+      <stop offset="100%" stop-color="#dae8ef"/>
+    </linearGradient>
+    <linearGradient id="dw-groundGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5a7a3a"/>
+      <stop offset="25%" stop-color="#4a6a2e"/>
+      <stop offset="60%" stop-color="#3d5a28"/>
+      <stop offset="100%" stop-color="#2e4a1e"/>
+    </linearGradient>
+    <linearGradient id="dw-heatherGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7a4a8a"/>
+      <stop offset="50%" stop-color="#8a5a9a"/>
+      <stop offset="100%" stop-color="#6a3a7a"/>
+    </linearGradient>
+    <linearGradient id="dw-dishGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e0ddd5"/>
+      <stop offset="20%" stop-color="#c8c5bc"/>
+      <stop offset="50%" stop-color="#a8a59c"/>
+      <stop offset="80%" stop-color="#8a8880"/>
+      <stop offset="100%" stop-color="#706e68"/>
+    </linearGradient>
+    <linearGradient id="dw-dishInner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#b0ada5"/>
+      <stop offset="50%" stop-color="#908d85"/>
+      <stop offset="100%" stop-color="#787570"/>
+    </linearGradient>
+    <linearGradient id="dw-steelGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a0a098"/>
+      <stop offset="50%" stop-color="#888882"/>
+      <stop offset="100%" stop-color="#70706a"/>
+    </linearGradient>
+    <linearGradient id="dw-concreteGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#c0b8a8"/>
+      <stop offset="100%" stop-color="#a09888"/>
+    </linearGradient>
+    <linearGradient id="dw-buildingGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d4cbb8"/>
+      <stop offset="100%" stop-color="#b8b0a0"/>
+    </linearGradient>
+    <linearGradient id="dw-roofGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8a7a68"/>
+      <stop offset="100%" stop-color="#6a5a48"/>
+    </linearGradient>
+    <radialGradient id="dw-sunGlow" cx="0.15" cy="0.2">
+      <stop offset="0%" stop-color="#fff8e0" stop-opacity="0.6"/>
+      <stop offset="30%" stop-color="#ffe8a0" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#ffe8a0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="dw-signalGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#4db8ff" stop-opacity="0.15"/>
+      <stop offset="60%" stop-color="#4db8ff" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#4db8ff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="dw-pathGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9a8a60"/>
+      <stop offset="100%" stop-color="#7a6a48"/>
+    </linearGradient>
+
+    <!-- ── FILTERS ── -->
+    <filter id="dw-cloudBlur">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+    <filter id="dw-softBlur">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <filter id="dw-mistBlur">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+    <filter id="dw-dishShadow">
+      <feDropShadow dx="6" dy="12" stdDeviation="8" flood-color="#1a2a1a" flood-opacity="0.35"/>
+    </filter>
+    <filter id="dw-buildingShadow">
+      <feDropShadow dx="4" dy="6" stdDeviation="5" flood-color="#1a2a1a" flood-opacity="0.3"/>
+    </filter>
+    <filter id="dw-filmGrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" seed="8" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply"/>
+    </filter>
+    <filter id="dw-glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="dw-redGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- ── CLIP PATHS ── -->
+    <clipPath id="dw-screenClip">
+      <rect x="0" y="0" width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+
+  <!-- ============================================================ -->
+  <!-- SKY                                                          -->
+  <!-- ============================================================ -->
+  <rect width="1920" height="1080" fill="url(#dw-skyGrad)"/>
+
+  <!-- Sun glow upper-left -->
+  <circle cx="280" cy="180" r="400" fill="url(#dw-sunGlow)"/>
+  <!-- Sun disk -->
+  <circle cx="280" cy="180" r="45" fill="#fff8e0" opacity="0.85"/>
+
+  <!-- God rays through clouds -->
+  <g opacity="0.08">
+    <polygon points="280,180 100,1080 160,1080" fill="#fff8d0"/>
+    <polygon points="280,180 320,1080 420,1080" fill="#fff8d0"/>
+    <polygon points="280,180 550,1080 680,1080" fill="#fff8d0"/>
+    <polygon points="280,180 820,1080 900,1080" fill="#fff8d0"/>
+  </g>
+
+  <!-- ── CLOUDS (animated drift) ── -->
+  <g filter="url(#dw-cloudBlur)" opacity="0.85">
+    <!-- Cloud cluster 1 -->
+    <g>
+      <ellipse cx="350" cy="140" rx="140" ry="50" fill="#fff" opacity="0.9"/>
+      <ellipse cx="440" cy="120" rx="100" ry="42" fill="#fff" opacity="0.85"/>
+      <ellipse cx="290" cy="150" rx="90" ry="35" fill="#f8f8f5" opacity="0.8"/>
+      <animateTransform attributeName="transform" type="translate" values="0,0;80,3;0,0" dur="120s" repeatCount="indefinite"/>
+    </g>
+    <!-- Cloud cluster 2 -->
+    <g>
+      <ellipse cx="850" cy="90" rx="170" ry="55" fill="#fff" opacity="0.7"/>
+      <ellipse cx="960" cy="75" rx="120" ry="45" fill="#fff" opacity="0.65"/>
+      <ellipse cx="780" cy="100" rx="100" ry="35" fill="#f8f8f0" opacity="0.6"/>
+      <animateTransform attributeName="transform" type="translate" values="0,0;-60,2;0,0" dur="95s" repeatCount="indefinite"/>
+    </g>
+    <!-- Cloud cluster 3 -->
+    <g>
+      <ellipse cx="1450" cy="110" rx="150" ry="52" fill="#fff" opacity="0.75"/>
+      <ellipse cx="1560" cy="95" rx="110" ry="42" fill="#fff" opacity="0.7"/>
+      <ellipse cx="1350" cy="125" rx="90" ry="32" fill="#f8f8f5" opacity="0.6"/>
+      <animateTransform attributeName="transform" type="translate" values="0,0;50,4;0,0" dur="110s" repeatCount="indefinite"/>
+    </g>
+    <!-- Wispy cloud near sun -->
+    <ellipse cx="400" cy="200" rx="120" ry="25" fill="#fff8e8" opacity="0.4">
+      <animateTransform attributeName="transform" type="translate" values="0,0;40,0;0,0" dur="80s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  <!-- ── BIRDS IN SKY (circling) ── -->
+  <g opacity="0.5" fill="none" stroke="#3a3a3a" stroke-width="1.5">
+    <!-- Bird 1 -->
+    <g>
+      <path d="M0,0 Q4,-4 8,0 Q12,-4 16,0"/>
+      <animateMotion path="M600,160 C700,140 750,180 650,170 C550,160 580,140 600,160" dur="18s" repeatCount="indefinite"/>
+    </g>
+    <!-- Bird 2 -->
+    <g>
+      <path d="M0,0 Q3,-3 6,0 Q9,-3 12,0"/>
+      <animateMotion path="M650,180 C720,165 780,200 700,190 C620,180 630,165 650,180" dur="22s" repeatCount="indefinite"/>
+    </g>
+    <!-- Bird 3 -->
+    <g>
+      <path d="M0,0 Q5,-5 10,0 Q15,-5 20,0"/>
+      <animateMotion path="M580,145 C660,130 700,160 620,155 C540,145 560,130 580,145" dur="25s" repeatCount="indefinite"/>
+    </g>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- FAR TREE LINE & HORIZON                                       -->
+  <!-- ============================================================ -->
+  <!-- Atmospheric haze band -->
+  <rect x="0" y="540" width="1920" height="20" fill="#c0d4e0" opacity="0.45"/>
+
+  <!-- Far tree line left -->
+  <g opacity="0.55">
+    <ellipse cx="60" cy="508" rx="45" ry="58" fill="#3a5828"/>
+    <ellipse cx="120" cy="512" rx="38" ry="52" fill="#4a6830"/>
+    <ellipse cx="175" cy="506" rx="42" ry="56" fill="#3a5828"/>
+    <ellipse cx="235" cy="510" rx="35" ry="48" fill="#4a6830"/>
+    <ellipse cx="290" cy="514" rx="40" ry="52" fill="#3d5c2a"/>
+    <ellipse cx="350" cy="508" rx="38" ry="50" fill="#4a6830"/>
+  </g>
+  <!-- Far tree line right -->
+  <g opacity="0.55">
+    <ellipse cx="1560" cy="510" rx="42" ry="55" fill="#3a5828"/>
+    <ellipse cx="1630" cy="506" rx="48" ry="60" fill="#4a6830"/>
+    <ellipse cx="1700" cy="512" rx="40" ry="54" fill="#3d5c2a"/>
+    <ellipse cx="1770" cy="508" rx="45" ry="58" fill="#4a6830"/>
+    <ellipse cx="1840" cy="514" rx="42" ry="55" fill="#3a5828"/>
+    <ellipse cx="1900" cy="510" rx="38" ry="50" fill="#4a6830"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- GROUND / DRENTHE HEATH                                       -->
+  <!-- ============================================================ -->
+  <rect x="0" y="555" width="1920" height="525" fill="url(#dw-groundGrad)"/>
+
+  <!-- Heather patches (Drenthe is famous for heath) -->
+  <ellipse cx="180" cy="680" rx="120" ry="22" fill="url(#dw-heatherGrad)" opacity="0.4"/>
+  <ellipse cx="1650" cy="720" rx="140" ry="25" fill="url(#dw-heatherGrad)" opacity="0.35"/>
+  <ellipse cx="400" cy="780" rx="100" ry="18" fill="url(#dw-heatherGrad)" opacity="0.3"/>
+  <ellipse cx="1400" cy="850" rx="110" ry="20" fill="url(#dw-heatherGrad)" opacity="0.25"/>
+
+  <!-- Grass texture patches -->
+  <ellipse cx="350" cy="640" rx="90" ry="16" fill="#4a6a28" opacity="0.4"/>
+  <ellipse cx="900" cy="700" rx="130" ry="22" fill="#3d5a22" opacity="0.35"/>
+  <ellipse cx="1500" cy="660" rx="100" ry="18" fill="#4a6a28" opacity="0.4"/>
+  <ellipse cx="600" cy="820" rx="80" ry="14" fill="#3d5a22" opacity="0.3"/>
+
+  <!-- Wildflowers in grass (yellow buttercups, white daisies) -->
+  <g opacity="0.6">
+    <circle cx="200" cy="700" r="2.5" fill="#f0e040"/><circle cx="215" cy="695" r="2" fill="#f0e040"/>
+    <circle cx="230" cy="702" r="2.5" fill="#fff"/><circle cx="250" cy="698" r="2" fill="#f0e040"/>
+    <circle cx="270" cy="705" r="2.5" fill="#fff"/><circle cx="285" cy="693" r="2" fill="#f0e040"/>
+    <circle cx="1600" cy="735" r="2.5" fill="#f0e040"/><circle cx="1620" cy="730" r="2" fill="#fff"/>
+    <circle cx="1640" cy="738" r="2.5" fill="#f0e040"/><circle cx="1660" cy="728" r="2" fill="#f0e040"/>
+    <circle cx="1680" cy="740" r="2.5" fill="#fff"/><circle cx="1700" cy="732" r="2" fill="#f0e040"/>
+  </g>
+
+  <!-- Wind-blown grass tufts -->
+  <g stroke="#4a6a30" stroke-width="1.5" fill="none">
+    <path d="M120,700 Q125,685 130,690">
+      <animateTransform attributeName="transform" type="rotate" values="0,120,700;5,120,700;-3,120,700;0,120,700" dur="4s" repeatCount="indefinite"/>
+    </path>
+    <path d="M125,700 Q130,680 138,688">
+      <animateTransform attributeName="transform" type="rotate" values="0,125,700;4,125,700;-2,125,700;0,125,700" dur="4.5s" repeatCount="indefinite"/>
+    </path>
+    <path d="M1750,700 Q1755,685 1760,690">
+      <animateTransform attributeName="transform" type="rotate" values="0,1750,700;6,1750,700;-2,1750,700;0,1750,700" dur="3.8s" repeatCount="indefinite"/>
+    </path>
+    <path d="M1755,700 Q1762,682 1768,688">
+      <animateTransform attributeName="transform" type="rotate" values="0,1755,700;5,1755,700;-3,1755,700;0,1755,700" dur="4.2s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- ── PATH / GRAVEL ROAD ── -->
+  <polygon points="880,1080 1040,1080 1010,780 940,600 935,570 925,570 930,600 900,780" fill="url(#dw-pathGrad)" opacity="0.65"/>
+  <!-- Gravel texture on path -->
+  <g fill="#a09070" opacity="0.4">
+    <circle cx="950" cy="900" r="2"/><circle cx="970" cy="910" r="1.5"/><circle cx="935" cy="920" r="2"/>
+    <circle cx="960" cy="940" r="1.5"/><circle cx="945" cy="960" r="2"/><circle cx="975" cy="970" r="1.5"/>
+    <circle cx="940" cy="850" r="2"/><circle cx="965" cy="860" r="1.5"/><circle cx="955" cy="830" r="2"/>
+    <circle cx="948" cy="800" r="1.5"/><circle cx="960" cy="810" r="2"/><circle cx="942" cy="790" r="1.5"/>
+  </g>
+  <!-- Path edge dirt -->
+  <line x1="880" y1="1080" x2="900" y2="780" stroke="#6a5a38" stroke-width="2" opacity="0.3"/>
+  <line x1="1040" y1="1080" x2="1010" y2="780" stroke="#6a5a38" stroke-width="2" opacity="0.3"/>
+
+  <!-- ============================================================ -->
+  <!-- CONTROL BUILDING (detailed)                                  -->
+  <!-- ============================================================ -->
+  <g filter="url(#dw-buildingShadow)">
+    <!-- Main building -->
+    <rect x="280" y="430" width="380" height="155" fill="url(#dw-buildingGrad)" stroke="#9a9080" stroke-width="2"/>
+    <!-- Roof -->
+    <polygon points="260,430 680,430 670,385 270,385" fill="url(#dw-roofGrad)" stroke="#8a7a68" stroke-width="1.5"/>
+    <!-- Roof gutter -->
+    <line x1="262" y1="430" x2="678" y2="430" stroke="#8a8070" stroke-width="3"/>
+
+    <!-- Windows (3) with detail -->
+    <g>
+      <!-- Window 1 -->
+      <rect x="310" y="458" width="60" height="72" fill="#5a80a8" stroke="#686058" stroke-width="2.5"/>
+      <line x1="340" y1="458" x2="340" y2="530" stroke="#686058" stroke-width="1.5"/>
+      <line x1="310" y1="494" x2="370" y2="494" stroke="#686058" stroke-width="1.5"/>
+      <rect x="312" y="460" width="12" height="32" fill="#7a9ab8" opacity="0.3"/>
+      <!-- Equipment glow inside -->
+      <rect x="315" y="500" width="20" height="10" fill="#40e870" opacity="0.15"/>
+
+      <!-- Window 2 -->
+      <rect x="395" y="458" width="60" height="72" fill="#5a80a8" stroke="#686058" stroke-width="2.5"/>
+      <line x1="425" y1="458" x2="425" y2="530" stroke="#686058" stroke-width="1.5"/>
+      <line x1="395" y1="494" x2="455" y2="494" stroke="#686058" stroke-width="1.5"/>
+      <rect x="397" y="460" width="12" height="32" fill="#7a9ab8" opacity="0.3"/>
+      <!-- Screen glow inside -->
+      <rect x="400" y="498" width="25" height="15" fill="#30a0ff" opacity="0.12"/>
+
+      <!-- Window 3 -->
+      <rect x="480" y="458" width="60" height="72" fill="#5a80a8" stroke="#686058" stroke-width="2.5"/>
+      <line x1="510" y1="458" x2="510" y2="530" stroke="#686058" stroke-width="1.5"/>
+      <line x1="480" y1="494" x2="540" y2="494" stroke="#686058" stroke-width="1.5"/>
+      <rect x="482" y="460" width="12" height="32" fill="#7a9ab8" opacity="0.3"/>
+    </g>
+
+    <!-- Door -->
+    <rect x="580" y="478" width="58" height="107" fill="#7a6a50" stroke="#5a4a30" stroke-width="2.5" rx="2"/>
+    <rect x="583" y="481" width="52" height="40" fill="#685838" opacity="0.4"/>
+    <rect x="583" y="525" width="52" height="56" fill="#685838" opacity="0.3"/>
+    <circle cx="590" cy="535" r="5" fill="#c8a830" stroke="#a08820" stroke-width="1"/>
+    <!-- Door step -->
+    <rect x="575" y="585" width="68" height="8" fill="#a09888"/>
+
+    <!-- Building label sign -->
+    <rect x="300" y="395" width="340" height="30" fill="#c8c0b0" stroke="#a09888" stroke-width="1" rx="2"/>
+    <text x="470" y="416" font-family="Arial, sans-serif" font-size="16" fill="#3a2a18" text-anchor="middle" font-weight="bold" letter-spacing="1">DWINGELOO RADIO OBSERVATORY</text>
+
+    <!-- Satellite dish on roof -->
+    <g transform="translate(640,370)">
+      <line x1="0" y1="0" x2="0" y2="15" stroke="#888" stroke-width="3"/>
+      <ellipse cx="-12" cy="-2" rx="15" ry="10" fill="#c0c0b8" stroke="#888" stroke-width="1.5"/>
+      <line x1="-12" y1="-2" x2="-2" y2="-12" stroke="#888" stroke-width="1.5"/>
+      <circle cx="-2" cy="-12" r="2" fill="#888"/>
+    </g>
+
+    <!-- Cable conduit from building toward telescope -->
+    <path d="M660,520 Q720,520 780,510 Q850,498 920,500" stroke="#555" stroke-width="3" fill="none" opacity="0.4"/>
+    <path d="M660,525 Q720,525 780,515 Q850,503 920,505" stroke="#444" stroke-width="2" fill="none" opacity="0.3"/>
+  </g>
+
+  <!-- Small annex building -->
+  <g filter="url(#dw-buildingShadow)">
+    <rect x="170" y="480" width="100" height="105" fill="#bab0a0" stroke="#9a9080" stroke-width="1.5"/>
+    <polygon points="155,480 285,480 280,455 160,455" fill="#8a7a68"/>
+    <rect x="195" y="498" width="42" height="52" fill="#5a80a8" stroke="#686058" stroke-width="2"/>
+    <line x1="216" y1="498" x2="216" y2="550" stroke="#686058" stroke-width="1"/>
+    <line x1="195" y1="524" x2="237" y2="524" stroke="#686058" stroke-width="1"/>
+    <!-- Vent/AC unit on annex roof -->
+    <rect x="200" y="452" width="25" height="15" fill="#808080" stroke="#666" stroke-width="1"/>
+    <line x1="205" y1="452" x2="205" y2="460" stroke="#999" stroke-width="0.5"/>
+    <line x1="210" y1="452" x2="210" y2="460" stroke="#999" stroke-width="0.5"/>
+    <line x1="215" y1="452" x2="215" y2="460" stroke="#999" stroke-width="0.5"/>
+    <line x1="220" y1="452" x2="220" y2="460" stroke="#999" stroke-width="0.5"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- TELESCOPE — REALISTIC 25m DWINGELOO DISH (3/4 low-angle)     -->
+  <!-- Viewed from ground level, slightly left of centre.           -->
+  <!-- Dish tilted ~50° elevation (looking up into the sky).        -->
+  <!-- ============================================================ -->
+
+  <!-- ── Ground shadow of telescope ── -->
+  <ellipse cx="980" cy="570" rx="200" ry="25" fill="#1a2a1a" opacity="0.18" filter="url(#dw-mistBlur)"/>
+
+  <!-- ── Concrete foundation tower ── -->
+  <!-- Base plinth (wider) -->
+  <path d="M880,565 L1080,565 L1070,555 L890,555 Z" fill="#a09888" stroke="#908878" stroke-width="1.5"/>
+  <path d="M890,555 L1070,555 L1060,540 L900,540 Z" fill="#b0a898" stroke="#908878" stroke-width="1"/>
+  <!-- Main concrete pedestal (tapered upward) -->
+  <path d="M900,540 L1060,540 L1045,470 L915,470 Z" fill="url(#dw-concreteGrad)" stroke="#908880" stroke-width="2"/>
+  <!-- Pedestal side face (3D depth - right side visible) -->
+  <path d="M1060,540 L1080,565 L1068,488 L1045,470 Z" fill="#9a9080" stroke="#888878" stroke-width="1" opacity="0.6"/>
+  <!-- Weathering stains on concrete -->
+  <path d="M920,530 Q930,520 940,532" stroke="#7a7068" stroke-width="2" fill="none" opacity="0.12"/>
+  <path d="M1010,525 Q1020,515 1030,528" stroke="#7a7068" stroke-width="1.5" fill="none" opacity="0.1"/>
+  <!-- Concrete texture lines -->
+  <line x1="905" y1="510" x2="1055" y2="510" stroke="#a09888" stroke-width="0.8" opacity="0.3"/>
+  <line x1="908" y1="490" x2="1050" y2="490" stroke="#a09888" stroke-width="0.8" opacity="0.25"/>
+
+  <!-- ── Azimuth track (ground-level circular rail) ── -->
+  <ellipse cx="980" cy="558" rx="240" ry="22" fill="none" stroke="#70706a" stroke-width="5" opacity="0.4"/>
+  <ellipse cx="980" cy="558" rx="240" ry="22" fill="none" stroke="#888880" stroke-width="1.5" opacity="0.25" stroke-dasharray="6,10"/>
+  <!-- Track wheels (visible at base) -->
+  <rect x="908" y="555" width="14" height="8" fill="#606058" rx="2"/>
+  <rect x="1038" y="555" width="14" height="8" fill="#606058" rx="2"/>
+
+  <!-- ── YOKE MOUNT (equatorial fork-style, 3/4 perspective) ── -->
+  <!-- Left fork arm (closer to viewer, larger due to perspective) -->
+  <path d="M870,468 L860,455 L850,310 L842,295 L878,295 L885,310 L895,455 L890,468 Z"
+        fill="url(#dw-steelGrad)" stroke="#686862" stroke-width="2"/>
+  <!-- Left arm inner face (3D) -->
+  <path d="M895,455 L890,468 L900,468 L905,455 Z" fill="#7a7a72" opacity="0.5"/>
+  <!-- Left arm lattice cutouts -->
+  <rect x="858" y="340" width="24" height="30" rx="3" fill="#5a7a3a" opacity="0.15" stroke="#787870" stroke-width="1"/>
+  <rect x="860" y="385" width="22" height="28" rx="3" fill="#5a7a3a" opacity="0.12" stroke="#787870" stroke-width="1"/>
+  <!-- Left arm rivets -->
+  <circle cx="862" cy="320" r="3" fill="#9a9a92" stroke="#78786e" stroke-width="1"/>
+  <circle cx="862" cy="425" r="3" fill="#9a9a92" stroke="#78786e" stroke-width="1"/>
+  <circle cx="882" cy="320" r="3" fill="#9a9a92" stroke="#78786e" stroke-width="1"/>
+  <circle cx="882" cy="425" r="3" fill="#9a9a92" stroke="#78786e" stroke-width="1"/>
+  <!-- Left arm diagonal stiffener -->
+  <line x1="855" y1="460" x2="878" y2="340" stroke="#787870" stroke-width="2.5" opacity="0.6"/>
+
+  <!-- Right fork arm (further, narrower due to perspective) -->
+  <path d="M1065,468 L1058,455 L1050,315 L1045,302 L1075,302 L1078,315 L1085,455 L1080,468 Z"
+        fill="url(#dw-steelGrad)" stroke="#686862" stroke-width="2"/>
+  <!-- Right arm inner face -->
+  <path d="M1058,455 L1065,468 L1055,468 L1050,455 Z" fill="#7a7a72" opacity="0.4"/>
+  <!-- Right arm lattice cutouts -->
+  <rect x="1053" y="345" width="20" height="26" rx="3" fill="#5a7a3a" opacity="0.1" stroke="#787870" stroke-width="1"/>
+  <rect x="1054" y="385" width="19" height="24" rx="3" fill="#5a7a3a" opacity="0.08" stroke="#787870" stroke-width="1"/>
+  <!-- Right arm rivets -->
+  <circle cx="1055" cy="325" r="2.5" fill="#9a9a92" stroke="#78786e" stroke-width="0.8"/>
+  <circle cx="1055" cy="425" r="2.5" fill="#9a9a92" stroke="#78786e" stroke-width="0.8"/>
+  <circle cx="1072" cy="325" r="2.5" fill="#9a9a92" stroke="#78786e" stroke-width="0.8"/>
+  <circle cx="1072" cy="425" r="2.5" fill="#9a9a92" stroke="#78786e" stroke-width="0.8"/>
+  <!-- Right arm diagonal stiffener -->
+  <line x1="1060" y1="455" x2="1072" y2="345" stroke="#787870" stroke-width="2" opacity="0.5"/>
+
+  <!-- ── Elevation axis / cross-shaft (connects fork arms) ── -->
+  <ellipse cx="970" cy="302" rx="96" ry="8" fill="#989890" stroke="#787870" stroke-width="2"/>
+  <!-- Bearing housings (left and right) -->
+  <circle cx="872" cy="302" r="14" fill="#888880" stroke="#787870" stroke-width="2"/>
+  <circle cx="872" cy="302" r="8" fill="#787870" stroke="#6a6a62" stroke-width="1.5"/>
+  <circle cx="1068" cy="302" r="12" fill="#888880" stroke="#787870" stroke-width="1.5"/>
+  <circle cx="1068" cy="302" r="7" fill="#787870" stroke="#6a6a62" stroke-width="1"/>
+
+  <!-- ── Counterweight (visible below/behind dish on back side) ── -->
+  <rect x="952" y="315" width="36" height="50" fill="#686862" stroke="#5a5a54" stroke-width="2" rx="3"/>
+  <rect x="948" y="335" width="44" height="18" fill="#606058" stroke="#5a5a54" stroke-width="1" rx="2"/>
+  <!-- Counterweight ribs -->
+  <line x1="955" y1="320" x2="955" y2="362" stroke="#5a5a54" stroke-width="1" opacity="0.4"/>
+  <line x1="970" y1="318" x2="970" y2="363" stroke="#5a5a54" stroke-width="1" opacity="0.4"/>
+  <line x1="985" y1="320" x2="985" y2="362" stroke="#5a5a54" stroke-width="1" opacity="0.4"/>
+
+  <!-- ── Dish back-structure hub (connects dish to elevation axis) ── -->
+  <path d="M935,295 L1005,295 L998,270 L942,270 Z" fill="#787870" stroke="#686862" stroke-width="1.5"/>
+  <!-- Hub cylinder detail -->
+  <ellipse cx="970" cy="270" rx="30" ry="6" fill="#808078" stroke="#686862" stroke-width="1"/>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- THE DISH (3/4 perspective — looking up into the concave bowl)  -->
+  <!-- The dish is tilted ~50° elevation, we see inside the bowl.    -->
+  <!-- Drawn as layered parabolic arcs to simulate depth.            -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+
+  <!-- ── Dish back structure (lattice framework, visible behind rim) ── -->
+  <g opacity="0.35" stroke="#787870" stroke-width="2" fill="none">
+    <!-- Radial trusses visible behind top rim -->
+    <line x1="970" y1="265" x2="880" y2="175"/>
+    <line x1="970" y1="265" x2="1060" y2="175"/>
+    <line x1="970" y1="265" x2="970" y2="158"/>
+    <line x1="970" y1="265" x2="845" y2="215"/>
+    <line x1="970" y1="265" x2="1095" y2="215"/>
+    <!-- Ring truss (circumferential) behind top -->
+    <path d="M855,188 Q910,168 970,163 Q1030,168 1085,188" stroke="#787870" stroke-width="1.5"/>
+    <path d="M870,210 Q920,192 970,188 Q1020,192 1070,210" stroke="#787870" stroke-width="1"/>
+  </g>
+
+  <!-- ── Dish outer rim (thick aluminium ring, 3/4 perspective) ── -->
+  <!-- The rim is an ellipse tilted in perspective - top is narrower (further), bottom wider (closer) -->
+  <!-- Back/top edge of rim (further away, thinner) -->
+  <path d="M745,210 Q810,155 970,148 Q1130,155 1195,210"
+        fill="none" stroke="#a0a098" stroke-width="5"/>
+  <!-- Front/bottom edge of rim (closer, wider) -->
+  <path d="M730,310 Q840,380 970,390 Q1100,380 1210,310"
+        fill="none" stroke="#98988e" stroke-width="6"/>
+
+  <!-- ── Dish surface (concave parabolic bowl) ── -->
+  <!-- Outer dish surface fill - the concave interior -->
+  <path d="M745,210 Q810,155 970,148 Q1130,155 1195,210
+           Q1180,260 1210,310 Q1100,380 970,390 Q840,380 730,310
+           Q760,260 745,210 Z"
+        fill="url(#dw-dishGrad)" stroke="#88887e" stroke-width="3" filter="url(#dw-dishShadow)"/>
+
+  <!-- Inner concave depth shading (darker toward centre-bottom) -->
+  <path d="M775,225 Q840,178 970,172 Q1100,178 1165,225
+           Q1150,268 1175,305 Q1075,365 970,372 Q865,365 765,305
+           Q790,268 775,225 Z"
+        fill="url(#dw-dishInner)" opacity="0.5"/>
+
+  <!-- Deeper inner shadow (creates bowl depth illusion) -->
+  <path d="M820,248 Q880,210 970,205 Q1060,210 1120,248
+           Q1110,280 1125,310 Q1050,348 970,354 Q890,348 815,310
+           Q830,280 820,248 Z"
+        fill="#7a7870" opacity="0.3"/>
+
+  <!-- Deepest centre shadow -->
+  <path d="M880,270 Q920,248 970,245 Q1020,248 1060,270
+           Q1055,290 1060,310 Q1025,332 970,335 Q915,332 880,310
+           Q885,290 880,270 Z"
+        fill="#6a6860" opacity="0.2"/>
+
+  <!-- ── Rim thickness (visible as a band between top and bottom arcs) ── -->
+  <!-- Left rim side -->
+  <path d="M745,210 Q748,240 730,310" stroke="#b0ada5" stroke-width="3" fill="none"/>
+  <path d="M748,212 Q752,242 735,308" fill="#c0bdb5" opacity="0.3"/>
+  <!-- Right rim side -->
+  <path d="M1195,210 Q1192,240 1210,310" stroke="#a0a098" stroke-width="3" fill="none"/>
+  <path d="M1192,212 Q1188,242 1205,308" fill="#b0ada5" opacity="0.25"/>
+
+  <!-- ── Dish panel seams (radial ribs following perspective curve) ── -->
+  <g stroke="#b8b5ad" stroke-width="1.5" opacity="0.4">
+    <!-- Vertical rib (top to bottom through centre) -->
+    <path d="M970,148 Q970,268 970,390"/>
+    <!-- Horizontal rib (left to right through centre) -->
+    <path d="M745,260 Q855,270 970,270 Q1085,270 1195,260"/>
+    <!-- Diagonal ribs (8 total, creating 16 panels) -->
+    <path d="M800,178 Q885,285 835,358"/>
+    <path d="M1140,178 Q1055,285 1105,358"/>
+    <path d="M770,215 Q870,310 780,365"/>
+    <path d="M1170,215 Q1070,310 1160,365"/>
+    <path d="M850,158 Q920,270 900,380"/>
+    <path d="M1090,158 Q1020,270 1040,380"/>
+    <path d="M910,150 Q940,268 935,388"/>
+    <path d="M1030,150 Q1000,268 1005,388"/>
+  </g>
+
+  <!-- ── Concentric ring seams (circumferential joints between panel rings) ── -->
+  <g fill="none" stroke="#aaa8a0" stroke-width="0.8" opacity="0.3">
+    <path d="M790,230 Q880,185 970,180 Q1060,185 1150,230
+             Q1140,270 1155,315 Q1060,365 970,370 Q880,365 785,315
+             Q800,270 790,230 Z"/>
+    <path d="M840,250 Q900,215 970,210 Q1040,215 1100,250
+             Q1095,278 1105,310 Q1040,345 970,350 Q900,345 835,310
+             Q842,278 840,250 Z"/>
+    <path d="M895,268 Q930,250 970,248 Q1010,250 1045,268
+             Q1042,285 1048,305 Q1015,325 970,328 Q925,325 892,305
+             Q898,285 895,268 Z"/>
+  </g>
+
+  <!-- ── Mesh/panel surface texture (wire mesh panels of real dish) ── -->
+  <g stroke="#b0ada5" stroke-width="0.3" opacity="0.15">
+    <!-- Horizontal mesh lines across dish face -->
+    <path d="M760,228 Q865,190 970,186 Q1075,190 1180,228"/>
+    <path d="M768,244 Q868,208 970,204 Q1072,208 1172,244"/>
+    <path d="M778,260 Q872,228 970,224 Q1068,228 1162,260"/>
+    <path d="M770,280 Q868,252 970,248 Q1072,252 1170,280"/>
+    <path d="M758,300 Q862,278 970,275 Q1078,278 1182,300"/>
+    <path d="M750,318 Q858,300 970,298 Q1082,300 1190,318"/>
+    <path d="M752,335 Q860,322 970,320 Q1080,322 1188,335"/>
+    <path d="M762,350 Q864,342 970,340 Q1076,342 1178,350"/>
+    <path d="M778,362 Q870,358 970,356 Q1070,358 1162,362"/>
+  </g>
+
+  <!-- ── Rust/weathering patches on dish surface ── -->
+  <ellipse cx="900" cy="280" rx="22" ry="10" fill="#8a6a4a" opacity="0.08" transform="rotate(-15,900,280)"/>
+  <ellipse cx="1050" cy="300" rx="18" ry="8" fill="#8a6a4a" opacity="0.06" transform="rotate(10,1050,300)"/>
+  <ellipse cx="970" cy="340" rx="25" ry="9" fill="#8a6a4a" opacity="0.05"/>
+  <ellipse cx="850" cy="320" rx="15" ry="7" fill="#8a6a4a" opacity="0.07" transform="rotate(-8,850,320)"/>
+
+  <!-- ── Sun reflection highlight on dish surface (upper-left, facing sun) ── -->
+  <ellipse cx="890" cy="220" rx="40" ry="15" fill="#fff" opacity="0.06" transform="rotate(-20,890,220)"/>
+  <ellipse cx="870" cy="235" rx="25" ry="8" fill="#fff" opacity="0.04" transform="rotate(-25,870,235)"/>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- FEED HORN QUADRUPOD (4-leg support structure above dish)       -->
+  <!-- The feed focal point is ~10m above dish centre in reality.     -->
+  <!-- In our perspective it's above-centre of the bowl.              -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+
+  <!-- Quadrupod legs (4 struts from rim to focal point) -->
+  <g stroke="#5a5a54" stroke-width="4.5" stroke-linecap="round">
+    <!-- Leg 1: upper-left rim to focus -->
+    <line x1="808" y1="185" x2="965" y2="215"/>
+    <!-- Leg 2: upper-right rim to focus -->
+    <line x1="1130" y1="185" x2="975" y2="215"/>
+    <!-- Leg 3: lower-left rim to focus -->
+    <line x1="770" y1="310" x2="965" y2="225"/>
+    <!-- Leg 4: lower-right rim to focus -->
+    <line x1="1175" y1="305" x2="975" y2="225"/>
+  </g>
+
+  <!-- Quadrupod cross-bracing (between legs, adding rigidity) -->
+  <g stroke="#6a6a62" stroke-width="1.5" opacity="0.5">
+    <!-- Upper cross-brace -->
+    <line x1="860" y1="195" x2="970" y2="180"/>
+    <line x1="1075" y1="195" x2="970" y2="180"/>
+    <!-- Lower cross-brace -->
+    <line x1="840" y1="268" x2="965" y2="290"/>
+    <line x1="1105" y1="265" x2="975" y2="290"/>
+    <!-- Diagonal bracing -->
+    <line x1="850" y1="230" x2="920" y2="270"/>
+    <line x1="1090" y1="228" x2="1020" y2="268"/>
+  </g>
+
+  <!-- ── Feed horn platform (at focal point) ── -->
+  <!-- Platform structure -->
+  <rect x="948" y="205" width="44" height="12" fill="#585850" stroke="#4a4a44" stroke-width="1.5" rx="2"/>
+  <rect x="952" y="200" width="36" height="8" fill="#505048" stroke="#4a4a44" stroke-width="1" rx="2"/>
+
+  <!-- ── Feed horn / receiver assembly ── -->
+  <!-- Main horn body (cylindrical, pointing into dish) -->
+  <rect x="961" y="218" width="18" height="28" fill="#404038" stroke="#4a4a44" stroke-width="1.5" rx="3"/>
+  <!-- Horn flange -->
+  <ellipse cx="970" cy="246" rx="14" ry="4" fill="#484840" stroke="#3a3a34" stroke-width="1"/>
+  <!-- Horn aperture (circular opening facing dish) -->
+  <ellipse cx="970" cy="250" rx="11" ry="3.5" fill="#2a2828" stroke="#3a3a34" stroke-width="1"/>
+  <ellipse cx="970" cy="250" rx="6" ry="2" fill="#1a1818"/>
+  <!-- Waveguide running up from horn to platform -->
+  <rect x="967" y="210" width="6" height="10" fill="#484840" rx="1"/>
+  <!-- LNA box (Low Noise Amplifier) on platform -->
+  <rect x="954" y="196" width="14" height="8" fill="#505048" stroke="#444" stroke-width="0.8" rx="1"/>
+  <!-- Cable from LNA -->
+  <path d="M960,204 Q955,210 952,218 Q948,230 940,260 Q930,290 920,310"
+        stroke="#333" stroke-width="1.5" fill="none" opacity="0.4"/>
+
+  <!-- ── Signal receiving cone (faint visualisation from sky into dish) ── -->
+  <g>
+    <!-- Signal cone from zenith converging on feed horn -->
+    <polygon points="970,218 800,48 1140,48" fill="url(#dw-signalGlow)" opacity="0.6"/>
+    <polygon points="970,218 800,48 1140,48" fill="none" stroke="#4db8ff" stroke-width="0.8" opacity="0.12" stroke-dasharray="8,6"/>
+
+    <!-- Pulsing signal wavefronts (plane waves arriving from space) -->
+    <path d="M830,80 Q970,65 1110,80" fill="none" stroke="#4db8ff" stroke-width="1" opacity="0">
+      <animate attributeName="opacity" values="0;0.2;0" dur="3.5s" repeatCount="indefinite"/>
+    </path>
+    <path d="M850,110 Q970,97 1090,110" fill="none" stroke="#4db8ff" stroke-width="0.8" opacity="0">
+      <animate attributeName="opacity" values="0;0.18;0" dur="3.5s" begin="0.8s" repeatCount="indefinite"/>
+    </path>
+    <path d="M870,140 Q970,130 1070,140" fill="none" stroke="#4db8ff" stroke-width="0.6" opacity="0">
+      <animate attributeName="opacity" values="0;0.15;0" dur="3.5s" begin="1.6s" repeatCount="indefinite"/>
+    </path>
+
+    <!-- Reflected waves converging on feed (bouncing off dish) -->
+    <ellipse cx="970" cy="235" rx="18" ry="5" fill="none" stroke="#4db8ff" stroke-width="0.6" opacity="0">
+      <animate attributeName="opacity" values="0;0.25;0" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="rx" values="30;8;30" dur="2.5s" repeatCount="indefinite"/>
+      <animate attributeName="ry" values="10;2;10" dur="2.5s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  <!-- ── Aviation warning light (top of dish rim, red, blinking) ── -->
+  <circle cx="970" cy="148" r="5" fill="#ff2020" opacity="0.8">
+    <animate attributeName="opacity" values="0.9;0.1;0.9" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="970" cy="148" r="14" fill="#ff2020" opacity="0" filter="url(#dw-redGlow)">
+    <animate attributeName="opacity" values="0;0.35;0" dur="2s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Warning light on left yoke arm top -->
+  <circle cx="860" cy="298" r="3" fill="#ff2020" opacity="0.6">
+    <animate attributeName="opacity" values="0.7;0.1;0.7" dur="2s" begin="1s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- ── Maintenance ladder on yoke (small detail) ── -->
+  <g stroke="#787870" stroke-width="1.5" opacity="0.35">
+    <line x1="896" y1="468" x2="892" y2="310"/>
+    <line x1="904" y1="468" x2="900" y2="310"/>
+    <!-- Rungs -->
+    <line x1="896" y1="450" x2="904" y2="450"/>
+    <line x1="896" y1="430" x2="903" y2="430"/>
+    <line x1="895" y1="410" x2="903" y2="410"/>
+    <line x1="895" y1="390" x2="902" y2="390"/>
+    <line x1="894" y1="370" x2="902" y2="370"/>
+    <line x1="894" y1="350" x2="901" y2="350"/>
+    <line x1="893" y1="330" x2="901" y2="330"/>
+  </g>
+
+  <!-- ── Cable tray running down from dish to pedestal ── -->
+  <path d="M970,302 Q960,380 955,430 Q950,460 953,470"
+        stroke="#444" stroke-width="3" fill="none" opacity="0.35"/>
+  <path d="M975,302 Q965,380 960,430 Q956,460 958,470"
+        stroke="#555" stroke-width="2" fill="none" opacity="0.25"/>
+
+  <!-- ── SIGN / INFO BOARD ── -->
+  <g filter="url(#dw-buildingShadow)">
+    <rect x="1280" y="490" width="260" height="105" fill="#f8f4e8" stroke="#888070" stroke-width="2" rx="4"/>
+    <!-- Sign posts -->
+    <rect x="1280" y="490" width="6" height="120" fill="#7a6a50" rx="2"/>
+    <rect x="1534" y="490" width="6" height="120" fill="#7a6a50" rx="2"/>
+    <!-- Sign content -->
+    <text x="1410" y="516" font-family="Arial, sans-serif" font-size="14" fill="#3a2a10" text-anchor="middle" font-weight="bold" letter-spacing="0.5">DWINGELOO TELESCOPE</text>
+    <line x1="1310" y1="522" x2="1510" y2="522" stroke="#c8c0b0" stroke-width="1"/>
+    <text x="1410" y="540" font-family="Arial, sans-serif" font-size="12" fill="#5a4a28" text-anchor="middle">Diameter: 25 metres</text>
+    <text x="1410" y="557" font-family="Arial, sans-serif" font-size="12" fill="#5a4a28" text-anchor="middle">Built: 1956 — Steerable dish</text>
+    <text x="1410" y="574" font-family="Arial, sans-serif" font-size="12" fill="#5a4a28" text-anchor="middle">UNESCO World Heritage Site</text>
+    <text x="1410" y="591" font-family="Arial, sans-serif" font-size="12" fill="#5a4a28" text-anchor="middle">Operated by CAMRAS Foundation</text>
+    <!-- Sign post -->
+    <rect x="1406" y="592" width="8" height="90" fill="#7a6a50" rx="2"/>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- FENCE (detailed wire fence)                                  -->
+  <!-- ============================================================ -->
+  <!-- Horizontal rails -->
+  <line x1="650" y1="570" x2="1600" y2="570" stroke="#8a7050" stroke-width="3.5"/>
+  <line x1="650" y1="586" x2="1600" y2="586" stroke="#8a7050" stroke-width="2.5"/>
+  <line x1="650" y1="600" x2="1600" y2="600" stroke="#8a7050" stroke-width="2"/>
+  <!-- Wire mesh between rails -->
+  <g stroke="#9a8a68" stroke-width="0.5" opacity="0.3">
+    <line x1="650" y1="570" x2="670" y2="600"/><line x1="670" y1="570" x2="650" y2="600"/>
+    <line x1="690" y1="570" x2="710" y2="600"/><line x1="710" y1="570" x2="690" y2="600"/>
+    <line x1="730" y1="570" x2="750" y2="600"/><line x1="750" y1="570" x2="730" y2="600"/>
+    <line x1="770" y1="570" x2="790" y2="600"/><line x1="790" y1="570" x2="770" y2="600"/>
+    <line x1="810" y1="570" x2="830" y2="600"/><line x1="830" y1="570" x2="810" y2="600"/>
+    <line x1="850" y1="570" x2="870" y2="600"/><line x1="870" y1="570" x2="850" y2="600"/>
+    <line x1="1050" y1="570" x2="1070" y2="600"/><line x1="1070" y1="570" x2="1050" y2="600"/>
+    <line x1="1090" y1="570" x2="1110" y2="600"/><line x1="1110" y1="570" x2="1090" y2="600"/>
+    <line x1="1130" y1="570" x2="1150" y2="600"/><line x1="1150" y1="570" x2="1130" y2="600"/>
+    <line x1="1170" y1="570" x2="1190" y2="600"/><line x1="1190" y1="570" x2="1170" y2="600"/>
+  </g>
+  <!-- Fence posts -->
+  <g fill="#8a7050">
+    <rect x="648" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="698" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="748" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="798" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="848" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="898" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="948" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="998" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="1048" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="1098" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="1148" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="1198" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="1248" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="1298" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="1348" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="1398" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="1448" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="1498" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="1548" y="558" width="7" height="48" rx="1.5"/>
+    <rect x="1598" y="558" width="7" height="48" rx="1.5"/>
+  </g>
+
+  <!-- Gate in fence -->
+  <rect x="900" y="560" width="45" height="42" fill="none" stroke="#6a5030" stroke-width="2.5" rx="1"/>
+  <line x1="900" y1="560" x2="945" y2="602" stroke="#6a5030" stroke-width="1.5"/>
+  <line x1="900" y1="602" x2="945" y2="560" stroke="#6a5030" stroke-width="1.5"/>
+  <circle cx="943" cy="582" r="3" fill="#a08020"/>
+
+  <!-- ============================================================ -->
+  <!-- NEARBY TREES (detailed, with wind sway)                      -->
+  <!-- ============================================================ -->
+  <!-- Large oak tree, right side -->
+  <g>
+    <rect x="1640" y="380" width="28" height="200" fill="#5a3a1a" rx="3"/>
+    <!-- Bark texture -->
+    <line x1="1648" y1="400" x2="1648" y2="580" stroke="#4a2a0a" stroke-width="1" opacity="0.3"/>
+    <line x1="1658" y1="390" x2="1658" y2="575" stroke="#4a2a0a" stroke-width="1" opacity="0.3"/>
+    <!-- Root flare -->
+    <path d="M1635,578 Q1640,575 1654,580 L1666,580 Q1672,575 1675,578" fill="#5a3a1a"/>
+    <!-- Canopy (swaying) -->
+    <g>
+      <ellipse cx="1654" cy="360" rx="70" ry="95" fill="#3d6820"/>
+      <ellipse cx="1654" cy="340" rx="55" ry="75" fill="#4a7a28"/>
+      <ellipse cx="1640" cy="320" rx="40" ry="55" fill="#5a8a30"/>
+      <ellipse cx="1680" cy="350" rx="45" ry="60" fill="#4a7828"/>
+      <!-- Leaf highlight -->
+      <ellipse cx="1640" cy="310" rx="25" ry="35" fill="#6a9a40" opacity="0.4"/>
+      <animateTransform attributeName="transform" type="rotate" values="0,1654,380;1.5,1654,380;-1,1654,380;0,1654,380" dur="6s" repeatCount="indefinite"/>
+    </g>
+    <!-- Branches poking out -->
+    <line x1="1640" y1="420" x2="1610" y2="400" stroke="#5a3a1a" stroke-width="4"/>
+    <line x1="1665" y1="430" x2="1700" y2="410" stroke="#5a3a1a" stroke-width="3"/>
+  </g>
+
+  <!-- Second tree -->
+  <g>
+    <rect x="1720" y="400" width="22" height="180" fill="#5a3a1a" rx="3"/>
+    <g>
+      <ellipse cx="1731" cy="382" rx="58" ry="80" fill="#3d6820"/>
+      <ellipse cx="1731" cy="365" rx="45" ry="62" fill="#4a7a28"/>
+      <ellipse cx="1720" cy="348" rx="35" ry="50" fill="#5a8a30"/>
+      <animateTransform attributeName="transform" type="rotate" values="0,1731,400;1.2,1731,400;-0.8,1731,400;0,1731,400" dur="7s" repeatCount="indefinite"/>
+    </g>
+  </g>
+
+  <!-- Small birch tree, left -->
+  <g>
+    <rect x="120" y="490" width="12" height="110" fill="#e8e0d0" rx="2"/>
+    <!-- Birch bark marks -->
+    <line x1="118" y1="510" x2="134" y2="510" stroke="#2a2a2a" stroke-width="0.8" opacity="0.4"/>
+    <line x1="119" y1="530" x2="133" y2="530" stroke="#2a2a2a" stroke-width="0.8" opacity="0.4"/>
+    <line x1="120" y1="550" x2="132" y2="550" stroke="#2a2a2a" stroke-width="0.8" opacity="0.4"/>
+    <g>
+      <ellipse cx="126" cy="478" rx="42" ry="55" fill="#5a8a30" opacity="0.9"/>
+      <ellipse cx="126" cy="465" rx="32" ry="42" fill="#6a9a40" opacity="0.8"/>
+      <animateTransform attributeName="transform" type="rotate" values="0,126,490;2,126,490;-1.5,126,490;0,126,490" dur="5s" repeatCount="indefinite"/>
+    </g>
+  </g>
+
+  <!-- ── ELECTRICITY POLE ── -->
+  <rect x="1830" y="260" width="12" height="340" fill="#787878" rx="2"/>
+  <line x1="1798" y1="280" x2="1862" y2="280" stroke="#787878" stroke-width="5"/>
+  <line x1="1808" y1="295" x2="1852" y2="295" stroke="#787878" stroke-width="3"/>
+  <!-- Power lines -->
+  <path d="M970,305 Q1400,260 1800,280" stroke="#333" stroke-width="1.5" fill="none" opacity="0.4"/>
+  <path d="M975,310 Q1400,268 1800,295" stroke="#333" stroke-width="1" fill="none" opacity="0.3"/>
+  <!-- Insulators -->
+  <circle cx="1800" cy="280" r="5" fill="#cc4422"/>
+  <circle cx="1860" cy="280" r="5" fill="#cc4422"/>
+  <circle cx="1810" cy="295" r="4" fill="#cc4422" opacity="0.8"/>
+  <circle cx="1850" cy="295" r="4" fill="#cc4422" opacity="0.8"/>
+
+  <!-- ============================================================ -->
+  <!-- GROUND FOG WISPS (atmospheric)                               -->
+  <!-- ============================================================ -->
+  <g filter="url(#dw-mistBlur)" opacity="0.2">
+    <ellipse cx="300" cy="650" rx="200" ry="25" fill="#c8dce8">
+      <animateTransform attributeName="transform" type="translate" values="0,0;40,0;0,0" dur="30s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="1200" cy="620" rx="250" ry="30" fill="#c8dce8">
+      <animateTransform attributeName="transform" type="translate" values="0,0;-30,0;0,0" dur="35s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="700" cy="680" rx="180" ry="20" fill="#c8dce8">
+      <animateTransform attributeName="transform" type="translate" values="0,0;25,0;0,0" dur="28s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- FOREGROUND DETAILS                                           -->
+  <!-- ============================================================ -->
+  <!-- Bicycle (parked near building) -->
+  <g transform="translate(680,565) scale(0.6)" opacity="0.6">
+    <!-- Wheels -->
+    <circle cx="0" cy="0" r="22" fill="none" stroke="#444" stroke-width="2.5"/>
+    <circle cx="60" cy="0" r="22" fill="none" stroke="#444" stroke-width="2.5"/>
+    <!-- Spokes -->
+    <line x1="-12" y1="-12" x2="12" y2="12" stroke="#666" stroke-width="0.8"/>
+    <line x1="12" y1="-12" x2="-12" y2="12" stroke="#666" stroke-width="0.8"/>
+    <line x1="48" y1="-12" x2="72" y2="12" stroke="#666" stroke-width="0.8"/>
+    <line x1="72" y1="-12" x2="48" y2="12" stroke="#666" stroke-width="0.8"/>
+    <!-- Frame -->
+    <line x1="0" y1="0" x2="30" y2="-25" stroke="#cc3030" stroke-width="2.5"/>
+    <line x1="30" y1="-25" x2="60" y2="0" stroke="#cc3030" stroke-width="2.5"/>
+    <line x1="30" y1="-25" x2="30" y2="-35" stroke="#cc3030" stroke-width="2"/>
+    <line x1="25" y1="-35" x2="35" y2="-35" stroke="#444" stroke-width="2"/>
+    <!-- Seat -->
+    <ellipse cx="12" cy="-18" rx="8" ry="3" fill="#2a2a2a"/>
+  </g>
+
+  <!-- Old bench near info sign -->
+  <g transform="translate(1320,620)">
+    <rect x="0" y="0" width="80" height="8" fill="#6a5030" rx="2"/>
+    <rect x="0" y="12" width="80" height="6" fill="#6a5030" rx="2"/>
+    <rect x="5" y="0" width="6" height="30" fill="#5a4020"/>
+    <rect x="69" y="0" width="6" height="30" fill="#5a4020"/>
+  </g>
+
+  <!-- Puddle on path (after rain) -->
+  <ellipse cx="950" cy="850" rx="30" ry="8" fill="#7a9ab0" opacity="0.25"/>
+  <ellipse cx="950" cy="850" rx="20" ry="5" fill="#8aaac0" opacity="0.15"/>
+
+  <!-- ============================================================ -->
+  <!-- DISH SLOW ROTATION ANIMATION (azimuth scan)                  -->
+  <!-- ============================================================ -->
+  <!-- Subtle dish elevation change animation (very slow) -->
+  <g>
+    <!-- This affects the dish cluster only via slow scale Y modulation -->
+  </g>
+
+  <!-- ============================================================ -->
+  <!-- CINEMATIC OVERLAYS                                           -->
+  <!-- ============================================================ -->
+  <!-- Warm light wash from sun direction -->
+  <rect x="0" y="0" width="1920" height="1080" fill="#f0e8c0" opacity="0.04"/>
+
+  <!-- Vignette -->
+  <radialGradient id="dw-vignette" cx="0.5" cy="0.5" r="0.7">
+    <stop offset="0%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="70%" stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.35"/>
+  </radialGradient>
+  <rect x="0" y="0" width="1920" height="1080" fill="url(#dw-vignette)"/>
+
+  <!-- Film grain -->
+  <rect x="0" y="0" width="1920" height="1080" filter="url(#dw-filmGrain)" opacity="0.06"/>
+
+  <!-- Letterbox bars -->
+  <rect x="0" y="0" width="1920" height="45" fill="#000" opacity="0.85"/>
+  <rect x="0" y="1035" width="1920" height="45" fill="#000" opacity="0.85"/>
+</svg>

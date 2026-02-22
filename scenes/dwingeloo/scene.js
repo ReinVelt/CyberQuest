@@ -40,10 +40,10 @@ const DwingelooScene = {
         {
             id: 'control_building',
             name: 'Observatory Control Building',
-            x: 17.5,
-            y: 37.8,
-            width: 22,
-            height: 18,
+            x: 14.5,
+            y: 68,
+            width: 16,
+            height: 13,
             cursor: 'pointer',
             action: (game) => {
                 const foundBroadcast = game.getFlag('dwingeloo_broadcast_found');
@@ -81,9 +81,9 @@ const DwingelooScene = {
         {
             id: 'info_sign',
             name: 'Information Sign',
-            x: 67.5,
-            y: 47.8,
-            width: 14,
+            x: 67,
+            y: 71,
+            width: 9,
             height: 10,
             cursor: 'pointer',
             action: (game) => {
@@ -102,10 +102,10 @@ const DwingelooScene = {
         {
             id: 'telescope_fence',
             name: 'Perimeter Fence',
-            x: 37.4,
-            y: 55.5,
-            width: 25,
-            height: 6,
+            x: 13,
+            y: 78,
+            width: 48,
+            height: 5,
             cursor: 'pointer',
             action: (game) => {
                 const foundBroadcast = game.getFlag('dwingeloo_broadcast_found');
@@ -137,10 +137,10 @@ const DwingelooScene = {
         {
             id: 'hydrogen_line_info',
             name: 'Hydrogen Line Receiver (inside window)',
-            x: 17.5,
-            y: 44,
-            width: 10,
-            height: 10,
+            x: 15.5,
+            y: 67,
+            width: 5,
+            height: 5,
             cursor: 'pointer',
             action: (game) => {
                 game.startDialogue([

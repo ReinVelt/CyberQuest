@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a5060"/>
+      <stop offset="40%" stop-color="#6a7080"/>
+      <stop offset="100%" stop-color="#8a9090"/>
+    </linearGradient>
+    <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a4a3a"/>
+      <stop offset="100%" stop-color="#3a3a2a"/>
+    </linearGradient>
+    <linearGradient id="pathGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6a6050"/>
+      <stop offset="100%" stop-color="#5a5040"/>
+    </linearGradient>
+    <filter id="mist">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+    <filter id="softBlur">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+  </defs>
+
+  <!-- Sky — overcast, heavy -->
+  <rect width="1600" height="900" fill="url(#skyGrad)"/>
+
+  <!-- Heavy cloud layer -->
+  <g filter="url(#mist)" opacity="0.7">
+    <ellipse cx="100" cy="100" rx="250" ry="80" fill="#707880"/>
+    <ellipse cx="350" cy="80" rx="200" ry="70" fill="#686e78"/>
+    <ellipse cx="600" cy="110" rx="220" ry="75" fill="#707880"/>
+    <ellipse cx="900" cy="90" rx="280" ry="85" fill="#686e78"/>
+    <ellipse cx="1200" cy="105" rx="240" ry="78" fill="#707880"/>
+    <ellipse cx="1500" cy="85" rx="200" ry="70" fill="#686e78"/>
+  </g>
+
+  <!-- Horizon mist -->
+  <rect x="0" y="450" width="1600" height="60" fill="#8a9090" opacity="0.25" filter="url(#softBlur)"/>
+
+  <!-- ── WSRT DISHES IN FAR BACKGROUND ── (ghostly, distant) -->
+  <g opacity="0.35" filter="url(#softBlur)">
+    <!-- Dish 1 -->
+    <rect x="60" y="390" width="6" height="70" fill="#909090"/>
+    <rect x="30" y="425" width="66" height="10" fill="#888"/>
+    <ellipse cx="63" cy="388" rx="36" ry="12" fill="#909090"/>
+    <!-- Dish 2 -->
+    <rect x="190" y="385" width="6" height="75" fill="#909090"/>
+    <rect x="160" y="420" width="66" height="10" fill="#888"/>
+    <ellipse cx="193" cy="382" rx="36" ry="12" fill="#909090"/>
+    <!-- Dish 3 -->
+    <rect x="330" y="392" width="6" height="68" fill="#909090"/>
+    <rect x="300" y="427" width="66" height="10" fill="#888"/>
+    <ellipse cx="333" cy="390" rx="36" ry="12" fill="#909090"/>
+    <!-- Dish 4 -->
+    <rect x="1260" y="388" width="6" height="72" fill="#909090"/>
+    <rect x="1230" y="423" width="66" height="10" fill="#888"/>
+    <ellipse cx="1263" cy="386" rx="36" ry="12" fill="#909090"/>
+    <!-- Dish 5 -->
+    <rect x="1400" y="394" width="6" height="66" fill="#909090"/>
+    <rect x="1370" y="428" width="66" height="10" fill="#888"/>
+    <ellipse cx="1403" cy="392" rx="36" ry="12" fill="#909090"/>
+    <!-- Dish 6 -->
+    <rect x="1530" y="386" width="6" height="74" fill="#909090"/>
+    <rect x="1500" y="422" width="66" height="10" fill="#888"/>
+    <ellipse cx="1533" cy="384" rx="36" ry="12" fill="#909090"/>
+  </g>
+
+  <!-- Ground -->
+  <rect x="0" y="490" width="1600" height="410" fill="url(#groundGrad)"/>
+  <!-- Ground texture -->
+  <rect x="0" y="490" width="1600" height="6" fill="#5a5a4a"/>
+
+  <!-- ── RAILWAY TRACK ── (the infamous transport track) -->
+  <!-- Ballast -->
+  <polygon points="720,900 880,900 840,530 760,530" fill="#585040"/>
+  <!-- Cross ties -->
+  <g fill="#4a3820" stroke="#382810" stroke-width="1">
+    <rect x="749" y="535" width="102" height="8" rx="1"/>
+    <rect x="747" y="558" width="106" height="8" rx="1"/>
+    <rect x="745" y="582" width="110" height="8" rx="1"/>
+    <rect x="743" y="608" width="114" height="8" rx="1"/>
+    <rect x="741" y="636" width="118" height="8" rx="1"/>
+    <rect x="738" y="666" width="122" height="8" rx="1"/>
+    <rect x="734" y="698" width="128" height="8" rx="1"/>
+    <rect x="730" y="732" width="134" height="8" rx="1"/>
+    <rect x="726" y="768" width="140" height="8" rx="1"/>
+    <rect x="722" y="806" width="146" height="8" rx="1"/>
+    <rect x="718" y="846" width="152" height="8" rx="1"/>
+    <rect x="713" y="888" width="160" height="8" rx="1"/>
+  </g>
+  <!-- Left rail -->
+  <path d="M758,540 L723,900" stroke="#888070" stroke-width="6" fill="none"/>
+  <!-- Right rail -->
+  <path d="M842,540 L877,900" stroke="#888070" stroke-width="6" fill="none"/>
+  <!-- Rails end abruptly at top (track ends here — transport road) -->
+  <rect x="748" y="528" width="8" height="15" fill="#666"/>
+  <rect x="836" y="528" width="8" height="15" fill="#666"/>
+  <!-- End stops -->
+  <rect x="738" y="520" width="28" height="10" fill="#cc4422" rx="2"/>
+  <rect x="828" y="520" width="28" height="10" fill="#cc4422" rx="2"/>
+  <line x1="742" y1="516" x2="742" y2="532" stroke="#880000" stroke-width="3"/>
+  <line x1="852" y1="516" x2="852" y2="532" stroke="#880000" stroke-width="3"/>
+
+  <!-- ── MEMORIAL STONES / COLUMNS ── -->
+  <!-- Row of memorial stones lining the path -->
+  <!-- Left side -->
+  <g fill="#7a7a7a" stroke="#606060" stroke-width="1">
+    <rect x="500" y="540" width="22" height="60" rx="2"/>
+    <rect x="540" y="548" width="18" height="52" rx="2"/>
+    <rect x="576" y="535" width="25" height="70" rx="2"/>
+    <rect x="615" y="544" width="20" height="58" rx="2"/>
+    <rect x="648" y="538" width="22" height="65" rx="2"/>
+    <rect x="685" y="546" width="16" height="55" rx="2"/>
+    <rect x="716" y="508" width="15" height="28" rx="2"/><!-- smaller near track -->
+  </g>
+  <!-- Right side -->
+  <g fill="#7a7a7a" stroke="#606060" stroke-width="1">
+    <rect x="870" y="508" width="15" height="28" rx="2"/>
+    <rect x="895" y="546" width="16" height="55" rx="2"/>
+    <rect x="926" y="538" width="22" height="65" rx="2"/>
+    <rect x="960" y="544" width="20" height="58" rx="2"/>
+    <rect x="996" y="535" width="25" height="70" rx="2"/>
+    <rect x="1038" y="548" width="18" height="52" rx="2"/>
+    <rect x="1074" y="540" width="22" height="60" rx="2"/>
+  </g>
+
+  <!-- ── MAIN MEMORIAL MONUMENT ── -->
+  <!-- Large central broken/incomplete train, or stone monument -->
+  <!-- Stone base platform -->
+  <rect x="640" y="460" width="320" height="40" fill="#888880" stroke="#707068" stroke-width="2" rx="4"/>
+  <!-- Upright stele left -->
+  <rect x="660" y="340" width="45" height="125" fill="#909088" stroke="#707068" stroke-width="2" rx="3"/>
+  <!-- Upright stele right -->
+  <rect x="895" y="340" width="45" height="125" fill="#909088" stroke="#707068" stroke-width="2" rx="3"/>
+  <!-- Star of David carved into left stele -->
+  <polygon points="682,380 692,396 702,380" fill="none" stroke="#c0b8a0" stroke-width="2" opacity="0.7"/>
+  <polygon points="682,392 692,376 702,392" fill="none" stroke="#c0b8a0" stroke-width="2" opacity="0.7"/>
+  <!-- Inscription on base -->
+  <text x="800" y="488" font-family="Georgia, serif" font-size="16" fill="#c8c0a8" text-anchor="middle" font-style="italic">Kamp Westerbork 1942—1945</text>
+  <!-- Wreaths at base -->
+  <ellipse cx="700" cy="500" rx="22" ry="10" fill="none" stroke="#4a7a2a" stroke-width="3" opacity="0.8"/>
+  <ellipse cx="910" cy="500" rx="22" ry="10" fill="none" stroke="#4a7a2a" stroke-width="3" opacity="0.8"/>
+
+  <!-- ── BARBED WIRE (remnant, on ground) ── -->
+  <g stroke="#888" stroke-width="1.5" fill="none" opacity="0.5">
+    <path d="M120,620 Q150,615 180,622 Q210,628 240,620 Q270,612 300,620"/>
+    <path d="M130,634 Q160,628 190,636 Q220,643 250,635"/>
+    <!-- Barbs -->
+    <line x1="155" y1="618" x2="158" y2="612"/>
+    <line x1="155" y1="618" x2="161" y2="615"/>
+    <line x1="210" y1="625" x2="213" y2="619"/>
+    <line x1="210" y1="625" x2="216" y2="622"/>
+    <line x1="265" y1="617" x2="268" y2="611"/>
+  </g>
+
+  <!-- Broken fence post, far right  -->
+  <rect x="1350" y="540" width="10" height="80" fill="#6a5a40" rx="2" transform="rotate(8,1355,580)"/>
+  <line x1="1355" y1="545" x2="1430" y2="552" stroke="#888" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- ── SURVEILLANCE CAMERA (modern — anachronistic, story element) ── -->
+  <rect x="1180" y="455" width="8" height="100" fill="#555" rx="2"/>
+  <!-- Camera body -->
+  <rect x="1168" y="445" width="32" height="18" fill="#333" stroke="#555" stroke-width="1.5" rx="3"/>
+  <rect x="1170" y="447" width="12" height="14" fill="#1a1a1a" rx="2"/>
+  <circle cx="1176" cy="454" r="5" fill="#0a0a0a" stroke="#444" stroke-width="1"/>
+  <circle cx="1176" cy="454" r="2" fill="#111"/>
+  <!-- Camera LED — blinking red -->
+  <circle cx="1194" cy="450" r="3" fill="#ff2200">
+    <animate attributeName="opacity" values="1;0.1;1" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Wi-Fi/Bluetooth module on camera -->
+  <rect x="1188" y="455" width="10" height="6" fill="#1a2a1a" stroke="#2a4a2a" stroke-width="1" rx="1"/>
+  <text x="1193" y="461" font-family="monospace" font-size="5" fill="#00aa44" text-anchor="middle">BT</text>
+
+  <!-- ── WOODEN BARRACK OUTLINES (ruins/foundations) ── -->
+  <!-- Barrack 1 foundation -->
+  <rect x="100" y="560" width="300" height="120" fill="none" stroke="#6a5a40" stroke-width="2" stroke-dasharray="8,4" opacity="0.5"/>
+  <text x="250" y="628" font-family="Georgia, serif" font-size="13" fill="#8a7a60" text-anchor="middle" opacity="0.7" font-style="italic">Barak 65</text>
+  <!-- Barrack 2 foundation -->
+  <rect x="1200" y="560" width="300" height="120" fill="none" stroke="#6a5a40" stroke-width="2" stroke-dasharray="8,4" opacity="0.5"/>
+  <text x="1350" y="628" font-family="Georgia, serif" font-size="13" fill="#8a7a60" text-anchor="middle" opacity="0.7" font-style="italic">Barak 51</text>
+
+  <!-- ── WILLOW TREES (weeping, appropriate for memorial) ── -->
+  <g>
+    <!-- Left tree -->
+    <rect x="420" y="440" width="14" height="130" fill="#5a4a30" rx="2"/>
+    <ellipse cx="427" cy="440" rx="40" ry="55" fill="#4a5a28" opacity="0.7"/>
+    <!-- Weeping branches -->
+    <path d="M415,460 Q400,510 395,560" stroke="#4a5a28" stroke-width="3" fill="none" opacity="0.6"/>
+    <path d="M427,455 Q412,510 408,565" stroke="#3d5a22" stroke-width="3" fill="none" opacity="0.6"/>
+    <path d="M438,460 Q428,512 425,568" stroke="#4a5a28" stroke-width="3" fill="none" opacity="0.6"/>
+    <path d="M447,465 Q442,514 440,570" stroke="#3d5a22" stroke-width="2" fill="none" opacity="0.5"/>
+  </g>
+  <g>
+    <!-- Right tree -->
+    <rect x="1168" y="435" width="14" height="135" fill="#5a4a30" rx="2"/>
+    <ellipse cx="1175" cy="435" rx="40" ry="58" fill="#4a5a28" opacity="0.7"/>
+    <path d="M1164,455 Q1148,508 1143,562" stroke="#4a5a28" stroke-width="3" fill="none" opacity="0.6"/>
+    <path d="M1175,450 Q1161,506 1157,562" stroke="#3d5a22" stroke-width="3" fill="none" opacity="0.6"/>
+    <path d="M1185,456 Q1175,510 1172,566" stroke="#4a5a28" stroke-width="3" fill="none" opacity="0.6"/>
+    <path d="M1194,462 Q1189,515 1187,572" stroke="#3d5a22" stroke-width="2" fill="none" opacity="0.5"/>
+  </g>
+
+  <!-- ── VISITOR PATH ── -->
+  <polygon points="570,900 700,900 720,530 640,530" fill="#6a6050" opacity="0.5"/>
+  <polygon points="900,530 970,530 1030,900 880,900" fill="#6a6050" opacity="0.5"/>
+
+  <!-- ── INFORMATION BOARD ── -->
+  <rect x="100" y="450" width="280" height="80" fill="#f0e8d0" stroke="#8a7050" stroke-width="2" rx="4"/>
+  <rect x="96" y="446" width="8" height="90" fill="#7a6040" rx="2"/>
+  <rect x="376" y="446" width="8" height="90" fill="#7a6040" rx="2"/>
+  <text x="240" y="474" font-family="Georgia, serif" font-size="15" fill="#3a2810" text-anchor="middle" font-weight="bold">Herinneringscentrum</text>
+  <text x="240" y="493" font-family="Georgia, serif" font-size="14" fill="#3a2810" text-anchor="middle">Kamp Westerbork</text>
+  <text x="240" y="512" font-family="Georgia, serif" font-size="11" fill="#6a5030" text-anchor="middle">Transit camp · 102,000 deportees</text>
+  <text x="240" y="525" font-family="Georgia, serif" font-size="11" fill="#6a5030" text-anchor="middle">1942–1945</text>
+
+  <!-- Skies mood: light barely through -->
+  <ellipse cx="800" cy="200" rx="300" ry="120" fill="#9090a0" opacity="0.15"/>
+</svg>

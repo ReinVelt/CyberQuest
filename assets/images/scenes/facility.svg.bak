@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- Gradients -->
+    <linearGradient id="nightSky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#050510"/>
+      <stop offset="50%" style="stop-color:#0a0a20"/>
+      <stop offset="100%" style="stop-color:#151530"/>
+    </linearGradient>
+    <linearGradient id="ground" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a"/>
+      <stop offset="100%" style="stop-color:#0d0d0d"/>
+    </linearGradient>
+    <linearGradient id="buildingGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a2a2a"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="concreteGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a4a4a"/>
+      <stop offset="100%" style="stop-color:#3a3a3a"/>
+    </linearGradient>
+    <radialGradient id="redGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ff0000;stop-opacity:0.8"/>
+      <stop offset="50%" style="stop-color:#ff0000;stop-opacity:0.3"/>
+      <stop offset="100%" style="stop-color:#ff0000;stop-opacity:0"/>
+    </radialGradient>
+    <radialGradient id="searchLight" cx="50%" cy="0%" r="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.3"/>
+      <stop offset="30%" style="stop-color:#ffffff;stop-opacity:0.1"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0"/>
+    </radialGradient>
+    <radialGradient id="windowLight" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#ffdd88;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#ffdd88;stop-opacity:0"/>
+    </radialGradient>
+    
+    <!-- Filters -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="strongGlow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="5" dy="5" stdDeviation="10" flood-opacity="0.5"/>
+    </filter>
+    
+    <!-- Fence pattern -->
+    <pattern id="fencePattern" patternUnits="userSpaceOnUse" width="30" height="100">
+      <rect x="13" y="0" width="4" height="100" fill="#555"/>
+      <line x1="0" y1="20" x2="30" y2="20" stroke="#666" stroke-width="2"/>
+      <line x1="0" y1="50" x2="30" y2="50" stroke="#666" stroke-width="2"/>
+      <line x1="0" y1="80" x2="30" y2="80" stroke="#666" stroke-width="2"/>
+    </pattern>
+  </defs>
+  
+  <!-- ============ NIGHT SKY ============ -->
+  <rect width="1920" height="600" fill="url(#nightSky)"/>
+  
+  <!-- Stars (fewer, industrial area has light pollution) -->
+  <g fill="#fff" opacity="0.5">
+    <circle cx="200" cy="100" r="1"/>
+    <circle cx="500" cy="150" r="1.2"/>
+    <circle cx="800" cy="80" r="1"/>
+    <circle cx="1200" cy="120" r="1.5"/>
+    <circle cx="1500" cy="90" r="1"/>
+    <circle cx="1700" cy="140" r="1.2"/>
+  </g>
+  
+  <!-- ============ MAIN R&D BUILDING ============ -->
+  <g transform="translate(600, 150)">
+    <!-- Main structure -->
+    <rect width="600" height="400" fill="url(#buildingGrad)" filter="url(#shadow)"/>
+    
+    <!-- Concrete panels -->
+    <g fill="#333" opacity="0.3">
+      <rect x="10" y="10" width="280" height="180"/>
+      <rect x="310" y="10" width="280" height="180"/>
+      <rect x="10" y="210" width="280" height="180"/>
+      <rect x="310" y="210" width="280" height="180"/>
+    </g>
+    
+    <!-- Windows with some lit -->
+    <g>
+      <!-- Row 1 -->
+      <rect x="30" y="30" width="60" height="40" fill="#1a1a30"/>
+      <rect x="110" y="30" width="60" height="40" fill="#ffdd88" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.6;0.4" dur="5s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="190" y="30" width="60" height="40" fill="#1a1a30"/>
+      <rect x="350" y="30" width="60" height="40" fill="#ffdd88" opacity="0.3"/>
+      <rect x="430" y="30" width="60" height="40" fill="#1a1a30"/>
+      <rect x="510" y="30" width="60" height="40" fill="#ffdd88" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0.3;0.5" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      
+      <!-- Row 2 -->
+      <rect x="30" y="100" width="60" height="40" fill="#ffdd88" opacity="0.4"/>
+      <rect x="110" y="100" width="60" height="40" fill="#1a1a30"/>
+      <rect x="190" y="100" width="60" height="40" fill="#1a1a30"/>
+      <rect x="350" y="100" width="60" height="40" fill="#1a1a30"/>
+      <rect x="430" y="100" width="60" height="40" fill="#ffdd88" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;0.5;0.3" dur="6s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="510" y="100" width="60" height="40" fill="#1a1a30"/>
+      
+      <!-- Row 3 -->
+      <rect x="30" y="230" width="60" height="40" fill="#1a1a30"/>
+      <rect x="110" y="230" width="60" height="40" fill="#1a1a30"/>
+      <rect x="190" y="230" width="60" height="40" fill="#ffdd88" opacity="0.4"/>
+      <rect x="350" y="230" width="60" height="40" fill="#ffdd88" opacity="0.5"/>
+      <rect x="430" y="230" width="60" height="40" fill="#1a1a30"/>
+      <rect x="510" y="230" width="60" height="40" fill="#1a1a30"/>
+      
+      <!-- Row 4 -->
+      <rect x="30" y="300" width="60" height="40" fill="#ffdd88" opacity="0.3"/>
+      <rect x="110" y="300" width="60" height="40" fill="#1a1a30"/>
+      <rect x="190" y="300" width="60" height="40" fill="#1a1a30"/>
+      <rect x="350" y="300" width="60" height="40" fill="#1a1a30"/>
+      <rect x="430" y="300" width="60" height="40" fill="#1a1a30"/>
+      <rect x="510" y="300" width="60" height="40" fill="#ffdd88" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.2;0.4" dur="3s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+    
+    <!-- Building sign -->
+    <rect x="200" y="360" width="200" height="30" fill="#333"/>
+    <text x="220" y="382" fill="#888" font-family="sans-serif" font-size="14" font-weight="bold">FORSCHUNGSZENTRUM</text>
+    
+    <!-- Roof equipment -->
+    <rect x="150" y="-30" width="100" height="30" fill="#2a2a2a"/>
+    <rect x="350" y="-20" width="80" height="20" fill="#2a2a2a"/>
+    
+    <!-- Air conditioning units -->
+    <rect x="450" y="-40" width="60" height="40" fill="#3a3a3a"/>
+    <g fill="#555">
+      <rect x="455" y="-35" width="50" height="5"/>
+      <rect x="455" y="-25" width="50" height="5"/>
+      <rect x="455" y="-15" width="50" height="5"/>
+    </g>
+  </g>
+  
+  <!-- ============ RADAR/ANTENNA ARRAY ============ -->
+  <g transform="translate(150, 200)">
+    <!-- Tower base -->
+    <rect x="40" y="200" width="40" height="350" fill="#3a3a3a"/>
+    <polygon points="30,200 60,50 90,200" fill="#4a4a4a"/>
+    
+    <!-- Radar dish -->
+    <g transform="translate(60, 80)">
+      <ellipse rx="80" ry="30" fill="#555" transform="rotate(-15)"/>
+      <ellipse rx="70" ry="25" fill="#444" transform="rotate(-15)"/>
+      <rect x="-5" y="0" width="10" height="50" fill="#3a3a3a"/>
+      
+      <!-- Rotating animation -->
+      <animateTransform attributeName="transform" type="rotate" values="0;5;0;-5;0" dur="8s" repeatCount="indefinite"/>
+    </g>
+    
+    <!-- Antenna mast -->
+    <rect x="55" y="0" width="10" height="80" fill="#555"/>
+    <rect x="45" y="-10" width="30" height="15" fill="#444"/>
+    
+    <!-- Red warning light -->
+    <circle cx="60" cy="-20" r="8" fill="#ff0000" filter="url(#strongGlow)">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- ============ SECONDARY BUILDING (Hangar) ============ -->
+  <g transform="translate(1300, 300)">
+    <path d="M0,250 L0,0 Q150,-50 300,0 L300,250 Z" fill="url(#buildingGrad)" filter="url(#shadow)"/>
+    
+    <!-- Hangar door -->
+    <rect x="50" y="100" width="200" height="150" fill="#1a1a1a"/>
+    <g stroke="#333" stroke-width="2">
+      <line x1="100" y1="100" x2="100" y2="250"/>
+      <line x1="150" y1="100" x2="150" y2="250"/>
+      <line x1="200" y1="100" x2="200" y2="250"/>
+    </g>
+    
+    <!-- Warning stripes -->
+    <g fill="#ffaa00">
+      <polygon points="50,100 70,100 50,120"/>
+      <polygon points="70,100 90,100 70,120 50,120"/>
+      <polygon points="230,100 250,100 250,120 230,120"/>
+    </g>
+    
+    <!-- Drone silhouette visible inside -->
+    <g transform="translate(100, 150)" opacity="0.3">
+      <ellipse cx="50" cy="20" rx="60" ry="15" fill="#222"/>
+      <rect x="20" y="15" width="60" height="10" fill="#222"/>
+      <polygon points="0,20 -30,10 -30,30" fill="#222"/>
+      <polygon points="100,20 130,10 130,30" fill="#222"/>
+    </g>
+    
+    <text x="90" y="280" fill="#666" font-family="stencil, sans-serif" font-size="18">HANGAR B-7</text>
+  </g>
+  
+  <!-- ============ GUARD TOWER ============ -->
+  <g transform="translate(50, 350)">
+    <!-- Tower structure -->
+    <rect x="20" y="100" width="60" height="250" fill="#3a3a3a"/>
+    <rect x="0" y="50" width="100" height="60" fill="url(#concreteGrad)" filter="url(#shadow)"/>
+    <rect x="5" y="0" width="90" height="55" fill="#2a2a2a"/>
+    
+    <!-- Windows -->
+    <rect x="15" y="10" width="30" height="35" fill="#1a1a30"/>
+    <rect x="55" y="10" width="30" height="35" fill="#1a1a30"/>
+    
+    <!-- Searchlight -->
+    <g transform="translate(50, 60)">
+      <rect x="-15" y="0" width="30" height="20" fill="#444"/>
+      <ellipse cx="0" cy="25" rx="15" ry="8" fill="#fff" opacity="0.8" filter="url(#glow)"/>
+      
+      <!-- Search beam -->
+      <polygon points="-20,30 20,30 100,400 -100,400" fill="url(#searchLight)">
+        <animateTransform attributeName="transform" type="rotate" values="-20;20;-20" dur="6s" repeatCount="indefinite"/>
+      </polygon>
+    </g>
+    
+    <!-- Red light -->
+    <circle cx="50" cy="-10" r="6" fill="#ff0000" filter="url(#glow)">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- ============ SECURITY FENCE ============ -->
+  <g transform="translate(0, 550)">
+    <!-- Fence -->
+    <rect width="1920" height="150" fill="url(#fencePattern)"/>
+    
+    <!-- Barbed wire -->
+    <g stroke="#666" stroke-width="2" fill="none">
+      <path d="M0,5 Q30,0 60,5 Q90,10 120,5 Q150,0 180,5 Q210,10 240,5 Q270,0 300,5"/>
+      <path d="M300,5 Q330,0 360,5 Q390,10 420,5 Q450,0 480,5 Q510,10 540,5 Q570,0 600,5"/>
+      <path d="M600,5 Q630,0 660,5 Q690,10 720,5 Q750,0 780,5 Q810,10 840,5 Q870,0 900,5"/>
+      <path d="M900,5 Q930,0 960,5 Q990,10 1020,5 Q1050,0 1080,5 Q1110,10 1140,5 Q1170,0 1200,5"/>
+      <path d="M1200,5 Q1230,0 1260,5 Q1290,10 1320,5 Q1350,0 1380,5 Q1410,10 1440,5 Q1470,0 1500,5"/>
+      <path d="M1500,5 Q1530,0 1560,5 Q1590,10 1620,5 Q1650,0 1680,5 Q1710,10 1740,5 Q1770,0 1800,5"/>
+      <path d="M1800,5 Q1830,0 1860,5 Q1890,10 1920,5"/>
+    </g>
+    
+    <!-- Barb details -->
+    <g fill="#777">
+      <circle cx="30" cy="3" r="3"/>
+      <circle cx="90" cy="7" r="3"/>
+      <circle cx="150" cy="3" r="3"/>
+      <circle cx="210" cy="7" r="3"/>
+      <circle cx="270" cy="3" r="3"/>
+      <circle cx="330" cy="7" r="3"/>
+      <circle cx="390" cy="3" r="3"/>
+      <circle cx="450" cy="7" r="3"/>
+    </g>
+    
+    <!-- Fence posts -->
+    <g fill="#444">
+      <rect x="0" y="-50" width="15" height="200"/>
+      <rect x="300" y="-50" width="15" height="200"/>
+      <rect x="600" y="-50" width="15" height="200"/>
+      <rect x="900" y="-50" width="15" height="200"/>
+      <rect x="1200" y="-50" width="15" height="200"/>
+      <rect x="1500" y="-50" width="15" height="200"/>
+      <rect x="1800" y="-50" width="15" height="200"/>
+    </g>
+  </g>
+  
+  <!-- ============ GROUND ============ -->
+  <rect y="700" width="1920" height="380" fill="url(#ground)"/>
+  
+  <!-- Concrete/asphalt texture -->
+  <g fill="#1f1f1f" opacity="0.3">
+    <rect x="100" y="750" width="200" height="150"/>
+    <rect x="400" y="780" width="300" height="120"/>
+    <rect x="800" y="750" width="250" height="150"/>
+    <rect x="1200" y="770" width="350" height="130"/>
+  </g>
+  
+  <!-- ============ WARNING SIGNS ============ -->
+  <g transform="translate(500, 620)">
+    <rect x="-5" y="0" width="10" height="130" fill="#555"/>
+    <rect x="-60" y="-60" width="120" height="80" fill="#ffcc00" filter="url(#shadow)"/>
+    <rect x="-55" y="-55" width="110" height="70" fill="#ff0000"/>
+    <text x="-50" y="-25" fill="#fff" font-family="sans-serif" font-size="14" font-weight="bold">SPERRGEBIET</text>
+    <text x="-45" y="-5" fill="#fff" font-family="sans-serif" font-size="11">BETRETEN</text>
+    <text x="-45" y="10" fill="#fff" font-family="sans-serif" font-size="11">VERBOTEN!</text>
+  </g>
+  
+  <g transform="translate(1100, 640)">
+    <rect x="-5" y="0" width="10" height="110" fill="#555"/>
+    <rect x="-50" y="-50" width="100" height="60" fill="#333" filter="url(#shadow)"/>
+    <text x="-40" y="-25" fill="#ff0000" font-family="sans-serif" font-size="12" font-weight="bold">⚠ ACHTUNG</text>
+    <text x="-45" y="-5" fill="#fff" font-family="sans-serif" font-size="10">MILITÄRISCHES</text>
+    <text x="-40" y="5" fill="#fff" font-family="sans-serif" font-size="10">SPERRGEBIET</text>
+  </g>
+  
+  <!-- ============ SECURITY CAMERAS ============ -->
+  <g transform="translate(350, 500)">
+    <rect x="-5" y="0" width="10" height="50" fill="#444"/>
+    <rect x="-20" y="-15" width="40" height="20" fill="#333"/>
+    <rect x="15" y="-10" width="25" height="10" fill="#222"/>
+    <circle cx="-10" cy="-5" r="5" fill="#ff0000" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <g transform="translate(1000, 520)">
+    <rect x="-5" y="0" width="10" height="30" fill="#444"/>
+    <rect x="-20" y="-15" width="40" height="20" fill="#333"/>
+    <rect x="15" y="-10" width="25" height="10" fill="#222"/>
+    <circle cx="-10" cy="-5" r="5" fill="#ff0000" opacity="0.8">
+      <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- ============ TRASH BIN (North Entrance) ============ -->
+  <g transform="translate(300, 650)">
+    <!-- Shadow -->
+    <ellipse cx="0" cy="90" rx="45" ry="10" fill="#000" opacity="0.3"/>
+    
+    <!-- Bin body -->
+    <path d="M -35,10 L -30,80 L 30,80 L 35,10 Z" fill="#2a3a2a" stroke="#1a251a" stroke-width="2"/>
+    
+    <!-- Bin rim -->
+    <ellipse cx="0" cy="10" rx="38" ry="12" fill="#354535" stroke="#2a3a2a" stroke-width="2"/>
+    
+    <!-- Lid -->
+    <ellipse cx="0" cy="5" rx="32" ry="8" fill="#3a4a3a"/>
+    
+    <!-- Dents and texture -->
+    <path d="M -20,30 Q -18,40 -20,50" stroke="#1a251a" stroke-width="1.5" fill="none"/>
+    <path d="M 15,35 Q 17,45 15,55" stroke="#1a251a" stroke-width="1.5" fill="none"/>
+    
+    <!-- Plastic liner edge visible -->
+    <path d="M -30,12 L -28,15" stroke="#222" stroke-width="2" opacity="0.6"/>
+    <path d="M 30,12 L 28,15" stroke="#222" stroke-width="2" opacity="0.6"/>
+    
+    <!-- German municipal mark -->
+    <text x="-8" y="50" fill="#1a251a" font-family="sans-serif" font-size="12" font-weight="bold">M</text>
+  </g>
+  
+  <!-- ============ MILITARY VEHICLE ============ -->
+  <g transform="translate(1500, 780)">
+    <rect y="30" width="200" height="60" fill="#3d4a3d" rx="5"/>
+    <rect x="20" y="10" width="160" height="40" fill="#3d4a3d" rx="5"/>
+    <rect x="30" y="15" width="50" height="25" fill="#2a352a"/>
+    <rect x="100" y="15" width="70" height="25" fill="#2a352a"/>
+    
+    <!-- Wheels -->
+    <circle cx="40" cy="95" r="20" fill="#1a1a1a"/>
+    <circle cx="40" cy="95" r="12" fill="#333"/>
+    <circle cx="160" cy="95" r="20" fill="#1a1a1a"/>
+    <circle cx="160" cy="95" r="12" fill="#333"/>
+    
+    <!-- German military cross -->
+    <g transform="translate(180, 50)" fill="#1a1a1a">
+      <rect x="-8" y="-2" width="16" height="4"/>
+      <rect x="-2" y="-8" width="4" height="16"/>
+    </g>
+  </g>
+  
+  <!-- ============ ROAD MARKINGS ============ -->
+  <g fill="#ffcc00" opacity="0.5">
+    <rect x="0" y="850" width="60" height="5"/>
+    <rect x="100" y="850" width="60" height="5"/>
+    <rect x="200" y="850" width="60" height="5"/>
+    <rect x="300" y="850" width="60" height="5"/>
+    <rect x="400" y="850" width="60" height="5"/>
+    <rect x="500" y="850" width="60" height="5"/>
+    <rect x="600" y="850" width="60" height="5"/>
+    <rect x="700" y="850" width="60" height="5"/>
+    <rect x="800" y="850" width="60" height="5"/>
+    <rect x="900" y="850" width="60" height="5"/>
+    <rect x="1000" y="850" width="60" height="5"/>
+    <rect x="1100" y="850" width="60" height="5"/>
+    <rect x="1200" y="850" width="60" height="5"/>
+    <rect x="1300" y="850" width="60" height="5"/>
+    <rect x="1400" y="850" width="60" height="5"/>
+    <rect x="1500" y="850" width="60" height="5"/>
+    <rect x="1600" y="850" width="60" height="5"/>
+    <rect x="1700" y="850" width="60" height="5"/>
+    <rect x="1800" y="850" width="60" height="5"/>
+  </g>
+  
+  <!-- ============ GATE ENTRANCE ============ -->
+  <g transform="translate(800, 550)">
+    <!-- Gate posts -->
+    <rect x="0" y="0" width="30" height="200" fill="#4a4a4a"/>
+    <rect x="250" y="0" width="30" height="200" fill="#4a4a4a"/>
+    
+    <!-- Gate barrier -->
+    <rect x="30" y="80" width="220" height="15" fill="#ff0000">
+      <animate attributeName="fill" values="#ff0000;#ffcc00;#ff0000" dur="1s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="30" y="95" width="220" height="15" fill="#fff"/>
+    
+    <!-- Control booth -->
+    <rect x="280" y="50" width="80" height="150" fill="url(#concreteGrad)"/>
+    <rect x="290" y="60" width="60" height="40" fill="#ffdd88" opacity="0.5"/>
+    <rect x="290" y="120" width="60" height="30" fill="#2a2a2a"/>
+    
+    <!-- Checkpoint sign -->
+    <rect x="60" y="-30" width="160" height="35" fill="#333"/>
+    <text x="75" y="-8" fill="#fff" font-family="sans-serif" font-size="14">CHECKPOINT</text>
+  </g>
+  
+  <!-- ============ COMMUNICATION TOWER ============ -->
+  <g transform="translate(1700, 100)">
+    <!-- Tower frame -->
+    <polygon points="50,0 0,500 100,500" fill="none" stroke="#555" stroke-width="3"/>
+    <line x1="50" y1="0" x2="50" y2="500" stroke="#555" stroke-width="3"/>
+    
+    <!-- Cross beams -->
+    <g stroke="#444" stroke-width="2">
+      <line x1="10" y1="100" x2="90" y2="100"/>
+      <line x1="15" y1="200" x2="85" y2="200"/>
+      <line x1="20" y1="300" x2="80" y2="300"/>
+      <line x1="25" y1="400" x2="75" y2="400"/>
+    </g>
+    
+    <!-- Antenna arrays -->
+    <rect x="30" y="50" width="40" height="30" fill="#3a3a3a"/>
+    <rect x="25" y="150" width="50" height="20" fill="#3a3a3a"/>
+    
+    <!-- Red warning lights -->
+    <circle cx="50" cy="10" r="8" fill="#ff0000" filter="url(#strongGlow)">
+      <animate attributeName="opacity" values="1;0.2;1" dur="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="50" cy="250" r="5" fill="#ff0000" filter="url(#glow)">
+      <animate attributeName="opacity" values="0.2;1;0.2" dur="1s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- ============ AMBIENT RED GLOW (Alert) ============ -->
+  <ellipse cx="200" cy="400" rx="150" ry="200" fill="url(#redGlow)" opacity="0.2">
+    <animate attributeName="opacity" values="0.2;0.1;0.2" dur="3s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="1700" cy="300" rx="100" ry="150" fill="url(#redGlow)" opacity="0.15">
+    <animate attributeName="opacity" values="0.15;0.05;0.15" dur="2s" repeatCount="indefinite"/>
+  </ellipse>
+  
+  <!-- ============ FACILITY NAME ============ -->
+  <g transform="translate(700, 950)">
+    <rect x="-20" y="-30" width="500" height="50" fill="#1a1a1a" opacity="0.8"/>
+    <text x="0" y="0" fill="#666" font-family="stencil, sans-serif" font-size="24">STECKERDOSER HEIDE</text>
+    <text x="50" y="20" fill="#555" font-family="sans-serif" font-size="12">BUNDESWEHR FORSCHUNGSGELÄNDE</text>
+  </g>
+  
+  <!-- ============ VIGNETTE/DARKNESS ============ -->
+  <rect width="1920" height="1080" fill="url(#nightSky)" opacity="0.3"/>
+</svg>

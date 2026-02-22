@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
   <defs>
-    <!-- Gradients -->
+    <!-- === GRADIENTS === -->
     <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" style="stop-color:#87CEEB"/>
       <stop offset="100%" style="stop-color:#B0E0E6"/>
@@ -36,16 +36,32 @@
       <stop offset="50%" style="stop-color:#8B4513"/>
       <stop offset="100%" style="stop-color:#654321"/>
     </linearGradient>
-    
-    <!-- Patterns -->
+    <!-- Morning sunbeam gradient -->
+    <linearGradient id="sunbeamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFE082;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#FFE082;stop-opacity:0"/>
+    </linearGradient>
+    <!-- Warm light radial from window -->
+    <radialGradient id="windowWarmGlow" cx="37%" cy="25%" r="45%">
+      <stop offset="0%" style="stop-color:#FFE082;stop-opacity:0.12"/>
+      <stop offset="100%" style="stop-color:#FFE082;stop-opacity:0"/>
+    </radialGradient>
+    <!-- Vignette -->
+    <radialGradient id="vignetteRadial" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" style="stop-color:#000;stop-opacity:0"/>
+      <stop offset="75%" style="stop-color:#000;stop-opacity:0"/>
+      <stop offset="100%" style="stop-color:#000;stop-opacity:0.35"/>
+    </radialGradient>
+
+    <!-- === PATTERNS === -->
     <pattern id="floorTiles" patternUnits="userSpaceOnUse" width="120" height="120">
       <rect width="60" height="60" fill="#8B4513"/>
       <rect x="60" width="60" height="60" fill="#A0522D"/>
       <rect y="60" width="60" height="60" fill="#A0522D"/>
       <rect x="60" y="60" width="60" height="60" fill="#8B4513"/>
     </pattern>
-    
-    <!-- Filters -->
+
+    <!-- === FILTERS === -->
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="4" dy="4" stdDeviation="4" flood-opacity="0.3"/>
     </filter>
@@ -53,80 +69,170 @@
       <feGaussianBlur stdDeviation="3" result="blur"/>
       <feComposite in="SourceGraphic" in2="blur" operator="over"/>
     </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="steamBlur">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
   </defs>
-  
-  <!-- Background Wall -->
+
+  <!-- ============ BACKGROUND WALL ============ -->
   <rect width="1920" height="1080" fill="url(#wallGradient)"/>
-  
+
   <!-- Wall texture lines -->
   <g opacity="0.1">
     <line x1="0" y1="200" x2="1920" y2="200" stroke="#000" stroke-width="1"/>
     <line x1="0" y1="400" x2="1920" y2="400" stroke="#000" stroke-width="1"/>
   </g>
-  
-  <!-- Floor -->
+
+  <!-- Warm morning light wash on wall (from window) -->
+  <rect width="1920" height="1080" fill="url(#windowWarmGlow)"/>
+
+  <!-- ============ FLOOR ============ -->
   <rect y="750" width="1920" height="330" fill="url(#floorTiles)"/>
   <rect y="750" width="1920" height="10" fill="#5D4037" opacity="0.5"/>
-  
+
+  <!-- Floor light patch from window -->
+  <polygon points="500,750 920,750 1050,1080 300,1080" fill="#FFE082" opacity="0.04"/>
+
   <!-- ============ WINDOW with Canal View ============ -->
   <g transform="translate(500, 120)">
     <!-- Window frame outer -->
     <rect x="-15" y="-15" width="430" height="380" fill="#5D4037" rx="5"/>
     <!-- Window frame inner -->
     <rect width="400" height="350" fill="#654321" rx="3"/>
-    
+
     <!-- Window glass / View outside -->
     <rect x="10" y="10" width="180" height="330" fill="url(#skyGradient)"/>
     <rect x="210" y="10" width="180" height="330" fill="url(#skyGradient)"/>
-    
-    <!-- Canal water -->
+
+    <!-- Canal water with animated shimmer -->
     <rect x="10" y="220" width="180" height="120" fill="url(#waterGradient)" opacity="0.8"/>
     <rect x="210" y="220" width="180" height="120" fill="url(#waterGradient)" opacity="0.8"/>
-    
-    <!-- Water reflections -->
+
+    <!-- Water reflections (animated sparkle) -->
     <g opacity="0.3">
-      <ellipse cx="100" cy="280" rx="60" ry="8" fill="#fff"/>
-      <ellipse cx="300" cy="290" rx="50" ry="6" fill="#fff"/>
+      <ellipse cx="100" cy="280" rx="60" ry="8" fill="#fff">
+        <animate attributeName="opacity" values="0.3;0.15;0.3;0.25;0.3" dur="3s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="300" cy="290" rx="50" ry="6" fill="#fff">
+        <animate attributeName="opacity" values="0.2;0.35;0.2;0.3;0.2" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <!-- Extra sparkle points -->
+      <circle cx="60" cy="270" r="3" fill="#fff" opacity="0">
+        <animate attributeName="opacity" values="0;0.5;0;0;0" dur="5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="350" cy="300" r="2" fill="#fff" opacity="0">
+        <animate attributeName="opacity" values="0;0;0.4;0;0" dur="4.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="150" cy="295" r="2.5" fill="#fff" opacity="0">
+        <animate attributeName="opacity" values="0;0;0;0.45;0" dur="6s" repeatCount="indefinite"/>
+      </circle>
     </g>
-    
+
     <!-- Grass/bank -->
     <rect x="10" y="200" width="180" height="25" fill="#228B22"/>
     <rect x="210" y="200" width="180" height="25" fill="#228B22"/>
-    
+
     <!-- Distant farmhouse -->
     <g transform="translate(50, 100)">
       <rect x="0" y="30" width="60" height="50" fill="#F5F5F5"/>
       <polygon points="0,30 30,0 60,30" fill="#8B0000"/>
       <rect x="20" y="50" width="15" height="25" fill="#654321"/>
     </g>
-    
-    <!-- Trees in distance -->
-    <ellipse cx="320" cy="160" rx="40" ry="50" fill="#2E8B57"/>
-    <ellipse cx="350" cy="170" rx="35" ry="40" fill="#228B22"/>
-    
-    <!-- Birds -->
+
+    <!-- Trees with gentle sway -->
+    <ellipse cx="320" cy="160" rx="40" ry="50" fill="#2E8B57">
+      <animateTransform attributeName="transform" type="translate" values="0,0;2,-1;0,0;-1,0;0,0" dur="5s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="350" cy="170" rx="35" ry="40" fill="#228B22">
+      <animateTransform attributeName="transform" type="translate" values="0,0;-1,0;0,0;2,-1;0,0" dur="6s" repeatCount="indefinite"/>
+    </ellipse>
+
+    <!-- Birds (gently gliding) -->
     <g fill="none" stroke="#333" stroke-width="2">
-      <path d="M80,80 Q85,75 90,80 Q95,75 100,80"/>
-      <path d="M280,60 Q285,55 290,60 Q295,55 300,60"/>
+      <path d="M80,80 Q85,75 90,80 Q95,75 100,80">
+        <animateMotion path="M0,0 C10,-5 20,3 30,-2 C40,-7 50,0 60,-4" dur="8s" repeatCount="indefinite"/>
+      </path>
+      <path d="M280,60 Q285,55 290,60 Q295,55 300,60">
+        <animateMotion path="M0,0 C-8,-3 -18,4 -25,-1 C-35,-5 -45,2 -55,-3" dur="10s" repeatCount="indefinite"/>
+      </path>
+      <!-- Extra bird far away -->
+      <path d="M0,0 Q3,-3 6,0 Q9,-3 12,0" opacity="0.5">
+        <animateMotion path="M180,90 C200,85 220,95 240,88" dur="12s" repeatCount="indefinite"/>
+      </path>
     </g>
-    
+
+    <!-- Drifting cloud through window -->
+    <ellipse cx="-80" cy="40" rx="50" ry="15" fill="#fff" opacity="0.5">
+      <animateMotion path="M0,0 L500,0" dur="45s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0.5;0.5;0.5;0" dur="45s" repeatCount="indefinite"/>
+    </ellipse>
+
     <!-- Window dividers -->
     <rect x="190" y="10" width="20" height="330" fill="#654321"/>
     <rect x="10" y="165" width="380" height="10" fill="#654321"/>
-    
+
     <!-- Window sill -->
     <rect x="-20" y="350" width="440" height="25" fill="#5D4037"/>
-    
-    <!-- Plant on windowsill -->
+
+    <!-- Plant on windowsill with gentle leaf sway -->
     <g transform="translate(50, 320)">
       <rect x="0" y="15" width="40" height="35" fill="#8B4513" rx="3"/>
-      <ellipse cx="20" cy="15" rx="25" ry="20" fill="#228B22"/>
-      <ellipse cx="15" cy="10" rx="15" ry="15" fill="#2E8B57"/>
-      <ellipse cx="28" cy="8" rx="12" ry="12" fill="#32CD32"/>
+      <ellipse cx="20" cy="15" rx="25" ry="20" fill="#228B22">
+        <animateTransform attributeName="transform" type="rotate" values="-1,20,15;1,20,15;-1,20,15" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="15" cy="10" rx="15" ry="15" fill="#2E8B57">
+        <animateTransform attributeName="transform" type="rotate" values="1,15,10;-1,15,10;1,15,10" dur="5s" repeatCount="indefinite"/>
+      </ellipse>
+      <ellipse cx="28" cy="8" rx="12" ry="12" fill="#32CD32">
+        <animateTransform attributeName="transform" type="rotate" values="-0.5,28,8;0.5,28,8;-0.5,28,8" dur="3.5s" repeatCount="indefinite"/>
+      </ellipse>
     </g>
   </g>
-  
-  <!-- ============ Upper Cabinets ============ -->
+
+  <!-- ============ SUNBEAMS through window ============ -->
+  <g opacity="0.08">
+    <!-- Ray 1 -->
+    <polygon points="510,130 700,130 1000,1080 350,1080" fill="#FFE082">
+      <animate attributeName="opacity" values="1;0.6;0.9;0.7;1" dur="8s" repeatCount="indefinite"/>
+    </polygon>
+    <!-- Ray 2 -->
+    <polygon points="720,130 900,130 1150,1080 850,1080" fill="#FFE082">
+      <animate attributeName="opacity" values="0.7;1;0.6;0.8;0.7" dur="10s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+
+  <!-- Floating dust motes in sunbeam -->
+  <g>
+    <circle cx="650" cy="300" r="1.5" fill="#FFE082" opacity="0.3">
+      <animateMotion path="M0,0 C20,50 -10,120 15,200 C30,280 -5,350 10,450" dur="15s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.1;0.35;0.15;0.3" dur="15s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="700" cy="250" r="1" fill="#FFE082" opacity="0.25">
+      <animateMotion path="M0,0 C-15,60 10,140 -10,220 C-20,300 15,380 -5,470" dur="18s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.25;0.05;0.3;0.1;0.25" dur="18s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="750" cy="200" r="1.2" fill="#FFE082" opacity="0.2">
+      <animateMotion path="M0,0 C10,40 -20,100 5,180 C25,260 -15,340 10,420" dur="20s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.2;0.35;0.1;0.25;0.2" dur="20s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="600" cy="350" r="0.8" fill="#FFE082" opacity="0.15">
+      <animateMotion path="M0,0 C-8,55 18,130 -5,210 C-18,290 8,360 -2,430" dur="22s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.15;0.3;0.08;0.2;0.15" dur="22s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="680" cy="400" r="1.3" fill="#FFE082" opacity="0.18">
+      <animateMotion path="M0,0 C15,35 -12,80 8,140 C22,200 -8,270 12,350" dur="16s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.18;0.06;0.22;0.1;0.18" dur="16s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ============ UPPER CABINETS ============ -->
   <g transform="translate(1100, 100)">
     <!-- Cabinet 1 -->
     <rect width="200" height="280" fill="url(#cabinetGradient)" rx="5" filter="url(#shadow)"/>
@@ -134,7 +240,7 @@
     <rect x="105" y="10" width="85" height="260" fill="#C4A35A" rx="3"/>
     <circle cx="85" cy="140" r="8" fill="#B8860B"/>
     <circle cx="115" cy="140" r="8" fill="#B8860B"/>
-    
+
     <!-- Cabinet 2 -->
     <g transform="translate(220, 0)">
       <rect width="200" height="280" fill="url(#cabinetGradient)" rx="5" filter="url(#shadow)"/>
@@ -144,11 +250,13 @@
       <circle cx="115" cy="140" r="8" fill="#B8860B"/>
     </g>
   </g>
-  
-  <!-- ============ Kitchen Counter ============ -->
+
+  <!-- ============ KITCHEN COUNTER ============ -->
   <rect x="1050" y="500" width="520" height="250" fill="url(#counterGradient)" filter="url(#shadow)"/>
   <rect x="1050" y="500" width="520" height="15" fill="#404040"/>
-  
+  <!-- Counter surface reflection -->
+  <rect x="1055" y="501" width="510" height="8" fill="#555" opacity="0.3"/>
+
   <!-- Counter backsplash tiles -->
   <g transform="translate(1050, 400)">
     <rect width="520" height="100" fill="#E0E0E0"/>
@@ -175,130 +283,184 @@
       <rect x="460" y="55" width="40" height="40"/>
     </g>
   </g>
-  
-  <!-- ============ Espresso Machine ============ -->
+
+  <!-- ============ ESPRESSO MACHINE (enhanced) ============ -->
   <g transform="translate(1200, 380)">
     <!-- Machine body -->
     <rect width="140" height="120" fill="url(#coffeeGradient)" rx="8" filter="url(#shadow)"/>
+    <!-- Chrome highlight -->
+    <rect x="3" y="3" width="134" height="4" fill="#E0E0E0" opacity="0.5" rx="2"/>
     <rect x="10" y="10" width="120" height="60" fill="#333" rx="5"/>
-    
-    <!-- Display -->
+
+    <!-- Display with blinking cursor -->
     <rect x="20" y="20" width="60" height="30" fill="#001a00" rx="3"/>
     <text x="30" y="42" fill="#00ff00" font-family="monospace" font-size="14">READY</text>
-    
+    <!-- Blinking LED -->
+    <circle cx="72" cy="45" r="3" fill="#00ff00">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+
     <!-- Buttons -->
     <circle cx="100" cy="35" r="10" fill="#222"/>
     <circle cx="100" cy="35" r="8" fill="#4a4a4a"/>
-    
-    <!-- Drip tray -->
+    <!-- Power indicator LED -->
+    <circle cx="115" cy="20" r="2" fill="#FF4444">
+      <animate attributeName="fill" values="#FF4444;#FF6666;#FF4444" dur="2s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Drip tray with coffee drip stain -->
     <rect x="30" y="80" width="80" height="30" fill="#222" rx="3"/>
-    
+    <ellipse cx="70" cy="90" rx="8" ry="3" fill="#3a2010" opacity="0.4"/>
+
     <!-- Cup -->
     <g transform="translate(50, 75)">
       <path d="M0,35 L5,0 L35,0 L40,35 Z" fill="#F5F5F5"/>
       <ellipse cx="20" cy="5" rx="15" ry="5" fill="#E8E8E8"/>
       <path d="M40,10 Q55,15 40,25" fill="none" stroke="#F5F5F5" stroke-width="4"/>
+      <!-- Coffee level in cup -->
+      <ellipse cx="20" cy="8" rx="12" ry="4" fill="#3C1A00" opacity="0.6"/>
     </g>
-    
-    <!-- Steam -->
-    <g opacity="0.4" fill="none" stroke="#FFF" stroke-width="2">
-      <path d="M70,60 Q65,50 70,40 Q75,30 70,20">
-        <animate attributeName="d" dur="2s" repeatCount="indefinite"
-          values="M70,60 Q65,50 70,40 Q75,30 70,20;
-                  M70,60 Q75,50 70,40 Q65,30 70,20;
-                  M70,60 Q65,50 70,40 Q75,30 70,20"/>
+
+    <!-- Steam wisps (multiple, varying) -->
+    <g opacity="0.4" fill="none" stroke="#FFF" stroke-width="2" filter="url(#steamBlur)">
+      <path d="M65,60 Q60,50 65,40 Q70,30 65,20">
+        <animate attributeName="d" dur="2.5s" repeatCount="indefinite"
+          values="M65,60 Q60,50 65,40 Q70,30 65,20;
+                  M65,60 Q70,50 65,40 Q60,30 65,20;
+                  M65,60 Q60,50 65,40 Q70,30 65,20"/>
+        <animate attributeName="opacity" values="0.4;0.15;0.35;0.2;0.4" dur="2.5s" repeatCount="indefinite"/>
+      </path>
+      <path d="M75,58 Q80,48 75,38 Q70,28 75,18">
+        <animate attributeName="d" dur="3s" repeatCount="indefinite"
+          values="M75,58 Q80,48 75,38 Q70,28 75,18;
+                  M75,58 Q70,48 75,38 Q80,28 75,18;
+                  M75,58 Q80,48 75,38 Q70,28 75,18"/>
+        <animate attributeName="opacity" values="0.3;0.1;0.3;0.2;0.3" dur="3s" repeatCount="indefinite"/>
+      </path>
+      <path d="M58,55 Q53,45 58,35 Q63,25 58,15" opacity="0.2">
+        <animate attributeName="d" dur="3.5s" repeatCount="indefinite"
+          values="M58,55 Q53,45 58,35 Q63,25 58,15;
+                  M58,55 Q63,45 58,35 Q53,25 58,15;
+                  M58,55 Q53,45 58,35 Q63,25 58,15"/>
+        <animate attributeName="opacity" values="0.2;0.05;0.15;0.1;0.2" dur="3.5s" repeatCount="indefinite"/>
       </path>
     </g>
+    <!-- Rising steam that fades up -->
+    <g opacity="0" fill="#fff" filter="url(#steamBlur)">
+      <ellipse cx="70" cy="5" rx="20" ry="8">
+        <animate attributeName="opacity" values="0;0.08;0.05;0;0" dur="6s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="translate" values="0,0;5,-20;-3,-40" dur="6s" repeatCount="indefinite"/>
+      </ellipse>
+    </g>
   </g>
-  
-  <!-- ============ Sink ============ -->
+
+  <!-- ============ SINK ============ -->
   <g transform="translate(1400, 480)">
     <rect width="150" height="80" fill="#A0A0A0" rx="5"/>
     <rect x="10" y="10" width="130" height="60" fill="#707070" rx="3"/>
     <!-- Faucet -->
     <rect x="60" y="-40" width="30" height="50" fill="#C0C0C0" rx="3"/>
     <path d="M75,-40 L75,-60 Q75,-70 95,-70 L95,-60" fill="none" stroke="#C0C0C0" stroke-width="10" stroke-linecap="round"/>
+    <!-- Chrome reflection on faucet -->
+    <rect x="62" y="-38" width="4" height="45" fill="#E8E8E8" opacity="0.4" rx="1"/>
+    <!-- Dripping faucet -->
+    <circle cx="95" cy="-52" r="2.5" fill="#5F9EA0" opacity="0">
+      <animate attributeName="cy" values="-52;-52;-52;10" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0;0.5;0" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="2.5;2.5;2.5;0.5" dur="4s" repeatCount="indefinite"/>
+    </circle>
   </g>
-  
-  <!-- ============ Door to Mancave (Right) ============ -->
+
+  <!-- ============ DOOR TO MANCAVE (Right) ============ -->
   <g transform="translate(1700, 200)">
     <rect x="-10" y="-10" width="180" height="570" fill="#3D2817"/>
     <rect width="160" height="550" fill="url(#doorGradient)" rx="3"/>
-    
+
     <!-- Door panels -->
     <rect x="15" y="20" width="130" height="200" fill="#5D4037" rx="2"/>
     <rect x="20" y="25" width="120" height="190" fill="#4E342E"/>
-    
+
     <rect x="15" y="250" width="130" height="200" fill="#5D4037" rx="2"/>
     <rect x="20" y="255" width="120" height="190" fill="#4E342E"/>
-    
+
     <!-- Door handle -->
     <ellipse cx="140" cy="300" rx="12" ry="8" fill="#B8860B"/>
     <circle cx="140" cy="300" r="5" fill="#8B6914"/>
-    
-    <!-- Small sign -->
+    <!-- Handle highlight -->
+    <ellipse cx="138" cy="298" rx="3" ry="2" fill="#DAA520" opacity="0.5"/>
+
+    <!-- Small sign with glow -->
     <rect x="50" y="470" width="60" height="30" fill="#2F2F2F" rx="2"/>
     <text x="58" y="492" fill="#00FF00" font-family="monospace" font-size="12">MANCAVE</text>
+    <rect x="52" y="472" width="56" height="26" fill="#00FF00" opacity="0.03" rx="1">
+      <animate attributeName="opacity" values="0.03;0.06;0.03" dur="3s" repeatCount="indefinite"/>
+    </rect>
   </g>
-  
-  <!-- ============ Door to Garden (Left) ============ -->
+
+  <!-- ============ DOOR TO GARDEN (Left) ============ -->
   <g transform="translate(50, 200)">
     <rect x="-10" y="-10" width="180" height="570" fill="#3D2817"/>
     <rect width="160" height="550" fill="url(#doorGradient)" rx="3"/>
-    
-    <!-- Glass panels -->
+
+    <!-- Glass panels with light shimmer -->
     <rect x="15" y="20" width="130" height="250" fill="#87CEEB" opacity="0.6" rx="2"/>
     <rect x="15" y="20" width="130" height="250" fill="none" stroke="#5D4037" stroke-width="8"/>
-    
+    <!-- Sun reflection glint on glass -->
+    <rect x="20" y="25" width="20" height="60" fill="#fff" opacity="0" rx="2">
+      <animate attributeName="opacity" values="0;0;0.15;0;0;0;0;0" dur="10s" repeatCount="indefinite"/>
+    </rect>
+
     <!-- Grid pattern on glass -->
     <line x1="80" y1="20" x2="80" y2="270" stroke="#5D4037" stroke-width="5"/>
     <line x1="15" y1="100" x2="145" y2="100" stroke="#5D4037" stroke-width="5"/>
     <line x1="15" y1="180" x2="145" y2="180" stroke="#5D4037" stroke-width="5"/>
-    
+
     <!-- View through glass - garden hint -->
     <rect x="20" y="180" width="55" height="85" fill="#228B22" opacity="0.5"/>
     <rect x="85" y="180" width="55" height="85" fill="#228B22" opacity="0.5"/>
-    
+
     <!-- Lower panel -->
     <rect x="15" y="290" width="130" height="240" fill="#5D4037" rx="2"/>
     <rect x="20" y="295" width="120" height="230" fill="#4E342E"/>
-    
+
     <!-- Door handle -->
     <ellipse cx="140" cy="320" rx="12" ry="8" fill="#B8860B"/>
     <circle cx="140" cy="320" r="5" fill="#8B6914"/>
   </g>
-  
-  <!-- ============ Door to Living Room (Left-Center) ============ -->
+
+  <!-- ============ DOOR TO LIVING ROOM (Left-Center) ============ -->
   <g transform="translate(250, 200)">
     <rect x="-10" y="-10" width="180" height="570" fill="#3D2817"/>
     <rect width="160" height="550" fill="url(#doorGradient)" rx="3"/>
-    
+
     <!-- Door panels -->
     <rect x="15" y="20" width="130" height="200" fill="#5D4037" rx="2"/>
     <rect x="20" y="25" width="120" height="190" fill="#4E342E"/>
-    
+
     <rect x="15" y="250" width="130" height="200" fill="#5D4037" rx="2"/>
     <rect x="20" y="255" width="120" height="190" fill="#4E342E"/>
-    
+
     <!-- Door handle -->
     <ellipse cx="20" cy="300" rx="12" ry="8" fill="#B8860B"/>
     <circle cx="20" cy="300" r="5" fill="#8B6914"/>
-    
+
     <!-- Small sign -->
     <rect x="40" y="470" width="80" height="30" fill="#2F2F2F" rx="2"/>
     <text x="48" y="492" fill="#FFD700" font-family="monospace" font-size="11">LIVING ROOM</text>
   </g>
-  
-  <!-- ============ Kitchen Table ============ -->
+
+  <!-- ============ KITCHEN TABLE ============ -->
   <g transform="translate(600, 550)">
     <!-- Table top -->
     <ellipse cx="150" cy="20" rx="180" ry="40" fill="#8B4513" filter="url(#shadow)"/>
     <ellipse cx="150" cy="15" rx="170" ry="35" fill="#A0522D"/>
-    
+    <!-- Table surface gloss -->
+    <ellipse cx="130" cy="10" rx="80" ry="15" fill="#B8742D" opacity="0.2"/>
+
     <!-- Table leg -->
     <rect x="130" y="50" width="40" height="150" fill="#654321"/>
     <ellipse cx="150" cy="200" rx="60" ry="15" fill="#4E342E"/>
-    
+
     <!-- Items on table -->
     <!-- Newspaper -->
     <g transform="translate(50, -20) rotate(-10)">
@@ -309,21 +471,25 @@
       <line x1="5" y1="45" x2="80" y2="45" stroke="#CCC" stroke-width="2"/>
       <line x1="5" y1="55" x2="70" y2="55" stroke="#CCC" stroke-width="2"/>
     </g>
-    
-    <!-- Apple -->
+
+    <!-- Apple with highlight -->
     <ellipse cx="220" cy="-5" rx="20" ry="18" fill="#DC143C"/>
+    <ellipse cx="215" cy="-12" rx="5" ry="4" fill="#FF4040" opacity="0.4"/>
     <path d="M220,-23 Q225,-30 220,-25" stroke="#228B22" stroke-width="3" fill="none"/>
+
+    <!-- Coffee ring stain on table (lived-in feel) -->
+    <ellipse cx="280" cy="0" rx="18" ry="16" fill="none" stroke="#7B5B3A" stroke-width="2" opacity="0.15"/>
   </g>
-  
-  <!-- ============ Chair ============ -->
+
+  <!-- ============ CHAIR ============ -->
   <g transform="translate(700, 680)">
     <rect x="20" y="0" width="80" height="10" fill="#8B4513" rx="2"/>
     <rect x="0" y="10" width="15" height="80" fill="#654321"/>
     <rect x="105" y="10" width="15" height="80" fill="#654321"/>
     <rect x="20" y="-80" width="80" height="80" fill="#A0522D" rx="3"/>
   </g>
-  
-  <!-- ============ Clock on Wall ============ -->
+
+  <!-- ============ CLOCK ON WALL (now with ticking second hand) ============ -->
   <g transform="translate(350, 150)">
     <circle r="50" fill="#F5F5F5" stroke="#5D4037" stroke-width="8"/>
     <circle r="5" fill="#333"/>
@@ -333,12 +499,67 @@
       <line x1="0" y1="40" x2="0" y2="35"/>
       <line x1="-40" y1="0" x2="-35" y2="0"/>
       <line x1="40" y1="0" x2="35" y2="0"/>
+      <!-- Minor marks -->
+      <line x1="20" y1="-35" x2="18" y2="-31" stroke-width="1.5"/>
+      <line x1="-20" y1="-35" x2="-18" y2="-31" stroke-width="1.5"/>
+      <line x1="35" y1="-20" x2="31" y2="-18" stroke-width="1.5"/>
+      <line x1="35" y1="20" x2="31" y2="18" stroke-width="1.5"/>
+      <line x1="-35" y1="20" x2="-31" y2="18" stroke-width="1.5"/>
+      <line x1="-35" y1="-20" x2="-31" y2="-18" stroke-width="1.5"/>
+      <line x1="20" y1="35" x2="18" y2="31" stroke-width="1.5"/>
+      <line x1="-20" y1="35" x2="-18" y2="31" stroke-width="1.5"/>
     </g>
-    <!-- Hands - 8:15 -->
+    <!-- Hour hand - 8:15 -->
     <line x1="0" y1="0" x2="0" y2="-25" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+    <!-- Minute hand -->
     <line x1="0" y1="0" x2="20" y2="0" stroke="#333" stroke-width="2" stroke-linecap="round"/>
+    <!-- Second hand (ticking) -->
+    <line x1="0" y1="5" x2="0" y2="-35" stroke="#CC0000" stroke-width="1" stroke-linecap="round">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="60s" repeatCount="indefinite"/>
+    </line>
+    <circle r="3" fill="#CC0000"/>
   </g>
-  
-  <!-- ============ Ambient Light Effect ============ -->
-  <rect width="1920" height="1080" fill="url(#skyGradient)" opacity="0.05"/>
+
+  <!-- ============ FRUIT BOWL on counter ============ -->
+  <g transform="translate(1100, 470)">
+    <!-- Bowl -->
+    <ellipse cx="40" cy="30" rx="45" ry="15" fill="#DEB887"/>
+    <path d="M-5,30 Q0,0 40,-5 Q80,0 85,30" fill="#CD853F"/>
+    <!-- Orange -->
+    <circle cx="25" cy="15" r="14" fill="#FF8C00"/>
+    <circle cx="22" cy="12" r="3" fill="#FFA040" opacity="0.4"/>
+    <!-- Banana -->
+    <path d="M45,10 Q65,-5 75,15" fill="#FFD700" stroke="#DAA520" stroke-width="2"/>
+    <!-- Apple -->
+    <circle cx="55" cy="18" r="12" fill="#DC143C"/>
+  </g>
+
+  <!-- ============ KITCHEN TOWEL hanging ============ -->
+  <g transform="translate(1560, 420)">
+    <rect x="0" y="-5" width="30" height="5" fill="#666"/>
+    <rect x="5" y="0" width="20" height="60" fill="#E8E8E8" rx="2">
+      <animateTransform attributeName="transform" type="rotate" values="-0.5,15,0;0.5,15,0;-0.5,15,0" dur="5s" repeatCount="indefinite"/>
+    </rect>
+    <line x1="8" y1="15" x2="22" y2="15" stroke="#CC4444" stroke-width="2"/>
+    <line x1="8" y1="20" x2="22" y2="20" stroke="#CC4444" stroke-width="2"/>
+  </g>
+
+  <!-- ============ DOG BOWL near table ============ -->
+  <g transform="translate(480, 870)">
+    <ellipse cx="30" cy="10" rx="35" ry="12" fill="#A0A0A0"/>
+    <ellipse cx="30" cy="5" rx="30" ry="10" fill="#B0B0B0"/>
+    <ellipse cx="30" cy="5" rx="22" ry="7" fill="#5F9EA0" opacity="0.4"/>
+    <text x="12" y="20" fill="#666" font-family="sans-serif" font-size="8" font-weight="bold">DOG</text>
+  </g>
+
+  <!-- ============ ATMOSPHERIC OVERLAYS ============ -->
+  <!-- Subtle warm colour wash -->
+  <rect width="1920" height="1080" fill="#FFE082" opacity="0.02"/>
+
+  <!-- Ambient light effect -->
+  <rect width="1920" height="1080" fill="url(#skyGradient)" opacity="0.03"/>
+
+  <!-- Vignette -->
+  <rect width="1920" height="1080" fill="url(#vignetteRadial)"/>
+
 </svg>

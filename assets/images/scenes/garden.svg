@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
   <defs>
-    <!-- Gradients -->
+    <!-- ═══════ GRADIENTS ═══════ -->
     <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" style="stop-color:#4A90D9"/>
       <stop offset="50%" style="stop-color:#87CEEB"/>
@@ -32,8 +32,19 @@
       <stop offset="0%" style="stop-color:#FFF59D"/>
       <stop offset="100%" style="stop-color:#FFD54F"/>
     </linearGradient>
-    
-    <!-- Filters -->
+    <!-- God rays gradient -->
+    <linearGradient id="godRayGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFF9C4;stop-opacity:0.18"/>
+      <stop offset="100%" style="stop-color:#FFF9C4;stop-opacity:0"/>
+    </linearGradient>
+    <!-- Atmospheric haze -->
+    <linearGradient id="hazeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#B0C4DE;stop-opacity:0"/>
+      <stop offset="60%" style="stop-color:#B0C4DE;stop-opacity:0.08"/>
+      <stop offset="100%" style="stop-color:#B0C4DE;stop-opacity:0.15"/>
+    </linearGradient>
+
+    <!-- ═══════ FILTERS ═══════ -->
     <filter id="blur">
       <feGaussianBlur stdDeviation="2"/>
     </filter>
@@ -47,67 +58,213 @@
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Sun bloom filter -->
+    <filter id="sunBloom">
+      <feGaussianBlur stdDeviation="25" result="bloom"/>
+      <feMerge>
+        <feMergeNode in="bloom"/>
+        <feMergeNode in="bloom"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <!-- Pollen/mote glow -->
+    <filter id="moteGlow">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+    <!-- Water ripple displacement -->
+    <filter id="waterRipple">
+      <feTurbulence type="turbulence" baseFrequency="0.04 0.08" numOctaves="2" result="turb">
+        <animate attributeName="baseFrequency" values="0.04 0.08;0.05 0.1;0.04 0.08" dur="4s" repeatCount="indefinite"/>
+      </feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="turb" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <!-- Tree shadow filter -->
+    <filter id="treeShadow">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+    <!-- Film grain -->
+    <filter id="filmGrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+      <feBlend in="SourceGraphic" in2="grayNoise" mode="multiply"/>
+    </filter>
   </defs>
-  
-  <!-- ============ SKY ============ -->
+
+  <!-- ═══════════════════════════════════════════
+       SKY
+       ═══════════════════════════════════════════ -->
   <rect width="1920" height="500" fill="url(#skyGrad)"/>
-  
-  <!-- Sun -->
+
+  <!-- Sun with Hollywood bloom -->
+  <circle cx="1600" cy="150" r="120" fill="#FFF9C4" opacity="0.15" filter="url(#sunBloom)"/>
   <circle cx="1600" cy="150" r="80" fill="url(#sunGrad)" filter="url(#glow)"/>
   <circle cx="1600" cy="150" r="60" fill="#FFF9C4"/>
-  
-  <!-- Clouds -->
-  <g fill="#fff" opacity="0.9">
-    <!-- Cloud 1 -->
-    <g transform="translate(200, 80)">
-      <ellipse cx="0" cy="30" rx="60" ry="30"/>
-      <ellipse cx="50" cy="20" rx="50" ry="25"/>
-      <ellipse cx="90" cy="35" rx="45" ry="22"/>
-      <ellipse cx="40" cy="40" rx="40" ry="20"/>
+  <!-- Sun corona rays -->
+  <g opacity="0.08">
+    <line x1="1600" y1="150" x2="1600" y2="0" stroke="#FFF9C4" stroke-width="60">
+      <animate attributeName="opacity" values="0.06;0.12;0.06" dur="5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="1600" y1="150" x2="1750" y2="50" stroke="#FFF9C4" stroke-width="40">
+      <animate attributeName="opacity" values="0.08;0.14;0.08" dur="7s" repeatCount="indefinite"/>
+    </line>
+    <line x1="1600" y1="150" x2="1450" y2="30" stroke="#FFF9C4" stroke-width="30">
+      <animate attributeName="opacity" values="0.05;0.1;0.05" dur="6s" repeatCount="indefinite"/>
+    </line>
+  </g>
+
+  <!-- GOD RAYS streaming from sun -->
+  <g opacity="0.06">
+    <polygon points="1600,150 1200,1080 1400,1080" fill="url(#godRayGrad)">
+      <animate attributeName="opacity" values="0.04;0.09;0.04" dur="8s" repeatCount="indefinite"/>
+    </polygon>
+    <polygon points="1600,150 1500,1080 1650,1080" fill="url(#godRayGrad)">
+      <animate attributeName="opacity" values="0.06;0.1;0.06" dur="6s" repeatCount="indefinite"/>
+    </polygon>
+    <polygon points="1600,150 900,1080 1100,1080" fill="url(#godRayGrad)">
+      <animate attributeName="opacity" values="0.03;0.07;0.03" dur="10s" repeatCount="indefinite"/>
+    </polygon>
+    <polygon points="1600,150 1700,1080 1920,1080" fill="url(#godRayGrad)">
+      <animate attributeName="opacity" values="0.05;0.08;0.05" dur="7s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+
+  <!-- Lens flare (subtle) -->
+  <circle cx="1560" cy="200" r="15" fill="#fff" opacity="0.12" filter="url(#moteGlow)">
+    <animate attributeName="opacity" values="0.08;0.15;0.08" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1480" cy="280" r="8" fill="#87CEEB" opacity="0.1">
+    <animate attributeName="opacity" values="0.06;0.12;0.06" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1520" cy="240" r="4" fill="#fff" opacity="0.15">
+    <animate attributeName="opacity" values="0.1;0.2;0.1" dur="3s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- ═══════ ANIMATED CLOUDS ═══════ -->
+  <g fill="#fff" opacity="0.85">
+    <!-- Cloud 1 — slow drift right -->
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,0;100,0;0,0" dur="80s" repeatCount="indefinite"/>
+      <g transform="translate(200, 80)">
+        <ellipse cx="0" cy="30" rx="60" ry="30"/>
+        <ellipse cx="50" cy="20" rx="50" ry="25"/>
+        <ellipse cx="90" cy="35" rx="45" ry="22"/>
+        <ellipse cx="40" cy="40" rx="40" ry="20"/>
+      </g>
     </g>
-    <!-- Cloud 2 -->
-    <g transform="translate(600, 120)">
-      <ellipse cx="0" cy="25" rx="45" ry="22"/>
-      <ellipse cx="40" cy="15" rx="40" ry="20"/>
-      <ellipse cx="70" cy="28" rx="35" ry="18"/>
+    <!-- Cloud 2 — slow drift left -->
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,0;-60,0;0,0" dur="90s" repeatCount="indefinite"/>
+      <g transform="translate(600, 120)">
+        <ellipse cx="0" cy="25" rx="45" ry="22"/>
+        <ellipse cx="40" cy="15" rx="40" ry="20"/>
+        <ellipse cx="70" cy="28" rx="35" ry="18"/>
+      </g>
     </g>
-    <!-- Cloud 3 -->
-    <g transform="translate(1100, 60)">
-      <ellipse cx="0" cy="30" rx="50" ry="25"/>
-      <ellipse cx="45" cy="20" rx="45" ry="23"/>
-      <ellipse cx="85" cy="32" rx="40" ry="20"/>
-      <ellipse cx="35" cy="38" rx="35" ry="18"/>
+    <!-- Cloud 3 — gentle drift -->
+    <g>
+      <animateTransform attributeName="transform" type="translate" values="0,0;70,3;0,0" dur="100s" repeatCount="indefinite"/>
+      <g transform="translate(1100, 60)">
+        <ellipse cx="0" cy="30" rx="50" ry="25"/>
+        <ellipse cx="45" cy="20" rx="45" ry="23"/>
+        <ellipse cx="85" cy="32" rx="40" ry="20"/>
+        <ellipse cx="35" cy="38" rx="35" ry="18"/>
+      </g>
+    </g>
+    <!-- Cloud 4 — new wispy cloud -->
+    <g opacity="0.5">
+      <animateTransform attributeName="transform" type="translate" values="0,0;50,0;0,0" dur="120s" repeatCount="indefinite"/>
+      <g transform="translate(1400, 170)">
+        <ellipse cx="0" cy="15" rx="30" ry="12"/>
+        <ellipse cx="30" cy="10" rx="25" ry="10"/>
+        <ellipse cx="55" cy="16" rx="20" ry="9"/>
+      </g>
     </g>
   </g>
-  
-  <!-- Birds -->
-  <g fill="none" stroke="#333" stroke-width="2">
-    <path d="M350,180 Q355,175 360,180 Q365,175 370,180"/>
-    <path d="M380,200 Q385,195 390,200 Q395,195 400,200"/>
-    <path d="M1300,100 Q1305,95 1310,100 Q1315,95 1320,100"/>
-    <path d="M1330,120 Q1335,115 1340,120 Q1345,115 1350,120"/>
+
+  <!-- ═══════ BIRDS IN SKY (animated flight paths) ═══════ -->
+  <!-- Swallow 1 — soaring arc -->
+  <g fill="none" stroke="#2a2a2a" stroke-width="2" opacity="0.7">
+    <g>
+      <animateMotion dur="18s" repeatCount="indefinite" path="M300,160 Q500,100 700,140 Q900,180 1100,120 Q1300,60 1500,130 Q1700,200 1920,100 Q1700,50 1500,120 Q1300,190 1100,130 Q900,70 700,140 Q500,210 300,160"/>
+      <path d="M0,0 Q3,-4 8,0 Q13,-4 16,0"/>
+      <animate attributeName="opacity" values="0.7;0.4;0.7" dur="18s" repeatCount="indefinite"/>
+    </g>
   </g>
-  
-  <!-- ============ DISTANT LANDSCAPE ============ -->
-  <!-- Horizon grass -->
+  <!-- Swallow 2 — lower swoop -->
+  <g fill="none" stroke="#333" stroke-width="1.5" opacity="0.5">
+    <g>
+      <animateMotion dur="22s" repeatCount="indefinite" path="M100,200 Q300,250 500,200 Q700,150 900,220 Q1100,290 1300,200 Q1500,110 1700,200 Q1920,250 1700,200 Q1500,150 1300,200 Q1100,250 900,180 Q700,110 500,200 Q300,290 100,200"/>
+      <path d="M0,0 Q2,-3 6,0 Q10,-3 12,0"/>
+    </g>
+  </g>
+  <!-- Bird perched on roof antenna (little robin) -->
+  <g transform="translate(175, 158)" opacity="0.8">
+    <ellipse cx="0" cy="0" rx="5" ry="4" fill="#5D4037"/>
+    <circle cx="-4" cy="-3" r="3" fill="#6D4C41"/>
+    <circle cx="-5" cy="-4" r="0.8" fill="#111"/>
+    <polygon points="2,-1 8,0 2,1" fill="#FF5722" opacity="0.8"/>
+    <!-- Tail bob -->
+    <line x1="5" y1="2" x2="10" y2="5" stroke="#5D4037" stroke-width="1.5">
+      <animate attributeName="y2" values="5;3;5" dur="2s" repeatCount="indefinite"/>
+    </line>
+    <!-- Occasional head tilt -->
+    <animateTransform attributeName="transform" type="rotate" values="0,0,0;-5,0,0;0,0,0;8,0,0;0,0,0" dur="4s" repeatCount="indefinite" additive="sum"/>
+  </g>
+  <!-- Sparrow near birdbath -->
+  <g transform="translate(1250, 538)" opacity="0.7">
+    <ellipse cx="0" cy="0" rx="4" ry="3" fill="#8D6E63"/>
+    <circle cx="-3" cy="-2" r="2.5" fill="#A1887F"/>
+    <circle cx="-4" cy="-3" r="0.7" fill="#111"/>
+    <polygon points="1,-1 5,0 1,1" fill="#F57C00"/>
+    <!-- Pecking animation -->
+    <animateTransform attributeName="transform" type="rotate" values="0,0,0;15,0,0;0,0,0;0,0,0;0,0,0" dur="3s" repeatCount="indefinite" additive="sum"/>
+  </g>
+
+  <!-- ═══════════════════════════════════════════
+       DISTANT LANDSCAPE
+       ═══════════════════════════════════════════ -->
   <rect y="400" width="1920" height="100" fill="url(#distantGrassGrad)" filter="url(#blur)"/>
-  
-  <!-- Distant trees -->
+
+  <!-- Distant trees (with gentle sway) -->
   <g transform="translate(100, 380)" opacity="0.7" filter="url(#blur)">
-    <ellipse cx="0" cy="30" rx="30" ry="40" fill="#558B2F"/>
-    <ellipse cx="50" cy="35" rx="25" ry="35" fill="#689F38"/>
-    <ellipse cx="90" cy="32" rx="28" ry="38" fill="#558B2F"/>
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="-1,0,70;1,0,70;-1,0,70" dur="6s" repeatCount="indefinite"/>
+      <ellipse cx="0" cy="30" rx="30" ry="40" fill="#558B2F"/>
+    </g>
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="1,50,70;-1,50,70;1,50,70" dur="7s" repeatCount="indefinite"/>
+      <ellipse cx="50" cy="35" rx="25" ry="35" fill="#689F38"/>
+    </g>
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="-0.5,90,70;0.5,90,70;-0.5,90,70" dur="8s" repeatCount="indefinite"/>
+      <ellipse cx="90" cy="32" rx="28" ry="38" fill="#558B2F"/>
+    </g>
   </g>
   <g transform="translate(400, 390)" opacity="0.6" filter="url(#blur)">
-    <ellipse cx="0" cy="25" rx="20" ry="30" fill="#689F38"/>
-    <ellipse cx="35" cy="28" rx="22" ry="32" fill="#558B2F"/>
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="0.5,0,55;-0.5,0,55;0.5,0,55" dur="5s" repeatCount="indefinite"/>
+      <ellipse cx="0" cy="25" rx="20" ry="30" fill="#689F38"/>
+    </g>
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="-0.8,35,60;0.8,35,60;-0.8,35,60" dur="6s" repeatCount="indefinite"/>
+      <ellipse cx="35" cy="28" rx="22" ry="32" fill="#558B2F"/>
+    </g>
   </g>
-  
-  <!-- ============ WIND TURBINES ============ -->
-  <!-- Turbine 1 (far left) -->
+
+  <!-- ═══════════════════════════════════════════
+       WIND TURBINES (unchanged positions)
+       ═══════════════════════════════════════════ -->
+  <!-- Turbine 1 -->
   <g transform="translate(800, 200)">
     <rect x="-5" y="0" width="10" height="250" fill="#E0E0E0"/>
-    <g transform="translate(0, 0)">
+    <g>
       <rect x="-4" y="-80" width="8" height="80" fill="#F5F5F5" transform="rotate(0)">
         <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="8s" repeatCount="indefinite"/>
       </rect>
@@ -120,11 +277,10 @@
       <circle r="12" fill="#BDBDBD"/>
     </g>
   </g>
-  
-  <!-- Turbine 2 (center) -->
+  <!-- Turbine 2 -->
   <g transform="translate(950, 180)">
     <rect x="-6" y="0" width="12" height="280" fill="#E0E0E0"/>
-    <g transform="translate(0, 0)">
+    <g>
       <rect x="-5" y="-90" width="10" height="90" fill="#F5F5F5" transform="rotate(30)">
         <animateTransform attributeName="transform" type="rotate" from="30" to="390" dur="7s" repeatCount="indefinite"/>
       </rect>
@@ -137,11 +293,10 @@
       <circle r="15" fill="#BDBDBD"/>
     </g>
   </g>
-  
-  <!-- Turbine 3 (far right) -->
+  <!-- Turbine 3 -->
   <g transform="translate(1100, 220)">
     <rect x="-4" y="0" width="8" height="230" fill="#E0E0E0"/>
-    <g transform="translate(0, 0)">
+    <g>
       <rect x="-3" y="-70" width="6" height="70" fill="#F5F5F5" transform="rotate(60)">
         <animateTransform attributeName="transform" type="rotate" from="60" to="420" dur="9s" repeatCount="indefinite"/>
       </rect>
@@ -154,19 +309,65 @@
       <circle r="10" fill="#BDBDBD"/>
     </g>
   </g>
-  
-  <!-- Sign pointing to Germany -->
+
+  <!-- ═══════ GERMANY SIGN ═══════ -->
   <g transform="translate(1350, 400)">
     <rect x="-3" y="0" width="6" height="80" fill="#5D4037"/>
     <polygon points="0,-30 80,-15 80,-45" fill="#5D4037"/>
     <text x="15" y="-25" fill="#fff" font-family="sans-serif" font-size="14" font-weight="bold">DEUTSCHLAND</text>
     <text x="35" y="-35" fill="#fff" font-family="sans-serif" font-size="10">→ 2km</text>
   </g>
-  
-  <!-- ============ MAIN GRASS AREA ============ -->
+
+  <!-- ═══════════════════════════════════════════
+       MAIN GRASS AREA
+       ═══════════════════════════════════════════ -->
   <rect y="480" width="1920" height="600" fill="url(#grassGrad)"/>
-  
-  <!-- Grass texture -->
+
+  <!-- Swaying grass blades — foreground nature detail -->
+  <g stroke="#2E7D32" stroke-width="1.5" opacity="0.45" stroke-linecap="round">
+    <!-- Cluster left -->
+    <line x1="80" y1="560" x2="75" y2="530">
+      <animate attributeName="x2" values="75;82;75" dur="3s" repeatCount="indefinite"/>
+    </line>
+    <line x1="90" y1="560" x2="88" y2="525">
+      <animate attributeName="x2" values="88;94;88" dur="3.5s" repeatCount="indefinite"/>
+    </line>
+    <line x1="100" y1="558" x2="96" y2="528">
+      <animate attributeName="x2" values="96;103;96" dur="2.8s" repeatCount="indefinite"/>
+    </line>
+    <!-- Cluster mid -->
+    <line x1="500" y1="600" x2="497" y2="570">
+      <animate attributeName="x2" values="497;504;497" dur="4s" repeatCount="indefinite"/>
+    </line>
+    <line x1="510" y1="598" x2="508" y2="565">
+      <animate attributeName="x2" values="508;515;508" dur="3.2s" repeatCount="indefinite"/>
+    </line>
+    <line x1="520" y1="602" x2="516" y2="572">
+      <animate attributeName="x2" values="516;523;516" dur="3.7s" repeatCount="indefinite"/>
+    </line>
+    <!-- Cluster right -->
+    <line x1="1350" y1="580" x2="1347" y2="548">
+      <animate attributeName="x2" values="1347;1354;1347" dur="3.3s" repeatCount="indefinite"/>
+    </line>
+    <line x1="1360" y1="578" x2="1358" y2="545">
+      <animate attributeName="x2" values="1358;1365;1358" dur="4.2s" repeatCount="indefinite"/>
+    </line>
+    <line x1="1370" y1="582" x2="1366" y2="550">
+      <animate attributeName="x2" values="1366;1373;1366" dur="2.9s" repeatCount="indefinite"/>
+    </line>
+    <!-- Additional grass tufts -->
+    <line x1="250" y1="620" x2="247" y2="595">
+      <animate attributeName="x2" values="247;254;247" dur="3.6s" repeatCount="indefinite"/>
+    </line>
+    <line x1="800" y1="550" x2="797" y2="520">
+      <animate attributeName="x2" values="797;804;797" dur="3.1s" repeatCount="indefinite"/>
+    </line>
+    <line x1="1100" y1="610" x2="1097" y2="580">
+      <animate attributeName="x2" values="1097;1104;1097" dur="4.5s" repeatCount="indefinite"/>
+    </line>
+  </g>
+
+  <!-- Static grass texture lines -->
   <g stroke="#2E7D32" stroke-width="1" opacity="0.3">
     <line x1="100" y1="550" x2="105" y2="530"/>
     <line x1="200" y1="580" x2="205" y2="560"/>
@@ -182,37 +383,49 @@
     <line x1="1200" y1="580" x2="1205" y2="560"/>
     <line x1="1300" y1="650" x2="1305" y2="630"/>
   </g>
-  
-  <!-- ============ RYAN'S FARMHOUSE (Back view) ============ -->
+
+  <!-- ═══════════════════════════════════════════
+       TREE SHADOW (on grass, cast by big oak)
+       ═══════════════════════════════════════════ -->
+  <ellipse cx="1650" cy="700" rx="200" ry="40" fill="#1B5E20" opacity="0.15" filter="url(#treeShadow)">
+    <animate attributeName="rx" values="200;210;200" dur="8s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- ═══════════════════════════════════════════
+       FARMHOUSE (Back view — unchanged positions)
+       ═══════════════════════════════════════════ -->
   <g transform="translate(50, 300)">
-    <!-- House body -->
     <rect y="100" width="350" height="250" fill="url(#houseWallGrad)" filter="url(#shadow)"/>
-    
-    <!-- Roof -->
     <polygon points="0,100 175,-30 350,100" fill="url(#roofGrad)"/>
     <polygon points="0,100 175,-30 175,100" fill="#B71C1C" opacity="0.3"/>
-    
-    <!-- Chimney -->
+    <!-- Chimney with smoke -->
     <rect x="250" y="0" width="40" height="80" fill="#5D4037"/>
     <rect x="245" y="-5" width="50" height="15" fill="#4E342E"/>
-    
+    <!-- Chimney smoke wisps -->
+    <g opacity="0.15" fill="none" stroke="#B0BEC5" stroke-width="3" stroke-linecap="round">
+      <path d="M270,-10 Q265,-30 275,-50 Q285,-70 270,-90">
+        <animate attributeName="d" values="M270,-10 Q265,-30 275,-50 Q285,-70 270,-90;M270,-10 Q280,-35 268,-55 Q258,-75 272,-95;M270,-10 Q265,-30 275,-50 Q285,-70 270,-90" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.15;0.08;0.15" dur="6s" repeatCount="indefinite"/>
+      </path>
+      <path d="M275,-5 Q285,-25 272,-45 Q260,-65 278,-85">
+        <animate attributeName="d" values="M275,-5 Q285,-25 272,-45 Q260,-65 278,-85;M275,-5 Q268,-28 280,-48 Q292,-68 275,-88;M275,-5 Q285,-25 272,-45 Q260,-65 278,-85" dur="8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.1;0.05;0.1" dur="8s" repeatCount="indefinite"/>
+      </path>
+    </g>
     <!-- Windows -->
     <g transform="translate(30, 140)">
       <rect width="80" height="100" fill="#4FC3F7" stroke="#5D4037" stroke-width="8"/>
       <line x1="40" y1="0" x2="40" y2="100" stroke="#5D4037" stroke-width="5"/>
       <line x1="0" y1="50" x2="80" y2="50" stroke="#5D4037" stroke-width="5"/>
-      <!-- Curtain hint -->
       <rect x="5" y="5" width="30" height="90" fill="#FFECB3" opacity="0.5"/>
     </g>
-    
     <g transform="translate(140, 140)">
       <rect width="80" height="100" fill="#4FC3F7" stroke="#5D4037" stroke-width="8"/>
       <line x1="40" y1="0" x2="40" y2="100" stroke="#5D4037" stroke-width="5"/>
       <line x1="0" y1="50" x2="80" y2="50" stroke="#5D4037" stroke-width="5"/>
       <rect x="45" y="5" width="30" height="90" fill="#FFECB3" opacity="0.5"/>
     </g>
-    
-    <!-- Back door (to kitchen) -->
+    <!-- Back door -->
     <g transform="translate(250, 150)">
       <rect width="80" height="200" fill="#5D4037"/>
       <rect x="5" y="5" width="70" height="100" fill="#4FC3F7" opacity="0.6"/>
@@ -220,40 +433,28 @@
       <line x1="5" y1="55" x2="75" y2="55" stroke="#5D4037" stroke-width="4"/>
       <rect x="5" y="120" width="70" height="75" fill="#4E342E"/>
       <circle cx="65" cy="160" r="6" fill="#B8860B"/>
-      <!-- Light from inside -->
       <rect x="10" y="10" width="25" height="90" fill="#FFF9C4" opacity="0.3"/>
     </g>
-    
-    <!-- ============ ANTENNA ON ROOF ============ -->
+    <!-- Antenna -->
     <g transform="translate(100, -20)">
-      <!-- Main mast -->
       <rect x="-4" y="-150" width="8" height="160" fill="#616161"/>
-      
-      <!-- Yagi antenna -->
       <rect x="-60" y="-140" width="120" height="4" fill="#757575"/>
       <rect x="-40" y="-145" width="3" height="14" fill="#757575"/>
       <rect x="-20" y="-147" width="3" height="18" fill="#757575"/>
       <rect x="0" y="-148" width="3" height="20" fill="#757575"/>
       <rect x="20" y="-147" width="3" height="18" fill="#757575"/>
       <rect x="40" y="-145" width="3" height="14" fill="#757575"/>
-      
-      <!-- Discone antenna -->
       <g transform="translate(30, -100)">
         <polygon points="0,-30 -20,0 20,0" fill="#9E9E9E"/>
         <polygon points="0,5 -25,35 25,35" fill="#757575" stroke="#616161"/>
       </g>
-      
-      <!-- Guy wires -->
       <line x1="0" y1="-140" x2="-100" y2="50" stroke="#888" stroke-width="1" opacity="0.5"/>
       <line x1="0" y1="-140" x2="100" y2="50" stroke="#888" stroke-width="1" opacity="0.5"/>
     </g>
   </g>
-  
-  <!-- ============ GARDEN PATH ============ -->
-  <path d="M510,550 Q580,600 610,700 Q640,800 660,900 L760,900 Q740,800 710,700 Q660,600 590,550 Z" 
-        fill="url(#pathGrad)" filter="url(#shadow)"/>
-  
-  <!-- Path stones texture -->
+
+  <!-- ═══════ GARDEN PATH ═══════ -->
+  <path d="M510,550 Q580,600 610,700 Q640,800 660,900 L760,900 Q740,800 710,700 Q660,600 590,550 Z" fill="url(#pathGrad)" filter="url(#shadow)"/>
   <g fill="#8D6E63" opacity="0.3">
     <ellipse cx="540" cy="570" rx="20" ry="10"/>
     <ellipse cx="580" cy="600" rx="25" ry="12"/>
@@ -262,50 +463,30 @@
     <ellipse cx="660" cy="800" rx="26" ry="13"/>
   </g>
 
-  <!-- ============ MANCAVE / GARAGE (attached to right of house) ============ -->
+  <!-- ═══════ MANCAVE / GARAGE ═══════ -->
   <g transform="translate(400, 370)">
-    <!-- Foundation shadow -->
     <rect x="-5" y="285" width="230" height="8" fill="#000" opacity="0.2" rx="2"/>
-
-    <!-- Main walls (slightly darker than house, a garage look) -->
     <rect y="80" width="220" height="200" fill="#D0D0D0" filter="url(#shadow)"/>
-    <!-- Side wall shadow (depth) -->
     <rect y="80" width="8" height="200" fill="#B0B0B0"/>
-
-    <!-- Flat/low-pitched roof -->
     <polygon points="-10,80 110,20 230,80" fill="#5D4037"/>
     <polygon points="-10,80 110,20 110,80" fill="#4A3528" opacity="0.3"/>
-    <!-- Roof ridge cap -->
-    <line x1="50" y1="50" x2="170" y2="50" stroke="#4E342E" stroke-width="3" opacity="0.0"/>
-
-    <!-- Garage door (large, closed, dark) -->
     <rect x="20" y="110" width="120" height="170" fill="#3A3A3A" rx="2"/>
-    <!-- Garage door panel lines -->
     <line x1="20" y1="152" x2="140" y2="152" stroke="#2A2A2A" stroke-width="1.5"/>
     <line x1="20" y1="194" x2="140" y2="194" stroke="#2A2A2A" stroke-width="1.5"/>
     <line x1="20" y1="236" x2="140" y2="236" stroke="#2A2A2A" stroke-width="1.5"/>
-    <!-- Garage door handle -->
     <rect x="70" y="260" width="20" height="4" fill="#666" rx="1"/>
-
-    <!-- Small side window (dimly lit from screens inside) -->
     <rect x="155" y="130" width="50" height="50" fill="#1A2A3A" stroke="#5D4037" stroke-width="5"/>
     <line x1="180" y1="130" x2="180" y2="180" stroke="#5D4037" stroke-width="3"/>
     <line x1="155" y1="155" x2="205" y2="155" stroke="#5D4037" stroke-width="3"/>
-    <!-- Glow from monitors inside -->
     <rect x="158" y="133" width="19" height="19" fill="#2a4a6a" opacity="0.5"/>
     <rect x="183" y="133" width="19" height="19" fill="#1a3a2a" opacity="0.4"/>
     <rect x="158" y="158" width="19" height="19" fill="#2a4a1a" opacity="0.3"/>
     <rect x="183" y="158" width="19" height="19" fill="#2a2a5a" opacity="0.4"/>
-
-    <!-- Antenna/aerial on mancave roof (small secondary) -->
     <g transform="translate(180, 10)">
       <rect x="-2" y="-60" width="4" height="70" fill="#616161"/>
-      <!-- Small dipole -->
       <line x1="-25" y1="-55" x2="25" y2="-55" stroke="#757575" stroke-width="2.5"/>
       <circle cy="-55" r="3" fill="#888"/>
     </g>
-
-    <!-- Ventilation duct on side wall -->
     <rect x="160" y="210" width="40" height="30" fill="#999" rx="2"/>
     <g stroke="#777" stroke-width="1.5">
       <line x1="165" y1="210" x2="165" y2="240"/>
@@ -314,31 +495,27 @@
       <line x1="186" y1="210" x2="186" y2="240"/>
       <line x1="193" y1="210" x2="193" y2="240"/>
     </g>
-
-    <!-- Cable running from house to mancave roof -->
     <path d="M-10,60 Q20,45 50,55" stroke="#333" stroke-width="2" fill="none"/>
-
-    <!-- "MANCAVE" sticker on door (subtle, personality detail) -->
     <rect x="50" y="115" width="60" height="14" fill="#222" rx="2"/>
     <text x="80" y="126" text-anchor="middle" fill="#00ff88" font-family="monospace" font-size="9" opacity="0.8">MANCAVE</text>
   </g>
-  
-  <!-- ============ FLOWER BEDS ============ -->
+
+  <!-- ═══════════════════════════════════════════
+       FLOWER BEDS (with swaying flowers)
+       ═══════════════════════════════════════════ -->
   <!-- Left flower bed -->
   <g transform="translate(650, 500)">
     <ellipse cx="80" cy="30" rx="100" ry="40" fill="#3E2723"/>
     <ellipse cx="80" cy="25" rx="95" ry="35" fill="#5D4037"/>
-    
-    <!-- Tulips - red -->
+    <!-- Tulips (swaying in breeze) -->
     <g fill="#E53935">
-      <ellipse cx="30" cy="10" rx="8" ry="12"/>
-      <ellipse cx="50" cy="5" rx="8" ry="12"/>
-      <ellipse cx="70" cy="8" rx="8" ry="12"/>
-      <ellipse cx="90" cy="3" rx="8" ry="12"/>
-      <ellipse cx="110" cy="7" rx="8" ry="12"/>
-      <ellipse cx="130" cy="10" rx="8" ry="12"/>
+      <g><ellipse cx="30" cy="10" rx="8" ry="12"/><animateTransform attributeName="transform" type="rotate" values="-2,30,22;2,30,22;-2,30,22" dur="3s" repeatCount="indefinite"/></g>
+      <g><ellipse cx="50" cy="5" rx="8" ry="12"/><animateTransform attributeName="transform" type="rotate" values="1,50,17;-2,50,17;1,50,17" dur="3.5s" repeatCount="indefinite"/></g>
+      <g><ellipse cx="70" cy="8" rx="8" ry="12"/><animateTransform attributeName="transform" type="rotate" values="-1,70,20;2,70,20;-1,70,20" dur="2.8s" repeatCount="indefinite"/></g>
+      <g><ellipse cx="90" cy="3" rx="8" ry="12"/><animateTransform attributeName="transform" type="rotate" values="2,90,15;-1,90,15;2,90,15" dur="4s" repeatCount="indefinite"/></g>
+      <g><ellipse cx="110" cy="7" rx="8" ry="12"/><animateTransform attributeName="transform" type="rotate" values="-1.5,110,19;1.5,110,19;-1.5,110,19" dur="3.3s" repeatCount="indefinite"/></g>
+      <g><ellipse cx="130" cy="10" rx="8" ry="12"/><animateTransform attributeName="transform" type="rotate" values="1,130,22;-2,130,22;1,130,22" dur="3.7s" repeatCount="indefinite"/></g>
     </g>
-    <!-- Stems -->
     <g stroke="#4CAF50" stroke-width="2">
       <line x1="30" y1="22" x2="30" y2="40"/>
       <line x1="50" y1="17" x2="50" y2="40"/>
@@ -348,19 +525,18 @@
       <line x1="130" y1="22" x2="130" y2="40"/>
     </g>
   </g>
-  
+
   <!-- Right flower bed -->
   <g transform="translate(750, 520)">
     <ellipse cx="100" cy="35" rx="120" ry="45" fill="#3E2723"/>
     <ellipse cx="100" cy="30" rx="115" ry="40" fill="#5D4037"/>
-    
-    <!-- Yellow flowers -->
+    <!-- Yellow flowers (swaying) -->
     <g fill="#FDD835">
-      <circle cx="40" cy="15" r="10"/>
-      <circle cx="70" cy="10" r="12"/>
-      <circle cx="100" cy="8" r="11"/>
-      <circle cx="130" cy="12" r="10"/>
-      <circle cx="160" cy="15" r="11"/>
+      <g><circle cx="40" cy="15" r="10"/><animateTransform attributeName="transform" type="rotate" values="-2,40,35;2,40,35;-2,40,35" dur="3.2s" repeatCount="indefinite"/></g>
+      <g><circle cx="70" cy="10" r="12"/><animateTransform attributeName="transform" type="rotate" values="1,70,30;-2,70,30;1,70,30" dur="3.8s" repeatCount="indefinite"/></g>
+      <g><circle cx="100" cy="8" r="11"/><animateTransform attributeName="transform" type="rotate" values="-1.5,100,30;1.5,100,30;-1.5,100,30" dur="2.9s" repeatCount="indefinite"/></g>
+      <g><circle cx="130" cy="12" r="10"/><animateTransform attributeName="transform" type="rotate" values="2,130,35;-1,130,35;2,130,35" dur="4.1s" repeatCount="indefinite"/></g>
+      <g><circle cx="160" cy="15" r="11"/><animateTransform attributeName="transform" type="rotate" values="-1,160,35;2,160,35;-1,160,35" dur="3.4s" repeatCount="indefinite"/></g>
     </g>
     <!-- Orange flowers -->
     <g fill="#FF9800">
@@ -376,8 +552,52 @@
       <ellipse cx="130" cy="35" rx="16" ry="8" transform="rotate(-10, 130, 35)"/>
     </g>
   </g>
-  
-  <!-- ============ GARDEN FURNITURE ============ -->
+
+  <!-- ═══════════════════════════════════════════
+       BEES buzzing around flower beds
+       ═══════════════════════════════════════════ -->
+  <!-- Bee 1 — figure-8 around left flower bed -->
+  <g>
+    <animateMotion dur="8s" repeatCount="indefinite" path="M720,490 Q760,470 780,490 Q800,510 780,530 Q760,550 720,530 Q680,510 700,490 Q720,470 720,490"/>
+    <ellipse cx="0" cy="0" rx="4" ry="3" fill="#FDD835"/>
+    <line x1="-2" y1="0" x2="2" y2="0" stroke="#333" stroke-width="1"/>
+    <line x1="-1" y1="-1" x2="1" y2="-1" stroke="#333" stroke-width="0.8"/>
+    <!-- Wings -->
+    <ellipse cx="-2" cy="-3" rx="3" ry="2" fill="#fff" opacity="0.6">
+      <animate attributeName="ry" values="2;1;2" dur="0.1s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="2" cy="-3" rx="3" ry="2" fill="#fff" opacity="0.6">
+      <animate attributeName="ry" values="1;2;1" dur="0.1s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+  <!-- Bee 2 — orbiting right flower bed -->
+  <g>
+    <animateMotion dur="6s" repeatCount="indefinite" path="M860,510 Q900,490 940,510 Q960,530 940,550 Q900,570 860,550 Q840,530 860,510"/>
+    <ellipse cx="0" cy="0" rx="3.5" ry="2.5" fill="#FDD835"/>
+    <line x1="-1.5" y1="0" x2="1.5" y2="0" stroke="#333" stroke-width="0.8"/>
+    <ellipse cx="-1.5" cy="-2.5" rx="2.5" ry="1.5" fill="#fff" opacity="0.5">
+      <animate attributeName="ry" values="1.5;0.8;1.5" dur="0.08s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="1.5" cy="-2.5" rx="2.5" ry="1.5" fill="#fff" opacity="0.5">
+      <animate attributeName="ry" values="0.8;1.5;0.8" dur="0.08s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+  <!-- Bee 3 — wandering from flowers to tree -->
+  <g opacity="0.8">
+    <animateMotion dur="14s" repeatCount="indefinite" path="M800,500 Q1000,450 1200,500 Q1400,550 1600,400 Q1700,350 1650,420 Q1400,500 1200,480 Q1000,460 800,500"/>
+    <ellipse cx="0" cy="0" rx="3" ry="2" fill="#FFC107"/>
+    <line x1="-1" y1="0" x2="1" y2="0" stroke="#333" stroke-width="0.7"/>
+    <ellipse cx="-1" cy="-2" rx="2" ry="1.2" fill="#fff" opacity="0.5">
+      <animate attributeName="ry" values="1.2;0.6;1.2" dur="0.09s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="1" cy="-2" rx="2" ry="1.2" fill="#fff" opacity="0.5">
+      <animate attributeName="ry" values="0.6;1.2;0.6" dur="0.09s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  <!-- ═══════════════════════════════════════════
+       GARDEN FURNITURE
+       ═══════════════════════════════════════════ -->
   <!-- Bench -->
   <g transform="translate(1000, 580)">
     <rect y="30" width="150" height="10" fill="#5D4037" filter="url(#shadow)"/>
@@ -387,104 +607,83 @@
     <rect x="0" y="5" width="150" height="8" fill="#5D4037"/>
     <rect x="0" y="18" width="150" height="8" fill="#5D4037"/>
   </g>
-  
-  <!-- Bird bath -->
+
+  <!-- Bird bath with rippling water -->
   <g transform="translate(1200, 550)">
     <rect x="25" y="50" width="30" height="80" fill="#9E9E9E"/>
     <ellipse cx="40" cy="50" rx="50" ry="15" fill="#BDBDBD"/>
-    <ellipse cx="40" cy="45" rx="45" ry="12" fill="#90CAF9" opacity="0.6"/>
+    <!-- Water surface with ripple animation -->
+    <ellipse cx="40" cy="45" rx="45" ry="12" fill="#90CAF9" opacity="0.6" filter="url(#waterRipple)"/>
+    <!-- Concentric ripple rings -->
+    <circle cx="35" cy="44" r="5" fill="none" stroke="#fff" stroke-width="0.5" opacity="0">
+      <animate attributeName="r" values="2;15;25" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.15;0" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="45" cy="46" r="5" fill="none" stroke="#fff" stroke-width="0.5" opacity="0">
+      <animate attributeName="r" values="2;12;20" dur="5s" begin="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.25;0.1;0" dur="5s" begin="2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Water sparkle -->
+    <circle cx="32" cy="43" r="1" fill="#fff" opacity="0">
+      <animate attributeName="opacity" values="0;0.6;0" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="48" cy="45" r="0.8" fill="#fff" opacity="0">
+      <animate attributeName="opacity" values="0;0.5;0" dur="4s" begin="1.5s" repeatCount="indefinite"/>
+    </circle>
     <ellipse cx="40" cy="130" rx="40" ry="10" fill="#757575"/>
   </g>
-  
-  <!-- ============ SMALL SHED ============ -->
+
+  <!-- ═══════ SMALL SHED ═══════ -->
   <g transform="translate(1500, 400)">
     <rect y="50" width="200" height="180" fill="#6D4C41" filter="url(#shadow)"/>
     <polygon points="0,50 100,-20 200,50" fill="#5D4037"/>
     <rect x="60" y="100" width="80" height="130" fill="#4E342E"/>
     <rect x="65" y="105" width="70" height="60" fill="#333"/>
     <circle cx="130" cy="170" r="6" fill="#B8860B"/>
-    
-    <!-- Garden tools visible -->
     <rect x="10" y="60" width="8" height="100" fill="#8D6E63" transform="rotate(-10, 10, 60)"/>
     <rect x="170" y="70" width="6" height="80" fill="#757575"/>
     <ellipse cx="173" cy="70" rx="15" ry="8" fill="#4CAF50"/>
   </g>
-  
-  <!-- ============ OLD VOLVO 240 ============ -->
+
+  <!-- ═══════ OLD VOLVO 240 ═══════ -->
   <g transform="translate(1480, 590)">
-    <!-- Car shadow -->
     <ellipse cx="100" cy="140" rx="110" ry="20" fill="#000" opacity="0.3"/>
-    
-    <!-- Wheels -->
     <g>
-      <!-- Rear wheel -->
       <circle cx="50" cy="120" r="22" fill="#1a1a1a" stroke="#333" stroke-width="3"/>
       <circle cx="50" cy="120" r="13" fill="#2a2a2a"/>
       <circle cx="50" cy="120" r="5" fill="#444"/>
-      
-      <!-- Front wheel -->
       <circle cx="150" cy="120" r="22" fill="#1a1a1a" stroke="#333" stroke-width="3"/>
       <circle cx="150" cy="120" r="13" fill="#2a2a2a"/>
       <circle cx="150" cy="120" r="5" fill="#444"/>
     </g>
-    
-    <!-- Car body (classic Volvo 240 boxy shape) -->
     <g>
-      <!-- Lower body -->
       <path d="M 20,120 L 20,80 L 40,65 L 160,65 L 180,80 L 180,120 Z" fill="#4a5a6a" stroke="#2a2a3a" stroke-width="2" filter="url(#shadow)"/>
-      
-      <!-- Upper body/cabin -->
       <path d="M 45,65 L 60,30 L 80,20 L 120,20 L 140,30 L 155,65 Z" fill="#4a5a6a" stroke="#2a2a3a" stroke-width="2"/>
-      
-      <!-- Roof -->
       <rect x="60" y="18" width="80" height="3" fill="#3a3a45"/>
-      
-      <!-- Windows (slightly reflective blue) -->
-      <!-- Windshield -->
       <path d="M 62,30 L 82,22 L 82,60 L 62,60 Z" fill="#5a7a9a" opacity="0.7"/>
-      <!-- Driver window -->
       <path d="M 87,22 L 110,22 L 110,60 L 87,60 Z" fill="#4a6a8a" opacity="0.8"/>
-      <!-- Rear window -->
       <path d="M 115,22 L 138,30 L 138,60 L 115,60 Z" fill="#5a7a9a" opacity="0.7"/>
-      
-      <!-- Window trim (chrome) -->
       <path d="M 60,30 L 80,20 L 120,20 L 140,30" fill="none" stroke="#8a8a9a" stroke-width="2"/>
       <path d="M 60,60 L 140,60" fill="none" stroke="#7a7a8a" stroke-width="1.5"/>
-      
-      <!-- Door line -->
       <line x1="95" y1="65" x2="95" y2="115" stroke="#3a3a4a" stroke-width="2"/>
-      
-      <!-- Door handle -->
       <rect x="90" y="88" width="10" height="3" fill="#2a2a2a" rx="1"/>
-      
-      <!-- Side mirror -->
       <rect x="42" y="45" width="6" height="12" fill="#3a3a45"/>
       <rect x="38" y="48" width="4" height="6" fill="#5a7a9a" opacity="0.5"/>
-      
-      <!-- Front bumper -->
       <rect x="160" y="82" width="22" height="25" fill="#3a3a45"/>
       <rect x="178" y="87" width="6" height="15" fill="#2a2a2a"/>
-      
-      <!-- Rear bumper -->
       <rect x="18" y="82" width="8" height="25" fill="#3a3a45"/>
-      
-      <!-- Headlights -->
       <rect x="170" y="75" width="12" height="16" fill="#ffff99" opacity="0.4" rx="2"/>
-      
-      <!-- Taillights -->
       <rect x="20" y="88" width="8" height="12" fill="#ff4444" opacity="0.5" rx="1"/>
-      
-      <!-- Body highlights -->
       <path d="M 40,67 L 160,67" stroke="#6a7a8a" stroke-width="1" opacity="0.4"/>
-      <path d="M 45,73" stroke="#5a6a7a" stroke-width="1" opacity="0.5"/>
-      
-      <!-- License plate -->
       <rect x="25" y="93" width="18" height="8" fill="#ffcc00" stroke="#333" stroke-width="0.5" rx="1"/>
       <text x="34" y="99" text-anchor="middle" fill="#333" font-family="monospace" font-size="4" font-weight="bold">NL</text>
     </g>
   </g>
-  
-  <!-- ============ BUTTERFLIES ============ -->
+
+  <!-- ═══════════════════════════════════════════
+       BUTTERFLIES (enhanced animation paths)
+       ═══════════════════════════════════════════ -->
+  <!-- Orange butterfly — figure-8 over flowers -->
   <g transform="translate(600, 450)">
     <ellipse cx="0" cy="0" rx="8" ry="5" fill="#FF9800" transform="rotate(-30)">
       <animateTransform attributeName="transform" type="rotate" values="-30;30;-30" dur="0.5s" repeatCount="indefinite"/>
@@ -493,9 +692,9 @@
       <animateTransform attributeName="transform" type="rotate" values="30;-30;30" dur="0.5s" repeatCount="indefinite"/>
     </ellipse>
     <ellipse cx="0" cy="0" rx="2" ry="6" fill="#5D4037"/>
-    <animateMotion dur="10s" repeatCount="indefinite" path="M0,0 Q50,-30 100,0 Q150,30 200,0 Q150,-30 100,0 Q50,30 0,0"/>
+    <animateMotion dur="12s" repeatCount="indefinite" path="M0,0 Q80,-40 160,0 Q240,40 320,0 Q240,-40 160,0 Q80,40 0,0"/>
   </g>
-  
+  <!-- Pink butterfly — lazy loop near bench -->
   <g transform="translate(900, 500)">
     <ellipse cx="0" cy="0" rx="6" ry="4" fill="#E91E63" transform="rotate(-30)">
       <animateTransform attributeName="transform" type="rotate" values="-30;30;-30" dur="0.4s" repeatCount="indefinite"/>
@@ -504,26 +703,182 @@
       <animateTransform attributeName="transform" type="rotate" values="30;-30;30" dur="0.4s" repeatCount="indefinite"/>
     </ellipse>
     <ellipse cx="0" cy="0" rx="1.5" ry="5" fill="#333"/>
-    <animateMotion dur="8s" repeatCount="indefinite" path="M0,0 Q-40,40 0,80 Q40,40 0,0"/>
+    <animateMotion dur="9s" repeatCount="indefinite" path="M0,0 Q-40,40 0,80 Q40,40 0,0"/>
   </g>
-  
-  <!-- ============ TREE ============ -->
+  <!-- Blue butterfly — higher, near tree -->
+  <g opacity="0.75">
+    <animateMotion dur="15s" repeatCount="indefinite" path="M1650,350 Q1700,300 1750,350 Q1700,400 1650,380 Q1600,360 1650,320 Q1700,280 1750,320 Q1700,360 1650,350"/>
+    <ellipse cx="0" cy="0" rx="7" ry="4.5" fill="#42A5F5" transform="rotate(-25)">
+      <animateTransform attributeName="transform" type="rotate" values="-25;25;-25" dur="0.45s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="0" cy="0" rx="7" ry="4.5" fill="#42A5F5" transform="rotate(25)">
+      <animateTransform attributeName="transform" type="rotate" values="25;-25;25" dur="0.45s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="0" cy="0" rx="1.5" ry="5" fill="#333"/>
+  </g>
+
+  <!-- ═══════════════════════════════════════════
+       DRAGONFLY near birdbath
+       ═══════════════════════════════════════════ -->
+  <g opacity="0.65">
+    <animateMotion dur="10s" repeatCount="indefinite" path="M1200,520 Q1250,500 1280,530 Q1310,560 1280,570 Q1250,580 1200,560 Q1150,540 1180,520 Q1200,500 1200,520"/>
+    <!-- Body -->
+    <rect x="-1.5" y="-8" width="3" height="16" fill="#1565C0" rx="1"/>
+    <!-- Wings (4, translucent) -->
+    <ellipse cx="-8" cy="-2" rx="10" ry="3" fill="#B3E5FC" opacity="0.5">
+      <animate attributeName="ry" values="3;1.5;3" dur="0.12s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="8" cy="-2" rx="10" ry="3" fill="#B3E5FC" opacity="0.5">
+      <animate attributeName="ry" values="1.5;3;1.5" dur="0.12s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="-7" cy="2" rx="8" ry="2.5" fill="#B3E5FC" opacity="0.4">
+      <animate attributeName="ry" values="2.5;1;2.5" dur="0.12s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="7" cy="2" rx="8" ry="2.5" fill="#B3E5FC" opacity="0.4">
+      <animate attributeName="ry" values="1;2.5;1" dur="0.12s" repeatCount="indefinite"/>
+    </ellipse>
+    <!-- Eyes -->
+    <circle cx="-2" cy="-9" r="1.5" fill="#0D47A1"/>
+    <circle cx="2" cy="-9" r="1.5" fill="#0D47A1"/>
+  </g>
+
+  <!-- ═══════ LADYBUG on bench ═══════ -->
+  <g transform="translate(1060, 577)" opacity="0.8">
+    <ellipse cx="0" cy="0" rx="4" ry="3.5" fill="#D32F2F"/>
+    <ellipse cx="0" cy="-2" rx="2" ry="2" fill="#1a1a1a"/>
+    <line x1="0" y1="-3.5" x2="0" y2="3.5" stroke="#1a1a1a" stroke-width="0.5"/>
+    <circle cx="-1.5" cy="0.5" r="0.8" fill="#1a1a1a"/>
+    <circle cx="1.5" cy="0.5" r="0.8" fill="#1a1a1a"/>
+    <circle cx="-1" cy="2" r="0.7" fill="#1a1a1a"/>
+    <circle cx="1" cy="2" r="0.7" fill="#1a1a1a"/>
+    <!-- Slow crawl -->
+    <animateTransform attributeName="transform" type="translate" values="1060,577;1068,577;1075,578;1068,577;1060,577" dur="20s" repeatCount="indefinite"/>
+  </g>
+
+  <!-- ═══════════════════════════════════════════
+       TREE (with leaf rustle & dappled light)
+       ═══════════════════════════════════════════ -->
   <g transform="translate(1700, 300)">
     <rect x="-20" y="150" width="40" height="200" fill="#5D4037"/>
-    <ellipse cx="0" cy="100" rx="120" ry="100" fill="#2E7D32"/>
-    <ellipse cx="-50" cy="130" rx="80" ry="70" fill="#388E3C"/>
-    <ellipse cx="50" cy="120" rx="90" ry="80" fill="#43A047"/>
-    <ellipse cx="0" cy="60" rx="70" ry="60" fill="#4CAF50"/>
+    <!-- Canopy layers with gentle sway -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="-0.5,0,100;0.5,0,100;-0.5,0,100" dur="5s" repeatCount="indefinite"/>
+      <ellipse cx="0" cy="100" rx="120" ry="100" fill="#2E7D32"/>
+    </g>
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="0.3,-50,130;-0.3,-50,130;0.3,-50,130" dur="6s" repeatCount="indefinite"/>
+      <ellipse cx="-50" cy="130" rx="80" ry="70" fill="#388E3C"/>
+    </g>
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="-0.4,50,120;0.4,50,120;-0.4,50,120" dur="7s" repeatCount="indefinite"/>
+      <ellipse cx="50" cy="120" rx="90" ry="80" fill="#43A047"/>
+    </g>
+    <g>
+      <animateTransform attributeName="transform" type="rotate" values="0.6,0,60;-0.6,0,60;0.6,0,60" dur="4s" repeatCount="indefinite"/>
+      <ellipse cx="0" cy="60" rx="70" ry="60" fill="#4CAF50"/>
+    </g>
+    <!-- Dappled light spots under tree -->
+    <g opacity="0.1">
+      <circle cx="-30" cy="250" r="8" fill="#FFF9C4">
+        <animate attributeName="opacity" values="0.08;0.15;0.08" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="20" cy="260" r="6" fill="#FFF9C4">
+        <animate attributeName="opacity" values="0.1;0.18;0.1" dur="5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="50" cy="245" r="7" fill="#FFF9C4">
+        <animate attributeName="opacity" values="0.06;0.12;0.06" dur="6s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <!-- Falling leaf -->
+    <g opacity="0.6">
+      <animateMotion dur="8s" repeatCount="indefinite" path="M-20,80 Q-40,150 -10,200 Q20,250 -30,320 Q-50,360 -20,400"/>
+      <animateTransform attributeName="transform" type="rotate" values="0;180;360" dur="4s" repeatCount="indefinite" additive="sum"/>
+      <ellipse cx="0" cy="0" rx="5" ry="3" fill="#8BC34A" opacity="0.7"/>
+    </g>
+    <g opacity="0.5">
+      <animateMotion dur="11s" begin="3s" repeatCount="indefinite" path="M40,70 Q60,140 30,200 Q0,260 40,330 Q60,370 30,400"/>
+      <animateTransform attributeName="transform" type="rotate" values="0;-180;-360" dur="5s" repeatCount="indefinite" additive="sum"/>
+      <ellipse cx="0" cy="0" rx="4" ry="2.5" fill="#689F38" opacity="0.6"/>
+    </g>
   </g>
-  
-  <!-- ============ FOREGROUND GRASS ============ -->
+
+  <!-- ═══════════════════════════════════════════
+       FLOATING POLLEN / DUST MOTES
+       ═══════════════════════════════════════════ -->
+  <g opacity="0.4">
+    <!-- Mote 1 -->
+    <circle cx="0" cy="0" r="1.5" fill="#FFF9C4" filter="url(#moteGlow)">
+      <animateMotion dur="20s" repeatCount="indefinite" path="M400,300 Q500,250 600,320 Q700,390 800,320 Q700,250 600,300 Q500,380 400,300"/>
+      <animate attributeName="opacity" values="0.2;0.5;0.2" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Mote 2 -->
+    <circle cx="0" cy="0" r="1" fill="#FFF9C4" filter="url(#moteGlow)">
+      <animateMotion dur="25s" repeatCount="indefinite" path="M900,400 Q1000,350 1100,420 Q1200,480 1100,420 Q1000,360 900,400"/>
+      <animate attributeName="opacity" values="0.15;0.45;0.15" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Mote 3 -->
+    <circle cx="0" cy="0" r="1.2" fill="#fff" filter="url(#moteGlow)">
+      <animateMotion dur="18s" repeatCount="indefinite" path="M300,450 Q400,400 500,450 Q400,500 300,450"/>
+      <animate attributeName="opacity" values="0.1;0.4;0.1" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Mote 4 -->
+    <circle cx="0" cy="0" r="1.3" fill="#FFF9C4" filter="url(#moteGlow)">
+      <animateMotion dur="22s" repeatCount="indefinite" path="M1300,350 Q1400,300 1500,380 Q1400,430 1300,350"/>
+      <animate attributeName="opacity" values="0.18;0.4;0.18" dur="7s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Mote 5 (larger, closer) -->
+    <circle cx="0" cy="0" r="2" fill="#FFF9C4" filter="url(#moteGlow)">
+      <animateMotion dur="30s" repeatCount="indefinite" path="M200,500 Q400,450 600,520 Q800,580 600,520 Q400,460 200,500"/>
+      <animate attributeName="opacity" values="0.1;0.35;0.1" dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Dandelion seed floating -->
+    <g>
+      <animateMotion dur="35s" repeatCount="indefinite" path="M600,400 Q800,350 1000,380 Q1200,410 1400,350 Q1600,290 1800,330 Q1600,370 1400,350 Q1200,330 1000,380 Q800,430 600,400"/>
+      <animate attributeName="opacity" values="0.3;0.6;0.3" dur="12s" repeatCount="indefinite"/>
+      <!-- Seed body -->
+      <circle cx="0" cy="0" r="1" fill="#fff"/>
+      <!-- Parachute filaments -->
+      <line x1="0" y1="0" x2="-3" y2="-5" stroke="#fff" stroke-width="0.3" opacity="0.6"/>
+      <line x1="0" y1="0" x2="0" y2="-6" stroke="#fff" stroke-width="0.3" opacity="0.6"/>
+      <line x1="0" y1="0" x2="3" y2="-5" stroke="#fff" stroke-width="0.3" opacity="0.6"/>
+      <line x1="0" y1="0" x2="-2" y2="-6" stroke="#fff" stroke-width="0.3" opacity="0.5"/>
+      <line x1="0" y1="0" x2="2" y2="-6" stroke="#fff" stroke-width="0.3" opacity="0.5"/>
+    </g>
+  </g>
+
+  <!-- ═══════════════════════════════════════════
+       FOREGROUND GRASS (swaying)
+       ═══════════════════════════════════════════ -->
   <g fill="#1B5E20" opacity="0.6">
-    <path d="M0,1000 Q20,950 0,900 L30,900 Q10,950 30,1000 Z"/>
-    <path d="M50,1020 Q70,970 50,920 L80,920 Q60,970 80,1020 Z"/>
-    <path d="M1850,1010 Q1870,960 1850,910 L1880,910 Q1860,960 1880,1010 Z"/>
-    <path d="M1900,1030 Q1920,980 1900,930 L1930,930 Q1910,980 1930,1030 Z"/>
+    <g>
+      <path d="M0,1000 Q20,950 0,900 L30,900 Q10,950 30,1000 Z"/>
+      <animateTransform attributeName="transform" type="rotate" values="-1,15,1000;1,15,1000;-1,15,1000" dur="3s" repeatCount="indefinite"/>
+    </g>
+    <g>
+      <path d="M50,1020 Q70,970 50,920 L80,920 Q60,970 80,1020 Z"/>
+      <animateTransform attributeName="transform" type="rotate" values="0.5,65,1020;-0.5,65,1020;0.5,65,1020" dur="3.5s" repeatCount="indefinite"/>
+    </g>
+    <g>
+      <path d="M1850,1010 Q1870,960 1850,910 L1880,910 Q1860,960 1880,1010 Z"/>
+      <animateTransform attributeName="transform" type="rotate" values="-0.8,1865,1010;0.8,1865,1010;-0.8,1865,1010" dur="2.8s" repeatCount="indefinite"/>
+    </g>
+    <g>
+      <path d="M1900,1030 Q1920,980 1900,930 L1930,930 Q1910,980 1930,1030 Z"/>
+      <animateTransform attributeName="transform" type="rotate" values="0.6,1915,1030;-0.6,1915,1030;0.6,1915,1030" dur="4s" repeatCount="indefinite"/>
+    </g>
   </g>
-  
-  <!-- ============ AMBIENT LIGHTING ============ -->
-  <rect width="1920" height="1080" fill="url(#skyGrad)" opacity="0.05"/>
+
+  <!-- ═══════════════════════════════════════════
+       ATMOSPHERIC OVERLAYS
+       ═══════════════════════════════════════════ -->
+  <!-- Atmospheric haze layer (distance/depth) -->
+  <rect width="1920" height="1080" fill="url(#hazeGrad)" opacity="0.5"/>
+
+  <!-- Warm ambient lighting overlay -->
+  <rect width="1920" height="1080" fill="url(#skyGrad)" opacity="0.04"/>
+
+  <!-- Vignette -->
+  <rect width="1920" height="1080" fill="url(#skyGrad)" opacity="0" style="pointer-events:none"/>
+  <ellipse cx="960" cy="540" rx="1100" ry="650" fill="none" stroke="#000" stroke-width="400" opacity="0.12" style="pointer-events:none"/>
+
 </svg>

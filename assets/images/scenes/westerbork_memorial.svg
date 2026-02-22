@@ -1,219 +1,749 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-  <defs>
-    <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#4a5060"/>
-      <stop offset="40%" stop-color="#6a7080"/>
-      <stop offset="100%" stop-color="#8a9090"/>
-    </linearGradient>
-    <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#4a4a3a"/>
-      <stop offset="100%" stop-color="#3a3a2a"/>
-    </linearGradient>
-    <linearGradient id="pathGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#6a6050"/>
-      <stop offset="100%" stop-color="#5a5040"/>
-    </linearGradient>
-    <filter id="mist">
-      <feGaussianBlur stdDeviation="12"/>
-    </filter>
-    <filter id="softBlur">
-      <feGaussianBlur stdDeviation="4"/>
-    </filter>
-  </defs>
+<defs>
+  <!-- ═══════════════════════════════════════════════ -->
+  <!--  GRADIENTS                                      -->
+  <!-- ═══════════════════════════════════════════════ -->
 
-  <!-- Sky — overcast, heavy -->
-  <rect width="1600" height="900" fill="url(#skyGrad)"/>
+  <!-- Ominous overcast sky — cold, oppressive, Fincher-esque -->
+  <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#1e2430"/>
+    <stop offset="25%"  stop-color="#2e3644"/>
+    <stop offset="50%"  stop-color="#3e4656"/>
+    <stop offset="75%"  stop-color="#525c6a"/>
+    <stop offset="100%" stop-color="#636d78"/>
+  </linearGradient>
 
-  <!-- Heavy cloud layer -->
-  <g filter="url(#mist)" opacity="0.7">
-    <ellipse cx="100" cy="100" rx="250" ry="80" fill="#707880"/>
-    <ellipse cx="350" cy="80" rx="200" ry="70" fill="#686e78"/>
-    <ellipse cx="600" cy="110" rx="220" ry="75" fill="#707880"/>
-    <ellipse cx="900" cy="90" rx="280" ry="85" fill="#686e78"/>
-    <ellipse cx="1200" cy="105" rx="240" ry="78" fill="#707880"/>
-    <ellipse cx="1500" cy="85" rx="200" ry="70" fill="#686e78"/>
+  <!-- Ground — cold, desaturated earth -->
+  <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#3a3d34"/>
+    <stop offset="40%"  stop-color="#333628"/>
+    <stop offset="100%" stop-color="#28291e"/>
+  </linearGradient>
+
+  <!-- Path gravel -->
+  <linearGradient id="pathGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#5a5545"/>
+    <stop offset="100%" stop-color="#484438"/>
+  </linearGradient>
+
+  <!-- Rail rust gradient -->
+  <linearGradient id="railGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#8a7560"/>
+    <stop offset="100%" stop-color="#6a5a48"/>
+  </linearGradient>
+
+  <!-- Cold fog/mist layering -->
+  <linearGradient id="fogGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#4a5060" stop-opacity="0"/>
+    <stop offset="40%"  stop-color="#5a6070" stop-opacity="0.2"/>
+    <stop offset="100%" stop-color="#6a7078" stop-opacity="0.5"/>
+  </linearGradient>
+
+  <!-- Eerie green surveillance glow -->
+  <radialGradient id="survGlow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%"   stop-color="#00FF44" stop-opacity="0.3"/>
+    <stop offset="40%"  stop-color="#00CC33" stop-opacity="0.1"/>
+    <stop offset="100%" stop-color="#009922" stop-opacity="0"/>
+  </radialGradient>
+
+  <!-- Camera red LED glow -->
+  <radialGradient id="redGlow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%"   stop-color="#FF2200" stop-opacity="0.6"/>
+    <stop offset="40%"  stop-color="#FF0000" stop-opacity="0.2"/>
+    <stop offset="100%" stop-color="#CC0000" stop-opacity="0"/>
+  </radialGradient>
+
+  <!-- Vignette — heavy, oppressive -->
+  <radialGradient id="vignetteGrad" cx="50%" cy="50%" r="65%">
+    <stop offset="0%"   stop-color="#000000" stop-opacity="0"/>
+    <stop offset="55%"  stop-color="#000000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000000" stop-opacity="0.6"/>
+  </radialGradient>
+
+  <!-- Cold light break in clouds (story hope) -->
+  <radialGradient id="coldLight" cx="50%" cy="30%" r="40%">
+    <stop offset="0%"   stop-color="#8090a8" stop-opacity="0.2"/>
+    <stop offset="50%"  stop-color="#6a7a90" stop-opacity="0.08"/>
+    <stop offset="100%" stop-color="#5a6a80" stop-opacity="0"/>
+  </radialGradient>
+
+  <!-- Puddle reflection gradient -->
+  <linearGradient id="puddleGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#4a5566" stop-opacity="0.5"/>
+    <stop offset="100%" stop-color="#3a4556" stop-opacity="0.3"/>
+  </linearGradient>
+
+  <!-- Monument stone gradient — weathered -->
+  <linearGradient id="stoneGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#8a8880"/>
+    <stop offset="50%"  stop-color="#7a7870"/>
+    <stop offset="100%" stop-color="#6a6860"/>
+  </linearGradient>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!--  FILTERS                                        -->
+  <!-- ═══════════════════════════════════════════════ -->
+
+  <!-- Heavy atmospheric mist -->
+  <filter id="mist" x="-10%" y="-10%" width="120%" height="120%">
+    <feGaussianBlur stdDeviation="14"/>
+  </filter>
+
+  <!-- Soft blur for distance -->
+  <filter id="softBlur" x="-5%" y="-5%" width="110%" height="110%">
+    <feGaussianBlur stdDeviation="5"/>
+  </filter>
+
+  <!-- Depth-of-field for far objects -->
+  <filter id="depthBlur" x="-3%" y="-3%" width="106%" height="106%">
+    <feGaussianBlur stdDeviation="2.5"/>
+  </filter>
+
+  <!-- Glow filter for LED/surveillance -->
+  <filter id="glowFilter" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="6" result="glow"/>
+    <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+  </filter>
+
+  <!-- Dramatic shadow filter -->
+  <filter id="dramaticShadow" x="-15%" y="-10%" width="135%" height="130%">
+    <feDropShadow dx="6" dy="10" stdDeviation="8" flood-color="#0a0a0a" flood-opacity="0.5"/>
+  </filter>
+
+  <!-- Monument shadow -->
+  <filter id="monumentShadow" x="-10%" y="-5%" width="125%" height="120%">
+    <feDropShadow dx="8" dy="12" stdDeviation="10" flood-color="#0a0a0a" flood-opacity="0.45"/>
+  </filter>
+
+  <!-- Film grain -->
+  <filter id="filmGrain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="4" stitchTiles="stitch" result="noise">
+      <animate attributeName="seed" values="0;80" dur="0.4s" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise"/>
+    <feBlend in="SourceGraphic" in2="grayNoise" mode="multiply" result="grainBlend"/>
+    <feComponentTransfer in="grainBlend">
+      <feFuncA type="linear" slope="0.08"/>
+    </feComponentTransfer>
+  </filter>
+
+  <!-- Rain streak filter -->
+  <filter id="rainFilter" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.02 0.8" numOctaves="2" seed="5" result="rainNoise">
+      <animate attributeName="seed" values="1;20;40;60;80;60;40;20;1" dur="3s" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feColorMatrix type="luminanceToAlpha" in="rainNoise" result="rainAlpha"/>
+    <feComponentTransfer in="rainAlpha" result="rainThreshold">
+      <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0.3 0.5"/>
+    </feComponentTransfer>
+    <feFlood flood-color="#8090a8" flood-opacity="0.15" result="rainColor"/>
+    <feComposite in="rainColor" in2="rainThreshold" operator="in"/>
+  </filter>
+
+  <!-- Puddle shimmer -->
+  <filter id="puddleShimmer" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.03 0.08" numOctaves="2" seed="3">
+      <animate attributeName="seed" values="1;5;9;5;1" dur="6s" repeatCount="indefinite"/>
+    </feTurbulence>
+    <feDisplacementMap in="SourceGraphic" scale="3"/>
+  </filter>
+
+  <!-- Barbed wire rust filter -->
+  <filter id="rustFilter">
+    <feDropShadow dx="1" dy="1" stdDeviation="0.8" flood-color="#000" flood-opacity="0.3"/>
+  </filter>
+</defs>
+
+<style>
+  /* ═══════════════════════════════════════════════ */
+  /*  ANIMATIONS — suspense-driven                   */
+  /* ═══════════════════════════════════════════════ */
+
+  @keyframes cloudCrawl1 {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(80px); }
+  }
+  @keyframes cloudCrawl2 {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-60px); }
+  }
+  @keyframes cloudCrawl3 {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(50px); }
+  }
+
+  @keyframes fogDrift {
+    0%   { transform: translateX(0); opacity: 0.15; }
+    50%  { transform: translateX(30px); opacity: 0.25; }
+    100% { transform: translateX(0); opacity: 0.15; }
+  }
+
+  @keyframes ledBlink {
+    0%, 100% { opacity: 1; }
+    40%      { opacity: 0.08; }
+    60%      { opacity: 0.08; }
+  }
+
+  @keyframes ledGlowPulse {
+    0%, 100% { opacity: 0.3; r: 18; }
+    50%      { opacity: 0.6; r: 25; }
+  }
+
+  @keyframes survSweep {
+    0%   { transform: rotate(-15deg); }
+    50%  { transform: rotate(15deg); }
+    100% { transform: rotate(-15deg); }
+  }
+
+  @keyframes branchSway {
+    0%, 100% { transform: rotate(0deg); }
+    25%      { transform: rotate(1.5deg); }
+    75%      { transform: rotate(-1.5deg); }
+  }
+
+  @keyframes wreathFlicker {
+    0%, 100% { opacity: 0.7; }
+    50%      { opacity: 0.85; }
+  }
+
+  @keyframes puddleRipple {
+    0%, 100% { rx: 20; ry: 4; opacity: 0.3; }
+    50%      { rx: 26; ry: 5; opacity: 0.15; }
+  }
+
+  @keyframes crowFly {
+    0%   { transform: translate(0,0); }
+    100% { transform: translate(-500px, -80px); }
+  }
+  @keyframes crowWing {
+    0%, 100% { transform: scaleY(1); }
+    50%      { transform: scaleY(-0.8); }
+  }
+
+  @keyframes lightFlicker {
+    0%,100% { opacity: 0.12; }
+    30%     { opacity: 0.18; }
+    70%     { opacity: 0.1; }
+  }
+
+  @keyframes dishPing {
+    0%, 100% { opacity: 0; r: 2; }
+    50%      { opacity: 0.4; r: 8; }
+  }
+
+  @keyframes mistWisp {
+    0%   { transform: translate(0,0) scaleX(1); opacity: 0.12; }
+    50%  { transform: translate(40px,-10px) scaleX(1.3); opacity: 0.2; }
+    100% { transform: translate(80px,0) scaleX(1); opacity: 0.12; }
+  }
+
+  @keyframes railGlint {
+    0%, 100% { opacity: 0; }
+    50%      { opacity: 0.4; }
+  }
+
+  @keyframes coldBreath {
+    0%, 100% { opacity: 0.08; }
+    50%      { opacity: 0.15; }
+  }
+
+  @keyframes grassBend {
+    0%, 100% { transform: skewX(0deg); }
+    50%      { transform: skewX(3deg); }
+  }
+
+  @keyframes infoFlicker {
+    0%,95%,100% { opacity: 0.7; }
+    96%         { opacity: 0.3; }
+    98%         { opacity: 0.6; }
+  }
+
+  /* Class assignments */
+  .cloud-1     { animation: cloudCrawl1 80s linear infinite; }
+  .cloud-2     { animation: cloudCrawl2 95s linear infinite; }
+  .cloud-3     { animation: cloudCrawl3 70s linear infinite; }
+  .fog-drift   { animation: fogDrift 12s ease-in-out infinite; }
+  .led-blink   { animation: ledBlink 3s ease-in-out infinite; }
+  .led-glow    { animation: ledGlowPulse 3s ease-in-out infinite; }
+  .surv-sweep  { animation: survSweep 8s ease-in-out infinite; transform-origin: 50% 100%; }
+  .branch-sway { animation: branchSway 6s ease-in-out infinite; transform-origin: 50% 100%; }
+  .wreath-flicker { animation: wreathFlicker 5s ease-in-out infinite; }
+  .puddle-ripple  { animation: puddleRipple 4s ease-in-out infinite; }
+  .crow-fly    { animation: crowFly 18s linear infinite; }
+  .crow-wing   { animation: crowWing 0.5s ease-in-out infinite; }
+  .light-flicker { animation: lightFlicker 4s ease-in-out infinite; }
+  .dish-ping   { animation: dishPing 4s ease-in-out infinite; }
+  .mist-wisp   { animation: mistWisp 10s ease-in-out infinite; }
+  .rail-glint  { animation: railGlint 5s ease-in-out infinite; }
+  .cold-breath { animation: coldBreath 6s ease-in-out infinite; }
+  .grass-bend  { animation: grassBend 7s ease-in-out infinite; }
+  .info-flicker { animation: infoFlicker 8s ease-in-out infinite; }
+</style>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  SKY — cold, oppressive, threatening overcast          -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<rect width="1600" height="900" fill="url(#skyGrad)"/>
+
+<!-- Tiny cold light break — Spielberg crack of hope -->
+<ellipse cx="800" cy="180" rx="350" ry="140" fill="url(#coldLight)" class="cold-breath"/>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  HEAVY CLOUD LAYERS — rolling, crawling, menacing      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g filter="url(#mist)">
+  <!-- Layer 1 — lowest, darkest -->
+  <g class="cloud-1" opacity="0.8">
+    <ellipse cx="0"    cy="120" rx="280" ry="90"  fill="#323844"/>
+    <ellipse cx="350"  cy="100" rx="250" ry="80"  fill="#2e3640"/>
+    <ellipse cx="700"  cy="130" rx="300" ry="95"  fill="#323844"/>
+    <ellipse cx="1100" cy="110" rx="280" ry="85"  fill="#2e3640"/>
+    <ellipse cx="1450" cy="125" rx="260" ry="88"  fill="#323844"/>
   </g>
 
-  <!-- Horizon mist -->
-  <rect x="0" y="450" width="1600" height="60" fill="#8a9090" opacity="0.25" filter="url(#softBlur)"/>
-
-  <!-- ── WSRT DISHES IN FAR BACKGROUND ── (ghostly, distant) -->
-  <g opacity="0.35" filter="url(#softBlur)">
-    <!-- Dish 1 -->
-    <rect x="60" y="390" width="6" height="70" fill="#909090"/>
-    <rect x="30" y="425" width="66" height="10" fill="#888"/>
-    <ellipse cx="63" cy="388" rx="36" ry="12" fill="#909090"/>
-    <!-- Dish 2 -->
-    <rect x="190" y="385" width="6" height="75" fill="#909090"/>
-    <rect x="160" y="420" width="66" height="10" fill="#888"/>
-    <ellipse cx="193" cy="382" rx="36" ry="12" fill="#909090"/>
-    <!-- Dish 3 -->
-    <rect x="330" y="392" width="6" height="68" fill="#909090"/>
-    <rect x="300" y="427" width="66" height="10" fill="#888"/>
-    <ellipse cx="333" cy="390" rx="36" ry="12" fill="#909090"/>
-    <!-- Dish 4 -->
-    <rect x="1260" y="388" width="6" height="72" fill="#909090"/>
-    <rect x="1230" y="423" width="66" height="10" fill="#888"/>
-    <ellipse cx="1263" cy="386" rx="36" ry="12" fill="#909090"/>
-    <!-- Dish 5 -->
-    <rect x="1400" y="394" width="6" height="66" fill="#909090"/>
-    <rect x="1370" y="428" width="66" height="10" fill="#888"/>
-    <ellipse cx="1403" cy="392" rx="36" ry="12" fill="#909090"/>
-    <!-- Dish 6 -->
-    <rect x="1530" y="386" width="6" height="74" fill="#909090"/>
-    <rect x="1500" y="422" width="66" height="10" fill="#888"/>
-    <ellipse cx="1533" cy="384" rx="36" ry="12" fill="#909090"/>
+  <!-- Layer 2 — mid, shifted -->
+  <g class="cloud-2" opacity="0.6">
+    <ellipse cx="150"  cy="160" rx="220" ry="70" fill="#3a4250"/>
+    <ellipse cx="500"  cy="140" rx="260" ry="75" fill="#3a4250"/>
+    <ellipse cx="850"  cy="170" rx="240" ry="68" fill="#404858"/>
+    <ellipse cx="1250" cy="150" rx="280" ry="80" fill="#3a4250"/>
+    <ellipse cx="1550" cy="165" rx="200" ry="65" fill="#404858"/>
   </g>
 
-  <!-- Ground -->
-  <rect x="0" y="490" width="1600" height="410" fill="url(#groundGrad)"/>
-  <!-- Ground texture -->
-  <rect x="0" y="490" width="1600" height="6" fill="#5a5a4a"/>
-
-  <!-- ── RAILWAY TRACK ── (the infamous transport track) -->
-  <!-- Ballast -->
-  <polygon points="720,900 880,900 840,530 760,530" fill="#585040"/>
-  <!-- Cross ties -->
-  <g fill="#4a3820" stroke="#382810" stroke-width="1">
-    <rect x="749" y="535" width="102" height="8" rx="1"/>
-    <rect x="747" y="558" width="106" height="8" rx="1"/>
-    <rect x="745" y="582" width="110" height="8" rx="1"/>
-    <rect x="743" y="608" width="114" height="8" rx="1"/>
-    <rect x="741" y="636" width="118" height="8" rx="1"/>
-    <rect x="738" y="666" width="122" height="8" rx="1"/>
-    <rect x="734" y="698" width="128" height="8" rx="1"/>
-    <rect x="730" y="732" width="134" height="8" rx="1"/>
-    <rect x="726" y="768" width="140" height="8" rx="1"/>
-    <rect x="722" y="806" width="146" height="8" rx="1"/>
-    <rect x="718" y="846" width="152" height="8" rx="1"/>
-    <rect x="713" y="888" width="160" height="8" rx="1"/>
+  <!-- Layer 3 — high wisps -->
+  <g class="cloud-3" opacity="0.45">
+    <ellipse cx="200"  cy="60"  rx="180" ry="50" fill="#4a5264"/>
+    <ellipse cx="600"  cy="50"  rx="220" ry="55" fill="#4a5264"/>
+    <ellipse cx="1000" cy="65"  rx="200" ry="48" fill="#4a5264"/>
+    <ellipse cx="1400" cy="55"  rx="180" ry="52" fill="#4a5264"/>
   </g>
-  <!-- Left rail -->
-  <path d="M758,540 L723,900" stroke="#888070" stroke-width="6" fill="none"/>
-  <!-- Right rail -->
-  <path d="M842,540 L877,900" stroke="#888070" stroke-width="6" fill="none"/>
-  <!-- Rails end abruptly at top (track ends here — transport road) -->
-  <rect x="748" y="528" width="8" height="15" fill="#666"/>
-  <rect x="836" y="528" width="8" height="15" fill="#666"/>
-  <!-- End stops -->
-  <rect x="738" y="520" width="28" height="10" fill="#cc4422" rx="2"/>
-  <rect x="828" y="520" width="28" height="10" fill="#cc4422" rx="2"/>
-  <line x1="742" y1="516" x2="742" y2="532" stroke="#880000" stroke-width="3"/>
-  <line x1="852" y1="516" x2="852" y2="532" stroke="#880000" stroke-width="3"/>
+</g>
 
-  <!-- ── MEMORIAL STONES / COLUMNS ── -->
-  <!-- Row of memorial stones lining the path -->
-  <!-- Left side -->
-  <g fill="#7a7a7a" stroke="#606060" stroke-width="1">
-    <rect x="500" y="540" width="22" height="60" rx="2"/>
-    <rect x="540" y="548" width="18" height="52" rx="2"/>
-    <rect x="576" y="535" width="25" height="70" rx="2"/>
-    <rect x="615" y="544" width="20" height="58" rx="2"/>
-    <rect x="648" y="538" width="22" height="65" rx="2"/>
-    <rect x="685" y="546" width="16" height="55" rx="2"/>
-    <rect x="716" y="508" width="15" height="28" rx="2"/><!-- smaller near track -->
-  </g>
-  <!-- Right side -->
-  <g fill="#7a7a7a" stroke="#606060" stroke-width="1">
-    <rect x="870" y="508" width="15" height="28" rx="2"/>
-    <rect x="895" y="546" width="16" height="55" rx="2"/>
-    <rect x="926" y="538" width="22" height="65" rx="2"/>
-    <rect x="960" y="544" width="20" height="58" rx="2"/>
-    <rect x="996" y="535" width="25" height="70" rx="2"/>
-    <rect x="1038" y="548" width="18" height="52" rx="2"/>
-    <rect x="1074" y="540" width="22" height="60" rx="2"/>
-  </g>
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  GROUND MIST — crawling fog at horizon                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g>
+  <!-- Base fog band -->
+  <rect x="0" y="430" width="1600" height="80" fill="url(#fogGrad)" filter="url(#softBlur)"/>
 
-  <!-- ── MAIN MEMORIAL MONUMENT ── -->
-  <!-- Large central broken/incomplete train, or stone monument -->
+  <!-- Animated mist wisps -->
+  <ellipse cx="200" cy="480" rx="150" ry="30" fill="#5a6470" opacity="0.12" filter="url(#softBlur)" class="mist-wisp"/>
+  <ellipse cx="600" cy="470" rx="180" ry="35" fill="#5a6470" opacity="0.1" filter="url(#softBlur)" class="mist-wisp" style="animation-delay: 3s;"/>
+  <ellipse cx="1000" cy="485" rx="160" ry="28" fill="#5a6470" opacity="0.14" filter="url(#softBlur)" class="mist-wisp" style="animation-delay: 6s;"/>
+  <ellipse cx="1400" cy="475" rx="140" ry="32" fill="#5a6470" opacity="0.11" filter="url(#softBlur)" class="mist-wisp" style="animation-delay: 2s;"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  WSRT DISHES — ghostly, beyond the mist                -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g opacity="0.3" filter="url(#depthBlur)">
+  <!-- Dish 1 -->
+  <g>
+    <rect x="60" y="390" width="6" height="70" fill="#707070"/>
+    <rect x="30" y="425" width="66" height="10" fill="#686868"/>
+    <ellipse cx="63" cy="388" rx="36" ry="12" fill="#787878"/>
+    <circle cx="63" cy="388" r="3" fill="#00FF44" class="dish-ping" style="animation-delay: 0s;"/>
+  </g>
+  <!-- Dish 2 -->
+  <g>
+    <rect x="190" y="385" width="6" height="75" fill="#707070"/>
+    <rect x="160" y="420" width="66" height="10" fill="#686868"/>
+    <ellipse cx="193" cy="382" rx="36" ry="12" fill="#787878"/>
+    <circle cx="193" cy="382" r="3" fill="#00FF44" class="dish-ping" style="animation-delay: 1s;"/>
+  </g>
+  <!-- Dish 3 -->
+  <g>
+    <rect x="330" y="392" width="6" height="68" fill="#707070"/>
+    <rect x="300" y="427" width="66" height="10" fill="#686868"/>
+    <ellipse cx="333" cy="390" rx="36" ry="12" fill="#787878"/>
+    <circle cx="333" cy="390" r="3" fill="#00FF44" class="dish-ping" style="animation-delay: 2s;"/>
+  </g>
+  <!-- Dish 4 -->
+  <g>
+    <rect x="1260" y="388" width="6" height="72" fill="#707070"/>
+    <rect x="1230" y="423" width="66" height="10" fill="#686868"/>
+    <ellipse cx="1263" cy="386" rx="36" ry="12" fill="#787878"/>
+    <circle cx="1263" cy="386" r="3" fill="#00FF44" class="dish-ping" style="animation-delay: 0.5s;"/>
+  </g>
+  <!-- Dish 5 -->
+  <g>
+    <rect x="1400" y="394" width="6" height="66" fill="#707070"/>
+    <rect x="1370" y="428" width="66" height="10" fill="#686868"/>
+    <ellipse cx="1403" cy="392" rx="36" ry="12" fill="#787878"/>
+    <circle cx="1403" cy="392" r="3" fill="#00FF44" class="dish-ping" style="animation-delay: 1.5s;"/>
+  </g>
+  <!-- Dish 6 -->
+  <g>
+    <rect x="1530" y="386" width="6" height="74" fill="#707070"/>
+    <rect x="1500" y="422" width="66" height="10" fill="#686868"/>
+    <ellipse cx="1533" cy="384" rx="36" ry="12" fill="#787878"/>
+    <circle cx="1533" cy="384" r="3" fill="#00FF44" class="dish-ping" style="animation-delay: 2.5s;"/>
+  </g>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  GROUND — cold, desaturated, oppressive                -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<rect x="0" y="490" width="1600" height="410" fill="url(#groundGrad)"/>
+<!-- Ground edge -->
+<rect x="0" y="490" width="1600" height="6" fill="#4a4a3a" opacity="0.6"/>
+
+<!-- Grass tufts bending in wind -->
+<g class="grass-bend" opacity="0.3">
+  <path d="M100,540 Q105,520 108,510" stroke="#3a4a28" stroke-width="2" fill="none"/>
+  <path d="M104,540 Q110,518 115,508" stroke="#3a4a28" stroke-width="1.5" fill="none"/>
+  <path d="M400,560 Q405,540 408,530" stroke="#3a4a28" stroke-width="2" fill="none"/>
+  <path d="M1300,545 Q1305,525 1308,515" stroke="#3a4a28" stroke-width="2" fill="none"/>
+  <path d="M1500,555 Q1505,535 1508,525" stroke="#3a4a28" stroke-width="1.5" fill="none"/>
+</g>
+<g class="grass-bend" style="animation-delay: 2s;" opacity="0.25">
+  <path d="M220,550 Q225,530 228,520" stroke="#3a4a28" stroke-width="1.5" fill="none"/>
+  <path d="M650,570 Q655,550 658,540" stroke="#3a4a28" stroke-width="2" fill="none"/>
+  <path d="M1100,548 Q1105,528 1108,518" stroke="#3a4a28" stroke-width="1.5" fill="none"/>
+</g>
+
+<!-- Rain puddles on ground -->
+<ellipse cx="300" cy="650" rx="45" ry="8" fill="url(#puddleGrad)" filter="url(#puddleShimmer)" class="puddle-ripple"/>
+<ellipse cx="1100" cy="700" rx="55" ry="9" fill="url(#puddleGrad)" filter="url(#puddleShimmer)" class="puddle-ripple" style="animation-delay: 1.5s;"/>
+<ellipse cx="750" cy="780" rx="40" ry="7" fill="url(#puddleGrad)" filter="url(#puddleShimmer)" class="puddle-ripple" style="animation-delay: 3s;"/>
+<!-- Sky reflection in puddles -->
+<ellipse cx="300" cy="649" rx="30" ry="4" fill="#4a5566" opacity="0.15"/>
+<ellipse cx="1100" cy="699" rx="38" ry="5" fill="#4a5566" opacity="0.12"/>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RAILWAY TRACK — the infamous transport track           -->
+<!--  Dramatic perspective, rust, weathering                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- Ballast — darker, grittier -->
+<polygon points="720,900 880,900 840,530 760,530" fill="#3e3828"/>
+<polygon points="722,900 878,900 838,532 762,532" fill="#4a4235" opacity="0.4"/>
+
+<!-- Cross ties — weathered wood -->
+<g fill="#3a2a18" stroke="#2a1c0e" stroke-width="1.2">
+  <rect x="749" y="535" width="102" height="8" rx="1"/>
+  <rect x="747" y="558" width="106" height="8" rx="1"/>
+  <rect x="745" y="582" width="110" height="8" rx="1"/>
+  <rect x="743" y="608" width="114" height="8" rx="1"/>
+  <rect x="741" y="636" width="118" height="8" rx="1"/>
+  <rect x="738" y="666" width="122" height="8" rx="1"/>
+  <rect x="734" y="698" width="128" height="8" rx="1"/>
+  <rect x="730" y="732" width="134" height="8" rx="1"/>
+  <rect x="726" y="768" width="140" height="8" rx="1"/>
+  <rect x="722" y="806" width="146" height="8" rx="1"/>
+  <rect x="718" y="846" width="152" height="8" rx="1"/>
+  <rect x="713" y="888" width="160" height="8" rx="1"/>
+</g>
+
+<!-- Left rail — rusted iron -->
+<path d="M758,540 L723,900" stroke="url(#railGrad)" stroke-width="7" fill="none"/>
+<path d="M758,540 L723,900" stroke="#5a4a38" stroke-width="2" fill="none" opacity="0.3"/>
+<!-- Right rail -->
+<path d="M842,540 L877,900" stroke="url(#railGrad)" stroke-width="7" fill="none"/>
+<path d="M842,540 L877,900" stroke="#5a4a38" stroke-width="2" fill="none" opacity="0.3"/>
+
+<!-- Rail glints — cold wet reflections -->
+<circle cx="740" cy="720" r="2" fill="#8a9aa8" class="rail-glint" style="animation-delay: 0s;"/>
+<circle cx="860" cy="720" r="2" fill="#8a9aa8" class="rail-glint" style="animation-delay: 1.5s;"/>
+<circle cx="735" cy="800" r="1.5" fill="#8a9aa8" class="rail-glint" style="animation-delay: 3s;"/>
+<circle cx="868" cy="800" r="1.5" fill="#8a9aa8" class="rail-glint" style="animation-delay: 2s;"/>
+<circle cx="750" cy="600" r="1.5" fill="#8a9aa8" class="rail-glint" style="animation-delay: 4s;"/>
+
+<!-- Rails end abruptly — the track terminates, ominous -->
+<rect x="748" y="528" width="8" height="15" fill="#555"/>
+<rect x="836" y="528" width="8" height="15" fill="#555"/>
+<!-- End stops — red, faded -->
+<rect x="738" y="520" width="28" height="10" fill="#8a3322" rx="2" stroke="#5a2010" stroke-width="1"/>
+<rect x="828" y="520" width="28" height="10" fill="#8a3322" rx="2" stroke="#5a2010" stroke-width="1"/>
+<line x1="742" y1="516" x2="742" y2="532" stroke="#6a1808" stroke-width="3"/>
+<line x1="852" y1="516" x2="852" y2="532" stroke="#6a1808" stroke-width="3"/>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  MEMORIAL STONES / COLUMNS — lining the approach       -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- Left side — weathered, shadow-casting -->
+<g fill="#6a6a62" stroke="#505048" stroke-width="1.2" filter="url(#dramaticShadow)">
+  <rect x="500" y="540" width="22" height="60" rx="2"/>
+  <rect x="540" y="548" width="18" height="52" rx="2"/>
+  <rect x="576" y="535" width="25" height="70" rx="2"/>
+  <rect x="615" y="544" width="20" height="58" rx="2"/>
+  <rect x="648" y="538" width="22" height="65" rx="2"/>
+  <rect x="685" y="546" width="16" height="55" rx="2"/>
+  <rect x="716" y="508" width="15" height="28" rx="2"/>
+</g>
+<!-- Right side -->
+<g fill="#6a6a62" stroke="#505048" stroke-width="1.2" filter="url(#dramaticShadow)">
+  <rect x="870" y="508" width="15" height="28" rx="2"/>
+  <rect x="895" y="546" width="16" height="55" rx="2"/>
+  <rect x="926" y="538" width="22" height="65" rx="2"/>
+  <rect x="960" y="544" width="20" height="58" rx="2"/>
+  <rect x="996" y="535" width="25" height="70" rx="2"/>
+  <rect x="1038" y="548" width="18" height="52" rx="2"/>
+  <rect x="1074" y="540" width="22" height="60" rx="2"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  MAIN MEMORIAL MONUMENT — dramatic, lit, imposing      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g filter="url(#monumentShadow)">
   <!-- Stone base platform -->
-  <rect x="640" y="460" width="320" height="40" fill="#888880" stroke="#707068" stroke-width="2" rx="4"/>
+  <rect x="640" y="460" width="320" height="40" fill="url(#stoneGrad)" stroke="#505048" stroke-width="2" rx="4"/>
+  <!-- Moss/weathering on base -->
+  <rect x="645" y="488" width="310" height="8" fill="#3a4a2a" opacity="0.15" rx="2"/>
+
   <!-- Upright stele left -->
-  <rect x="660" y="340" width="45" height="125" fill="#909088" stroke="#707068" stroke-width="2" rx="3"/>
+  <rect x="660" y="340" width="45" height="125" fill="url(#stoneGrad)" stroke="#505048" stroke-width="2" rx="3"/>
+  <!-- Weathering streaks -->
+  <line x1="670" y1="345" x2="672" y2="465" stroke="#5a5850" stroke-width="1" opacity="0.3"/>
+  <line x1="690" y1="345" x2="693" y2="465" stroke="#5a5850" stroke-width="0.8" opacity="0.2"/>
+
   <!-- Upright stele right -->
-  <rect x="895" y="340" width="45" height="125" fill="#909088" stroke="#707068" stroke-width="2" rx="3"/>
-  <!-- Star of David carved into left stele -->
-  <polygon points="682,380 692,396 702,380" fill="none" stroke="#c0b8a0" stroke-width="2" opacity="0.7"/>
-  <polygon points="682,392 692,376 702,392" fill="none" stroke="#c0b8a0" stroke-width="2" opacity="0.7"/>
+  <rect x="895" y="340" width="45" height="125" fill="url(#stoneGrad)" stroke="#505048" stroke-width="2" rx="3"/>
+  <line x1="905" y1="345" x2="907" y2="465" stroke="#5a5850" stroke-width="1" opacity="0.3"/>
+  <line x1="925" y1="345" x2="928" y2="465" stroke="#5a5850" stroke-width="0.8" opacity="0.2"/>
+
+  <!-- Star of David — deeply carved -->
+  <polygon points="682,378 692,396 702,378" fill="none" stroke="#b0a888" stroke-width="2.5" opacity="0.8"/>
+  <polygon points="682,394 692,376 702,394" fill="none" stroke="#b0a888" stroke-width="2.5" opacity="0.8"/>
+  <!-- Star glow — faint, reverent -->
+  <polygon points="682,378 692,396 702,378" fill="none" stroke="#c8c0a0" stroke-width="1" opacity="0.2" filter="url(#glowFilter)"/>
+
   <!-- Inscription on base -->
-  <text x="800" y="488" font-family="Georgia, serif" font-size="16" fill="#c8c0a8" text-anchor="middle" font-style="italic">Kamp Westerbork 1942—1945</text>
-  <!-- Wreaths at base -->
-  <ellipse cx="700" cy="500" rx="22" ry="10" fill="none" stroke="#4a7a2a" stroke-width="3" opacity="0.8"/>
-  <ellipse cx="910" cy="500" rx="22" ry="10" fill="none" stroke="#4a7a2a" stroke-width="3" opacity="0.8"/>
+  <text x="800" y="488" font-family="Georgia, serif" font-size="16" fill="#a8a088" text-anchor="middle" font-style="italic">Kamp Westerbork 1942&#x2014;1945</text>
+</g>
 
-  <!-- ── BARBED WIRE (remnant, on ground) ── -->
-  <g stroke="#888" stroke-width="1.5" fill="none" opacity="0.5">
-    <path d="M120,620 Q150,615 180,622 Q210,628 240,620 Q270,612 300,620"/>
-    <path d="M130,634 Q160,628 190,636 Q220,643 250,635"/>
-    <!-- Barbs -->
-    <line x1="155" y1="618" x2="158" y2="612"/>
-    <line x1="155" y1="618" x2="161" y2="615"/>
-    <line x1="210" y1="625" x2="213" y2="619"/>
-    <line x1="210" y1="625" x2="216" y2="622"/>
-    <line x1="265" y1="617" x2="268" y2="611"/>
-  </g>
+<!-- Wreaths at base — faded, solemn -->
+<ellipse cx="700" cy="500" rx="22" ry="10" fill="none" stroke="#3a5a22" stroke-width="3.5" class="wreath-flicker"/>
+<ellipse cx="910" cy="500" rx="22" ry="10" fill="none" stroke="#3a5a22" stroke-width="3.5" class="wreath-flicker" style="animation-delay: 2s;"/>
+<!-- Small withered flowers on wreaths -->
+<circle cx="688" cy="496" r="3" fill="#aa3030" opacity="0.4"/>
+<circle cx="712" cy="497" r="2.5" fill="#aa3030" opacity="0.35"/>
+<circle cx="898" cy="496" r="3" fill="#aa3030" opacity="0.4"/>
+<circle cx="922" cy="497" r="2.5" fill="#aa3030" opacity="0.35"/>
 
-  <!-- Broken fence post, far right  -->
-  <rect x="1350" y="540" width="10" height="80" fill="#6a5a40" rx="2" transform="rotate(8,1355,580)"/>
-  <line x1="1355" y1="545" x2="1430" y2="552" stroke="#888" stroke-width="1.5" opacity="0.4"/>
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  BARBED WIRE — remnants, rust, decay                   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g stroke="#6a5a4a" stroke-width="1.8" fill="none" opacity="0.55" filter="url(#rustFilter)">
+  <path d="M100,620 Q135,613 170,622 Q205,630 240,620 Q275,610 310,620 Q345,628 380,618"/>
+  <path d="M110,636 Q145,628 180,638 Q215,646 250,636 Q285,626 320,636"/>
+  <!-- Barbs — sharp, aggressive -->
+  <line x1="140" y1="616" x2="144" y2="608" stroke-width="2"/>
+  <line x1="140" y1="616" x2="148" y2="612" stroke-width="2"/>
+  <line x1="205" y1="627" x2="209" y2="619" stroke-width="2"/>
+  <line x1="205" y1="627" x2="213" y2="623" stroke-width="2"/>
+  <line x1="270" y1="615" x2="274" y2="607" stroke-width="2"/>
+  <line x1="270" y1="615" x2="278" y2="611" stroke-width="2"/>
+  <line x1="340" y1="622" x2="344" y2="614" stroke-width="2"/>
+</g>
 
-  <!-- ── SURVEILLANCE CAMERA (modern — anachronistic, story element) ── -->
-  <rect x="1180" y="455" width="8" height="100" fill="#555" rx="2"/>
+<!-- Second barbed wire section — far right -->
+<g stroke="#6a5a4a" stroke-width="1.5" fill="none" opacity="0.4" filter="url(#rustFilter)">
+  <path d="M1250,640 Q1280,632 1310,642 Q1340,650 1370,640 Q1400,630 1430,640"/>
+  <line x1="1285" y1="636" x2="1289" y2="628" stroke-width="1.8"/>
+  <line x1="1285" y1="636" x2="1293" y2="632" stroke-width="1.8"/>
+  <line x1="1355" y1="645" x2="1359" y2="637" stroke-width="1.8"/>
+</g>
+
+<!-- Broken fence post — tilted, rotting -->
+<rect x="1350" y="540" width="12" height="85" fill="#4a3a24" rx="2" transform="rotate(8,1356,582)"/>
+<line x1="1356" y1="548" x2="1440" y2="555" stroke="#6a5a4a" stroke-width="1.8" opacity="0.35"/>
+<line x1="1356" y1="570" x2="1430" y2="580" stroke="#6a5a4a" stroke-width="1.2" opacity="0.25"/>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  SURVEILLANCE CAMERA — the modern intrusion            -->
+<!--  Dramatic, ominous, sweeping                           -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- Pole -->
+<rect x="1180" y="455" width="8" height="100" fill="#404040" rx="2"/>
+<rect x="1179" y="540" width="10" height="16" fill="#333" rx="1"/>
+
+<!-- Camera housing — sweeping slowly -->
+<g class="surv-sweep" style="transform-origin: 1184px 455px;">
   <!-- Camera body -->
-  <rect x="1168" y="445" width="32" height="18" fill="#333" stroke="#555" stroke-width="1.5" rx="3"/>
-  <rect x="1170" y="447" width="12" height="14" fill="#1a1a1a" rx="2"/>
-  <circle cx="1176" cy="454" r="5" fill="#0a0a0a" stroke="#444" stroke-width="1"/>
-  <circle cx="1176" cy="454" r="2" fill="#111"/>
-  <!-- Camera LED — blinking red -->
-  <circle cx="1194" cy="450" r="3" fill="#ff2200">
-    <animate attributeName="opacity" values="1;0.1;1" dur="3s" repeatCount="indefinite"/>
-  </circle>
-  <!-- Wi-Fi/Bluetooth module on camera -->
-  <rect x="1188" y="455" width="10" height="6" fill="#1a2a1a" stroke="#2a4a2a" stroke-width="1" rx="1"/>
-  <text x="1193" y="461" font-family="monospace" font-size="5" fill="#00aa44" text-anchor="middle">BT</text>
+  <rect x="1164" y="441" width="38" height="22" fill="#1a1a1a" stroke="#333" stroke-width="2" rx="4"/>
+  <!-- Lens housing -->
+  <rect x="1166" y="444" width="16" height="16" fill="#0d0d0d" rx="3"/>
+  <circle cx="1174" cy="452" r="6" fill="#080808" stroke="#333" stroke-width="1.5"/>
+  <circle cx="1174" cy="452" r="3" fill="#111"/>
+  <!-- Lens reflection -->
+  <circle cx="1172" cy="450" r="1.5" fill="#4a5a6a" opacity="0.4"/>
 
-  <!-- ── WOODEN BARRACK OUTLINES (ruins/foundations) ── -->
-  <!-- Barrack 1 foundation -->
-  <rect x="100" y="560" width="300" height="120" fill="none" stroke="#6a5a40" stroke-width="2" stroke-dasharray="8,4" opacity="0.5"/>
-  <text x="250" y="628" font-family="Georgia, serif" font-size="13" fill="#8a7a60" text-anchor="middle" opacity="0.7" font-style="italic">Barak 65</text>
-  <!-- Barrack 2 foundation -->
-  <rect x="1200" y="560" width="300" height="120" fill="none" stroke="#6a5a40" stroke-width="2" stroke-dasharray="8,4" opacity="0.5"/>
-  <text x="1350" y="628" font-family="Georgia, serif" font-size="13" fill="#8a7a60" text-anchor="middle" opacity="0.7" font-style="italic">Barak 51</text>
+  <!-- Camera LED — ominous blinking red -->
+  <circle cx="1196" cy="448" r="3.5" fill="#ff2200" class="led-blink"/>
+  <!-- LED glow halo -->
+  <circle cx="1196" cy="448" r="18" fill="url(#redGlow)" class="led-glow"/>
+</g>
 
-  <!-- ── WILLOW TREES (weeping, appropriate for memorial) ── -->
-  <g>
-    <!-- Left tree -->
-    <rect x="420" y="440" width="14" height="130" fill="#5a4a30" rx="2"/>
-    <ellipse cx="427" cy="440" rx="40" ry="55" fill="#4a5a28" opacity="0.7"/>
-    <!-- Weeping branches -->
-    <path d="M415,460 Q400,510 395,560" stroke="#4a5a28" stroke-width="3" fill="none" opacity="0.6"/>
-    <path d="M427,455 Q412,510 408,565" stroke="#3d5a22" stroke-width="3" fill="none" opacity="0.6"/>
-    <path d="M438,460 Q428,512 425,568" stroke="#4a5a28" stroke-width="3" fill="none" opacity="0.6"/>
-    <path d="M447,465 Q442,514 440,570" stroke="#3d5a22" stroke-width="2" fill="none" opacity="0.5"/>
+<!-- Surveillance cone (visible scan area — eerie green) -->
+<polygon points="1174,452 1050,560 1300,560" fill="url(#survGlow)" opacity="0.08">
+  <animate attributeName="opacity" values="0.05;0.12;0.05" dur="4s" repeatCount="indefinite"/>
+</polygon>
+
+<!-- Wi-Fi/Bluetooth module -->
+<rect x="1188" y="455" width="12" height="7" fill="#0a1a0a" stroke="#1a3a1a" stroke-width="1" rx="1"/>
+<text x="1194" y="462" font-family="monospace" font-size="5.5" fill="#00aa44" text-anchor="middle" class="info-flicker">BT</text>
+<!-- Signal emission lines -->
+<g opacity="0.15">
+  <path d="M1200,458 Q1210,450 1218,458" stroke="#00CC44" stroke-width="1" fill="none" class="led-blink" style="animation-delay: 0.3s;"/>
+  <path d="M1202,458 Q1215,445 1225,458" stroke="#00CC44" stroke-width="0.8" fill="none" class="led-blink" style="animation-delay: 0.6s;"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  BARRACK FOUNDATIONS — ghostly outlines                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<rect x="100" y="560" width="300" height="120" fill="none" stroke="#5a4a34" stroke-width="2.5" stroke-dasharray="10,5" opacity="0.4"/>
+<text x="250" y="628" font-family="Georgia, serif" font-size="13" fill="#6a5a40" text-anchor="middle" opacity="0.5" font-style="italic">Barak 65</text>
+
+<rect x="1200" y="560" width="300" height="120" fill="none" stroke="#5a4a34" stroke-width="2.5" stroke-dasharray="10,5" opacity="0.4"/>
+<text x="1350" y="628" font-family="Georgia, serif" font-size="13" fill="#6a5a40" text-anchor="middle" opacity="0.5" font-style="italic">Barak 51</text>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  WEEPING WILLOWS — dramatic, wind-swept                 -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g filter="url(#dramaticShadow)">
+  <!-- Left tree -->
+  <rect x="420" y="440" width="16" height="135" fill="#3a2a18" rx="3"/>
+  <!-- Bark texture -->
+  <line x1="424" y1="445" x2="425" y2="575" stroke="#2a1e10" stroke-width="1" opacity="0.4"/>
+  <line x1="432" y1="448" x2="433" y2="575" stroke="#2a1e10" stroke-width="0.8" opacity="0.3"/>
+  <!-- Canopy -->
+  <ellipse cx="428" cy="438" rx="45" ry="58" fill="#3a4a22" opacity="0.75"/>
+  <ellipse cx="428" cy="430" rx="35" ry="45" fill="#425228" opacity="0.5"/>
+  <!-- Weeping branches — animated sway -->
+  <g class="branch-sway" style="animation-delay: 0s;">
+    <path d="M412,458 Q396,510 390,568" stroke="#3a4a22" stroke-width="3.5" fill="none" opacity="0.6"/>
+    <path d="M428,452 Q410,510 404,572" stroke="#324820" stroke-width="3.5" fill="none" opacity="0.55"/>
   </g>
-  <g>
-    <!-- Right tree -->
-    <rect x="1168" y="435" width="14" height="135" fill="#5a4a30" rx="2"/>
-    <ellipse cx="1175" cy="435" rx="40" ry="58" fill="#4a5a28" opacity="0.7"/>
-    <path d="M1164,455 Q1148,508 1143,562" stroke="#4a5a28" stroke-width="3" fill="none" opacity="0.6"/>
-    <path d="M1175,450 Q1161,506 1157,562" stroke="#3d5a22" stroke-width="3" fill="none" opacity="0.6"/>
-    <path d="M1185,456 Q1175,510 1172,566" stroke="#4a5a28" stroke-width="3" fill="none" opacity="0.6"/>
-    <path d="M1194,462 Q1189,515 1187,572" stroke="#3d5a22" stroke-width="2" fill="none" opacity="0.5"/>
+  <g class="branch-sway" style="animation-delay: 1.5s;">
+    <path d="M440,458 Q430,514 426,575" stroke="#3a4a22" stroke-width="3" fill="none" opacity="0.6"/>
+    <path d="M450,465 Q445,518 443,578" stroke="#324820" stroke-width="2.5" fill="none" opacity="0.5"/>
+  </g>
+  <g class="branch-sway" style="animation-delay: 3s;">
+    <path d="M460,470 Q458,522 458,580" stroke="#3a4a22" stroke-width="2" fill="none" opacity="0.4"/>
+  </g>
+</g>
+
+<g filter="url(#dramaticShadow)">
+  <!-- Right tree -->
+  <rect x="1168" y="435" width="16" height="140" fill="#3a2a18" rx="3"/>
+  <line x1="1172" y1="440" x2="1173" y2="575" stroke="#2a1e10" stroke-width="1" opacity="0.4"/>
+  <line x1="1180" y1="443" x2="1181" y2="575" stroke="#2a1e10" stroke-width="0.8" opacity="0.3"/>
+  <ellipse cx="1176" cy="433" rx="45" ry="60" fill="#3a4a22" opacity="0.75"/>
+  <ellipse cx="1176" cy="425" rx="35" ry="47" fill="#425228" opacity="0.5"/>
+  <g class="branch-sway" style="animation-delay: 0.8s;">
+    <path d="M1162,453 Q1144,508 1138,568" stroke="#3a4a22" stroke-width="3.5" fill="none" opacity="0.6"/>
+    <path d="M1176,448 Q1160,508 1154,570" stroke="#324820" stroke-width="3.5" fill="none" opacity="0.55"/>
+  </g>
+  <g class="branch-sway" style="animation-delay: 2.3s;">
+    <path d="M1188,455 Q1178,512 1175,575" stroke="#3a4a22" stroke-width="3" fill="none" opacity="0.6"/>
+    <path d="M1198,462 Q1194,518 1192,580" stroke="#324820" stroke-width="2.5" fill="none" opacity="0.5"/>
+  </g>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  VISITOR PATHS                                         -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<polygon points="570,900 700,900 720,530 640,530" fill="url(#pathGrad)" opacity="0.45"/>
+<polygon points="900,530 970,530 1030,900 880,900" fill="url(#pathGrad)" opacity="0.45"/>
+<!-- Path edge detail -->
+<path d="M640,530 L570,900" stroke="#3a3428" stroke-width="1.5" opacity="0.3"/>
+<path d="M720,530 L700,900" stroke="#3a3428" stroke-width="1.5" opacity="0.3"/>
+<path d="M900,530 L880,900" stroke="#3a3428" stroke-width="1.5" opacity="0.3"/>
+<path d="M970,530 L1030,900" stroke="#3a3428" stroke-width="1.5" opacity="0.3"/>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  INFORMATION BOARD — weathered, flickering light        -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g filter="url(#dramaticShadow)">
+  <rect x="100" y="450" width="280" height="80" fill="#d8d0b8" stroke="#6a5838" stroke-width="2.5" rx="4"/>
+  <rect x="96" y="446" width="10" height="92" fill="#5a4830" rx="2"/>
+  <rect x="376" y="446" width="10" height="92" fill="#5a4830" rx="2"/>
+  <!-- Weathered spots -->
+  <circle cx="140" cy="510" r="6" fill="#c0b8a0" opacity="0.3"/>
+  <circle cx="350" cy="470" r="4" fill="#c0b8a0" opacity="0.25"/>
+  <text x="240" y="474" font-family="Georgia, serif" font-size="15" fill="#2a1808" text-anchor="middle" font-weight="bold">Herinneringscentrum</text>
+  <text x="240" y="493" font-family="Georgia, serif" font-size="14" fill="#2a1808" text-anchor="middle">Kamp Westerbork</text>
+  <text x="240" y="512" font-family="Georgia, serif" font-size="11" fill="#5a4020" text-anchor="middle">Transit camp &#183; 102,000 deportees</text>
+  <text x="240" y="525" font-family="Georgia, serif" font-size="11" fill="#5a4020" text-anchor="middle">1942&#x2013;1945</text>
+</g>
+
+<!-- Info board light (flickers like it's about to die) -->
+<rect x="110" y="442" width="260" height="4" fill="#FFE0A0" opacity="0.08" class="info-flicker" rx="2"/>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CROWS — unsettling, circling                          -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g opacity="0.5">
+  <!-- Crow group 1 — flying across -->
+  <g class="crow-fly">
+    <g class="crow-wing">
+      <path d="M1400,280 Q1412,265 1424,280" stroke="#1a1a1a" stroke-width="2.5" fill="none"/>
+    </g>
+    <g class="crow-wing" style="animation-delay: 0.2s;">
+      <path d="M1430,290 Q1442,275 1454,290" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+    </g>
+    <g class="crow-wing" style="animation-delay: 0.4s;">
+      <path d="M1415,300 Q1427,285 1439,300" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+    </g>
   </g>
 
-  <!-- ── VISITOR PATH ── -->
-  <polygon points="570,900 700,900 720,530 640,530" fill="#6a6050" opacity="0.5"/>
-  <polygon points="900,530 970,530 1030,900 880,900" fill="#6a6050" opacity="0.5"/>
+  <!-- Single crow — high, ominous -->
+  <g class="crow-fly" style="animation-delay: 8s; animation-duration: 22s;">
+    <g class="crow-wing">
+      <path d="M1300,200 Q1315,183 1330,200" stroke="#1a1a1a" stroke-width="3" fill="none"/>
+    </g>
+  </g>
+</g>
 
-  <!-- ── INFORMATION BOARD ── -->
-  <rect x="100" y="450" width="280" height="80" fill="#f0e8d0" stroke="#8a7050" stroke-width="2" rx="4"/>
-  <rect x="96" y="446" width="8" height="90" fill="#7a6040" rx="2"/>
-  <rect x="376" y="446" width="8" height="90" fill="#7a6040" rx="2"/>
-  <text x="240" y="474" font-family="Georgia, serif" font-size="15" fill="#3a2810" text-anchor="middle" font-weight="bold">Herinneringscentrum</text>
-  <text x="240" y="493" font-family="Georgia, serif" font-size="14" fill="#3a2810" text-anchor="middle">Kamp Westerbork</text>
-  <text x="240" y="512" font-family="Georgia, serif" font-size="11" fill="#6a5030" text-anchor="middle">Transit camp · 102,000 deportees</text>
-  <text x="240" y="525" font-family="Georgia, serif" font-size="11" fill="#6a5030" text-anchor="middle">1942–1945</text>
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  RAIN — light, persistent drizzle                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<rect x="0" y="0" width="1600" height="900" filter="url(#rainFilter)" fill="transparent" opacity="0.7" style="pointer-events:none;"/>
 
-  <!-- Skies mood: light barely through -->
-  <ellipse cx="800" cy="200" rx="300" ry="120" fill="#9090a0" opacity="0.15"/>
+<!-- Individual visible rain streaks for foreground -->
+<g stroke="#8090a8" stroke-width="1" opacity="0.12">
+  <line x1="200" y1="0" x2="195" y2="60"/>
+  <line x1="450" y1="30" x2="445" y2="90"/>
+  <line x1="700" y1="10" x2="695" y2="70"/>
+  <line x1="950" y1="50" x2="945" y2="110"/>
+  <line x1="1200" y1="20" x2="1195" y2="80"/>
+  <line x1="1450" y1="40" x2="1445" y2="100"/>
+  <line x1="100" y1="200" x2="95" y2="260"/>
+  <line x1="350" y1="180" x2="345" y2="240"/>
+  <line x1="800" y1="270" x2="795" y2="330"/>
+  <line x1="1100" y1="250" x2="1095" y2="310"/>
+  <line x1="1350" y1="210" x2="1345" y2="270"/>
+  <line x1="250" y1="400" x2="245" y2="460"/>
+  <line x1="600" y1="380" x2="595" y2="440"/>
+  <line x1="900" y1="420" x2="895" y2="480"/>
+  <line x1="1250" y1="390" x2="1245" y2="450"/>
+  <line x1="1500" y1="370" x2="1495" y2="430"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  LOW FOG LAYER — creeping across the ground             -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<g filter="url(#mist)">
+  <ellipse cx="300"  cy="750" rx="200" ry="40" fill="#4a5460" opacity="0.12" class="fog-drift" style="animation-delay: 0s;"/>
+  <ellipse cx="700"  cy="770" rx="250" ry="45" fill="#4a5460" opacity="0.1" class="fog-drift" style="animation-delay: 4s;"/>
+  <ellipse cx="1100" cy="740" rx="200" ry="35" fill="#4a5460" opacity="0.13" class="fog-drift" style="animation-delay: 2s;"/>
+  <ellipse cx="1450" cy="760" rx="180" ry="38" fill="#4a5460" opacity="0.11" class="fog-drift" style="animation-delay: 6s;"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!--  CINEMATIC OVERLAYS                                    -->
+<!-- ═══════════════════════════════════════════════════════ -->
+
+<!-- Cold colour grade — desaturated blue cast -->
+<rect x="0" y="0" width="1600" height="900" fill="#1a2a3a" opacity="0.08"/>
+
+<!-- Heavy vignette — Fincher darkness -->
+<rect x="0" y="0" width="1600" height="900" fill="url(#vignetteGrad)"/>
+
+<!-- Letterbox bars — cinematic 2.39:1 feel -->
+<rect x="0" y="0" width="1600" height="28" fill="#000" opacity="0.5"/>
+<rect x="0" y="872" width="1600" height="28" fill="#000" opacity="0.5"/>
+
+<!-- Film grain — heavy, gritty -->
+<rect x="0" y="0" width="1600" height="900" filter="url(#filmGrain)" fill="transparent" opacity="0.4" style="pointer-events:none;"/>
 </svg>
