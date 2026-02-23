@@ -189,12 +189,14 @@ const SdrBenchScene = {
         // ── Back to mancave ──
         {
             id: 'back_to_mancave',
-            name: 'Back to Mancave',
+            name: '← Back to Mancave',
             x: 0,
             y: 80,
             width: 8,
             height: 20,
             cursor: 'pointer',
+            cssClass: 'hotspot-nav',
+            skipWalk: true,
             targetScene: 'mancave'
         }
     ],

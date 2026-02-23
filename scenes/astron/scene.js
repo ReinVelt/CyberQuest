@@ -345,10 +345,10 @@ const AstronScene = {
                 });
                 game.showNotification('Received ASTRON Mesh Radio from Cees');
 
-                // Unlock facility infiltration quest
+                // Unlock facility infiltration quest (only if not already created by Eva contact)
                 setTimeout(() => {
-                    if (game.questManager && typeof game.questManager.addQuest === 'function') {
-                        game.questManager.addQuest({
+                    if (!game.questManager.hasQuest('infiltrate_facility')) {
+                        game.addQuest({
                             id: 'infiltrate_facility',
                             name: 'Infiltrate Steckerdoser Heide',
                             description: 'Drive to the facility under cover of darkness and find a way inside.',
@@ -356,7 +356,6 @@ const AstronScene = {
                         });
                     }
                     game.setFlag('facility_unlocked', true);
-                    game.showNotification('New quest: Infiltrate Steckerdoser Heide');
                 }, 2500);
             }, 1500);
             this._timeoutIds.push(tid);

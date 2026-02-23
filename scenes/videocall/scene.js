@@ -202,12 +202,14 @@ const VideocallScene = {
         },
         {
             id: 'exit_videocall',
-            name: 'End Call',
+            name: 'End Call →',
             x: 83.3,
             y: 81.5,
             width: 8.3,
             height: 5.6,
             cursor: 'pointer',
+            cssClass: 'hotspot-nav',
+            skipWalk: true,
             targetScene: 'mancave'
         }
     ],

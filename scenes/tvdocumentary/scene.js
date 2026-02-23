@@ -230,9 +230,30 @@ const TvdocumentaryScene = {
             TvdocumentaryScene._stopDrone();
             TvdocumentaryScene._stopDrone = null;
         }
+        // Stop any ongoing TTS
+        TvdocumentaryScene._stopSpeech();
     },
 
     _stopDrone: null,
+
+    /** Speak text via the game voice system (with speaker profile) */
+    _speak(text, speaker = 'Documentary') {
+        try {
+            const vm = window.voiceManager;
+            if (vm && vm.enabled) {
+                vm.stop();                      // cancel any running utterance
+                vm.speak(text, speaker);
+            }
+        } catch (e) { /* TTS not critical */ }
+    },
+
+    /** Stop any ongoing TTS */
+    _stopSpeech() {
+        try {
+            const vm = window.voiceManager;
+            if (vm) vm.stop();
+        } catch (e) { /* silent */ }
+    },
 
     /* ═══════════════════════════════════════════════════════
      *  MAIN DOCUMENTARY OVERLAY
@@ -704,8 +725,9 @@ const TvdocumentaryScene = {
         const sequence = [
             // ─── 0: COLD OPEN ───
             {
-                duration: 6000,
+                duration: 8000,
                 sound: 'impact',
+                voice: { text: 'Drenthe. The Unexpected Tech Hub. From quiet heathlands came wireless innovations that changed the world.', speaker: 'Documentary' },
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdocumentary.svg');"></div>
                     <div class="docu-title-card">
@@ -715,10 +737,24 @@ const TvdocumentaryScene = {
                     </div>
                 `
             },
-            // ─── 1: WSRT OVERVIEW ───
+            // ─── 1: NARRATOR — introduces the theme ───
+            {
+                duration: 10000,
+                sound: 'whoosh',
+                voice: { text: 'In the north-east of the Netherlands lies Drenthe. A province of rolling heathlands, ancient dolmens, and vast open skies. It is also home to some of the most revolutionary wireless technology ever created.', speaker: 'Documentary' },
+                content: `
+                    <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdocumentary.svg'); animation-duration: 14s;"></div>
+                    <div class="docu-text-overlay">
+                        <p>In the north-east of the Netherlands lies Drenthe &mdash; a province of rolling heathlands, ancient dolmens, and vast open skies.</p>
+                        <p>It is also home to some of the most revolutionary wireless technology ever created.</p>
+                    </div>
+                `
+            },
+            // ─── 2: CHAPTER 1 CARD ───
             {
                 duration: 7000,
-                sound: 'whoosh',
+                sound: 'impact',
+                voice: { text: 'Chapter One. The Dishes of Drenthe. Modern antenna technology and the science of radio astronomy.', speaker: 'Documentary' },
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_wsrt.svg'); animation-duration: 10s;"></div>
                     <div class="docu-chapter">
@@ -728,11 +764,12 @@ const TvdocumentaryScene = {
                     </div>
                 `
             },
-            // ─── 2: DAVID PRINSLOO — intro ───
+            // ─── 3: DAVID PRINSLOO — intro ───
             {
-                duration: 9000,
+                duration: 11000,
                 sound: 'whoosh',
                 character: true,
+                voice: { text: 'My specialty is phased array technology. Thousands of small antennas working as one giant ear to the universe. We can listen to signals that have been travelling for billions of years.', speaker: 'David Prinsloo' },
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_interview.svg');"></div>
                     <div class="docu-chapter-label">Chapter 1 &mdash; The Dishes of Drenthe</div>
@@ -749,15 +786,16 @@ const TvdocumentaryScene = {
                         </div>
                     </div>
                     <div class="docu-quote-bubble">
-                        <p>My specialty is phased array technology &mdash; thousands of small antennas working as one giant ear to the universe.</p>
+                        <p>My specialty is phased array technology &mdash; thousands of small antennas working as one giant ear to the universe. We can listen to signals that have been travelling for billions of years.</p>
                     </div>
                 `
             },
-            // ─── 3: DAVID PRINSLOO — lunar ───
+            // ─── 4: DAVID PRINSLOO — antennas explained ───
             {
-                duration: 8000,
+                duration: 11000,
                 sound: 'tick',
                 character: true,
+                voice: { text: 'The beauty of a phased array is that you steer the beam electronically, not mechanically. No moving parts. You combine the signals from each individual antenna with precise time delays, and suddenly you have a virtual dish the size of a football field.', speaker: 'David Prinsloo' },
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_interview.svg'); animation-direction: reverse;"></div>
                     <div class="docu-chapter-label">Chapter 1 &mdash; The Dishes of Drenthe</div>
@@ -774,14 +812,54 @@ const TvdocumentaryScene = {
                         </div>
                     </div>
                     <div class="docu-quote-bubble">
-                        <p>We're designing antennas for the lunar far side &mdash; radio telescopes on the moon, free from Earth's interference.</p>
+                        <p>The beauty of a phased array is that you steer the beam electronically, not mechanically. No moving parts. You combine the signals with precise time delays, and suddenly you have a virtual dish the size of a football field.</p>
                     </div>
                 `
             },
-            // ─── 4: LOFAR CHAPTER ───
+            // ─── 5: DAVID PRINSLOO — lunar telescope ───
+            {
+                duration: 12000,
+                sound: 'riser',
+                character: true,
+                voice: { text: 'We are designing antennas for the lunar far side. Radio telescopes on the Moon, completely shielded from Earth\'s radio interference. The Dark Ages Explorer will listen for signals from the very first stars, over thirteen billion years ago. It is the ultimate quiet zone for radio astronomy.', speaker: 'David Prinsloo' },
+                content: `
+                    <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_interview.svg');"></div>
+                    <div class="docu-chapter-label">Chapter 1 &mdash; The Dishes of Drenthe</div>
+                    <div class="docu-character-scene">
+                        <div class="docu-character">
+                            <img src="assets/images/characters/david_prinsloo_southpark.svg" alt="Dr. David Prinsloo">
+                        </div>
+                    </div>
+                    <div class="docu-nameplate">
+                        <div class="np-accent"></div>
+                        <div class="np-content">
+                            <h3>Dr. David Prinsloo</h3>
+                            <p>Antenna Engineer &middot; TU Eindhoven</p>
+                        </div>
+                    </div>
+                    <div class="docu-quote-bubble">
+                        <p>We're designing antennas for the lunar far side &mdash; radio telescopes on the Moon, free from Earth's interference. The Dark Ages Explorer will listen for signals from the very first stars, over thirteen billion years ago.</p>
+                    </div>
+                `
+            },
+            // ─── 6: NARRATOR — transition to LOFAR ───
+            {
+                duration: 9000,
+                sound: 'whoosh',
+                voice: { text: 'The principles that David describes are not just theoretical. Just ninety kilometres north, in the peat bogs of Drenthe, they have been put to practice on an unprecedented scale.', speaker: 'Documentary' },
+                content: `
+                    <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_wsrt.svg'); animation-direction: reverse; animation-duration: 12s;"></div>
+                    <div class="docu-text-overlay">
+                        <p>The principles that David describes are not just theoretical.</p>
+                        <p>Just ninety kilometres north, in the peat bogs of Drenthe, they have been put to practice on an unprecedented scale.</p>
+                    </div>
+                `
+            },
+            // ─── 7: CHAPTER 2 CARD ───
             {
                 duration: 7000,
                 sound: 'impact',
+                voice: { text: 'Chapter Two. Software That Sees. LOFAR, the digital telescope that rewrote the rules of radio astronomy.', speaker: 'Documentary' },
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_lofar.svg');"></div>
                     <div class="docu-chapter">
@@ -791,11 +869,12 @@ const TvdocumentaryScene = {
                     </div>
                 `
             },
-            // ─── 5: CEES BASSA — digital telescope ───
+            // ─── 8: CEES BASSA — digital telescope ───
             {
-                duration: 9000,
+                duration: 12000,
                 sound: 'whoosh',
                 character: true,
+                voice: { text: 'We built the most advanced digital radio telescope on Earth. Fifty thousand simple antennas spread across Europe, all connected by fibre optics. No moving parts whatsoever. The genius is entirely in the software. We combine the signals digitally, and the computer does the pointing.', speaker: 'Cees Bassa' },
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_interview.svg');"></div>
                     <div class="docu-chapter-label">Chapter 2 &mdash; Software That Sees</div>
@@ -812,15 +891,16 @@ const TvdocumentaryScene = {
                         </div>
                     </div>
                     <div class="docu-quote-bubble">
-                        <p>We built the most advanced digital radio telescope on Earth. No moving parts. The genius is entirely in the software.</p>
+                        <p>We built the most advanced digital radio telescope on Earth. Fifty thousand simple antennas, no moving parts. The genius is entirely in the software &mdash; the computer does the pointing.</p>
                     </div>
                 `
             },
-            // ─── 6: CEES BASSA — no moving parts ───
+            // ─── 9: CEES BASSA — beamforming ───
             {
-                duration: 8000,
+                duration: 11000,
                 sound: 'tick',
                 character: true,
+                voice: { text: 'We can point the telescope anywhere in the sky, without moving a single antenna. It is all done with mathematics. We add tiny time delays to each signal, and they combine constructively in exactly the direction we want. We can even look at multiple parts of the sky simultaneously.', speaker: 'Cees Bassa' },
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_interview.svg'); animation-direction: reverse;"></div>
                     <div class="docu-chapter-label">Chapter 2 &mdash; Software That Sees</div>
@@ -837,14 +917,53 @@ const TvdocumentaryScene = {
                         </div>
                     </div>
                     <div class="docu-quote-bubble">
-                        <p>We can point the telescope anywhere in the sky — without moving a single antenna. It's all done with mathematics.</p>
+                        <p>We can point the telescope anywhere in the sky &mdash; without moving a single antenna. It's all mathematics. We can even observe multiple directions simultaneously.</p>
                     </div>
                 `
             },
-            // ─── 7: BLUETOOTH CHAPTER ───
+            // ─── 10: CEES BASSA — Starlink interference ───
             {
-                duration: 7000,
+                duration: 12000,
                 sound: 'riser',
+                character: true,
+                voice: { text: 'Then came Starlink. We discovered that SpaceX satellites were leaking unintended radio emissions right into our observation frequencies. Thousands of satellites, drowning out the faintest whispers from the cosmos. I converted the interference patterns into sound and video to show people what we were losing. It was like trying to listen to a pin drop at a rock concert.', speaker: 'Cees Bassa' },
+                content: `
+                    <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_interview.svg');"></div>
+                    <div class="docu-chapter-label">Chapter 2 &mdash; Software That Sees</div>
+                    <div class="docu-character-scene">
+                        <div class="docu-character">
+                            <img src="assets/images/characters/cees_bassa_southpark.svg" alt="Cees Bassa">
+                        </div>
+                    </div>
+                    <div class="docu-nameplate">
+                        <div class="np-accent"></div>
+                        <div class="np-content">
+                            <h3>Cees Bassa</h3>
+                            <p>ASTRON Scientist &middot; LOFAR Team</p>
+                        </div>
+                    </div>
+                    <div class="docu-quote-bubble">
+                        <p>Then came Starlink. SpaceX satellites leaking radio emissions into our frequencies. I converted the interference into sound to show people what we were losing. It was like trying to hear a pin drop at a rock concert.</p>
+                    </div>
+                `
+            },
+            // ─── 11: NARRATOR — transition to Bluetooth ───
+            {
+                duration: 9000,
+                sound: 'whoosh',
+                voice: { text: 'While Drenthe scientists pushed the boundaries of listening to the universe, a Dutch engineer working in Emmen was about to change the way every device on Earth communicates.', speaker: 'Documentary' },
+                content: `
+                    <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_lofar.svg'); animation-direction: reverse; animation-duration: 12s;"></div>
+                    <div class="docu-text-overlay">
+                        <p>While Drenthe scientists pushed the boundaries of listening to the universe, a Dutch engineer in Emmen was about to change the way every device on Earth communicates.</p>
+                    </div>
+                `
+            },
+            // ─── 12: CHAPTER 3 CARD ───
+            {
+                duration: 8000,
+                sound: 'riser',
+                voice: { text: 'Chapter Three. Bluetooth. Named after the Viking king Harald Bluetooth, who united the warring tribes of Denmark. In the early nineteen-nineties, engineer Jaap Haartsen developed a short-range wireless protocol at Ericsson.', speaker: 'Documentary' },
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_bluetooth.svg');"></div>
                     <div class="docu-chapter">
@@ -853,16 +972,17 @@ const TvdocumentaryScene = {
                         <span class="chapter-line"></span>
                     </div>
                     <div class="docu-text-overlay">
-                        <p>In the early 1990s, engineer Jaap Haartsen developed a short-range wireless protocol while working at Ericsson in Sweden.</p>
-                        <p><span class="docu-fact">Named after Viking king Harald Bl&aring;tand — "Bluetooth" — the man who united the tribes of Denmark.</span></p>
+                        <p>Named after Viking king Harald Bl&aring;tand &mdash; "Bluetooth" &mdash; who united the tribes of Denmark.</p>
+                        <p><span class="docu-fact">In the early 1990s, Dutch engineer Jaap Haartsen developed a short-range wireless protocol at Ericsson in Emmen.</span></p>
                     </div>
                 `
             },
-            // ─── 8: JAAP HAARTSEN ───
+            // ─── 13: JAAP HAARTSEN — frequency hopping ───
             {
-                duration: 10000,
+                duration: 12000,
                 sound: 'whoosh',
                 character: true,
+                voice: { text: 'The challenge was enormous. We needed a protocol that could work in the unlicensed spectrum, the same crowded band used by microwave ovens and baby monitors. The solution was frequency-hopping spread spectrum. The radio hops between seventy-nine different frequencies, sixteen hundred times per second. If another device is on one frequency, you have already moved to the next one.', speaker: 'Jaap Haartsen' },
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_interview.svg');"></div>
                     <div class="docu-chapter-label">Chapter 3 &mdash; Bluetooth</div>
@@ -875,19 +995,61 @@ const TvdocumentaryScene = {
                         <div class="np-accent"></div>
                         <div class="np-content">
                             <h3>Jaap Haartsen</h3>
-                            <p>Inventor of Bluetooth</p>
+                            <p>Inventor of Bluetooth &middot; Ericsson</p>
                         </div>
                     </div>
+                    <div class="docu-quote-bubble">
+                        <p>The solution was frequency-hopping spread spectrum. The radio hops between 79 frequencies, 1,600 times per second. If another device is on one frequency, you've already moved to the next.</p>
+                    </div>
+                `
+            },
+            // ─── 14: JAAP HAARTSEN — impact ───
+            {
+                duration: 11000,
+                sound: 'tick',
+                character: true,
+                voice: { text: 'When we started, people said short-range wireless would never replace cables. Now over five billion Bluetooth devices ship every single year. Your phone, your car, your hearing aids, your medical devices. The technology has become invisible, and that was always the goal. The best technology is the kind you never notice.', speaker: 'Jaap Haartsen' },
+                content: `
+                    <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_interview.svg'); animation-direction: reverse;"></div>
+                    <div class="docu-chapter-label">Chapter 3 &mdash; Bluetooth</div>
+                    <div class="docu-character-scene">
+                        <div class="docu-character">
+                            <img src="assets/images/characters/jaap_haartsen_southpark.svg" alt="Jaap Haartsen">
+                        </div>
+                    </div>
+                    <div class="docu-nameplate">
+                        <div class="np-accent"></div>
+                        <div class="np-content">
+                            <h3>Jaap Haartsen</h3>
+                            <p>Inventor of Bluetooth &middot; Ericsson</p>
+                        </div>
+                    </div>
+                    <div class="docu-quote-bubble">
+                        <p>Over five billion Bluetooth devices ship every year. Your phone, your car, your hearing aids. The best technology is the kind you never notice.</p>
+                    </div>
                     <div class="docu-text-overlay" style="bottom: 24%; left: 55%; width: 38%; transform: none; animation-delay: 1.2s;">
-                        <p>Today, over 5 billion Bluetooth devices ship annually worldwide.</p>
                         <p><a href="https://www.youtube.com/watch?v=IAHM4SoT3eY" target="_blank">&#127909; Watch Real Interview &rarr;</a></p>
                     </div>
                 `
             },
-            // ─── 9: OUTRO ───
+            // ─── 15: NARRATOR — the connection ───
             {
-                duration: 7000,
+                duration: 10000,
+                sound: 'whoosh',
+                voice: { text: 'Three technologies. Three engineers. All connected to this quiet corner of the Netherlands. The phased arrays that listen to the cosmos, the digital telescope that sees without moving, and the protocol that connects five billion devices. Sometimes the most profound innovations emerge from the most unexpected places.', speaker: 'Documentary' },
+                content: `
+                    <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdocumentary.svg'); animation-duration: 14s;"></div>
+                    <div class="docu-text-overlay">
+                        <p>Three technologies. Three engineers. All connected to this quiet corner of the Netherlands.</p>
+                        <p>The phased arrays that listen to the cosmos, the digital telescope that sees without moving, and the protocol that connects five billion devices.</p>
+                    </div>
+                `
+            },
+            // ─── 16: OUTRO ───
+            {
+                duration: 8000,
                 sound: 'chime',
+                voice: { text: 'The Drenthe Legacy. Sometimes genius lives in the Dutch countryside.', speaker: 'Documentary' },
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdocumentary.svg'); animation-direction: reverse;"></div>
                     <div class="docu-title-card">
@@ -934,6 +1096,13 @@ const TvdocumentaryScene = {
                 }
             } catch (e) { /* audio not critical */ }
 
+            // Speak voice-over / interview dialogue via TTS
+            if (step.voice) {
+                setTimeout(() => {
+                    self._speak(step.voice.text, step.voice.speaker || 'Documentary');
+                }, 600);  // slight delay so sound FX lands first
+            }
+
             // Build screen
             const screen = document.createElement('div');
             screen.className = 'docu-screen';
@@ -974,6 +1143,7 @@ const TvdocumentaryScene = {
             continueBtn.className = 'docu-continue';
             continueBtn.textContent = currentStep < sequence.length - 1 ? 'CONTINUE ▸' : 'FINISH ▸';
             continueBtn.onclick = () => {
+                self._stopSpeech();
                 screen.style.opacity = '0';
                 setTimeout(() => {
                     screen.remove();

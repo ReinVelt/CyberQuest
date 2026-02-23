@@ -265,29 +265,149 @@
     <!-- Left candle -->
     <rect x="670" y="220" width="12" height="18" fill="#DAA520" rx="1"/>
     <rect x="673" y="211" width="6" height="12" fill="#F5F5DC" rx="1"/>
-    <ellipse cx="676" cy="208" rx="4" ry="6" fill="#FF6600" opacity="0.8"/>
-    <ellipse cx="676" cy="205" rx="3" ry="4" fill="#FFCC00" opacity="0.9"/>
+    <ellipse cx="676" cy="208" rx="4" ry="6" fill="#FF6600" opacity="0.8">
+      <animate attributeName="ry" values="5;7;5.5;6.5;5" dur="0.6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.7;0.9;0.75;0.85;0.7" dur="0.5s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="676" cy="205" rx="3" ry="4" fill="#FFCC00" opacity="0.9">
+      <animate attributeName="ry" values="3.5;5;4;4.5;3.5" dur="0.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;1;0.85;0.95;0.8" dur="0.45s" repeatCount="indefinite"/>
+    </ellipse>
     <!-- Right candle -->
     <rect x="788" y="220" width="12" height="18" fill="#DAA520" rx="1"/>
     <rect x="791" y="211" width="6" height="12" fill="#F5F5DC" rx="1"/>
-    <ellipse cx="794" cy="208" rx="4" ry="6" fill="#FF6600" opacity="0.8"/>
-    <ellipse cx="794" cy="205" rx="3" ry="4" fill="#FFCC00" opacity="0.9"/>
+    <ellipse cx="794" cy="208" rx="4" ry="6" fill="#FF6600" opacity="0.8">
+      <animate attributeName="ry" values="6;5;6.5;5.5;6" dur="0.55s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.75;0.9;0.8;0.85;0.75" dur="0.5s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="794" cy="205" rx="3" ry="4" fill="#FFCC00" opacity="0.9">
+      <animate attributeName="ry" values="4;3.5;4.5;3.8;4" dur="0.48s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.85;1;0.9;0.95;0.85" dur="0.42s" repeatCount="indefinite"/>
+    </ellipse>
     <!-- Logs -->
     <ellipse cx="710" cy="610" rx="35" ry="12" fill="#4A2F1A" stroke="#3D2817" stroke-width="1.5" transform="rotate(-10 710 610)"/>
     <ellipse cx="760" cy="607" rx="30" ry="10" fill="#5C4033" stroke="#3D2817" stroke-width="1.5" transform="rotate(10 760 607)"/>
     <ellipse cx="735" cy="603" rx="28" ry="9" fill="#654321" stroke="#4A2F1A" stroke-width="1"/>
-    <!-- Flames -->
-    <path d="M 700 598 Q 697 565 708 545 Q 715 525 722 545 Q 728 510 735 535 Q 742 520 746 540 Q 755 520 760 598 Z"
-          fill="#FF4500" opacity="0.85"/>
-    <path d="M 707 598 Q 705 575 714 558 Q 720 540 728 558 Q 735 540 740 560 Q 747 548 750 598 Z"
-          fill="#FF6600" opacity="0.8"/>
-    <path d="M 712 598 Q 713 580 720 568 Q 726 555 732 570 Q 738 556 742 570 Q 747 560 747 598 Z"
-          fill="#FFB300" opacity="0.9"/>
-    <path d="M 718 598 Q 720 583 726 575 Q 730 565 736 578 Q 740 570 740 598 Z"
-          fill="#FFDD00" opacity="0.8"/>
-    <!-- Floor glow -->
-    <ellipse cx="735" cy="730" rx="110" ry="30" fill="#FF6600" opacity="0.06"/>
-    <ellipse cx="735" cy="722" rx="70" ry="18" fill="#FFCC00" opacity="0.04"/>
+    <!-- Animated Flames -->
+    <g id="fireFlames">
+      <!-- Flame glow behind flames -->
+      <ellipse cx="730" cy="580" rx="55" ry="40" fill="#FF4500" opacity="0.15">
+        <animate attributeName="opacity" values="0.12;0.18;0.14;0.2;0.12" dur="1.8s" repeatCount="indefinite"/>
+        <animate attributeName="rx" values="52;58;54;56;52" dur="2.2s" repeatCount="indefinite"/>
+      </ellipse>
+
+      <!-- FLAME 1 - left tall flame (red-orange) -->
+      <path fill="#FF4500" opacity="0.9">
+        <animate attributeName="d" dur="0.8s" repeatCount="indefinite"
+          values="
+            M 700 620 Q 698 590 702 570 Q 706 545 710 535 Q 714 520 716 540 Q 718 555 714 580 Q 710 598 700 620 Z;
+            M 700 620 Q 696 585 704 562 Q 708 540 712 528 Q 716 515 718 535 Q 720 552 716 575 Q 712 595 700 620 Z;
+            M 700 620 Q 699 592 703 572 Q 707 548 711 538 Q 715 525 717 542 Q 719 560 715 582 Q 711 600 700 620 Z;
+            M 700 620 Q 698 590 702 570 Q 706 545 710 535 Q 714 520 716 540 Q 718 555 714 580 Q 710 598 700 620 Z"/>
+      </path>
+
+      <!-- FLAME 2 - center-left tall flame (orange) -->
+      <path fill="#FF6600" opacity="0.85">
+        <animate attributeName="d" dur="0.7s" repeatCount="indefinite"
+          values="
+            M 715 620 Q 712 582 716 555 Q 720 530 725 518 Q 730 505 732 525 Q 734 545 730 575 Q 726 598 715 620 Z;
+            M 715 620 Q 710 578 718 548 Q 722 522 727 510 Q 732 498 734 518 Q 736 540 732 568 Q 728 592 715 620 Z;
+            M 715 620 Q 713 585 717 560 Q 721 535 726 522 Q 731 510 733 528 Q 735 548 731 578 Q 727 600 715 620 Z;
+            M 715 620 Q 712 582 716 555 Q 720 530 725 518 Q 730 505 732 525 Q 734 545 730 575 Q 726 598 715 620 Z"/>
+      </path>
+
+      <!-- FLAME 3 - center main flame (bright orange-yellow, tallest) -->
+      <path fill="#FF8C00" opacity="0.9">
+        <animate attributeName="d" dur="0.65s" repeatCount="indefinite"
+          values="
+            M 728 620 Q 724 575 728 545 Q 732 515 735 500 Q 738 485 740 505 Q 742 520 740 548 Q 738 580 745 620 Z;
+            M 728 620 Q 722 570 730 538 Q 734 508 737 492 Q 740 478 742 498 Q 744 515 742 542 Q 740 575 745 620 Z;
+            M 728 620 Q 725 578 729 550 Q 733 518 736 505 Q 739 490 741 508 Q 743 525 741 552 Q 739 582 745 620 Z;
+            M 728 620 Q 724 575 728 545 Q 732 515 735 500 Q 738 485 740 505 Q 742 520 740 548 Q 738 580 745 620 Z"/>
+      </path>
+
+      <!-- FLAME 4 - center-right flame (orange) -->
+      <path fill="#FF6600" opacity="0.85">
+        <animate attributeName="d" dur="0.75s" repeatCount="indefinite"
+          values="
+            M 742 620 Q 740 585 744 558 Q 748 532 752 520 Q 756 508 758 528 Q 760 548 756 575 Q 752 598 760 620 Z;
+            M 742 620 Q 738 580 746 550 Q 750 525 754 512 Q 758 500 760 520 Q 762 542 758 568 Q 754 592 760 620 Z;
+            M 742 620 Q 741 588 745 562 Q 749 538 753 525 Q 757 512 759 530 Q 761 550 757 578 Q 753 600 760 620 Z;
+            M 742 620 Q 740 585 744 558 Q 748 532 752 520 Q 756 508 758 528 Q 760 548 756 575 Q 752 598 760 620 Z"/>
+      </path>
+
+      <!-- FLAME 5 - right flame (red-orange) -->
+      <path fill="#FF4500" opacity="0.88">
+        <animate attributeName="d" dur="0.85s" repeatCount="indefinite"
+          values="
+            M 755 620 Q 756 592 760 572 Q 764 548 766 538 Q 768 525 770 542 Q 772 558 768 582 Q 764 600 770 620 Z;
+            M 755 620 Q 754 588 762 565 Q 766 542 768 530 Q 770 518 772 535 Q 774 552 770 578 Q 766 598 770 620 Z;
+            M 755 620 Q 757 595 761 575 Q 765 550 767 540 Q 769 528 771 545 Q 773 562 769 585 Q 765 602 770 620 Z;
+            M 755 620 Q 756 592 760 572 Q 764 548 766 538 Q 768 525 770 542 Q 772 558 768 582 Q 764 600 770 620 Z"/>
+      </path>
+
+      <!-- Inner bright yellow core - left -->
+      <path fill="#FFB300" opacity="0.9">
+        <animate attributeName="d" dur="0.6s" repeatCount="indefinite"
+          values="
+            M 714 620 Q 714 595 717 578 Q 720 560 723 550 Q 726 540 727 555 Q 728 568 725 590 Q 722 605 720 620 Z;
+            M 714 620 Q 712 592 718 575 Q 722 555 725 545 Q 728 535 729 550 Q 730 565 727 585 Q 724 602 720 620 Z;
+            M 714 620 Q 715 598 718 580 Q 721 562 724 552 Q 727 542 728 558 Q 729 572 726 592 Q 723 608 720 620 Z;
+            M 714 620 Q 714 595 717 578 Q 720 560 723 550 Q 726 540 727 555 Q 728 568 725 590 Q 722 605 720 620 Z"/>
+      </path>
+
+      <!-- Inner bright yellow core - center -->
+      <path fill="#FFDD00" opacity="0.85">
+        <animate attributeName="d" dur="0.55s" repeatCount="indefinite"
+          values="
+            M 730 620 Q 728 590 731 570 Q 734 548 736 535 Q 738 522 739 540 Q 740 555 738 578 Q 736 598 742 620 Z;
+            M 730 620 Q 726 585 733 565 Q 736 542 738 528 Q 740 515 741 533 Q 742 550 740 572 Q 738 594 742 620 Z;
+            M 730 620 Q 729 592 732 572 Q 735 550 737 538 Q 739 525 740 542 Q 741 558 739 580 Q 737 600 742 620 Z;
+            M 730 620 Q 728 590 731 570 Q 734 548 736 535 Q 738 522 739 540 Q 740 555 738 578 Q 736 598 742 620 Z"/>
+      </path>
+
+      <!-- Inner bright yellow core - right -->
+      <path fill="#FFB300" opacity="0.88">
+        <animate attributeName="d" dur="0.7s" repeatCount="indefinite"
+          values="
+            M 745 620 Q 746 598 749 580 Q 752 562 754 552 Q 756 542 757 555 Q 758 570 756 590 Q 754 608 758 620 Z;
+            M 745 620 Q 744 595 750 575 Q 753 558 755 548 Q 757 538 758 552 Q 759 567 757 586 Q 755 604 758 620 Z;
+            M 745 620 Q 747 600 750 582 Q 753 565 755 555 Q 757 545 758 558 Q 759 572 757 592 Q 755 610 758 620 Z;
+            M 745 620 Q 746 598 749 580 Q 752 562 754 552 Q 756 542 757 555 Q 758 570 756 590 Q 754 608 758 620 Z"/>
+      </path>
+
+      <!-- Hot white core at base -->
+      <ellipse cx="735" cy="615" rx="20" ry="8" fill="#FFF8DC" opacity="0.5">
+        <animate attributeName="opacity" values="0.4;0.6;0.45;0.55;0.4" dur="0.9s" repeatCount="indefinite"/>
+        <animate attributeName="rx" values="18;22;19;21;18" dur="1.1s" repeatCount="indefinite"/>
+      </ellipse>
+
+      <!-- Sparks / embers -->
+      <circle cx="720" cy="545" r="1.5" fill="#FFDD00" opacity="0">
+        <animate attributeName="cy" values="560;520;490;460" dur="2.5s" repeatCount="indefinite"/>
+        <animate attributeName="cx" values="720;715;710;708" dur="2.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0;0.9;0.7;0" dur="2.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="750" cy="540" r="1.2" fill="#FF8C00" opacity="0">
+        <animate attributeName="cy" values="555;515;485;455" dur="3s" repeatCount="indefinite" begin="0.8s"/>
+        <animate attributeName="cx" values="750;755;760;762" dur="3s" repeatCount="indefinite" begin="0.8s"/>
+        <animate attributeName="opacity" values="0;0.8;0.5;0" dur="3s" repeatCount="indefinite" begin="0.8s"/>
+      </circle>
+      <circle cx="735" cy="530" r="1" fill="#FFCC00" opacity="0">
+        <animate attributeName="cy" values="545;505;475;445" dur="2.8s" repeatCount="indefinite" begin="1.5s"/>
+        <animate attributeName="cx" values="735;738;742;745" dur="2.8s" repeatCount="indefinite" begin="1.5s"/>
+        <animate attributeName="opacity" values="0;0.7;0.4;0" dur="2.8s" repeatCount="indefinite" begin="1.5s"/>
+      </circle>
+    </g>
+
+    <!-- Animated floor glow -->
+    <ellipse cx="735" cy="730" rx="110" ry="30" fill="#FF6600" opacity="0.06">
+      <animate attributeName="opacity" values="0.05;0.08;0.06;0.09;0.05" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="rx" values="105;115;108;112;105" dur="2.5s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="735" cy="722" rx="70" ry="18" fill="#FFCC00" opacity="0.04">
+      <animate attributeName="opacity" values="0.03;0.06;0.04;0.05;0.03" dur="1.8s" repeatCount="indefinite"/>
+    </ellipse>
     <!-- Hearth -->
     <rect x="630" y="710" width="210" height="14" rx="2" fill="#7A6850" stroke="#5C4033" stroke-width="2"/>
   </g>

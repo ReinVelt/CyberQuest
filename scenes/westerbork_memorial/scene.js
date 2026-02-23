@@ -64,10 +64,11 @@ const WesterborkMemorialScene = {
         {
             id: 'surveillance_camera',
             name: 'Security Camera',
-            x: 73.75,
-            y: 49.4,
-            width: 6,
-            height: 14,
+            // SVG: pole from y=410 to y=700, camera arm from x=1096 to x=1225
+            x: (1096 / 1600) * 100,    // 68.50%
+            y: (408 / 900) * 100,       // 45.33%
+            width: (130 / 1600) * 100,  // 8.13%
+            height: (292 / 900) * 100,  // 32.44%
             cursor: 'pointer',
             action: (game) => {
                 const cameraInspected = game.getFlag('westerbork_camera_inspected');
@@ -147,7 +148,7 @@ const WesterborkMemorialScene = {
             cursor: 'pointer',
             action: (game) => {
                 game.startDialogue([
-                    { speaker: 'Ryan', text: 'The WSRT dishes. Just a couple of kilometres away.' },
+                    { speaker: 'Ryan', text: 'The WSRT dishes. Just 300 metres away.' },
                     { speaker: 'Ryan', text: 'The radio telescope was built in the 1960s, right next to this memorial. They chose this flat, radio-quiet stretch of Drenthe deliberately.' },
                     { speaker: 'Ryan', text: 'In a way, I understand the irony. This ground was used to watch and catalogue people. Now it watches the cosmos.' },
                     { speaker: 'Ryan', text: 'Except someone has decided to start watching people again.' },
@@ -182,7 +183,7 @@ const WesterborkMemorialScene = {
             name: 'Remnant Barbed Wire',
             x: 6,
             y: 68,
-            width: 15,
+            width: 18,
             height: 7,
             cursor: 'pointer',
             action: (game) => {
@@ -193,27 +194,39 @@ const WesterborkMemorialScene = {
             }
         },
 
-        // ── Back to klooster ──
+        // ── Drive home ──
         {
-            id: 'back_to_klooster',
-            name: 'Back to Ter Apel Klooster',
+            id: 'drive_home',
+            name: '← Drive Home',
             x: 0,
             y: 80,
             width: 8,
             height: 20,
             cursor: 'pointer',
-            targetScene: 'klooster'
+            cssClass: 'hotspot-nav',
+            skipWalk: true,
+            action: (game) => {
+                game.startDialogue([
+                    { speaker: 'Ryan', text: 'Time to head home. I need to process all of this.' },
+                    { speaker: '', text: '*Ryan walks back to the Volvo*' }
+                ], () => {
+                    game.setFlag('driving_destination', 'home');
+                    game.loadScene('driving');
+                });
+            }
         },
 
         // ── Also reachable from regional_map ──
         {
             id: 'back_to_map',
-            name: 'Back to Regional Map',
+            name: 'Map →',
             x: 92,
             y: 80,
             width: 8,
             height: 20,
             cursor: 'pointer',
+            cssClass: 'hotspot-nav',
+            skipWalk: true,
             targetScene: 'regional_map'
         }
     ],

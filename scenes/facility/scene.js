@@ -83,11 +83,11 @@ const FacilityScene = {
         {
             id: 'main-building',
             name: 'Main R&D Building',
-            // SVG: translate(600,150), w=600, h=400
-            x: (600 / 1920) * 100,    // 31.25%
-            y: (120 / 1080) * 100,    // 11.11%
-            width: (600 / 1920) * 100, // 31.25%
-            height: (440 / 1080) * 100, // 40.74%
+            // SVG: translate(550,130), w=650, h=420
+            x: (550 / 1920) * 100,    // 28.65%
+            y: (130 / 1080) * 100,    // 12.04%
+            width: (650 / 1920) * 100, // 33.85%
+            height: (420 / 1080) * 100, // 38.89%
             cursor: 'look',
             interactions: {
                 look: (game) => {
@@ -161,11 +161,11 @@ const FacilityScene = {
         {
             id: 'guard_post',
             name: 'Guard Tower',
-            // SVG: translate(50,350), w=100, h=350
-            x: (50 / 1920) * 100,     // 2.60%
-            y: (350 / 1080) * 100,    // 32.41%
+            // SVG: translate(40,320), w=100, h=400
+            x: (40 / 1920) * 100,     // 2.08%
+            y: (320 / 1080) * 100,    // 29.63%
             width: (100 / 1920) * 100, // 5.21%
-            height: (350 / 1080) * 100, // 32.41%
+            height: (400 / 1080) * 100, // 37.04%
             cursor: 'look',
             interactions: {
                 look: (game) => {
@@ -278,10 +278,10 @@ const FacilityScene = {
         {
             id: 'gate',
             name: 'Security Gate',
-            // SVG: translate(800,550), gate barrier at y+80, w=220
-            x: (830 / 1920) * 100,    // 43.23%
-            y: (550 / 1080) * 100,    // 50.93%
-            width: (250 / 1920) * 100, // 13.02%
+            // SVG: translate(790,540), pillars 0-288 wide, 200 tall
+            x: (790 / 1920) * 100,    // 41.15%
+            y: (540 / 1080) * 100,    // 50.00%
+            width: (290 / 1920) * 100, // 15.10%
             height: (200 / 1080) * 100, // 18.52%
             cursor: 'look',
             interactions: {

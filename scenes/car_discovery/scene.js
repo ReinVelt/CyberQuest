@@ -22,11 +22,11 @@ const CarDiscoveryScene = {
             id: 'usb_stick',
             name: 'USB Stick',
             // The USB stick is in the detail inset - upper right quadrant
-            // Detail box spans roughly x:1000-1500, y:150-600 in SVG
-            x: 52,  // (1000/1920) * 100
-            y: 14,  // (150/1080) * 100
-            width: 26,  // (500/1920) * 100
-            height: 42,  // (450/1080) * 100
+            // Inset box: translate(1150,150), rect 700x550 → abs (1150,150)-(1850,700)
+            x: 60,   // (1150/1920) * 100
+            y: 14,   // (150/1080) * 100
+            width: 36.5,  // (700/1920) * 100
+            height: 51,   // (550/1080) * 100
             cursor: 'use',
             action: function(game) {
                 if (!game.getFlag('picked_up_usb')) {
@@ -98,11 +98,12 @@ const CarDiscoveryScene = {
         {
             id: 'car',
             name: 'Get in Car',
-            // Entire car body area
-            x: 13,  // (250/1920) * 100
-            y: 55,  // (600/1080) * 100
-            width: 50,  // (960/1920) * 100
-            height: 35,  // (380/1080) * 100
+            // Entire car body area: translate(250,400), body from x=60 to x=1220
+            // Abs: x=310 to x=1470, y=600 to y=905
+            x: 13,    // (250/1920) * 100
+            y: 55,    // (600/1080) * 100
+            width: 64, // (1220/1920) * 100 — covers full car including rear
+            height: 35, // (380/1080) * 100
             cursor: 'use',
             action: function(game) {
                 if (game.getFlag('picked_up_usb')) {

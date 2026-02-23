@@ -162,6 +162,36 @@ body {
     box-shadow: 0 0 20px rgba(233, 69, 96, 0.3);
 }
 
+/* Navigation hotspots - always visible with subtle indicator */
+.hotspot.hotspot-nav {
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', monospace;
+    font-size: clamp(10px, 1.2vw, 14px);
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 1px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+.hotspot.hotspot-nav::before {
+    content: attr(data-tooltip);
+    white-space: nowrap;
+    pointer-events: none;
+}
+.hotspot.hotspot-nav:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(0, 0, 0, 0.5);
+    color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+}
+/* Hide the default ::after tooltip for nav hotspots since label is always shown */
+.hotspot.hotspot-nav[data-tooltip]:hover::after {
+    display: none;
+}
+
 .hotspot[data-tooltip]:hover::after {
     content: attr(data-tooltip);
     position: absolute;
@@ -462,6 +492,81 @@ body {
 #menu-voice.muted {
     opacity: 0.6;
     border-color: var(--color-text-dim);
+}
+
+/* Pause button */
+#menu-pause {
+    min-width: 100px;
+}
+
+#menu-pause.paused {
+    background: linear-gradient(135deg, #1a3a1a 0%, #0a2a0a 100%);
+    border-color: #44ff44;
+    color: #44ff44;
+    animation: pause-btn-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pause-btn-pulse {
+    0%, 100% { box-shadow: 0 0 4px rgba(68, 255, 68, 0.3); }
+    50% { box-shadow: 0 0 12px rgba(68, 255, 68, 0.6); }
+}
+
+/* Pause overlay — covers the entire game */
+#pause-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    animation: pause-fade-in 0.2s ease-out;
+}
+
+#pause-overlay.hidden {
+    display: none;
+}
+
+@keyframes pause-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#pause-content {
+    text-align: center;
+    user-select: none;
+    pointer-events: none;
+}
+
+#pause-icon {
+    font-size: 72px;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.5));
+}
+
+#pause-title {
+    font-family: Impact, 'Arial Black', sans-serif;
+    font-size: 56px;
+    color: #eaeaea;
+    letter-spacing: 12px;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.5), 0 2px 8px rgba(0, 0, 0, 0.8);
+    margin-bottom: 12px;
+}
+
+#pause-hint {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--color-text-dim);
+    opacity: 0.8;
+    animation: pause-hint-blink 2s ease-in-out infinite;
+}
+
+@keyframes pause-hint-blink {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.3; }
 }
 
 /* Time Display — centred in #game-top-bar */
@@ -964,313 +1069,59 @@ body {
 }
 
 /* HOME SCENE - Kitchen */
+/* Home: SVG background only — placeholder removed */
 #scene-background.scene-home {
-    background: linear-gradient(180deg, 
-        #87CEEB 0%,      /* Sky */
-        #87CEEB 20%,
-        #e8dcc4 20%,     /* Wall */
-        #e8dcc4 100%);
+    background: none;
 }
 
 #scene-background.scene-home::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 25%;
-    background: linear-gradient(90deg,
-        #8B4513 0%, #8B4513 10%,
-        #A0522D 10%, #A0522D 20%,
-        #8B4513 20%, #8B4513 30%,
-        #A0522D 30%, #A0522D 40%,
-        #8B4513 40%, #8B4513 50%,
-        #A0522D 50%, #A0522D 60%,
-        #8B4513 60%, #8B4513 70%,
-        #A0522D 70%, #A0522D 80%,
-        #8B4513 80%, #8B4513 90%,
-        #A0522D 90%, #A0522D 100%);
-}
-
-/* CSS Kitchen Elements */
-.scene-home .css-window {
-    position: absolute;
-    top: 15%;
-    left: 30%;
-    width: 20%;
-    height: 25%;
-    background: linear-gradient(180deg, #87CEEB 0%, #a8d8ea 100%);
-    border: 8px solid #654321;
-    box-shadow: inset 0 0 30px rgba(255,255,255,0.3);
-}
-
-.scene-home .css-counter {
-    position: absolute;
-    bottom: 25%;
-    left: 55%;
-    width: 35%;
-    height: 15%;
-    background: linear-gradient(180deg, #2c2c2c 0%, #1a1a1a 100%);
-    border-radius: 5px 5px 0 0;
-}
-
-.scene-home .css-coffee {
-    position: absolute;
-    bottom: 40%;
-    left: 62%;
-    width: 10%;
-    height: 12%;
-    background: linear-gradient(180deg, #c0c0c0 0%, #808080 100%);
-    border-radius: 5px;
-}
-
-.scene-home .css-door {
-    position: absolute;
-    top: 20%;
-    right: 8%;
-    width: 10%;
-    height: 45%;
-    background: linear-gradient(180deg, #654321 0%, #4a3520 100%);
-    border: 3px solid #3d2817;
+    display: none;
 }
 
 /* MANCAVE SCENE - Tech Lab */
+/* Mancave: SVG background only — placeholder removed */
 #scene-background.scene-mancave {
-    background: linear-gradient(180deg, 
-        #1a1a2e 0%,
-        #16213e 50%,
-        #0f0f1a 100%);
+    background: none;
 }
 
 #scene-background.scene-mancave::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        /* Grid pattern */
-        linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px),
-        /* Computer glow */
-        radial-gradient(ellipse at 30% 60%, rgba(0, 255, 136, 0.15) 0%, transparent 40%),
-        radial-gradient(ellipse at 70% 50%, rgba(0, 100, 255, 0.1) 0%, transparent 30%);
-    background-size: 50px 50px, 50px 50px, 100% 100%, 100% 100%;
-    pointer-events: none;
-}
-
-/* Desk */
-.scene-mancave .css-desk {
-    position: absolute;
-    bottom: 15%;
-    left: 10%;
-    width: 80%;
-    height: 8%;
-    background: linear-gradient(180deg, #3d3d3d 0%, #2a2a2a 100%);
-}
-
-/* Monitor */
-.scene-mancave .css-monitor {
-    position: absolute;
-    bottom: 23%;
-    left: 25%;
-    width: 20%;
-    height: 25%;
-    background: #000;
-    border: 4px solid #333;
-    border-radius: 3px;
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-}
-
-.scene-mancave .css-monitor::after {
-    content: '> SSTV DECODER';
-    position: absolute;
-    top: 10%;
-    left: 5%;
-    color: #00ff88;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    animation: blink 1s infinite;
-}
-
-/* SDR Equipment */
-.scene-mancave .css-hackrf {
-    position: absolute;
-    bottom: 23%;
-    left: 55%;
-    width: 12%;
-    height: 8%;
-    background: linear-gradient(180deg, #2d5a27 0%, #1a3d15 100%);
-    border-radius: 3px;
-    box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
-}
-
-/* Server rack */
-.scene-mancave .css-server {
-    position: absolute;
-    bottom: 15%;
-    right: 5%;
-    width: 8%;
-    height: 50%;
-    background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
-    border: 2px solid #333;
-}
-
-.scene-mancave .css-server::after {
-    content: '';
-    position: absolute;
-    top: 10%;
-    left: 20%;
-    width: 60%;
-    height: 5px;
-    background: #00ff00;
-    box-shadow: 
-        0 15px 0 #00ff00,
-        0 30px 0 #ff0000,
-        0 45px 0 #00ff00,
-        0 60px 0 #ffaa00;
-    animation: serverBlink 2s infinite;
-}
-
-@keyframes serverBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+    display: none;
 }
 
 /* WSRT / ASTRON SCENE */
+/* ASTRON: SVG background only — placeholder removed */
 #scene-background.scene-astron {
-    background: linear-gradient(180deg,
-        #2a5a8c 0%,
-        #5a8ab4 40%,
-        #3a5c2a 40%,
-        #2e4a22 100%);
+    background: none;
 }
 
 /* GARDEN SCENE */
+/* Garden: SVG background only — placeholder removed */
 #scene-background.scene-garden {
-    background: linear-gradient(180deg, 
-        #87CEEB 0%,      /* Sky */
-        #87CEEB 40%,
-        #90EE90 40%,     /* Grass horizon */
-        #228B22 100%);   /* Grass foreground */
+    background: none;
 }
 
 #scene-background.scene-garden::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-        /* Clouds */
-        radial-gradient(ellipse at 20% 15%, rgba(255,255,255,0.8) 0%, transparent 10%),
-        radial-gradient(ellipse at 25% 12%, rgba(255,255,255,0.8) 0%, transparent 8%),
-        radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.7) 0%, transparent 12%),
-        /* Wind turbines silhouette */
-        linear-gradient(180deg, transparent 25%, #666 25%, #666 26%, transparent 26%),
-        linear-gradient(180deg, transparent 20%, #888 20%, #888 38%, transparent 38%);
-    background-size: 100%, 100%, 100%, 2px 100%, 3px 100%;
-    background-position: 0 0, 0 0, 0 0, 85% 0, 85% 0;
-    background-repeat: no-repeat;
-    pointer-events: none;
-}
-
-/* Antenna */
-.scene-garden .css-antenna {
-    position: absolute;
-    top: 15%;
-    right: 20%;
-    width: 3px;
-    height: 30%;
-    background: #666;
-}
-
-.scene-garden .css-antenna::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -10px;
-    width: 23px;
-    height: 3px;
-    background: #666;
-}
-
-/* Flowers */
-.scene-garden .css-flowers {
-    position: absolute;
-    bottom: 20%;
-    left: 15%;
-    width: 25%;
-    height: 10%;
-    background: repeating-linear-gradient(90deg,
-        #ff6b6b 0px, #ff6b6b 10px,
-        #ffd93d 10px, #ffd93d 20px,
-        #6bcb77 20px, #6bcb77 30px,
-        #4d96ff 30px, #4d96ff 40px);
-    border-radius: 50% 50% 0 0;
-    opacity: 0.8;
+    display: none;
 }
 
 /* KLOOSTER SCENE */
+/* Klooster: SVG background only — placeholder removed */
 #scene-background.scene-klooster {
-    background: linear-gradient(180deg, 
-        #1a1a2e 0%,      /* Night sky */
-        #2d3436 30%,
-        #636e72 60%,     /* Stone walls */
-        #4a4a4a 100%);
+    background: none;
 }
 
 #scene-background.scene-klooster::after {
-    content: '';
-    position: absolute;
-    /* Gothic arches silhouette */
-    top: 20%;
-    left: 20%;
-    width: 60%;
-    height: 50%;
-    background:
-        /* Moon */
-        radial-gradient(circle at 80% 15%, #f5f5dc 0%, transparent 8%),
-        /* Gothic arch 1 */
-        linear-gradient(135deg, transparent 40%, #2d2d2d 40%, #2d2d2d 60%, transparent 60%),
-        linear-gradient(45deg, transparent 40%, #2d2d2d 40%, #2d2d2d 60%, transparent 60%);
-    pointer-events: none;
+    display: none;
 }
 
 /* FACILITY SCENE */
+/* Facility: SVG background only — placeholder removed */
 #scene-background.scene-facility {
-    background: linear-gradient(180deg, 
-        #1a1a2e 0%,
-        #0f3460 40%,
-        #16213e 100%);
+    background: none;
 }
 
 #scene-background.scene-facility::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-        /* Fence pattern */
-        repeating-linear-gradient(90deg,
-            transparent 0px, transparent 30px,
-            rgba(100,100,100,0.3) 30px, rgba(100,100,100,0.3) 32px),
-        /* Security lights */
-        radial-gradient(ellipse at 20% 40%, rgba(255, 0, 0, 0.2) 0%, transparent 20%),
-        radial-gradient(ellipse at 80% 35%, rgba(255, 0, 0, 0.2) 0%, transparent 20%),
-        /* Building silhouette */
-        linear-gradient(180deg, transparent 50%, #1a1a1a 50%);
-    animation: securitySweep 4s ease-in-out infinite;
-    pointer-events: none;
-}
-
-@keyframes securitySweep {
-    0%, 100% { filter: brightness(1); }
-    50% { filter: brightness(1.1); }
+    display: none;
 }
 
 @keyframes blink {
@@ -1278,16 +1129,7 @@ body {
     50% { opacity: 0; }
 }
 
-/* Make hotspots more visible in placeholder mode */
-.hotspot {
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px dashed rgba(233, 69, 96, 0.4) !important;
-}
-
-.hotspot:hover {
-    background: rgba(233, 69, 96, 0.25);
-    border: 2px solid rgba(233, 69, 96, 0.8) !important;
-}
+/* Hotspots — visible on hover only (placeholder debug borders removed) */
 
 /* ==========================================
    PLAYER CHARACTER STYLES

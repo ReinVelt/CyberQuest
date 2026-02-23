@@ -686,6 +686,102 @@
     <text x="60" y="590" fill="#444" font-family="monospace" font-size="12">RACK-01</text>
   </g>
   
+  <!-- ============ AIR-GAPPED LAPTOP ============ -->
+  <!-- On a small wall-mounted shelf right of the kitchen door -->
+  <!-- Hotspot: x=9.4%, y=42% → pixel (180, 455), w=115, h=151 -->
+  <g transform="translate(180, 455)">
+    <!-- Small shelf -->
+    <rect x="-5" y="110" width="125" height="12" fill="#2a2a2a" filter="url(#shadow)"/>
+    <rect x="-5" y="122" width="8" height="40" fill="#222"/>
+    <rect x="112" y="122" width="8" height="40" fill="#222"/>
+
+    <!-- Laptop body (closed-ish, slightly open) -->
+    <g transform="translate(8, 30)">
+      <!-- Base/keyboard half -->
+      <rect width="100" height="65" fill="#2a2a2a" rx="4" filter="url(#shadow)"/>
+      <rect x="3" y="3" width="94" height="59" fill="#1a1a1a" rx="2"/>
+
+      <!-- Screen half (tilted back) -->
+      <rect x="-2" y="-55" width="104" height="58" fill="#333" rx="4"/>
+      <rect x="3" y="-52" width="94" height="50" fill="#000" rx="2"/>
+
+      <!-- Screen content — air-gapped warning -->
+      <rect x="5" y="-50" width="90" height="46" fill="#0a0008"/>
+      <text x="50" y="-35" fill="#ff3333" font-family="monospace" font-size="8" text-anchor="middle" font-weight="bold">⚠ AIR-GAPPED ⚠</text>
+      <text x="50" y="-24" fill="#ff6644" font-family="monospace" font-size="6" text-anchor="middle">NO NETWORK</text>
+      <text x="50" y="-14" fill="#884422" font-family="monospace" font-size="6" text-anchor="middle">USB ANALYSIS ONLY</text>
+
+      <!-- Red LED indicator -->
+      <circle cx="50" cy="-52" r="2" fill="#ff0000">
+        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+      </circle>
+
+      <!-- Keyboard keys suggestion -->
+      <g fill="#222" opacity="0.5">
+        <rect x="8" y="8" width="84" height="4" rx="1"/>
+        <rect x="8" y="15" width="84" height="4" rx="1"/>
+        <rect x="8" y="22" width="84" height="4" rx="1"/>
+        <rect x="28" y="29" width="44" height="4" rx="1"/>
+      </g>
+
+      <!-- Trackpad -->
+      <rect x="30" y="38" width="40" height="22" fill="#151515" rx="2" stroke="#222" stroke-width="0.5"/>
+    </g>
+
+    <!-- "AIRGAP" tape label -->
+    <rect x="15" y="0" width="80" height="18" fill="#cc0000" rx="2" opacity="0.9"/>
+    <text x="55" y="13" fill="#fff" font-family="monospace" font-size="9" text-anchor="middle" font-weight="bold">AIRGAPPED</text>
+
+    <!-- Faint red glow -->
+    <ellipse cx="55" cy="50" rx="60" ry="40" fill="#ff0000" opacity="0.04"/>
+  </g>
+
+  <!-- ============ ESPRESSO MACHINE ============ -->
+  <!-- On a small counter near the kitchen door -->
+  <!-- Hotspot: x=15%, y=65% → pixel (288, 702), w=77, h=86 -->
+  <g transform="translate(288, 702)">
+    <!-- Small counter/shelf -->
+    <rect x="-10" y="56" width="97" height="10" fill="#2a2a2a" filter="url(#shadow)"/>
+
+    <!-- Machine body -->
+    <rect x="5" y="0" width="65" height="56" fill="#1a1a1a" rx="3" filter="url(#shadow)"/>
+    <rect x="8" y="3" width="59" height="50" fill="#222"/>
+
+    <!-- Top section (boiler housing) -->
+    <rect x="10" y="-15" width="55" height="18" fill="#2a2a2a" rx="4"/>
+    <rect x="15" y="-12" width="45" height="12" fill="#333" rx="2"/>
+
+    <!-- Gauge -->
+    <circle cx="37" cy="-6" r="5" fill="#111" stroke="#555" stroke-width="1"/>
+    <line x1="37" y1="-10" x2="37" y2="-6" stroke="#ff4400" stroke-width="1"/>
+
+    <!-- Portafilter -->
+    <rect x="20" y="32" width="35" height="8" fill="#555" rx="2"/>
+    <rect x="30" y="40" width="15" height="12" fill="#444" rx="1"/>
+
+    <!-- Drip tray -->
+    <rect x="18" y="52" width="40" height="4" fill="#333" rx="1"/>
+
+    <!-- Cup underneath -->
+    <path d="M28,40 L26,52 L48,52 L46,40 Z" fill="#eee" opacity="0.5"/>
+
+    <!-- Steam (animated) -->
+    <g opacity="0.25" fill="none" stroke="#aaa" stroke-width="1.5">
+      <path d="M30,-18 Q26,-28 30,-38">
+        <animate attributeName="d" dur="1.8s" repeatCount="indefinite" values="M30,-18 Q26,-28 30,-38;M30,-18 Q34,-28 30,-38;M30,-18 Q26,-28 30,-38"/>
+      </path>
+      <path d="M45,-18 Q49,-28 45,-38">
+        <animate attributeName="d" dur="2.2s" repeatCount="indefinite" values="M45,-18 Q49,-28 45,-38;M45,-18 Q41,-28 45,-38;M45,-18 Q49,-28 45,-38"/>
+      </path>
+    </g>
+
+    <!-- Power LED -->
+    <circle cx="60" cy="10" r="2" fill="#00ff00" opacity="0.8" filter="url(#glow)"/>
+
+    <!-- Label -->
+    <text x="37" y="72" fill="#555" font-family="sans-serif" font-size="7" text-anchor="middle">ESPRESSO</text>
+  </g>
+
   <!-- ============ DOOR TO KITCHEN ============ -->
   <g transform="translate(30, 250)">
     <rect width="140" height="500" fill="#2a2a2a" rx="3" filter="url(#shadow)"/>
@@ -706,6 +802,80 @@
     <text x="42" y="467" fill="#888" font-family="sans-serif" font-size="10">← KITCHEN</text>
   </g>
   
+  <!-- ============ WIFI PINEAPPLE ============ -->
+  <!-- On bench near Flipper Zero and HackRF -->
+  <!-- Hotspot: x=68%, y=67% → pixel (1306, 724), w=77, h=59 -->
+  <g transform="translate(1306, 724)">
+    <!-- Device body — pineapple-shaped router -->
+    <rect width="70" height="45" fill="#1a1a1a" rx="6" filter="url(#shadow)"/>
+    <rect x="3" y="3" width="64" height="39" fill="#111"/>
+
+    <!-- Pineapple logo (simplified) -->
+    <ellipse cx="35" cy="22" rx="12" ry="15" fill="none" stroke="#88ff00" stroke-width="1.5" opacity="0.6"/>
+    <line x1="35" y1="7" x2="35" y2="3" stroke="#88ff00" stroke-width="1.5" opacity="0.6"/>
+    <line x1="35" y1="3" x2="31" y2="0" stroke="#88ff00" stroke-width="1" opacity="0.4"/>
+    <line x1="35" y1="3" x2="39" y2="0" stroke="#88ff00" stroke-width="1" opacity="0.4"/>
+
+    <!-- Antenna stubs -->
+    <rect x="10" y="-18" width="4" height="20" fill="#333" rx="1"/>
+    <rect x="7" y="-20" width="10" height="4" fill="#444" rx="1"/>
+    <rect x="56" y="-18" width="4" height="20" fill="#333" rx="1"/>
+    <rect x="53" y="-20" width="10" height="4" fill="#444" rx="1"/>
+
+    <!-- Status LEDs -->
+    <circle cx="15" cy="38" r="2.5" fill="#00ff00" filter="url(#glow)">
+      <animate attributeName="opacity" values="1;0.4;1" dur="1.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="25" cy="38" r="2.5" fill="#ffaa00">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="0.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="35" cy="38" r="2.5" fill="#00ff00" opacity="0.4"/>
+
+    <!-- Ethernet port -->
+    <rect x="50" y="36" width="12" height="8" fill="#0a0a0a" stroke="#333" stroke-width="0.5" rx="1"/>
+
+    <!-- Label -->
+    <text x="35" y="55" fill="#88ff00" font-family="monospace" font-size="7" text-anchor="middle" filter="url(#glow)">PINEAPPLE</text>
+  </g>
+
+  <!-- ============ NIGHT VISION MONOCULAR ============ -->
+  <!-- Mounted on wall shelf above the equipment bench -->
+  <!-- Hotspot: x=78%, y=38% → pixel (1498, 410), w=67, h=54 -->
+  <g transform="translate(1498, 410)">
+    <!-- Wall mounting bracket -->
+    <rect x="10" y="-5" width="45" height="8" fill="#333" rx="1"/>
+    <rect x="15" y="-8" width="4" height="6" fill="#444"/>
+    <rect x="47" y="-8" width="4" height="6" fill="#444"/>
+
+    <!-- Monocular body (cylindrical, side view) -->
+    <rect x="0" y="5" width="60" height="28" fill="#1a2a1a" rx="6" filter="url(#shadow)"/>
+    <rect x="3" y="8" width="54" height="22" fill="#0f1f0f" rx="4"/>
+
+    <!-- Objective lens (front) -->
+    <ellipse cx="5" cy="19" rx="8" ry="14" fill="#0a0a0a" stroke="#2a3a2a" stroke-width="1.5"/>
+    <ellipse cx="5" cy="19" rx="5" ry="10" fill="#111" opacity="0.8"/>
+    <!-- Lens coating reflection (green) -->
+    <ellipse cx="4" cy="17" rx="3" ry="6" fill="#00ff44" opacity="0.15"/>
+
+    <!-- Eyepiece (back) -->
+    <rect x="55" y="10" width="12" height="18" fill="#1a1a1a" rx="3"/>
+    <ellipse cx="67" cy="19" rx="4" ry="8" fill="#0a0a0a"/>
+
+    <!-- IR illuminator -->
+    <circle cx="15" cy="10" r="3" fill="#330000">
+      <animate attributeName="fill" values="#330000;#660000;#330000" dur="3s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Power button -->
+    <circle cx="35" cy="8" r="2.5" fill="#222" stroke="#444" stroke-width="0.5"/>
+
+    <!-- "NV" marking -->
+    <text x="30" y="28" fill="#2a4a2a" font-family="monospace" font-size="7" text-anchor="middle" opacity="0.6">GEN3</text>
+
+    <!-- Label -->
+    <text x="33" y="50" fill="#446644" font-family="monospace" font-size="7" text-anchor="middle">NV MONO</text>
+  </g>
+
   <!-- ============ MESHTASTIC DEVICE ============ -->
   <g transform="translate(1380, 600)">
     <rect width="80" height="120" fill="#333" rx="5" filter="url(#shadow)"/>
@@ -810,6 +980,32 @@
     <ellipse cx="150" cy="220" rx="180" ry="40" fill="url(#blueGlow)" opacity="0.4"/>
   </g>
   
+  <!-- ============ DOOR TO GARDEN ============ -->
+  <!-- Side door on right wall -->
+  <!-- Hotspot: x=95%, y=50% → pixel (1824, 540), w=77, h=324 -->
+  <g transform="translate(1824, 540)">
+    <!-- Door frame -->
+    <rect x="-3" y="-3" width="83" height="330" fill="#333" rx="2"/>
+    <rect x="0" y="0" width="77" height="324" fill="#222"/>
+
+    <!-- Door panels -->
+    <rect x="8" y="10" width="61" height="130" fill="#2a2a2a" stroke="#1a1a1a" stroke-width="1"/>
+    <rect x="8" y="155" width="61" height="130" fill="#2a2a2a" stroke="#1a1a1a" stroke-width="1"/>
+
+    <!-- Door handle -->
+    <rect x="12" y="160" width="10" height="30" fill="#555" rx="2"/>
+
+    <!-- "GARDEN" sign -->
+    <rect x="14" y="295" width="50" height="20" fill="#333" rx="2"/>
+    <text x="39" y="309" fill="#888" font-family="sans-serif" font-size="8" text-anchor="middle">GARDEN →</text>
+
+    <!-- Light leaking through gap -->
+    <rect x="70" y="5" width="4" height="314" fill="#335522" opacity="0.15" filter="url(#glow)"/>
+
+    <!-- Daylight line under door -->
+    <rect x="5" y="318" width="67" height="3" fill="#88aa55" opacity="0.3" filter="url(#glow)"/>
+  </g>
+
   <!-- ============ LED STRIP ON CEILING ============ -->
   <rect x="200" y="180" width="1500" height="5" fill="#0088ff" opacity="0.5" filter="url(#strongGlow)">
     <animate attributeName="fill" values="#0088ff;#00ff88;#ff0088;#0088ff" dur="10s" repeatCount="indefinite"/>

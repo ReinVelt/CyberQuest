@@ -37,10 +37,12 @@ const MancaveScene = {
         {
             id: 'sstv-terminal',
             name: 'SSTV Terminal',
-            x: 38.54,
-            y: 37.04,
-            width: 8.33,
-            height: 18.52,
+            // SVG: desk translate(250,450) + SSTV translate(300,0)
+            // Bezel: rect x=-20,y=-20,w=340,h=240 → abs (530,430)-(870,670)
+            x: (530 / 1920) * 100,    // 27.60%
+            y: (430 / 1080) * 100,    // 39.81%
+            width: (340 / 1920) * 100, // 17.71%
+            height: (240 / 1080) * 100, // 22.22%
             cursor: 'pointer',
             action: function(game) {
                 // Second transmission (after frequency puzzle)
@@ -227,8 +229,12 @@ const MancaveScene = {
                 if (game.getFlag('volkov_investigated')) {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Volkov: Russian agent. 8 dead. Infiltrated German military R&D.' },
-                        { speaker: 'Ryan', text: 'Need Chris Kubecka to dig deeper. OSINT is her specialty.' }
+                        { speaker: 'Ryan', text: 'Need Chris Kubecka to dig deeper. OSINT is her specialty.' },
+                        { speaker: 'Ryan', text: 'The secure phone. That\'s how I reach her.' }
                     ]);
+                    setTimeout(() => {
+                        game.showNotification('Use the secure phone to contact Chris Kubecka');
+                    }, 1500);
                     return;
                 }
 
@@ -259,10 +265,11 @@ const MancaveScene = {
         {
             id: 'airgapped-laptop',
             name: 'Air-Gapped Laptop',
-            x: 5.00,
-            y: 42.13,
-            width: 6.00,
-            height: 14.00,
+            // SVG: translate(180, 455), shelf + laptop, w≈115, h≈151
+            x: (180 / 1920) * 100,     // 9.38%
+            y: (455 / 1080) * 100,     // 42.13%
+            width: (115 / 1920) * 100,  // 5.99%
+            height: (151 / 1080) * 100, // 13.98%
             cursor: 'pointer',
             lookMessage: "My air-gapped laptop. Never been online. Perfect for analyzing suspicious files.",
             action: function(game) {

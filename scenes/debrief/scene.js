@@ -73,12 +73,14 @@ const DebriefScene = {
         },
         {
             id: 'continue-to-epilogue',
-            name: 'Continue',
+            name: 'Continue →',
             x: 40,
             y: 82,
             width: 20,
             height: 10,
             cursor: 'pointer',
+            cssClass: 'hotspot-nav',
+            skipWalk: true,
             action: function(game) {
                 if (game.getFlag('debrief_complete')) {
                     game.loadScene('epilogue');

@@ -47,7 +47,11 @@ class VoiceManager {
             // Dutch friends - varied male voices
             'David Prinsloo':      { ...britishMale, pitch: 0.95, rate: 1.0 },
             'Pieter':              { ...britishMale, pitch: 1.05, rate: 0.95 },
-            'Cees Bassa':          { ...britishFemale, pitch: 1.2, rate: 0.95 },
+            'Cees Bassa':          { ...britishMale, pitch: 1.0, rate: 0.95 },
+            'Jaap Haartsen':       { ...britishMale, pitch: 0.88, rate: 0.92 },
+            
+            // Documentary narrator - authoritative, warm
+            'Documentary':         { ...britishFemale, pitch: 1.05, rate: 0.88 },
             
             // Ryan's wife - Dutch female, warm voice
             'Ies':                 { ...britishFemale, pitch: 1.15, rate: 0.95 },

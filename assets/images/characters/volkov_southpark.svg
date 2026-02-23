@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
-  <!-- DMITRI VOLKOV - Modern South Park Style Character -->
-  <!-- Russian scientist, intellectual antagonist, cold, calculating -->
+  <!-- DMITRI VOLKOV - South Park Style — Old Russian Crooked Inventor, Age 68 -->
+  <!-- Weathered Soviet relic, ushanka, walrus mustache, lab coat, hunched, sinister -->
   
   <defs>
-    <linearGradient id="suitGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#5a6678"/>
-      <stop offset="100%" style="stop-color:#3a4558"/>
+    <linearGradient id="labCoatGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8e4dc"/>
+      <stop offset="100%" style="stop-color:#c8c4b8"/>
+    </linearGradient>
+    
+    <linearGradient id="sweaterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3a3a2a"/>
+      <stop offset="100%" style="stop-color:#2a2a1a"/>
     </linearGradient>
     
     <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#f0dcc8"/>
-      <stop offset="100%" style="stop-color:#e5d0bb"/>
+      <stop offset="0%" style="stop-color:#d8c4a8"/>
+      <stop offset="100%" style="stop-color:#c8b090"/>
     </linearGradient>
     
     <filter id="shadow">
@@ -21,97 +26,416 @@
     <filter id="lightShadow">
       <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
     </filter>
+    
+    <linearGradient id="ushankaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a4038"/>
+      <stop offset="100%" style="stop-color:#3a302a"/>
+    </linearGradient>
+    
+    <linearGradient id="furGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8a7a68"/>
+      <stop offset="100%" style="stop-color:#6a5a48"/>
+    </linearGradient>
   </defs>
   
-  <!-- SHOES (polished dress shoes) -->
+  <!-- SHOES (scuffed, worn leather) -->
   <ellipse cx="85" cy="294" rx="15" ry="5" fill="#0a0a0a" opacity="0.3"/>
-  <ellipse cx="115" cy="294" rx="15" ry="5" fill="#0a0a0a" opacity="0.3"/>
-  <ellipse cx="85" cy="292" rx="14" ry="6" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
-  <ellipse cx="115" cy="292" rx="14" ry="6" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="294" rx="15" ry="5" fill="#0a0a0a" opacity="0.3"/>
+  <ellipse cx="85" cy="292" rx="14" ry="6" fill="#3a2a1a" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="292" rx="14" ry="6" fill="#3a2a1a" stroke="#000" stroke-width="2"/>
+  <!-- Scuff marks -->
+  <ellipse cx="79" cy="291" rx="4" ry="2" fill="#4a3a2a" opacity="0.5"/>
+  <ellipse cx="122" cy="290" rx="3" ry="2" fill="#4a3a2a" opacity="0.5"/>
   
-  <!-- LEGS (dress pants) -->
-  <rect x="74" y="270" width="22" height="24" fill="#2d3748" stroke="#000" stroke-width="2.5"/>
-  <rect x="104" y="270" width="22" height="24" fill="#2d3748" stroke="#000" stroke-width="2.5"/>
+  <!-- LEGS (rumpled dark trousers, slightly uneven) -->
+  <rect x="74" y="268" width="22" height="26" fill="#2a2a22" stroke="#000" stroke-width="2.5"/>
+  <rect x="107" y="268" width="22" height="26" fill="#2a2a22" stroke="#000" stroke-width="2.5"/>
+  <!-- Trouser wrinkles -->
+  <path d="M78,278 Q85,276 92,278" stroke="#1a1a12" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M111,280 Q118,277 125,280" stroke="#1a1a12" stroke-width="1" fill="none" opacity="0.4"/>
   
-  <!-- BODY (slim, professional gray suit) -->
-  <path d="M66,133 L60,272 L140,272 L134,133 Q100,123 66,133 Z" 
-        fill="url(#suitGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+  <!-- BODY (slightly hunched, asymmetric) -->
+  <!-- Dark turtleneck sweater underneath -->
+  <path d="M68,135 L62,270 L138,270 L132,135 Q100,125 68,135 Z" 
+        fill="url(#sweaterGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
   
-  <!-- Suit lapels -->
-  <path d="M73,133 L83,148 L73,165" fill="#2d3748" stroke="#000" stroke-width="2"/>
-  <path d="M127,133 L117,148 L127,165" fill="#2d3748" stroke="#000" stroke-width="2"/>
+  <!-- Turtleneck collar -->
+  <path d="M80,128 Q100,122 120,128 L118,138 Q100,132 82,138 Z" fill="#3a3a2a" stroke="#000" stroke-width="2"/>
   
-  <!-- White shirt -->
-  <path d="M83,148 L88,272 L112,272 L117,148 Z" fill="#f8f8ff" stroke="#000" stroke-width="2"/>
+  <!-- LAB COAT (open, stained, flapping slightly) -->
+  <!-- Left panel -->
+  <path d="M56,138 L48,275 L92,275 L88,138 Q72,132 56,138 Z" 
+        fill="url(#labCoatGrad)" stroke="#000" stroke-width="2.5" filter="url(#lightShadow)"/>
+  <!-- Right panel (slightly askew) -->
+  <path d="M112,138 L108,275 L155,275 L147,138 Q130,132 112,138 Z" 
+        fill="url(#labCoatGrad)" stroke="#000" stroke-width="2.5" filter="url(#lightShadow)"/>
   
-  <!-- Burgundy tie -->
-  <path d="M96,148 L93,272 L107,272 L104,148 Z" fill="#7a2a2a" stroke="#000" stroke-width="2"/>
-  <polygon points="96,148 104,148 100,156" fill="#8b3a3a" stroke="#000" stroke-width="2"/>
+  <!-- Lab coat collar (popped, disheveled) -->
+  <path d="M68,133 L60,130 L56,140 L72,148" fill="#d8d4c8" stroke="#000" stroke-width="2"/>
+  <path d="M132,133 L143,130 L147,140 L130,148" fill="#d8d4c8" stroke="#000" stroke-width="2"/>
   
-  <!-- ARMS (formal, measured) -->
-  <path d="M66,143 Q48,185 56,228 L72,230 Q66,188 76,153" 
-        fill="url(#suitGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
-  <path d="M134,143 Q152,185 144,228 L128,230 Q134,188 124,153" 
-        fill="url(#suitGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <!-- Coffee stain on coat -->
+  <ellipse cx="75" cy="200" rx="8" ry="6" fill="#b89a70" opacity="0.3"/>
+  <!-- Burn mark near pocket -->
+  <ellipse cx="130" cy="185" rx="4" ry="3" fill="#8a7a5a" opacity="0.25"/>
   
-  <!-- Shirt cuffs (white) -->
-  <rect x="52" y="223" width="16" height="10" rx="2" fill="#f8f8ff" stroke="#000" stroke-width="2"/>
-  <rect x="132" y="223" width="16" height="10" rx="2" fill="#f8f8ff" stroke="#000" stroke-width="2"/>
+  <!-- Coat pockets (stuffed, bulging) -->
+  <rect x="62" y="210" width="24" height="28" rx="3" fill="#d0ccbc" stroke="#000" stroke-width="1.5"/>
+  <!-- Stuff poking out of pocket -->
+  <rect x="64" y="206" width="4" height="10" rx="1" fill="#ff4444" transform="rotate(-8,66,211)"/>
+  <rect x="72" y="204" width="3" height="12" rx="1" fill="#3388ff" transform="rotate(5,73,210)"/>
+  <rect x="78" y="207" width="8" height="6" rx="1" fill="#444" transform="rotate(-3,82,210)"/>
   
-  <!-- Hands (pale) -->
-  <ellipse cx="58" cy="238" rx="10" ry="12" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
-  <ellipse cx="142" cy="238" rx="10" ry="12" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <!-- Right pocket — pen cluster -->
+  <rect x="118" y="158" width="22" height="18" rx="2" fill="#d0ccbc" stroke="#000" stroke-width="1.5"/>
+  <rect x="120" y="148" width="2" height="14" fill="#1a1a8a"/>
+  <rect x="124" y="150" width="2" height="12" fill="#8a1a1a"/>
+  <rect x="128" y="146" width="2" height="16" fill="#1a1a1a"/>
+  <rect x="132" y="151" width="2" height="11" fill="#2a8a2a"/>
   
-   <!-- HEAD (angular, intellectual) -->
-  <ellipse cx="100" cy="72" rx="42" ry="52" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+  <!-- ARMS (lab coat sleeves, one slightly raised) -->
+  <!-- Left arm (holding soldering iron) -->
+  <path d="M56,145 Q36,188 40,232 L58,234 Q54,192 66,155" 
+        fill="url(#labCoatGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <!-- Right arm (at side, relaxed) -->
+  <path d="M147,145 Q162,190 156,235 L140,237 Q148,195 136,155" 
+        fill="url(#labCoatGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
   
-  <!-- HAIR (graying, receding, slicked back) -->
-  <path d="M64,58 Q68,26 100,22 Q132,26 136,58 L134,48 Q100,38 66,48 Z" 
-        fill="#7a8490" stroke="#000" stroke-width="2.5"/>
-  <path d="M68,54 Q84,48 100,50 Q116,48 132,54" fill="none" stroke="#f0dcc8" stroke-width="9" stroke-linecap="round"/>
-  <path d="M64,58 Q60,70 62,84" fill="#7a8490" stroke="#000" stroke-width="2"/>
-  <path d="M136,58 Q140,70 138,84" fill="#7a8490" stroke="#000" stroke-width="2"/>
-  <ellipse cx="100" cy="45" rx="30" ry="16" fill="#9ca3af" stroke="#000" stroke-width="2"/>
+  <!-- Rolled-up sleeves showing sweater underneath -->
+  <path d="M42,225 Q49,220 56,225" stroke="#3a3a2a" stroke-width="3" fill="none"/>
+  <path d="M142,228 Q149,223 156,228" stroke="#3a3a2a" stroke-width="3" fill="none"/>
   
-  <!-- EARS -->
-  <ellipse cx="60" cy="72" rx="8" ry="12" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
-  <ellipse cx="140" cy="72" rx="8" ry="12" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <!-- Hands (bony, veiny, liver-spotted, nicotine-stained — old hands) -->
+  <ellipse cx="47" cy="240" rx="11" ry="13" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <!-- Prominent veins -->
+  <path d="M42,235 Q46,240 44,248" stroke="#a08868" stroke-width="0.8" fill="none" opacity="0.4"/>
+  <path d="M50,234 Q52,240 50,246" stroke="#a08868" stroke-width="0.8" fill="none" opacity="0.35"/>
+  <!-- Liver spots -->
+  <circle cx="44" cy="236" r="1.5" fill="#a08868" opacity="0.35"/>
+  <circle cx="50" cy="238" r="1" fill="#a08868" opacity="0.3"/>
+  <!-- Yellowed, gnarled fingertips (left) -->
+  <circle cx="40" cy="247" r="3" fill="#d0bc88" stroke="#000" stroke-width="1"/>
+  <circle cx="46" cy="250" r="3" fill="#d0bc88" stroke="#000" stroke-width="1"/>
+  <circle cx="52" cy="248" r="3" fill="#d0bc88" stroke="#000" stroke-width="1"/>
+  <!-- Knobby knuckles -->
+  <circle cx="42" cy="244" r="1.5" fill="#d8c4aa" stroke="#c0a888" stroke-width="0.5" opacity="0.5"/>
+  <circle cx="48" cy="246" r="1.5" fill="#d8c4aa" stroke="#c0a888" stroke-width="0.5" opacity="0.5"/>
   
-  <!-- GLASSES (thin, intellectual) -->
-  <ellipse cx="80" cy="72" rx="13" ry="16" fill="rgba(248,248,255,0.1)" stroke="#2d3748" stroke-width="2.5"/>
-  <ellipse cx="120" cy="72" rx="13" ry="16" fill="rgba(248,248,255,0.1)" stroke="#2d3748" stroke-width="2.5"/>
-  <line x1="93" y1="72" x2="107" y2="72" stroke="#2d3748" stroke-width="2.5"/>
-  <ellipse cx="76" cy="68" rx="5" ry="6" fill="white" opacity="0.7"/>
-  <ellipse cx="116" cy="68" rx="5" ry="6" fill="white" opacity="0.7"/>
+  <ellipse cx="150" cy="243" rx="11" ry="13" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <!-- Right hand veins and spots -->
+  <path d="M146,236 Q150,242 148,250" stroke="#a08868" stroke-width="0.8" fill="none" opacity="0.4"/>
+  <circle cx="152" cy="238" r="1.5" fill="#a08868" opacity="0.3"/>
+  <circle cx="148" cy="240" r="1" fill="#a08868" opacity="0.25"/>
   
-  <!-- EYES (cold, calculating, ice blue) -->
-  <ellipse cx="80" cy="73" rx="9" ry="13" fill="white" stroke="#000" stroke-width="1"/>
-  <ellipse cx="120" cy="73" rx="9" ry="13" fill="white" stroke="#000" stroke-width="1"/>
-  <circle cx="81" cy="75" r="6" fill="#4a9af0"/>
-  <circle cx="121" cy="75" r="6" fill="#4a9af0"/>
-  <circle cx="81" cy="75" r="3" fill="#1a3a5f"/>
-  <circle cx="121" cy="75" r="3" fill="#1a3a5f"/>
-  <circle cx="79" cy="73" r="2" fill="white" opacity="0.9"/>
-  <circle cx="119" cy="73" r="2" fill="white" opacity="0.9"/>
+  <!-- SOLDERING IRON in left hand -->
+  <rect x="30" y="234" width="28" height="5" rx="1" fill="#555" stroke="#000" stroke-width="1.5" transform="rotate(-25,44,237)"/>
+  <rect x="20" y="230" width="14" height="4" rx="1" fill="#888" stroke="#000" stroke-width="1" transform="rotate(-25,27,232)"/>
+  <!-- Hot tip glow -->
+  <circle cx="22" cy="228" r="3" fill="#ff6600" opacity="0.8"/>
+  <circle cx="22" cy="228" r="6" fill="#ff4400" opacity="0.2"/>
   
-  <!-- EYEBROWS (furrowed, menacing) -->
-  <path d="M68,58 Q78,56 90,59" stroke="#6b7280" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path d="M110,59 Q122,56 132,58" stroke="#6b7280" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <!-- NECK (thin, sinew-y, turkey neck at 65) -->
+  <rect x="88" y="118" width="24" height="18" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <!-- Adam's apple -->
+  <ellipse cx="100" cy="126" rx="3" ry="4" fill="#d0b89a" stroke="#c0a888" stroke-width="1"/>
+  <!-- Turkey neck wattle/loose skin -->
+  <path d="M92,128 Q96,134 92,138" stroke="#c0a888" stroke-width="1" fill="none" opacity="0.5"/>
+  <path d="M94,126 Q98,132 96,136" stroke="#c0a888" stroke-width="1" fill="none" opacity="0.4"/>
+  <path d="M108,128 Q104,134 108,138" stroke="#c0a888" stroke-width="1" fill="none" opacity="0.5"/>
   
-  <!-- NOSE (prominent, angular) -->
-  <path d="M100,75 L100,90" stroke="#d5c5b0" stroke-width="2.5" stroke-linecap="round"/>
-  <path d="M100,88 L96,92 L100,93 L104,92 Z" fill="#e0d0bb" stroke="#000" stroke-width="1.5"/>
-  <ellipse cx="96" cy="91" rx="3" ry="4" fill="#d5c5b0"/>
-  <ellipse cx="104" cy="91" rx="3" ry="4" fill="#d5c5b0"/>
+  <!-- HEAD (angular, gaunt, slightly tilted forward — the hunch) -->
+  <ellipse cx="100" cy="68" rx="40" ry="50" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
   
-  <!-- MOUTH (thin, cold smile) -->
-  <path d="M86,102 Q100,106 114,102" stroke="#8b6355" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Pronounced cheekbones (gaunt, sunken at 65) -->
+  <path d="M65,75 Q72,82 68,90" stroke="#c0a888" stroke-width="2" fill="none" opacity="0.6"/>
+  <path d="M135,75 Q128,82 132,90" stroke="#c0a888" stroke-width="2" fill="none" opacity="0.6"/>
   
-  <!-- AGE LINES -->
-  <path d="M70,78 Q73,82 70,86" stroke="#d5c5b0" stroke-width="1" opacity="0.4"/>
-  <path d="M130,78 Q127,82 130,86" stroke="#d5c5b0" stroke-width="1" opacity="0.4"/>
+  <!-- Deeply hollow cheeks -->
+  <ellipse cx="72" cy="85" rx="7" ry="9" fill="#c8b098" opacity="0.4"/>
+  <ellipse cx="128" cy="85" rx="7" ry="9" fill="#c8b098" opacity="0.4"/>
   
-  <!-- Badge on suit -->
-  <rect x="115" y="160" width="16" height="20" rx="2" fill="#edf2f7" stroke="#000" stroke-width="1.5"/>
-  <rect x="117" y="163" width="12" height="8" fill="#3b82f6"/>
+  <!-- Heavy jowls (deeply sagging skin at jawline) -->
+  <path d="M66,98 Q62,108 68,118" stroke="#b89878" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M134,98 Q138,108 132,118" stroke="#b89878" stroke-width="2" fill="none" opacity="0.5"/>
+  <ellipse cx="70" cy="110" rx="7" ry="6" fill="#c8b090" opacity="0.3"/>
+  <ellipse cx="130" cy="110" rx="7" ry="6" fill="#c8b090" opacity="0.3"/>
+  <!-- Double chin -->
+  <path d="M84,116 Q100,124 116,116" stroke="#b89878" stroke-width="1.5" fill="none" opacity="0.35"/>
+  
+  <!-- Age spots / liver spots on face (many more at this age) -->
+  <circle cx="130" cy="70" r="2.5" fill="#a89070" opacity="0.35"/>
+  <circle cx="76" cy="96" r="2" fill="#a89070" opacity="0.3"/>
+  <circle cx="126" cy="95" r="2" fill="#a89070" opacity="0.25"/>
+  <circle cx="68" cy="68" r="1.5" fill="#a89070" opacity="0.25"/>
+  <circle cx="134" cy="80" r="1.8" fill="#a89070" opacity="0.2"/>
+  <circle cx="82" cy="110" r="1.5" fill="#a89070" opacity="0.2"/>
+  <circle cx="118" cy="112" r="1.3" fill="#a89070" opacity="0.2"/>
+  
+  <!-- USHANKA (Russian fur hat — ear flaps down, worn & beaten) -->
+  <!-- Main hat crown -->
+  <path d="M56,38 Q58,10 100,6 Q142,10 144,38 L140,48 Q100,42 60,48 Z" 
+        fill="url(#ushankaGrad)" stroke="#000" stroke-width="2.5"/>
+  <!-- Hat top badge area -->
+  <ellipse cx="100" cy="22" rx="14" ry="8" fill="#4a4038" stroke="#3a302a" stroke-width="1"/>
+  <!-- Soviet-style star badge on hat (faded red) -->
+  <polygon points="100,14 102,20 108,20 103,24 105,30 100,26 95,30 97,24 92,20 98,20" 
+           fill="#aa3333" stroke="#882222" stroke-width="0.8" opacity="0.7"/>
+  <!-- Fur brim (thick, matted rabbit fur) -->
+  <path d="M50,38 Q48,42 50,48 Q100,56 150,48 Q152,42 150,38" 
+        fill="url(#furGrad)" stroke="#000" stroke-width="2"/>
+  <!-- Fur texture on brim -->
+  <g stroke="#7a6a58" stroke-width="0.8" fill="none" opacity="0.5">
+    <path d="M55,42 Q56,46 54,48"/>
+    <path d="M65,44 Q66,48 64,50"/>
+    <path d="M75,45 Q76,49 74,51"/>
+    <path d="M85,46 Q86,50 84,52"/>
+    <path d="M115,46 Q116,50 114,52"/>
+    <path d="M125,45 Q126,49 124,51"/>
+    <path d="M135,44 Q136,48 134,50"/>
+    <path d="M145,42 Q146,46 144,48"/>
+  </g>
+  <!-- Left ear flap (hanging down) -->
+  <path d="M50,40 Q42,48 38,68 Q36,80 40,88 L52,86 Q50,74 52,60 Q54,48 56,42" 
+        fill="url(#ushankaGrad)" stroke="#000" stroke-width="2"/>
+  <!-- Left flap fur lining -->
+  <path d="M40,88 Q44,90 52,86" fill="url(#furGrad)" stroke="#000" stroke-width="1.5"/>
+  <path d="M42,84 Q44,86 48,84" stroke="#7a6a58" stroke-width="0.6" fill="none" opacity="0.4"/>
+  <!-- Right ear flap -->
+  <path d="M150,40 Q158,48 162,68 Q164,80 160,88 L148,86 Q150,74 148,60 Q146,48 144,42" 
+        fill="url(#ushankaGrad)" stroke="#000" stroke-width="2"/>
+  <!-- Right flap fur lining -->
+  <path d="M160,88 Q156,90 148,86" fill="url(#furGrad)" stroke="#000" stroke-width="1.5"/>
+  <path d="M152,84 Q156,86 158,84" stroke="#7a6a58" stroke-width="0.6" fill="none" opacity="0.4"/>
+  <!-- Untied strings dangling from flaps -->
+  <path d="M40,88 Q38,96 42,100" stroke="#3a302a" stroke-width="1.5" fill="none"/>
+  <path d="M160,88 Q162,96 158,100" stroke="#3a302a" stroke-width="1.5" fill="none"/>
+  
+  <!-- White hair poking out from under ushanka -->
+  <path d="M52,48 Q48,52 46,60" stroke="#d0d0c8" stroke-width="2" fill="none"/>
+  <path d="M148,48 Q152,52 154,60" stroke="#d0d0c8" stroke-width="2" fill="none"/>
+  <path d="M54,50 Q50,56 50,64" stroke="#c8c8c0" stroke-width="1.5" fill="none"/>
+  <path d="M146,50 Q150,56 150,64" stroke="#c8c8c0" stroke-width="1.5" fill="none"/>
+  
+  <!-- White sideburns (bushy, old) -->
+  <path d="M52,58 Q48,74 50,94" fill="#d0d0c8" stroke="#000" stroke-width="1.5"/>
+  <path d="M148,58 Q152,74 150,94" fill="#d0d0c8" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- EARS (larger — ears grow with age, drooping lobes) -->
+  <ellipse cx="57" cy="73" rx="10" ry="16" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <ellipse cx="143" cy="73" rx="10" ry="16" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <!-- Ear hair (prominent white tufts — old man ears) -->
+  <path d="M52,68 Q46,62 48,56" stroke="#b0b0a8" stroke-width="2" fill="none"/>
+  <path d="M50,72 Q44,68 46,62" stroke="#b0b0a8" stroke-width="1.5" fill="none"/>
+  <path d="M148,68 Q154,62 152,56" stroke="#b0b0a8" stroke-width="2" fill="none"/>
+  <path d="M150,72 Q156,68 154,62" stroke="#b0b0a8" stroke-width="1.5" fill="none"/>
+  <!-- Elongated earlobes -->
+  <ellipse cx="57" cy="86" rx="4" ry="4" fill="url(#skinGrad)" stroke="#000" stroke-width="1"/>
+  <ellipse cx="143" cy="86" rx="4" ry="4" fill="url(#skinGrad)" stroke="#000" stroke-width="1"/>
+  
+  <!-- GLASSES (thick, Soviet-era round frames, taped bridge) -->
+  <circle cx="80" cy="72" r="16" fill="rgba(248,248,255,0.08)" stroke="#4a4a3a" stroke-width="3"/>
+  <circle cx="120" cy="72" r="16" fill="rgba(248,248,255,0.08)" stroke="#4a4a3a" stroke-width="3"/>
+  <!-- Bridge (taped together!) -->
+  <line x1="96" y1="72" x2="104" y2="72" stroke="#4a4a3a" stroke-width="3"/>
+  <rect x="96" y="69" width="8" height="6" rx="1" fill="#e8e0d0" stroke="#aaa" stroke-width="0.5" opacity="0.7"/>
+  <!-- Tape texture -->
+  <line x1="97" y1="70" x2="103" y2="70" stroke="#ccc" stroke-width="0.5" opacity="0.5"/>
+  <line x1="97" y1="73" x2="103" y2="73" stroke="#ccc" stroke-width="0.5" opacity="0.5"/>
+  <!-- Temple arms -->
+  <line x1="64" y1="68" x2="55" y2="66" stroke="#4a4a3a" stroke-width="2.5"/>
+  <line x1="136" y1="68" x2="145" y2="66" stroke="#4a4a3a" stroke-width="2.5"/>
+  <!-- Lens glare -->
+  <ellipse cx="74" cy="67" rx="5" ry="6" fill="white" opacity="0.5"/>
+  <ellipse cx="114" cy="67" rx="5" ry="6" fill="white" opacity="0.5"/>
+  <!-- Scratch on left lens -->
+  <line x1="72" y1="78" x2="86" y2="66" stroke="#fff" stroke-width="0.5" opacity="0.3"/>
+  
+  <!-- EYES (rheumy, faded, deep-set — old Russian wolf's stare) -->
+  <ellipse cx="80" cy="73" rx="10" ry="11" fill="#f8f4ee" stroke="#000" stroke-width="1"/>
+  <ellipse cx="120" cy="73" rx="10" ry="11" fill="#f8f4ee" stroke="#000" stroke-width="1"/>
+  <!-- Yellowed sclera (aged) -->
+  <ellipse cx="80" cy="73" rx="9" ry="10" fill="#f4f0e4" opacity="0.4"/>
+  <ellipse cx="120" cy="73" rx="9" ry="10" fill="#f4f0e4" opacity="0.4"/>
+  <!-- Irises (faded, watery gray) -->
+  <circle cx="82" cy="74" r="6" fill="#8a9098"/>
+  <circle cx="122" cy="74" r="6" fill="#8a9098"/>
+  <!-- Arcus senilis (gray ring around iris — old age) -->
+  <circle cx="82" cy="74" r="6.5" fill="none" stroke="#b0b4b8" stroke-width="0.8" opacity="0.5"/>
+  <circle cx="122" cy="74" r="6.5" fill="none" stroke="#b0b4b8" stroke-width="0.8" opacity="0.5"/>
+  <!-- Pupils (small, focused — intensity) -->
+  <circle cx="82" cy="74" r="3" fill="#1a2a3a"/>
+  <circle cx="122" cy="74" r="3" fill="#1a2a3a"/>
+  <!-- Glint (calculating) -->
+  <circle cx="80" cy="72" r="2" fill="white" opacity="0.9"/>
+  <circle cx="120" cy="72" r="2" fill="white" opacity="0.9"/>
+  <!-- Heavy bags under eyes (deep, puffy — decades of sleepless lab nights) -->
+  <ellipse cx="80" cy="83" rx="9" ry="4" fill="#a89080" opacity="0.45"/>
+  <ellipse cx="120" cy="83" rx="9" ry="4" fill="#a89080" opacity="0.45"/>
+  <!-- Second bag line (double bags at 65) -->
+  <path d="M72,86 Q80,89 88,86" stroke="#b8a090" stroke-width="0.8" fill="none" opacity="0.35"/>
+  <path d="M112,86 Q120,89 128,86" stroke="#b8a090" stroke-width="0.8" fill="none" opacity="0.35"/>
+  <!-- Crow's feet -->
+  <g opacity="0.4" stroke="#c0a888" stroke-width="1" fill="none">
+    <path d="M66,70 L60,66"/>
+    <path d="M66,73 L59,74"/>
+    <path d="M66,76 L60,80"/>
+    <path d="M134,70 L140,66"/>
+    <path d="M134,73 L141,74"/>
+    <path d="M134,76 L140,80"/>
+  </g>
+  <!-- Hooded eyelids (drooping upper lids) -->
+  <path d="M70,66 Q80,62 90,66" stroke="#c0a888" stroke-width="1.5" fill="url(#skinGrad)" opacity="0.5"/>
+  <path d="M110,66 Q120,62 130,66" stroke="#c0a888" stroke-width="1.5" fill="url(#skinGrad)" opacity="0.5"/>
+  
+  <!-- EYEBROWS (wild, bushy, white/gray, unkempt — old man brows) -->
+  <path d="M66,54 Q76,48 90,54" stroke="#a0a098" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Right eyebrow raised (scheming expression) -->
+  <path d="M110,52 Q122,45 134,50" stroke="#a0a098" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Long stray brow hairs going every direction -->
+  <path d="M68,52 Q62,44 64,38" stroke="#a0a098" stroke-width="1.5" fill="none"/>
+  <path d="M74,50 Q70,42 72,36" stroke="#b0b0a8" stroke-width="1" fill="none"/>
+  <path d="M132,48 Q138,40 136,34" stroke="#a0a098" stroke-width="1.5" fill="none"/>
+  <path d="M126,47 Q130,40 128,34" stroke="#b0b0a8" stroke-width="1" fill="none"/>
+  <!-- Extra bushy texture -->
+  <path d="M70,55 Q76,52 82,55" stroke="#b0b0a8" stroke-width="2" fill="none" opacity="0.4"/>
+  <path d="M116,53 Q122,50 130,52" stroke="#b0b0a8" stroke-width="2" fill="none" opacity="0.4"/>
+  
+  <!-- NOSE (large, bulbous, crooked, vodka-reddened — very Russian) -->
+  <path d="M100,72 L103,80 L106,88" stroke="#c0a080" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  <path d="M106,88 L99,96 L92,93" fill="#c8a090" stroke="#000" stroke-width="1.5"/>
+  <!-- Bulbous, potato-like nose tip (reddened) -->
+  <ellipse cx="99" cy="92" rx="10" ry="7" fill="#c8a088" stroke="#000" stroke-width="1.5"/>
+  <!-- Vodka flush / broken capillaries -->
+  <ellipse cx="99" cy="91" rx="7" ry="5" fill="#d09080" opacity="0.4"/>
+  <g stroke="#c07060" stroke-width="0.5" fill="none" opacity="0.35">
+    <path d="M94,89 Q96,92 94,94"/>
+    <path d="M98,88 Q100,91 98,94"/>
+    <path d="M102,89 Q104,92 102,94"/>
+  </g>
+  <!-- Bulbous nostrils (large, flared) -->
+  <ellipse cx="93" cy="94" rx="4.5" ry="5" fill="#b89078"/>
+  <ellipse cx="105" cy="93" rx="4.5" ry="5" fill="#b89078"/>
+  <!-- Nose bump (crooked, broken) -->
+  <ellipse cx="104" cy="82" rx="4" ry="5" fill="#c8b098" opacity="0.5"/>
+  <!-- Pores on nose -->
+  <g fill="#a08068" opacity="0.2">
+    <circle cx="96" cy="90" r="0.6"/>
+    <circle cx="99" cy="88" r="0.6"/>
+    <circle cx="102" cy="90" r="0.6"/>
+    <circle cx="97" cy="93" r="0.6"/>
+    <circle cx="101" cy="93" r="0.6"/>
+  </g>
+  
+  <!-- MOUTH (hidden behind mustache, thin downturned line barely visible) -->
+  <path d="M88,106 Q100,110 112,106" stroke="#6a4535" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <!-- Gold tooth glinting in corner of smirk -->
+  <rect x="108" y="105" width="3" height="2.5" rx="0.5" fill="#c8a840" opacity="0.6"/>
+  <!-- Regular yellowed teeth barely visible -->
+  <rect x="94" y="105" width="12" height="2" rx="0.5" fill="#d0c8a0" opacity="0.3"/>
+  
+  <!-- THICK WALRUS MUSTACHE (signature Russian old man, yellowed from smoking) -->
+  <path d="M82,96 Q86,94 92,96 Q96,98 100,97 Q104,98 108,96 Q114,94 118,96 
+           Q122,100 118,104 Q114,108 108,106 Q104,104 100,104 Q96,104 92,106 
+           Q86,108 82,104 Q78,100 82,96 Z" 
+        fill="#c0c0b0" stroke="#000" stroke-width="2"/>
+  <!-- Mustache texture/hair lines -->
+  <g stroke="#a8a898" stroke-width="0.8" fill="none" opacity="0.5">
+    <path d="M84,98 Q88,96 92,98"/>
+    <path d="M86,100 Q90,98 94,100"/>
+    <path d="M88,102 Q92,100 96,102"/>
+    <path d="M104,102 Q108,100 112,102"/>
+    <path d="M106,100 Q110,98 114,100"/>
+    <path d="M108,98 Q112,96 116,98"/>
+  </g>
+  <!-- Nicotine staining on mustache -->
+  <ellipse cx="92" cy="100" rx="4" ry="3" fill="#b8a878" opacity="0.2"/>
+  <ellipse cx="108" cy="100" rx="4" ry="3" fill="#b8a878" opacity="0.2"/>
+  <!-- Mustache drooping past corners of mouth -->
+  <path d="M82,104 Q78,108 76,114" stroke="#b0b0a0" stroke-width="2" fill="none"/>
+  <path d="M118,104 Q122,108 124,114" stroke="#b0b0a0" stroke-width="2" fill="none"/>
+  
+  <!-- WHITE STUBBLE / BEARD (days old, patchy, white) -->
+  <g fill="#c8c8c0" opacity="0.3">
+    <circle cx="78" cy="100" r="1"/>
+    <circle cx="74" cy="104" r="1"/>
+    <circle cx="76" cy="108" r="1"/>
+    <circle cx="78" cy="112" r="1"/>
+    <circle cx="126" cy="100" r="1"/>
+    <circle cx="128" cy="104" r="1"/>
+    <circle cx="126" cy="108" r="1"/>
+    <circle cx="124" cy="112" r="1"/>
+    <circle cx="84" cy="110" r="1"/>
+    <circle cx="90" cy="114" r="1"/>
+    <circle cx="96" cy="116" r="1"/>
+    <circle cx="102" cy="116" r="1"/>
+    <circle cx="108" cy="114" r="1"/>
+    <circle cx="114" cy="110" r="1"/>
+    <circle cx="88" cy="118" r="0.8"/>
+    <circle cx="94" cy="120" r="0.8"/>
+    <circle cx="100" cy="120" r="0.8"/>
+    <circle cx="106" cy="120" r="0.8"/>
+    <circle cx="112" cy="118" r="0.8"/>
+  </g>
+  
+  <!-- SCAR on left cheekbone (old, faded — Soviet military past) -->
+  <path d="M66,80 L72,86" stroke="#c0a898" stroke-width="1.5" opacity="0.5" stroke-linecap="round"/>
+  
+  <!-- AGE LINES / DEEP WRINKLES (decades of Soviet scheming) -->
+  <!-- Nasolabial folds (very deep, carved into face) -->
+  <path d="M90,88 Q84,96 82,108" stroke="#b89878" stroke-width="2" opacity="0.6"/>
+  <path d="M110,88 Q116,96 118,108" stroke="#b89878" stroke-width="2" opacity="0.6"/>
+  <!-- Cheek creases -->
+  <path d="M68,78 Q72,84 68,92" stroke="#c0a888" stroke-width="1.5" opacity="0.5"/>
+  <path d="M132,78 Q128,84 132,92" stroke="#c0a888" stroke-width="1.5" opacity="0.5"/>
+  <!-- Forehead wrinkles (deep, multiple) -->
+  <path d="M74,44 Q100,40 126,44" stroke="#c0a888" stroke-width="1.2" opacity="0.45"/>
+  <path d="M76,48 Q100,44 124,48" stroke="#c0a888" stroke-width="1" opacity="0.4"/>
+  <path d="M78,52 Q100,49 122,52" stroke="#c0a888" stroke-width="1" opacity="0.35"/>
+  <path d="M80,56 Q100,53 120,56" stroke="#c0a888" stroke-width="0.8" opacity="0.3"/>
+  <!-- Marionette lines (corners of mouth to chin) -->
+  <path d="M86,106 Q84,112 86,118" stroke="#c0a888" stroke-width="1" opacity="0.35"/>
+  <path d="M114,106 Q116,112 114,118" stroke="#c0a888" stroke-width="1" opacity="0.35"/>
+  <!-- Chin crease -->
+  <path d="M88,114 Q100,118 112,114" stroke="#c0a888" stroke-width="1" opacity="0.3"/>
+  
+  <!-- SOVIET MEDAL on lab coat (Order of the Red Star, tarnished) -->
+  <g transform="translate(70,148)">
+    <!-- Medal ribbon -->
+    <rect x="0" y="0" width="14" height="8" rx="1" fill="#cc3333" stroke="#000" stroke-width="1"/>
+    <line x1="3" y1="0" x2="3" y2="8" stroke="#882222" stroke-width="0.5" opacity="0.4"/>
+    <line x1="7" y1="0" x2="7" y2="8" stroke="#882222" stroke-width="0.5" opacity="0.4"/>
+    <line x1="11" y1="0" x2="11" y2="8" stroke="#882222" stroke-width="0.5" opacity="0.4"/>
+    <!-- Medal star (tarnished gold) -->
+    <polygon points="7,9 8.5,14 13,14 9.5,17 11,22 7,19 3,22 4.5,17 1,14 5.5,14" 
+             fill="#b8984a" stroke="#8a7030" stroke-width="0.8"/>
+    <!-- Center hammer & sickle hint -->
+    <circle cx="7" cy="16" r="2.5" fill="#a88840" stroke="#8a7030" stroke-width="0.5"/>
+  </g>
+  
+  <!-- Second medal (Order of Lenin, very old) -->
+  <g transform="translate(54,150) rotate(-5)">
+    <rect x="0" y="0" width="10" height="6" rx="1" fill="#cc3333" stroke="#000" stroke-width="0.8"/>
+    <circle cx="5" cy="12" r="5" fill="#b8984a" stroke="#8a7030" stroke-width="0.8"/>
+    <circle cx="5" cy="12" r="3" fill="#a88840" stroke="#8a7030" stroke-width="0.5"/>
+  </g>
+  
+  <!-- ID BADGE (hastily clipped, crooked, yellowed with age) -->
+  <g transform="rotate(12,120,170)">
+    <rect x="115" y="158" width="18" height="24" rx="2" fill="#e8e4d0" stroke="#000" stroke-width="1.5"/>
+    <rect x="117" y="161" width="14" height="9" fill="#cc3333"/>
+    <!-- Cyrillic-looking text lines -->
+    <line x1="118" y1="172" x2="130" y2="172" stroke="#888" stroke-width="0.8"/>
+    <line x1="118" y1="175" x2="128" y2="175" stroke="#888" stroke-width="0.6"/>
+    <line x1="118" y1="178" x2="126" y2="178" stroke="#888" stroke-width="0.5"/>
+    <!-- Clip -->
+    <rect x="121" y="154" width="6" height="8" rx="1" fill="#888" stroke="#000" stroke-width="1"/>
+  </g>
+  
+  <!-- READING GLASSES on chain around neck -->
+  <path d="M80,128 Q72,142 68,160" stroke="#888" stroke-width="0.8" fill="none" stroke-dasharray="2,2"/>
+  <path d="M120,128 Q128,142 132,160" stroke="#888" stroke-width="0.8" fill="none" stroke-dasharray="2,2"/>
+  <!-- Small reading glasses dangling -->
+  <ellipse cx="82" cy="164" rx="8" ry="5" fill="none" stroke="#5a5a4a" stroke-width="1.5"/>
+  <ellipse cx="100" cy="164" rx="8" ry="5" fill="none" stroke="#5a5a4a" stroke-width="1.5"/>
+  <line x1="90" y1="164" x2="92" y2="164" stroke="#5a5a4a" stroke-width="1.5"/>
 </svg>

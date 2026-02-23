@@ -156,12 +156,14 @@ const DwingelooScene = {
         // ── Back to regional_map ──
         {
             id: 'back_to_map',
-            name: 'Back to Regional Map',
+            name: '← Back to Map',
             x: 0,
             y: 80,
             width: 8,
             height: 20,
             cursor: 'pointer',
+            cssClass: 'hotspot-nav',
+            skipWalk: true,
             targetScene: 'regional_map'
         }
     ],

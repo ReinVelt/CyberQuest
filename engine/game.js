@@ -63,6 +63,7 @@ class CyberQuestEngine {
         this.passwordPuzzle = null;
         this.chatInterface = null;
         this.typewriterAbortController = null;
+        this.isPaused = false;
         
         // Dependency injection for testing
         this._deps = deps;
@@ -187,10 +188,18 @@ class CyberQuestEngine {
             </div>
             <div id="game-bottom-bar">
                 <div id="game-menu">
+                    <button id="menu-pause" title="Pause / Resume (P)">⏸️ Pause</button>
                     <button id="menu-voice" title="Toggle Voice">🔊 Voice</button>
                     <button id="menu-save">💾 Save</button>
                     <button id="menu-load">📂 Load</button>
                     <button id="menu-settings">⚙️ Settings</button>
+                </div>
+            </div>
+            <div id="pause-overlay" class="hidden">
+                <div id="pause-content">
+                    <div id="pause-icon">⏸️</div>
+                    <div id="pause-title">PAUSED</div>
+                    <div id="pause-hint">Click here or press P to resume</div>
                 </div>
             </div>
             <div id="notification-area"></div>
@@ -212,6 +221,7 @@ class CyberQuestEngine {
     bindEvents() {
         // Dialogue continuation (click and touch)
         const handleDialogueInteraction = (e) => {
+            if (this.isPaused) return;
             if (this.isDialogueActive && e.target.closest('#dialogue-box')) {
                 e.preventDefault();
                 this.advanceDialogue();
@@ -222,7 +232,8 @@ class CyberQuestEngine {
         
         // Scene interaction for walking (click and touch)
         const handleSceneInteraction = (e) => {
-            // Don't walk if clicking on UI, hotspots, or during dialogue/puzzle
+            // Don't walk if paused, clicking on UI, hotspots, or during dialogue/puzzle
+            if (this.isPaused) return;
             if (this.isDialogueActive || this.isPuzzleActive) return;
             if (e.target.closest('.hotspot')) return;
             if (e.target.closest('#ui-overlay')) return;
@@ -280,15 +291,44 @@ class CyberQuestEngine {
             btn?.addEventListener('click', wrappedHandler);
             btn?.addEventListener('touchend', wrappedHandler);
         };
+        addButtonHandler('menu-pause', () => this.togglePause());
         addButtonHandler('menu-save', () => this.saveGame());
         addButtonHandler('menu-load', () => this.loadGame());
         addButtonHandler('menu-voice', () => this.toggleVoice());
         
+        // Pause overlay — click to resume
+        const pauseOverlay = document.getElementById('pause-overlay');
+        if (pauseOverlay) {
+            const resumeHandler = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (this.isPaused) this.togglePause();
+            };
+            pauseOverlay.addEventListener('click', resumeHandler);
+            pauseOverlay.addEventListener('touchend', resumeHandler);
+        }
+        
         // Keyboard shortcuts
         const keyHandler = (e) => {
-            if (e.key === 'Escape') {
-                this.closePuzzle();
+            // Pause toggle — always available (P or Escape when paused)
+            if (e.key === 'p' || e.key === 'P') {
+                if (!this.isDialogueActive && !this.isPuzzleActive) {
+                    this.togglePause();
+                }
+                return;
             }
+            // Escape unpauses if paused, otherwise closes puzzle
+            if (e.key === 'Escape') {
+                if (this.isPaused) {
+                    this.togglePause();
+                    return;
+                }
+                this.closePuzzle();
+                return;
+            }
+            // Block all other keys while paused
+            if (this.isPaused) return;
+            
             if (e.key === 'i' || e.key === 'I') {
                 document.getElementById('inventory-items')?.classList.toggle('hidden');
             }
@@ -321,6 +361,9 @@ class CyberQuestEngine {
     }
     
     async loadScene(sceneId, transition = 'fade') {
+        // Auto-resume if paused when changing scenes
+        if (this.isPaused) this.togglePause();
+        
         const scene = this.scenes[sceneId];
         if (!scene) {
             console.error(`Scene not found: ${sceneId}`);
@@ -456,6 +499,11 @@ class CyberQuestEngine {
             element.style.width = `${hotspot.width}%`;
             element.style.height = `${hotspot.height}%`;
             
+            // Support custom CSS classes (e.g. 'hotspot-nav' for visible nav buttons)
+            if (hotspot.cssClass) {
+                element.classList.add(hotspot.cssClass);
+            }
+            
             if (hotspot.cursor) {
                 element.style.cursor = hotspot.cursor;
             }
@@ -478,7 +526,7 @@ class CyberQuestEngine {
     }
     
     handleHotspotClick(hotspot) {
-        if (this.isDialogueActive || this.isPuzzleActive) return;
+        if (this.isPaused || this.isDialogueActive || this.isPuzzleActive) return;
         
         // Check 'enabled' property (function or boolean)
         if (hotspot.enabled !== undefined) {
@@ -792,6 +840,98 @@ class CyberQuestEngine {
         return this.voiceEnabled;
     }
     
+    /**
+     * Toggle pause state. Freezes all game activity instantly.
+     * Pauses CSS animations, speech, typewriter, and blocks all interaction.
+     * @returns {boolean} new pause state
+     */
+    togglePause() {
+        this.isPaused = !this.isPaused;
+        
+        const overlay = document.getElementById('pause-overlay');
+        const btn = document.getElementById('menu-pause');
+        const sceneWrapper = document.getElementById('scene-wrapper');
+        const sceneContainer = document.getElementById('scene-container');
+        
+        if (this.isPaused) {
+            // --- PAUSE ---
+            // Show overlay
+            if (overlay) overlay.classList.remove('hidden');
+            
+            // Update button
+            if (btn) {
+                btn.textContent = '▶️ Resume';
+                btn.title = 'Resume Game (P)';
+                btn.classList.add('paused');
+            }
+            
+            // Freeze all CSS animations in the scene
+            if (sceneContainer) {
+                sceneContainer.style.animationPlayState = 'paused';
+                sceneContainer.querySelectorAll('*').forEach(el => {
+                    el.style.animationPlayState = 'paused';
+                });
+            }
+            
+            // Pause speech synthesis
+            if (this.voiceManager?.synth?.speaking) {
+                try { this.voiceManager.synth.pause(); } catch (e) { /* ignore */ }
+            }
+            
+            // Pause typewriter by aborting current and storing state
+            if (this.typewriterAbortController) {
+                this._typewriterWasPaused = true;
+                this.typewriterAbortController.abort();
+            }
+            
+            // Freeze player idle timer
+            if (this.player?._idleTimer) {
+                clearTimeout(this.player._idleTimer);
+                this.player._idleFrozen = true;
+            }
+            
+            console.log('Game PAUSED');
+        } else {
+            // --- RESUME ---
+            // Hide overlay
+            if (overlay) overlay.classList.add('hidden');
+            
+            // Update button
+            if (btn) {
+                btn.textContent = '⏸️ Pause';
+                btn.title = 'Pause / Resume (P)';
+                btn.classList.remove('paused');
+            }
+            
+            // Unfreeze all CSS animations
+            if (sceneContainer) {
+                sceneContainer.style.animationPlayState = '';
+                sceneContainer.querySelectorAll('*').forEach(el => {
+                    el.style.animationPlayState = '';
+                });
+            }
+            
+            // Resume speech synthesis
+            if (this.voiceManager?.synth?.paused) {
+                try { this.voiceManager.synth.resume(); } catch (e) { /* ignore */ }
+            }
+            
+            // Restart player idle timer
+            if (this.player?._idleFrozen) {
+                this.player._idleFrozen = false;
+                if (this.player.startIdleTimer) {
+                    this.player.startIdleTimer();
+                }
+            }
+            
+            this._typewriterWasPaused = false;
+            
+            console.log('Game RESUMED');
+        }
+        
+        return this.isPaused;
+    }
+
     // Quest Manager API (for compatibility with scene scripts)
     get questManager() {
         const self = this;
@@ -832,11 +972,14 @@ class CyberQuestEngine {
             return;
         }
         
-        if (!this.gameState.activeQuests.find(q => q.id === quest.id)) {
-            this.gameState.activeQuests.push(quest);
-            this.updateQuestUI();
-            this.showNotification(`New Quest: ${quest.name || quest.id}`);
+        // Skip if quest is already active or was already completed
+        if (this.gameState.activeQuests.find(q => q.id === quest.id) ||
+            this.gameState.questsCompleted.includes(quest.id)) {
+            return;
         }
+        this.gameState.activeQuests.push(quest);
+        this.updateQuestUI();
+        this.showNotification(`New Quest: ${quest.name || quest.id}`);
     }
     
     // Add item to inventory (shortcut method)

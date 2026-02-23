@@ -30,12 +30,14 @@ const EpilogueScene = {
     hotspots: [
         {
             id: 'continue-to-credits',
-            name: 'Continue',
+            name: 'Continue →',
             x: 40,
             y: 80,
             width: 20,
             height: 12,
             cursor: 'pointer',
+            cssClass: 'hotspot-nav',
+            skipWalk: true,
             action: function(game) {
                 if (game.getFlag('epilogue_complete')) {
                     game.loadScene('credits');
@@ -128,8 +130,8 @@ const EpilogueScene = {
 
             // ── Jaap Haartsen ──
             [
-                { speaker: 'Narrator', text: 'Jaap Haartsen started a wireless security consulting firm.' },
-                { speaker: 'Narrator', text: 'His first client: a German defence contractor.' },
+                { speaker: 'Narrator', text: 'Jaap Haartsen returned to his work at Dopple, his consumer electronics company in Assen.' },
+                { speaker: 'Narrator', text: 'The National Inventors Hall of Fame inductee took on a new client: a German defence contractor.' },
                 { speaker: 'Narrator', text: 'The father of Bluetooth, improving their wireless vetting procedures. The irony isn\'t lost on him.' }
             ],
 

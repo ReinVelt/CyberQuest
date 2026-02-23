@@ -78,13 +78,13 @@ const GardenScene = {
         {
             id: 'flower-beds',
             name: 'Flower Beds',
-            // SVG: Left bed at translate(450,500), Right at translate(750,520)
-            // Left: ellipse rx=100 → x=450-20=430; Right: extends to 750+200=950
-            // Combined: x=430, y=460, w=520, h=110
-            x: (430 / 1920) * 100,    // 22.40%
-            y: (460 / 1080) * 100,    // 42.59%
-            width: (520 / 1920) * 100, // 27.08%
-            height: (110 / 1080) * 100, // 10.19%
+            // SVG: Left bed at translate(650,500), Right at translate(750,520)
+            // Left: ellipse rx=100 cx=80 → abs x=630; Right: rx=120 cx=100 → abs x=970
+            // Combined: x=630, y=488, w=340, h=112
+            x: (630 / 1920) * 100,    // 32.81%
+            y: (488 / 1080) * 100,    // 45.19%
+            width: (340 / 1920) * 100, // 17.71%
+            height: (112 / 1080) * 100, // 10.37%
             cursor: 'pointer',
             action: function(game) {
                 game.startDialogue([
@@ -147,11 +147,11 @@ const GardenScene = {
         {
             id: 'tree',
             name: 'Large Tree',
-            // SVG: translate(1700,300), trunk at x=-20, canopy rx=120, ry=100
-            // Actual: x=1580, y=200, w=240, h=350
-            x: (1580 / 1920) * 100,   // 82.29%
-            y: (200 / 1080) * 100,    // 18.52%
-            width: (240 / 1920) * 100, // 12.50%
+            // SVG: translate(1700,300), canopy top at cy=60-ry=60→abs y=300, trunk to y=350→abs y=650
+            // Actual: x=1570, y=300, w=270, h=350
+            x: (1570 / 1920) * 100,   // 81.77%
+            y: (300 / 1080) * 100,    // 27.78%
+            width: (270 / 1920) * 100, // 14.06%
             height: (350 / 1080) * 100, // 32.41%
             cursor: 'pointer',
             action: function(game) {
@@ -483,8 +483,8 @@ const GardenScene = {
             });
         }
 
-        // Dwingeloo Observatory — accessible after visiting ASTRON or via story flag
-        if (game.getFlag('dwingeloo_unlocked') || game.getFlag('visited_astron')) {
+        // Dwingeloo Observatory — accessible after visiting ASTRON
+        if (game.getFlag('visited_astron')) {
             destinations.push({
                 id: 'dwingeloo',
                 name: 'Dwingeloo Observatory',
@@ -498,8 +498,8 @@ const GardenScene = {
             });
         }
 
-        // Westerbork Memorial — accessible after visiting klooster or via flag
-        if (game.getFlag('visited_klooster') || game.getFlag('westerbork_unlocked')) {
+        // Westerbork Memorial — accessible after visiting klooster
+        if (game.getFlag('visited_klooster')) {
             destinations.push({
                 id: 'westerbork',
                 name: 'Westerbork Memorial',
@@ -508,7 +508,7 @@ const GardenScene = {
                 icon: '✡️',
                 directScene: 'westerbork_memorial',
                 night: false,
-                visited: !!game.getFlag('visited_westerbork'),
+                visited: !!game.getFlag('visited_westerbork_memorial'),
                 urgent: false
             });
         }

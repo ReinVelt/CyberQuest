@@ -559,6 +559,19 @@ const HomeScene = {
             }, 1000);
         }
         
+        // Guide player after returning from klooster with USB
+        if (game.hasItem('usb_stick') && !game.getFlag('usb_analyzed')) {
+            setTimeout(() => {
+                game.startDialogue([
+                    { speaker: 'Ryan', text: 'Home. Time to check that USB stick.' },
+                    { speaker: 'Ryan', text: 'The air-gapped laptop in the mancave. No network, no risk.' }
+                ]);
+                setTimeout(() => {
+                    game.showNotification('Head to the mancave — use the air-gapped laptop');
+                }, 2000);
+            }, 800);
+        }
+
         // Update scene background with CSS class
         document.getElementById('scene-background').className = 'scene-home';
 

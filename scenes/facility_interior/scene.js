@@ -133,12 +133,14 @@ const FacilityInteriorScene = {
         },
         {
             id: 'exit_compound',
-            name: 'Exit to Perimeter',
+            name: '← Exit to Perimeter',
             x: 5,
             y: 85,
             width: 15,
             height: 12,
             cursor: 'exit',
+            cssClass: 'hotspot-nav',
+            skipWalk: true,
             action: function(game) {
                 game.showDialogue([
                     "Back to the perimeter? Not yet.",

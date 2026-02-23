@@ -551,42 +551,155 @@
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!--  SURVEILLANCE CAMERA — the modern intrusion            -->
-<!--  Dramatic, ominous, sweeping                           -->
+<!--  Dramatic, ominous pole + PTZ camera                   -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<!-- Pole -->
-<rect x="1180" y="455" width="8" height="100" fill="#404040" rx="2"/>
-<rect x="1179" y="540" width="10" height="16" fill="#333" rx="1"/>
 
-<!-- Camera housing — sweeping slowly -->
-<g class="surv-sweep" style="transform-origin: 1184px 455px;">
-  <!-- Camera body -->
-  <rect x="1164" y="441" width="38" height="22" fill="#1a1a1a" stroke="#333" stroke-width="2" rx="4"/>
-  <!-- Lens housing -->
-  <rect x="1166" y="444" width="16" height="16" fill="#0d0d0d" rx="3"/>
-  <circle cx="1174" cy="452" r="6" fill="#080808" stroke="#333" stroke-width="1.5"/>
-  <circle cx="1174" cy="452" r="3" fill="#111"/>
-  <!-- Lens reflection -->
-  <circle cx="1172" cy="450" r="1.5" fill="#4a5a6a" opacity="0.4"/>
+<!-- ── Pole shadow on ground ── -->
+<ellipse cx="1205" cy="695" rx="40" ry="6" fill="#000" opacity="0.3"/>
 
-  <!-- Camera LED — ominous blinking red -->
-  <circle cx="1196" cy="448" r="3.5" fill="#ff2200" class="led-blink"/>
+<!-- ── Concrete base ── -->
+<rect x="1175" y="678" width="60" height="22" fill="#4a4a42" rx="3"/>
+<rect x="1178" y="680" width="54" height="18" fill="#555548" rx="2"/>
+<!-- Moss/grime on base -->
+<rect x="1180" y="690" width="50" height="8" fill="#3a4a2a" opacity="0.2" rx="2"/>
+<!-- Base bolts -->
+<circle cx="1185" cy="688" r="2.5" fill="#3a3a30" stroke="#2a2a22" stroke-width="0.8"/>
+<circle cx="1225" cy="688" r="2.5" fill="#3a3a30" stroke="#2a2a22" stroke-width="0.8"/>
+
+<!-- ── Main pole — galvanised steel, weathered ── -->
+<rect x="1199" y="410" width="12" height="270" fill="#505050" rx="1"/>
+<!-- Pole highlight (wet reflection) -->
+<rect x="1200" y="412" width="4" height="266" fill="#6a6a6a" opacity="0.35" rx="1"/>
+<!-- Pole dark side -->
+<rect x="1207" y="412" width="3" height="266" fill="#3a3a3a" opacity="0.4"/>
+<!-- Weathering streaks -->
+<line x1="1202" y1="500" x2="1203" y2="580" stroke="#5a5a4a" stroke-width="0.8" opacity="0.3"/>
+<line x1="1206" y1="530" x2="1207" y2="640" stroke="#5a5a4a" stroke-width="0.6" opacity="0.25"/>
+<!-- Rust spots -->
+<circle cx="1204" cy="560" r="2" fill="#6a4a2a" opacity="0.25"/>
+<circle cx="1208" cy="620" r="1.5" fill="#7a5a3a" opacity="0.2"/>
+
+<!-- ── Cable conduit running down pole ── -->
+<rect x="1212" y="430" width="4" height="250" fill="#333" rx="1"/>
+<rect x="1213" y="432" width="2" height="246" fill="#2a2a2a" rx="0.5"/>
+<!-- Conduit clips -->
+<rect x="1211" y="475" width="6" height="3" fill="#444" rx="0.5"/>
+<rect x="1211" y="545" width="6" height="3" fill="#444" rx="0.5"/>
+<rect x="1211" y="615" width="6" height="3" fill="#444" rx="0.5"/>
+
+<!-- ── Junction box on pole (mid-height) ── -->
+<rect x="1193" y="530" width="24" height="30" fill="#3a3a3a" stroke="#555" stroke-width="1" rx="2"/>
+<rect x="1196" y="533" width="18" height="24" fill="#2a2a2a" rx="1"/>
+<!-- Warning sticker -->
+<rect x="1198" y="536" width="14" height="8" fill="#ccaa00" rx="1"/>
+<text x="1205" y="543" font-family="monospace" font-size="4.5" fill="#000" text-anchor="middle" font-weight="bold">⚡</text>
+<!-- Conduit entry holes -->
+<circle cx="1198" cy="555" r="2" fill="#1a1a1a"/>
+<circle cx="1210" cy="555" r="2" fill="#1a1a1a"/>
+
+<!-- ── Mount arm (horizontal bracket at top) ── -->
+<rect x="1152" y="415" width="56" height="8" fill="#484848" rx="1"/>
+<rect x="1153" y="416" width="54" height="3" fill="#5a5a5a" opacity="0.3"/>
+<!-- Arm bolts -->
+<circle cx="1160" cy="419" r="2" fill="#3a3a3a" stroke="#2a2a2a" stroke-width="0.8"/>
+<circle cx="1200" cy="419" r="2" fill="#3a3a3a" stroke="#2a2a2a" stroke-width="0.8"/>
+<!-- Diagonal brace -->
+<line x1="1195" y1="415" x2="1165" y2="435" stroke="#4a4a4a" stroke-width="3"/>
+<line x1="1196" y1="416" x2="1168" y2="433" stroke="#5a5a5a" stroke-width="1" opacity="0.3"/>
+
+<!-- ── Camera housing — sweeping slowly ── -->
+<g class="surv-sweep" style="transform-origin: 1155px 420px;">
+
+  <!-- Camera mounting plate -->
+  <rect x="1140" y="408" width="30" height="6" fill="#3a3a3a" rx="1"/>
+
+  <!-- Main camera body — heavy, industrial -->
+  <rect x="1120" y="414" width="70" height="35" fill="#1a1a1a" stroke="#333" stroke-width="2" rx="5"/>
+  <!-- Body panel lines -->
+  <line x1="1125" y1="420" x2="1125" y2="444" stroke="#2a2a2a" stroke-width="0.8"/>
+  <line x1="1185" y1="420" x2="1185" y2="444" stroke="#2a2a2a" stroke-width="0.8"/>
+  <!-- Body highlight -->
+  <rect x="1125" y="416" width="60" height="3" fill="#333" opacity="0.4" rx="1"/>
+  <!-- Heat vents on top -->
+  <g stroke="#2a2a2a" stroke-width="0.8" opacity="0.5">
+    <line x1="1145" y1="416" x2="1145" y2="414"/>
+    <line x1="1150" y1="416" x2="1150" y2="414"/>
+    <line x1="1155" y1="416" x2="1155" y2="414"/>
+    <line x1="1160" y1="416" x2="1160" y2="414"/>
+    <line x1="1165" y1="416" x2="1165" y2="414"/>
+  </g>
+
+  <!-- Lens barrel — protruding, aggressive -->
+  <rect x="1108" y="420" width="18" height="24" fill="#0d0d0d" rx="3" stroke="#222" stroke-width="1.5"/>
+  <!-- Inner lens tube -->
+  <rect x="1100" y="423" width="12" height="18" fill="#080808" rx="4"/>
+  <!-- Lens glass — outer ring -->
+  <circle cx="1104" cy="432" r="9" fill="#050505" stroke="#333" stroke-width="2"/>
+  <!-- Iris ring -->
+  <circle cx="1104" cy="432" r="6" fill="#0a0a0a" stroke="#2a2a2a" stroke-width="1"/>
+  <!-- Inner lens -->
+  <circle cx="1104" cy="432" r="3.5" fill="#111"/>
+  <!-- Lens coating reflection — cold blue glint -->
+  <circle cx="1102" cy="430" r="2" fill="#3a5a7a" opacity="0.35"/>
+  <circle cx="1106" cy="434" r="1" fill="#2a4a6a" opacity="0.2"/>
+
+  <!-- IR LEDs around lens (night-vision ring) -->
+  <g fill="#330000" opacity="0.6">
+    <circle cx="1104" cy="422" r="1.5">
+      <animate attributeName="fill" values="#330000;#550000;#330000" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1096" cy="428" r="1.5">
+      <animate attributeName="fill" values="#330000;#550000;#330000" dur="2s" repeatCount="indefinite" begin="0.3s"/>
+    </circle>
+    <circle cx="1096" cy="436" r="1.5">
+      <animate attributeName="fill" values="#330000;#550000;#330000" dur="2s" repeatCount="indefinite" begin="0.6s"/>
+    </circle>
+    <circle cx="1104" cy="442" r="1.5">
+      <animate attributeName="fill" values="#330000;#550000;#330000" dur="2s" repeatCount="indefinite" begin="0.9s"/>
+    </circle>
+    <circle cx="1112" cy="436" r="1.5">
+      <animate attributeName="fill" values="#330000;#550000;#330000" dur="2s" repeatCount="indefinite" begin="1.2s"/>
+    </circle>
+    <circle cx="1112" cy="428" r="1.5">
+      <animate attributeName="fill" values="#330000;#550000;#330000" dur="2s" repeatCount="indefinite" begin="1.5s"/>
+    </circle>
+  </g>
+
+  <!-- Status LED — ominous blinking red -->
+  <circle cx="1186" cy="425" r="4" fill="#ff2200" class="led-blink"/>
   <!-- LED glow halo -->
-  <circle cx="1196" cy="448" r="18" fill="url(#redGlow)" class="led-glow"/>
+  <circle cx="1186" cy="425" r="22" fill="url(#redGlow)" class="led-glow"/>
+
+  <!-- Camera model label (tiny) -->
+  <text x="1155" y="445" font-family="monospace" font-size="4" fill="#444" text-anchor="middle">DS-2DE4A425</text>
+
+  <!-- Wi-Fi/Bluetooth module — bolted underneath -->
+  <rect x="1145" y="449" width="20" height="10" fill="#0a1a0a" stroke="#1a3a1a" stroke-width="1" rx="2"/>
+  <text x="1155" y="457" font-family="monospace" font-size="5" fill="#00aa44" text-anchor="middle" class="info-flicker">BT</text>
+  <!-- BT antenna stub -->
+  <rect x="1162" y="445" width="2" height="12" fill="#1a3a1a" rx="0.5"/>
+  <circle cx="1163" cy="444" r="1.5" fill="#00aa44" opacity="0.5"/>
 </g>
 
-<!-- Surveillance cone (visible scan area — eerie green) -->
-<polygon points="1174,452 1050,560 1300,560" fill="url(#survGlow)" opacity="0.08">
-  <animate attributeName="opacity" values="0.05;0.12;0.05" dur="4s" repeatCount="indefinite"/>
+<!-- ── Surveillance cone (eerie green scan area) ── -->
+<polygon points="1104,432 960,580 1260,580" fill="url(#survGlow)" opacity="0.06">
+  <animate attributeName="opacity" values="0.03;0.10;0.03" dur="4s" repeatCount="indefinite"/>
 </polygon>
+<!-- Scan line sweep -->
+<line x1="1104" y1="432" x2="1104" y2="580" stroke="#00ff44" stroke-width="0.5" opacity="0.04">
+  <animateTransform attributeName="transform" type="rotate" values="-18,1104,432;18,1104,432;-18,1104,432" dur="8s" repeatCount="indefinite"/>
+</line>
 
-<!-- Wi-Fi/Bluetooth module -->
-<rect x="1188" y="455" width="12" height="7" fill="#0a1a0a" stroke="#1a3a1a" stroke-width="1" rx="1"/>
-<text x="1194" y="462" font-family="monospace" font-size="5.5" fill="#00aa44" text-anchor="middle" class="info-flicker">BT</text>
-<!-- Signal emission lines -->
-<g opacity="0.15">
-  <path d="M1200,458 Q1210,450 1218,458" stroke="#00CC44" stroke-width="1" fill="none" class="led-blink" style="animation-delay: 0.3s;"/>
-  <path d="M1202,458 Q1215,445 1225,458" stroke="#00CC44" stroke-width="0.8" fill="none" class="led-blink" style="animation-delay: 0.6s;"/>
+<!-- ── BT signal emission arcs ── -->
+<g opacity="0.12">
+  <path d="M1170,455 Q1182,445 1192,455" stroke="#00CC44" stroke-width="1.2" fill="none" class="led-blink" style="animation-delay: 0s;"/>
+  <path d="M1168,455 Q1185,440 1198,455" stroke="#00CC44" stroke-width="1" fill="none" class="led-blink" style="animation-delay: 0.4s;"/>
+  <path d="M1165,455 Q1188,433 1205,455" stroke="#00CC44" stroke-width="0.8" fill="none" class="led-blink" style="animation-delay: 0.8s;"/>
 </g>
+
+<!-- ── "DO NOT CLIMB" warning plate on pole ── -->
+<rect x="1194" y="580" width="22" height="14" fill="#cc0000" rx="1" opacity="0.6"/>
+<text x="1205" y="590" font-family="sans-serif" font-size="3.5" fill="#fff" text-anchor="middle" font-weight="bold">⚠</text>
 
 <!-- ═══════════════════════════════════════════════════════ -->
 <!--  BARRACK FOUNDATIONS — ghostly outlines                 -->
@@ -624,19 +737,19 @@
 </g>
 
 <g filter="url(#dramaticShadow)">
-  <!-- Right tree -->
-  <rect x="1168" y="435" width="16" height="140" fill="#3a2a18" rx="3"/>
-  <line x1="1172" y1="440" x2="1173" y2="575" stroke="#2a1e10" stroke-width="1" opacity="0.4"/>
-  <line x1="1180" y1="443" x2="1181" y2="575" stroke="#2a1e10" stroke-width="0.8" opacity="0.3"/>
-  <ellipse cx="1176" cy="433" rx="45" ry="60" fill="#3a4a22" opacity="0.75"/>
-  <ellipse cx="1176" cy="425" rx="35" ry="47" fill="#425228" opacity="0.5"/>
+  <!-- Right tree — positioned right of camera pole -->
+  <rect x="1328" y="435" width="16" height="140" fill="#3a2a18" rx="3"/>
+  <line x1="1332" y1="440" x2="1333" y2="575" stroke="#2a1e10" stroke-width="1" opacity="0.4"/>
+  <line x1="1340" y1="443" x2="1341" y2="575" stroke="#2a1e10" stroke-width="0.8" opacity="0.3"/>
+  <ellipse cx="1336" cy="433" rx="45" ry="60" fill="#3a4a22" opacity="0.75"/>
+  <ellipse cx="1336" cy="425" rx="35" ry="47" fill="#425228" opacity="0.5"/>
   <g class="branch-sway" style="animation-delay: 0.8s;">
-    <path d="M1162,453 Q1144,508 1138,568" stroke="#3a4a22" stroke-width="3.5" fill="none" opacity="0.6"/>
-    <path d="M1176,448 Q1160,508 1154,570" stroke="#324820" stroke-width="3.5" fill="none" opacity="0.55"/>
+    <path d="M1322,453 Q1304,508 1298,568" stroke="#3a4a22" stroke-width="3.5" fill="none" opacity="0.6"/>
+    <path d="M1336,448 Q1320,508 1314,570" stroke="#324820" stroke-width="3.5" fill="none" opacity="0.55"/>
   </g>
   <g class="branch-sway" style="animation-delay: 2.3s;">
-    <path d="M1188,455 Q1178,512 1175,575" stroke="#3a4a22" stroke-width="3" fill="none" opacity="0.6"/>
-    <path d="M1198,462 Q1194,518 1192,580" stroke="#324820" stroke-width="2.5" fill="none" opacity="0.5"/>
+    <path d="M1348,455 Q1338,512 1335,575" stroke="#3a4a22" stroke-width="3" fill="none" opacity="0.6"/>
+    <path d="M1358,462 Q1354,518 1352,580" stroke="#324820" stroke-width="2.5" fill="none" opacity="0.5"/>
   </g>
 </g>
 

@@ -1,278 +1,880 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900" style="background: linear-gradient(180deg, #0a0e17 0%, #1a1f2e 50%, #0d1117 100%)">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200">
+  <!-- CYBERQUEST: OPERATION ZERFALL — Hollywood Action Cyber Thriller Poster -->
+  <!-- South Park style characters, multi-layered scene composition -->
+  
   <defs>
-    <!-- Gradient definitions -->
-    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1" />
-      <stop offset="50%" style="stop-color:#1a2a3e;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#0f1923;stop-opacity:1" />
+    <!-- Sky gradient (dark cinematic) -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#030510"/>
+      <stop offset="30%" style="stop-color:#0a1628"/>
+      <stop offset="60%" style="stop-color:#0c1a2e"/>
+      <stop offset="100%" style="stop-color:#1a0a0a"/>
     </linearGradient>
     
-    <linearGradient id="redAlert" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#ff0000;stop-opacity:0.3" />
-      <stop offset="50%" style="stop-color:#ff3333;stop-opacity:0.6" />
-      <stop offset="100%" style="stop-color:#ff0000;stop-opacity:0.3" />
+    <!-- Dramatic red-orange fire glow at bottom -->
+    <linearGradient id="fireGlow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:transparent"/>
+      <stop offset="60%" style="stop-color:#2a0800;stop-opacity:0"/>
+      <stop offset="85%" style="stop-color:#4a1500;stop-opacity:0.6"/>
+      <stop offset="100%" style="stop-color:#ff4400;stop-opacity:0.3"/>
     </linearGradient>
     
-    <radialGradient id="glowGreen" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.8" />
-      <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0" />
+    <!-- Cyan tech glow -->
+    <radialGradient id="techGlow" cx="50%" cy="35%" r="40%">
+      <stop offset="0%" style="stop-color:#00ffff;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#00ffff;stop-opacity:0"/>
     </radialGradient>
     
-    <radialGradient id="glowRed" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:#ff3333;stop-opacity:0.6" />
-      <stop offset="100%" style="stop-color:#ff3333;stop-opacity:0" />
-    </radialGradient>
+    <!-- Title metallic gradient -->
+    <linearGradient id="titleGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="30%" style="stop-color:#e0e8f0"/>
+      <stop offset="50%" style="stop-color:#00cccc"/>
+      <stop offset="70%" style="stop-color:#e0e8f0"/>
+      <stop offset="100%" style="stop-color:#ffffff"/>
+    </linearGradient>
     
-    <!-- Filter for glow effects -->
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
+    <linearGradient id="subtitleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ff4444"/>
+      <stop offset="50%" style="stop-color:#ff6644"/>
+      <stop offset="100%" style="stop-color:#ff4444"/>
+    </linearGradient>
     
-    <filter id="strongGlow">
-      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    
-    <!-- Scanline pattern -->
-    <pattern id="scanlines" x="0" y="0" width="2" height="2" patternUnits="userSpaceOnUse">
-      <rect width="2" height="1" fill="rgba(0,255,255,0.03)"/>
+    <!-- Scan line effect -->
+    <pattern id="scanlines" patternUnits="userSpaceOnUse" width="4" height="4">
+      <rect width="4" height="2" fill="rgba(0,255,255,0.03)"/>
     </pattern>
+    
+    <!-- Matrix rain pattern -->
+    <pattern id="matrixRain" patternUnits="userSpaceOnUse" width="20" height="200">
+      <text x="2" y="20" font-family="monospace" font-size="10" fill="#00ff88" opacity="0.15">0</text>
+      <text x="2" y="40" font-family="monospace" font-size="10" fill="#00ff88" opacity="0.1">1</text>
+      <text x="2" y="60" font-family="monospace" font-size="10" fill="#00ff88" opacity="0.08">Ф</text>
+      <text x="2" y="80" font-family="monospace" font-size="10" fill="#00ff88" opacity="0.06">0</text>
+      <text x="2" y="100" font-family="monospace" font-size="10" fill="#00ff88" opacity="0.04">Д</text>
+      <text x="2" y="120" font-family="monospace" font-size="10" fill="#00ff88" opacity="0.03">1</text>
+    </pattern>
+    
+    <!-- Glow filters -->
+    <filter id="glowCyan">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowRed">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glowTitle">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softShadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#000" flood-opacity="0.7"/>
+    </filter>
+    <filter id="heavyShadow">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#000" flood-opacity="0.9"/>
+    </filter>
+    
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" style="stop-color:transparent"/>
+      <stop offset="100%" style="stop-color:#000;stop-opacity:0.8"/>
+    </radialGradient>
+    
+    <!-- Radar sweep -->
+    <linearGradient id="radarSweep" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0"/>
+      <stop offset="80%" style="stop-color:#00ff88;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#00ff88;stop-opacity:0.4"/>
+    </linearGradient>
+    
+    <!-- Skin gradient for SP characters -->
+    <linearGradient id="spSkin" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5e0c8"/>
+      <stop offset="100%" style="stop-color:#e8d0b0"/>
+    </linearGradient>
+    
+    <clipPath id="posterClip">
+      <rect x="0" y="0" width="800" height="1200" rx="4"/>
+    </clipPath>
   </defs>
   
-  <!-- Background sky -->
-  <rect width="600" height="900" fill="url(#skyGradient)"/>
+  <!-- ============================================ -->
+  <!-- BACKGROUND LAYERS                            -->
+  <!-- ============================================ -->
   
-  <!-- Scanline overlay -->
-  <rect width="600" height="900" fill="url(#scanlines)" opacity="0.4"/>
-  
-  <!-- Background LOFAR antenna field (distant) -->
-  <g opacity="0.3">
-    <!-- Multiple antenna towers in perspective -->
-    <line x1="50" y1="400" x2="50" y2="320" stroke="#4db8ff" stroke-width="1.5" opacity="0.6"/>
-    <circle cx="50" cy="315" r="8" fill="none" stroke="#4db8ff" stroke-width="1"/>
+  <g clip-path="url(#posterClip)">
     
-    <line x1="90" y1="410" x2="90" y2="340" stroke="#4db8ff" stroke-width="1.5" opacity="0.6"/>
-    <circle cx="90" cy="335" r="8" fill="none" stroke="#4db8ff" stroke-width="1"/>
+    <!-- Dark cinematic sky -->
+    <rect width="800" height="1200" fill="url(#skyGrad)"/>
     
-    <line x1="130" y1="420" x2="130" y2="355" stroke="#4db8ff" stroke-width="1.5" opacity="0.6"/>
-    <circle cx="130" cy="350" r="8" fill="none" stroke="#4db8ff" stroke-width="1"/>
+    <!-- Matrix rain overlay -->
+    <rect width="800" height="1200" fill="url(#matrixRain)" opacity="0.5"/>
     
-    <line x1="470" y1="420" x2="470" y2="355" stroke="#4db8ff" stroke-width="1.5" opacity="0.6"/>
-    <circle cx="470" cy="350" r="8" fill="none" stroke="#4db8ff" stroke-width="1"/>
+    <!-- Subtle stars -->
+    <g fill="white" opacity="0.4">
+      <circle cx="120" cy="40" r="1"/><circle cx="350" cy="25" r="1.2"/>
+      <circle cx="580" cy="50" r="0.8"/><circle cx="700" cy="30" r="1"/>
+      <circle cx="60" cy="90" r="0.6"/><circle cx="240" cy="65" r="1.1"/>
+      <circle cx="480" cy="80" r="0.7"/><circle cx="660" cy="75" r="0.9"/>
+      <circle cx="150" cy="120" r="0.5"/><circle cx="550" cy="110" r="0.8"/>
+    </g>
     
-    <line x1="510" y1="410" x2="510" y2="340" stroke="#4db8ff" stroke-width="1.5" opacity="0.6"/>
-    <circle cx="510" cy="335" r="8" fill="none" stroke="#4db8ff" stroke-width="1"/>
+    <!-- Tech glow center -->
+    <rect width="800" height="1200" fill="url(#techGlow)"/>
     
-    <line x1="550" y1="400" x2="550" y2="320" stroke="#4db8ff" stroke-width="1.5" opacity="0.6"/>
-    <circle cx="550" cy="315" r="8" fill="none" stroke="#4db8ff" stroke-width="1"/>
-  </g>
-  
-  <!-- WSRT Large Radio Telescope (left side) -->
-  <g opacity="0.5">
-    <!-- Large dish -->
-    <ellipse cx="120" cy="280" rx="45" ry="20" fill="none" stroke="#5599cc" stroke-width="3"/>
-    <ellipse cx="120" cy="280" rx="35" ry="15" fill="none" stroke="#5599cc" stroke-width="1.5"/>
-    <line x1="120" y1="280" x2="120" y2="380" stroke="#5599cc" stroke-width="4"/>
-    <polygon points="110,380 130,380 135,390 105,390" fill="#3a5f7d"/>
+    <!-- ============================================ -->
+    <!-- BACKGROUND SCENE: WSRT DISHES (horizon)     -->
+    <!-- ============================================ -->
+    <g opacity="0.35">
+      <!-- Distant WSRT dishes silhouette across top -->
+      <g fill="#0a2040" stroke="#0e2848" stroke-width="1">
+        <path d="M40,320 Q60,290 80,320 L70,320 L70,370 L50,370 L50,320 Z"/>
+        <path d="M140,310 Q165,275 190,310 L178,310 L178,370 L152,370 L152,310 Z"/>
+        <path d="M260,315 Q282,282 304,315 L294,315 L294,370 L270,370 L270,315 Z"/>
+        <path d="M380,312 Q405,278 430,312 L418,312 L418,370 L392,370 L392,312 Z"/>
+        <path d="M500,318 Q522,286 544,318 L534,318 L534,370 L510,370 L510,318 Z"/>
+        <path d="M610,314 Q632,280 654,314 L644,314 L644,370 L620,370 L620,314 Z"/>
+        <path d="M720,320 Q742,290 764,320 L754,320 L754,370 L730,370 L730,320 Z"/>
+      </g>
+      <!-- Moonlight glow on dishes -->
+      <g fill="none" stroke="#1a4a6a" stroke-width="0.5" opacity="0.3">
+        <path d="M58,304 Q60,290 62,304"/>
+        <path d="M158,298 Q165,278 172,298"/>
+        <path d="M274,300 Q282,284 290,300"/>
+        <path d="M394,296 Q405,280 416,296"/>
+        <path d="M514,302 Q522,288 530,302"/>
+        <path d="M624,298 Q632,282 640,298"/>
+        <path d="M734,304 Q742,292 750,304"/>
+      </g>
+    </g>
     
-    <!-- Signal waves from dish -->
-    <path d="M 120,260 Q 100,230 85,200" fill="none" stroke="#00ff88" stroke-width="1.5" opacity="0.4" stroke-dasharray="5,5">
-      <animate attributeName="opacity" values="0.2;0.6;0.2" dur="2s" repeatCount="indefinite"/>
-    </path>
-    <path d="M 120,260 Q 140,230 155,200" fill="none" stroke="#00ff88" stroke-width="1.5" opacity="0.4" stroke-dasharray="5,5">
-      <animate attributeName="opacity" values="0.2;0.6;0.2" dur="2s" begin="0.5s" repeatCount="indefinite"/>
-    </path>
-  </g>
-  
-  <!-- WSRT second dish (right side) -->
-  <g opacity="0.5">
-    <ellipse cx="480" cy="290" rx="40" ry="18" fill="none" stroke="#5599cc" stroke-width="3"/>
-    <ellipse cx="480" cy="290" rx="30" ry="13" fill="none" stroke="#5599cc" stroke-width="1.5"/>
-    <line x1="480" y1="290" x2="480" y2="380" stroke="#5599cc" stroke-width="4"/>
-    <polygon points="470,380 490,380 495,390 465,390" fill="#3a5f7d"/>
-  </g>
-  
-  <!-- Military facility - Steckerdoser Heide bunker complex -->
-  <g opacity="0.7">
-    <!-- Main bunker building -->
-    <rect x="200" y="340" width="200" height="80" fill="#1a1a1a" stroke="#333" stroke-width="2"/>
+    <!-- Ground/horizon line -->
+    <rect x="0" y="360" width="800" height="4" fill="#0a1828" opacity="0.6"/>
     
-    <!-- Bunker entrance -->
-    <rect x="280" y="370" width="40" height="50" fill="#0a0a0a"/>
-    <polygon points="280,370 300,360 320,370" fill="#2a2a2a"/>
+    <!-- ============================================ -->
+    <!-- MID-GROUND: FACILITY SILHOUETTE (LEFT)       -->
+    <!-- ============================================ -->
+    <g opacity="0.5" filter="url(#softShadow)">
+      <!-- Military facility building -->
+      <rect x="20" y="380" width="180" height="180" fill="#0c1420" rx="2"/>
+      <rect x="30" y="390" width="50" height="30" fill="#0a1018" rx="1"/>
+      <rect x="100" y="390" width="50" height="30" fill="#0a1018" rx="1"/>
+      <!-- Security lights (red) -->
+      <circle cx="60" cy="395" r="3" fill="#ff2222" opacity="0.6"/>
+      <circle cx="60" cy="395" r="8" fill="#ff0000" opacity="0.1"/>
+      <circle cx="130" cy="395" r="3" fill="#ff2222" opacity="0.6"/>
+      <circle cx="130" cy="395" r="8" fill="#ff0000" opacity="0.1"/>
+      <!-- Antenna on roof -->
+      <line x1="110" y1="380" x2="110" y2="340" stroke="#1a2a3a" stroke-width="2"/>
+      <line x1="100" y1="350" x2="120" y2="350" stroke="#1a2a3a" stroke-width="1.5"/>
+      <circle cx="110" cy="340" r="3" fill="#ff0000" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0.8;0.4" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Barbed wire fence -->
+      <line x1="0" y1="555" x2="200" y2="555" stroke="#2a3a4a" stroke-width="1.5" stroke-dasharray="8,4"/>
+      <!-- Guard tower -->
+      <rect x="175" y="440" width="30" height="120" fill="#0e1822"/>
+      <rect x="170" y="430" width="40" height="15" fill="#0e1822"/>
+      <circle cx="190" cy="435" r="4" fill="#ffaa00" opacity="0.3"/>
+    </g>
     
-    <!-- Windows with red glow -->
-    <rect x="220" y="355" width="20" height="12" fill="#660000" opacity="0.8">
-      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" repeatCount="indefinite"/>
-    </rect>
-    <rect x="250" y="355" width="20" height="12" fill="#660000" opacity="0.8">
-      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" begin="1s" repeatCount="indefinite"/>
-    </rect>
-    <rect x="330" y="355" width="20" height="12" fill="#660000" opacity="0.8">
-      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" begin="2s" repeatCount="indefinite"/>
-    </rect>
-    <rect x="360" y="355" width="20" height="12" fill="#660000" opacity="0.8">
-      <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" begin="0.5s" repeatCount="indefinite"/>
-    </rect>
+    <!-- ============================================ -->
+    <!-- MID-GROUND: DWINGELOO DISH (RIGHT)           -->
+    <!-- ============================================ -->
+    <g opacity="0.4" transform="translate(580,350)">
+      <!-- Massive radio dish silhouette -->
+      <path d="M0,100 Q60,20 120,100" fill="none" stroke="#1a3050" stroke-width="3"/>
+      <path d="M10,95 Q60,30 110,95" fill="#0c1828" opacity="0.5"/>
+      <!-- Dish support structure -->
+      <line x1="60" y1="60" x2="60" y2="180" stroke="#1a3050" stroke-width="3"/>
+      <line x1="30" y1="100" x2="60" y2="140" stroke="#1a2a40" stroke-width="1.5"/>
+      <line x1="90" y1="100" x2="60" y2="140" stroke="#1a2a40" stroke-width="1.5"/>
+      <!-- Signal emanating from dish (cyan) -->
+      <path d="M60,60 Q40,30 60,0" stroke="#00ffff" stroke-width="0.8" fill="none" opacity="0.3"/>
+      <path d="M60,60 Q80,30 60,0" stroke="#00ffff" stroke-width="0.8" fill="none" opacity="0.3"/>
+      <circle cx="60" cy="60" r="4" fill="#00ffff" opacity="0.3">
+        <animate attributeName="r" values="3;6;3" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.3;0.1;0.3" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </g>
     
-    <!-- Barbed wire fence -->
-    <line x1="150" y1="420" x2="450" y2="420" stroke="#666" stroke-width="2"/>
-    <path d="M 150,420 L 160,418 L 170,422 L 180,418 L 190,422 L 200,418 L 210,422 L 220,418 L 230,422 L 240,418 L 250,422 L 260,418 L 270,422 L 280,418 L 290,422 L 300,418 L 310,422 L 320,418 L 330,422 L 340,418 L 350,422 L 360,418 L 370,422 L 380,418 L 390,422 L 400,418 L 410,422 L 420,418 L 430,422 L 440,418 L 450,420" fill="none" stroke="#999" stroke-width="1"/>
+    <!-- ============================================ -->
+    <!-- BACKGROUND: KLOOSTER / MONASTERY (CENTER)   -->
+    <!-- ============================================ -->
+    <g opacity="0.25" transform="translate(300,370)">
+      <!-- Medieval monastery silhouette -->
+      <rect x="0" y="40" width="200" height="120" fill="#0e1820"/>
+      <!-- Tower -->
+      <rect x="80" y="0" width="40" height="50" fill="#0e1820"/>
+      <polygon points="80,0 100,-20 120,0" fill="#0e1820"/>
+      <!-- Cross on tower -->
+      <line x1="100" y1="-20" x2="100" y2="-32" stroke="#1a2a3a" stroke-width="2"/>
+      <line x1="94" y1="-26" x2="106" y2="-26" stroke="#1a2a3a" stroke-width="2"/>
+      <!-- Arched windows -->
+      <path d="M30,70 Q40,55 50,70 L50,100 L30,100 Z" fill="#08101a"/>
+      <path d="M80,70 Q90,55 100,70 L100,100 L80,100 Z" fill="#08101a"/>
+      <path d="M130,70 Q140,55 150,70 L150,100 L130,100 Z" fill="#08101a"/>
+      <!-- Faint candlelight in windows -->
+      <circle cx="40" cy="85" r="3" fill="#ffaa44" opacity="0.15"/>
+      <circle cx="90" cy="85" r="3" fill="#ffaa44" opacity="0.12"/>
+    </g>
     
-    <!-- Side building/tower -->
-    <rect x="410" y="310" width="40" height="110" fill="#1a1a1a" stroke="#333" stroke-width="2"/>
-    <rect x="420" y="325" width="8" height="8" fill="#ff3333" opacity="0.9" filter="url(#glow)">
-      <animate attributeName="opacity" values="0.3;1;0.3" dur="1.5s" repeatCount="indefinite"/>
-    </rect>
+    <!-- ============================================ -->
+    <!-- CIRCUIT BOARD / DATA STREAMS                -->
+    <!-- ============================================ -->
+    <g opacity="0.2" stroke="#00ff88" stroke-width="0.8" fill="none">
+      <!-- Left data streams -->
+      <path d="M0,200 L60,200 L60,280 L120,280"/>
+      <path d="M0,230 L40,230 L40,310 L100,310"/>
+      <path d="M0,260 L30,260 L30,340 L80,340"/>
+      <!-- Right data streams -->
+      <path d="M800,210 L740,210 L740,290 L680,290"/>
+      <path d="M800,240 L750,240 L750,320 L690,320"/>
+      <path d="M800,270 L760,270 L760,350 L720,350"/>
+      <!-- Circuit nodes -->
+      <circle cx="120" cy="280" r="3" fill="#00ff88" opacity="0.3"/>
+      <circle cx="100" cy="310" r="3" fill="#00ff88" opacity="0.3"/>
+      <circle cx="680" cy="290" r="3" fill="#00ff88" opacity="0.3"/>
+      <circle cx="690" cy="320" r="3" fill="#00ff88" opacity="0.3"/>
+    </g>
     
-    <!-- Surveillance camera -->
-    <circle cx="390" cy="345" r="5" fill="#2a2a2a" stroke="#666" stroke-width="1"/>
-    <rect x="385" y="343" width="10" height="4" fill="#333"/>
-    <circle cx="390" cy="345" r="2" fill="#ff0000" opacity="0.8">
-      <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
-    </circle>
-  </g>
-  
-  <!-- Signal waves emanating from antennas -->
-  <g opacity="0.4">
-    <circle cx="300" cy="200" r="80" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.3">
-      <animate attributeName="r" values="80;150;220" dur="4s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.4;0.1;0" dur="4s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="300" cy="200" r="80" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.3">
-      <animate attributeName="r" values="80;150;220" dur="4s" begin="1.3s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.4;0.1;0" dur="4s" begin="1.3s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="300" cy="200" r="80" fill="none" stroke="#00ff88" stroke-width="1" opacity="0.3">
-      <animate attributeName="r" values="80;150;220" dur="4s" begin="2.6s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.4;0.1;0" dur="4s" begin="2.6s" repeatCount="indefinite"/>
-    </circle>
-  </g>
-  
-  <!-- Protagonist silhouette (Ryan with laptop/equipment) -->
-  <g transform="translate(300,500)">
-    <!-- Shadow/base -->
-    <ellipse cx="0" cy="100" rx="50" ry="8" fill="#000" opacity="0.5"/>
+    <!-- ============================================ -->
+    <!-- RADAR / SURVEILLANCE ARC (top area)          -->
+    <!-- ============================================ -->
+    <g transform="translate(400,180)" opacity="0.2">
+      <circle cx="0" cy="0" r="120" fill="none" stroke="#00ff88" stroke-width="0.5"/>
+      <circle cx="0" cy="0" r="80" fill="none" stroke="#00ff88" stroke-width="0.5"/>
+      <circle cx="0" cy="0" r="40" fill="none" stroke="#00ff88" stroke-width="0.5"/>
+      <line x1="0" y1="-120" x2="0" y2="120" stroke="#00ff88" stroke-width="0.3"/>
+      <line x1="-120" y1="0" x2="120" y2="0" stroke="#00ff88" stroke-width="0.3"/>
+      <!-- Sweep -->
+      <path d="M0,0 L0,-120 A120,120 0 0,1 85,-85 Z" fill="url(#radarSweep)">
+        <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="8s" repeatCount="indefinite"/>
+      </path>
+      <!-- Blips -->
+      <circle cx="30" cy="-50" r="3" fill="#00ff88" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0;0.6" dur="8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="-60" cy="20" r="2" fill="#00ff88" opacity="0.4">
+        <animate attributeName="opacity" values="0;0.4;0" dur="8s" repeatCount="indefinite"/>
+      </circle>
+    </g>
     
-    <!-- Legs -->
-    <rect x="-12" y="40" width="10" height="60" fill="#1a1a1a"/>
-    <rect x="2" y="40" width="10" height="60" fill="#1a1a1a"/>
+    <!-- ============================================ -->
+    <!-- RADIO FREQUENCY WAVES (across poster)       -->
+    <!-- ============================================ -->
+    <g opacity="0.15" fill="none" stroke="#00ccff" stroke-width="1">
+      <path d="M0,450 Q100,420 200,450 Q300,480 400,450 Q500,420 600,450 Q700,480 800,450">
+        <animate attributeName="d" 
+          values="M0,450 Q100,420 200,450 Q300,480 400,450 Q500,420 600,450 Q700,480 800,450;
+                  M0,450 Q100,480 200,450 Q300,420 400,450 Q500,480 600,450 Q700,420 800,450;
+                  M0,450 Q100,420 200,450 Q300,480 400,450 Q500,420 600,450 Q700,480 800,450" 
+          dur="4s" repeatCount="indefinite"/>
+      </path>
+      <path d="M0,460 Q100,430 200,460 Q300,490 400,460 Q500,430 600,460 Q700,490 800,460" opacity="0.6"/>
+    </g>
     
-    <!-- Body -->
-    <rect x="-20" y="0" width="40" height="45" fill="#2a2a2a"/>
     
-    <!-- Arms -->
-    <rect x="-35" y="5" width="15" height="8" fill="#2a2a2a" transform="rotate(-20 -27.5 9)"/>
-    <rect x="20" y="5" width="15" height="8" fill="#2a2a2a" transform="rotate(20 27.5 9)"/>
+    <!-- ============================================ -->
+    <!-- TITLE BLOCK                                  -->
+    <!-- ============================================ -->
     
-    <!-- Laptop/device in hands -->
-    <rect x="-15" y="15" width="30" height="20" fill="#1a1a1a" stroke="#00ff88" stroke-width="1.5"/>
-    <rect x="-13" y="17" width="26" height="16" fill="#003322">
-      <animate attributeName="fill" values="#003322;#004433;#003322" dur="2s" repeatCount="indefinite"/>
-    </rect>
+    <!-- Top tagline -->
+    <text x="400" y="90" text-anchor="middle" font-family="'Courier New', monospace" font-size="14" 
+          fill="#00ff88" letter-spacing="8" opacity="0.8" filter="url(#glowCyan)">
+      FROM THE CREATOR OF NOTHING IMPORTANT
+    </text>
     
-    <!-- Screen glow -->
-    <rect x="-15" y="15" width="30" height="20" fill="url(#glowGreen)" opacity="0.5"/>
-    
-    <!-- Head -->
-    <circle cx="0" cy="-18" r="15" fill="#2a2a2a"/>
-    
-    <!-- Headset/radio equipment -->
-    <path d="M -12,-18 Q -15,-13 -12,-8" fill="none" stroke="#00ff88" stroke-width="2"/>
-    <circle cx="-12" cy="-18" r="4" fill="#2a2a2a" stroke="#00ff88" stroke-width="1.5"/>
-  </g>
-  
-  <!-- Surveillance grid overlay -->
-  <g opacity="0.3">
-    <line x1="0" y1="150" x2="600" y2="150" stroke="#ff3333" stroke-width="0.5" stroke-dasharray="10,10">
-      <animate attributeName="y1" values="150;450" dur="8s" repeatCount="indefinite"/>
-      <animate attributeName="y2" values="150;450" dur="8s" repeatCount="indefinite"/>
-    </line>
-    <line x1="0" y1="200" x2="600" y2="200" stroke="#ff3333" stroke-width="0.5" stroke-dasharray="10,10">
-      <animate attributeName="y1" values="200;500" dur="8s" begin="2s" repeatCount="indefinite"/>
-      <animate attributeName="y2" values="200;500" dur="8s" begin="2s" repeatCount="indefinite"/>
-    </line>
-  </g>
-  
-  <!-- Data streams / code rain effect -->
-  <g opacity="0.4" font-family="monospace" font-size="10" fill="#00ff88">
-    <text x="50" y="100">01001000</text>
-    <text x="50" y="150">11010010</text>
-    <text x="50" y="200">00110101</text>
-    
-    <text x="530" y="120">10110011</text>
-    <text x="530" y="170">01011100</text>
-    <text x="530" y="220">11001010</text>
-    
-    <animateTransform attributeName="transform" type="translate" values="0,0; 0,300" dur="6s" repeatCount="indefinite"/>
-  </g>
-  
-  <!-- Dramatic lighting flare from top -->
-  <polygon points="300,0 250,200 350,200" fill="url(#glowRed)" opacity="0.2">
-    <animate attributeName="opacity" values="0.1;0.3;0.1" dur="3s" repeatCount="indefinite"/>
-  </polygon>
-  
-  <!-- Target reticle (surveillance theme) -->
-  <g opacity="0.5">
-    <circle cx="450" cy="150" r="30" fill="none" stroke="#ff3333" stroke-width="1.5"/>
-    <circle cx="450" cy="150" r="20" fill="none" stroke="#ff3333" stroke-width="1"/>
-    <line x1="420" y1="150" x2="440" y2="150" stroke="#ff3333" stroke-width="1.5"/>
-    <line x1="460" y1="150" x2="480" y2="150" stroke="#ff3333" stroke-width="1.5"/>
-    <line x1="450" y1="120" x2="450" y2="140" stroke="#ff3333" stroke-width="1.5"/>
-    <line x1="450" y1="160" x2="450" y2="180" stroke="#ff3333" stroke-width="1.5"/>
-    <text x="485" y="155" font-family="monospace" font-size="10" fill="#ff3333">TARGET ACQUIRED</text>
-  </g>
-  
-  <!-- Warning indicator -->
-  <g opacity="0.7">
-    <polygon points="150,100 135,125 165,125" fill="none" stroke="#ffaa00" stroke-width="2"/>
-    <text x="146" y="120" font-family="monospace" font-size="14" font-weight="bold" fill="#ffaa00">!</text>
-    <text x="170" y="115" font-family="monospace" font-size="9" fill="#ffaa00">CLASSIFIED</text>
-  </g>
-  
-  <!-- Bottom dark vignette -->
-  <rect x="0" y="650" width="600" height="250" fill="url(#skyGradient)" opacity="0.8"/>
-  
-  <!-- Title text -->
-  <g filter="url(#strongGlow)">
-    <text x="300" y="720" font-family="Arial Black, sans-serif" font-size="64" font-weight="bold" fill="#00ffff" text-anchor="middle" letter-spacing="8">
+    <!-- Main Title: CYBERQUEST -->
+    <text x="400" y="170" text-anchor="middle" font-family="Impact, 'Arial Black', sans-serif" 
+          font-size="88" fill="url(#titleGrad)" letter-spacing="6" filter="url(#glowTitle)"
+          stroke="#00aaaa" stroke-width="1">
       CYBERQUEST
     </text>
-    <text x="300" y="760" font-family="Arial, sans-serif" font-size="32" font-weight="normal" fill="#ffd700" text-anchor="middle" letter-spacing="6">
+    
+    <!-- Subtitle: OPERATION ZERFALL -->
+    <text x="400" y="215" text-anchor="middle" font-family="Impact, 'Arial Black', sans-serif" 
+          font-size="36" fill="url(#subtitleGrad)" letter-spacing="12" filter="url(#glowRed)">
       OPERATION ZERFALL
     </text>
-  </g>
-  
-  <!-- Tagline -->
-  <text x="300" y="800" font-family="monospace" font-size="16" font-style="italic" fill="#cccccc" text-anchor="middle" letter-spacing="2">
-    THE TRUTH IS HIDDEN IN THE SIGNAL
-  </text>
-  
-  <!-- Bottom text -->
-  <g font-family="monospace" font-size="11" fill="#999999" text-anchor="middle">
-    <text x="300" y="840">A SIERRA-STYLE ADVENTURE</text>
-    <text x="300" y="860">SET IN DRENTHE, NETHERLANDS</text>
-    <text x="300" y="880">INSPIRED BY REAL EVENTS</text>
-  </g>
-  
-  <!-- Classification stamp -->
-  <g transform="translate(480, 830) rotate(15)">
-    <rect x="-45" y="-15" width="90" height="30" fill="none" stroke="#ff3333" stroke-width="2" opacity="0.7"/>
-    <text x="0" y="5" font-family="monospace" font-size="12" font-weight="bold" fill="#ff3333" text-anchor="middle" opacity="0.7">
-      CLASSIFIED
+    
+    <!-- Decorative line under title -->
+    <line x1="200" y1="230" x2="600" y2="230" stroke="#00ffff" stroke-width="1" opacity="0.4"/>
+    <line x1="250" y1="234" x2="550" y2="234" stroke="#ff4444" stroke-width="0.5" opacity="0.3"/>
+    
+    
+    <!-- ============================================ -->
+    <!-- CHARACTER LAYER — SOUTH PARK STYLE           -->
+    <!-- ============================================ -->
+    
+    
+    <!-- ==================== -->
+    <!-- VOLKOV (TOP — LOOMING ANTAGONIST, LARGEST) -->
+    <!-- ==================== -->
+    <g transform="translate(400,340) scale(1.1)" filter="url(#heavyShadow)" opacity="0.85">
+      <!-- Ushanka silhouette looming above (just head/shoulders, menacing) -->
+      <!-- Head (huge, dark, faded into background) -->
+      <ellipse cx="0" cy="0" rx="85" ry="95" fill="#1a1820" stroke="#2a2830" stroke-width="2"/>
+      <!-- Ushanka hat -->
+      <path d="M-80,-30 Q-82,-80 0,-95 Q82,-80 80,-30 L75,-20 Q0,-30 -75,-20 Z" fill="#2a2420" stroke="#000" stroke-width="2"/>
+      <!-- Fur brim -->
+      <path d="M-78,-26 Q-80,-18 -78,-12 Q0,0 78,-12 Q80,-18 78,-26" fill="#4a3a28" stroke="#000" stroke-width="1.5"/>
+      <!-- Ear flaps -->
+      <path d="M-80,-26 Q-94,-10 -96,20 Q-96,40 -90,50 L-76,46 Q-80,30 -78,10 Q-76,-10 -74,-22" fill="#2a2420" stroke="#000" stroke-width="1.5"/>
+      <path d="M80,-26 Q94,-10 96,20 Q96,40 90,50 L76,46 Q80,30 78,10 Q76,-10 74,-22" fill="#2a2420" stroke="#000" stroke-width="1.5"/>
+      <!-- Soviet star on hat -->
+      <polygon points="0,-72 4,-60 14,-60 6,-52 9,-42 0,-48 -9,-42 -6,-52 -14,-60 -4,-60" 
+               fill="#cc2222" stroke="#881111" stroke-width="0.8" opacity="0.7"/>
+      <!-- Glasses (glowing ominously) -->
+      <circle cx="-22" cy="2" r="20" fill="rgba(0,255,255,0.06)" stroke="#3a3a30" stroke-width="3"/>
+      <circle cx="22" cy="2" r="20" fill="rgba(0,255,255,0.06)" stroke="#3a3a30" stroke-width="3"/>
+      <line x1="-2" y1="2" x2="2" y2="2" stroke="#3a3a30" stroke-width="3"/>
+      <!-- Menacing lens reflection (cyan) -->
+      <ellipse cx="-28" cy="-4" rx="8" ry="10" fill="#00ffff" opacity="0.12"/>
+      <ellipse cx="16" cy="-4" rx="8" ry="10" fill="#00ffff" opacity="0.12"/>
+      <!-- Eyes barely visible behind glasses (cold, threatening) -->
+      <circle cx="-20" cy="4" r="5" fill="#4a5a6a" opacity="0.4"/>
+      <circle cx="24" cy="4" r="5" fill="#4a5a6a" opacity="0.4"/>
+      <circle cx="-20" cy="4" r="2.5" fill="#1a2a3a" opacity="0.5"/>
+      <circle cx="24" cy="4" r="2.5" fill="#1a2a3a" opacity="0.5"/>
+      <!-- Walrus mustache -->
+      <path d="M-20,20 Q-10,16 0,20 Q10,16 20,20 Q26,28 20,34 Q10,38 0,36 Q-10,38 -20,34 Q-26,28 -20,20 Z" 
+            fill="#b8b8a8" stroke="#000" stroke-width="1.5" opacity="0.7"/>
+      <!-- Nose (reddened) -->
+      <ellipse cx="0" cy="16" rx="10" ry="8" fill="#c8a088" stroke="#000" stroke-width="1" opacity="0.6"/>
+      <ellipse cx="0" cy="16" rx="7" ry="5" fill="#d09080" opacity="0.3"/>
+    </g>
+    
+    <!-- Russian text hint -->
+    <text x="400" y="260" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" 
+          fill="#ff4444" letter-spacing="3" opacity="0.5">
+      ДОВЕРЯЙ, НО ПРОВЕРЯЙ
     </text>
+    
+    
+    <!-- ==================== -->
+    <!-- RYAN (CENTER-FRONT — THE HERO) -->
+    <!-- ==================== -->
+    <g transform="translate(400,700)" filter="url(#softShadow)">
+      <!-- Body (hoodie) -->
+      <path d="M-50,20 L-55,140 L55,140 L50,20 Q0,5 -50,20 Z" fill="#2a4a2a" stroke="#000" stroke-width="3"/>
+      <!-- Hoodie pocket -->
+      <rect x="-25" y="80" width="50" height="25" rx="5" fill="#224422" stroke="#1a3a1a" stroke-width="1"/>
+      <!-- Hoodie text "I VOID WARRANTIES" -->
+      <text x="0" y="55" text-anchor="middle" font-family="'Courier New', monospace" font-size="5" fill="#88aa88" opacity="0.6">I VOID WARRANTIES</text>
+      <!-- Hoodie hood -->
+      <path d="M-48,22 Q-52,10 -40,4 Q0,-8 40,4 Q52,10 48,22" fill="#2a4a2a" stroke="#000" stroke-width="2"/>
+      
+      <!-- Arms -->
+      <!-- Left arm (holding Flipper Zero) -->
+      <path d="M-50,28 Q-72,60 -68,110 L-52,112 Q-58,68 -42,38" fill="#2a4a2a" stroke="#000" stroke-width="3"/>
+      <!-- Right arm -->
+      <path d="M50,28 Q72,60 68,110 L52,112 Q58,68 42,38" fill="#2a4a2a" stroke="#000" stroke-width="3"/>
+      
+      <!-- Hands -->
+      <ellipse cx="-62" cy="118" rx="10" ry="12" fill="url(#spSkin)" stroke="#000" stroke-width="2"/>
+      <ellipse cx="62" cy="118" rx="10" ry="12" fill="url(#spSkin)" stroke="#000" stroke-width="2"/>
+      
+      <!-- FLIPPER ZERO in left hand -->
+      <rect x="-76" y="108" width="28" height="16" rx="3" fill="#ff6600" stroke="#000" stroke-width="1.5"/>
+      <rect x="-72" y="111" width="14" height="10" rx="1" fill="#111" stroke="#333" stroke-width="0.5"/>
+      <!-- Screen glow -->
+      <rect x="-71" y="112" width="12" height="8" rx="0.5" fill="#00ff88" opacity="0.3"/>
+      <!-- D-pad -->
+      <circle cx="-54" cy="116" r="3" fill="#222" stroke="#444" stroke-width="0.5"/>
+      
+      <!-- HackRF in right hand -->
+      <rect x="50" y="110" width="24" height="14" rx="2" fill="#1a1a2a" stroke="#000" stroke-width="1.5"/>
+      <rect x="52" y="112" width="8" height="8" fill="#0a2a1a" opacity="0.6"/>
+      <circle cx="66" cy="116" r="2" fill="#00ff88" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Antenna -->
+      <line x1="62" y1="110" x2="62" y2="98" stroke="#555" stroke-width="1.5"/>
+      
+      <!-- Legs -->
+      <rect x="-30" y="138" width="24" height="30" fill="#3a3a30" stroke="#000" stroke-width="2.5"/>
+      <rect x="6" y="138" width="24" height="30" fill="#3a3a30" stroke="#000" stroke-width="2.5"/>
+      
+      <!-- Shoes -->
+      <ellipse cx="-18" cy="170" rx="16" ry="6" fill="#2a2a1a" stroke="#000" stroke-width="2"/>
+      <ellipse cx="18" cy="170" rx="16" ry="6" fill="#2a2a1a" stroke="#000" stroke-width="2"/>
+      
+      <!-- HEAD -->
+      <ellipse cx="0" cy="-22" rx="38" ry="46" fill="url(#spSkin)" stroke="#000" stroke-width="3.5"/>
+      
+      <!-- Beard (gray, full) -->
+      <path d="M-28,6 Q-32,20 -24,36 Q-14,48 0,50 Q14,48 24,36 Q32,20 28,6" 
+            fill="#8a8a80" stroke="#000" stroke-width="2"/>
+      <!-- Beard texture -->
+      <g stroke="#7a7a70" stroke-width="0.6" fill="none" opacity="0.4">
+        <path d="M-20,12 Q-18,20 -22,28"/>
+        <path d="M-10,14 Q-8,24 -12,34"/>
+        <path d="M0,16 Q0,28 -2,40"/>
+        <path d="M10,14 Q8,24 12,34"/>
+        <path d="M20,12 Q18,20 22,28"/>
+      </g>
+      
+      <!-- Round glasses -->
+      <circle cx="-14" cy="-18" r="14" fill="rgba(255,255,255,0.08)" stroke="#333" stroke-width="2.5"/>
+      <circle cx="14" cy="-18" r="14" fill="rgba(255,255,255,0.08)" stroke="#333" stroke-width="2.5"/>
+      <line x1="0" y1="-18" x2="0" y2="-18" stroke="#333" stroke-width="2.5"/>
+      <!-- Lens glare -->
+      <ellipse cx="-18" cy="-22" rx="5" ry="6" fill="white" opacity="0.3"/>
+      <ellipse cx="10" cy="-22" rx="5" ry="6" fill="white" opacity="0.3"/>
+      
+      <!-- Eyes (determined) -->
+      <ellipse cx="-14" cy="-16" rx="8" ry="10" fill="white" stroke="#000" stroke-width="1"/>
+      <ellipse cx="14" cy="-16" rx="8" ry="10" fill="white" stroke="#000" stroke-width="1"/>
+      <circle cx="-12" cy="-14" r="5" fill="#4a7a3a"/>
+      <circle cx="14" cy="-14" r="5" fill="#4a7a3a"/>
+      <circle cx="-12" cy="-14" r="2.5" fill="#1a3a1a"/>
+      <circle cx="14" cy="-14" r="2.5" fill="#1a3a1a"/>
+      <circle cx="-13" cy="-16" r="2" fill="white" opacity="0.9"/>
+      <circle cx="13" cy="-16" r="2" fill="white" opacity="0.9"/>
+      
+      <!-- Eyebrows (focused, determined) -->
+      <path d="M-26,-34 Q-16,-38 -4,-34" stroke="#666" stroke-width="3" fill="none"/>
+      <path d="M4,-34 Q16,-38 26,-34" stroke="#666" stroke-width="3" fill="none"/>
+      
+      <!-- Nose -->
+      <path d="M0,-14 L0,-2" stroke="#d0b898" stroke-width="2"/>
+      <ellipse cx="-3" cy="-1" rx="4" ry="3" fill="#d0b898"/>
+      <ellipse cx="3" cy="-1" rx="4" ry="3" fill="#d0b898"/>
+      
+      <!-- Hair (graying, messy under hoodie) -->
+      <path d="M-32,-48 Q-20,-68 0,-70 Q20,-68 32,-48" fill="#7a7a70" stroke="#000" stroke-width="2"/>
+      <path d="M-30,-46 Q-22,-58 0,-60 Q22,-58 30,-46" fill="#8a8a80" stroke="#000" stroke-width="1"/>
+    </g>
+    
+    
+    <!-- ==================== -->
+    <!-- EVA (LEFT OF RYAN — AIVD AGENT) -->
+    <!-- ==================== -->
+    <g transform="translate(220,740) scale(0.75)" filter="url(#softShadow)">
+      <!-- Body (dark tactical jacket) -->
+      <path d="M-40,20 L-45,130 L45,130 L40,20 Q0,8 -40,20 Z" fill="#1a1a2a" stroke="#000" stroke-width="3"/>
+      <!-- Tactical vest lines -->
+      <line x1="-20" y1="30" x2="-20" y2="130" stroke="#2a2a3a" stroke-width="1"/>
+      <line x1="20" y1="30" x2="20" y2="130" stroke="#2a2a3a" stroke-width="1"/>
+      <!-- Badge -->
+      <rect x="-12" y="35" width="24" height="14" rx="2" fill="#2a3a5a" stroke="#4a5a7a" stroke-width="1"/>
+      <text x="0" y="45" text-anchor="middle" font-family="sans-serif" font-size="6" fill="#aabbcc">AIVD</text>
+      
+      <!-- Arms -->
+      <path d="M-40,26 Q-58,55 -54,100 L-40,102 Q-46,60 -34,34" fill="#1a1a2a" stroke="#000" stroke-width="2.5"/>
+      <path d="M40,26 Q58,55 54,100 L40,102 Q46,60 34,34" fill="#1a1a2a" stroke="#000" stroke-width="2.5"/>
+      
+      <!-- Hands -->
+      <ellipse cx="-48" cy="108" rx="9" ry="10" fill="url(#spSkin)" stroke="#000" stroke-width="2"/>
+      <ellipse cx="48" cy="108" rx="9" ry="10" fill="url(#spSkin)" stroke="#000" stroke-width="2"/>
+      
+      <!-- Meshtastic radio in hand -->
+      <rect x="38" y="100" width="16" height="22" rx="2" fill="#333" stroke="#000" stroke-width="1"/>
+      <rect x="40" y="103" width="10" height="8" fill="#0a1a0a"/>
+      <line x1="46" y1="100" x2="46" y2="88" stroke="#555" stroke-width="1"/>
+      <circle cx="46" cy="87" r="1.5" fill="#00ff88" opacity="0.5"/>
+      
+      <!-- Earpiece (covert) -->
+      <circle cx="-32" cy="-14" r="3" fill="#222" stroke="#000" stroke-width="1"/>
+      <path d="M-32,-11 Q-36,-6 -36,0" stroke="#222" stroke-width="1" fill="none"/>
+      
+      <!-- HEAD -->
+      <ellipse cx="0" cy="-18" rx="34" ry="42" fill="url(#spSkin)" stroke="#000" stroke-width="3"/>
+      
+      <!-- Hair (dark, tied back, professional) -->
+      <path d="M-30,-42 Q-18,-68 0,-70 Q18,-68 30,-42" fill="#2a1a0a" stroke="#000" stroke-width="2"/>
+      <path d="M28,-40 Q34,-30 32,-18 Q38,-22 36,-34" fill="#2a1a0a" stroke="#000" stroke-width="1.5"/>
+      
+      <!-- Eyes (sharp, alert) -->
+      <ellipse cx="-12" cy="-16" rx="8" ry="9" fill="white" stroke="#000" stroke-width="1"/>
+      <ellipse cx="12" cy="-16" rx="8" ry="9" fill="white" stroke="#000" stroke-width="1"/>
+      <circle cx="-10" cy="-14" r="5" fill="#3a5a7a"/>
+      <circle cx="12" cy="-14" r="5" fill="#3a5a7a"/>
+      <circle cx="-10" cy="-14" r="2.5" fill="#1a2a3a"/>
+      <circle cx="12" cy="-14" r="2.5" fill="#1a2a3a"/>
+      <circle cx="-11" cy="-16" r="1.5" fill="white" opacity="0.9"/>
+      <circle cx="11" cy="-16" r="1.5" fill="white" opacity="0.9"/>
+      
+      <!-- Eyebrows -->
+      <path d="M-22,-28 Q-12,-32 -2,-28" stroke="#2a1a0a" stroke-width="2.5" fill="none"/>
+      <path d="M2,-28 Q12,-32 22,-28" stroke="#2a1a0a" stroke-width="2.5" fill="none"/>
+      
+      <!-- Nose -->
+      <path d="M0,-12 L0,-2" stroke="#d0b898" stroke-width="1.5"/>
+      <ellipse cx="0" cy="-1" rx="5" ry="3" fill="#d8c0a8"/>
+      
+      <!-- Mouth (slight, serious) -->
+      <path d="M-8,6 Q0,9 8,6" stroke="#8a5a4a" stroke-width="1.5" fill="none"/>
+      
+      <!-- Legs -->
+      <rect x="-24" y="128" width="20" height="28" fill="#1a1a2a" stroke="#000" stroke-width="2"/>
+      <rect x="4" y="128" width="20" height="28" fill="#1a1a2a" stroke="#000" stroke-width="2"/>
+      <!-- Boots -->
+      <ellipse cx="-14" cy="158" rx="14" ry="5" fill="#111" stroke="#000" stroke-width="2"/>
+      <ellipse cx="14" cy="158" rx="14" ry="5" fill="#111" stroke="#000" stroke-width="2"/>
+    </g>
+    
+    
+    <!-- ==================== -->
+    <!-- CEES BASSA (RIGHT OF RYAN — SCIENTIST) -->
+    <!-- ==================== -->
+    <g transform="translate(580,750) scale(0.7)" filter="url(#softShadow)">
+      <!-- Body (casual button-up shirt) -->
+      <path d="M-38,20 L-42,125 L42,125 L38,20 Q0,8 -38,20 Z" fill="#2a3a5a" stroke="#000" stroke-width="3"/>
+      <!-- Shirt buttons -->
+      <circle cx="0" cy="40" r="2" fill="#4a5a7a" stroke="#000" stroke-width="0.5"/>
+      <circle cx="0" cy="55" r="2" fill="#4a5a7a" stroke="#000" stroke-width="0.5"/>
+      <circle cx="0" cy="70" r="2" fill="#4a5a7a" stroke="#000" stroke-width="0.5"/>
+      
+      <!-- Arms -->
+      <path d="M-38,24 Q-54,50 -50,95 L-38,97 Q-42,56 -32,32" fill="#2a3a5a" stroke="#000" stroke-width="2.5"/>
+      <path d="M38,24 Q54,50 50,95 L38,97 Q42,56 32,32" fill="#2a3a5a" stroke="#000" stroke-width="2.5"/>
+      
+      <!-- Hands -->
+      <ellipse cx="-44" cy="102" rx="9" ry="10" fill="url(#spSkin)" stroke="#000" stroke-width="2"/>
+      <ellipse cx="44" cy="102" rx="9" ry="10" fill="url(#spSkin)" stroke="#000" stroke-width="2"/>
+      
+      <!-- Laptop in hand -->
+      <rect x="30" y="88" width="30" height="20" rx="2" fill="#333" stroke="#000" stroke-width="1.5"/>
+      <rect x="32" y="90" width="26" height="14" fill="#0a2a1a"/>
+      <!-- Screen data -->
+      <g fill="#00ff88" font-size="3" font-family="monospace" opacity="0.7">
+        <text x="34" y="95">FREQ: 14.230</text>
+        <text x="34" y="100">SIG: ████▓▒</text>
+        <text x="34" y="105">ZERFALL</text>
+      </g>
+      
+      <!-- HEAD -->
+      <ellipse cx="0" cy="-16" rx="32" ry="40" fill="url(#spSkin)" stroke="#000" stroke-width="3"/>
+      
+      <!-- Hair (dark, neat) -->
+      <path d="M-28,-38 Q-16,-60 0,-62 Q16,-60 28,-38" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
+      
+      <!-- Eyes (focused, intelligent) -->
+      <ellipse cx="-10" cy="-14" rx="7" ry="9" fill="white" stroke="#000" stroke-width="1"/>
+      <ellipse cx="10" cy="-14" rx="7" ry="9" fill="white" stroke="#000" stroke-width="1"/>
+      <circle cx="-9" cy="-12" r="4.5" fill="#4a3a2a"/>
+      <circle cx="10" cy="-12" r="4.5" fill="#4a3a2a"/>
+      <circle cx="-9" cy="-12" r="2" fill="#1a1a0a"/>
+      <circle cx="10" cy="-12" r="2" fill="#1a1a0a"/>
+      <circle cx="-10" cy="-14" r="1.5" fill="white" opacity="0.8"/>
+      <circle cx="9" cy="-14" r="1.5" fill="white" opacity="0.8"/>
+      
+      <!-- Eyebrows -->
+      <path d="M-18,-26 Q-10,-30 -2,-26" stroke="#1a1a1a" stroke-width="2.5" fill="none"/>
+      <path d="M2,-26 Q10,-30 18,-26" stroke="#1a1a1a" stroke-width="2.5" fill="none"/>
+      
+      <!-- Nose -->
+      <path d="M0,-8 L0,0" stroke="#d0b898" stroke-width="1.5"/>
+      <ellipse cx="0" cy="1" rx="4" ry="2.5" fill="#d0b898"/>
+      
+      <!-- Mouth -->
+      <path d="M-6,8 Q0,11 6,8" stroke="#7a5a4a" stroke-width="1.5" fill="none"/>
+      
+      <!-- Legs -->
+      <rect x="-22" y="123" width="18" height="26" fill="#2a2a2a" stroke="#000" stroke-width="2"/>
+      <rect x="4" y="123" width="18" height="26" fill="#2a2a2a" stroke="#000" stroke-width="2"/>
+      <ellipse cx="-13" cy="150" rx="12" ry="4" fill="#1a1a1a" stroke="#000" stroke-width="1.5"/>
+      <ellipse cx="13" cy="150" rx="12" ry="4" fill="#1a1a1a" stroke="#000" stroke-width="1.5"/>
+    </g>
+    
+    
+    <!-- ==================== -->
+    <!-- CHRIS KUBECKA (FAR LEFT — COMING IN HOT) -->
+    <!-- ==================== -->
+    <g transform="translate(90,770) scale(0.6)" filter="url(#softShadow)">
+      <!-- Body (military-ish jacket) -->
+      <path d="M-35,20 L-40,120 L40,120 L35,20 Q0,8 -35,20 Z" fill="#3a4a3a" stroke="#000" stroke-width="3"/>
+      <!-- Military patches -->
+      <rect x="-30" y="30" width="16" height="12" rx="1" fill="#4a5a4a" stroke="#000" stroke-width="1"/>
+      
+      <!-- Arms -->
+      <path d="M-35,24 Q-50,50 -46,90 L-34,92 Q-38,55 -30,30" fill="#3a4a3a" stroke="#000" stroke-width="2.5"/>
+      <path d="M35,24 Q50,50 46,90 L34,92 Q38,55 30,30" fill="#3a4a3a" stroke="#000" stroke-width="2.5"/>
+      
+      <ellipse cx="-40" cy="96" rx="8" ry="9" fill="url(#spSkin)" stroke="#000" stroke-width="2"/>
+      <ellipse cx="40" cy="96" rx="8" ry="9" fill="url(#spSkin)" stroke="#000" stroke-width="2"/>
+      
+      <!-- HEAD -->
+      <ellipse cx="0" cy="-16" rx="30" ry="38" fill="url(#spSkin)" stroke="#000" stroke-width="3"/>
+      
+      <!-- Hair (short, practical) -->
+      <path d="M-26,-36 Q-14,-56 0,-58 Q14,-56 26,-36" fill="#5a3a2a" stroke="#000" stroke-width="2"/>
+      
+      <!-- Eyes -->
+      <ellipse cx="-10" cy="-14" rx="7" ry="8" fill="white" stroke="#000" stroke-width="1"/>
+      <ellipse cx="10" cy="-14" rx="7" ry="8" fill="white" stroke="#000" stroke-width="1"/>
+      <circle cx="-9" cy="-12" r="4" fill="#4a6a4a"/>
+      <circle cx="10" cy="-12" r="4" fill="#4a6a4a"/>
+      <circle cx="-9" cy="-12" r="2" fill="#1a2a1a"/>
+      <circle cx="10" cy="-12" r="2" fill="#1a2a1a"/>
+      
+      <!-- Eyebrows (confident) -->
+      <path d="M-18,-24 Q-10,-28 -2,-24" stroke="#4a2a1a" stroke-width="2" fill="none"/>
+      <path d="M2,-24 Q10,-28 18,-24" stroke="#4a2a1a" stroke-width="2" fill="none"/>
+      
+      <!-- Nose -->
+      <path d="M0,-8 L0,0" stroke="#d0b898" stroke-width="1.5"/>
+      <ellipse cx="0" cy="1" rx="4" ry="2.5" fill="#d0b898"/>
+      
+      <!-- Mouth (determined smile) -->
+      <path d="M-6,6 Q0,10 6,6" stroke="#7a5a4a" stroke-width="1.5" fill="none"/>
+      
+      <!-- Legs -->
+      <rect x="-20" y="118" width="16" height="24" fill="#3a3a2a" stroke="#000" stroke-width="2"/>
+      <rect x="4" y="118" width="16" height="24" fill="#3a3a2a" stroke="#000" stroke-width="2"/>
+      <ellipse cx="-12" cy="143" rx="11" ry="4" fill="#1a1a0a" stroke="#000" stroke-width="1.5"/>
+      <ellipse cx="12" cy="143" rx="11" ry="4" fill="#1a1a0a" stroke="#000" stroke-width="1.5"/>
+    </g>
+    
+    
+    <!-- ==================== -->
+    <!-- VAN DER BERG (FAR RIGHT — AIVD) -->
+    <!-- ==================== -->
+    <g transform="translate(700,770) scale(0.6)" filter="url(#softShadow)">
+      <!-- Body (dark suit) -->
+      <path d="M-35,20 L-40,120 L40,120 L35,20 Q0,8 -35,20 Z" fill="#1a1a28" stroke="#000" stroke-width="3"/>
+      <!-- White shirt + tie -->
+      <path d="M-8,20 L-6,120 L6,120 L8,20 Z" fill="#e8e8f0" stroke="#000" stroke-width="1"/>
+      <path d="M-4,20 L-3,120 L3,120 L4,20 Z" fill="#2a2a5a" stroke="#000" stroke-width="0.5"/>
+      <!-- Lapels -->
+      <path d="M-14,20 L-8,38 L-14,55" fill="#111128" stroke="#000" stroke-width="1"/>
+      <path d="M14,20 L8,38 L14,55" fill="#111128" stroke="#000" stroke-width="1"/>
+      
+      <!-- Arms -->
+      <path d="M-35,24 Q-46,48 -42,85 L-32,87 Q-36,52 -30,30" fill="#1a1a28" stroke="#000" stroke-width="2.5"/>
+      <path d="M35,24 Q46,48 42,85 L32,87 Q36,52 30,30" fill="#1a1a28" stroke="#000" stroke-width="2.5"/>
+      
+      <!-- Hands -->
+      <ellipse cx="-36" cy="92" rx="8" ry="9" fill="url(#spSkin)" stroke="#000" stroke-width="2"/>
+      <ellipse cx="36" cy="92" rx="8" ry="9" fill="url(#spSkin)" stroke="#000" stroke-width="2"/>
+      
+      <!-- HEAD -->
+      <ellipse cx="0" cy="-14" rx="30" ry="37" fill="url(#spSkin)" stroke="#000" stroke-width="3"/>
+      
+      <!-- Hair (dark, military-cut) -->
+      <path d="M-26,-34 Q-14,-52 0,-54 Q14,-52 26,-34" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
+      
+      <!-- Sunglasses (menacing, reflective) -->
+      <rect x="-22" y="-22" width="18" height="12" rx="2" fill="#0a0a1a" stroke="#000" stroke-width="2"/>
+      <rect x="4" y="-22" width="18" height="12" rx="2" fill="#0a0a1a" stroke="#000" stroke-width="2"/>
+      <line x1="-4" y1="-16" x2="4" y2="-16" stroke="#000" stroke-width="2"/>
+      <!-- Reflections -->
+      <rect x="-20" y="-20" width="6" height="4" rx="1" fill="white" opacity="0.15"/>
+      <rect x="6" y="-20" width="6" height="4" rx="1" fill="white" opacity="0.15"/>
+      
+      <!-- Eyebrows (stern) -->
+      <path d="M-22,-24 Q-12,-28 -4,-25" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+      <path d="M4,-25 Q12,-28 22,-24" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+      
+      <!-- Mouth (firm line) -->
+      <path d="M-8,4 Q0,6 8,4" stroke="#7a5a4a" stroke-width="1.5" fill="none"/>
+      
+      <!-- Legs -->
+      <rect x="-20" y="118" width="16" height="24" fill="#111128" stroke="#000" stroke-width="2"/>
+      <rect x="4" y="118" width="16" height="24" fill="#111128" stroke="#000" stroke-width="2"/>
+      <ellipse cx="-12" cy="143" rx="11" ry="4" fill="#0a0a12" stroke="#000" stroke-width="1.5"/>
+      <ellipse cx="12" cy="143" rx="11" ry="4" fill="#0a0a12" stroke="#000" stroke-width="1.5"/>
+    </g>
+    
+    
+    <!-- ==================== -->
+    <!-- PUPS — IES'S DOGS near cast -->
+    <!-- ==================== -->
+    
+    <!-- Pug (ET) near Ryan's feet -->
+    <g transform="translate(440,862) scale(0.4)">
+      <ellipse cx="0" cy="10" rx="25" ry="18" fill="#c8a878" stroke="#000" stroke-width="2.5"/>
+      <circle cx="0" cy="-16" r="20" fill="#c8a878" stroke="#000" stroke-width="2.5"/>
+      <ellipse cx="0" cy="-10" rx="14" ry="10" fill="#a88858" stroke="#000" stroke-width="1"/>
+      <circle cx="-8" cy="-18" r="6" fill="white" stroke="#000" stroke-width="1.5"/>
+      <circle cx="8" cy="-18" r="6" fill="white" stroke="#000" stroke-width="1.5"/>
+      <circle cx="-7" cy="-17" r="4" fill="#3a2a1a"/>
+      <circle cx="8" cy="-17" r="4" fill="#3a2a1a"/>
+      <circle cx="-8" cy="-19" r="2" fill="white" opacity="0.8"/>
+      <circle cx="7" cy="-19" r="2" fill="white" opacity="0.8"/>
+      <ellipse cx="0" cy="-8" rx="5" ry="3" fill="#1a1a1a"/>
+      <path d="M-10,-12 Q0,-14 10,-12" stroke="#8a6838" stroke-width="1" fill="none"/>
+      <ellipse cx="-16" cy="-24" rx="7" ry="8" fill="#a88858" stroke="#000" stroke-width="1.5"/>
+      <ellipse cx="16" cy="-24" rx="7" ry="8" fill="#a88858" stroke="#000" stroke-width="1.5"/>
+      <rect x="-18" y="22" width="8" height="14" fill="#c8a878" stroke="#000" stroke-width="1.5" rx="3"/>
+      <rect x="10" y="22" width="8" height="14" fill="#c8a878" stroke="#000" stroke-width="1.5" rx="3"/>
+      <path d="M20,4 Q30,0 28,-8" stroke="#c8a878" stroke-width="4" fill="none" stroke-linecap="round"/>
+    </g>
+    
+    <!-- White Dog (Kessy) at Eva's feet -->
+    <g transform="translate(195,870) scale(0.35)">
+      <ellipse cx="0" cy="10" rx="28" ry="16" fill="#f0ece0" stroke="#000" stroke-width="2.5"/>
+      <ellipse cx="-20" cy="0" rx="22" ry="18" fill="#f0ece0" stroke="#000" stroke-width="2.5"/>
+      <circle cx="-28" cy="-8" r="5" fill="white" stroke="#000" stroke-width="1.5"/>
+      <circle cx="-14" cy="-8" r="5" fill="white" stroke="#000" stroke-width="1.5"/>
+      <circle cx="-27" cy="-7" r="3" fill="#3a2a1a"/>
+      <circle cx="-14" cy="-7" r="3" fill="#3a2a1a"/>
+      <ellipse cx="-20" cy="2" rx="4" ry="2.5" fill="#1a1a1a"/>
+      <ellipse cx="-32" cy="-14" rx="6" ry="8" fill="#f0ece0" stroke="#000" stroke-width="1.5"/>
+      <ellipse cx="-8" cy="-14" rx="6" ry="8" fill="#f0ece0" stroke="#000" stroke-width="1.5"/>
+      <rect x="-14" y="22" width="6" height="12" fill="#f0ece0" stroke="#000" stroke-width="1.5" rx="2"/>
+      <rect x="6" y="22" width="6" height="12" fill="#f0ece0" stroke="#000" stroke-width="1.5" rx="2"/>
+      <path d="M24,6 Q34,2 32,-6 Q38,-4 36,4" stroke="#f0ece0" stroke-width="3" fill="none" stroke-linecap="round"/>
+    </g>
+    
+    
+    <!-- ============================================ -->
+    <!-- ACTION ELEMENTS                              -->
+    <!-- ============================================ -->
+    
+    <!-- Explosion/fire glow at bottom -->
+    <rect x="0" y="900" width="800" height="300" fill="url(#fireGlow)"/>
+    
+    <!-- Sparks / debris -->
+    <g fill="#ffaa44" opacity="0.6">
+      <circle cx="100" cy="870" r="2"><animate attributeName="cy" values="870;840;870" dur="2s" repeatCount="indefinite"/></circle>
+      <circle cx="160" cy="860" r="1.5"><animate attributeName="cy" values="860;830;860" dur="1.8s" repeatCount="indefinite"/></circle>
+      <circle cx="80" cy="880" r="1"><animate attributeName="cy" values="880;855;880" dur="2.2s" repeatCount="indefinite"/></circle>
+      <circle cx="680" cy="865" r="1.5"><animate attributeName="cy" values="865;840;865" dur="1.6s" repeatCount="indefinite"/></circle>
+      <circle cx="720" cy="875" r="1"><animate attributeName="cy" values="875;850;875" dur="2.4s" repeatCount="indefinite"/></circle>
+    </g>
+    
+    <!-- Signal beam from Flipper -->
+    <g opacity="0.4" filter="url(#glowCyan)">
+      <path d="M345,808 Q280,790 200,760 Q140,740 70,700" stroke="#00ffff" stroke-width="2" fill="none"/>
+      <path d="M345,808 Q280,795 200,770" stroke="#00ffff" stroke-width="1" fill="none" opacity="0.5"/>
+    </g>
+    
+    <!-- Signal beam from HackRF -->
+    <g opacity="0.3" filter="url(#glowCyan)">
+      <path d="M455,808 Q520,790 600,760 Q660,740 730,700" stroke="#00ffff" stroke-width="1.5" fill="none"/>
+    </g>
+    
+    <!-- Crosshair overlay on facility -->
+    <g transform="translate(110,470)" opacity="0.3" stroke="#ff2222" stroke-width="1" fill="none">
+      <circle cx="0" cy="0" r="30"/>
+      <circle cx="0" cy="0" r="15"/>
+      <line x1="-35" y1="0" x2="35" y2="0"/>
+      <line x1="0" y1="-35" x2="0" y2="35"/>
+    </g>
+    
+    
+    <!-- ============================================ -->
+    <!-- VOLVO CAR (bottom, driving through)          -->
+    <!-- ============================================ -->
+    <g transform="translate(400,920) scale(0.7)" opacity="0.7">
+      <!-- Car body (Volvo estate silhouette) -->
+      <path d="M-120,0 L-110,-30 L-60,-45 L60,-45 L100,-30 L120,0 Z" fill="#1a2a3a" stroke="#000" stroke-width="2"/>
+      <rect x="-115" y="0" width="230" height="30" rx="5" fill="#1a2a3a" stroke="#000" stroke-width="2"/>
+      <!-- Windows -->
+      <path d="M-100,-25 L-55,-40 L50,-40 L90,-25 Z" fill="#0a1a2a" stroke="#2a3a4a" stroke-width="1"/>
+      <line x1="-10" y1="-40" x2="-10" y2="-25" stroke="#2a3a4a" stroke-width="2"/>
+      <!-- Headlights -->
+      <ellipse cx="-110" cy="10" rx="8" ry="6" fill="#ffee88" opacity="0.8"/>
+      <ellipse cx="-110" cy="10" rx="20" ry="12" fill="#ffee44" opacity="0.1"/>
+      <ellipse cx="110" cy="10" rx="8" ry="6" fill="#ff2222" opacity="0.5"/>
+      <!-- Wheels -->
+      <circle cx="-70" cy="30" r="14" fill="#111" stroke="#000" stroke-width="2"/>
+      <circle cx="70" cy="30" r="14" fill="#111" stroke="#000" stroke-width="2"/>
+      <circle cx="-70" cy="30" r="6" fill="#333"/>
+      <circle cx="70" cy="30" r="6" fill="#333"/>
+      <!-- Light beams -->
+      <path d="M-118,4 L-220,-40 L-200,20 Z" fill="#ffee88" opacity="0.05"/>
+    </g>
+    
+    <!-- USB stick floating (evidence) -->
+    <g transform="translate(340,560) rotate(-15)" opacity="0.6">
+      <rect x="0" y="0" width="24" height="10" rx="2" fill="#333" stroke="#000" stroke-width="1"/>
+      <rect x="24" y="2" width="6" height="6" rx="1" fill="#888" stroke="#000" stroke-width="0.5"/>
+      <rect x="2" y="2" width="8" height="6" rx="1" fill="#00ff88" opacity="0.3"/>
+      <!-- Glow -->
+      <circle cx="6" cy="5" r="2" fill="#00ff88" opacity="0.5">
+        <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    
+    
+    <!-- ============================================ -->
+    <!-- TEXT ELEMENTS (Hollywood style)              -->
+    <!-- ============================================ -->
+    
+    <!-- Tagline -->
+    <text x="400" y="1000" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" 
+          font-size="20" fill="#cccccc" font-style="italic" letter-spacing="2">
+      Every frequency has a secret. Every signal has a price.
+    </text>
+    
+    <!-- Cast billing block -->
+    <g font-family="Impact, 'Arial Black', sans-serif" font-size="16" fill="#888" letter-spacing="2" text-anchor="middle">
+      <text x="400" y="1040">
+        <tspan fill="#ccc">RYAN WEYLANT</tspan>
+        <tspan fill="#555"> · </tspan>
+        <tspan fill="#ccc">EVA</tspan>
+        <tspan fill="#555"> · </tspan>
+        <tspan fill="#ccc">DR. VOLKOV</tspan>
+        <tspan fill="#555"> · </tspan>
+        <tspan fill="#ccc">CEES BASSA</tspan>
+      </text>
+      <text x="400" y="1065">
+        <tspan fill="#aaa">CHRIS KUBECKA</tspan>
+        <tspan fill="#555"> · </tspan>
+        <tspan fill="#aaa">VAN DER BERG</tspan>
+        <tspan fill="#555"> · </tspan>
+        <tspan fill="#aaa">JAAP HAARTSEN</tspan>
+        <tspan fill="#555"> · </tspan>
+        <tspan fill="#aaa">DAVID PRINSLOO</tspan>
+      </text>
+    </g>
+    
+    <!-- Micro billing block (fake movie credits style) -->
+    <g font-family="'Courier New', monospace" font-size="7" fill="#444" text-anchor="middle" letter-spacing="1">
+      <text x="400" y="1090">DIRECTED BY REIN WEYLANT   WRITTEN BY REIN WEYLANT   PRODUCED BY REIN WEYLANT</text>
+      <text x="400" y="1102">MUSIC BY CLASSIFIED   SOUND DESIGN: FLIPPER ZERO NOISES   CATERING: ESPRESSO MACHINE</text>
+      <text x="400" y="1114">A COMPASCUUM PRODUCTIONS FILM   SHOT ON LOCATION IN DRENTHE, NIEDERSACHSEN &amp; ZOETERMEER</text>
+      <text x="400" y="1126">FEATURING: LOFAR · WSRT · DWINGELOO · KLOOSTER TER APEL · STECKERDOSER HEIDE</text>
+    </g>
+    
+    <!-- Rating box -->
+    <g transform="translate(60,1140)">
+      <rect x="0" y="0" width="40" height="30" rx="2" fill="none" stroke="#666" stroke-width="1.5"/>
+      <text x="20" y="14" text-anchor="middle" font-family="Impact, sans-serif" font-size="12" fill="#666">PG</text>
+      <text x="20" y="24" text-anchor="middle" font-family="sans-serif" font-size="5" fill="#555">HACKER</text>
+      <text x="20" y="29" text-anchor="middle" font-family="sans-serif" font-size="4" fill="#555">CONTENT</text>
+    </g>
+    
+    <!-- Release date -->
+    <text x="400" y="1158" text-anchor="middle" font-family="Impact, 'Arial Black', sans-serif" 
+          font-size="14" fill="#666" letter-spacing="6">
+      FEBRUARY 2026
+    </text>
+    
+    <!-- Website -->
+    <text x="700" y="1158" text-anchor="middle" font-family="'Courier New', monospace" 
+          font-size="8" fill="#00ff88" letter-spacing="2" opacity="0.5">
+      CYBERQUEST.GAME
+    </text>
+    
+    <!-- ============================================ -->
+    <!-- OVERLAYS                                     -->
+    <!-- ============================================ -->
+    
+    <!-- Scanline overlay -->
+    <rect width="800" height="1200" fill="url(#scanlines)"/>
+    
+    <!-- Vignette -->
+    <rect width="800" height="1200" fill="url(#vignette)"/>
+    
+    <!-- Film grain noise hint -->
+    <g opacity="0.02" fill="white">
+      <rect x="123" y="456" width="2" height="2"/>
+      <rect x="567" y="234" width="2" height="2"/>
+      <rect x="345" y="789" width="2" height="2"/>
+      <rect x="678" y="123" width="2" height="2"/>
+      <rect x="234" y="567" width="2" height="2"/>
+      <rect x="456" y="890" width="2" height="2"/>
+    </g>
+    
+    <!-- Thin border -->
+    <rect x="2" y="2" width="796" height="1196" rx="3" fill="none" stroke="#1a3a5a" stroke-width="1" opacity="0.3"/>
+    
   </g>
-  
-  <!-- Scanline animation overlay -->
-  <rect x="0" y="0" width="600" height="3" fill="#00ffff" opacity="0.1">
-    <animate attributeName="y" values="0;900" dur="5s" repeatCount="indefinite"/>
-  </rect>
 </svg>
