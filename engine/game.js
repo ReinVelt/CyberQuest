@@ -8,7 +8,7 @@ const ENGINE_CONFIG = Object.freeze({
     TRANSITION_DURATION: 500,
     SCENE_CHANGE_DELAY: 300,
     INVENTORY_AUTO_CLOSE: 2000,
-    TYPEWRITER_SPEED: 30,
+    TYPEWRITER_SPEED: 40,
     NOTIFICATION_DURATION: 3000,
     NOTIFICATION_FADE: 500,
     DEFAULT_TIME: '08:00',
@@ -683,12 +683,13 @@ class CyberQuestEngine {
     }
     
     // Dialogue System
-    startDialogue(dialogue) {
+    startDialogue(dialogue, onComplete) {
         if (!dialogue) {
             console.error('startDialogue: dialogue is required');
             return;
         }
         this.dialogueQueue = Array.isArray(dialogue) ? [...dialogue] : [dialogue];
+        this._dialogueCallback = typeof onComplete === 'function' ? onComplete : null;
         this.isDialogueActive = true;
         const dialogueBox = document.getElementById('dialogue-box');
         if (dialogueBox) dialogueBox.classList.remove('hidden');
@@ -804,6 +805,11 @@ class CyberQuestEngine {
         
         const dialogueBox = document.getElementById('dialogue-box');
         if (dialogueBox) dialogueBox.classList.add('hidden');
+        
+        // Fire completion callback if set
+        const cb = this._dialogueCallback;
+        this._dialogueCallback = null;
+        if (cb) cb(this);
     }
     
     // Voice System Methods

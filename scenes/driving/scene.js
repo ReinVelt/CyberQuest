@@ -416,15 +416,11 @@ const DrivingScene = {
                     { speaker: 'Ryan', text: 'There it is. Ter Apel Klooster.' },
                     { speaker: 'Ryan', text: 'Centuries old. Perfect for secrets.' },
                     { speaker: 'Ryan', text: 'Let\'s see what this is about.' }
-                ]);
-                
-                // After dialogue, transition to klooster
-                const timeoutId2 = setTimeout(() => {
+                ], () => {
                     g.advanceTime(20);
                     g.setStoryPart(7);
                     g.loadScene('klooster');
-                }, 16000); // ~16 seconds for dialogue
-                this._timeoutIds.push(timeoutId2);
+                });
             }, 1000);
             this._timeoutIds.push(timeoutId1);
             
@@ -451,15 +447,11 @@ const DrivingScene = {
                     { speaker: 'Ryan', text: 'First: find that badge. Then we see what happens.' },
                     { speaker: 'Ryan', text: 'For Klaus Weber. For everyone Volkov has hurt.' },
                     { speaker: 'Ryan', text: 'Let\'s end this.' }
-                ]);
-                
-                // After dialogue, transition to facility
-                const timeoutId2 = setTimeout(() => {
+                ], () => {
                     g.advanceTime(25);
                     g.setStoryPart(17);
-                    g.loadScene('facility');
-                }, 17000); // ~17 seconds for dialogue
-                this._timeoutIds.push(timeoutId2);
+                    g.loadScene('drone_hunt');
+                });
             }, 1000);
             this._timeoutIds.push(timeoutId1);
             
@@ -486,15 +478,11 @@ const DrivingScene = {
                     { speaker: 'Ryan', text: 'Time to plug this in. See what\'s worth all this cloak and dagger.' },
                     { speaker: 'Ryan', text: 'Air-gapped laptop. Isolated. Safe.' },
                     { speaker: 'Ryan', text: 'Let\'s see what "E" wants me to know.' }
-                ]);
-                
-                // After dialogue, transition to mancave
-                const timeoutId2 = setTimeout(() => {
+                ], () => {
                     g.advanceTime(25);
                     g.loadScene('mancave');
                     g.showNotification('Returned to mancave');
-                }, 18000); // ~18 seconds for dialogue
-                this._timeoutIds.push(timeoutId2);
+                });
             }, 1000);
             this._timeoutIds.push(timeoutId1);
         } else if (destination === 'astron') {
@@ -516,13 +504,10 @@ const DrivingScene = {
                     { speaker: '', text: '*The white dishes appear above the treeline*' },
                     { speaker: 'Ryan', text: 'There they are. Like a row of giant ears.' },
                     { speaker: 'Ryan', text: 'Let\'s hear what Cees has to say.' }
-                ]);
-
-                const timeoutId2 = setTimeout(() => {
+                ], () => {
                     g.advanceTime(40);
                     g.loadScene('astron');
-                }, 16000);
-                this._timeoutIds.push(timeoutId2);
+                });
             }, 1000);
             this._timeoutIds.push(timeoutId1);
 
@@ -543,14 +528,11 @@ const DrivingScene = {
                     { speaker: 'Ryan', text: 'Eva is counting on me. Time to plan the infiltration.' },
                     { speaker: '', text: '*Approaching Compascuum. Home*' },
                     { speaker: 'Ryan', text: 'One step closer to ending this.' }
-                ]);
-
-                const timeoutId2 = setTimeout(() => {
+                ], () => {
                     g.advanceTime(40);
                     g.loadScene('mancave');
                     g.showNotification('Returned to mancave');
-                }, 14000);
-                this._timeoutIds.push(timeoutId2);
+                });
             }, 1000);
             this._timeoutIds.push(timeoutId1);
 
@@ -577,6 +559,7 @@ const DrivingScene = {
         
         // Cancel any active dialogue
         if (window.game && window.game.isDialogueActive) {
+            window.game._dialogueCallback = null; // prevent callback firing during exit
             window.game.endDialogue();
         }
     }

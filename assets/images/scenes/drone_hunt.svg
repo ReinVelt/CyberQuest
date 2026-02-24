@@ -1,0 +1,831 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- ===== CINEMATIC SKY ===== -->
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#020408"/>
+      <stop offset="15%" stop-color="#04081a"/>
+      <stop offset="40%" stop-color="#081028"/>
+      <stop offset="70%" stop-color="#0c1830"/>
+      <stop offset="100%" stop-color="#101e38"/>
+    </linearGradient>
+
+    <!-- Dramatic moon -->
+    <radialGradient id="moonDisc" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e8e4d8"/>
+      <stop offset="70%" stop-color="#d0ccc0"/>
+      <stop offset="100%" stop-color="#b8b4a8"/>
+    </radialGradient>
+    <radialGradient id="moonHalo" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(200,210,240,0.25)"/>
+      <stop offset="30%" stop-color="rgba(160,180,220,0.12)"/>
+      <stop offset="60%" stop-color="rgba(100,130,180,0.04)"/>
+      <stop offset="100%" stop-color="rgba(60,80,140,0)"/>
+    </radialGradient>
+
+    <!-- Heide ground -->
+    <linearGradient id="heideGround" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#141812"/>
+      <stop offset="30%" stop-color="#0e120c"/>
+      <stop offset="100%" stop-color="#080a06"/>
+    </linearGradient>
+
+    <!-- Swamp water reflections -->
+    <linearGradient id="swampWater" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1018"/>
+      <stop offset="50%" stop-color="#060c14"/>
+      <stop offset="100%" stop-color="#040810"/>
+    </linearGradient>
+    <radialGradient id="swampReflect" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="rgba(140,160,200,0.08)"/>
+      <stop offset="100%" stop-color="rgba(80,100,150,0)"/>
+    </radialGradient>
+
+    <!-- Facility glow (ominous red horizon) -->
+    <radialGradient id="facilityGlow" cx="85%" cy="48%" r="22%">
+      <stop offset="0%" stop-color="rgba(255,50,30,0.18)"/>
+      <stop offset="40%" stop-color="rgba(220,30,15,0.08)"/>
+      <stop offset="100%" stop-color="rgba(150,20,10,0)"/>
+    </radialGradient>
+
+    <!-- Searchlight beams -->
+    <linearGradient id="beam1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,220,0.35)"/>
+      <stop offset="20%" stop-color="rgba(255,255,220,0.15)"/>
+      <stop offset="60%" stop-color="rgba(255,255,200,0.04)"/>
+      <stop offset="100%" stop-color="rgba(255,255,200,0)"/>
+    </linearGradient>
+    <linearGradient id="beam2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(200,220,255,0.25)"/>
+      <stop offset="30%" stop-color="rgba(180,200,255,0.08)"/>
+      <stop offset="100%" stop-color="rgba(150,170,240,0)"/>
+    </linearGradient>
+
+    <!-- Cabin warm light -->
+    <radialGradient id="cabinGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,180,60,0.35)"/>
+      <stop offset="40%" stop-color="rgba(255,150,40,0.12)"/>
+      <stop offset="100%" stop-color="rgba(200,100,20,0)"/>
+    </radialGradient>
+    <radialGradient id="windowLight" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#c8903a"/>
+      <stop offset="80%" stop-color="#a06820"/>
+      <stop offset="100%" stop-color="#805010"/>
+    </radialGradient>
+
+    <!-- Volumetric fog -->
+    <linearGradient id="groundFog" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(60,70,90,0)"/>
+      <stop offset="30%" stop-color="rgba(50,60,80,0.08)"/>
+      <stop offset="60%" stop-color="rgba(40,50,70,0.12)"/>
+      <stop offset="100%" stop-color="rgba(30,40,60,0.06)"/>
+    </linearGradient>
+    <radialGradient id="fogPatch1" cx="30%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(50,60,80,0.10)"/>
+      <stop offset="100%" stop-color="rgba(40,50,70,0)"/>
+    </radialGradient>
+    <radialGradient id="fogPatch2" cx="70%" cy="50%" r="45%">
+      <stop offset="0%" stop-color="rgba(50,60,80,0.08)"/>
+      <stop offset="100%" stop-color="rgba(40,50,70,0)"/>
+    </radialGradient>
+
+    <!-- HackRF glow -->
+    <radialGradient id="hackrfGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(0,255,100,0.7)"/>
+      <stop offset="50%" stop-color="rgba(0,200,80,0.25)"/>
+      <stop offset="100%" stop-color="rgba(0,150,60,0)"/>
+    </radialGradient>
+
+    <!-- Heather bloom -->
+    <radialGradient id="heatherBloom" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#3a1830"/>
+      <stop offset="100%" stop-color="#1a0c18"/>
+    </radialGradient>
+
+    <!-- Filters -->
+    <filter id="cloudBlur"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="softGlow"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="mist"><feGaussianBlur stdDeviation="15"/></filter>
+
+    <!-- Searchlight sweep gradient -->
+    <linearGradient id="searchBeam" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,220,0.6)"/>
+      <stop offset="5%" stop-color="rgba(255,255,220,0.3)"/>
+      <stop offset="20%" stop-color="rgba(255,255,200,0.08)"/>
+      <stop offset="60%" stop-color="rgba(255,255,200,0.02)"/>
+      <stop offset="100%" stop-color="rgba(255,255,200,0)"/>
+    </linearGradient>
+    <linearGradient id="searchBeamRed" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="rgba(255,100,80,0.5)"/>
+      <stop offset="10%" stop-color="rgba(255,80,60,0.2)"/>
+      <stop offset="40%" stop-color="rgba(255,60,40,0.05)"/>
+      <stop offset="100%" stop-color="rgba(200,40,20,0)"/>
+    </linearGradient>
+
+    <!-- Lightning flash filter -->
+    <filter id="lightningGlow">
+      <feGaussianBlur stdDeviation="40"/>
+    </filter>
+
+    <!-- Cinematic vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="85%" stop-color="rgba(0,0,0,0.3)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.7)"/>
+    </radialGradient>
+
+    <!-- Danger pulse for sky -->
+    <radialGradient id="dangerPulse" cx="85%" cy="45%" r="30%">
+      <stop offset="0%" stop-color="rgba(255,30,10,0.12)"/>
+      <stop offset="50%" stop-color="rgba(200,20,5,0.04)"/>
+      <stop offset="100%" stop-color="rgba(150,10,0,0)"/>
+    </radialGradient>
+
+    <!-- Ember particle glow -->
+    <radialGradient id="emberGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,120,20,0.8)"/>
+      <stop offset="60%" stop-color="rgba(255,80,10,0.3)"/>
+      <stop offset="100%" stop-color="rgba(200,40,0,0)"/>
+    </radialGradient>
+
+  </defs>
+
+  <!-- ======================================================================== -->
+  <!-- ===== ACT 1: THE SKY — VAST, COLD, THREATENING ===== -->
+  <!-- ======================================================================== -->
+
+  <rect width="1920" height="1080" fill="url(#sky)"/>
+
+  <!-- Wispy clouds catching moonlight -->
+  <g filter="url(#cloudBlur)" opacity="0.15">
+    <ellipse cx="400" cy="80" rx="300" ry="25" fill="#2a3050"/>
+    <ellipse cx="500" cy="95" rx="200" ry="15" fill="#222840"/>
+    <ellipse cx="1300" cy="120" rx="350" ry="20" fill="#2a3050"/>
+    <ellipse cx="1500" cy="105" rx="180" ry="12" fill="#222840"/>
+    <ellipse cx="900" cy="60" rx="250" ry="18" fill="#252c48"/>
+  </g>
+
+  <!-- Moving cloud layer -->
+  <g filter="url(#cloudBlur)" opacity="0.1">
+    <ellipse cx="0" cy="140" rx="400" ry="30" fill="#283048">
+      <animate attributeName="cx" values="-200;2120" dur="120s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="960" cy="90" rx="500" ry="22" fill="#252c45">
+      <animate attributeName="cx" values="960;3160;960" dur="180s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  <!-- Stars — cold pinpoints -->
+  <g>
+    <circle cx="120" cy="28" r="1.2" fill="#d0d8f0" opacity="0.7"/>
+    <circle cx="340" cy="52" r="0.8" fill="#b0b8d0" opacity="0.5"/>
+    <circle cx="580" cy="18" r="1.0" fill="#c0c8e0" opacity="0.6"/>
+    <circle cx="780" cy="65" r="0.6" fill="#a0a8c0" opacity="0.4"/>
+    <circle cx="960" cy="30" r="0.9" fill="#c8d0e8" opacity="0.55"/>
+    <circle cx="1150" cy="48" r="0.7" fill="#b0b8d0" opacity="0.45"/>
+    <circle cx="1380" cy="22" r="1.1" fill="#d0d8f0" opacity="0.65"/>
+    <circle cx="1520" cy="58" r="0.8" fill="#c0c8e0" opacity="0.5"/>
+    <circle cx="1700" cy="35" r="0.6" fill="#a8b0c8" opacity="0.4"/>
+    <circle cx="1850" cy="70" r="0.9" fill="#b8c0d8" opacity="0.5"/>
+    <circle cx="450" cy="42" r="1.0" fill="#e0e8ff" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1060" cy="15" r="0.8" fill="#d8e0f8" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;0.15;0.5" dur="4s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1640" cy="45" r="0.7" fill="#e0e8ff" opacity="0.55">
+      <animate attributeName="opacity" values="0.55;0.1;0.55" dur="2.5s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ===== MOON — cinematic, huge, low on horizon ===== -->
+  <g transform="translate(1500, 100)">
+    <circle cx="0" cy="0" r="180" fill="url(#moonHalo)"/>
+    <circle cx="0" cy="0" r="45" fill="url(#moonDisc)"/>
+    <circle cx="-12" cy="-8" r="6" fill="rgba(160,155,140,0.3)"/>
+    <circle cx="10" cy="5" r="8" fill="rgba(150,145,130,0.25)"/>
+    <circle cx="-5" cy="15" r="4" fill="rgba(155,150,135,0.2)"/>
+    <circle cx="18" cy="-12" r="5" fill="rgba(145,140,125,0.2)"/>
+    <ellipse cx="30" cy="-10" rx="60" ry="12" fill="rgba(15,20,35,0.6)" filter="url(#cloudBlur)"/>
+  </g>
+
+  <!-- ======================================================================== -->
+  <!-- ===== ACT 2: THE HORIZON — DISTANT TREELINE + FACILITY ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- Atmospheric haze at horizon -->
+  <rect x="0" y="380" width="1920" height="80" fill="rgba(15,20,35,0.3)" filter="url(#mist)"/>
+
+  <!-- Distant treeline silhouette -->
+  <g fill="#050c05">
+    <polygon points="0,440 30,360 60,440"/>
+    <polygon points="40,440 80,300 120,440"/>
+    <polygon points="100,440 145,330 190,440"/>
+    <polygon points="160,440 210,280 260,440"/>
+    <polygon points="230,440 275,320 320,440"/>
+    <polygon points="290,440 340,290 390,440"/>
+    <polygon points="360,440 410,310 460,440"/>
+    <polygon points="430,440 480,270 530,440"/>
+    <polygon points="500,440 545,300 590,440"/>
+    <polygon points="560,440 610,330 660,440"/>
+    <polygon points="630,440 680,280 730,440"/>
+    <polygon points="700,440 745,310 790,440"/>
+    <polygon points="760,440 810,290 860,440"/>
+    <polygon points="830,440 880,270 930,440"/>
+    <polygon points="900,440 945,300 990,440"/>
+    <polygon points="960,440 1010,320 1060,440"/>
+    <polygon points="1030,440 1075,280 1120,440"/>
+    <polygon points="1090,440 1140,310 1190,440"/>
+    <polygon points="1160,440 1210,290 1260,440"/>
+    <polygon points="1230,440 1280,270 1330,440"/>
+    <polygon points="1300,440 1345,300 1390,440"/>
+    <polygon points="1360,440 1410,320 1460,440"/>
+    <polygon points="1430,440 1480,280 1530,440"/>
+    <polygon points="1500,440 1545,310 1590,440"/>
+    <polygon points="1560,440 1610,290 1660,440"/>
+    <polygon points="1630,440 1680,270 1730,440"/>
+    <polygon points="1700,440 1745,310 1790,440"/>
+    <polygon points="1760,440 1810,285 1860,440"/>
+    <polygon points="1830,440 1880,300 1920,440"/>
+  </g>
+
+  <!-- Facility glow — ominous red bleeding through trees -->
+  <rect width="1920" height="1080" fill="url(#facilityGlow)"/>
+
+  <!-- Facility tower lights — pulsing danger -->
+  <g>
+    <line x1="1680" y1="440" x2="1680" y2="370" stroke="#0a0a0a" stroke-width="3"/>
+    <circle cx="1680" cy="368" r="4" fill="#ff1a1a" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.15;0.9" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1680" cy="368" r="12" fill="none" stroke="#ff1a1a" stroke-width="1" opacity="0.4">
+      <animate attributeName="r" values="12;25;12" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0;0.4" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <line x1="1730" y1="440" x2="1730" y2="385" stroke="#0a0a0a" stroke-width="2"/>
+    <circle cx="1730" cy="383" r="3" fill="#ff2020" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;0.1;0.7" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1730" cy="383" r="10" fill="none" stroke="#ff2020" stroke-width="0.8" opacity="0.3">
+      <animate attributeName="r" values="10;20;10" dur="2.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0;0.3" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1650" cy="398" r="2.5" fill="#ff3030" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;0.08;0.5" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1770" cy="405" r="1.5" fill="#ff4040" opacity="0.4">
+      <animate attributeName="opacity" values="0.4;0;0.4" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ===== SWEEPING SEARCHLIGHTS from facility ===== -->
+  <!-- Searchlight 1: wide sweep from left tower -->
+  <g transform-origin="1680 370" opacity="0.5">
+    <polygon points="1680,370 1200,750 1350,770" fill="url(#searchBeam)">
+      <animate attributeName="points" dur="12s" repeatCount="indefinite" values="
+        1680,370 1200,750 1350,770;
+        1680,370 800,680 950,700;
+        1680,370 400,750 550,770;
+        1680,370 200,850 350,870;
+        1680,370 500,800 650,820;
+        1680,370 1000,720 1150,740;
+        1680,370 1400,700 1550,720;
+        1680,370 1200,750 1350,770"/>
+    </polygon>
+    <!-- Ground splash of light -->
+    <ellipse cx="1275" cy="760" rx="120" ry="25" fill="rgba(255,255,200,0.04)">
+      <animate attributeName="cx" dur="12s" repeatCount="indefinite" values="1275;875;475;275;575;1075;1475;1275"/>
+      <animate attributeName="cy" dur="12s" repeatCount="indefinite" values="760;690;760;860;810;730;710;760"/>
+    </ellipse>
+  </g>
+
+  <!-- Searchlight 2: red security sweep from right tower -->
+  <g opacity="0.35">
+    <polygon points="1730,383 1600,650 1700,660" fill="url(#searchBeamRed)">
+      <animate attributeName="points" dur="8s" repeatCount="indefinite" values="
+        1730,383 1600,650 1700,660;
+        1730,383 1350,600 1450,610;
+        1730,383 1100,650 1200,660;
+        1730,383 1350,620 1450,630;
+        1730,383 1550,600 1650,610;
+        1730,383 1750,650 1850,660;
+        1730,383 1650,680 1750,690;
+        1730,383 1600,650 1700,660"/>
+    </polygon>
+  </g>
+
+  <!-- ===== PULSING DANGER GLOW in sky ===== -->
+  <rect width="1920" height="1080" fill="url(#dangerPulse)" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6;0.8;0.4;0.6" dur="7s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- ===== DISTANT LIGHTNING FLASHES ===== -->
+  <!-- Flash 1: rare distant heat lightning, left horizon -->
+  <rect x="0" y="0" width="960" height="600" fill="rgba(180,190,220,0.12)" opacity="0" filter="url(#lightningGlow)">
+    <animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;0;0;0;0;0;0;0;0;0.8;1;0.3;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0"/>
+  </rect>
+  <!-- Flash 2: right side, offset timing -->
+  <rect x="800" y="0" width="1120" height="500" fill="rgba(200,210,240,0.1)" opacity="0" filter="url(#lightningGlow)">
+    <animate attributeName="opacity" dur="22s" repeatCount="indefinite" values="0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0.6;0.9;0.2;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0"/>
+  </rect>
+  <!-- Lightning bolt silhouette, left -->
+  <path d="M320,120 L310,200 L330,195 L305,320 L340,290 L300,440" fill="none" stroke="rgba(200,210,255,0.7)" stroke-width="2" opacity="0">
+    <animate attributeName="opacity" dur="15s" repeatCount="indefinite" values="0;0;0;0;0;0;0;0;0;0;0.7;1;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0"/>
+  </path>
+  <!-- Lightning bolt, right -->
+  <path d="M1100,80 L1115,180 L1095,175 L1120,280 L1090,260 L1125,380" fill="none" stroke="rgba(200,220,255,0.5)" stroke-width="1.5" opacity="0">
+    <animate attributeName="opacity" dur="22s" repeatCount="indefinite" values="0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0.5;0.8;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0"/>
+  </path>
+
+  <!-- ======================================================================== -->
+  <!-- ===== ACT 3: THE HEIDE — OPEN MOORLAND, SWAMP, HEATHER ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- Main ground plane -->
+  <rect x="0" y="430" width="1920" height="650" fill="url(#heideGround)"/>
+
+  <!-- Heather fields — purple-brown moorland texture -->
+  <g opacity="0.5">
+    <ellipse cx="200" cy="580" rx="120" ry="15" fill="url(#heatherBloom)"/>
+    <ellipse cx="500" cy="620" rx="90" ry="12" fill="#2a1225"/>
+    <ellipse cx="750" cy="560" rx="150" ry="18" fill="url(#heatherBloom)"/>
+    <ellipse cx="1100" cy="600" rx="110" ry="14" fill="#2c1428"/>
+    <ellipse cx="1400" cy="570" rx="130" ry="16" fill="url(#heatherBloom)"/>
+    <ellipse cx="1700" cy="610" rx="100" ry="13" fill="#281020"/>
+    <ellipse cx="350" cy="650" rx="80" ry="10" fill="#2a1225"/>
+    <ellipse cx="900" cy="680" rx="140" ry="15" fill="url(#heatherBloom)"/>
+    <ellipse cx="1250" cy="660" rx="95" ry="11" fill="#2c1428"/>
+    <ellipse cx="1600" cy="690" rx="120" ry="14" fill="url(#heatherBloom)"/>
+  </g>
+
+  <!-- Grass tufts -->
+  <g opacity="0.4">
+    <path d="M100,560 Q105,540 110,560" stroke="#1a2810" stroke-width="1.5" fill="none"/>
+    <path d="M108,560 Q115,535 122,560" stroke="#162008" stroke-width="1" fill="none"/>
+    <path d="M400,590 Q405,570 410,590" stroke="#1a2810" stroke-width="1.5" fill="none"/>
+    <path d="M408,590 Q415,565 422,590" stroke="#162008" stroke-width="1" fill="none"/>
+    <path d="M650,550 Q655,530 660,550" stroke="#1a2810" stroke-width="1.5" fill="none"/>
+    <path d="M1000,585 Q1005,565 1010,585" stroke="#182408" stroke-width="1.5" fill="none"/>
+    <path d="M1300,565 Q1305,545 1310,565" stroke="#1a2810" stroke-width="1" fill="none"/>
+    <path d="M1550,605 Q1555,585 1560,605" stroke="#162008" stroke-width="1.5" fill="none"/>
+    <path d="M1800,575 Q1805,555 1810,575" stroke="#1a2810" stroke-width="1" fill="none"/>
+  </g>
+
+  <!-- ===== SWAMP POOLS — dark water, moonlight reflections ===== -->
+  <g transform="translate(550, 700)">
+    <ellipse cx="0" cy="0" rx="200" ry="40" fill="url(#swampWater)"/>
+    <ellipse cx="0" cy="0" rx="200" ry="40" fill="url(#swampReflect)"/>
+    <ellipse cx="60" cy="-5" rx="12" ry="3" fill="rgba(200,210,230,0.06)">
+      <animate attributeName="rx" values="12;15;12" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.5;1" dur="2s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="-40" cy="5" rx="30" ry="6" fill="none" stroke="rgba(100,120,160,0.06)" stroke-width="0.5"/>
+    <ellipse cx="80" cy="10" rx="25" ry="5" fill="none" stroke="rgba(100,120,160,0.04)" stroke-width="0.5"/>
+    <line x1="-190" y1="0" x2="-185" y2="-35" stroke="#101808" stroke-width="1.5"/>
+    <line x1="-180" y1="5" x2="-176" y2="-28" stroke="#0e1606" stroke-width="1"/>
+    <line x1="-170" y1="3" x2="-167" y2="-32" stroke="#101808" stroke-width="1.2"/>
+    <line x1="185" y1="-2" x2="188" y2="-30" stroke="#101808" stroke-width="1.5"/>
+    <line x1="175" y1="4" x2="178" y2="-25" stroke="#0e1606" stroke-width="1"/>
+  </g>
+
+  <g transform="translate(1350, 760)">
+    <ellipse cx="0" cy="0" rx="130" ry="30" fill="url(#swampWater)"/>
+    <ellipse cx="0" cy="0" rx="130" ry="30" fill="url(#swampReflect)"/>
+    <ellipse cx="20" cy="-3" rx="8" ry="2" fill="rgba(200,210,230,0.05)">
+      <animate attributeName="opacity" values="1;0.4;1" dur="2.5s" repeatCount="indefinite"/>
+    </ellipse>
+    <line x1="-120" y1="2" x2="-117" y2="-25" stroke="#101808" stroke-width="1.2"/>
+    <line x1="-110" y1="5" x2="-108" y2="-20" stroke="#0e1606" stroke-width="1"/>
+    <line x1="118" y1="0" x2="121" y2="-28" stroke="#101808" stroke-width="1.5"/>
+  </g>
+
+  <!-- ======================================================================== -->
+  <!-- ===== ACT 4: THE HUNTING CABIN — RYAN'S POSITION ===== -->
+  <!-- ======================================================================== -->
+
+  <g transform="translate(280, 520)">
+    <!-- Warm light spill on ground -->
+    <ellipse cx="80" cy="130" rx="100" ry="30" fill="rgba(255,160,50,0.04)"/>
+
+    <!-- Cabin body -->
+    <rect x="0" y="30" width="160" height="100" fill="#18140e"/>
+    <line x1="0" y1="45" x2="160" y2="45" stroke="#1e1a12" stroke-width="1" opacity="0.5"/>
+    <line x1="0" y1="60" x2="160" y2="60" stroke="#1e1a12" stroke-width="1" opacity="0.4"/>
+    <line x1="0" y1="75" x2="160" y2="75" stroke="#1e1a12" stroke-width="1" opacity="0.5"/>
+    <line x1="0" y1="90" x2="160" y2="90" stroke="#1e1a12" stroke-width="1" opacity="0.4"/>
+    <line x1="0" y1="105" x2="160" y2="105" stroke="#1e1a12" stroke-width="1" opacity="0.3"/>
+    <rect x="0" y="30" width="8" height="100" fill="#14100a"/>
+    <rect x="152" y="30" width="8" height="100" fill="#14100a"/>
+
+    <!-- Roof -->
+    <polygon points="-15,30 80,-20 175,30" fill="#100c08"/>
+    <polygon points="-15,30 80,-15 175,30" fill="#161210"/>
+    <line x1="80" y1="-20" x2="80" y2="-15" stroke="#0a0806" stroke-width="2"/>
+    <line x1="10" y1="22" x2="80" y2="-12" stroke="#1a1610" stroke-width="0.5" opacity="0.3"/>
+    <line x1="80" y1="-12" x2="150" y2="22" stroke="#1a1610" stroke-width="0.5" opacity="0.3"/>
+
+    <!-- Chimney with smoke -->
+    <rect x="110" y="-35" width="18" height="30" fill="#1a1610"/>
+    <rect x="108" y="-38" width="22" height="5" fill="#201c14"/>
+    <g opacity="0.08" filter="url(#cloudBlur)">
+      <circle cx="119" cy="-50" r="8" fill="#405060">
+        <animate attributeName="cy" values="-50;-120;-200" dur="8s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="8;20;35" dur="8s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.08;0.04;0" dur="8s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="119" cy="-50" r="6" fill="#405060">
+        <animate attributeName="cy" values="-50;-130;-220" dur="10s" begin="3s" repeatCount="indefinite"/>
+        <animate attributeName="r" values="6;18;30" dur="10s" begin="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.06;0.03;0" dur="10s" begin="3s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+
+    <!-- Door (ajar, light leaking) -->
+    <rect x="25" y="65" width="30" height="65" fill="#100c08"/>
+    <rect x="27" y="67" width="26" height="61" fill="#0e0a06"/>
+    <circle cx="49" cy="97" r="2" fill="#2a2218"/>
+    <rect x="25" y="65" width="3" height="65" fill="rgba(255,160,60,0.15)">
+      <animate attributeName="opacity" values="1;0.6;1;0.8;0.4;1;0.9;0.5;1" dur="3s" repeatCount="indefinite"/>
+    </rect>
+
+    <!-- Window (warm glow) with tension flicker -->
+    <rect x="80" y="55" width="45" height="35" fill="#100c08"/>
+    <rect x="83" y="58" width="39" height="29" fill="url(#windowLight)" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.5;0.6;0.35;0.6;0.55;0.3;0.6" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    <line x1="102.5" y1="58" x2="102.5" y2="87" stroke="#100c08" stroke-width="2"/>
+    <line x1="83" y1="72.5" x2="122" y2="72.5" stroke="#100c08" stroke-width="2"/>
+    <rect x="80" y="55" width="45" height="35" fill="url(#cabinGlow)" opacity="0.4">
+      <animate attributeName="opacity" values="0.4;0.3;0.4;0.2;0.4;0.35;0.15;0.4" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    <polygon points="83,87 70,130 135,130 122,87" fill="rgba(255,160,50,0.06)">
+      <animate attributeName="opacity" values="1;0.8;1;0.5;1;0.7;0.4;1" dur="4s" repeatCount="indefinite"/>
+    </polygon>
+
+    <!-- Cabin ambient glow -->
+    <ellipse cx="80" cy="65" rx="120" ry="80" fill="url(#cabinGlow)" opacity="0.15"/>
+  </g>
+
+  <!-- ===== BACKPACK (leaning against cabin) ===== -->
+  <g transform="translate(460, 625)">
+    <rect x="0" y="0" width="30" height="38" rx="4" fill="#0e0e12"/>
+    <rect x="3" y="3" width="24" height="16" rx="2" fill="#121218"/>
+    <line x1="4" y1="19" x2="26" y2="19" stroke="#2a2a30" stroke-width="1"/>
+    <path d="M4,0 Q-3,-12 4,-8" stroke="#0a0a0e" stroke-width="1.5" fill="none"/>
+    <path d="M26,0 Q33,-12 26,-8" stroke="#0a0a0e" stroke-width="1.5" fill="none"/>
+    <circle cx="15" cy="10" r="5" fill="url(#hackrfGlow)" opacity="0">
+      <animate id="hackrfLed" attributeName="opacity" values="0" dur="1s" fill="freeze"/>
+    </circle>
+  </g>
+
+  <!-- ======================================================================== -->
+  <!-- ===== ACT 5: THE DRONES — MENACING, HUNTING, SEARCHING ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- ===== DRONE 1: MAIN HUNTER — aggressive search pattern with searchlight ===== -->
+  <g id="drone1">
+    <polygon points="0,25 -160,650 160,650" fill="url(#beam1)" opacity="0.3">
+      <animate attributeName="opacity" values="0.3;0.15;0.25;0.1;0.3" dur="4s" repeatCount="indefinite"/>
+    </polygon>
+    <ellipse cx="0" cy="650" rx="160" ry="40" fill="rgba(255,255,200,0.04)">
+      <animate attributeName="opacity" values="1;0.5;0.8;0.4;1" dur="4s" repeatCount="indefinite"/>
+    </ellipse>
+    <g>
+      <line x1="-40" y1="0" x2="-75" y2="-18" stroke="#383838" stroke-width="3.5"/>
+      <line x1="40" y1="0" x2="75" y2="-18" stroke="#383838" stroke-width="3.5"/>
+      <line x1="-35" y1="6" x2="-65" y2="24" stroke="#383838" stroke-width="3.5"/>
+      <line x1="35" y1="6" x2="65" y2="24" stroke="#383838" stroke-width="3.5"/>
+      <circle cx="-75" cy="-18" r="6" fill="#222"/>
+      <circle cx="75" cy="-18" r="6" fill="#222"/>
+      <circle cx="-65" cy="24" r="6" fill="#222"/>
+      <circle cx="65" cy="24" r="6" fill="#222"/>
+      <polygon points="-32,0 -28,-12 28,-12 32,0 28,12 -28,12" fill="#1c1c1c"/>
+      <polygon points="-26,-2 -22,-10 22,-10 26,-2 22,8 -22,8" fill="#252525"/>
+      <rect x="-10" y="12" width="20" height="10" rx="3" fill="#111"/>
+      <circle cx="0" cy="17" r="4" fill="#0a0505">
+        <animate attributeName="fill" values="#0a0505;#1a0808;#0a0505" dur="1.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="0" cy="17" r="6" fill="none" stroke="#300808" stroke-width="0.5" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0.2;0.6" dur="1.2s" repeatCount="indefinite"/>
+      </circle>
+      <g opacity="0.35">
+        <ellipse cx="-75" cy="-18" rx="28" ry="4" fill="#666">
+          <animate attributeName="rx" values="28;22;28" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="75" cy="-18" rx="28" ry="4" fill="#666">
+          <animate attributeName="rx" values="22;28;22" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="-65" cy="24" rx="28" ry="4" fill="#666">
+          <animate attributeName="rx" values="25;28;25" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="65" cy="24" rx="28" ry="4" fill="#666">
+          <animate attributeName="rx" values="28;25;28" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+      </g>
+      <circle cx="-75" cy="-18" r="2.5" fill="#ff0000">
+        <animate attributeName="opacity" values="1;0;1" dur="0.4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="75" cy="-18" r="2.5" fill="#00ff00">
+        <animate attributeName="opacity" values="0;1;0" dur="0.4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="0" cy="-12" r="2" fill="#ffffff" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;0;0;0;0;0" dur="2s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <animateMotion dur="16s" repeatCount="indefinite" rotate="auto"
+      path="M800,100 C600,80 350,140 200,110 C80,85 40,160 120,180 C280,210 500,130 750,150 C1000,170 1350,80 1550,120 C1700,150 1800,90 1650,70 C1450,55 1050,130 800,100"/>
+  </g>
+
+  <!-- ===== DRONE 2: FLANKER — perimeter patrol ===== -->
+  <g id="drone2" opacity="0.65">
+    <polygon points="0,18 -60,400 60,400" fill="url(#beam2)" opacity="0.2">
+      <animate attributeName="opacity" values="0.2;0.08;0.15;0.05;0.2" dur="5s" repeatCount="indefinite"/>
+    </polygon>
+    <g>
+      <line x1="-18" y1="0" x2="-35" y2="-10" stroke="#353535" stroke-width="2.5"/>
+      <line x1="18" y1="0" x2="35" y2="-10" stroke="#353535" stroke-width="2.5"/>
+      <line x1="-15" y1="5" x2="-30" y2="15" stroke="#353535" stroke-width="2.5"/>
+      <line x1="15" y1="5" x2="30" y2="15" stroke="#353535" stroke-width="2.5"/>
+      <circle cx="-35" cy="-10" r="4" fill="#222"/>
+      <circle cx="35" cy="-10" r="4" fill="#222"/>
+      <circle cx="-30" cy="15" r="4" fill="#222"/>
+      <circle cx="30" cy="15" r="4" fill="#222"/>
+      <polygon points="-16,0 -14,-8 14,-8 16,0 14,8 -14,8" fill="#1c1c1c"/>
+      <polygon points="-12,-1 -10,-6 10,-6 12,-1 10,6 -10,6" fill="#252525"/>
+      <circle cx="0" cy="10" r="3" fill="#0a0505">
+        <animate attributeName="fill" values="#0a0505;#180808;#0a0505" dur="1.6s" repeatCount="indefinite"/>
+      </circle>
+      <g opacity="0.3">
+        <ellipse cx="-35" cy="-10" rx="16" ry="3" fill="#666">
+          <animate attributeName="rx" values="16;12;16" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="35" cy="-10" rx="16" ry="3" fill="#666">
+          <animate attributeName="rx" values="12;16;12" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="-30" cy="15" rx="16" ry="3" fill="#666">
+          <animate attributeName="rx" values="14;16;14" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="30" cy="15" rx="16" ry="3" fill="#666">
+          <animate attributeName="rx" values="16;14;16" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+      </g>
+      <circle cx="-35" cy="-10" r="2" fill="#ff0000">
+        <animate attributeName="opacity" values="1;0;1" dur="0.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="35" cy="-10" r="2" fill="#00ff00">
+        <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <animateMotion dur="22s" repeatCount="indefinite" rotate="auto"
+      path="M1500,160 C1700,130 1880,180 1850,140 C1820,100 1650,70 1400,90 C1100,115 800,180 550,155 C350,135 150,80 80,120 C30,150 150,200 350,185 C600,165 1000,195 1300,175 C1400,168 1480,165 1500,160"/>
+  </g>
+
+  <!-- ===== DRONE 3: FAST INTERCEPTOR — racing across horizon ===== -->
+  <g id="drone3" opacity="0.35">
+    <g>
+      <ellipse cx="0" cy="0" rx="10" ry="4" fill="#1c1c1c"/>
+      <circle cx="-20" cy="-5" r="1.5" fill="#ff0000">
+        <animate attributeName="opacity" values="1;0;1" dur="0.3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="20" cy="-5" r="1.5" fill="#ff0000">
+        <animate attributeName="opacity" values="0;1;0" dur="0.3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="0" cy="-4" r="1" fill="#fff" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;0;0;0" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <animateMotion dur="10s" repeatCount="indefinite"
+      path="M-100,300 L400,280 L800,310 L1200,285 L1600,305 L2020,290 L2020,280 L1600,295 L1200,275 L800,300 L400,270 L-100,300"/>
+  </g>
+
+  <!-- ===== DRONE 4: HIGH ALTITUDE SPOTTER — tiny, circling ===== -->
+  <g id="drone4" opacity="0.2">
+    <circle cx="0" cy="0" r="3" fill="#181818"/>
+    <circle cx="-8" cy="-3" r="0.8" fill="#ff0000">
+      <animate attributeName="opacity" values="1;0;1" dur="0.7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="8" cy="-3" r="0.8" fill="#00ff00">
+      <animate attributeName="opacity" values="0;1;0" dur="0.7s" repeatCount="indefinite"/>
+    </circle>
+    <animateMotion dur="30s" repeatCount="indefinite"
+      path="M960,200 C1200,180 1400,220 1500,200 C1600,180 1550,160 1400,170 C1200,185 1000,210 800,195 C600,180 400,200 350,210 C300,220 400,230 600,215 C800,200 900,200 960,200"/>
+  </g>
+
+  <!-- ======================================================================== -->
+  <!-- ===== ACT 6: ATMOSPHERE — FOG, MIST, PARTICLES ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- Rolling ground fog -->
+  <rect x="0" y="550" width="1920" height="300" fill="url(#groundFog)"/>
+  <rect x="0" y="600" width="1920" height="200" fill="url(#fogPatch1)">
+    <animate attributeName="x" values="0;-100;0" dur="40s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="0" y="580" width="1920" height="250" fill="url(#fogPatch2)">
+    <animate attributeName="x" values="0;80;0" dur="55s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- Low mist wisps -->
+  <g filter="url(#mist)" opacity="0.06">
+    <ellipse cx="400" cy="720" rx="250" ry="30" fill="#4a5a70">
+      <animate attributeName="cx" values="400;500;400" dur="25s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="1000" cy="700" rx="300" ry="25" fill="#4a5a70">
+      <animate attributeName="cx" values="1000;900;1000" dur="30s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="1500" cy="740" rx="200" ry="20" fill="#4a5a70">
+      <animate attributeName="cx" values="1500;1600;1500" dur="22s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  <!-- Swamp gas / firefly particles -->
+  <g>
+    <circle cx="500" cy="690" r="2" fill="#506848" opacity="0.3">
+      <animate attributeName="opacity" values="0.3;0;0.2;0;0.3" dur="6s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="690;670;690" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="620" cy="710" r="1.5" fill="#487040" opacity="0.25">
+      <animate attributeName="opacity" values="0.25;0;0.15;0;0.25" dur="7s" begin="2s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="710;690;710" dur="9s" begin="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1300" cy="750" r="1.8" fill="#506848" opacity="0.2">
+      <animate attributeName="opacity" values="0.2;0;0.15;0;0.2" dur="5s" begin="1s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="750;735;750" dur="7s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1400" cy="770" r="1.2" fill="#487040" opacity="0.15">
+      <animate attributeName="opacity" values="0.15;0;0.1;0;0.15" dur="8s" begin="4s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="770;755;770" dur="6s" begin="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="850" cy="560" r="1" fill="#405838" opacity="0.15">
+      <animate attributeName="opacity" values="0.15;0;0.15" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1150" cy="580" r="0.8" fill="#405838" opacity="0.1">
+      <animate attributeName="opacity" values="0.1;0;0.1" dur="5s" begin="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ======================================================================== -->
+  <!-- ===== ACT 7: FOREGROUND — BUSHES, VEGETATION ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- ===== FOREGROUND BUSHES — FAR LEFT (wind-animated) ===== -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0,0;3,-1;0,0;-2,1;0,0" dur="6s" repeatCount="indefinite"/>
+    <!-- Large bush cluster far left -->
+    <ellipse cx="180" cy="960" rx="160" ry="80" fill="#080c06"/>
+    <ellipse cx="120" cy="940" rx="100" ry="60" fill="#0a0e08"/>
+    <ellipse cx="260" cy="970" rx="90" ry="55" fill="#070b05"/>
+    <ellipse cx="80" cy="975" rx="70" ry="50" fill="#060a04"/>
+    <!-- Branch detail, wind-swaying -->
+    <path d="M100,920 Q80,880 65,860" stroke="#121810" stroke-width="2" fill="none" opacity="0.4">
+      <animate attributeName="d" values="M100,920 Q80,880 65,860;M100,920 Q85,878 70,855;M100,920 Q80,880 65,860" dur="4s" repeatCount="indefinite"/>
+    </path>
+    <path d="M150,905 Q140,870 125,850" stroke="#101608" stroke-width="1.5" fill="none" opacity="0.35">
+      <animate attributeName="d" values="M150,905 Q140,870 125,850;M150,905 Q145,868 130,845;M150,905 Q140,870 125,850" dur="5s" repeatCount="indefinite"/>
+    </path>
+    <path d="M220,930 Q210,895 195,880" stroke="#121810" stroke-width="1.5" fill="none" opacity="0.3">
+      <animate attributeName="d" values="M220,930 Q210,895 195,880;M220,930 Q215,893 200,876;M220,930 Q210,895 195,880" dur="4.5s" repeatCount="indefinite"/>
+    </path>
+    <!-- Leaf highlights -->
+    <ellipse cx="130" cy="935" rx="35" ry="18" fill="#0c1208" opacity="0.6"/>
+    <ellipse cx="200" cy="955" rx="28" ry="15" fill="#0e1408" opacity="0.5"/>
+    <ellipse cx="90" cy="960" rx="22" ry="12" fill="#0c1208" opacity="0.4"/>
+    <!-- Far-left scrub -->
+    <ellipse cx="0" cy="1000" rx="80" ry="50" fill="#080c06"/>
+    <ellipse cx="50" cy="1010" rx="60" ry="40" fill="#070b05"/>
+  </g>
+
+  <!-- ===== FOREGROUND BUSHES — FAR RIGHT (wind-animated) ===== -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" values="0,0;-3,-1;0,0;2,1;0,0" dur="7s" repeatCount="indefinite"/>
+    <!-- Large bush cluster far right -->
+    <ellipse cx="1600" cy="965" rx="140" ry="70" fill="#080c06"/>
+    <ellipse cx="1700" cy="955" rx="110" ry="60" fill="#0a0e08"/>
+    <ellipse cx="1540" cy="980" rx="90" ry="50" fill="#070b05"/>
+    <ellipse cx="1760" cy="975" rx="80" ry="55" fill="#060a04"/>
+    <!-- Heather bloom hints -->
+    <ellipse cx="1580" cy="948" rx="40" ry="12" fill="#1a0c18" opacity="0.4"/>
+    <ellipse cx="1670" cy="940" rx="30" ry="10" fill="#1c0e1a" opacity="0.35"/>
+    <ellipse cx="1740" cy="955" rx="25" ry="8" fill="#180a16" opacity="0.3"/>
+    <!-- Branch detail, wind-swaying -->
+    <path d="M1630,930 Q1615,895 1600,880" stroke="#121810" stroke-width="2" fill="none" opacity="0.35">
+      <animate attributeName="d" values="M1630,930 Q1615,895 1600,880;M1630,930 Q1620,893 1605,876;M1630,930 Q1615,895 1600,880" dur="5s" repeatCount="indefinite"/>
+    </path>
+    <path d="M1720,925 Q1710,890 1695,875" stroke="#101608" stroke-width="1.5" fill="none" opacity="0.3">
+      <animate attributeName="d" values="M1720,925 Q1710,890 1695,875;M1720,925 Q1715,888 1700,872;M1720,925 Q1710,890 1695,875" dur="4.5s" repeatCount="indefinite"/>
+    </path>
+    <!-- Far-right scrub -->
+    <ellipse cx="1830" cy="990" rx="120" ry="55" fill="#080c06"/>
+    <ellipse cx="1900" cy="1000" rx="90" ry="50" fill="#070b05"/>
+    <ellipse cx="1920" cy="1005" rx="70" ry="45" fill="#060a04"/>
+    <ellipse cx="1780" cy="1010" rx="80" ry="40" fill="#0a0e08"/>
+    <path d="M1850,970 Q1840,940 1825,925" stroke="#121810" stroke-width="1.5" fill="none" opacity="0.3"/>
+  </g>
+
+  <!-- ===== FOREGROUND MOOR VEGETATION \u2014 ground level (wind-animated) ===== -->
+  <g opacity="0.6">
+    <!-- Peat/bog grass tussocks with wind sway -->
+    <path d="M30,1060 Q45,1035 60,1060" stroke="#141c10" stroke-width="2" fill="none">
+      <animate attributeName="d" values="M30,1060 Q45,1035 60,1060;M30,1060 Q48,1033 60,1060;M30,1060 Q42,1037 60,1060;M30,1060 Q45,1035 60,1060" dur="3s" repeatCount="indefinite"/>
+    </path>
+    <path d="M55,1060 Q70,1030 85,1060" stroke="#121a0e" stroke-width="1.5" fill="none">
+      <animate attributeName="d" values="M55,1060 Q70,1030 85,1060;M55,1060 Q73,1028 85,1060;M55,1060 Q67,1032 85,1060;M55,1060 Q70,1030 85,1060" dur="3.5s" repeatCount="indefinite"/>
+    </path>
+    <path d="M300,1055 Q315,1030 330,1055" stroke="#141c10" stroke-width="2" fill="none">
+      <animate attributeName="d" values="M300,1055 Q315,1030 330,1055;M300,1055 Q318,1028 330,1055;M300,1055 Q312,1032 330,1055;M300,1055 Q315,1030 330,1055" dur="4s" repeatCount="indefinite"/>
+    </path>
+    <path d="M1350,1055 Q1365,1028 1380,1055" stroke="#121a0e" stroke-width="2" fill="none">
+      <animate attributeName="d" values="M1350,1055 Q1365,1028 1380,1055;M1350,1055 Q1368,1025 1380,1055;M1350,1055 Q1362,1030 1380,1055;M1350,1055 Q1365,1028 1380,1055" dur="3.2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M1600,1058 Q1615,1030 1630,1058" stroke="#141c10" stroke-width="1.5" fill="none">
+      <animate attributeName="d" values="M1600,1058 Q1615,1030 1630,1058;M1600,1058 Q1618,1027 1630,1058;M1600,1058 Q1612,1032 1630,1058;M1600,1058 Q1615,1030 1630,1058" dur="3.8s" repeatCount="indefinite"/>
+    </path>
+    <path d="M1800,1055 Q1820,1028 1840,1055" stroke="#141c10" stroke-width="1.5" fill="none">
+      <animate attributeName="d" values="M1800,1055 Q1820,1028 1840,1055;M1800,1055 Q1823,1025 1840,1055;M1800,1055 Q1817,1030 1840,1055;M1800,1055 Q1820,1028 1840,1055" dur="4.2s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <!-- Sphagnum moss patches -->
+  <g opacity="0.3">
+    <ellipse cx="300" cy="1050" rx="50" ry="10" fill="#1a2214"/>
+    <ellipse cx="1400" cy="1048" rx="60" ry="12" fill="#1a2214"/>
+    <ellipse cx="1700" cy="1052" rx="45" ry="9" fill="#182010"/>
+  </g>
+
+  <!-- Low heather at bottom edge (outside road) -->
+  <g opacity="0.5">
+    <path d="M0,1040 Q40,1020 80,1040 Q120,1015 160,1040 Q200,1025 240,1040 L240,1080 L0,1080Z" fill="#120a14"/>
+    <path d="M350,1038 Q400,1018 450,1038 Q500,1022 550,1038 L550,1080 L350,1080Z" fill="#140c16"/>
+    <path d="M1300,1038 Q1350,1018 1400,1038 Q1450,1022 1500,1038 L1500,1080 L1300,1080Z" fill="#140c16"/>
+    <path d="M1650,1040 Q1700,1020 1750,1040 Q1800,1025 1850,1040 Q1900,1030 1920,1040 L1920,1080 L1650,1080Z" fill="#120a14"/>
+  </g>
+
+  <!-- ===== EMBER / SPARK PARTICLES from facility direction ===== -->
+  <g>
+    <!-- Ember 1: slow rising -->
+    <circle cx="1650" cy="500" r="1.5" fill="url(#emberGlow)" opacity="0">
+      <animate attributeName="cy" values="500;350;200;50" dur="12s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="1650;1620;1580;1550" dur="12s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0.6;0.8;0.4;0" dur="12s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="1.5;2;1.5;1;0.5" dur="12s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Ember 2 -->
+    <circle cx="1700" cy="480" r="1" fill="url(#emberGlow)" opacity="0">
+      <animate attributeName="cy" values="480;320;160;20" dur="15s" begin="3s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="1700;1660;1630;1610" dur="15s" begin="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0.5;0.7;0.3;0" dur="15s" begin="3s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Ember 3: fast -->
+    <circle cx="1680" cy="460" r="0.8" fill="#ff8020" opacity="0">
+      <animate attributeName="cy" values="460;280;100" dur="8s" begin="6s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="1680;1640;1590" dur="8s" begin="6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0.7;0.9;0.5;0" dur="8s" begin="6s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Ember 4 -->
+    <circle cx="1720" cy="440" r="1.2" fill="url(#emberGlow)" opacity="0">
+      <animate attributeName="cy" values="440;300;160;30" dur="18s" begin="9s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="1720;1690;1650;1600" dur="18s" begin="9s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0.4;0.6;0.2;0" dur="18s" begin="9s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Ember 5: tiny, going high -->
+    <circle cx="1660" cy="470" r="0.6" fill="#ffa040" opacity="0">
+      <animate attributeName="cy" values="470;250;30" dur="10s" begin="2s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="1660;1630;1580" dur="10s" begin="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0.5;0.8;0.3;0" dur="10s" begin="2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Ember 6 -->
+    <circle cx="1740" cy="450" r="1" fill="url(#emberGlow)" opacity="0">
+      <animate attributeName="cy" values="450;330;210;100" dur="14s" begin="5s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="1740;1710;1680;1650" dur="14s" begin="5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;0.3;0.5;0.2;0" dur="14s" begin="5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ===== ADDITIONAL ATMOSPHERIC — wind-driven dust/mist wisps ===== -->
+  <g filter="url(#mist)" opacity="0.04">
+    <ellipse cx="300" cy="850" rx="400" ry="20" fill="#5a6878">
+      <animate attributeName="cx" values="300;600;900;600;300" dur="35s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="1;0.5;0.8;0.3;1" dur="35s" repeatCount="indefinite"/>
+    </ellipse>
+    <ellipse cx="1200" cy="820" rx="350" ry="18" fill="#5a6878">
+      <animate attributeName="cx" values="1200;900;600;900;1200" dur="28s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.6;1;0.5;0.8;0.6" dur="28s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  <!-- ===== SCANNING LASER LINE from distant drone ===== -->
+  <line x1="0" y1="650" x2="1920" y2="650" stroke="rgba(255,0,0,0.15)" stroke-width="1" opacity="0">
+    <animate attributeName="y1" values="600;750;600" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="y2" values="650;700;650" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0;0;0.15;0.3;0.15;0;0;0" dur="6s" repeatCount="indefinite"/>
+  </line>
+
+  <!-- ===== CINEMATIC VIGNETTE — dark edges ===== -->
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+
+  <!-- ===== CINEMATIC LETTERBOX BARS — widescreen feel ===== -->
+  <rect x="0" y="0" width="1920" height="45" fill="#000" opacity="0.85"/>
+  <rect x="0" y="1035" width="1920" height="45" fill="#000" opacity="0.85"/>
+
+  <!-- Scene label -->
+  <text x="960" y="1065" text-anchor="middle" font-family="monospace" font-size="11" fill="#1a2015" opacity="0.2" letter-spacing="4">STECKERDOSER HEIDE</text>
+</svg>

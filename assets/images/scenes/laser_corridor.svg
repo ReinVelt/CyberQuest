@@ -1,0 +1,553 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- Corridor walls gradient -->
+    <linearGradient id="wallLeft" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0a0a0e"/>
+      <stop offset="100%" stop-color="#14141c"/>
+    </linearGradient>
+    <linearGradient id="wallRight" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#14141c"/>
+      <stop offset="100%" stop-color="#0a0a0e"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0e0e14"/>
+      <stop offset="100%" stop-color="#080810"/>
+    </linearGradient>
+    <linearGradient id="ceiling" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="#101018"/>
+      <stop offset="100%" stop-color="#08080e"/>
+    </linearGradient>
+
+    <!-- Emergency red lighting -->
+    <radialGradient id="emergencyRed1" cx="25%" cy="50%" r="35%">
+      <stop offset="0%" stop-color="rgba(255,20,10,0.15)"/>
+      <stop offset="50%" stop-color="rgba(200,10,5,0.05)"/>
+      <stop offset="100%" stop-color="rgba(150,5,0,0)"/>
+    </radialGradient>
+    <radialGradient id="emergencyRed2" cx="75%" cy="50%" r="35%">
+      <stop offset="0%" stop-color="rgba(255,20,10,0.12)"/>
+      <stop offset="50%" stop-color="rgba(200,10,5,0.04)"/>
+      <stop offset="100%" stop-color="rgba(150,5,0,0)"/>
+    </radialGradient>
+
+    <!-- Laser beam glow -->
+    <radialGradient id="laserGlowRed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,0,0,0.8)"/>
+      <stop offset="30%" stop-color="rgba(255,0,0,0.3)"/>
+      <stop offset="100%" stop-color="rgba(255,0,0,0)"/>
+    </radialGradient>
+    <radialGradient id="laserGlowGreen" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(0,255,60,0.6)"/>
+      <stop offset="30%" stop-color="rgba(0,200,40,0.2)"/>
+      <stop offset="100%" stop-color="rgba(0,150,30,0)"/>
+    </radialGradient>
+
+    <!-- Biometric panel glow -->
+    <radialGradient id="panelGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(0,150,255,0.4)"/>
+      <stop offset="50%" stop-color="rgba(0,100,200,0.1)"/>
+      <stop offset="100%" stop-color="rgba(0,60,150,0)"/>
+    </radialGradient>
+
+    <!-- Heavy steel door -->
+    <linearGradient id="steelDoor" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1a1a22"/>
+      <stop offset="20%" stop-color="#222230"/>
+      <stop offset="50%" stop-color="#2a2a38"/>
+      <stop offset="80%" stop-color="#222230"/>
+      <stop offset="100%" stop-color="#1a1a22"/>
+    </linearGradient>
+
+    <!-- Pipe surface -->
+    <linearGradient id="pipeGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#282830"/>
+      <stop offset="40%" stop-color="#1e1e28"/>
+      <stop offset="100%" stop-color="#141420"/>
+    </linearGradient>
+
+    <!-- Steam / fog -->
+    <radialGradient id="steamPatch" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(100,110,130,0.15)"/>
+      <stop offset="100%" stop-color="rgba(80,90,110,0)"/>
+    </radialGradient>
+
+    <!-- Spark glow -->
+    <radialGradient id="sparkGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,200,50,0.9)"/>
+      <stop offset="40%" stop-color="rgba(255,150,20,0.3)"/>
+      <stop offset="100%" stop-color="rgba(200,100,0,0)"/>
+    </radialGradient>
+
+    <!-- Sensor pod -->
+    <radialGradient id="sensorEye" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#304050"/>
+      <stop offset="70%" stop-color="#202830"/>
+      <stop offset="100%" stop-color="#101820"/>
+    </radialGradient>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="85%" stop-color="rgba(0,0,0,0.4)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.8)"/>
+    </radialGradient>
+
+    <!-- Filters -->
+    <filter id="blur3"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="blur8"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="blur15"><feGaussianBlur stdDeviation="15"/></filter>
+    <filter id="blur25"><feGaussianBlur stdDeviation="25"/></filter>
+  </defs>
+
+  <!-- ======================================================================== -->
+  <!-- ===== CORRIDOR STRUCTURE - 1-POINT PERSPECTIVE ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- Background - deep dark -->
+  <rect width="1920" height="1080" fill="#06060a"/>
+
+  <!-- Ceiling plane -->
+  <polygon points="0,0 1920,0 1320,280 600,280" fill="url(#ceiling)"/>
+  
+  <!-- Floor plane -->
+  <polygon points="0,1080 1920,1080 1320,700 600,700" fill="url(#floor)"/>
+
+  <!-- Left wall -->
+  <polygon points="0,0 600,280 600,700 0,1080" fill="url(#wallLeft)"/>
+
+  <!-- Right wall -->
+  <polygon points="1920,0 1320,280 1320,700 1920,1080" fill="url(#wallRight)"/>
+
+  <!-- Back wall (vanishing point area) -->
+  <rect x="600" y="280" width="720" height="420" fill="#0c0c14"/>
+
+  <!-- ======================================================================== -->
+  <!-- ===== WALL DETAILS - CONCRETE PANELS, CONDUITS ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- Left wall concrete panel lines (perspective) -->
+  <g stroke="#1a1a24" stroke-width="1" opacity="0.4">
+    <!-- Horizontal panel seams -->
+    <line x1="0" y1="200" x2="600" y2="360"/>
+    <line x1="0" y1="400" x2="600" y2="430"/>
+    <line x1="0" y1="600" x2="600" y2="530"/>
+    <line x1="0" y1="800" x2="600" y2="620"/>
+    <line x1="0" y1="950" x2="600" y2="670"/>
+    <!-- Vertical panel seams -->
+    <line x1="100" y1="0" x2="610" y2="290" opacity="0.3"/>
+    <line x1="250" y1="0" x2="605" y2="285" opacity="0.3"/>
+    <line x1="400" y1="0" x2="602" y2="282" opacity="0.25"/>
+  </g>
+
+  <!-- Right wall concrete panel lines -->
+  <g stroke="#1a1a24" stroke-width="1" opacity="0.4">
+    <line x1="1920" y1="200" x2="1320" y2="360"/>
+    <line x1="1920" y1="400" x2="1320" y2="430"/>
+    <line x1="1920" y1="600" x2="1320" y2="530"/>
+    <line x1="1920" y1="800" x2="1320" y2="620"/>
+    <line x1="1920" y1="950" x2="1320" y2="670"/>
+    <line x1="1820" y1="0" x2="1310" y2="290" opacity="0.3"/>
+    <line x1="1670" y1="0" x2="1315" y2="285" opacity="0.3"/>
+    <line x1="1520" y1="0" x2="1318" y2="282" opacity="0.25"/>
+  </g>
+
+  <!-- Floor tiles / perspective grid lines -->
+  <g stroke="#18181e" stroke-width="1" opacity="0.35">
+    <!-- Cross-corridor lines (horizontal, converging) -->
+    <line x1="0" y1="1080" x2="600" y2="700"/>
+    <line x1="80" y1="1080" x2="620" y2="700"/>
+    <line x1="240" y1="1080" x2="660" y2="700"/>
+    <line x1="480" y1="1080" x2="720" y2="700"/>
+    <line x1="720" y1="1080" x2="790" y2="700"/>
+    <line x1="960" y1="1080" x2="860" y2="700"/>
+    <line x1="1200" y1="1080" x2="940" y2="700"/>
+    <line x1="1440" y1="1080" x2="1020" y2="700"/>
+    <line x1="1680" y1="1080" x2="1100" y2="700"/>
+    <line x1="1840" y1="1080" x2="1200" y2="700"/>
+    <line x1="1920" y1="1080" x2="1320" y2="700"/>
+    <!-- Lengthwise perspective lines -->
+    <line x1="150" y1="1080" x2="630" y2="700" opacity="0.2"/>
+    <line x1="600" y1="1080" x2="750" y2="700" opacity="0.2"/>
+    <line x1="1050" y1="1080" x2="900" y2="700" opacity="0.2"/>
+    <line x1="1500" y1="1080" x2="1080" y2="700" opacity="0.2"/>
+    <line x1="1770" y1="1080" x2="1260" y2="700" opacity="0.2"/>
+  </g>
+
+  <!-- ======================================================================== -->
+  <!-- ===== CEILING INFRASTRUCTURE - PIPES, CABLES, SENSORS ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- Main pipe runs along ceiling -->
+  <g>
+    <!-- Large pipe left side -->
+    <line x1="30" y1="60" x2="610" y2="290" stroke="url(#pipeGrad)" stroke-width="18" stroke-linecap="round"/>
+    <line x1="30" y1="60" x2="610" y2="290" stroke="#303040" stroke-width="14" stroke-linecap="round" opacity="0.3"/>
+    <!-- Pipe clamps -->
+    <rect x="120" y="96" width="14" height="8" fill="#252530" transform="rotate(15,127,100)" rx="1"/>
+    <rect x="280" y="150" width="14" height="8" fill="#252530" transform="rotate(18,287,154)" rx="1"/>
+    <rect x="440" y="210" width="14" height="8" fill="#252530" transform="rotate(20,447,214)" rx="1"/>
+
+    <!-- Large pipe right side -->
+    <line x1="1890" y1="60" x2="1310" y2="290" stroke="url(#pipeGrad)" stroke-width="18" stroke-linecap="round"/>
+    <line x1="1890" y1="60" x2="1310" y2="290" stroke="#303040" stroke-width="14" stroke-linecap="round" opacity="0.3"/>
+    <rect x="1780" y="96" width="14" height="8" fill="#252530" transform="rotate(-15,1787,100)" rx="1"/>
+    <rect x="1620" y="150" width="14" height="8" fill="#252530" transform="rotate(-18,1627,154)" rx="1"/>
+    <rect x="1460" y="210" width="14" height="8" fill="#252530" transform="rotate(-20,1467,214)" rx="1"/>
+
+    <!-- Smaller cable bundles -->
+    <line x1="80" y1="30" x2="605" y2="285" stroke="#1c1c28" stroke-width="6"/>
+    <line x1="1840" y1="30" x2="1315" y2="285" stroke="#1c1c28" stroke-width="6"/>
+    <line x1="150" y1="15" x2="608" y2="283" stroke="#1a1a25" stroke-width="4"/>
+    <line x1="1770" y1="15" x2="1312" y2="283" stroke="#1a1a25" stroke-width="4"/>
+  </g>
+
+  <!-- ===== DRIPPING PIPE with steam (left wall, mid-corridor) ===== -->
+  <g transform="translate(320,180)">
+    <!-- Pipe joint with leak -->
+    <rect x="-8" y="-4" width="16" height="10" fill="#222230" rx="2"/>
+    <rect x="-3" y="5" width="2" height="1" fill="#405060" opacity="0.6"/>
+    <!-- Animated drip -->
+    <circle cx="0" cy="8" r="1.5" fill="rgba(80,120,160,0.5)">
+      <animate attributeName="cy" values="8;180;8" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.5;0.3;0" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="1.5;1;0.5" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="8" r="1" fill="rgba(80,120,160,0.4)">
+      <animate attributeName="cy" values="8;180;8" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.4;0.2;0" dur="3s" begin="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Steam wisp -->
+    <ellipse cx="10" cy="40" rx="30" ry="15" fill="url(#steamPatch)" filter="url(#blur8)">
+      <animate attributeName="cx" values="10;30;10" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="40;25;40" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="8s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  <!-- ===== SPARKING CONDUIT (right wall) ===== -->
+  <g transform="translate(1620,250)">
+    <!-- Damaged conduit box -->
+    <rect x="-15" y="-10" width="30" height="20" fill="#1a1a24" rx="2"/>
+    <line x1="-12" y1="0" x2="-5" y2="0" stroke="#2a2a38" stroke-width="2"/>
+    <line x1="5" y1="-3" x2="12" y2="3" stroke="#ff8800" stroke-width="1.5" opacity="0">
+      <animate attributeName="opacity" values="0;0;0;0;0;1;0;0;0;0;0;0.8;0;0;0;0" dur="4s" repeatCount="indefinite"/>
+    </line>
+    <!-- Spark flare -->
+    <circle cx="8" cy="0" r="8" fill="url(#sparkGlow)" opacity="0">
+      <animate attributeName="opacity" values="0;0;0;0;0;0.9;0;0;0;0;0;0.7;0;0;0;0" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="8" cy="0" r="20" fill="url(#sparkGlow)" opacity="0" filter="url(#blur3)">
+      <animate attributeName="opacity" values="0;0;0;0;0;0.4;0;0;0;0;0;0.3;0;0;0;0" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Spark particles falling -->
+    <circle cx="10" cy="5" r="0.8" fill="#ffcc00" opacity="0">
+      <animate attributeName="opacity" values="0;0;0;0;0;1;0.5;0;0;0;0;0;0;0;0;0" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="5;60;5" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="6" cy="3" r="0.6" fill="#ff9900" opacity="0">
+      <animate attributeName="opacity" values="0;0;0;0;0;0.8;0.4;0;0;0;0;0;0;0;0;0" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="3;50;3" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="6;-5;6" dur="4s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="12" cy="6" r="0.5" fill="#ffaa00" opacity="0">
+      <animate attributeName="opacity" values="0;0;0;0;0;0;0;0;0;0;0;0.9;0.3;0;0;0" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="6;45;6" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="12;20;12" dur="4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ======================================================================== -->
+  <!-- ===== MOTION SENSOR PODS - CEILING MOUNTED ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- Sensor Pod 1 (near, left-center ceiling) -->
+  <g transform="translate(700,310)">
+    <rect x="-18" y="-12" width="36" height="18" rx="4" fill="#181824"/>
+    <rect x="-14" y="-8" width="28" height="12" rx="2" fill="url(#sensorEye)"/>
+    <circle cx="0" cy="-2" r="5" fill="#0a0a12"/>
+    <!-- Sensor active LED (pulses) -->
+    <circle cx="0" cy="-2" r="3" fill="#00ff40" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="-2" r="8" fill="none" stroke="#00ff40" stroke-width="0.5" opacity="0">
+      <animate attributeName="opacity" values="0;0.3;0" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="8;16;8" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Ultrasonic detection cone (faint) -->
+    <polygon points="0,6 -80,250 80,250" fill="rgba(0,200,60,0.02)">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+
+  <!-- Sensor Pod 2 (mid, right-center ceiling) -->
+  <g transform="translate(1100,330)">
+    <rect x="-16" y="-10" width="32" height="16" rx="3" fill="#181824"/>
+    <rect x="-12" y="-7" width="24" height="10" rx="2" fill="url(#sensorEye)"/>
+    <circle cx="0" cy="-2" r="4" fill="#0a0a12"/>
+    <circle cx="0" cy="-2" r="2.5" fill="#00ff40" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;0.1;0.5" dur="2.3s" repeatCount="indefinite"/>
+    </circle>
+    <polygon points="0,5 -60,200 60,200" fill="rgba(0,200,60,0.015)">
+      <animate attributeName="opacity" values="1;0.2;1" dur="2.3s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+
+  <!-- Sensor Pod 3 (far, center ceiling) -->
+  <g transform="translate(920,295)">
+    <rect x="-12" y="-8" width="24" height="12" rx="3" fill="#181824"/>
+    <circle cx="0" cy="-2" r="3" fill="#0a0a12"/>
+    <circle cx="0" cy="-2" r="2" fill="#00ff40" opacity="0.4">
+      <animate attributeName="opacity" values="0.4;0.08;0.4" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ======================================================================== -->
+  <!-- ===== SERVER ROOM DOOR - FAR END ===== -->
+  <!-- ======================================================================== -->
+
+  <g transform="translate(660, 310)">
+    <!-- Door frame -->
+    <rect x="-15" y="-10" width="630" height="380" fill="#10101a" rx="2"/>
+    <!-- Heavy steel door -->
+    <rect x="0" y="0" width="600" height="360" fill="url(#steelDoor)" rx="1"/>
+    <!-- Door reinforcement plates -->
+    <rect x="20" y="20" width="260" height="160" fill="none" stroke="#2a2a3a" stroke-width="1.5" rx="2"/>
+    <rect x="320" y="20" width="260" height="160" fill="none" stroke="#2a2a3a" stroke-width="1.5" rx="2"/>
+    <rect x="20" y="200" width="260" height="140" fill="none" stroke="#2a2a3a" stroke-width="1.5" rx="2"/>
+    <rect x="320" y="200" width="260" height="140" fill="none" stroke="#2a2a3a" stroke-width="1.5" rx="2"/>
+    <!-- Bolt heads -->
+    <g fill="#222230">
+      <circle cx="30" cy="30" r="4"/><circle cx="270" cy="30" r="4"/>
+      <circle cx="30" cy="170" r="4"/><circle cx="270" cy="170" r="4"/>
+      <circle cx="330" cy="30" r="4"/><circle cx="570" cy="30" r="4"/>
+      <circle cx="330" cy="170" r="4"/><circle cx="570" cy="170" r="4"/>
+      <circle cx="30" cy="210" r="4"/><circle cx="270" cy="210" r="4"/>
+      <circle cx="30" cy="330" r="4"/><circle cx="270" cy="330" r="4"/>
+      <circle cx="330" cy="210" r="4"/><circle cx="570" cy="210" r="4"/>
+      <circle cx="330" cy="330" r="4"/><circle cx="570" cy="330" r="4"/>
+    </g>
+    <!-- "SERVER RAUM" stencil text -->
+    <text x="300" y="195" text-anchor="middle" font-family="monospace" font-weight="bold" font-size="24" fill="#2a2a3a" letter-spacing="8" opacity="0.5">SERVER RAUM</text>
+    <!-- Heavy handle -->
+    <rect x="530" y="160" width="40" height="12" rx="3" fill="#2a2a36"/>
+    <rect x="540" y="155" width="20" height="22" rx="2" fill="#222230"/>
+    <!-- Lock status indicator -->
+    <circle cx="520" cy="140" r="5" fill="#ff2200" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="520" cy="140" r="12" fill="none" stroke="#ff2200" stroke-width="0.5" opacity="0">
+      <animate attributeName="opacity" values="0;0.3;0" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="12;22;12" dur="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- ======================================================================== -->
+  <!-- ===== BIOMETRIC PANEL - RIGHT OF DOOR ===== -->
+  <!-- ======================================================================== -->
+
+  <g transform="translate(1290, 420)">
+    <!-- Panel housing -->
+    <rect x="-30" y="-40" width="60" height="80" rx="4" fill="#181824"/>
+    <rect x="-26" y="-36" width="52" height="72" rx="3" fill="#0e0e18"/>
+    <!-- Screen area -->
+    <rect x="-20" y="-30" width="40" height="30" rx="2" fill="#0a1020"/>
+    <!-- Fingerprint scanner pad -->
+    <rect x="-15" y="8" width="30" height="25" rx="3" fill="#101018"/>
+    <ellipse cx="0" cy="20" rx="10" ry="8" fill="none" stroke="#1a2838" stroke-width="0.8" opacity="0.5"/>
+    <ellipse cx="0" cy="20" rx="7" ry="6" fill="none" stroke="#1a2838" stroke-width="0.5" opacity="0.4"/>
+    <ellipse cx="0" cy="20" rx="4" ry="3.5" fill="none" stroke="#1a2838" stroke-width="0.5" opacity="0.3"/>
+    <!-- Status LED -->
+    <circle cx="22" cy="-32" r="2" fill="#ff4400" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Panel glow -->
+    <ellipse cx="0" cy="0" rx="50" ry="60" fill="url(#panelGlow)" opacity="0.3"/>
+    <!-- Screen text -->
+    <text x="0" y="-16" text-anchor="middle" font-family="monospace" font-size="7" fill="#4488cc" opacity="0.6">BIOMETRIC</text>
+    <text x="0" y="-8" text-anchor="middle" font-family="monospace" font-size="6" fill="#ff4400" opacity="0.7">LOCKED</text>
+  </g>
+
+  <!-- ======================================================================== -->
+  <!-- ===== BROKEN SECURITY CAMERA (Eva disabled it) ===== -->
+  <!-- ======================================================================== -->
+
+  <g transform="translate(960, 285)">
+    <!-- Wall mount -->
+    <rect x="-6" y="-4" width="12" height="8" fill="#1e1e28" rx="1"/>
+    <!-- Camera body, hanging loose -->
+    <rect x="-18" y="2" width="36" height="16" rx="2" fill="#18181e" transform="rotate(15,-1,10)"/>
+    <circle cx="-10" cy="10" r="4" fill="#0a0a0e" transform="rotate(15,-1,10)"/>
+    <!-- Dangling wire -->
+    <path d="M0,4 Q5,18 -3,30 Q-8,38 -2,45" fill="none" stroke="#303038" stroke-width="1.5">
+      <animate attributeName="d" values="M0,4 Q5,18 -3,30 Q-8,38 -2,45;M0,4 Q7,20 -1,32 Q-6,40 0,47;M0,4 Q5,18 -3,30 Q-8,38 -2,45" dur="5s" repeatCount="indefinite"/>
+    </path>
+    <!-- Broken LED, dead -->
+    <circle cx="14" cy="8" r="2" fill="#221100" opacity="0.4" transform="rotate(15,-1,10)"/>
+  </g>
+
+  <!-- ======================================================================== -->
+  <!-- ===== LASER GRID - ANIMATED RED BEAMS ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- Laser emitter housings on walls -->
+  <!-- Left wall emitters -->
+  <g>
+    <rect x="200" y="350" width="12" height="8" rx="1" fill="#1a1a22"/>
+    <circle cx="212" cy="354" r="2" fill="#ff0000" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <rect x="350" y="400" width="10" height="7" rx="1" fill="#1a1a22"/>
+    <circle cx="360" cy="403.5" r="1.8" fill="#ff0000" opacity="0.7">
+      <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.8s" begin="0.3s" repeatCount="indefinite"/>
+    </circle>
+    <rect x="470" y="440" width="9" height="6" rx="1" fill="#1a1a22"/>
+    <circle cx="479" cy="443" r="1.5" fill="#ff0000" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.15;0.6" dur="2s" begin="0.7s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Laser Beam 1: low diagonal, sweeping -->
+  <g opacity="0.7">
+    <line x1="212" y1="354" x2="1700" y2="600" stroke="#ff0000" stroke-width="2">
+      <animate attributeName="y2" values="600;500;650;550;600" dur="6s" repeatCount="indefinite"/>
+    </line>
+    <line x1="212" y1="354" x2="1700" y2="600" stroke="#ff0000" stroke-width="8" opacity="0.15" filter="url(#blur3)">
+      <animate attributeName="y2" values="600;500;650;550;600" dur="6s" repeatCount="indefinite"/>
+    </line>
+  </g>
+
+  <!-- Laser Beam 2: mid horizontal, pulsing -->
+  <g opacity="0.6">
+    <line x1="360" y1="403" x2="1560" y2="480" stroke="#ff0000" stroke-width="1.8">
+      <animate attributeName="y1" values="403;380;420;390;403" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="y2" values="480;500;460;490;480" dur="8s" repeatCount="indefinite"/>
+    </line>
+    <line x1="360" y1="403" x2="1560" y2="480" stroke="#ff0000" stroke-width="7" opacity="0.12" filter="url(#blur3)">
+      <animate attributeName="y1" values="403;380;420;390;403" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="y2" values="480;500;460;490;480" dur="8s" repeatCount="indefinite"/>
+    </line>
+  </g>
+
+  <!-- Laser Beam 3: high crossing beam -->
+  <g opacity="0.5">
+    <line x1="479" y1="443" x2="1420" y2="350" stroke="#ff0000" stroke-width="1.5">
+      <animate attributeName="x2" values="1420;1350;1450;1380;1420" dur="7s" repeatCount="indefinite"/>
+      <animate attributeName="y2" values="350;370;340;360;350" dur="7s" repeatCount="indefinite"/>
+    </line>
+    <line x1="479" y1="443" x2="1420" y2="350" stroke="#ff0000" stroke-width="6" opacity="0.1" filter="url(#blur3)">
+      <animate attributeName="x2" values="1420;1350;1450;1380;1420" dur="7s" repeatCount="indefinite"/>
+      <animate attributeName="y2" values="350;370;340;360;350" dur="7s" repeatCount="indefinite"/>
+    </line>
+  </g>
+
+  <!-- Laser Beam 4: floor-level tripwire -->
+  <g opacity="0.65">
+    <line x1="180" y1="680" x2="1740" y2="690" stroke="#ff0000" stroke-width="1.5"/>
+    <line x1="180" y1="680" x2="1740" y2="690" stroke="#ff0000" stroke-width="6" opacity="0.12" filter="url(#blur3)"/>
+    <!-- Floor reflection -->
+    <line x1="180" y1="684" x2="1740" y2="694" stroke="#ff0000" stroke-width="4" opacity="0.04" filter="url(#blur8)"/>
+  </g>
+
+  <!-- Laser Beam 5: vertical slicer, moving side to side -->
+  <g opacity="0.55">
+    <line x1="960" y1="300" x2="960" y2="690" stroke="#ff0000" stroke-width="1.5">
+      <animate attributeName="x1" values="960;800;1100;900;960" dur="10s" repeatCount="indefinite"/>
+      <animate attributeName="x2" values="960;820;1080;910;960" dur="10s" repeatCount="indefinite"/>
+    </line>
+    <line x1="960" y1="300" x2="960" y2="690" stroke="#ff0000" stroke-width="8" opacity="0.08" filter="url(#blur3)">
+      <animate attributeName="x1" values="960;800;1100;900;960" dur="10s" repeatCount="indefinite"/>
+      <animate attributeName="x2" values="960;820;1080;910;960" dur="10s" repeatCount="indefinite"/>
+    </line>
+  </g>
+
+  <!-- Atmospheric red haze from lasers -->
+  <rect x="200" y="280" width="1520" height="430" fill="rgba(255,0,0,0.02)" filter="url(#blur25)">
+    <animate attributeName="opacity" values="1;0.5;0.8;0.4;1" dur="5s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- ======================================================================== -->
+  <!-- ===== EMERGENCY LIGHTING ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- Emergency red light, left wall -->
+  <g transform="translate(100, 350)">
+    <rect x="-8" y="-5" width="16" height="10" rx="2" fill="#201015"/>
+    <circle cx="0" cy="0" r="4" fill="#ff1a00" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.2;0.5;0.1;0.6" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="0" r="15" fill="#ff1a00" opacity="0" filter="url(#blur8)">
+      <animate attributeName="opacity" values="0.15;0.03;0.1;0.02;0.15" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Emergency red light, right wall -->
+  <g transform="translate(1820, 350)">
+    <rect x="-8" y="-5" width="16" height="10" rx="2" fill="#201015"/>
+    <circle cx="0" cy="0" r="4" fill="#ff1a00" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;0.15;0.4;0.08;0.5" dur="3.2s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="0" cy="0" r="15" fill="#ff1a00" opacity="0" filter="url(#blur8)">
+      <animate attributeName="opacity" values="0.12;0.02;0.08;0.01;0.12" dur="3.2s" begin="0.5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Emergency strips on floor edges (perspective) -->
+  <g opacity="0.3">
+    <!-- Left edge warning stripe -->
+    <polygon points="0,1080 600,700 600,705 0,1080" fill="#cc2200">
+      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+    </polygon>
+    <!-- Right edge warning stripe -->
+    <polygon points="1920,1080 1320,700 1320,705 1920,1080" fill="#cc2200">
+      <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+    </polygon>
+  </g>
+
+  <!-- ======================================================================== -->
+  <!-- ===== EMERGENCY RED AMBIENT LIGHT ===== -->
+  <!-- ======================================================================== -->
+
+  <rect width="1920" height="1080" fill="url(#emergencyRed1)">
+    <animate attributeName="opacity" values="1;0.5;0.8;0.3;1" dur="4s" repeatCount="indefinite"/>
+  </rect>
+  <rect width="1920" height="1080" fill="url(#emergencyRed2)">
+    <animate attributeName="opacity" values="0.6;1;0.4;0.8;0.6" dur="4.5s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- ======================================================================== -->
+  <!-- ===== ATMOSPHERIC STEAM / FOG ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- Low fog layer on the floor -->
+  <ellipse cx="500" cy="850" rx="500" ry="80" fill="rgba(60,65,80,0.06)" filter="url(#blur15)">
+    <animate attributeName="cx" values="500;600;500" dur="20s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="1200" cy="870" rx="450" ry="70" fill="rgba(60,65,80,0.05)" filter="url(#blur15)">
+    <animate attributeName="cx" values="1200;1100;1200" dur="25s" repeatCount="indefinite"/>
+  </ellipse>
+  <ellipse cx="960" cy="820" rx="600" ry="50" fill="rgba(50,55,70,0.04)" filter="url(#blur25)">
+    <animate attributeName="cx" values="960;1050;960" dur="18s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Steam from pipe leak drifting across corridor -->
+  <ellipse cx="400" cy="300" rx="80" ry="30" fill="rgba(80,90,110,0.06)" filter="url(#blur15)">
+    <animate attributeName="cx" values="400;600;400" dur="15s" repeatCount="indefinite"/>
+    <animate attributeName="cy" values="300;280;300" dur="15s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;0.4;1" dur="15s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- ======================================================================== -->
+  <!-- ===== CINEMATIC OVERLAY ===== -->
+  <!-- ======================================================================== -->
+
+  <!-- Vignette -->
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+
+  <!-- Letterbox bars -->
+  <rect x="0" y="0" width="1920" height="45" fill="#000" opacity="0.85"/>
+  <rect x="0" y="1035" width="1920" height="45" fill="#000" opacity="0.85"/>
+
+  <!-- Scene label -->
+  <text x="960" y="1065" text-anchor="middle" font-family="monospace" font-size="10" fill="#2a2a3a" opacity="0.3" letter-spacing="6">BASEMENT LEVEL B - SECURITY CORRIDOR</text>
+</svg>

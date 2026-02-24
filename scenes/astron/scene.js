@@ -164,20 +164,57 @@ const AstronScene = {
             cursor: 'pointer',
             action: function(game) {
                 if (game.getFlag('astron_complete')) {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'Got what we came for. Schematics verified. Signal pinpointed.' },
-                        { speaker: 'Ryan', text: 'Time to head home and plan the next move.' }
-                    ]);
-                    const timeoutId = setTimeout(() => {
-                        game.setFlag('driving_destination', 'home_from_astron');
-                        game.loadScene('driving_day');
-                    }, 2000);
-                    AstronScene._timeoutIds.push(timeoutId);
+                    // Offer choice: drive home or walk to nearby memorial
+                    if (game.getFlag('visited_klooster') && !game.getFlag('visited_westerbork_memorial')) {
+                        game.startDialogue([
+                            { speaker: 'Ryan', text: 'Got what we came for. Schematics verified. Signal pinpointed.' },
+                            { speaker: 'Ryan', text: 'The Westerbork Memorial is just 200 metres from here, across the heath.' },
+                            { speaker: 'Ryan', text: 'I should check it out before heading home.' }
+                        ], () => {
+                            game.loadScene('westerbork_memorial');
+                        });
+                    } else {
+                        game.startDialogue([
+                            { speaker: 'Ryan', text: 'Got what we came for. Schematics verified. Signal pinpointed.' },
+                            { speaker: 'Ryan', text: 'Time to head home and plan the next move.' }
+                        ], () => {
+                            game.setFlag('driving_destination', 'home_from_astron');
+                            game.loadScene('driving_day');
+                        });
+                    }
                 } else {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'The exit. Not leaving yet — still work to do here.' }
                     ]);
                 }
+            }
+        },
+
+        // ── Walk to Westerbork Memorial (200 m across the heath) ──
+        {
+            id: 'walk-to-memorial',
+            name: 'Westerbork Memorial →',
+            x: 92,
+            y: 80,
+            width: 8,
+            height: 20,
+            cursor: 'pointer',
+            cssClass: 'hotspot-nav',
+            skipWalk: true,
+            action: function(game) {
+                if (!game.getFlag('visited_klooster')) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'The memorial is just across the field. Maybe 200 metres.' },
+                        { speaker: 'Ryan', text: 'But I don\'t have a reason to go there right now.' }
+                    ]);
+                    return;
+                }
+                game.startDialogue([
+                    { speaker: 'Ryan', text: 'The memorial is just 200 metres across the heath. I can walk there.' },
+                    { speaker: '', text: '*Ryan steps outside and crosses the field toward the memorial site*' }
+                ], () => {
+                    game.loadScene('westerbork_memorial');
+                });
             }
         },
 

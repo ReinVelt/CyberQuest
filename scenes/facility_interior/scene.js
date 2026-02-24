@@ -127,7 +127,7 @@ const FacilityInteriorScene = {
                 ]);
                 
                 game.sceneTimeout(() => {
-                    game.loadScene('facility_server');
+                    game.loadScene('laser_corridor');
                 }, 3000);
             }
         },

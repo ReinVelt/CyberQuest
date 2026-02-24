@@ -1,8 +1,10 @@
 /**
  * Westerbork Memorial Scene
  * Herinneringscentrum Kamp Westerbork — former transit camp, now memorial.
+ * Located 200 m from the WSRT radio telescope array.
  * The same ground now houses WSRT and a covert Bluetooth surveillance node.
- * Reached from: klooster (or regional_map WSRT hotspot)
+ * Reached from: garden → volvo → driving_day → westerbork_memorial
+ *              or on foot from ASTRON/WSRT (200 m)
  * Purpose: moral weight of surveillance story + key Bluetooth evidence discovery
  */
 
@@ -194,7 +196,35 @@ const WesterborkMemorialScene = {
             }
         },
 
-        // ── Drive home ──
+        // ── Walk to WSRT / ASTRON (200 m across the heath) ──
+        {
+            id: 'walk_to_wsrt',
+            name: '← WSRT',
+            x: 0,
+            y: 60,
+            width: 8,
+            height: 20,
+            cursor: 'pointer',
+            cssClass: 'hotspot-nav',
+            skipWalk: true,
+            action: (game) => {
+                if (game.getFlag('visited_astron')) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'The WSRT control room is just 200 metres across the heath.' },
+                        { speaker: '', text: '*Ryan walks across the field toward the radio telescope array*' }
+                    ], () => {
+                        game.loadScene('astron');
+                    });
+                } else {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'I can see the WSRT dishes from here — maybe 200 metres away.' },
+                        { speaker: 'Ryan', text: 'No reason to go to the control room right now.' }
+                    ]);
+                }
+            }
+        },
+
+        // ── Drive home (via Volvo / driving_day) ──
         {
             id: 'drive_home',
             name: '← Drive Home',
@@ -210,24 +240,10 @@ const WesterborkMemorialScene = {
                     { speaker: 'Ryan', text: 'Time to head home. I need to process all of this.' },
                     { speaker: '', text: '*Ryan walks back to the Volvo*' }
                 ], () => {
-                    game.setFlag('driving_destination', 'home');
-                    game.loadScene('driving');
+                    game.setFlag('driving_destination', 'home_from_westerbork');
+                    game.loadScene('driving_day');
                 });
             }
-        },
-
-        // ── Also reachable from regional_map ──
-        {
-            id: 'back_to_map',
-            name: 'Map →',
-            x: 92,
-            y: 80,
-            width: 8,
-            height: 20,
-            cursor: 'pointer',
-            cssClass: 'hotspot-nav',
-            skipWalk: true,
-            targetScene: 'regional_map'
         }
     ],
 

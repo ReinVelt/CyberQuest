@@ -497,18 +497,8 @@ const RegionalMapScene = {
       }
     },
 
-    {
-      id: 'location-westerbork-memorial-hotspot',
-      name: 'Westerbork Memorial',
-      x: 19.96,
-      y: 54,
-      width: 8,
-      height: 8,
-      cursor: 'pointer',
-      action: function(game) {
-        game.loadScene('westerbork_memorial');
-      }
-    },
+    // Westerbork Memorial — now reached via garden → volvo → driving_day
+    // (hotspot removed; location still shown on map as info-only)
 
     {
       id: 'location-lofar-hotspot',
