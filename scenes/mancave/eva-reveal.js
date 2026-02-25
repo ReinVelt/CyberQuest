@@ -260,6 +260,63 @@ Has raised concerns about network anomalies (see incident log 2024-07-22)`,
     /* ══════════════════════════════════════════════════════════
        PHASE 4: RYAN'S REALIZATION
        ══════════════════════════════════════════════════════════ */
+    function phase4_flashback(content) {
+        return new Promise(resolve => {
+            MC.setPhaseLabel('MEMORY — TWO YEARS AGO');
+            content.innerHTML = '';
+
+            const fb = document.createElement('div');
+            fb.style.cssText = 'width:100%;max-width:550px;margin:0 auto;text-align:center;';
+            content.appendChild(fb);
+
+            // Warm-tone flashback container
+            const memory = document.createElement('div');
+            memory.style.cssText = `
+                padding:20px;border-radius:10px;
+                background:linear-gradient(135deg,rgba(255,180,50,0.06),rgba(255,220,130,0.04));
+                border:1px solid rgba(255,200,80,0.15);
+                animation:mc-fadeIn 1.2s ease;
+            `;
+            memory.innerHTML = `
+                <div style="font-size:10px;color:rgba(255,200,80,0.5);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;">
+                    ☀ Compascuum — Two Years Ago ☀
+                </div>
+                <div style="font-size:30px;margin:10px 0;">🐕 🌿 🐕‍🦺</div>
+                <div style="font-size:11px;color:rgba(255,220,150,0.7);line-height:1.7;margin-top:10px;text-align:left;" class="fb-text"></div>
+            `;
+            fb.appendChild(memory);
+
+            const textArea = memory.querySelector('.fb-text');
+
+            const moments = [
+                { text: 'A sunny Saturday morning. The Tony Knight rescue dog training field.', delay: 0 },
+                { text: 'Ies is there with the dogs — volunteering like she does every month.', delay: 2000 },
+                { text: '"Ryan, this is Eva. She\'s from Germany. Also rescue dogs."', delay: 2000 },
+                { text: 'A handshake. Warm smile. She seemed genuinely interested in the dogs.', delay: 2200 },
+                { text: 'Later that afternoon — she came to the house. Ies gave her the tour.', delay: 2200 },
+                { text: 'Then the mancave. Her eyes went wide at the radio equipment.', delay: 2000 },
+                { text: '"You built all this yourself? The SDR setup, the Meshtastic mesh?"', delay: 2200 },
+                { text: 'Sharp questions. Very sharp. About frequencies, encryption, off-grid comms.', delay: 2200 },
+                { text: 'A busy weekend. Nice woman. And then... life moved on. I forgot.', delay: 2000 },
+                { text: 'But she didn\'t forget.', delay: 2500 }
+            ];
+
+            let delay = 800;
+            moments.forEach(m => {
+                delay += m.delay;
+                MC.schedule(() => {
+                    const line = document.createElement('div');
+                    line.textContent = m.text;
+                    line.style.cssText = 'margin-bottom:6px;opacity:0;animation:mc-fadeIn 0.6s ease forwards;';
+                    textArea.appendChild(line);
+                    if (m.text.includes('forgot')) MC.playImpact();
+                }, delay);
+            });
+
+            MC.schedule(resolve, delay + 3000);
+        });
+    }
+
     function phase4_realization(content, game) {
         return new Promise(resolve => {
             const reaction = document.createElement('div');
@@ -272,22 +329,38 @@ Has raised concerns about network anomalies (see incident log 2024-07-22)`,
                 { speaker: 'Ryan', text: '"Too inquisitive about matters outside her purview"' },
                 { speaker: 'Ryan', text: 'She found something. Tried to raise concerns. Got shut down.' },
                 { speaker: 'Ryan', text: 'So she went outside. Found me. But HOW?' },
-                { speaker: 'Ryan', text: 'She could scan external targets. Found my SSTV terminal.' },
-                { speaker: 'Ryan', text: 'Saw my equipment. Knew I could receive. She chose me.' },
-                { speaker: 'Ryan', text: 'Can\'t be silenced internally. Perfect outside contact.' },
-                { speaker: 'Ryan', text: 'Eva Weber. "E". The whistleblower.' },
-                { speaker: 'Ryan', text: 'Now I need to contact her. Securely.' }
+                { speaker: 'Ryan', text: 'Wait. Weber. Eva Weber...' }
             ], {
                 pauseBetween: 2000,
                 onDone: () => {
-                    game.completeQuest('identify_eva');
-                    game.addQuest({
-                        id: 'contact_eva',
-                        name: 'Contact Eva Weber',
-                        description: 'Establish secure communication with Eva Weber using Meshtastic off-grid network.',
-                        hint: 'Eva mentioned coordinates in her message. Check the Meshtastic device.'
-                    });
-                    MC.schedule(resolve, 1500);
+                    // ── Dog training flashback ──
+                    MC.schedule(() => {
+                        phase4_flashback(content).then(() => {
+                            MC.setPhaseLabel('REALIZATION');
+                            content.innerHTML = '';
+                            const postFb = document.createElement('div');
+                            postFb.style.cssText = 'margin-top:15px;';
+                            content.appendChild(postFb);
+
+                            MC.revealDialogue(postFb, [
+                                { speaker: 'Ryan', text: 'She remembered the hacker in Drenthe with the radio lab and no government ties.' },
+                                { speaker: 'Ryan', text: 'Eva Weber. "E". The whistleblower. She chose me because she\'d BEEN here.' },
+                                { speaker: 'Ryan', text: 'Now I need to contact her. Securely.' }
+                            ], {
+                                pauseBetween: 2000,
+                                onDone: () => {
+                                    game.completeQuest('identify_eva');
+                                    game.addQuest({
+                                        id: 'contact_eva',
+                                        name: 'Contact Eva Weber',
+                                        description: 'Establish secure communication with Eva Weber using Meshtastic off-grid network.',
+                                        hint: 'Eva mentioned coordinates in her message. Check the Meshtastic device.'
+                                    });
+                                    MC.schedule(resolve, 1500);
+                                }
+                            });
+                        });
+                    }, 500);
                 }
             });
         });
@@ -314,7 +387,7 @@ Has raised concerns about network anomalies (see incident log 2024-07-22)`,
 
         MC.revealDialogue(openDiv, [
             { speaker: 'Ryan', text: 'How does E know me? Why choose a random hacker in Drenthe?' },
-            { speaker: 'Ryan', text: 'Unless... they\'ve been watching. The photo of my house!' },
+            { speaker: 'Ryan', text: 'There must be a connection. Something personal. But first — the photo.' },
             { speaker: '', text: '*Pulls up SSTV image on air-gapped laptop*' }
         ], { pauseBetween: 1800 });
 

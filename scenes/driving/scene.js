@@ -431,20 +431,31 @@ const DrivingScene = {
                     { speaker: '', text: '*11 PM. The Volvo cuts through darkness toward Germany*' },
                     { speaker: 'Ryan', text: 'This is it. The real thing.' },
                     { speaker: 'Ryan', text: 'Not monitoring signals. Not decoding messages. Actually infiltrating.' },
-                    { speaker: '', text: '*Approaches the Dutch-German border. No checkpoint, no guards. Schengen.*' },
-                    { speaker: 'Ryan', text: 'Welcome to Germany. Bundesrepublik Deutschland.' },
-                    { speaker: 'Ryan', text: 'Funny how you can cross into another country without anyone noticing.' },
-                    { speaker: 'Ryan', text: 'But go 10 kilometers further, and you hit military fencing.' },
+                    { speaker: '', text: '*N34 eastward. Past Emmen. The road narrows.*' },
+                    { speaker: 'Ryan', text: 'Meshtastic node in pocket. Faraday bag with the USB dumps. Laptop battery full.' },
+                    { speaker: 'Ryan', text: 'Cees should be at WSRT by now. Jaap has the dead-man switch armed.' },
+
+                    // ── Enhanced border crossing ──
+                    { speaker: '', text: '*A small blue sign: "Bundesrepublik Deutschland". That\'s it. No gate. No guard.*' },
+                    { speaker: 'Ryan', text: 'Schengen. No passport check. No record of me crossing.' },
+                    { speaker: 'Ryan', text: 'Same road. Same asphalt. But everything just changed.' },
+                    { speaker: 'Ryan', text: 'In the Netherlands I\'m a radio amateur poking around. Worst case: a fine.' },
+                    { speaker: 'Ryan', text: 'In Germany? Trespassing on a Bundeswehr research facility. That\'s... years.' },
+                    { speaker: 'Ryan', text: 'Espionage, if they want to call it that. Because that\'s what it looks like from the outside.' },
+                    { speaker: '', text: '*Hands tighten on the wheel. Heart rate up.*' },
+                    { speaker: 'Ryan', text: 'Breathe. You\'re not a spy. You\'re a journalist protecting a source.' },
+                    { speaker: 'Ryan', text: 'That thought doesn\'t help as much as it should.' },
+
                     { speaker: '', text: '*German road signs appear. Steckerdoser Heide: 8 km*' },
                     { speaker: 'Ryan', text: 'Eva said north entrance. Badge under trash bin.' },
                     { speaker: 'Ryan', text: 'If she\'s wrong. If this is a trap...' },
-                    { speaker: 'Ryan', text: 'No. She\'s risking as much as me. More, even.' },
+                    { speaker: 'Ryan', text: 'No. She\'s risking as much as me. More, even. She WORKS there.' },
                     { speaker: '', text: '*Red lights appear through the trees. Guard tower. Radar arrays.*' },
                     { speaker: 'Ryan', text: 'There it is. Bundeswehr research facility.' },
                     { speaker: 'Ryan', text: 'Looks like something from a Cold War film. Because it IS.' },
                     { speaker: 'Ryan', text: 'Focus. Stay calm. You\'ve planned for this.' },
-                    { speaker: '', text: '*Pulls off main road. Parks in shadows near perimeter.*' },
-                    { speaker: 'Ryan', text: 'First: find that badge. Then we see what happens.' },
+                    { speaker: '', text: '*Pulls off main road. Parks in shadows near perimeter. Engine off.*' },
+                    { speaker: '', text: '*Silence. Just the ticking of the cooling engine and his own breathing.*' },
                     { speaker: 'Ryan', text: 'For Klaus Weber. For everyone Volkov has hurt.' },
                     { speaker: 'Ryan', text: 'Let\'s end this.' }
                 ], () => {
@@ -467,6 +478,22 @@ const DrivingScene = {
                     { speaker: 'Ryan', text: 'This USB stick. "TRUST THE PROCESS - AIR-GAPPED ONLY"' },
                     { speaker: 'Ryan', text: 'They know operational security. They know MY setup.' },
                     { speaker: '', text: '*The countryside passes in darkness*' },
+                    { speaker: 'Ryan', text: 'How did they even get here? A monastery in the middle of nowhere, late at night...' },
+
+                    // ── Klaus flashback — Ryan imagines the drop ──
+                    { speaker: '', text: '─── Ryan\'s mind fills the gaps ───' },
+                    { speaker: '', text: '*A modest Volkswagen Passat with German plates. Autobahn A31 heading north.*' },
+                    { speaker: '', text: '*An elderly man at the wheel. Careful. Deliberate. Hands steady.*' },
+                    { speaker: '', text: '*He crosses the border at Bad Bentheim. Doesn\'t stop, doesn\'t hurry. Schengen. No checks.*' },
+                    { speaker: '', text: '*Dutch roads now. Narrower. Darker. He knows the way — has driven it before.*' },
+                    { speaker: '', text: '*Ter Apel. The monastery parking lot. He spots the Volvo. Swedish car. Unmistakable.*' },
+                    { speaker: '', text: '*Engine off. Waits. Watches Ryan walk toward the monastery entrance.*' },
+                    { speaker: '', text: '*Then — quickly, quietly. USB stick. Tape. Under the door handle. Done.*' },
+                    { speaker: '', text: '*Back in the Passat. South again. By midnight, he\'ll be home in Germany.*' },
+                    { speaker: '', text: '*No call. No message. No trace. Just the USB — and trust.*' },
+                    { speaker: '', text: '───' },
+
+                    { speaker: 'Ryan', text: 'They drove from Germany. Had to. Whoever "E" is, they\'re inside the system. Deep.' },
                     { speaker: 'Ryan', text: 'Who is "E"? Inside the facility? Outside?' },
                     { speaker: 'Ryan', text: 'Why me? Random hacker in rural Drenthe?' },
                     { speaker: 'Ryan', text: 'Unless... I\'m NOT random.' },
@@ -485,53 +512,30 @@ const DrivingScene = {
                 });
             }, 1000);
             this._timeoutIds.push(timeoutId1);
-        } else if (destination === 'astron') {
-            // Drive TO WSRT - Compascuum → Westerbork (~40 min)
-            const timeoutId1 = setTimeout(() => {
-                g.startDialogue([
-                    { speaker: '', text: '*Afternoon sun. The Volvo heads south-west on the N34*' },
-                    { speaker: 'Ryan', text: 'Westerbork. Forty minutes, give or take.' },
-                    { speaker: 'Ryan', text: 'Cees Bassa. Satellite tracker, amateur astronomer, radio wizard.' },
-                    { speaker: 'Ryan', text: 'If anyone can verify those schematics, it\'s him.' },
-                    { speaker: '', text: '*Passes Emmen. Fields and wind turbines*' },
-                    { speaker: 'Ryan', text: 'He was sceptical on the Meshtastic chat.' },
-                    { speaker: 'Ryan', text: '"Send me the data. I\'ll run it through the pipeline."' },
-                    { speaker: 'Ryan', text: 'Then silence for six hours. Then: "Get over here. Now."' },
-                    { speaker: '', text: '*Road sign: Westerbork 12 km*' },
-                    { speaker: 'Ryan', text: 'Whatever he found was enough to pull me out of the mancave.' },
-                    { speaker: 'Ryan', text: 'The WSRT. Fourteen dishes. Listening to the cosmos.' },
-                    { speaker: 'Ryan', text: 'Today they listen for something man-made.' },
-                    { speaker: '', text: '*The white dishes appear above the treeline*' },
-                    { speaker: 'Ryan', text: 'There they are. Like a row of giant ears.' },
-                    { speaker: 'Ryan', text: 'Let\'s hear what Cees has to say.' }
-                ], () => {
-                    g.advanceTime(40);
-                    g.loadScene('astron');
-                });
-            }, 1000);
-            this._timeoutIds.push(timeoutId1);
 
-        } else if (destination === 'home_from_astron') {
-            // Drive back FROM WSRT - processing what Cees told us
+        } else if (destination === 'home_from_facility') {
+            // Drive FROM facility - post-infiltration adrenaline crash
             const timeoutId1 = setTimeout(() => {
                 g.startDialogue([
-                    { speaker: '', text: '*Evening. The dishes shrink in the rear-view mirror*' },
-                    { speaker: 'Ryan', text: 'Confirmed. All of it. The weapon, the signal, the coordinates.' },
-                    { speaker: 'Ryan', text: '53.28 north, 7.42 east. Steckerdoser Heide. Right across the border.' },
-                    { speaker: '', text: '*N34 heading north-east. The sky turns orange*' },
-                    { speaker: 'Ryan', text: 'Cees was shaken. A man who tracks spy satellites for fun, shaken.' },
-                    { speaker: 'Ryan', text: 'Weaponised radio. Russian-school algorithms. Built on German soil.' },
-                    { speaker: 'Ryan', text: 'And they gave me a mesh radio. "Come back in one piece."' },
-                    { speaker: '', text: '*Headlights on. Getting dark*' },
-                    { speaker: 'Ryan', text: 'Now I have proof. The schematics. Cees\'s analysis. The triangulation.' },
-                    { speaker: 'Ryan', text: 'But proof means nothing without action.' },
-                    { speaker: 'Ryan', text: 'Eva is counting on me. Time to plan the infiltration.' },
-                    { speaker: '', text: '*Approaching Compascuum. Home*' },
-                    { speaker: 'Ryan', text: 'One step closer to ending this.' }
+                    { speaker: '', text: '*01:00 AM. The Volvo tears through the darkness toward the Dutch border.*' },
+                    { speaker: 'Ryan', text: 'Hands. Stop shaking. STOP SHAKING.' },
+                    { speaker: '', text: '*Crosses the border. Germany recedes in the mirror.*' },
+                    { speaker: 'Ryan', text: 'Dutch soil. Safe. For now.' },
+                    { speaker: 'Ryan', text: 'The external drive in my bag has everything. EVERYTHING.' },
+                    { speaker: 'Ryan', text: 'Deployment plans. Target coordinates. Hoffmann\'s logs. Volkov\'s FSB comms.' },
+                    { speaker: '', text: '*Empty road. Flat fields. A distant farmhouse light.*' },
+                    { speaker: 'Ryan', text: 'Chris corrupted the calibration data. Eva guided me through. Kubecka caught Volkov off guard.' },
+                    { speaker: 'Ryan', text: 'Three people who barely know each other. And we just dismantled a weapon of mass disruption.' },
+                    { speaker: '', text: '*Dashboard clock: 01:17*' },
+                    { speaker: 'Ryan', text: 'But dismantling isn\'t enough. They\'ll rebuild. They\'ll try again.' },
+                    { speaker: 'Ryan', text: 'Unless the world knows. Unless we go public.' },
+                    { speaker: 'Ryan', text: 'I have the evidence. I have the skills to package it. I have contacts in journalism.' },
+                    { speaker: 'Ryan', text: 'Tonight we stopped the attack. Tomorrow we expose the whole operation.' },
+                    { speaker: '', text: '*The mancave lights glow through the trees. Home.*' },
+                    { speaker: 'Ryan', text: 'No sleep tonight. There\'s work to do.' }
                 ], () => {
-                    g.advanceTime(40);
-                    g.loadScene('mancave');
-                    g.showNotification('Returned to mancave');
+                    g.advanceTime(30);
+                    g.loadScene('long_night');
                 });
             }, 1000);
             this._timeoutIds.push(timeoutId1);

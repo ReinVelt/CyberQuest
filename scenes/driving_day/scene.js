@@ -8,6 +8,8 @@
  *   'home_from_astron'      → drive back FROM WSRT after Cees's briefing
  *   'westerbork'            → drive TO Westerbork Memorial
  *   'home_from_westerbork'  → drive back FROM Westerbork Memorial to garden
+ *   'hackerspace'            → drive TO Hackerspace Drenthe in Coevorden
+ *   'home_from_hackerspace'  → drive back FROM Hackerspace to garden
  *
  * Audio: Car radio tuned to RTV Drenthe (regional Dutch broadcaster)
  *        — Web Audio API synthesised jingle, news, weather & pop music
@@ -370,7 +372,16 @@ const DrivingDayScene = {
 
             // Build news bulletin based on where the player is going
             let bulletin;
-            if (destination === 'astron') {
+            if (destination === 'hackerspace' || destination === 'home_from_hackerspace') {
+                bulletin = 'RTV Drenthe, het nieuws. ' +
+                    'Good evening. This is RTV Drenthe news. ' +
+                    'The Hackerspace Drenthe community in Coevorden celebrated its second anniversary this month with a record number of visitors. ' +
+                    'The maker space now hosts weekly sessions on 3D printing, electronics and mesh networking. ' +
+                    'In related news, the municipality of Coevorden approved a grant for digital literacy workshops in rural communities. ' +
+                    'And the weather. ' +
+                    'Clear skies this evening, cooling to ten degrees. Light winds from the east. ' +
+                    'That was RTV Drenthe. Back to the music.';
+            } else if (destination === 'astron') {
                 bulletin = 'RTV Drenthe, het nieuws. ' +
                     'Goedemiddag. ' +
                     'Good afternoon, this is RTV Drenthe news. ' +
@@ -535,6 +546,92 @@ const DrivingDayScene = {
                     g.advanceTime(40);
                     g.loadScene('mancave');
                     g.showNotification('Returned to mancave');
+                });
+            }, 1000);
+            this._timeoutIds.push(t1);
+
+        } else if (destination === 'hackerspace') {
+            // Compascuum → Coevorden (~25 min, evening)
+            const t1 = setTimeout(() => {
+                g.startDialogue([
+                    { speaker: '',      text: '*Evening. The Volvo heads south-east toward Coevorden.*' },
+                    { speaker: '',      text: '*RTV Drenthe plays on the autoradio. The evening news, then music.*' },
+                    { speaker: 'Ryan',  text: 'Hackerspace night. Twenty-five minutes to Coevorden.' },
+                    { speaker: 'Ryan',  text: 'Good to get out of the mancave for a bit. Meet some like-minded people.' },
+                    { speaker: '',      text: '*Flat countryside. Farms and wind turbines in the fading light.*' },
+                    { speaker: 'Ryan',  text: 'CNC machines, 3D printers, welding rigs. Paradise for a tinkerer.' },
+                    { speaker: 'Ryan',  text: 'And the presentations. Always something new to learn.' },
+                    { speaker: '',      text: '*Road sign: Coevorden 5 km*' },
+                    { speaker: 'Ryan',  text: 'Wonder what tonight\'s topic is. LoRa? Meshtastic? Something new?' },
+                    { speaker: 'Ryan',  text: 'Doesn\'t matter. The community is what counts.' },
+                    { speaker: '',      text: '*The old school building appears. Cars parked outside. Lights on.*' },
+                    { speaker: 'Ryan',  text: 'There it is. Hackerspace Drenthe. Let\'s see who\'s here tonight.' }
+                ], () => {
+                    g.advanceTime(25);
+                    g.loadScene('hackerspace');
+                });
+            }, 1000);
+            this._timeoutIds.push(t1);
+
+        } else if (destination === 'home_from_hackerspace') {
+            // Coevorden → Compascuum (~25 min, night)
+            const t1 = setTimeout(() => {
+                g.startDialogue([
+                    { speaker: '',      text: '*Night. The Volvo pulls out of the hackerspace parking lot.*' },
+                    { speaker: '',      text: '*RTV Drenthe plays quietly. Late-night music programme.*' },
+                    { speaker: 'Ryan',  text: 'Good evening. Always is, at the hackerspace.' },
+                    { speaker: 'Ryan',  text: 'Good people. Smart people. People who build things instead of just talking.' },
+                    { speaker: '',      text: '*Dark countryside. Stars visible through the windscreen.*' },
+                    { speaker: 'Ryan',  text: 'Picked up a few ideas tonight. And some useful contacts.' },
+                    { speaker: 'Ryan',  text: 'The mesh networking crowd knows their stuff. Could be useful.' },
+                    { speaker: '',      text: '*Approaching Compascuum. Familiar roads.*' },
+                    { speaker: 'Ryan',  text: 'Home. Time for some late-night tinkering.' }
+                ], () => {
+                    g.advanceTime(25);
+                    g.loadScene('garden');
+                    g.showNotification('Returned to garden');
+                });
+            }, 1000);
+            this._timeoutIds.push(t1);
+
+        } else if (destination === 'lofar') {
+            // Compascuum → LOFAR Superterp (~30 min, day)
+            const t1 = setTimeout(() => {
+                g.startDialogue([
+                    { speaker: '',      text: '*Afternoon sun. The Volvo heads south through Drenthe.*' },
+                    { speaker: '',      text: '*RTV Drenthe news: "De LOFAR telescoop in Exloo heeft een nieuw signaal gedetecteerd..."*' },
+                    { speaker: 'Ryan',  text: 'LOFAR. Cees invited me to see the Superterp.' },
+                    { speaker: 'Ryan',  text: 'Thousands of antennas in a field. No dishes. Just math.' },
+                    { speaker: '',      text: '*Passes Borger. Then Exloo. Signs for ASTRON everywhere.*' },
+                    { speaker: 'Ryan',  text: 'Same area as WSRT, but a different concept entirely.' },
+                    { speaker: 'Ryan',  text: 'Low-frequency. Digital beamforming. Software-defined astronomy.' },
+                    { speaker: '',      text: '*A field appears, dotted with strange metal structures.*' },
+                    { speaker: 'Ryan',  text: 'There it is. Doesn\'t look like much from the road.' },
+                    { speaker: 'Ryan',  text: 'But Cees says it\'s the most powerful low-frequency telescope on Earth.' }
+                ], () => {
+                    g.advanceTime(30);
+                    g.loadScene('lofar');
+                });
+            }, 1000);
+            this._timeoutIds.push(t1);
+
+        } else if (destination === 'home_from_lofar') {
+            // LOFAR → Compascuum (~30 min, day)
+            const t1 = setTimeout(() => {
+                g.startDialogue([
+                    { speaker: '',      text: '*The Volvo pulls away from the LOFAR site.*' },
+                    { speaker: 'Ryan',  text: 'Incredible place. Thousands of antennas, all working in concert.' },
+                    { speaker: 'Ryan',  text: 'Digital beamforming. Retroactive pointing. No moving parts.' },
+                    { speaker: 'Ryan',  text: 'And some of those frequencies overlap with Echo\'s operating range.' },
+                    { speaker: '',      text: '*Country roads. Grazing sheep. A tractor waves.*' },
+                    { speaker: 'Ryan',  text: 'Cees set up a detection pipeline. If Echo transmits, LOFAR will record it.' },
+                    { speaker: 'Ryan',  text: 'Scientific proof from a peer-reviewed instrument. That\'s hard to deny.' },
+                    { speaker: '',      text: '*Compascuum ahead. The garden gate visible through the trees.*' },
+                    { speaker: 'Ryan',  text: 'Good to have another weapon in our arsenal. Even if it\'s made of math.' }
+                ], () => {
+                    g.advanceTime(30);
+                    g.loadScene('garden');
+                    g.showNotification('Returned to garden');
                 });
             }, 1000);
             this._timeoutIds.push(t1);

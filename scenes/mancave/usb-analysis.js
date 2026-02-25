@@ -42,7 +42,8 @@ Good luck, Ryan. The fate of a lot of innocent people depends on what you do nex
 
 - E
 
-P.S. Destroy this USB after copying the files. It's traceable.`;
+P.S. Destroy this USB after copying the files. It's traceable.
+P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
 
     const README_HIGHLIGHTS = [
         { text: 'Project Echo', class: 'mc-highlight-yellow' },
@@ -53,6 +54,8 @@ P.S. Destroy this USB after copying the files. It's traceable.`;
         { text: 'Trust no one', class: 'mc-highlight' },
         { text: 'casualty reports', class: 'mc-highlight' },
         { text: 'silenced', class: 'mc-highlight' },
+        { text: '906.875', class: 'mc-highlight-yellow' },
+        { text: 'think mesh', class: 'mc-highlight' },
     ];
 
     /* ── Casualty incidents ───────────────────────────────── */
@@ -77,9 +80,9 @@ P.S. Destroy this USB after copying the files. It's traceable.`;
         },
         {
             id: 'ECHO-10', date: '2025-04-03', distance: '1.8 km',
-            event: 'Hospital equipment failure during surgery',
-            casualties: '1 fatality (cardiac arrest)', freq: '2.4 GHz sustained interference',
-            cover: 'Equipment malfunction', dead: 1, injured: 0
+            event: 'Hospital equipment failure during surgery — Patient: Marlies Bakker, 67, grandmother of 4',
+            casualties: '1 fatality (cardiac arrest on operating table)', freq: '2.4 GHz sustained interference',
+            cover: 'Equipment malfunction, patient pre-existing condition', dead: 1, injured: 0
         },
         {
             id: 'ECHO-11', date: '2025-10-19', distance: '5.3 km',
@@ -415,8 +418,9 @@ P.S. Destroy this USB after copying the files. It's traceable.`;
 
                         MC.revealDialogue(reaction, [
                             { speaker: 'Ryan', text: 'Eight people dead. Nine injured. And they call it "acceptable".' },
+                            { speaker: 'Ryan', text: 'Marlies Bakker. Sixty-seven years old. Four grandchildren. She went in for routine surgery and never came out because some bastard was calibrating his weapon.' },
                             { speaker: 'Ryan', text: 'Signed by "V". That has to be Volkov.' },
-                            { speaker: 'Ryan', text: 'Phase 3 means urban testing. More people. More casualties.' },
+                            { speaker: 'Ryan', text: 'Phase 3 means urban testing. More people. More casualties. More Marlies Bakkers.' },
                             { speaker: 'Ryan', text: 'I need help. Need allies who understand what this technology can do.' },
                             { speaker: 'Ryan', text: '"E" was right. This is beyond me now.' }
                         ], {

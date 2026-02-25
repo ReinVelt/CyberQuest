@@ -1,0 +1,687 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- Floor gradient (polished concrete) -->
+    <linearGradient id="floorGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8E8E8E"/>
+      <stop offset="100%" stop-color="#6B6B6B"/>
+    </linearGradient>
+    <!-- Ceiling industrial light glow -->
+    <radialGradient id="lightGlow" cx="50%" cy="0%" r="60%">
+      <stop offset="0%" stop-color="#FFFDE7" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#FFFDE7" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Sparks glow -->
+    <radialGradient id="sparkGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF6F00" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#FF6F00" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Welding arc glow -->
+    <radialGradient id="weldGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#42A5F5" stop-opacity="0.6"/>
+      <stop offset="60%" stop-color="#42A5F5" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#42A5F5" stop-opacity="0"/>
+    </radialGradient>
+    <!-- 3D printer LED -->
+    <radialGradient id="printerLed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00E676" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#00E676" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Window light -->
+    <linearGradient id="windowLight" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B3E5FC" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#B3E5FC" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Steel surface -->
+    <linearGradient id="steelSurface" x1="0" y1="0" x2="1" y2="0.3">
+      <stop offset="0%" stop-color="#B0BEC5"/>
+      <stop offset="50%" stop-color="#CFD8DC"/>
+      <stop offset="100%" stop-color="#90A4AE"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ================================================================ -->
+  <!-- ===== BUILDING STRUCTURE — Large school building interior ===== -->
+  <!-- ================================================================ -->
+
+  <!-- Back wall (old school wall, painted white, slightly worn) -->
+  <rect x="0" y="0" width="1920" height="650" fill="#E8E4DF"/>
+  <!-- Exposed brick patches where paint has chipped -->
+  <g opacity="0.15">
+    <rect x="120" y="80" width="60" height="30" rx="2" fill="#8D6E63"/>
+    <rect x="125" y="115" width="25" height="12" rx="1" fill="#A1887F"/>
+    <rect x="1700" y="150" width="40" height="18" rx="1" fill="#8D6E63"/>
+    <rect x="1750" y="140" width="30" height="14" rx="1" fill="#A1887F"/>
+    <rect x="950" y="50" width="45" height="20" rx="1" fill="#8D6E63"/>
+  </g>
+
+  <!-- High windows (old school arched windows) -->
+  <g>
+    <!-- Window 1 -->
+    <rect x="150" y="40" width="120" height="200" rx="4" fill="#87CEEB" opacity="0.6"/>
+    <rect x="150" y="40" width="120" height="200" rx="4" fill="url(#windowLight)"/>
+    <line x1="210" y1="40" x2="210" y2="240" stroke="#B0BEC5" stroke-width="3"/>
+    <line x1="150" y1="140" x2="270" y2="140" stroke="#B0BEC5" stroke-width="3"/>
+    <rect x="150" y="40" width="120" height="200" rx="4" fill="none" stroke="#78909C" stroke-width="4"/>
+    <!-- Window 2 -->
+    <rect x="420" y="40" width="120" height="200" rx="4" fill="#87CEEB" opacity="0.6"/>
+    <rect x="420" y="40" width="120" height="200" rx="4" fill="url(#windowLight)"/>
+    <line x1="480" y1="40" x2="480" y2="240" stroke="#B0BEC5" stroke-width="3"/>
+    <line x1="420" y1="140" x2="540" y2="140" stroke="#B0BEC5" stroke-width="3"/>
+    <rect x="420" y="40" width="120" height="200" rx="4" fill="none" stroke="#78909C" stroke-width="4"/>
+    <!-- Window 3 -->
+    <rect x="700" y="40" width="120" height="200" rx="4" fill="#87CEEB" opacity="0.6"/>
+    <rect x="700" y="40" width="120" height="200" rx="4" fill="url(#windowLight)"/>
+    <line x1="760" y1="40" x2="760" y2="240" stroke="#B0BEC5" stroke-width="3"/>
+    <line x1="700" y1="140" x2="820" y2="140" stroke="#B0BEC5" stroke-width="3"/>
+    <rect x="700" y="40" width="120" height="200" rx="4" fill="none" stroke="#78909C" stroke-width="4"/>
+    <!-- Window 4 -->
+    <rect x="1100" y="40" width="120" height="200" rx="4" fill="#87CEEB" opacity="0.6"/>
+    <rect x="1100" y="40" width="120" height="200" rx="4" fill="url(#windowLight)"/>
+    <line x1="1160" y1="40" x2="1160" y2="240" stroke="#B0BEC5" stroke-width="3"/>
+    <line x1="1100" y1="140" x2="1220" y2="140" stroke="#B0BEC5" stroke-width="3"/>
+    <rect x="1100" y="40" width="120" height="200" rx="4" fill="none" stroke="#78909C" stroke-width="4"/>
+    <!-- Window 5 -->
+    <rect x="1400" y="40" width="120" height="200" rx="4" fill="#87CEEB" opacity="0.6"/>
+    <rect x="1400" y="40" width="120" height="200" rx="4" fill="url(#windowLight)"/>
+    <line x1="1460" y1="40" x2="1460" y2="240" stroke="#B0BEC5" stroke-width="3"/>
+    <line x1="1400" y1="140" x2="1520" y2="140" stroke="#B0BEC5" stroke-width="3"/>
+    <rect x="1400" y="40" width="120" height="200" rx="4" fill="none" stroke="#78909C" stroke-width="4"/>
+    <!-- Window 6 -->
+    <rect x="1680" y="40" width="120" height="200" rx="4" fill="#87CEEB" opacity="0.6"/>
+    <rect x="1680" y="40" width="120" height="200" rx="4" fill="url(#windowLight)"/>
+    <line x1="1740" y1="40" x2="1740" y2="240" stroke="#B0BEC5" stroke-width="3"/>
+    <line x1="1680" y1="140" x2="1800" y2="140" stroke="#B0BEC5" stroke-width="3"/>
+    <rect x="1680" y="40" width="120" height="200" rx="4" fill="none" stroke="#78909C" stroke-width="4"/>
+  </g>
+
+  <!-- Floor (polished concrete) -->
+  <rect x="0" y="650" width="1920" height="430" fill="url(#floorGrad)"/>
+  <!-- Floor markings (yellow safety lines) -->
+  <line x1="0" y1="655" x2="1920" y2="655" stroke="#FDD835" stroke-width="3" stroke-dasharray="20,10" opacity="0.5"/>
+  <!-- Concrete floor joints -->
+  <line x1="480" y1="650" x2="480" y2="1080" stroke="#7E7E7E" stroke-width="1" opacity="0.3"/>
+  <line x1="960" y1="650" x2="960" y2="1080" stroke="#7E7E7E" stroke-width="1" opacity="0.3"/>
+  <line x1="1440" y1="650" x2="1440" y2="1080" stroke="#7E7E7E" stroke-width="1" opacity="0.3"/>
+  <line x1="0" y1="850" x2="1920" y2="850" stroke="#7E7E7E" stroke-width="1" opacity="0.3"/>
+
+  <!-- ================================================================ -->
+  <!-- ===== CEILING — Industrial I-beams + lights ===== -->
+  <!-- ================================================================ -->
+  <g>
+    <!-- Steel I-beams across ceiling -->
+    <rect x="0" y="0" width="1920" height="8" fill="#546E7A"/>
+    <rect x="0" y="0" width="8" height="650" fill="#546E7A" opacity="0.3"/>
+    <rect x="1912" y="0" width="8" height="650" fill="#546E7A" opacity="0.3"/>
+    <!-- Cross beams -->
+    <rect x="0" y="280" width="1920" height="6" fill="#455A64" opacity="0.4"/>
+    <!-- Hanging industrial lights -->
+    <g transform="translate(300, 0)">
+      <line x1="0" y1="8" x2="0" y2="60" stroke="#333" stroke-width="2"/>
+      <rect x="-40" y="60" width="80" height="12" rx="3" fill="#37474F"/>
+      <rect x="-35" y="72" width="70" height="4" fill="#FFF9C4" opacity="0.9"/>
+      <ellipse cx="0" cy="90" rx="60" ry="30" fill="url(#lightGlow)"/>
+    </g>
+    <g transform="translate(700, 0)">
+      <line x1="0" y1="8" x2="0" y2="60" stroke="#333" stroke-width="2"/>
+      <rect x="-40" y="60" width="80" height="12" rx="3" fill="#37474F"/>
+      <rect x="-35" y="72" width="70" height="4" fill="#FFF9C4" opacity="0.9"/>
+      <ellipse cx="0" cy="90" rx="60" ry="30" fill="url(#lightGlow)"/>
+    </g>
+    <g transform="translate(1150, 0)">
+      <line x1="0" y1="8" x2="0" y2="60" stroke="#333" stroke-width="2"/>
+      <rect x="-40" y="60" width="80" height="12" rx="3" fill="#37474F"/>
+      <rect x="-35" y="72" width="70" height="4" fill="#FFF9C4" opacity="0.9"/>
+      <ellipse cx="0" cy="90" rx="60" ry="30" fill="url(#lightGlow)"/>
+    </g>
+    <g transform="translate(1600, 0)">
+      <line x1="0" y1="8" x2="0" y2="60" stroke="#333" stroke-width="2"/>
+      <rect x="-40" y="60" width="80" height="12" rx="3" fill="#37474F"/>
+      <rect x="-35" y="72" width="70" height="4" fill="#FFF9C4" opacity="0.9"/>
+      <ellipse cx="0" cy="90" rx="60" ry="30" fill="url(#lightGlow)"/>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== BANNER / SIGN ===== -->
+  <!-- ================================================================ -->
+  <g transform="translate(960, 300)">
+    <!-- Banner hanging from ceiling -->
+    <rect x="-220" y="-20" width="440" height="55" rx="4" fill="#1B5E20" opacity="0.9"/>
+    <text x="0" y="12" fill="#00E676" font-family="'Courier New', monospace" font-size="28" font-weight="bold" text-anchor="middle">HACKERSPACE DRENTHE</text>
+    <text x="0" y="32" fill="#A5D6A7" font-family="'Courier New', monospace" font-size="12" text-anchor="middle">Coevorden · Est. 2019 · Open for all makers</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== LEFT ZONE: CNC MACHINES (Steel cutter, Plasma, Lathe) === -->
+  <!-- ================================================================ -->
+
+  <!-- CNC Plasma Cutter (big machine, left wall area) -->
+  <g transform="translate(120, 380)">
+    <!-- Machine body -->
+    <rect x="0" y="0" width="280" height="260" rx="6" fill="#37474F"/>
+    <rect x="5" y="5" width="270" height="250" rx="4" fill="#455A64"/>
+    <!-- Cutting bed (top view through glass) -->
+    <rect x="15" y="30" width="250" height="160" rx="3" fill="#263238"/>
+    <!-- Steel plate being cut -->
+    <rect x="30" y="50" width="200" height="120" fill="url(#steelSurface)" opacity="0.8"/>
+    <!-- Cut line (glowing) -->
+    <line x1="80" y1="60" x2="180" y2="150" stroke="#FF6F00" stroke-width="2" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.4;0.9" dur="0.8s" repeatCount="indefinite"/>
+    </line>
+    <!-- Sparks at cutting point -->
+    <circle cx="180" cy="150" r="15" fill="url(#sparkGlow)">
+      <animate attributeName="r" values="10;18;10" dur="0.5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Control panel -->
+    <rect x="15" y="200" width="100" height="45" rx="3" fill="#1B2631"/>
+    <rect x="20" y="205" width="60" height="30" rx="2" fill="#0D1B2A"/>
+    <!-- Screen text -->
+    <text x="50" y="222" fill="#00E676" font-family="monospace" font-size="8" text-anchor="middle">CUTTING</text>
+    <text x="50" y="232" fill="#00E676" font-family="monospace" font-size="7" text-anchor="middle">X:124 Y:89</text>
+    <!-- Status LEDs -->
+    <circle cx="95" cy="215" r="3" fill="#00E676">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="105" cy="215" r="3" fill="#FDD835"/>
+    <!-- Label -->
+    <text x="140" y="265" fill="#90A4AE" font-family="sans-serif" font-size="11" text-anchor="middle">CNC PLASMA CUTTER</text>
+  </g>
+
+  <!-- CNC Steel Cutter (next to plasma) -->
+  <g transform="translate(120, 500)">
+    <!-- Enclosure -->
+    <rect x="290" y="-120" width="220" height="260" rx="5" fill="#37474F"/>
+    <rect x="295" y="-115" width="210" height="250" rx="3" fill="#455A64"/>
+    <!-- Viewing window -->
+    <rect x="305" y="-100" width="190" height="150" rx="3" fill="#1B2631" opacity="0.8"/>
+    <!-- Cutting head -->
+    <rect x="370" y="-85" width="8" height="60" fill="#CFD8DC"/>
+    <circle cx="374" cy="-25" r="6" fill="#FF6F00" opacity="0.7">
+      <animate attributeName="opacity" values="0.4;0.9;0.4" dur="0.6s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Workpiece -->
+    <rect x="340" y="-30" width="80" height="20" rx="2" fill="#90A4AE"/>
+    <!-- Coolant spray effect -->
+    <g opacity="0.3">
+      <circle cx="374" cy="-30" r="8" fill="#B3E5FC">
+        <animate attributeName="r" values="5;12;5" dur="1s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.4;0.1;0.4" dur="1s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <!-- Control panel -->
+    <rect x="305" y="60" width="90" height="35" rx="2" fill="#1B2631"/>
+    <rect x="310" y="65" width="55" height="22" rx="1" fill="#0D1B2A"/>
+    <text x="338" y="80" fill="#42A5F5" font-family="monospace" font-size="7" text-anchor="middle">RPM:3200</text>
+    <circle cx="380" cy="78" r="3" fill="#00E676">
+      <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Label -->
+    <text x="400" y="155" fill="#90A4AE" font-family="sans-serif" font-size="11" text-anchor="middle">CNC STEEL CUTTER</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== CENTER-LEFT: CNC LATHE ===== -->
+  <!-- ================================================================ -->
+  <g transform="translate(580, 450)">
+    <!-- Lathe bed -->
+    <rect x="0" y="0" width="300" height="180" rx="4" fill="#455A64"/>
+    <!-- Headstock -->
+    <rect x="0" y="20" width="60" height="140" rx="3" fill="#37474F"/>
+    <circle cx="30" cy="90" r="35" fill="#546E7A" stroke="#607D8B" stroke-width="3"/>
+    <!-- Chuck jaws -->
+    <rect x="18" y="58" width="24" height="5" rx="1" fill="#78909C">
+      <animateTransform attributeName="transform" type="rotate" values="0,30,90;360,30,90" dur="3s" repeatCount="indefinite"/>
+    </rect>
+    <!-- Workpiece (spinning) -->
+    <rect x="60" y="78" width="160" height="24" rx="12" fill="#B0BEC5">
+      <animate attributeName="opacity" values="0.9;0.7;0.9" dur="0.1s" repeatCount="indefinite"/>
+    </rect>
+    <!-- Tailstock -->
+    <rect x="240" y="40" width="50" height="100" rx="3" fill="#37474F"/>
+    <circle cx="245" cy="90" r="8" fill="#546E7A"/>
+    <!-- Tool post carriage -->
+    <rect x="130" y="50" width="40" height="28" rx="2" fill="#607D8B"/>
+    <rect x="145" y="72" width="10" height="16" fill="#CFD8DC"/>
+    <!-- Metal shavings (curly) -->
+    <path d="M150,105 Q160,108 155,115 Q148,118 152,125" fill="none" stroke="#B0BEC5" stroke-width="1.5" opacity="0.5"/>
+    <path d="M162,105 Q172,110 165,118 Q158,120 163,128" fill="none" stroke="#B0BEC5" stroke-width="1.5" opacity="0.4"/>
+    <!-- Control box -->
+    <rect x="0" y="165" width="120" height="35" rx="2" fill="#1B2631"/>
+    <rect x="5" y="170" width="70" height="22" rx="1" fill="#0D1B2A"/>
+    <text x="40" y="184" fill="#FDD835" font-family="monospace" font-size="7" text-anchor="middle">SPEED:1200</text>
+    <!-- Handwheels -->
+    <circle cx="100" cy="182" r="10" fill="none" stroke="#78909C" stroke-width="3"/>
+    <circle cx="100" cy="182" r="2" fill="#607D8B"/>
+    <!-- Label -->
+    <text x="150" y="215" fill="#90A4AE" font-family="sans-serif" font-size="11" text-anchor="middle">CNC LATHE</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== CENTER-RIGHT: CNC MILLING MACHINE ===== -->
+  <!-- ================================================================ -->
+  <g transform="translate(920, 420)">
+    <!-- Machine column -->
+    <rect x="0" y="0" width="200" height="240" rx="5" fill="#37474F"/>
+    <!-- Spindle head -->
+    <rect x="50" y="10" width="100" height="60" rx="3" fill="#455A64"/>
+    <rect x="90" y="30" width="20" height="40" fill="#607D8B"/>
+    <!-- Endmill -->
+    <rect x="96" y="65" width="8" height="30" fill="#CFD8DC"/>
+    <circle cx="100" cy="95" r="4" fill="#B0BEC5">
+      <animate attributeName="opacity" values="1;0.5;1" dur="0.08s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Work table (X-Y) -->
+    <rect x="10" y="100" width="180" height="15" rx="2" fill="#546E7A"/>
+    <!-- T-slots -->
+    <line x1="30" y1="107" x2="170" y2="107" stroke="#455A64" stroke-width="2"/>
+    <!-- Workpiece being milled -->
+    <rect x="60" y="85" width="80" height="15" rx="2" fill="#90A4AE"/>
+    <!-- Metal chips flying -->
+    <g opacity="0.5">
+      <circle cx="105" cy="88" r="1.5" fill="#CFD8DC">
+        <animate attributeName="cx" values="105;120;105" dur="0.3s" repeatCount="indefinite"/>
+        <animate attributeName="cy" values="88;82;88" dur="0.3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="95" cy="86" r="1" fill="#CFD8DC">
+        <animate attributeName="cx" values="95;80;95" dur="0.25s" repeatCount="indefinite"/>
+        <animate attributeName="cy" values="86;80;86" dur="0.25s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <!-- Saddle / knee -->
+    <rect x="20" y="120" width="160" height="100" rx="3" fill="#455A64"/>
+    <!-- Control panel (side) -->
+    <rect x="165" y="130" width="30" height="80" rx="2" fill="#1B2631"/>
+    <rect x="170" y="135" width="20" height="30" rx="1" fill="#0D1B2A"/>
+    <text x="180" y="153" fill="#42A5F5" font-family="monospace" font-size="6" text-anchor="middle">G-CODE</text>
+    <text x="180" y="160" fill="#42A5F5" font-family="monospace" font-size="5" text-anchor="middle">RUN</text>
+    <!-- DRO readout -->
+    <circle cx="180" cy="175" r="3" fill="#00E676">
+      <animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="180" cy="185" r="3" fill="#FDD835"/>
+    <!-- Handwheels -->
+    <circle cx="40" cy="200" r="12" fill="none" stroke="#78909C" stroke-width="3"/>
+    <circle cx="40" cy="200" r="3" fill="#607D8B"/>
+    <!-- Label -->
+    <text x="100" y="250" fill="#90A4AE" font-family="sans-serif" font-size="11" text-anchor="middle">CNC MILLING MACHINE</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== RIGHT ZONE: WELDING STATION ===== -->
+  <!-- ================================================================ -->
+  <g transform="translate(1200, 430)">
+    <!-- Welding table (heavy steel) -->
+    <rect x="0" y="50" width="200" height="10" rx="2" fill="#546E7A"/>
+    <!-- Table legs -->
+    <rect x="10" y="60" width="8" height="80" fill="#455A64"/>
+    <rect x="182" y="60" width="8" height="80" fill="#455A64"/>
+    <!-- Welding curtain (left) -->
+    <rect x="-20" y="-40" width="8" height="180" fill="#B71C1C" opacity="0.4"/>
+    <rect x="-15" y="-40" width="5" height="180" fill="#C62828" opacity="0.3"/>
+    <!-- Welding curtain (right) -->
+    <rect x="212" y="-40" width="8" height="180" fill="#B71C1C" opacity="0.4"/>
+    <rect x="217" y="-40" width="5" height="180" fill="#C62828" opacity="0.3"/>
+    <!-- Workpiece on table -->
+    <rect x="30" y="35" width="140" height="15" rx="2" fill="#78909C"/>
+    <rect x="80" y="20" width="40" height="15" rx="1" fill="#607D8B"/>
+    <!-- Welding arc (bright blue flash) -->
+    <circle cx="100" cy="35" r="20" fill="url(#weldGlow)">
+      <animate attributeName="r" values="15;25;15" dur="0.3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="0.15s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="100" cy="35" r="4" fill="#E3F2FD" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.2;0.9" dur="0.12s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Welding machine (MIG/MAG) -->
+    <rect x="210" y="40" width="60" height="90" rx="4" fill="#D32F2F"/>
+    <rect x="215" y="45" width="50" height="20" rx="2" fill="#1B2631"/>
+    <text x="240" y="58" fill="#FDD835" font-family="monospace" font-size="7" text-anchor="middle">180A</text>
+    <!-- Wire spool -->
+    <circle cx="240" cy="100" r="15" fill="#455A64" stroke="#607D8B" stroke-width="2"/>
+    <circle cx="240" cy="100" r="5" fill="#37474F"/>
+    <!-- Gas bottle -->
+    <rect x="280" y="10" width="18" height="120" rx="8" fill="#1565C0"/>
+    <rect x="283" y="5" width="12" height="12" rx="3" fill="#455A64"/>
+    <!-- Label -->
+    <text x="100" y="155" fill="#90A4AE" font-family="sans-serif" font-size="11" text-anchor="middle">WELDING STATION</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== FAR RIGHT: 3D PRINT WORKSHOP ===== -->
+  <!-- ================================================================ -->
+  <g transform="translate(1520, 380)">
+    <!-- Shelving unit -->
+    <rect x="0" y="0" width="350" height="280" rx="3" fill="#455A64"/>
+    <!-- Shelves -->
+    <rect x="5" y="0" width="340" height="5" fill="#546E7A"/>
+    <rect x="5" y="90" width="340" height="5" fill="#546E7A"/>
+    <rect x="5" y="180" width="340" height="5" fill="#546E7A"/>
+
+    <!-- 3D Printer 1 (large, top shelf) -->
+    <g transform="translate(20, 10)">
+      <rect x="0" y="0" width="90" height="75" rx="3" fill="#263238"/>
+      <!-- Frame -->
+      <rect x="5" y="5" width="80" height="65" rx="2" fill="none" stroke="#455A64" stroke-width="2"/>
+      <!-- Build plate -->
+      <rect x="10" y="55" width="70" height="8" rx="1" fill="#37474F"/>
+      <!-- Print in progress (little object growing) -->
+      <rect x="35" y="35" width="20" height="23" rx="2" fill="#FF6F00" opacity="0.8">
+        <animate attributeName="height" values="5;23;5" dur="8s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="53;35;53" dur="8s" repeatCount="indefinite"/>
+      </rect>
+      <!-- Extruder -->
+      <rect x="30" y="28" width="30" height="10" rx="2" fill="#607D8B">
+        <animate attributeName="x" values="30;50;20;40;30" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <!-- Status LED -->
+      <circle cx="80" cy="8" r="3" fill="url(#printerLed)">
+        <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <text x="45" y="-4" fill="#90A4AE" font-family="monospace" font-size="7" text-anchor="middle">Prusa MK4</text>
+    </g>
+
+    <!-- 3D Printer 2 (top shelf, right) -->
+    <g transform="translate(130, 10)">
+      <rect x="0" y="0" width="90" height="75" rx="3" fill="#263238"/>
+      <rect x="5" y="5" width="80" height="65" rx="2" fill="none" stroke="#455A64" stroke-width="2"/>
+      <rect x="10" y="55" width="70" height="8" rx="1" fill="#37474F"/>
+      <rect x="40" y="40" width="15" height="18" rx="1" fill="#42A5F5" opacity="0.7">
+        <animate attributeName="height" values="3;18;3" dur="6s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="55;40;55" dur="6s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="35" y="33" width="25" height="8" rx="2" fill="#607D8B">
+        <animate attributeName="x" values="35;55;25;45;35" dur="3.5s" repeatCount="indefinite"/>
+      </rect>
+      <circle cx="80" cy="8" r="3" fill="url(#printerLed)">
+        <animate attributeName="opacity" values="1;0.4;1" dur="1.8s" repeatCount="indefinite"/>
+      </circle>
+      <text x="45" y="-4" fill="#90A4AE" font-family="monospace" font-size="7" text-anchor="middle">Prusa XL</text>
+    </g>
+
+    <!-- 3D Printer 3 (large format, second shelf) -->
+    <g transform="translate(20, 100)">
+      <rect x="0" y="0" width="120" height="75" rx="3" fill="#1B2631"/>
+      <rect x="5" y="5" width="110" height="65" rx="2" fill="none" stroke="#37474F" stroke-width="2"/>
+      <rect x="10" y="55" width="100" height="8" rx="1" fill="#263238"/>
+      <rect x="30" y="38" width="40" height="20" rx="2" fill="#FFAB00" opacity="0.6">
+        <animate attributeName="height" values="4;20;4" dur="10s" repeatCount="indefinite"/>
+        <animate attributeName="y" values="54;38;54" dur="10s" repeatCount="indefinite"/>
+      </rect>
+      <circle cx="105" cy="8" r="3" fill="#FDD835" opacity="0.8"/>
+      <text x="60" y="-4" fill="#90A4AE" font-family="monospace" font-size="7" text-anchor="middle">Bambu X1C</text>
+    </g>
+
+    <!-- Filament spools (second shelf, right) -->
+    <g transform="translate(160, 100)">
+      <circle cx="15" cy="40" r="18" fill="#E53935" opacity="0.5" stroke="#C62828" stroke-width="2"/>
+      <circle cx="15" cy="40" r="6" fill="#263238"/>
+      <circle cx="55" cy="40" r="18" fill="#1E88E5" opacity="0.5" stroke="#1565C0" stroke-width="2"/>
+      <circle cx="55" cy="40" r="6" fill="#263238"/>
+      <circle cx="95" cy="40" r="18" fill="#43A047" opacity="0.5" stroke="#2E7D32" stroke-width="2"/>
+      <circle cx="95" cy="40" r="6" fill="#263238"/>
+      <circle cx="135" cy="40" r="18" fill="#FDD835" opacity="0.5" stroke="#F9A825" stroke-width="2"/>
+      <circle cx="135" cy="40" r="6" fill="#263238"/>
+    </g>
+
+    <!-- Finished prints (bottom shelf) -->
+    <g transform="translate(20, 195)">
+      <!-- Little Benchy boat -->
+      <path d="M0,25 Q5,15 15,12 Q20,10 25,12 L28,18 L28,25 Z" fill="#FF6F00" opacity="0.8"/>
+      <!-- Gear -->
+      <circle cx="60" cy="20" r="12" fill="#42A5F5" opacity="0.6"/>
+      <circle cx="60" cy="20" r="5" fill="#263238"/>
+      <!-- Vase -->
+      <path d="M100,28 Q95,15 98,5 L108,5 Q111,15 106,28 Z" fill="#00E676" opacity="0.5"/>
+      <!-- Phone stand -->
+      <rect x="130" y="12" width="25" height="16" rx="3" fill="#AB47BC" opacity="0.6" transform="rotate(-15,142,20)"/>
+      <!-- Skull -->
+      <circle cx="190" cy="18" r="10" fill="#EEEEEE" opacity="0.7"/>
+      <circle cx="186" cy="15" r="3" fill="#263238"/>
+      <circle cx="194" cy="15" r="3" fill="#263238"/>
+    </g>
+
+    <!-- Section label -->
+    <text x="175" y="295" fill="#90A4AE" font-family="sans-serif" font-size="11" text-anchor="middle">3D PRINT WORKSHOP</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== SOLDERING WORKSHOP (Center area, worktable) ===== -->
+  <!-- ================================================================ -->
+  <g transform="translate(680, 680)">
+    <!-- Large workbench -->
+    <rect x="0" y="0" width="350" height="15" rx="2" fill="#5D4037"/>
+    <!-- Bench legs -->
+    <rect x="10" y="15" width="6" height="60" fill="#4E342E"/>
+    <rect x="334" y="15" width="6" height="60" fill="#4E342E"/>
+    <!-- Shelf under bench -->
+    <rect x="0" y="50" width="350" height="6" rx="1" fill="#4E342E" opacity="0.6"/>
+
+    <!-- Soldering station 1 -->
+    <g transform="translate(30, -20)">
+      <!-- Base unit -->
+      <rect x="0" y="0" width="50" height="22" rx="3" fill="#1565C0"/>
+      <rect x="5" y="3" width="25" height="14" rx="1" fill="#0D1B2A"/>
+      <text x="17" y="12" fill="#FF6F00" font-family="monospace" font-size="7" text-anchor="middle">350°C</text>
+      <!-- Iron holder -->
+      <rect x="55" y="5" width="15" height="12" rx="2" fill="#455A64"/>
+      <!-- Iron (resting) -->
+      <line x1="60" y1="8" x2="95" y2="-5" stroke="#78909C" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="95" cy="-5" r="2" fill="#FF6F00" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0.2;0.6" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+      <text x="35" y="30" fill="#78909C" font-family="monospace" font-size="6" text-anchor="middle">Hakko FX-951</text>
+    </g>
+
+    <!-- Soldering station 2 -->
+    <g transform="translate(160, -20)">
+      <rect x="0" y="0" width="50" height="22" rx="3" fill="#1565C0"/>
+      <rect x="5" y="3" width="25" height="14" rx="1" fill="#0D1B2A"/>
+      <text x="17" y="12" fill="#FF6F00" font-family="monospace" font-size="7" text-anchor="middle">380°C</text>
+      <rect x="55" y="5" width="15" height="12" rx="2" fill="#455A64"/>
+      <line x1="60" y1="8" x2="95" y2="-5" stroke="#78909C" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="95" cy="-5" r="2" fill="#FF6F00" opacity="0.5">
+        <animate attributeName="opacity" values="0.5;0.2;0.5" dur="1.8s" repeatCount="indefinite"/>
+      </circle>
+      <text x="35" y="30" fill="#78909C" font-family="monospace" font-size="6" text-anchor="middle">Weller WE1010</text>
+    </g>
+
+    <!-- Oscilloscope -->
+    <g transform="translate(270, -45)">
+      <rect x="0" y="0" width="60" height="45" rx="4" fill="#263238"/>
+      <rect x="5" y="5" width="50" height="30" rx="2" fill="#0D1B2A"/>
+      <!-- Waveform -->
+      <path d="M10,20 Q15,8 20,20 Q25,32 30,20 Q35,8 40,20 Q45,32 50,20" fill="none" stroke="#00E676" stroke-width="1.5">
+        <animate attributeName="d" values="M10,20 Q15,8 20,20 Q25,32 30,20 Q35,8 40,20 Q45,32 50,20;M10,20 Q15,12 20,20 Q25,28 30,20 Q35,12 40,20 Q45,28 50,20;M10,20 Q15,8 20,20 Q25,32 30,20 Q35,8 40,20 Q45,32 50,20" dur="2s" repeatCount="indefinite"/>
+      </path>
+      <text x="30" y="54" fill="#78909C" font-family="monospace" font-size="6" text-anchor="middle">Rigol DS1054Z</text>
+    </g>
+
+    <!-- PCBs and components scattered -->
+    <rect x="130" y="-8" width="20" height="14" rx="1" fill="#2E7D32" opacity="0.7"/>
+    <rect x="155" y="-5" width="12" height="8" rx="1" fill="#1565C0" opacity="0.5"/>
+    <!-- Solder roll -->
+    <circle cx="120" cy="-5" r="8" fill="#B0BEC5" opacity="0.5"/>
+    <circle cx="120" cy="-5" r="3" fill="#455A64"/>
+
+    <!-- Label -->
+    <text x="175" y="82" fill="#90A4AE" font-family="sans-serif" font-size="11" text-anchor="middle">SOLDERING WORKSHOP</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== METAL WORKING BENCH (far left, floor level) ===== -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 700)">
+    <!-- Heavy steel workbench -->
+    <rect x="0" y="0" width="250" height="12" rx="2" fill="#546E7A"/>
+    <rect x="10" y="12" width="8" height="70" fill="#455A64"/>
+    <rect x="232" y="12" width="8" height="70" fill="#455A64"/>
+    <!-- Bench vise -->
+    <g transform="translate(40, -15)">
+      <rect x="0" y="0" width="30" height="18" rx="2" fill="#37474F"/>
+      <rect x="30" y="3" width="20" height="12" rx="1" fill="#455A64"/>
+      <rect x="50" y="5" width="15" height="8" rx="1" fill="#607D8B"/>
+      <!-- Handle -->
+      <line x1="38" y1="0" x2="38" y2="-12" stroke="#78909C" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="38" cy="-14" r="4" fill="#607D8B"/>
+    </g>
+    <!-- Angle grinder -->
+    <g transform="translate(140, -12)">
+      <rect x="0" y="0" width="50" height="15" rx="6" fill="#FDD835"/>
+      <circle cx="55" cy="7" r="12" fill="#78909C" opacity="0.6"/>
+      <circle cx="55" cy="7" r="8" fill="#607D8B"/>
+    </g>
+    <!-- Various tools hanging -->
+    <g transform="translate(0, -55)">
+      <!-- Tool pegboard -->
+      <rect x="0" y="0" width="250" height="40" rx="2" fill="#795548" opacity="0.4"/>
+      <!-- Hammers -->
+      <line x1="30" y1="5" x2="30" y2="35" stroke="#8D6E63" stroke-width="4" stroke-linecap="round"/>
+      <rect x="22" y="2" width="16" height="10" rx="2" fill="#607D8B"/>
+      <!-- Files -->
+      <line x1="60" y1="8" x2="60" y2="38" stroke="#B0BEC5" stroke-width="2"/>
+      <line x1="75" y1="8" x2="75" y2="36" stroke="#B0BEC5" stroke-width="2.5"/>
+      <line x1="90" y1="8" x2="90" y2="34" stroke="#B0BEC5" stroke-width="1.5"/>
+      <!-- Wrenches -->
+      <line x1="120" y1="5" x2="120" y2="38" stroke="#90A4AE" stroke-width="3"/>
+      <line x1="140" y1="5" x2="140" y2="35" stroke="#90A4AE" stroke-width="2.5"/>
+      <!-- Calipers -->
+      <rect x="170" y="8" width="3" height="30" fill="#B0BEC5"/>
+      <rect x="170" y="8" width="25" height="3" fill="#B0BEC5"/>
+      <rect x="175" y="8" width="3" height="20" fill="#CFD8DC"/>
+    </g>
+    <text x="125" y="95" fill="#90A4AE" font-family="sans-serif" font-size="11" text-anchor="middle">METAL WORKBENCH</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== HACKERSPACE DRENTHE LOGO (on wall, center) ===== -->
+  <!-- ================================================================ -->
+  <g transform="translate(960, 530)">
+    <!-- Logo painted on wall -->
+    <circle cx="0" cy="0" r="50" fill="none" stroke="#00E676" stroke-width="3" opacity="0.3"/>
+    <circle cx="0" cy="0" r="42" fill="none" stroke="#00E676" stroke-width="1.5" opacity="0.2"/>
+    <!-- Gear teeth (maker symbol) -->
+    <g opacity="0.25">
+      <rect x="-5" y="-52" width="10" height="12" rx="2" fill="#00E676"/>
+      <rect x="-5" y="40" width="10" height="12" rx="2" fill="#00E676"/>
+      <rect x="-52" y="-5" width="12" height="10" rx="2" fill="#00E676"/>
+      <rect x="40" y="-5" width="12" height="10" rx="2" fill="#00E676"/>
+      <rect x="29" y="-40" width="10" height="12" rx="2" fill="#00E676" transform="rotate(45,34,-34)"/>
+      <rect x="-39" y="-40" width="10" height="12" rx="2" fill="#00E676" transform="rotate(-45,-34,-34)"/>
+      <rect x="29" y="28" width="10" height="12" rx="2" fill="#00E676" transform="rotate(-45,34,34)"/>
+      <rect x="-39" y="28" width="10" height="12" rx="2" fill="#00E676" transform="rotate(45,-34,34)"/>
+    </g>
+    <text x="0" y="5" fill="#00E676" font-family="'Courier New', monospace" font-size="16" font-weight="bold" text-anchor="middle" opacity="0.3">HSD</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== SAFETY EQUIPMENT / DETAILS ===== -->
+  <!-- ================================================================ -->
+
+  <!-- Fire extinguisher (near welding) -->
+  <g transform="translate(1510, 560)">
+    <rect x="0" y="0" width="14" height="45" rx="6" fill="#D32F2F"/>
+    <rect x="3" y="-5" width="8" height="8" rx="2" fill="#455A64"/>
+    <line x1="7" y1="-5" x2="14" y2="-12" stroke="#455A64" stroke-width="2"/>
+  </g>
+
+  <!-- First aid kit (on wall) -->
+  <g transform="translate(1500, 340)">
+    <rect x="0" y="0" width="35" height="30" rx="3" fill="#fff" stroke="#D32F2F" stroke-width="2"/>
+    <rect x="14" y="5" width="7" height="20" rx="1" fill="#D32F2F"/>
+    <rect x="7" y="11" width="21" height="7" rx="1" fill="#D32F2F"/>
+  </g>
+
+  <!-- Safety glasses rack -->
+  <g transform="translate(50, 340)">
+    <rect x="0" y="0" width="50" height="25" rx="3" fill="#FFD54F" opacity="0.5"/>
+    <text x="25" y="15" fill="#333" font-family="sans-serif" font-size="7" font-weight="bold" text-anchor="middle">⚠ SAFETY GLASSES</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== CLASSROOM DOOR (back wall, center-right) ===== -->
+  <!-- ================================================================ -->
+  <g transform="translate(890, 420)">
+    <!-- Double door frame -->
+    <rect x="0" y="0" width="120" height="230" rx="3" fill="#3E2723"/>
+    <!-- Left door panel -->
+    <rect x="5" y="5" width="53" height="220" rx="2" fill="#5D4037"/>
+    <rect x="10" y="15" width="43" height="95" rx="2" fill="#4E342E"/>
+    <rect x="10" y="120" width="43" height="95" rx="2" fill="#4E342E"/>
+    <!-- Right door panel -->
+    <rect x="62" y="5" width="53" height="220" rx="2" fill="#5D4037"/>
+    <rect x="67" y="15" width="43" height="95" rx="2" fill="#4E342E"/>
+    <rect x="67" y="120" width="43" height="95" rx="2" fill="#4E342E"/>
+    <!-- Door handles -->
+    <rect x="48" y="130" width="10" height="6" rx="2" fill="#B0BEC5"/>
+    <rect x="62" y="130" width="10" height="6" rx="2" fill="#B0BEC5"/>
+    <!-- Glass window in door (left) -->
+    <rect x="18" y="25" width="27" height="60" rx="2" fill="#87CEEB" opacity="0.3"/>
+    <!-- Glass window in door (right) -->
+    <rect x="75" y="25" width="27" height="60" rx="2" fill="#87CEEB" opacity="0.3"/>
+    <!-- Light spilling from classroom (warm glow through glass) -->
+    <rect x="18" y="25" width="27" height="60" rx="2" fill="#FFF9C4" opacity="0.15">
+      <animate attributeName="opacity" values="0.15;0.25;0.15" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    <rect x="75" y="25" width="27" height="60" rx="2" fill="#FFF9C4" opacity="0.15">
+      <animate attributeName="opacity" values="0.15;0.25;0.15" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    <!-- Sign above door -->
+    <rect x="5" y="-30" width="110" height="25" rx="3" fill="#1B5E20" opacity="0.85"/>
+    <text x="60" y="-13" fill="#00E676" font-family="'Courier New', monospace" font-size="12" font-weight="bold" text-anchor="middle">📚 CLASSROOM</text>
+    <!-- Small "presentation tonight" notice -->
+    <rect x="15" y="215" width="90" height="14" rx="2" fill="#FFF9C4" opacity="0.8"/>
+    <text x="60" y="225" fill="#1B5E20" font-family="sans-serif" font-size="7" font-weight="bold" text-anchor="middle">▶ PRESENTATION TONIGHT</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== EXIT DOOR (right side) ===== -->
+  <!-- ================================================================ -->
+  <g transform="translate(1870, 420)">
+    <rect x="0" y="0" width="50" height="230" rx="3" fill="#5D4037"/>
+    <rect x="5" y="5" width="40" height="110" rx="2" fill="#4E342E"/>
+    <rect x="5" y="120" width="40" height="105" rx="2" fill="#4E342E"/>
+    <!-- Door handle -->
+    <rect x="12" y="130" width="20" height="6" rx="2" fill="#B0BEC5"/>
+    <!-- Exit sign above -->
+    <rect x="-5" y="-25" width="60" height="20" rx="2" fill="#2E7D32"/>
+    <text x="25" y="-10" fill="#fff" font-family="sans-serif" font-size="10" font-weight="bold" text-anchor="middle">← EXIT</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- ===== ATMOSPHERIC EFFECTS ===== -->
+  <!-- ================================================================ -->
+
+  <!-- Dust motes floating in light beams -->
+  <g opacity="0.2">
+    <circle cx="250" cy="300" r="2" fill="#FFF9C4">
+      <animate attributeName="cy" values="300;250;300" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="250;260;250" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="500" cy="350" r="1.5" fill="#FFF9C4">
+      <animate attributeName="cy" values="350;280;350" dur="10s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="500;510;500" dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="780" cy="280" r="1.5" fill="#FFF9C4">
+      <animate attributeName="cy" values="280;230;280" dur="7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1200" cy="320" r="2" fill="#FFF9C4">
+      <animate attributeName="cy" values="320;260;320" dur="9s" repeatCount="indefinite"/>
+      <animate attributeName="cx" values="1200;1210;1200" dur="9s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1550" cy="300" r="1.5" fill="#FFF9C4">
+      <animate attributeName="cy" values="300;240;300" dur="11s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Light beams from windows -->
+  <g opacity="0.06">
+    <polygon points="150,240 270,240 320,650 100,650" fill="#FFFDE7"/>
+    <polygon points="420,240 540,240 590,650 370,650" fill="#FFFDE7"/>
+    <polygon points="700,240 820,240 870,650 650,650" fill="#FFFDE7"/>
+    <polygon points="1100,240 1220,240 1270,650 1050,650" fill="#FFFDE7"/>
+    <polygon points="1400,240 1520,240 1570,650 1350,650" fill="#FFFDE7"/>
+    <polygon points="1680,240 1800,240 1850,650 1630,650" fill="#FFFDE7"/>
+  </g>
+
+</svg>

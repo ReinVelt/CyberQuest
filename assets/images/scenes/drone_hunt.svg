@@ -371,6 +371,116 @@
     <path d="M1800,575 Q1805,555 1810,575" stroke="#1a2810" stroke-width="1" fill="none"/>
   </g>
 
+  <!-- ===== FALLEN TREE — moss-covered pine trunk (hotspot: fallen_tree) ===== -->
+  <g transform="translate(96, 655)" id="fallen-tree">
+    <!-- Main trunk — thick fallen pine -->
+    <rect x="0" y="0" width="200" height="22" rx="11" fill="#1a1608" transform="rotate(-8, 100, 11)"/>
+    <rect x="5" y="2" width="190" height="18" rx="9" fill="#221c0e" transform="rotate(-8, 100, 11)"/>
+    <!-- Bark texture lines -->
+    <line x1="30" y1="5" x2="30" y2="17" stroke="#14100a" stroke-width="1.5" opacity="0.5" transform="rotate(-8, 100, 11)"/>
+    <line x1="60" y1="4" x2="60" y2="18" stroke="#14100a" stroke-width="1" opacity="0.4" transform="rotate(-8, 100, 11)"/>
+    <line x1="95" y1="3" x2="95" y2="19" stroke="#14100a" stroke-width="1.5" opacity="0.5" transform="rotate(-8, 100, 11)"/>
+    <line x1="130" y1="4" x2="130" y2="17" stroke="#14100a" stroke-width="1" opacity="0.4" transform="rotate(-8, 100, 11)"/>
+    <line x1="160" y1="5" x2="160" y2="16" stroke="#14100a" stroke-width="1.5" opacity="0.5" transform="rotate(-8, 100, 11)"/>
+    <!-- Moss patches (green) -->
+    <ellipse cx="40" cy="4" rx="25" ry="5" fill="#1a3010" opacity="0.7" transform="rotate(-8, 100, 11)"/>
+    <ellipse cx="100" cy="2" rx="30" ry="4" fill="#1e3814" opacity="0.6" transform="rotate(-8, 100, 11)"/>
+    <ellipse cx="155" cy="5" rx="20" ry="4" fill="#1a2e10" opacity="0.65" transform="rotate(-8, 100, 11)"/>
+    <!-- Root ball (left end) -->
+    <ellipse cx="-10" cy="11" rx="18" ry="16" fill="#18140a"/>
+    <path d="M-20,0 Q-30,-15 -15,-20 M-25,8 Q-38,2 -28,-10 M-18,20 Q-32,25 -30,15" stroke="#14100a" stroke-width="2" fill="none" opacity="0.6"/>
+    <!-- Broken branch stubs -->
+    <line x1="70" y1="-2" x2="65" y2="-18" stroke="#1a1608" stroke-width="3" transform="rotate(-8, 100, 11)"/>
+    <line x1="140" y1="-1" x2="145" y2="-15" stroke="#1a1608" stroke-width="2.5" transform="rotate(-8, 100, 11)"/>
+    <!-- Pine needles scattered around -->
+    <g opacity="0.35">
+      <path d="M20,25 Q25,20 30,25" stroke="#1a2810" stroke-width="1" fill="none"/>
+      <path d="M80,27 Q85,22 90,27" stroke="#162008" stroke-width="1" fill="none"/>
+      <path d="M150,23 Q155,18 160,23" stroke="#1a2810" stroke-width="1" fill="none"/>
+    </g>
+    <!-- Meshtastic Pi glow (hidden, activated by game) -->
+    <circle cx="100" cy="5" r="3" fill="#00ff44" opacity="0" id="meshtastic-led">
+      <animate attributeName="opacity" values="0" dur="1s" fill="freeze"/>
+    </circle>
+    <circle cx="100" cy="5" r="12" fill="rgba(0,255,68,0.15)" opacity="0" id="meshtastic-glow">
+      <animate attributeName="opacity" values="0" dur="1s" fill="freeze"/>
+    </circle>
+  </g>
+
+  <!-- ===== DENSE PINES — tree cover area (hotspot: tree_cover) ===== -->
+  <g transform="translate(20, 430)" id="dense-pines">
+    <!-- Thick pine trunk cluster -->
+    <rect x="0" y="0" width="8" height="120" fill="#0c0a06"/>
+    <rect x="40" y="-10" width="10" height="130" fill="#0e0c08"/>
+    <rect x="85" y="5" width="7" height="115" fill="#0a0806"/>
+    <rect x="120" y="-5" width="9" height="125" fill="#0c0a06"/>
+    <rect x="160" y="0" width="8" height="118" fill="#0e0c08"/>
+    <!-- Pine canopy (dense, dark, IR-scattering) -->
+    <ellipse cx="4" cy="-15" rx="35" ry="40" fill="#060e04"/>
+    <ellipse cx="45" cy="-25" rx="40" ry="50" fill="#081006"/>
+    <ellipse cx="88" cy="-10" rx="35" ry="38" fill="#060e04"/>
+    <ellipse cx="124" cy="-20" rx="38" ry="45" fill="#071005"/>
+    <ellipse cx="164" cy="-12" rx="32" ry="36" fill="#060e04"/>
+    <!-- Inner canopy detail -->
+    <ellipse cx="25" cy="-20" rx="50" ry="30" fill="#0a1408" opacity="0.5"/>
+    <ellipse cx="100" cy="-18" rx="55" ry="28" fill="#081208" opacity="0.4"/>
+    <!-- Ground shadow -->
+    <ellipse cx="85" cy="120" rx="100" ry="15" fill="rgba(0,0,0,0.15)"/>
+  </g>
+
+  <!-- ===== FOREST PATH — trail to facility (hotspot: forest_path) ===== -->
+  <g id="forest-path">
+    <!-- Dirt trail winding right through trees -->
+    <path d="M1574,560 Q1620,555 1660,565 Q1720,575 1780,555 Q1840,540 1900,530 L1920,525 L1920,600 L1900,595 Q1840,605 1780,620 Q1720,635 1660,625 Q1620,615 1574,620 Z" fill="#0e0c08" opacity="0.6"/>
+    <!-- Path texture (lighter patches = worn earth) -->
+    <ellipse cx="1650" cy="590" rx="30" ry="8" fill="#141008" opacity="0.5"/>
+    <ellipse cx="1750" cy="580" rx="25" ry="6" fill="#12100a" opacity="0.4"/>
+    <ellipse cx="1850" cy="560" rx="20" ry="5" fill="#141008" opacity="0.5"/>
+    <!-- Trees flanking path -->
+    <rect x="1580" y="480" width="6" height="90" fill="#0c0a06"/>
+    <ellipse cx="1583" cy="470" rx="25" ry="30" fill="#060e04"/>
+    <rect x="1640" y="490" width="5" height="80" fill="#0a0806"/>
+    <ellipse cx="1642" cy="480" rx="22" ry="28" fill="#071005"/>
+    <rect x="1700" y="475" width="7" height="95" fill="#0c0a06"/>
+    <ellipse cx="1703" cy="465" rx="28" ry="32" fill="#060e04"/>
+    <!-- Path continues into darkness (facility direction) -->
+    <rect x="1880" y="520" width="40" height="85" fill="rgba(255,30,10,0.03)"/>
+    <!-- Subtle arrow-like worn marks -->
+    <path d="M1660,590 L1680,585 L1660,580" stroke="#1a1608" stroke-width="1" fill="none" opacity="0.3"/>
+    <path d="M1780,575 L1800,570 L1780,565" stroke="#1a1608" stroke-width="1" fill="none" opacity="0.3"/>
+  </g>
+
+  <!-- ===== HackRF Equipment (near backpack, shown when activated) ===== -->
+  <g transform="translate(495, 618)" id="hackrf-device" opacity="0.7">
+    <!-- HackRF One board -->
+    <rect x="0" y="0" width="48" height="28" rx="2" fill="#0c0c10"/>
+    <rect x="2" y="2" width="44" height="24" rx="1" fill="#101018"/>
+    <!-- PCB traces -->
+    <line x1="6" y1="8" x2="20" y2="8" stroke="#1a2a1a" stroke-width="0.5" opacity="0.4"/>
+    <line x1="6" y1="14" x2="25" y2="14" stroke="#1a2a1a" stroke-width="0.5" opacity="0.4"/>
+    <line x1="6" y1="20" x2="18" y2="20" stroke="#1a2a1a" stroke-width="0.5" opacity="0.4"/>
+    <!-- SMA antenna connector -->
+    <circle cx="42" cy="14" r="4" fill="#2a2a2a" stroke="#3a3a3a" stroke-width="0.5"/>
+    <circle cx="42" cy="14" r="1.5" fill="#444"/>
+    <!-- Antenna (telescopic whip) -->
+    <line x1="42" y1="10" x2="42" y2="-25" stroke="#555" stroke-width="1.5"/>
+    <line x1="42" y1="-25" x2="42" y2="-55" stroke="#666" stroke-width="1"/>
+    <circle cx="42" cy="-55" r="1" fill="#777"/>
+    <!-- USB cable to laptop -->
+    <path d="M0,14 Q-15,14 -20,20 Q-25,26 -35,26" stroke="#0a0a0e" stroke-width="2" fill="none"/>
+    <!-- Green status LEDs -->
+    <circle cx="10" cy="6" r="1.5" fill="#00ff44" opacity="0" id="hackrf-led1">
+      <animate attributeName="opacity" values="0" dur="1s" fill="freeze"/>
+    </circle>
+    <circle cx="16" cy="6" r="1.5" fill="#00cc33" opacity="0" id="hackrf-led2">
+      <animate attributeName="opacity" values="0" dur="1s" fill="freeze"/>
+    </circle>
+    <!-- Transmit indicator (red, pulsing when spoofing) -->
+    <circle cx="36" cy="6" r="2" fill="#ff2200" opacity="0" id="hackrf-tx-led">
+      <animate attributeName="opacity" values="0" dur="1s" fill="freeze"/>
+    </circle>
+  </g>
+
   <!-- ===== SWAMP POOLS — dark water, moonlight reflections ===== -->
   <g transform="translate(550, 700)">
     <ellipse cx="0" cy="0" rx="200" ry="40" fill="url(#swampWater)"/>
@@ -810,6 +920,74 @@
       <animate attributeName="cx" values="1200;900;600;900;1200" dur="28s" repeatCount="indefinite"/>
       <animate attributeName="opacity" values="0.6;1;0.5;0.8;0.6" dur="28s" repeatCount="indefinite"/>
     </ellipse>
+  </g>
+
+  <!-- ===== CRASHED DRONES IN SWAMP (hidden, revealed after GPS spoof) ===== -->
+  <g id="crashed-drones" opacity="0">
+    <!-- Crashed drone 1 — half submerged in swamp pool -->
+    <g transform="translate(520, 710)">
+      <line x1="0" y1="0" x2="-15" y2="-8" stroke="#383838" stroke-width="2.5"/>
+      <line x1="0" y1="0" x2="12" y2="-6" stroke="#383838" stroke-width="2.5"/>
+      <polygon points="-8,-2 -6,-6 6,-6 8,-2 6,4 -6,4" fill="#1c1c1c"/>
+      <!-- Broken rotor -->
+      <line x1="-15" y1="-8" x2="-25" y2="-12" stroke="#555" stroke-width="1.5"/>
+      <line x1="-15" y1="-8" x2="-18" y2="-18" stroke="#555" stroke-width="1"/>
+      <!-- Sparking -->
+      <circle cx="5" cy="-3" r="2" fill="#ff8800" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0;0.3;0;0.6;0;0" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <!-- Submerged in water -->
+      <rect x="-20" y="2" width="40" height="12" fill="url(#swampWater)" opacity="0.7"/>
+    </g>
+    <!-- Crashed drone 2 — wrapped around dead pine -->
+    <g transform="translate(680, 685)">
+      <line x1="-5" y1="0" x2="-20" y2="5" stroke="#383838" stroke-width="2"/>
+      <line x1="5" y1="0" x2="18" y2="8" stroke="#383838" stroke-width="2"/>
+      <polygon points="-6,-1 -4,-5 4,-5 6,-1 4,3 -4,3" fill="#1c1c1c" transform="rotate(35)"/>
+      <!-- Broken rotors scattered -->
+      <line x1="18" y1="8" x2="30" y2="5" stroke="#444" stroke-width="1"/>
+      <line x1="-20" y1="5" x2="-30" y2="12" stroke="#444" stroke-width="1.5"/>
+      <!-- Red blinking dying nav light -->
+      <circle cx="0" cy="-5" r="1.5" fill="#ff0000" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0;0;0;0.4;0;0;0;0;0" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <!-- Crashed drone 3 — in the bog -->
+    <g transform="translate(1370, 755)">
+      <polygon points="-5,-1 -3,-4 3,-4 5,-1 3,2 -3,2" fill="#1c1c1c" transform="rotate(-20)"/>
+      <line x1="-5" y1="0" x2="-12" y2="3" stroke="#383838" stroke-width="1.5"/>
+      <line x1="5" y1="0" x2="14" y2="-2" stroke="#383838" stroke-width="1.5"/>
+      <!-- Smoke wisps from crashed engine -->
+      <g opacity="0.12" filter="url(#cloudBlur)">
+        <circle cx="0" cy="-5" r="4" fill="#506070">
+          <animate attributeName="cy" values="-5;-30;-60" dur="6s" repeatCount="indefinite"/>
+          <animate attributeName="r" values="4;10;18" dur="6s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.12;0.06;0" dur="6s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+      <!-- Water ripples around wreck -->
+      <ellipse cx="0" cy="5" rx="20" ry="4" fill="none" stroke="rgba(100,120,160,0.08)" stroke-width="0.5">
+        <animate attributeName="rx" values="20;30;40" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;0.5;0" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+    </g>
+  </g>
+
+  <!-- ===== GPS SPOOF RADIO WAVES (hidden, shown during spoof) ===== -->
+  <g id="spoof-waves" opacity="0">
+    <!-- Expanding circular waves from HackRF position -->
+    <circle cx="520" cy="630" r="20" fill="none" stroke="rgba(0,255,100,0.3)" stroke-width="1.5">
+      <animate attributeName="r" values="20;200;500" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.1;0" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="520" cy="630" r="20" fill="none" stroke="rgba(0,255,100,0.25)" stroke-width="1">
+      <animate attributeName="r" values="20;200;500" dur="3s" begin="1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.25;0.08;0" dur="3s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="520" cy="630" r="20" fill="none" stroke="rgba(0,200,80,0.2)" stroke-width="1">
+      <animate attributeName="r" values="20;200;500" dur="3s" begin="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.2;0.06;0" dur="3s" begin="2s" repeatCount="indefinite"/>
+    </circle>
   </g>
 
   <!-- ===== SCANNING LASER LINE from distant drone ===== -->

@@ -553,7 +553,7 @@ const HomeScene = {
             setTimeout(() => {
                 game.startDialogue([
                     { speaker: '', text: 'Compascuum, Netherlands. Another morning.' },
-                    { speaker: '', text: 'Ryan Weylant, hacker. Age 55. Lives with Ies and three dogs.' },
+                    { speaker: '', text: 'Ryan Weylant, hacker. Age 55. Lives with Ies and three rescue dogs.' },
                     { speaker: 'Ryan', text: 'Coffee. Need coffee.' }
                 ]);
             }, 1000);

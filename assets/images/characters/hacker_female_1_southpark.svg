@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- HACKER FEMALE 1 - "Sophie" - South Park Style Generic Character -->
+  <!-- Young maker, purple hair streak, overalls, slim, enthusiastic -->
+
+  <defs>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffe0cc"/>
+      <stop offset="100%" style="stop-color:#f5ccb0"/>
+    </linearGradient>
+    <linearGradient id="overallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#5c6bc0"/>
+      <stop offset="100%" style="stop-color:#3949ab"/>
+    </linearGradient>
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4a2a1a"/>
+      <stop offset="40%" style="stop-color:#4a2a1a"/>
+      <stop offset="45%" style="stop-color:#9c27b0"/>
+      <stop offset="65%" style="stop-color:#9c27b0"/>
+      <stop offset="70%" style="stop-color:#4a2a1a"/>
+      <stop offset="100%" style="stop-color:#4a2a1a"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+    <filter id="lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- SHOES (Doc Martens style) -->
+  <ellipse cx="82" cy="294" rx="14" ry="5" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="294" rx="14" ry="5" fill="#1a1a1a" stroke="#000" stroke-width="2"/>
+  <rect x="70" y="284" width="24" height="12" rx="3" fill="#222" stroke="#000" stroke-width="2.5"/>
+  <rect x="106" y="284" width="24" height="12" rx="3" fill="#222" stroke="#000" stroke-width="2.5"/>
+  <!-- Yellow stitching -->
+  <line x1="72" y1="293" x2="92" y2="293" stroke="#ffc107" stroke-width="1"/>
+  <line x1="108" y1="293" x2="128" y2="293" stroke="#ffc107" stroke-width="1"/>
+
+  <!-- LEGS -->
+  <rect x="74" y="264" width="18" height="22" fill="url(#overallGrad)" stroke="#000" stroke-width="2.5" rx="2"/>
+  <rect x="108" y="264" width="18" height="22" fill="url(#overallGrad)" stroke="#000" stroke-width="2.5" rx="2"/>
+
+  <!-- BODY (overalls over striped shirt) -->
+  <!-- Striped shirt underneath -->
+  <ellipse cx="100" cy="210" rx="42" ry="58" fill="#eee" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+  <g clip-path="inset(0)">
+    <line x1="58" y1="165" x2="58" y2="268" stroke="#e91e63" stroke-width="3" opacity="0.3"/>
+    <line x1="70" y1="160" x2="70" y2="268" stroke="#e91e63" stroke-width="3" opacity="0.3"/>
+    <line x1="82" y1="157" x2="82" y2="268" stroke="#e91e63" stroke-width="3" opacity="0.3"/>
+    <line x1="94" y1="155" x2="94" y2="268" stroke="#e91e63" stroke-width="3" opacity="0.3"/>
+    <line x1="106" y1="155" x2="106" y2="268" stroke="#e91e63" stroke-width="3" opacity="0.3"/>
+    <line x1="118" y1="157" x2="118" y2="268" stroke="#e91e63" stroke-width="3" opacity="0.3"/>
+    <line x1="130" y1="160" x2="130" y2="268" stroke="#e91e63" stroke-width="3" opacity="0.3"/>
+    <line x1="142" y1="165" x2="142" y2="268" stroke="#e91e63" stroke-width="3" opacity="0.3"/>
+  </g>
+
+  <!-- Overall bib -->
+  <path d="M72,170 L72,250 L128,250 L128,170 Q100,160 72,170 Z"
+        fill="url(#overallGrad)" stroke="#000" stroke-width="2.5"/>
+  <!-- Overall straps -->
+  <line x1="78" y1="170" x2="75" y2="148" stroke="#3949ab" stroke-width="5"/>
+  <line x1="122" y1="170" x2="125" y2="148" stroke="#3949ab" stroke-width="5"/>
+  <!-- Strap buttons -->
+  <circle cx="75" cy="148" r="3" fill="#ffc107" stroke="#000" stroke-width="1.5"/>
+  <circle cx="125" cy="148" r="3" fill="#ffc107" stroke="#000" stroke-width="1.5"/>
+  <!-- Overall pocket -->
+  <rect x="82" y="205" width="36" height="25" rx="3" fill="#3040a0" stroke="#000" stroke-width="1.5"/>
+  <!-- Screwdriver in pocket -->
+  <line x1="92" y1="210" x2="92" y2="195" stroke="#ff8f00" stroke-width="3" stroke-linecap="round"/>
+  <line x1="92" y1="195" x2="92" y2="185" stroke="#888" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- ARMS -->
+  <ellipse cx="58" cy="198" rx="14" ry="22" fill="#eee" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <ellipse cx="142" cy="198" rx="14" ry="22" fill="#eee" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+
+  <!-- Hands -->
+  <circle cx="58" cy="222" r="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <circle cx="142" cy="222" r="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+
+  <!-- HEAD -->
+  <circle cx="100" cy="82" r="50" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+
+  <!-- HAIR (shoulder length with purple streak) -->
+  <path d="M52,65 Q48,28 100,20 Q152,28 148,65"
+        fill="url(#hairGrad)" stroke="#000" stroke-width="3"/>
+  <!-- Side hair flowing down -->
+  <path d="M52,65 Q46,85 50,115 Q54,125 58,118 Q55,90 58,70"
+        fill="#4a2a1a" stroke="#000" stroke-width="2.5"/>
+  <path d="M148,65 Q154,85 150,115 Q146,125 142,118 Q145,90 142,70"
+        fill="#4a2a1a" stroke="#000" stroke-width="2.5"/>
+  <!-- Bangs -->
+  <path d="M60,58 Q75,68 85,55 Q95,65 108,55 Q118,65 130,58 Q125,48 100,42 Q75,48 60,58 Z"
+        fill="url(#hairGrad)" stroke="#000" stroke-width="2"/>
+
+  <!-- EARS (mostly hidden by hair) -->
+  <ellipse cx="52" cy="84" rx="6" ry="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <ellipse cx="148" cy="84" rx="6" ry="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+
+  <!-- EYES (South Park dot style, slightly larger for female) -->
+  <ellipse cx="82" cy="80" rx="8" ry="7" fill="#fff" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="80" rx="8" ry="7" fill="#fff" stroke="#000" stroke-width="2"/>
+  <circle cx="82" cy="80" r="4" fill="#2a2a2a"/>
+  <circle cx="118" cy="80" r="4" fill="#2a2a2a"/>
+  <circle cx="80" cy="78" r="1.3" fill="#fff"/>
+  <circle cx="116" cy="78" r="1.3" fill="#fff"/>
+
+  <!-- Eyelashes -->
+  <line x1="74" y1="74" x2="72" y2="70" stroke="#000" stroke-width="1.5"/>
+  <line x1="77" y1="73" x2="76" y2="69" stroke="#000" stroke-width="1.5"/>
+  <line x1="124" y1="73" x2="125" y2="69" stroke="#000" stroke-width="1.5"/>
+  <line x1="127" y1="74" x2="129" y2="70" stroke="#000" stroke-width="1.5"/>
+
+  <!-- NOSE -->
+  <ellipse cx="100" cy="92" rx="4" ry="5" fill="#f0c0a0" stroke="#000" stroke-width="1.5"/>
+
+  <!-- MOUTH (big smile) -->
+  <path d="M88,104 Q100,114 112,104" stroke="#c0392b" stroke-width="2.5" fill="#fff" stroke-linecap="round"/>
+
+  <!-- EYEBROWS -->
+  <path d="M70,70 Q80,65 92,68" stroke="#4a2a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M108,68 Q120,65 130,70" stroke="#4a2a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Small stud earring -->
+  <circle cx="52" cy="88" r="2.5" fill="#ffc107" stroke="#000" stroke-width="1"/>
+  <circle cx="148" cy="88" r="2.5" fill="#ffc107" stroke="#000" stroke-width="1"/>
+</svg>

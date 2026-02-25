@@ -742,6 +742,17 @@ class CyberQuestEngine {
                 'jaap haartsen':  'assets/images/characters/jaap_haartsen_southpark.svg',
                 'jaap':           'assets/images/characters/jaap_haartsen_southpark.svg',
                 'vandeberg':      'assets/images/characters/vandeberg_southpark.svg',
+                // Hackerspace characters
+                'dennis':         'assets/images/characters/hacker_male_2_southpark.svg',
+                'sophie':         'assets/images/characters/hacker_female_1_southpark.svg',
+                'marco':          'assets/images/characters/hacker_male_1_southpark.svg',
+                'kim':            'assets/images/characters/hacker_female_4_southpark.svg',
+                'joris':          'assets/images/characters/hacker_male_3_southpark.svg',
+                'linda':          'assets/images/characters/hacker_female_2_southpark.svg',
+                'pieter':         'assets/images/characters/hacker_male_4_southpark.svg',
+                'aisha':          'assets/images/characters/hacker_female_3_southpark.svg',
+                'wouter':         'assets/images/characters/presenter_male_southpark.svg',
+                'marieke':        'assets/images/characters/presenter_female_southpark.svg',
             };
             const portraitPath = current.portrait ||
                 PORTRAIT_MAP[speaker.toLowerCase()] || '';
@@ -1534,10 +1545,16 @@ class CyberQuestEngine {
     // Debug Panel for Testing
     toggleDebugPanel() {
         let panel = document.getElementById('debug-panel');
-        if (!panel) {
-            panel = this.createDebugPanel();
+        if (panel) {
+            // Remove old panel and recreate with fresh data
+            if (!panel.classList.contains('hidden')) {
+                panel.classList.add('hidden');
+                return;
+            }
+            panel.remove();
         }
-        panel.classList.toggle('hidden');
+        panel = this.createDebugPanel();
+        panel.classList.remove('hidden');
     }
     
     createDebugPanel() {
@@ -1573,6 +1590,7 @@ class CyberQuestEngine {
                         <button onclick="game.loadScene('videocall');game.toggleDebugPanel()">videocall</button>
                         <span class="scene-group">— Outdoors / Travel —</span>
                         <button onclick="game.loadScene('garden');game.toggleDebugPanel()">garden</button>
+                        <button onclick="game.loadScene('garden_back');game.toggleDebugPanel()">garden_back</button>
                         <button onclick="game.loadScene('regional_map');game.toggleDebugPanel()">regional_map</button>
                         <button onclick="game.setFlag('driving_destination','klooster');game.loadScene('driving');game.toggleDebugPanel()">driving→klooster</button>
                         <button onclick="game.setFlag('driving_destination','home');game.loadScene('driving');game.toggleDebugPanel()">driving→home</button>
@@ -1584,11 +1602,16 @@ class CyberQuestEngine {
                         <button onclick="game.loadScene('car_discovery');game.toggleDebugPanel()">car_discovery</button>
                         <button onclick="game.loadScene('dwingeloo');game.toggleDebugPanel()">dwingeloo</button>
                         <button onclick="game.loadScene('westerbork_memorial');game.toggleDebugPanel()">westerbork_memorial</button>
+                        <button onclick="game.loadScene('drone_hunt');game.toggleDebugPanel()">drone_hunt</button>
+                        <span class="scene-group">— Community —</span>
+                        <button onclick="game.loadScene('hackerspace');game.toggleDebugPanel()">hackerspace</button>
+                        <button onclick="game.loadScene('hackerspace_classroom');game.toggleDebugPanel()">hackerspace_classroom</button>
                         <span class="scene-group">— WSRT / ASTRON —</span>
                         <button onclick="game.loadScene('astron');game.toggleDebugPanel()">astron</button>
                         <span class="scene-group">— Facility —</span>
                         <button onclick="game.loadScene('facility');game.toggleDebugPanel()">facility</button>
                         <button onclick="game.loadScene('facility_interior');game.toggleDebugPanel()">facility_interior</button>
+                        <button onclick="game.loadScene('laser_corridor');game.toggleDebugPanel()">laser_corridor</button>
                         <button onclick="game.loadScene('facility_server');game.toggleDebugPanel()">facility_server</button>
                         <span class="scene-group">— Endgame —</span>
                         <button onclick="game.loadScene('debrief');game.toggleDebugPanel()">debrief</button>
@@ -1609,9 +1632,9 @@ class CyberQuestEngine {
                         ${fb('game_started')}${fb('made_espresso')}${fb('espresso_count')}${fb('talked_to_ies')}
                         ${fb('saw_tv_documentary')}${fb('tv_documentary_watched')}${fb('documentary_completed_once')}${fb('post_documentary_reminder_shown')}
                         <span class="flag-group">— Visited Scenes —</span>
-                        ${fb('visited_livingroom')}${fb('visited_garden')}${fb('visited_mancave')}${fb('visited_sdr_bench')}
-                        ${fb('visited_dwingeloo')}${fb('visited_westerbork_memorial')}${fb('visited_astron')}${fb('visited_planboard')}
-                        ${fb('visited_videocall')}${fb('visited_facility')}${fb('visited_debrief')}${fb('visited_epilogue')}
+                        ${fb('visited_livingroom')}${fb('visited_garden')}${fb('visited_garden_back')}${fb('visited_mancave')}${fb('visited_sdr_bench')}
+                        ${fb('visited_dwingeloo')}${fb('visited_westerbork_memorial')}${fb('visited_astron')}${fb('visited_planboard')}${fb('visited_hackerspace')}${fb('visited_hackerspace_classroom')}${fb('classroom_presentation_index')}
+                        ${fb('visited_videocall')}${fb('visited_klooster')}${fb('visited_facility')}${fb('visited_debrief')}${fb('visited_epilogue')}
                         <span class="flag-group">— Interactions / Counters —</span>
                         ${fb('dog_interactions')}${fb('pug_interactions')}${fb('fireplace_interactions')}
                         ${fb('father_call_count')}${fb('mother_call_count')}
@@ -1640,6 +1663,13 @@ class CyberQuestEngine {
                         ${fb('discovered_zerfall')}${fb('eva_arrived')}${fb('kubecka_arrived')}
                         <span class="flag-group">— Endgame —</span>
                         ${fb('debrief_complete')}${fb('epilogue_complete')}
+                        <span class="flag-group">— Drone Hunt —</span>
+                        ${fb('drone_hunt_started')}${fb('meshtastic_decoy_placed')}${fb('hackrf_ready')}${fb('survived_thermal_scan')}
+                        ${fb('gps_frequency_set')}${fb('tx_power_set')}${fb('spoof_target_set')}${fb('gps_spoof_executed')}${fb('drones_eliminated')}
+                        <span class="flag-group">— Laser Corridor —</span>
+                        ${fb('laser_corridor_entered')}${fb('laser_grid_analysed')}${fb('motion_sensors_analysed')}${fb('biometric_panel_activated')}
+                        ${fb('ir_frequency_set')}${fb('lasers_disabled')}${fb('jam_frequency_set')}${fb('sensors_jammed')}
+                        ${fb('biometric_code_entered')}${fb('server_door_unlocked')}${fb('laser_corridor_complete')}
                     </div>
                 </div>
 
@@ -1652,6 +1682,8 @@ class CyberQuestEngine {
                     <button onclick="game.giveDebugItem('wifi_pineapple')">WiFi Pineapple</button>
                     <button onclick="game.giveDebugItem('hackrf')">HackRF One</button>
                     <button onclick="game.giveDebugItem('night_vision')">Night Vision</button>
+                    <button onclick="game.giveDebugItem('security_badge')">Security Badge</button>
+                    <button onclick="game.giveDebugItem('astron_mesh_radio')">Astron Mesh Radio</button>
                     <br/>
                     <span style="color:#888;font-size:0.78rem">Evidence: </span>
                     <button onclick="game.giveDebugItem('sstv_decoded_image')">SSTV Image</button>
@@ -1798,7 +1830,7 @@ class CyberQuestEngine {
             'game_started','made_espresso','espresso_count','talked_to_ies','saw_tv_documentary',
             'tv_documentary_watched','documentary_completed_once','post_documentary_reminder_shown',
             'visited_livingroom','visited_garden','visited_mancave','visited_sdr_bench',
-            'visited_dwingeloo','visited_westerbork_memorial','visited_astron','visited_planboard',
+            'visited_dwingeloo','visited_westerbork_memorial','visited_astron','visited_planboard','visited_hackerspace','visited_hackerspace_classroom','classroom_presentation_index',
             'visited_videocall','visited_facility','visited_debrief','visited_epilogue',
             'dog_interactions','pug_interactions','fireplace_interactions',
             'frequency_tuned','military_frequency','sstv_transmission_received','sstv_decoded',

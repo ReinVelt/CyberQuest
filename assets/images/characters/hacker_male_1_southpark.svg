@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- HACKER MALE 1 - "Marco" - South Park Style Generic Character -->
+  <!-- Young maker, beanie, band t-shirt, slim build, brown hair -->
+
+  <defs>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd9c4"/>
+      <stop offset="100%" style="stop-color:#f5c4aa"/>
+    </linearGradient>
+    <linearGradient id="shirtGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a"/>
+      <stop offset="100%" style="stop-color:#0a0a0a"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+    <filter id="lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- SHOES -->
+  <ellipse cx="80" cy="294" rx="16" ry="5" fill="#333" stroke="#000" stroke-width="2"/>
+  <ellipse cx="120" cy="294" rx="16" ry="5" fill="#333" stroke="#000" stroke-width="2"/>
+  <rect x="66" y="286" width="28" height="9" rx="3" fill="#444" stroke="#000" stroke-width="2.5"/>
+  <rect x="106" y="286" width="28" height="9" rx="3" fill="#444" stroke="#000" stroke-width="2.5"/>
+
+  <!-- LEGS (jeans) -->
+  <rect x="70" y="260" width="22" height="28" fill="#3a5a8a" stroke="#000" stroke-width="2.5" rx="2"/>
+  <rect x="108" y="260" width="22" height="28" fill="#3a5a8a" stroke="#000" stroke-width="2.5" rx="2"/>
+
+  <!-- BODY (slim, black band t-shirt) -->
+  <ellipse cx="100" cy="210" rx="48" ry="58" fill="url(#shirtGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+
+  <!-- Band logo on shirt (fictional: skull circuit board) -->
+  <circle cx="100" cy="195" r="14" fill="none" stroke="#888" stroke-width="1.5"/>
+  <circle cx="95" cy="191" r="2.5" fill="#888"/>
+  <circle cx="105" cy="191" r="2.5" fill="#888"/>
+  <path d="M92,200 Q100,205 108,200" stroke="#888" stroke-width="1.5" fill="none"/>
+  <line x1="100" y1="208" x2="100" y2="215" stroke="#555" stroke-width="1"/>
+  <line x1="92" y1="210" x2="108" y2="210" stroke="#555" stroke-width="1"/>
+
+  <!-- ARMS -->
+  <ellipse cx="52" cy="200" rx="16" ry="26" fill="url(#shirtGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <ellipse cx="148" cy="200" rx="16" ry="26" fill="url(#shirtGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+
+  <!-- Hands -->
+  <circle cx="52" cy="228" r="11" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <circle cx="148" cy="228" r="11" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+
+  <!-- Phone in left hand -->
+  <rect x="43" y="222" width="12" height="20" rx="2" fill="#222" stroke="#000" stroke-width="1.5"/>
+  <rect x="45" y="225" width="8" height="14" rx="1" fill="#4488cc"/>
+
+  <!-- HEAD -->
+  <circle cx="100" cy="90" r="55" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+
+  <!-- BROWN HAIR (messy, sticking out of beanie) -->
+  <path d="M55,78 Q50,65 58,55" stroke="#5a3a1a" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M60,72 Q54,58 62,48" stroke="#6a4a2a" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M140,72 Q146,58 138,48" stroke="#5a3a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M145,78 Q150,65 142,55" stroke="#6a4a2a" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- BEANIE -->
+  <path d="M48,78 Q48,35 100,28 Q152,35 152,78" fill="#cc3333" stroke="#000" stroke-width="3"/>
+  <rect x="48" y="72" width="104" height="12" rx="3" fill="#aa2222" stroke="#000" stroke-width="2.5"/>
+  <!-- Beanie fold lines -->
+  <line x1="65" y1="74" x2="65" y2="82" stroke="#881818" stroke-width="1.5"/>
+  <line x1="85" y1="74" x2="85" y2="82" stroke="#881818" stroke-width="1.5"/>
+  <line x1="115" y1="74" x2="115" y2="82" stroke="#881818" stroke-width="1.5"/>
+  <line x1="135" y1="74" x2="135" y2="82" stroke="#881818" stroke-width="1.5"/>
+
+  <!-- EARS -->
+  <ellipse cx="47" cy="92" rx="9" ry="14" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="49" cy="92" rx="5" ry="8" fill="#f0b898"/>
+  <ellipse cx="153" cy="92" rx="9" ry="14" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="151" cy="92" rx="5" ry="8" fill="#f0b898"/>
+
+  <!-- EYES (South Park dot style) -->
+  <circle cx="82" cy="88" r="5" fill="#2a2a2a"/>
+  <circle cx="118" cy="88" r="5" fill="#2a2a2a"/>
+  <circle cx="80" cy="86" r="1.5" fill="#fff"/>
+  <circle cx="116" cy="86" r="1.5" fill="#fff"/>
+
+  <!-- NOSE -->
+  <ellipse cx="100" cy="100" rx="5" ry="7" fill="#eeb895" stroke="#000" stroke-width="2"/>
+
+  <!-- MOUTH (slight grin) -->
+  <path d="M88,115 Q100,122 112,115" stroke="#8b4513" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- EYEBROWS -->
+  <path d="M68,78 Q80,73 92,76" stroke="#5a3a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M108,76 Q120,73 132,78" stroke="#5a3a1a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+</svg>

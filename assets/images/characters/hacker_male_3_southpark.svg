@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- HACKER MALE 3 - "Joris" - South Park Style Generic Character -->
+  <!-- Tall skinny nerd, curly blond hair, glasses, hoodie with Linux penguin -->
+
+  <defs>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffe8d6"/>
+      <stop offset="100%" style="stop-color:#f5d4be"/>
+    </linearGradient>
+    <linearGradient id="hoodieGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2e7d32"/>
+      <stop offset="100%" style="stop-color:#1b5e20"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+    <filter id="lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- SHOES (Converse-style) -->
+  <ellipse cx="82" cy="294" rx="15" ry="5" fill="#eee" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="294" rx="15" ry="5" fill="#eee" stroke="#000" stroke-width="2"/>
+  <rect x="69" y="286" width="26" height="9" rx="3" fill="#f5f5f5" stroke="#000" stroke-width="2.5"/>
+  <rect x="105" y="286" width="26" height="9" rx="3" fill="#f5f5f5" stroke="#000" stroke-width="2.5"/>
+  <!-- Rubber toe caps -->
+  <ellipse cx="72" cy="290" rx="6" ry="5" fill="#ddd" stroke="#000" stroke-width="1.5"/>
+  <ellipse cx="108" cy="290" rx="6" ry="5" fill="#ddd" stroke="#000" stroke-width="1.5"/>
+
+  <!-- LEGS (skinny jeans, dark) -->
+  <rect x="74" y="262" width="18" height="26" fill="#222" stroke="#000" stroke-width="2.5" rx="2"/>
+  <rect x="108" y="262" width="18" height="26" fill="#222" stroke="#000" stroke-width="2.5" rx="2"/>
+
+  <!-- BODY (slim, green hoodie) -->
+  <ellipse cx="100" cy="212" rx="44" ry="58" fill="url(#hoodieGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+
+  <!-- Hoodie pocket -->
+  <rect x="68" y="215" width="64" height="30" rx="5" fill="#1a5220" stroke="#000" stroke-width="1.5"/>
+  <line x1="100" y1="218" x2="100" y2="242" stroke="#0d3a12" stroke-width="1.5"/>
+
+  <!-- Tux penguin on shirt (simple) -->
+  <ellipse cx="100" cy="188" rx="12" ry="15" fill="#222" stroke="#000" stroke-width="1.5"/>
+  <ellipse cx="100" cy="192" rx="8" ry="10" fill="#fff"/>
+  <circle cx="96" cy="183" r="1.5" fill="#fff"/>
+  <circle cx="104" cy="183" r="1.5" fill="#fff"/>
+  <polygon points="97,187 100,191 103,187" fill="#ff8f00"/>
+
+  <!-- ARMS -->
+  <ellipse cx="56" cy="204" rx="14" ry="24" fill="url(#hoodieGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <ellipse cx="144" cy="204" rx="14" ry="24" fill="url(#hoodieGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+
+  <!-- Hands -->
+  <circle cx="56" cy="230" r="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <circle cx="144" cy="230" r="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+
+  <!-- HEAD -->
+  <circle cx="100" cy="88" r="52" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+
+  <!-- CURLY BLOND HAIR -->
+  <circle cx="72" cy="48" r="12" fill="#e6b422" stroke="#000" stroke-width="2"/>
+  <circle cx="92" cy="40" r="14" fill="#daa520" stroke="#000" stroke-width="2"/>
+  <circle cx="112" cy="40" r="14" fill="#e6b422" stroke="#000" stroke-width="2"/>
+  <circle cx="130" cy="48" r="12" fill="#daa520" stroke="#000" stroke-width="2"/>
+  <circle cx="60" cy="58" r="10" fill="#daa520" stroke="#000" stroke-width="2"/>
+  <circle cx="140" cy="58" r="10" fill="#e6b422" stroke="#000" stroke-width="2"/>
+  <circle cx="82" cy="38" r="10" fill="#ccaa18" stroke="#000" stroke-width="1.5"/>
+  <circle cx="118" cy="38" r="10" fill="#ccaa18" stroke="#000" stroke-width="1.5"/>
+  <circle cx="100" cy="35" r="11" fill="#e6b422" stroke="#000" stroke-width="2"/>
+
+  <!-- EARS -->
+  <ellipse cx="50" cy="90" rx="8" ry="13" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="52" cy="90" rx="4" ry="7" fill="#f0c8a8"/>
+  <ellipse cx="150" cy="90" rx="8" ry="13" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="148" cy="90" rx="4" ry="7" fill="#f0c8a8"/>
+
+  <!-- GLASSES (round, Harry Potter style) -->
+  <circle cx="80" cy="84" r="18" fill="rgba(248,248,255,0.12)" stroke="#333" stroke-width="3"/>
+  <circle cx="120" cy="84" r="18" fill="rgba(248,248,255,0.12)" stroke="#333" stroke-width="3"/>
+  <line x1="98" y1="84" x2="102" y2="84" stroke="#333" stroke-width="3"/>
+  <line x1="62" y1="84" x2="50" y2="82" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="138" y1="84" x2="150" y2="82" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Lens reflection -->
+  <ellipse cx="74" cy="78" rx="6" ry="4" fill="#fff" opacity="0.5"/>
+  <ellipse cx="114" cy="78" rx="6" ry="4" fill="#fff" opacity="0.5"/>
+
+  <!-- EYES (South Park dot style) -->
+  <circle cx="80" cy="84" r="4.5" fill="#2a2a2a"/>
+  <circle cx="120" cy="84" r="4.5" fill="#2a2a2a"/>
+  <circle cx="78" cy="82" r="1.3" fill="#fff"/>
+  <circle cx="118" cy="82" r="1.3" fill="#fff"/>
+
+  <!-- NOSE -->
+  <ellipse cx="100" cy="98" rx="5" ry="6" fill="#eec8a8" stroke="#000" stroke-width="2"/>
+
+  <!-- MOUTH (friendly smile) -->
+  <path d="M86,112 Q100,120 114,112" stroke="#8b4513" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Teeth -->
+  <rect x="94" y="112" width="12" height="5" rx="1" fill="#fff" stroke="#ddd" stroke-width="0.5"/>
+
+  <!-- EYEBROWS -->
+  <path d="M62,72 Q76,66 92,70" stroke="#c8a020" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M108,70 Q124,66 138,72" stroke="#c8a020" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- HOODIE HOOD (behind head) -->
+  <path d="M52,148 Q38,105 55,60 Q100,30 145,60 Q162,105 148,148"
+        stroke="#1b5e20" stroke-width="10" fill="none" opacity="0.6" stroke-linecap="round"/>
+</svg>

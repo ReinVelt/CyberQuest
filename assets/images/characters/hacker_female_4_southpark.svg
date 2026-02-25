@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- HACKER FEMALE 4 - "Kim" - South Park Style Generic Character -->
+  <!-- East Asian, short black bob, sleek style, leather jacket, cybersecurity pro -->
+
+  <defs>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5dcc0"/>
+      <stop offset="100%" style="stop-color:#e8ccaa"/>
+    </linearGradient>
+    <linearGradient id="jacketGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#2a2a2a"/>
+      <stop offset="100%" style="stop-color:#111"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+    <filter id="lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- SHOES (ankle boots with heel) -->
+  <ellipse cx="82" cy="294" rx="14" ry="5" fill="#111" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="294" rx="14" ry="5" fill="#111" stroke="#000" stroke-width="2"/>
+  <rect x="70" y="282" width="24" height="14" rx="3" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+  <rect x="106" y="282" width="24" height="14" rx="3" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+  <!-- Small heel -->
+  <rect x="88" y="292" width="6" height="4" fill="#111" stroke="#000" stroke-width="1"/>
+  <rect x="124" y="292" width="6" height="4" fill="#111" stroke="#000" stroke-width="1"/>
+
+  <!-- LEGS (black skinny jeans) -->
+  <rect x="74" y="262" width="18" height="22" fill="#111" stroke="#000" stroke-width="2.5" rx="2"/>
+  <rect x="108" y="262" width="18" height="22" fill="#111" stroke="#000" stroke-width="2.5" rx="2"/>
+
+  <!-- BODY (leather jacket) -->
+  <ellipse cx="100" cy="210" rx="44" ry="58" fill="url(#jacketGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+
+  <!-- Leather jacket details -->
+  <!-- Diagonal zip -->
+  <path d="M100,155 L78,240" stroke="#666" stroke-width="2"/>
+  <!-- Zip teeth (simplified) -->
+  <g stroke="#888" stroke-width="1" opacity="0.5">
+    <line x1="98" y1="165" x2="95" y2="165"/>
+    <line x1="96" y1="175" x2="93" y2="175"/>
+    <line x1="94" y1="185" x2="91" y2="185"/>
+    <line x1="92" y1="195" x2="89" y2="195"/>
+    <line x1="90" y1="205" x2="87" y2="205"/>
+    <line x1="88" y1="215" x2="85" y2="215"/>
+    <line x1="86" y1="225" x2="83" y2="225"/>
+  </g>
+  <!-- Collar/lapels -->
+  <path d="M78,155 L68,170 L82,170 L90,158" fill="#333" stroke="#000" stroke-width="2"/>
+  <path d="M122,155 L132,170 L118,170 L110,158" fill="#333" stroke="#000" stroke-width="2"/>
+  <!-- Pocket zips -->
+  <line x1="68" y1="200" x2="85" y2="198" stroke="#666" stroke-width="1.5"/>
+  <line x1="115" y1="198" x2="132" y2="200" stroke="#666" stroke-width="1.5"/>
+
+  <!-- Inner top (dark red) -->
+  <path d="M82,155 Q100,148 118,155 L110,170 Q100,165 90,170 Z" fill="#b71c1c" stroke="#000" stroke-width="1.5"/>
+
+  <!-- ARMS -->
+  <ellipse cx="56" cy="200" rx="14" ry="24" fill="url(#jacketGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <ellipse cx="144" cy="200" rx="14" ry="24" fill="url(#jacketGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+
+  <!-- Hands -->
+  <circle cx="56" cy="226" r="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <circle cx="144" cy="226" r="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+
+  <!-- HEAD -->
+  <circle cx="100" cy="82" r="50" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+
+  <!-- BLACK BOB HAIR -->
+  <path d="M52,68 Q48,30 100,20 Q152,30 148,68"
+        fill="#0a0a0a" stroke="#000" stroke-width="3"/>
+  <!-- Bob sides (sharp, angular) -->
+  <path d="M52,68 Q48,80 46,105 Q48,110 54,108 Q52,85 56,72"
+        fill="#0a0a0a" stroke="#000" stroke-width="2.5"/>
+  <path d="M148,68 Q152,80 154,105 Q152,110 146,108 Q148,85 144,72"
+        fill="#0a0a0a" stroke="#000" stroke-width="2.5"/>
+  <!-- Sharp bangs -->
+  <path d="M58,62 Q72,70 82,58 Q92,68 100,60 Q108,68 118,58 Q128,70 142,62 L140,52 Q100,38 60,52 Z"
+        fill="#0a0a0a" stroke="#000" stroke-width="2"/>
+  <!-- Hair shine -->
+  <path d="M80,35 Q90,42 100,38" stroke="#333" stroke-width="2" fill="none" opacity="0.6"/>
+
+  <!-- EARS (partially visible under bob) -->
+  <ellipse cx="52" cy="84" rx="5" ry="9" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <ellipse cx="148" cy="84" rx="5" ry="9" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+
+  <!-- EYES (South Park dot style, slightly almond) -->
+  <ellipse cx="82" cy="80" rx="9" ry="6.5" fill="#fff" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="80" rx="9" ry="6.5" fill="#fff" stroke="#000" stroke-width="2"/>
+  <circle cx="82" cy="80" r="4" fill="#1a1a0a"/>
+  <circle cx="118" cy="80" r="4" fill="#1a1a0a"/>
+  <circle cx="80" cy="78" r="1.3" fill="#fff"/>
+  <circle cx="116" cy="78" r="1.3" fill="#fff"/>
+
+  <!-- Eyeliner (sharp) -->
+  <path d="M73,77 Q72,75 70,74" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M127,77 Q128,75 130,74" stroke="#000" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Lower lash line -->
+  <path d="M75,84 Q82,87 89,84" stroke="#000" stroke-width="1" fill="none"/>
+  <path d="M111,84 Q118,87 125,84" stroke="#000" stroke-width="1" fill="none"/>
+
+  <!-- NOSE -->
+  <ellipse cx="100" cy="92" rx="4" ry="5" fill="#e0bb98" stroke="#000" stroke-width="1.5"/>
+
+  <!-- MOUTH (confident smirk, red lipstick) -->
+  <path d="M88,106 Q100,112 112,104" stroke="#c62828" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- EYEBROWS (sharp, groomed) -->
+  <path d="M68,68 Q80,62 92,66" stroke="#0a0a0a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M108,66 Q120,62 132,68" stroke="#0a0a0a" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Small hoop earrings -->
+  <circle cx="50" cy="90" r="5" fill="none" stroke="#ffc107" stroke-width="1.5"/>
+  <circle cx="150" cy="90" r="5" fill="none" stroke="#ffc107" stroke-width="1.5"/>
+</svg>

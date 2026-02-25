@@ -19,7 +19,7 @@ window.MancaveDilemma = (function () {
             num: 'OPTION 1',
             title: 'Contact Authorities',
             desc: 'Dutch police? AIVD? "Some stranger gave me German military secrets." Yeah, that\'ll go well.',
-            monologue: 'They\'d laugh me out. Or worse — tip off the wrong people.',
+            monologue: 'I actually thought about it. Really thought about it. Call the AIVD, hand it all over, let the professionals handle it. But E said it herself — the people protecting this project have infiltrated military AND intelligence. What if I call the one person who reports to the wrong person? Marlies Bakker ends up as a footnote in a classified file that never sees daylight.',
             rejected: true,
             direction: 'mc-slideRight'
         },
@@ -27,7 +27,7 @@ window.MancaveDilemma = (function () {
             num: 'OPTION 2',
             title: 'Go to the Press',
             desc: 'WikiLeaks, Der Spiegel. Blow this wide open.',
-            monologue: '72 hours isn\'t enough time. And I\'d become target number one. Blown whistle, blown life.',
+            monologue: '72 hours isn\'t enough time. And I\'d become target number one. Blown whistle, blown life. Ies, the dogs — they\'d all be in the spotlight.',
             rejected: true,
             direction: 'mc-slideLeft'
         },
@@ -35,7 +35,7 @@ window.MancaveDilemma = (function () {
             num: 'OPTION 3',
             title: 'Walk Away',
             desc: 'Delete everything. Pretend this never happened.',
-            monologue: '...Who am I kidding? That was never an option.',
+            monologue: 'A 67-year-old grandmother went into surgery and never came out because some Russian needed to calibrate his toy. Walk away from that? ...Who am I kidding? That was never an option.',
             rejected: true,
             direction: 'mc-slideRight'
         },

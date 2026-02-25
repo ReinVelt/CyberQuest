@@ -377,6 +377,9 @@ const FacilityScene = {
     onEnter: (game) => {
         const storyPart = game.gameState.storyPart;
         game.setFlag('visited_facility', true);
+
+        // Show ally coordination overlay during infiltration
+        if (window.AllyOverlay) window.AllyOverlay.show(game);
         
         if (storyPart === 17 && !game.hasItem('security_badge')) {
             // Part 17: Arrival and badge pickup
@@ -411,7 +414,7 @@ const FacilityScene = {
     
     // Scene exit
     onExit: () => {
-        // Cleanup
+        if (window.AllyOverlay) window.AllyOverlay.hide();
     }
 };
 

@@ -494,6 +494,22 @@ const GardenScene = {
             });
         }
 
+        // LOFAR Superterp — accessible after visiting ASTRON
+        if (game.getFlag('visited_astron')) {
+            destinations.push({
+                id: 'lofar',
+                name: 'LOFAR Superterp',
+                desc: 'World\'s largest low-frequency radio telescope. Cees Bassa.',
+                distance: '30 min · South',
+                icon: '📶',
+                drivingScene: 'driving_day',
+                drivingDest: 'lofar',
+                night: false,
+                visited: !!game.getFlag('visited_lofar'),
+                urgent: false
+            });
+        }
+
         // Westerbork Memorial — accessible after visiting klooster
         // (200 m from WSRT — same location area, same ~40 min drive)
         if (game.getFlag('visited_klooster')) {
@@ -507,6 +523,22 @@ const GardenScene = {
                 drivingDest: 'westerbork',
                 night: false,
                 visited: !!game.getFlag('visited_westerbork_memorial'),
+                urgent: false
+            });
+        }
+
+        // Hackerspace Drenthe — available after mancave unlocked
+        if (game.getFlag('mancave_unlocked')) {
+            destinations.push({
+                id: 'hackerspace',
+                name: 'Hackerspace Drenthe',
+                desc: 'Community maker space in Coevorden. CNC, 3D printing, welding, soldering.',
+                distance: '25 min · South-east',
+                icon: '🔧',
+                drivingScene: 'driving_day',
+                drivingDest: 'hackerspace',
+                night: false,
+                visited: !!game.getFlag('visited_hackerspace'),
                 urgent: false
             });
         }

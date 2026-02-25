@@ -83,7 +83,7 @@ const DebriefScene = {
             skipWalk: true,
             action: function(game) {
                 if (game.getFlag('debrief_complete')) {
-                    game.loadScene('epilogue');
+                    game.loadScene('morning_after');
                 } else {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Not yet. Still processing all this.' }
@@ -229,6 +229,25 @@ const DebriefScene = {
                 { speaker: 'Ryan', text: '*Watches the flat Dutch landscape scroll past* I need to think about this.' }
             ],
 
+            // ── Homecoming — Ies ──
+            [
+                { speaker: '', text: '*The black car pulls into the driveway in Compascuum. Late afternoon.*' },
+                { speaker: '', text: '*The front door opens before Ryan reaches it.*' },
+                { speaker: 'Ies', text: '*Standing in the doorway, arms crossed, eyes red*' },
+                { speaker: 'Ies', text: 'You\'re back.' },
+                { speaker: 'Ryan', text: 'I\'m back.' },
+                { speaker: '', text: '*She pulls him into a long, tight embrace. Neither speaks for a while.*' },
+                { speaker: 'Ies', text: 'I saw the news. Der Spiegel. The Guardian. Your name everywhere.' },
+                { speaker: 'Ryan', text: 'I should have called sooner. I\'m sorry.' },
+                { speaker: 'Ies', text: 'You should have. But you\'re here. That\'s what matters.' },
+                { speaker: '', text: '*Tino and Kessy barrel out the door, tails wagging. ET waddles behind, snorting.*' },
+                { speaker: 'Ies', text: 'The AIVD brought you home in a government car. That\'s new.' },
+                { speaker: 'Ryan', text: 'They offered me a job.' },
+                { speaker: 'Ies', text: '*Long look* Of course they did.' },
+                { speaker: 'Ies', text: 'We\'ll talk about it. Over espresso. After you sleep.' },
+                { speaker: 'Ryan', text: '*Smiles* Deal.' }
+            ],
+
             // ── Mission complete ──
             [
                 { speaker: '', text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━' },
@@ -242,9 +261,9 @@ const DebriefScene = {
         const playNext = () => {
             if (sectionIndex >= sections.length) {
                 game.setFlag('debrief_complete', true);
-                game.showNotification('Click to continue to the epilogue…');
+                game.showNotification('Click to continue…');
                 const tid = setTimeout(() => {
-                    game.loadScene('epilogue');
+                    game.loadScene('morning_after');
                 }, 10000);
                 this._timeoutIds.push(tid);
                 return;

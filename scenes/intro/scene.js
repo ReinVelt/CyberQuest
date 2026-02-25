@@ -923,7 +923,7 @@ const IntroScene = {
                 '<div class="ryan-details" id="ryan-details">' +
                     '<p>Age 55. A man who never met a signal he couldn\'t decode.</p>' +
                     '<p>A puzzle he couldn\'t solve. A system he couldn\'t break.</p>' +
-                    '<p>Home: a white farmhouse by the canal. Partner: Ies.<br>Three dogs &mdash; Tino, Kessy, and ET the pug.</p>' +
+                    '<p>Home: a white farmhouse by the canal. Partner: Ies.<br>Three rescue dogs &mdash; Tino, Kessy, and ET the pug.</p>' +
                     '<p class="glow">When the brightest minds face impossible problems, they call Ryan.</p>' +
                 '</div>' +
             '</div>' +

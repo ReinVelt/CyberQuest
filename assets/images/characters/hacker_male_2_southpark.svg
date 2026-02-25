@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- HACKER MALE 2 - "Dennis" - South Park Style Generic Character -->
+  <!-- Older maker, bald with glasses, flannel shirt, stocky build -->
+
+  <defs>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5d0b0"/>
+      <stop offset="100%" style="stop-color:#e8bfa0"/>
+    </linearGradient>
+    <linearGradient id="flannelGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c62828"/>
+      <stop offset="50%" style="stop-color:#b71c1c"/>
+      <stop offset="100%" style="stop-color:#c62828"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+    <filter id="lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- SHOES (work boots) -->
+  <ellipse cx="77" cy="294" rx="18" ry="6" fill="#3e2723" stroke="#000" stroke-width="2"/>
+  <ellipse cx="123" cy="294" rx="18" ry="6" fill="#3e2723" stroke="#000" stroke-width="2"/>
+  <rect x="62" y="284" width="30" height="12" rx="4" fill="#4e342e" stroke="#000" stroke-width="2.5"/>
+  <rect x="108" y="284" width="30" height="12" rx="4" fill="#4e342e" stroke="#000" stroke-width="2.5"/>
+
+  <!-- LEGS (cargo pants) -->
+  <rect x="65" y="262" width="25" height="24" fill="#5d6d3f" stroke="#000" stroke-width="2.5" rx="2"/>
+  <rect x="110" y="262" width="25" height="24" fill="#5d6d3f" stroke="#000" stroke-width="2.5" rx="2"/>
+  <!-- Cargo pocket -->
+  <rect x="112" y="268" width="12" height="10" rx="2" fill="#4e5d32" stroke="#000" stroke-width="1.5"/>
+
+  <!-- BODY (stocky, flannel shirt) -->
+  <ellipse cx="100" cy="212" rx="56" ry="62" fill="url(#flannelGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+  <!-- Flannel plaid pattern -->
+  <line x1="60" y1="175" x2="60" y2="260" stroke="#8b1a1a" stroke-width="2" opacity="0.4"/>
+  <line x1="80" y1="165" x2="80" y2="268" stroke="#222" stroke-width="1" opacity="0.3"/>
+  <line x1="100" y1="160" x2="100" y2="270" stroke="#8b1a1a" stroke-width="2" opacity="0.4"/>
+  <line x1="120" y1="165" x2="120" y2="268" stroke="#222" stroke-width="1" opacity="0.3"/>
+  <line x1="140" y1="175" x2="140" y2="260" stroke="#8b1a1a" stroke-width="2" opacity="0.4"/>
+  <line x1="55" y1="190" x2="145" y2="190" stroke="#222" stroke-width="1" opacity="0.3"/>
+  <line x1="50" y1="210" x2="150" y2="210" stroke="#8b1a1a" stroke-width="1.5" opacity="0.3"/>
+  <line x1="50" y1="230" x2="150" y2="230" stroke="#222" stroke-width="1" opacity="0.3"/>
+
+  <!-- Button line -->
+  <line x1="100" y1="155" x2="100" y2="265" stroke="#222" stroke-width="2"/>
+  <circle cx="100" cy="170" r="2.5" fill="#ddd" stroke="#000" stroke-width="1"/>
+  <circle cx="100" cy="190" r="2.5" fill="#ddd" stroke="#000" stroke-width="1"/>
+  <circle cx="100" cy="210" r="2.5" fill="#ddd" stroke="#000" stroke-width="1"/>
+  <circle cx="100" cy="230" r="2.5" fill="#ddd" stroke="#000" stroke-width="1"/>
+
+  <!-- ARMS -->
+  <ellipse cx="46" cy="202" rx="18" ry="28" fill="url(#flannelGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <ellipse cx="154" cy="202" rx="18" ry="28" fill="url(#flannelGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+
+  <!-- Hands -->
+  <circle cx="46" cy="232" r="12" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <circle cx="154" cy="232" r="12" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+
+  <!-- Soldering iron in right hand -->
+  <line x1="154" y1="224" x2="170" y2="210" stroke="#666" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="172" cy="208" r="2" fill="#ff6600" opacity="0.8"/>
+
+  <!-- HEAD (round, bald) -->
+  <circle cx="100" cy="88" r="58" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+
+  <!-- BALD HEAD — light top highlight -->
+  <ellipse cx="100" cy="50" rx="35" ry="12" fill="#ffe0cc" opacity="0.4"/>
+
+  <!-- Remaining hair (sides, gray-brown) -->
+  <path d="M48,80 Q42,95 48,110" fill="#7a6a5a" stroke="#000" stroke-width="2.5"/>
+  <path d="M152,80 Q158,95 152,110" fill="#7a6a5a" stroke="#000" stroke-width="2.5"/>
+  <path d="M48,80 Q45,72 52,68" fill="#7a6a5a" stroke="#000" stroke-width="2"/>
+  <path d="M152,80 Q155,72 148,68" fill="#7a6a5a" stroke="#000" stroke-width="2"/>
+
+  <!-- EARS -->
+  <ellipse cx="44" cy="92" rx="10" ry="16" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="46" cy="92" rx="5" ry="9" fill="#e8b598"/>
+  <ellipse cx="156" cy="92" rx="10" ry="16" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="154" cy="92" rx="5" ry="9" fill="#e8b598"/>
+
+  <!-- GLASSES (rectangular, practical) -->
+  <rect x="66" y="76" width="28" height="22" rx="4" fill="rgba(248,248,255,0.12)" stroke="#333" stroke-width="3.5"/>
+  <rect x="106" y="76" width="28" height="22" rx="4" fill="rgba(248,248,255,0.12)" stroke="#333" stroke-width="3.5"/>
+  <line x1="94" y1="86" x2="106" y2="86" stroke="#333" stroke-width="3"/>
+  <line x1="66" y1="86" x2="44" y2="84" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="134" y1="86" x2="156" y2="84" stroke="#333" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Lens reflection -->
+  <ellipse cx="76" cy="82" rx="6" ry="3" fill="#fff" opacity="0.5"/>
+  <ellipse cx="116" cy="82" rx="6" ry="3" fill="#fff" opacity="0.5"/>
+
+  <!-- EYES (South Park dot style, behind glasses) -->
+  <circle cx="80" cy="86" r="4.5" fill="#2a2a2a"/>
+  <circle cx="120" cy="86" r="4.5" fill="#2a2a2a"/>
+  <circle cx="78" cy="84" r="1.3" fill="#fff"/>
+  <circle cx="118" cy="84" r="1.3" fill="#fff"/>
+
+  <!-- NOSE -->
+  <ellipse cx="100" cy="100" rx="6" ry="8" fill="#e8b598" stroke="#000" stroke-width="2"/>
+
+  <!-- MUSTACHE (thick, walrus style) -->
+  <path d="M78,107 Q90,115 100,112 Q110,115 122,107 Q112,120 100,118 Q88,120 78,107 Z"
+        fill="#7a6a5a" stroke="#000" stroke-width="2"/>
+
+  <!-- MOUTH -->
+  <path d="M90,120 Q100,126 110,120" stroke="#8b4513" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- EYEBROWS (bushy) -->
+  <path d="M63,72 Q78,65 94,70" stroke="#7a6a5a" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  <path d="M106,70 Q122,65 137,72" stroke="#7a6a5a" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+</svg>

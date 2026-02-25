@@ -235,7 +235,7 @@
     <script src="engine/evidence-viewer.js"></script>
     <script src="engine/puzzles/password-puzzle.js"></script>
     <script src="engine/chat-interface.js"></script>
-    <script src="engine/game.js"></script>
+    <script src="engine/game.js?v=2"></script>
     <script src="engine/player.js"></script>
     
     <!-- Load Scenes -->
@@ -251,27 +251,36 @@
     <script src="scenes/mancave/volkov-investigation.js"></script>
     <script src="scenes/mancave/eva-reveal.js"></script>
     <script src="scenes/mancave/eva-contact.js"></script>
+    <script src="scenes/mancave/meshtastic-setup.js"></script>
+    <script src="scenes/mancave/forensic-analysis.js"></script>
+    <script src="scenes/mancave/mission-prep.js"></script>
     <script src="scenes/mancave/scene.js?v=4"></script>
     <script src="scenes/sdr_bench/scene.js"></script>
     <script src="scenes/planboard/scene.js"></script>
     <script src="scenes/regional_map/scene.js"></script>
     <script src="scenes/dwingeloo/scene.js"></script>
     <script src="scenes/videocall/scene.js?v=2"></script>
-    <script src="scenes/garden/scene.js"></script>
-    <script src="scenes/garden_back/scene.js"></script>
+    <script src="scenes/garden/scene.js?v=2"></script>
+    <script src="scenes/garden_back/scene.js?v=2"></script>
     <script src="scenes/klooster/scene.js"></script>
     <script src="scenes/westerbork_memorial/scene.js"></script>
     <script src="scenes/car_discovery/scene.js"></script>
     <script src="scenes/driving/scene.js"></script>
     <script src="scenes/driving_day/scene.js"></script>
     <script src="scenes/astron/scene.js"></script>
-    <script src="scenes/drone_hunt/scene.js"></script>
+    <script src="scenes/lofar/scene.js"></script>
+    <script src="scenes/drone_hunt/scene.js?v=2"></script>
+    <script src="scenes/facility/ally-overlay.js"></script>
     <script src="scenes/facility/scene.js?v=3"></script>
     <script src="scenes/facility_interior/scene.js?v=3"></script>
-    <script src="scenes/laser_corridor/scene.js"></script>
+    <script src="scenes/laser_corridor/scene.js?v=2"></script>
     <script src="scenes/facility_server/scene.js?v=4"></script>
+    <script src="scenes/long_night/scene.js"></script>
     <script src="scenes/debrief/scene.js"></script>
+    <script src="scenes/morning_after/scene.js"></script>
     <script src="scenes/epilogue/scene.js"></script>
+    <script src="scenes/hackerspace/scene.js"></script>
+    <script src="scenes/hackerspace_classroom/scene.js"></script>
     <script src="scenes/credits/scene.js"></script>
 
     <!-- Game Initialization -->
@@ -347,11 +356,18 @@
             game.registerScene(SdrBenchScene);
             game.registerScene(WesterborkMemorialScene);
             game.registerScene(AstronScene);
+            game.registerScene(LofarScene);
             game.registerScene(FacilityScene);
             game.registerScene(FacilityInteriorScene);
+            game.registerScene(LaserCorridorScene);
             game.registerScene(FacilityServerScene);
+            game.registerScene(LongNightScene);
+            game.registerScene(DroneHuntScene);
             game.registerScene(DebriefScene);
+            game.registerScene(MorningAfterScene);
             game.registerScene(EpilogueScene);
+            game.registerScene(HackerspaceScene);
+            game.registerScene(HackerspaceClassroomScene);
             game.registerScene(CreditsScene);
             
             // Initialize the game

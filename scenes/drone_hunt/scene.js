@@ -34,6 +34,597 @@ const DroneHuntScene = {
         'GPS L1 has zero authentication. Amateur hour.'
     ],
 
+    /* ═══════════════════════════════════════════════════════════
+     *  AUDIO ENGINE — Web Audio API synthesised FX
+     *  Drone rotors, wind, HackRF beeps, GPS spoof, crashes
+     * ═══════════════════════════════════════════════════════════ */
+    _audioCtx: null,
+    _audioNodes: [],
+    _audioIntervals: [],
+    _masterGain: null,
+    _rotorGain: null,
+    _windGain: null,
+
+    _getAudioCtx() {
+        if (!this._audioCtx) {
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if (!AC) return null;
+            this._audioCtx = new AC();
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+
+    _initAudio() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+
+            const master = ctx.createGain();
+            master.gain.setValueAtTime(0, now);
+            master.gain.linearRampToValueAtTime(1, now + 2);
+            master.connect(ctx.destination);
+            this._masterGain = master;
+            this._audioNodes.push(master);
+
+            // ── DRONE ROTOR HUM (menacing, pulsing) ──
+            const rotorGain = ctx.createGain();
+            rotorGain.gain.value = 0.06;
+            const rotorFilter = ctx.createBiquadFilter();
+            rotorFilter.type = 'lowpass';
+            rotorFilter.frequency.value = 350;
+            rotorFilter.Q.value = 2;
+
+            // Multiple rotors at different frequencies
+            [185, 192, 370, 384].forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                osc.type = i < 2 ? 'sawtooth' : 'square';
+                osc.frequency.value = freq;
+                osc.detune.value = Math.random() * 8 - 4;
+                const g = ctx.createGain();
+                g.gain.value = i < 2 ? 0.04 : 0.015;
+                osc.connect(g).connect(rotorFilter);
+                osc.start();
+                this._audioNodes.push(osc, g);
+            });
+            rotorFilter.connect(rotorGain).connect(master);
+            this._audioNodes.push(rotorFilter, rotorGain);
+            this._rotorGain = rotorGain;
+
+            // Rotor volume modulation (drones circling closer/farther)
+            const rotorLfo = ctx.createOscillator();
+            rotorLfo.type = 'sine';
+            rotorLfo.frequency.value = 0.12;
+            const rotorLfoGain = ctx.createGain();
+            rotorLfoGain.gain.value = 0.035;
+            rotorLfo.connect(rotorLfoGain).connect(rotorGain.gain);
+            rotorLfo.start();
+            this._audioNodes.push(rotorLfo, rotorLfoGain);
+
+            // ── WIND / MOORLAND AMBIENCE ──
+            const windGain = ctx.createGain();
+            windGain.gain.value = 0.02;
+            const windFilter = ctx.createBiquadFilter();
+            windFilter.type = 'lowpass';
+            windFilter.frequency.value = 300;
+
+            for (let w = 0; w < 3; w++) {
+                const wOsc = ctx.createOscillator();
+                wOsc.type = 'sawtooth';
+                wOsc.frequency.value = 60 + w * 18;
+                wOsc.detune.value = Math.random() * 15 - 7;
+                const wG = ctx.createGain();
+                wG.gain.value = 0.008;
+                wOsc.connect(wG).connect(windFilter);
+                wOsc.start();
+                this._audioNodes.push(wOsc, wG);
+            }
+            windFilter.connect(windGain).connect(master);
+            this._audioNodes.push(windFilter, windGain);
+            this._windGain = windGain;
+
+            // Wind gusts
+            const windLfo = ctx.createOscillator();
+            windLfo.type = 'sine';
+            windLfo.frequency.value = 0.08;
+            const windLfoG = ctx.createGain();
+            windLfoG.gain.value = 0.01;
+            windLfo.connect(windLfoG).connect(windGain.gain);
+            windLfo.start();
+            this._audioNodes.push(windLfo, windLfoG);
+
+            // ── DISTANT HEARTBEAT TENSION ──
+            const tensionGain = ctx.createGain();
+            tensionGain.gain.value = 0;
+            const tensionOsc = ctx.createOscillator();
+            tensionOsc.type = 'sine';
+            tensionOsc.frequency.value = 28;
+            const tensionFilter = ctx.createBiquadFilter();
+            tensionFilter.type = 'lowpass';
+            tensionFilter.frequency.value = 50;
+            tensionOsc.connect(tensionFilter).connect(tensionGain).connect(master);
+            tensionOsc.start();
+            this._audioNodes.push(tensionOsc, tensionFilter, tensionGain);
+
+            // Pulse the tension bass
+            const tensionLfo = ctx.createOscillator();
+            tensionLfo.type = 'square';
+            tensionLfo.frequency.value = 0.8;
+            const tensionLfoG = ctx.createGain();
+            tensionLfoG.gain.value = 0.02;
+            tensionLfo.connect(tensionLfoG).connect(tensionGain.gain);
+            tensionLfo.start();
+            this._audioNodes.push(tensionLfo, tensionLfoG);
+
+            // ── PERIODIC ROTOR BUZZ-BY (random closer passes) ──
+            const buzzyId = setInterval(() => {
+                if (!this._audioCtx) return;
+                const ctx2 = this._audioCtx;
+                const t = ctx2.currentTime;
+                const buzzOsc = ctx2.createOscillator();
+                buzzOsc.type = 'sawtooth';
+                buzzOsc.frequency.setValueAtTime(200 + Math.random() * 80, t);
+                buzzOsc.frequency.linearRampToValueAtTime(160 + Math.random() * 40, t + 2);
+                const buzzG = ctx2.createGain();
+                buzzG.gain.setValueAtTime(0, t);
+                buzzG.gain.linearRampToValueAtTime(0.08, t + 0.8);
+                buzzG.gain.setValueAtTime(0.08, t + 1.2);
+                buzzG.gain.linearRampToValueAtTime(0, t + 2);
+                const buzzF = ctx2.createBiquadFilter();
+                buzzF.type = 'bandpass';
+                buzzF.frequency.value = 250;
+                buzzF.Q.value = 1;
+                buzzOsc.connect(buzzF).connect(buzzG).connect(master);
+                buzzOsc.start(t);
+                buzzOsc.stop(t + 2.1);
+            }, 8000 + Math.random() * 6000);
+            this._audioIntervals.push(buzzyId);
+
+        } catch (e) {
+            console.log('[DroneHunt] Audio init failed:', e);
+        }
+    },
+
+    /** HackRF activation beep sequence */
+    _playHackrfBeep() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime;
+            [0, 0.15, 0.3, 0.6].forEach((offset, i) => {
+                const freq = i < 3 ? 1200 + i * 200 : 2400;
+                const dur = i < 3 ? 0.08 : 0.2;
+                const osc = ctx.createOscillator();
+                osc.type = 'square';
+                osc.frequency.value = freq;
+                const g = ctx.createGain();
+                g.gain.setValueAtTime(0.08, t + offset);
+                g.gain.exponentialRampToValueAtTime(0.001, t + offset + dur);
+                osc.connect(g).connect(this._masterGain);
+                osc.start(t + offset);
+                osc.stop(t + offset + dur + 0.01);
+            });
+        } catch (e) { /* silent */ }
+    },
+
+    /** GPS spoof transmission warble */
+    _playGPSTransmit() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime;
+            // Warbling carrier tone
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(1575, t);
+            const lfo = ctx.createOscillator();
+            lfo.type = 'sine';
+            lfo.frequency.value = 8;
+            const lfoG = ctx.createGain();
+            lfoG.gain.value = 50;
+            lfo.connect(lfoG).connect(osc.frequency);
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0, t);
+            g.gain.linearRampToValueAtTime(0.06, t + 0.5);
+            g.gain.setValueAtTime(0.06, t + 3);
+            g.gain.linearRampToValueAtTime(0, t + 4);
+            const f = ctx.createBiquadFilter();
+            f.type = 'bandpass';
+            f.frequency.value = 1575;
+            f.Q.value = 10;
+            osc.connect(f).connect(g).connect(this._masterGain);
+            lfo.start(t);
+            osc.start(t);
+            osc.stop(t + 4.1);
+            lfo.stop(t + 4.1);
+        } catch (e) { /* silent */ }
+    },
+
+    /** Puzzle success chime */
+    _playSuccessChime() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime;
+            [880, 1108, 1320].forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                const g = ctx.createGain();
+                g.gain.setValueAtTime(0.06, t + i * 0.12);
+                g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.12 + 0.3);
+                osc.connect(g).connect(this._masterGain);
+                osc.start(t + i * 0.12);
+                osc.stop(t + i * 0.12 + 0.35);
+            });
+        } catch (e) { /* silent */ }
+    },
+
+    /** Drone crash sequence — multiple timed impacts */
+    _playCrashSequence() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime;
+
+            // Fade rotors to erratic then silence
+            if (this._rotorGain) {
+                this._rotorGain.gain.setValueAtTime(0.06, t);
+                this._rotorGain.gain.linearRampToValueAtTime(0.12, t + 1);
+                this._rotorGain.gain.linearRampToValueAtTime(0.03, t + 3);
+                this._rotorGain.gain.linearRampToValueAtTime(0, t + 6);
+            }
+
+            // Individual crash sounds at staggered times
+            [1.5, 3.0, 4.2, 5.5].forEach((delay, i) => {
+                // Low thud
+                const impOsc = ctx.createOscillator();
+                impOsc.type = 'sine';
+                impOsc.frequency.setValueAtTime(80 - i * 8, t + delay);
+                impOsc.frequency.exponentialRampToValueAtTime(20, t + delay + 0.5);
+                const impG = ctx.createGain();
+                impG.gain.setValueAtTime(0.4 - i * 0.06, t + delay);
+                impG.gain.exponentialRampToValueAtTime(0.001, t + delay + 0.6);
+                impOsc.connect(impG).connect(this._masterGain);
+                impOsc.start(t + delay);
+                impOsc.stop(t + delay + 0.65);
+
+                // Noise burst (crash debris / splash)
+                const nBuf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.15), ctx.sampleRate);
+                const nData = nBuf.getChannelData(0);
+                for (let s = 0; s < nData.length; s++) {
+                    nData[s] = (Math.random() * 2 - 1) * Math.exp(-s / (ctx.sampleRate * 0.04));
+                }
+                const nSrc = ctx.createBufferSource();
+                nSrc.buffer = nBuf;
+                const nG = ctx.createGain();
+                nG.gain.setValueAtTime(0.15, t + delay);
+                nG.gain.exponentialRampToValueAtTime(0.001, t + delay + 0.2);
+                const nF = ctx.createBiquadFilter();
+                nF.type = i % 2 === 0 ? 'lowpass' : 'bandpass';
+                nF.frequency.value = i % 2 === 0 ? 800 : 2000;
+                nSrc.connect(nF).connect(nG).connect(this._masterGain);
+                nSrc.start(t + delay);
+
+                // Splash (water impact for swamp crashes)
+                if (i === 0 || i === 2) {
+                    const splBuf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.3), ctx.sampleRate);
+                    const splData = splBuf.getChannelData(0);
+                    for (let s = 0; s < splData.length; s++) {
+                        splData[s] = (Math.random() * 2 - 1) * Math.exp(-s / (ctx.sampleRate * 0.1));
+                    }
+                    const splSrc = ctx.createBufferSource();
+                    splSrc.buffer = splBuf;
+                    const splG = ctx.createGain();
+                    splG.gain.setValueAtTime(0.1, t + delay + 0.05);
+                    splG.gain.exponentialRampToValueAtTime(0.001, t + delay + 0.35);
+                    const splF = ctx.createBiquadFilter();
+                    splF.type = 'lowpass';
+                    splF.frequency.value = 500;
+                    splSrc.connect(splF).connect(splG).connect(this._masterGain);
+                    splSrc.start(t + delay + 0.05);
+                }
+
+                // Metallic crack (rotor shattering)
+                if (i === 1) {
+                    const crOsc = ctx.createOscillator();
+                    crOsc.type = 'square';
+                    crOsc.frequency.setValueAtTime(3000, t + delay);
+                    crOsc.frequency.exponentialRampToValueAtTime(200, t + delay + 0.1);
+                    const crG = ctx.createGain();
+                    crG.gain.setValueAtTime(0.12, t + delay);
+                    crG.gain.exponentialRampToValueAtTime(0.001, t + delay + 0.15);
+                    crOsc.connect(crG).connect(this._masterGain);
+                    crOsc.start(t + delay);
+                    crOsc.stop(t + delay + 0.2);
+                }
+            });
+
+            // Final: silence falls — wind only
+            if (this._windGain) {
+                this._windGain.gain.setValueAtTime(0.02, t + 6);
+                this._windGain.gain.linearRampToValueAtTime(0.04, t + 8);
+            }
+        } catch (e) { /* silent */ }
+    },
+
+    /** Warning alarm when drone detected (phase 2) */
+    _playWarningPulse() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime;
+            for (let i = 0; i < 3; i++) {
+                const osc = ctx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.value = 600;
+                const g = ctx.createGain();
+                g.gain.setValueAtTime(0.08, t + i * 0.3);
+                g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.3 + 0.15);
+                osc.connect(g).connect(this._masterGain);
+                osc.start(t + i * 0.3);
+                osc.stop(t + i * 0.3 + 0.2);
+            }
+        } catch (e) { /* silent */ }
+    },
+
+    _stopAudio() {
+        this._audioIntervals.forEach(id => clearInterval(id));
+        this._audioIntervals = [];
+        this._audioNodes.forEach(node => {
+            try {
+                if (node.stop) node.stop();
+                if (node.disconnect) node.disconnect();
+            } catch (e) { /* already stopped */ }
+        });
+        this._audioNodes = [];
+        if (this._audioCtx) {
+            try { this._audioCtx.close(); } catch (e) { /* ok */ }
+            this._audioCtx = null;
+        }
+        this._masterGain = null;
+        this._rotorGain = null;
+        this._windGain = null;
+    },
+
+    /* ═══════════════════════════════════════════════════════════
+     *  DRONE CRASH ANIMATION — CSS overlay + SVG manipulation
+     * ═══════════════════════════════════════════════════════════ */
+    _crashStyleEl: null,
+    _crashOverlayEl: null,
+
+    _injectCrashStyles() {
+        if (document.getElementById('drone-crash-styles')) return;
+        const style = document.createElement('style');
+        style.id = 'drone-crash-styles';
+        style.textContent = `
+            @keyframes droneSpiral1 {
+                0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
+                30% { transform: translate(-80px, 50px) rotate(120deg); opacity: 0.9; }
+                60% { transform: translate(-150px, 200px) rotate(320deg); opacity: 0.7; }
+                80% { transform: translate(-180px, 380px) rotate(500deg); opacity: 0.4; }
+                100% { transform: translate(-200px, 500px) rotate(720deg); opacity: 0; }
+            }
+            @keyframes droneSpiral2 {
+                0% { transform: translate(0,0) rotate(0deg); opacity: 1; }
+                25% { transform: translate(60px, 30px) rotate(-80deg); opacity: 0.9; }
+                50% { transform: translate(100px, 150px) rotate(-200deg); opacity: 0.6; }
+                75% { transform: translate(80px, 340px) rotate(-400deg); opacity: 0.3; }
+                100% { transform: translate(50px, 480px) rotate(-540deg); opacity: 0; }
+            }
+            @keyframes droneSpiral3 {
+                0% { transform: translate(0,0) rotate(0deg); opacity: 0.8; }
+                40% { transform: translate(-40px, 80px) rotate(150deg); opacity: 0.6; }
+                70% { transform: translate(-100px, 280px) rotate(350deg); opacity: 0.3; }
+                100% { transform: translate(-120px, 460px) rotate(600deg); opacity: 0; }
+            }
+            @keyframes droneFade4 {
+                0% { transform: translate(0,0); opacity: 0.5; }
+                50% { transform: translate(50px, 30px); opacity: 0.3; }
+                100% { transform: translate(150px, 100px); opacity: 0; }
+            }
+            @keyframes searchlightWild {
+                0% { transform: rotate(0deg); opacity: 0.5; }
+                20% { transform: rotate(30deg); opacity: 0.8; }
+                40% { transform: rotate(-20deg); opacity: 0.3; }
+                60% { transform: rotate(45deg); opacity: 0.6; }
+                80% { transform: rotate(-35deg); opacity: 0.1; }
+                100% { transform: rotate(60deg); opacity: 0; }
+            }
+            @keyframes crashFlash {
+                0% { opacity: 0; }
+                10% { opacity: 0.3; }
+                20% { opacity: 0; }
+                40% { opacity: 0.15; }
+                60% { opacity: 0; }
+                70% { opacity: 0.2; }
+                100% { opacity: 0; }
+            }
+            @keyframes splashRipple {
+                0% { transform: scale(0.2); opacity: 0.8; }
+                100% { transform: scale(3); opacity: 0; }
+            }
+            @keyframes spoofWaveExpand {
+                0% { r: 10; opacity: 0.5; }
+                100% { r: 400; opacity: 0; }
+            }
+            .crash-drone-1 { animation: droneSpiral1 2.5s ease-in forwards; }
+            .crash-drone-2 { animation: droneSpiral2 2.8s ease-in 1.5s forwards; }
+            .crash-drone-3 { animation: droneSpiral3 2.2s ease-in 2.7s forwards; }
+            .crash-drone-4 { animation: droneFade4 3s ease-out 4s forwards; }
+            .crash-searchlight { animation: searchlightWild 2s ease-out forwards; }
+            .crash-flash { animation: crashFlash 6s ease-out forwards; }
+            .crash-splash {
+                position: absolute;
+                width: 60px; height: 20px;
+                border-radius: 50%;
+                border: 2px solid rgba(100,130,180,0.4);
+                animation: splashRipple 1s ease-out forwards;
+            }
+            #drone-crash-overlay {
+                position: fixed;
+                top: 0; left: 0;
+                width: 100vw; height: 100vh;
+                pointer-events: none;
+                z-index: 50;
+                overflow: hidden;
+            }
+            .crash-drone-sprite {
+                position: absolute;
+                width: 80px; height: 40px;
+            }
+            .crash-drone-sprite .rotor {
+                width: 30px; height: 4px;
+                background: #666;
+                position: absolute;
+                animation: spin 0.08s linear infinite;
+            }
+            .crash-drone-sprite .body {
+                width: 40px; height: 20px;
+                background: #1c1c1c;
+                clip-path: polygon(20% 0, 80% 0, 100% 50%, 80% 100%, 20% 100%, 0 50%);
+                position: absolute;
+                left: 20px; top: 10px;
+            }
+            .crash-drone-sprite .led-red {
+                width: 5px; height: 5px;
+                background: #ff0000;
+                border-radius: 50%;
+                position: absolute;
+                animation: blink 0.3s infinite;
+            }
+            .crash-drone-sprite .led-green {
+                width: 5px; height: 5px;
+                background: #00ff00;
+                border-radius: 50%;
+                position: absolute;
+            }
+            .crash-drone-sprite .beam {
+                width: 0; height: 0;
+                border-left: 40px solid transparent;
+                border-right: 40px solid transparent;
+                border-top: 200px solid rgba(255,255,200,0.08);
+                position: absolute;
+                left: 0; top: 35px;
+            }
+            @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+            @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+        `;
+        document.head.appendChild(style);
+        this._crashStyleEl = style;
+    },
+
+    /** Play the full cinematic drone crash animation */
+    _playCrashAnimation() {
+        this._injectCrashStyles();
+
+        const overlay = document.createElement('div');
+        overlay.id = 'drone-crash-overlay';
+        document.body.appendChild(overlay);
+        this._crashOverlayEl = overlay;
+
+        // Flash overlay for impact moments
+        const flash = document.createElement('div');
+        flash.className = 'crash-flash';
+        flash.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(255,200,100,0.15);pointer-events:none;';
+        overlay.appendChild(flash);
+
+        // Animated crashing drones
+        const dronePositions = [
+            { x: '35%', y: '12%', cls: 'crash-drone-1' },
+            { x: '55%', y: '8%',  cls: 'crash-drone-2' },
+            { x: '25%', y: '20%', cls: 'crash-drone-3' },
+            { x: '70%', y: '15%', cls: 'crash-drone-4' }
+        ];
+
+        dronePositions.forEach(dp => {
+            const drone = document.createElement('div');
+            drone.className = 'crash-drone-sprite ' + dp.cls;
+            drone.style.left = dp.x;
+            drone.style.top = dp.y;
+            drone.innerHTML = `
+                <div class="rotor" style="left:0;top:0;transform-origin:right center;"></div>
+                <div class="rotor" style="left:50px;top:0;transform-origin:left center;"></div>
+                <div class="body"></div>
+                <div class="rotor" style="left:0;top:30px;transform-origin:right center;"></div>
+                <div class="rotor" style="left:50px;top:30px;transform-origin:left center;"></div>
+                <div class="led-red" style="left:5px;top:5px;"></div>
+                <div class="led-green" style="left:70px;top:5px;"></div>
+                <div class="beam"></div>
+            `;
+            overlay.appendChild(drone);
+        });
+
+        // Splash effects at impact times
+        const splashTimers = [
+            { delay: 2500, x: '25%', y: '68%' },
+            { delay: 4300, x: '45%', y: '65%' },
+            { delay: 4900, x: '60%', y: '72%' }
+        ];
+
+        splashTimers.forEach(sp => {
+            setTimeout(() => {
+                if (!this._crashOverlayEl) return;
+                const splash = document.createElement('div');
+                splash.className = 'crash-splash';
+                splash.style.left = sp.x;
+                splash.style.top = sp.y;
+                overlay.appendChild(splash);
+            }, sp.delay);
+        });
+
+        // Activate SVG crashed drones + spoof waves
+        setTimeout(() => {
+            this._setSVGElementOpacity('spoof-waves', 1);
+        }, 500);
+
+        setTimeout(() => {
+            this._setSVGElementOpacity('crashed-drones', 1);
+            this._setSVGElementOpacity('spoof-waves', 0);
+        }, 6500);
+
+        // Activate SVG HackRF TX LED
+        this._setSVGElementOpacity('hackrf-tx-led', 1);
+
+        // Cleanup overlay after animation completes
+        setTimeout(() => {
+            if (this._crashOverlayEl) {
+                this._crashOverlayEl.remove();
+                this._crashOverlayEl = null;
+            }
+        }, 8000);
+    },
+
+    /** Helper to set opacity on SVG elements by ID */
+    _setSVGElementOpacity(id, opacity) {
+        try {
+            const bg = document.getElementById('scene-background');
+            if (!bg) return;
+            // The SVG is set as a background-image, so we can't directly access elements
+            // Instead we use an inline SVG overlay approach
+        } catch (e) { /* silent */ }
+    },
+
+    /** Activate Meshtastic LED in a visible way */
+    _showMeshtasticActive() {
+        // Show notification with pulsing icon
+        if (typeof game !== 'undefined') {
+            game.showNotification('📡 Meshtastic decoy broadcasting on 868 MHz');
+        }
+    },
+
+    _cleanupCrash() {
+        if (this._crashOverlayEl) {
+            this._crashOverlayEl.remove();
+            this._crashOverlayEl = null;
+        }
+        if (this._crashStyleEl) {
+            this._crashStyleEl.remove();
+            this._crashStyleEl = null;
+        }
+    },
+
     // Scene state tracking
     state: {
         phase: 1,              // Current phase (1-5)
@@ -77,7 +668,8 @@ const DroneHuntScene = {
                 ], () => {
                     s.decoyPlaced = true;
                     game.setFlag('meshtastic_decoy_placed', true);
-                    game.showNotification('Meshtastic decoy deployed');
+                    game.showNotification('📡 Meshtastic decoy deployed — broadcasting on 868 MHz');
+                    DroneHuntScene._playHackrfBeep();
 
                     // Advance to phase 2 after a beat
                     setTimeout(() => {
@@ -115,6 +707,8 @@ const DroneHuntScene = {
                         s.hackrfReady = true;
                         game.setFlag('hackrf_ready', true);
                         game.showNotification('HackRF One activated');
+                        // Audio: HackRF activation beep
+                        DroneHuntScene._playHackrfBeep();
                     });
                 } else if (s.phase < 3) {
                     game.startDialogue([
@@ -245,6 +839,7 @@ const DroneHuntScene = {
                                 s.frequencySet = true;
                                 game.setFlag('gps_frequency_set', true);
                                 game.showNotification('Frequency locked: 1575.42 MHz');
+                                DroneHuntScene._playSuccessChime();
                                 game.startDialogue([
                                     { speaker: '', text: '*HackRF display: TX FREQ 1575.42 MHz — LOCKED*' },
                                     { speaker: 'Ryan', text: '1575.42 MHz. GPS L1 C/A. Locked and loaded.' },
@@ -301,6 +896,7 @@ const DroneHuntScene = {
                                 s.powerSet = true;
                                 game.setFlag('tx_power_set', true);
                                 game.showNotification('TX power calibrated');
+                                DroneHuntScene._playSuccessChime();
                                 game.startDialogue([
                                     { speaker: '', text: '*HackRF display: TX POWER -5 dBm — CALIBRATED*' },
                                     { speaker: 'Ryan', text: 'Subtle. The drones\' receivers will accept this as a legitimate satellite.' },
@@ -356,6 +952,7 @@ const DroneHuntScene = {
                                 s.targetSet = true;
                                 game.setFlag('spoof_target_set', true);
                                 game.showNotification('Target coordinates locked');
+                                DroneHuntScene._playSuccessChime();
                                 game.startDialogue([
                                     { speaker: '', text: '*HackRF display: SPOOF OFFSET +200m NORTH — TARGET LOCKED*' },
                                     { speaker: '', text: '*The swamp pools glint coldly in the moonlight*' },
@@ -515,6 +1112,9 @@ const DroneHuntScene = {
 
         game.setFlag('drone_hunt_started', true);
 
+        // Start ambient audio (drone rotors + wind)
+        DroneHuntScene._initAudio();
+
         game.showNotification('Steckerdoser Heide — Forest');
 
         setTimeout(() => {
@@ -543,7 +1143,8 @@ const DroneHuntScene = {
 
     // ─── Scene exit ──────────────────────────────────────────
     onExit: () => {
-        // Cleanup
+        DroneHuntScene._stopAudio();
+        DroneHuntScene._cleanupCrash();
     },
 
     // ═══════════════════════════════════════════════════════════
@@ -554,6 +1155,9 @@ const DroneHuntScene = {
     _startPhase2: (game) => {
         const s = DroneHuntScene.state;
         s.phase = 2;
+
+        // Audio: urgent warning pulse
+        DroneHuntScene._playWarningPulse();
 
         game.startDialogue([
             { speaker: '', text: '*BUZZZZZZ — rotor noise swells overhead*' },
@@ -584,6 +1188,16 @@ const DroneHuntScene = {
         ], () => {
             game.showNotification('Configure the HackRF to spoof GPS signals');
         });
+
+        // Increase rotor intensity for phase 3
+        if (DroneHuntScene._rotorGain) {
+            try {
+                const ctx = DroneHuntScene._audioCtx;
+                if (ctx) {
+                    DroneHuntScene._rotorGain.gain.linearRampToValueAtTime(0.1, ctx.currentTime + 2);
+                }
+            } catch (e) { /* silent */ }
+        }
     },
 
     /** Check if all three spoof parameters are set */
@@ -610,6 +1224,13 @@ const DroneHuntScene = {
         s.spoofExecuted = true;
         s.phase = 4;
         game.setFlag('gps_spoof_executed', true);
+
+        // Audio: GPS transmit warble + crash sequence
+        DroneHuntScene._playGPSTransmit();
+        setTimeout(() => {
+            DroneHuntScene._playCrashSequence();
+            DroneHuntScene._playCrashAnimation();
+        }, 2000);
 
         game.startDialogue([
             { speaker: '', text: '*Ryan\'s finger hovers over the TRANSMIT key*' },

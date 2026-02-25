@@ -281,7 +281,13 @@ const MancaveScene = {
                     return;
                 }
 
-                // ── Phase 1+2: First click — insert USB + README ──
+                // ── Forensic prep: First click with USB — boot forensic environment ──
+                if (!game.getFlag('forensic_prep_complete')) {
+                    window.MancaveForensicAnalysis.play(game);
+                    return;
+                }
+
+                // ── Phase 1+2: Second click — insert USB + README ──
                 if (!game.getFlag('usb_analyzed')) {
                     window.MancaveUSBAnalysis.playInsertUSB(game);
                     return;
@@ -523,13 +529,34 @@ const MancaveScene = {
             height: 11.11,
             cursor: 'pointer',
             action: function(game) {
+                // ── Part 15b: Configure Meshtastic for Eva ──
+                if (game.getFlag('identified_eva') && !game.getFlag('meshtastic_configured')) {
+                    window.MancaveMeshtasticSetup.play(game);
+                    return;
+                }
+
                 // ── Part 16: Contact Eva via Meshtastic ──
                 if (game.getFlag('identified_eva') && !game.getFlag('eva_contacted')) {
                     window.MancaveEvaContact.play(game);
                     return;
                 }
 
-                // After Eva contacted — reminder
+                // ── Part 16b: Mission Prep — after Eva contacted ──
+                if (game.getFlag('eva_contacted') && !game.getFlag('mission_prep_complete')) {
+                    window.MancaveMissionPrep.play(game);
+                    return;
+                }
+
+                // After mission prep — reminder
+                if (game.getFlag('mission_prep_complete')) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'Gear packed. Allies standing by. Eva waiting at the facility.' },
+                        { speaker: 'Ryan', text: 'Time to go. Through the garden to the Volvo.' }
+                    ]);
+                    return;
+                }
+
+                // After Eva contacted but before mission prep — redirect
                 if (game.getFlag('eva_contacted')) {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Eva is waiting. Tomorrow night. 11 PM. North entrance.' },
@@ -593,7 +620,8 @@ const MancaveScene = {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Eva Weber. IT Security Analyst. Whistleblower.' },
                         { speaker: 'Ryan', text: 'Need to contact her securely. Off-grid.' },
-                        { speaker: 'Ryan', text: 'Meshtastic. She mentioned coordinates in an earlier transmission.' }
+                        { speaker: 'Ryan', text: 'Wait — the USB README. "Think mesh. 906.875." She\'s on Meshtastic!' },
+                        { speaker: 'Ryan', text: '906.875 MHz. That\'s the EU LoRa frequency. She\'s been listening this whole time.' }
                     ]);
                     return;
                 }

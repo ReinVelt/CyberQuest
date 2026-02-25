@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- HACKER FEMALE 3 - "Aisha" - South Park Style Generic Character -->
+  <!-- Young, hijab, modern tech style, hoodie, laptop sticker aesthetic -->
+
+  <defs>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4a574"/>
+      <stop offset="100%" style="stop-color:#c49060"/>
+    </linearGradient>
+    <linearGradient id="hijabGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00897b"/>
+      <stop offset="100%" style="stop-color:#00695c"/>
+    </linearGradient>
+    <linearGradient id="hoodieGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#37474f"/>
+      <stop offset="100%" style="stop-color:#263238"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+    <filter id="lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- SHOES (trainers) -->
+  <ellipse cx="82" cy="294" rx="14" ry="5" fill="#222" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="294" rx="14" ry="5" fill="#222" stroke="#000" stroke-width="2"/>
+  <rect x="70" y="286" width="24" height="9" rx="3" fill="#333" stroke="#000" stroke-width="2.5"/>
+  <rect x="106" y="286" width="24" height="9" rx="3" fill="#333" stroke="#000" stroke-width="2.5"/>
+  <!-- Coloured stripe on shoes -->
+  <line x1="72" y1="290" x2="92" y2="290" stroke="#00bcd4" stroke-width="2"/>
+  <line x1="108" y1="290" x2="128" y2="290" stroke="#00bcd4" stroke-width="2"/>
+
+  <!-- LEGS (dark jeans) -->
+  <rect x="74" y="264" width="18" height="24" fill="#1a237e" stroke="#000" stroke-width="2.5" rx="2"/>
+  <rect x="108" y="264" width="18" height="24" fill="#1a237e" stroke="#000" stroke-width="2.5" rx="2"/>
+
+  <!-- BODY (dark hoodie) -->
+  <ellipse cx="100" cy="210" rx="42" ry="58" fill="url(#hoodieGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+
+  <!-- Hoodie pocket -->
+  <rect x="68" y="215" width="64" height="28" rx="5" fill="#1e2e38" stroke="#000" stroke-width="1.5"/>
+  <line x1="100" y1="218" x2="100" y2="240" stroke="#0d1520" stroke-width="1.5"/>
+
+  <!-- Laptop stickers on hoodie (fun detail) -->
+  <rect x="72" y="178" width="18" height="12" rx="2" fill="#ff6f00" opacity="0.7"/>
+  <text x="81" y="187" text-anchor="middle" font-size="5" fill="#fff" font-family="monospace">&lt;/&gt;</text>
+  <rect x="95" y="175" width="20" height="12" rx="2" fill="#00bcd4" opacity="0.7"/>
+  <text x="105" y="184" text-anchor="middle" font-size="5" fill="#fff" font-family="monospace">hack</text>
+  <circle cx="125" cy="182" r="7" fill="#4caf50" opacity="0.6"/>
+  <text x="125" y="185" text-anchor="middle" font-size="5" fill="#fff" font-family="monospace">IoT</text>
+
+  <!-- ARMS -->
+  <ellipse cx="58" cy="200" rx="14" ry="22" fill="url(#hoodieGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <ellipse cx="142" cy="200" rx="14" ry="22" fill="url(#hoodieGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+
+  <!-- Hands -->
+  <circle cx="58" cy="224" r="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <circle cx="142" cy="224" r="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+
+  <!-- Tablet in left hand -->
+  <rect x="46" y="216" width="16" height="22" rx="2" fill="#111" stroke="#000" stroke-width="1.5"/>
+  <rect x="48" y="219" width="12" height="16" rx="1" fill="#4fc3f7"/>
+  <rect x="50" y="221" width="8" height="3" fill="#81d4fa"/>
+  <rect x="50" y="226" width="8" height="2" fill="#b3e5fc"/>
+
+  <!-- HEAD -->
+  <circle cx="100" cy="82" r="50" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+
+  <!-- HIJAB -->
+  <path d="M50,72 Q46,30 100,18 Q154,30 150,72 Q152,98 148,130 Q130,145 100,148 Q70,145 52,130 Q48,98 50,72 Z"
+        fill="url(#hijabGrad)" stroke="#000" stroke-width="3"/>
+  <!-- Hijab folds/draping -->
+  <path d="M62,120 Q65,130 60,140" stroke="#005d50" stroke-width="2" fill="none" opacity="0.5"/>
+  <path d="M138,120 Q135,130 140,140" stroke="#005d50" stroke-width="2" fill="none" opacity="0.5"/>
+  <!-- Hijab wraps around neck -->
+  <path d="M60,135 Q80,150 100,148" stroke="#00796b" stroke-width="6" fill="none" opacity="0.6"/>
+  <path d="M140,135 Q120,150 100,148" stroke="#00796b" stroke-width="6" fill="none" opacity="0.6"/>
+
+  <!-- Face opening -->
+  <ellipse cx="100" cy="84" rx="38" ry="40" fill="url(#skinGrad)"/>
+
+  <!-- EYES (South Park dot style, expressive) -->
+  <ellipse cx="84" cy="80" rx="8" ry="7" fill="#fff" stroke="#000" stroke-width="2"/>
+  <ellipse cx="116" cy="80" rx="8" ry="7" fill="#fff" stroke="#000" stroke-width="2"/>
+  <circle cx="84" cy="80" r="4" fill="#3e2723"/>
+  <circle cx="116" cy="80" r="4" fill="#3e2723"/>
+  <circle cx="82" cy="78" r="1.3" fill="#fff"/>
+  <circle cx="114" cy="78" r="1.3" fill="#fff"/>
+
+  <!-- Eyelashes -->
+  <line x1="76" y1="74" x2="74" y2="70" stroke="#000" stroke-width="1.5"/>
+  <line x1="79" y1="73" x2="78" y2="69" stroke="#000" stroke-width="1.5"/>
+  <line x1="122" y1="73" x2="123" y2="69" stroke="#000" stroke-width="1.5"/>
+  <line x1="125" y1="74" x2="127" y2="70" stroke="#000" stroke-width="1.5"/>
+
+  <!-- NOSE -->
+  <ellipse cx="100" cy="92" rx="4" ry="5" fill="#c49060" stroke="#000" stroke-width="1.5"/>
+
+  <!-- MOUTH (friendly) -->
+  <path d="M90,105 Q100,112 110,105" stroke="#8b4513" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- EYEBROWS -->
+  <path d="M72,70 Q82,65 94,68" stroke="#3e2723" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M106,68 Q118,65 128,70" stroke="#3e2723" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>

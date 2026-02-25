@@ -151,6 +151,8 @@ const FacilityInteriorScene = {
     ],
     
     onEnter: (game) => {
+        // Show ally coordination overlay
+        if (window.AllyOverlay) window.AllyOverlay.show(game);
         game.showNotification('Inside the compound - Find the server room');
         
         if (!game.getFlag('facility_interior_entered')) {
@@ -169,6 +171,6 @@ const FacilityInteriorScene = {
     },
     
     onExit: () => {
-        // Cleanup
+        if (window.AllyOverlay) window.AllyOverlay.hide();
     }
 };

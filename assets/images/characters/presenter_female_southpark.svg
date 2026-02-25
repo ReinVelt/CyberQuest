@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- PRESENTER FEMALE - "Marieke" - South Park Style Generic Character -->
+  <!-- Hackerspace presenter, blonde ponytail, blazer, clicker, confident -->
+
+  <defs>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffe0cc"/>
+      <stop offset="100%" style="stop-color:#f5ccb0"/>
+    </linearGradient>
+    <linearGradient id="blazerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#455a64"/>
+      <stop offset="100%" style="stop-color:#37474f"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+    <filter id="lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- SHOES (heeled ankle boots) -->
+  <ellipse cx="82" cy="294" rx="14" ry="5" fill="#111" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="294" rx="14" ry="5" fill="#111" stroke="#000" stroke-width="2"/>
+  <rect x="70" y="282" width="24" height="14" rx="3" fill="#222" stroke="#000" stroke-width="2.5"/>
+  <rect x="106" y="282" width="24" height="14" rx="3" fill="#222" stroke="#000" stroke-width="2.5"/>
+  <!-- Heels -->
+  <rect x="86" y="292" width="5" height="4" fill="#111" stroke="#000" stroke-width="1"/>
+  <rect x="122" y="292" width="5" height="4" fill="#111" stroke="#000" stroke-width="1"/>
+
+  <!-- LEGS (dark trousers) -->
+  <rect x="74" y="264" width="18" height="20" fill="#263238" stroke="#000" stroke-width="2.5" rx="2"/>
+  <rect x="108" y="264" width="18" height="20" fill="#263238" stroke="#000" stroke-width="2.5" rx="2"/>
+
+  <!-- BODY (blazer over blouse) -->
+  <!-- Inner blouse (white/cream) -->
+  <ellipse cx="100" cy="208" rx="42" ry="60" fill="#fafafa" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+  <!-- Blazer -->
+  <path d="M58,155 Q54,210 60,268 L78,268 Q74,210 78,165"
+        fill="url(#blazerGrad)" stroke="#000" stroke-width="2.5"/>
+  <path d="M142,155 Q146,210 140,268 L122,268 Q126,210 122,165"
+        fill="url(#blazerGrad)" stroke="#000" stroke-width="2.5"/>
+  <!-- Blazer lapels -->
+  <path d="M78,155 L68,175 L84,172 L90,158" fill="#546e7a" stroke="#000" stroke-width="2"/>
+  <path d="M122,155 L132,175 L116,172 L110,158" fill="#546e7a" stroke="#000" stroke-width="2"/>
+
+  <!-- Blouse V-neck -->
+  <path d="M84,155 L100,175 L116,155" fill="#fafafa" stroke="#ccc" stroke-width="1.5"/>
+
+  <!-- Lanyard -->
+  <path d="M112,155 L115,198" stroke="#1565c0" stroke-width="3"/>
+  <!-- Badge -->
+  <rect x="106" y="196" width="22" height="28" rx="3" fill="#fff" stroke="#000" stroke-width="1.5"/>
+  <rect x="109" y="199" width="16" height="10" fill="#1565c0" rx="1"/>
+  <text x="117" y="207" text-anchor="middle" font-size="5" fill="#fff" font-family="monospace">HSD</text>
+  <rect x="110" y="212" width="14" height="2" fill="#ddd"/>
+  <rect x="112" y="216" width="10" height="2" fill="#ddd"/>
+
+  <!-- ARMS -->
+  <ellipse cx="55" cy="198" rx="15" ry="24" fill="url(#blazerGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <ellipse cx="145" cy="198" rx="15" ry="24" fill="url(#blazerGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+
+  <!-- Hands -->
+  <circle cx="55" cy="224" r="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <circle cx="145" cy="224" r="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+
+  <!-- Clicker in right hand -->
+  <rect x="141" y="218" width="6" height="18" rx="2" fill="#222" stroke="#000" stroke-width="1.5"/>
+  <circle cx="144" cy="220" r="2" fill="#1565c0"/>
+
+  <!-- HEAD -->
+  <circle cx="100" cy="80" r="48" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+
+  <!-- BLONDE HAIR (pulled back into ponytail) -->
+  <path d="M54,65 Q52,30 100,22 Q148,30 146,65"
+        fill="#f5c542" stroke="#000" stroke-width="3"/>
+  <!-- Side hair, sleek -->
+  <path d="M54,65 Q50,75 54,85" fill="#e6b422" stroke="#000" stroke-width="2"/>
+  <path d="M146,65 Q150,75 146,85" fill="#e6b422" stroke="#000" stroke-width="2"/>
+  <!-- Ponytail -->
+  <path d="M146,50 Q165,55 170,80 Q172,110 160,130"
+        fill="#f5c542" stroke="#000" stroke-width="3"/>
+  <path d="M160,130 Q155,140 158,145" stroke="#e6b422" stroke-width="3" fill="none"/>
+  <!-- Hair tie -->
+  <circle cx="158" cy="62" r="4" fill="#c62828" stroke="#000" stroke-width="1.5"/>
+  <!-- Hair shine -->
+  <path d="M78,30 Q92,38 100,32" stroke="#ffe082" stroke-width="2" fill="none" opacity="0.6"/>
+
+  <!-- EARS -->
+  <ellipse cx="54" cy="82" rx="6" ry="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <ellipse cx="146" cy="82" rx="6" ry="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  <!-- Stud earrings -->
+  <circle cx="54" cy="85" r="2.5" fill="#c0a060" stroke="#000" stroke-width="1"/>
+  <circle cx="146" cy="85" r="2.5" fill="#c0a060" stroke="#000" stroke-width="1"/>
+
+  <!-- EYES (South Park dot style, bright) -->
+  <ellipse cx="82" cy="78" rx="8" ry="7" fill="#fff" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="78" rx="8" ry="7" fill="#fff" stroke="#000" stroke-width="2"/>
+  <circle cx="82" cy="78" r="4" fill="#1565c0"/>
+  <circle cx="118" cy="78" r="4" fill="#1565c0"/>
+  <circle cx="80" cy="76" r="1.3" fill="#fff"/>
+  <circle cx="116" cy="76" r="1.3" fill="#fff"/>
+
+  <!-- Eyelashes -->
+  <line x1="74" y1="72" x2="72" y2="68" stroke="#000" stroke-width="1.5"/>
+  <line x1="77" y1="71" x2="76" y2="67" stroke="#000" stroke-width="1.5"/>
+  <line x1="124" y1="71" x2="125" y2="67" stroke="#000" stroke-width="1.5"/>
+  <line x1="127" y1="72" x2="129" y2="68" stroke="#000" stroke-width="1.5"/>
+
+  <!-- NOSE -->
+  <ellipse cx="100" cy="90" rx="4" ry="5" fill="#f0c0a0" stroke="#000" stroke-width="1.5"/>
+
+  <!-- MOUTH (mid-sentence, presenting) -->
+  <ellipse cx="100" cy="102" rx="10" ry="7" fill="#c0392b" stroke="#000" stroke-width="2"/>
+  <ellipse cx="100" cy="100" rx="8" ry="3" fill="#fff"/>
+
+  <!-- EYEBROWS -->
+  <path d="M68,66 Q80,60 92,64" stroke="#c8a020" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M108,64 Q120,60 132,66" stroke="#c8a020" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>

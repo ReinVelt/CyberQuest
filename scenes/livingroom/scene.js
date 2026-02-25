@@ -108,6 +108,17 @@ const LivingroomScene = {
                         { speaker: 'Ryan', text: 'Sound asleep by the fire, both of them.' },
                         { speaker: '', text: '*Tino\'s ear twitches at Ryan\'s voice but he stays asleep*' },
                         { speaker: 'Ies', text: 'They love that spot! Been there all afternoon.' }
+                    ],
+                    [
+                        { speaker: 'Ryan', text: 'Rescue dogs. Both of them. Hard to imagine anyone giving them up.' },
+                        { speaker: 'Ies', text: 'Remember Tony Knight? The dog whisperer? When he came to Compascuum for the training weekend?' },
+                        { speaker: 'Ryan', text: 'Vaguely. That was... two years ago?' },
+                        { speaker: 'Ies', text: 'Tino was still nervous around strangers back then. Tony worked with him for twenty minutes and he was a different dog.' },
+                        { speaker: 'Ies', text: 'I met so many lovely people that weekend. Other rescue dog volunteers from all over. Even a German woman... what was her name... Eva, I think.' },
+                        { speaker: 'Ryan', text: 'I don\'t remember her.' },
+                        { speaker: 'Ies', text: 'You talked to her! I introduced you. She was interested in your tech stuff. You showed her the mancave.' },
+                        { speaker: 'Ryan', text: '...Really? I have no memory of that at all.' },
+                        { speaker: 'Ies', text: '*shrugs* You get so absorbed in your projects. A person could walk through your mancave and you\'d forget the next day.' },
                     ]
                 ];
                 

@@ -302,6 +302,8 @@ const FacilityServerScene = {
        ON ENTER — Build cinematic overlay, start Phase 0
        ════════════════════════════════════════════════════════════ */
     onEnter(game) {
+        // Show ally coordination overlay
+        if (window.AllyOverlay) window.AllyOverlay.show(game);
         const self = this;
         self.state = {
             doorUnlocked: false, terminalAccessed: false,
@@ -1169,53 +1171,23 @@ const FacilityServerScene = {
                 game.setFlag('eva_arrived', true);
                 game.setStoryPart(20);
 
-                // Epilogue dialogue then debrief
+                // Brief transition dialogue then drive home
                 game.startDialogue([
                     { speaker: '', text: '═══════════════════════════════════════' },
-                    { speaker: '', text: 'OPERATION ZERFALL — NEUTRALISED' },
+                    { speaker: '', text: 'OPERATION ZERFALL — DATA EXTRACTED' },
                     { speaker: '', text: '═══════════════════════════════════════' },
                     { speaker: '', text: '' },
-                    { speaker: '', text: 'Three months later.' },
+                    { speaker: 'Ryan', text: 'We have everything. Time to get out of here.' },
+                    { speaker: 'Eva', text: 'Go. I\'ll cover the access logs from my end.' },
+                    { speaker: 'Chris', text: 'Good luck, Ryan. Make it count.' },
+                    { speaker: '', text: '*Ryan slips into the night. The Volvo waits in the shadows.*' },
                     { speaker: '', text: '' },
-                    { speaker: 'Ryan', text: '*Back in my mancave. Coffee in hand. Radio frequencies humming.*' },
-                    { speaker: 'Ryan', text: 'Volkov is awaiting trial outside Munich. Maximum-security wing.' },
-                    { speaker: 'Ryan', text: 'The evidence held up. Ironclad.' },
-                    { speaker: 'Ryan', text: 'ZERFALL never launched. Hamburg, Amsterdam, Berlin — all safe.' },
-                    { speaker: 'Ryan', text: '1.2 million people who don\'t know how close they came.' },
-                    { speaker: '', text: '' },
-                    { speaker: 'Ryan', text: 'Eva was promoted. Leads NATO\'s new cyber defense task force now.' },
-                    { speaker: 'Ryan', text: 'Chris Kubecka went back to Geneva. We email sometimes.' },
-                    { speaker: 'Ryan', text: 'She says hi. Asks if I need any more "exciting field work".' },
-                    { speaker: 'Ryan', text: 'David got his equipment back. Still drives that rusty Opel.' },
-                    { speaker: 'Ryan', text: 'Still complains about everything. Some things never change.' },
-                    { speaker: '', text: '' },
-                    { speaker: 'Ryan', text: '*Meshtastic device chirps*' },
-                    { speaker: '', text: '*Message from EVA_W: "Thanks again. -E"*' },
-                    { speaker: 'Ryan', text: '*Smiles. Types back: "Anytime."*' },
-                    { speaker: '', text: '' },
-                    { speaker: 'Ryan', text: 'Outside, the Dutch countryside is quiet.' },
-                    { speaker: 'Ryan', text: 'Agricultural land stretching to the horizon.' },
-                    { speaker: 'Ryan', text: 'My Volvo sits in the garden. License plate still Dutch.' },
-                    { speaker: 'Ryan', text: 'Still boxy. Still reliable. Still anonymous.' },
-                    { speaker: 'Ryan', text: 'Sometimes I still scan old frequencies.' },
-                    { speaker: 'Ryan', text: 'Listen to the static between stations.' },
-                    { speaker: 'Ryan', text: 'Sometimes I wonder what else is out there.' },
-                    { speaker: '', text: '' },
-                    { speaker: 'Ryan', text: 'But tonight?' },
-                    { speaker: 'Ryan', text: 'Tonight I just drink my coffee.' },
-                    { speaker: 'Ryan', text: 'Check my radio gear.' },
-                    { speaker: 'Ryan', text: 'And know that, this time,' },
-                    { speaker: 'Ryan', text: 'We won.' },
-                    { speaker: '', text: '' },
-                    { speaker: '', text: '═══════════════════════════════════════' },
-                    { speaker: '', text: 'MISSION COMPLETE' },
-                    { speaker: '', text: '═══════════════════════════════════════' },
-                    { speaker: '', text: '' },
-                    { speaker: '', text: '[Continue for debrief...]' }
+                    { speaker: '', text: '[Driving home...]' }
                 ]);
 
                 game.sceneTimeout(() => {
-                    game.loadScene('debrief');
+                    game.setFlag('driving_destination', 'home_from_facility');
+                    game.loadScene('driving');
                 }, 5000);
             }, 1600);
         }
@@ -1225,6 +1197,7 @@ const FacilityServerScene = {
        ON EXIT
        ════════════════════════════════════════════════════════════ */
     onExit() {
+        if (window.AllyOverlay) window.AllyOverlay.hide();
         this._clearTimeouts();
         this._stopAudio();
         this._finished = true;

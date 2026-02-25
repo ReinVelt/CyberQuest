@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- HACKER FEMALE 2 - "Linda" - South Park Style Generic Character -->
+  <!-- Middle-aged, red curly hair, glasses on chain, cardigan, warm smile -->
+
+  <defs>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffe0cc"/>
+      <stop offset="100%" style="stop-color:#f5ccb0"/>
+    </linearGradient>
+    <linearGradient id="cardiganGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#6a1b9a"/>
+      <stop offset="100%" style="stop-color:#4a148c"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+    <filter id="lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- SHOES (comfortable flats) -->
+  <ellipse cx="82" cy="294" rx="14" ry="5" fill="#5d4037" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="294" rx="14" ry="5" fill="#5d4037" stroke="#000" stroke-width="2"/>
+  <rect x="70" y="288" width="24" height="8" rx="4" fill="#6d4c41" stroke="#000" stroke-width="2"/>
+  <rect x="106" y="288" width="24" height="8" rx="4" fill="#6d4c41" stroke="#000" stroke-width="2"/>
+
+  <!-- LEGS (dark trousers) -->
+  <rect x="74" y="264" width="18" height="26" fill="#37474f" stroke="#000" stroke-width="2.5" rx="2"/>
+  <rect x="108" y="264" width="18" height="26" fill="#37474f" stroke="#000" stroke-width="2.5" rx="2"/>
+
+  <!-- BODY (cardigan over blouse) -->
+  <!-- Inner blouse -->
+  <ellipse cx="100" cy="210" rx="42" ry="60" fill="#e8eaf6" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+  <!-- Cardigan (open front) -->
+  <path d="M58,155 Q56,210 62,268 L76,268 Q72,210 76,165"
+        fill="url(#cardiganGrad)" stroke="#000" stroke-width="2.5"/>
+  <path d="M142,155 Q144,210 138,268 L124,268 Q128,210 124,165"
+        fill="url(#cardiganGrad)" stroke="#000" stroke-width="2.5"/>
+
+  <!-- Blouse collar -->
+  <path d="M82,150 L90,162 L100,155 L110,162 L118,150" fill="#e8eaf6" stroke="#000" stroke-width="2"/>
+
+  <!-- Reading glasses on chain (resting on chest) -->
+  <path d="M78,155 Q85,175 82,195" stroke="#c0a060" stroke-width="1.5" fill="none"/>
+  <path d="M122,155 Q115,175 118,195" stroke="#c0a060" stroke-width="1.5" fill="none"/>
+  <rect x="80" y="192" width="16" height="12" rx="3" fill="rgba(248,248,255,0.15)" stroke="#c0a060" stroke-width="1.5"/>
+  <rect x="104" y="192" width="16" height="12" rx="3" fill="rgba(248,248,255,0.15)" stroke="#c0a060" stroke-width="1.5"/>
+  <line x1="96" y1="197" x2="104" y2="197" stroke="#c0a060" stroke-width="1.5"/>
+
+  <!-- ARMS -->
+  <ellipse cx="55" cy="198" rx="15" ry="24" fill="url(#cardiganGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <ellipse cx="145" cy="198" rx="15" ry="24" fill="url(#cardiganGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+
+  <!-- Hands -->
+  <circle cx="55" cy="224" r="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <circle cx="145" cy="224" r="10" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+
+  <!-- Coffee mug in right hand -->
+  <g transform="translate(136, 218)">
+    <rect x="0" y="0" width="12" height="14" rx="2" fill="#fff" stroke="#000" stroke-width="1.5"/>
+    <path d="M12,3 Q18,5 12,11" stroke="#000" stroke-width="1.5" fill="none"/>
+    <rect x="2" y="2" width="8" height="10" fill="#6d4c41" opacity="0.7"/>
+    <path d="M3,-2 Q5,-6 4,-8" stroke="#999" stroke-width="1" fill="none" opacity="0.5"/>
+  </g>
+
+  <!-- HEAD -->
+  <circle cx="100" cy="82" r="50" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+
+  <!-- RED CURLY HAIR -->
+  <circle cx="68" cy="42" r="14" fill="#c0392b" stroke="#000" stroke-width="2"/>
+  <circle cx="88" cy="35" r="15" fill="#b71c1c" stroke="#000" stroke-width="2"/>
+  <circle cx="112" cy="35" r="15" fill="#c0392b" stroke="#000" stroke-width="2"/>
+  <circle cx="132" cy="42" r="14" fill="#b71c1c" stroke="#000" stroke-width="2"/>
+  <circle cx="56" cy="55" r="12" fill="#b71c1c" stroke="#000" stroke-width="2"/>
+  <circle cx="144" cy="55" r="12" fill="#c0392b" stroke="#000" stroke-width="2"/>
+  <circle cx="100" cy="30" r="13" fill="#d32f2f" stroke="#000" stroke-width="2"/>
+  <circle cx="78" cy="34" r="11" fill="#d32f2f" stroke="#000" stroke-width="1.5"/>
+  <circle cx="122" cy="34" r="11" fill="#d32f2f" stroke="#000" stroke-width="1.5"/>
+  <!-- Hair flowing to sides -->
+  <circle cx="48" cy="72" r="10" fill="#c0392b" stroke="#000" stroke-width="2"/>
+  <circle cx="152" cy="72" r="10" fill="#b71c1c" stroke="#000" stroke-width="2"/>
+  <circle cx="46" cy="88" r="9" fill="#b71c1c" stroke="#000" stroke-width="2"/>
+  <circle cx="154" cy="88" r="9" fill="#c0392b" stroke="#000" stroke-width="2"/>
+  <circle cx="50" cy="102" r="8" fill="#c0392b" stroke="#000" stroke-width="1.5"/>
+  <circle cx="150" cy="102" r="8" fill="#b71c1c" stroke="#000" stroke-width="1.5"/>
+
+  <!-- EARS (hidden by hair) -->
+
+  <!-- EYES (South Park dot style, slightly larger with lashes) -->
+  <ellipse cx="82" cy="80" rx="8" ry="7" fill="#fff" stroke="#000" stroke-width="2"/>
+  <ellipse cx="118" cy="80" rx="8" ry="7" fill="#fff" stroke="#000" stroke-width="2"/>
+  <circle cx="82" cy="80" r="4" fill="#2a6a2a"/>
+  <circle cx="118" cy="80" r="4" fill="#2a6a2a"/>
+  <circle cx="80" cy="78" r="1.3" fill="#fff"/>
+  <circle cx="116" cy="78" r="1.3" fill="#fff"/>
+
+  <!-- Eyelashes -->
+  <line x1="74" y1="74" x2="72" y2="70" stroke="#000" stroke-width="1.5"/>
+  <line x1="77" y1="73" x2="76" y2="69" stroke="#000" stroke-width="1.5"/>
+  <line x1="124" y1="73" x2="125" y2="69" stroke="#000" stroke-width="1.5"/>
+  <line x1="127" y1="74" x2="129" y2="70" stroke="#000" stroke-width="1.5"/>
+
+  <!-- NOSE -->
+  <ellipse cx="100" cy="92" rx="4" ry="5" fill="#f0c0a0" stroke="#000" stroke-width="1.5"/>
+
+  <!-- MOUTH (warm smile, lipstick) -->
+  <path d="M88,105 Q100,114 112,105" stroke="#c0392b" stroke-width="2.5" fill="#e57373" stroke-linecap="round"/>
+
+  <!-- EYEBROWS -->
+  <path d="M70,70 Q80,65 92,68" stroke="#8b3a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M108,68 Q120,65 130,70" stroke="#8b3a1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Small earrings (dangling, visible below hair) -->
+  <line x1="52" y1="94" x2="52" y2="102" stroke="#c0a060" stroke-width="1"/>
+  <circle cx="52" cy="104" r="3" fill="#c0392b" stroke="#000" stroke-width="1"/>
+  <line x1="148" y1="94" x2="148" y2="102" stroke="#c0a060" stroke-width="1"/>
+  <circle cx="148" cy="104" r="3" fill="#c0392b" stroke="#000" stroke-width="1"/>
+</svg>

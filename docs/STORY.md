@@ -1,4 +1,22 @@
-You are Ryan Weylant, macGyver style person, software developer and hacker. 55 years old. Living on the planet Earth, Europe, Netherlands, Drenthe, Compascuum. Partner: Ies. Dogs: Tino, Kessy (white), and ET (pug).
+You are Ryan Weylant, macGyver style person, software developer and hacker. 55 years old. Living on the planet Earth, Europe, Netherlands, Drenthe, Compascuum. Partner: Ies. Rescue dogs: Tino, Kessy (white), and ET (pug).
+
+### Why Eva chose Ryan
+Two years before the events of the game, Tony Knight — the famous "dog whisperer" — held a training weekend in Compascuum for a rescue dog organisation. Ies and Eva Weber are both volunteers for the same rescue dog foundation. They met at the training. Eva has a rescue dog herself (a black Shepherd mix). Ies introduced Eva to Ryan. Eva visited the house, saw Ryan's mancave, and they briefly talked about SDR, mesh networks, OSINT, and hacking. Eva was impressed; Ryan forgot about it the next day. Eva also attended a Hackerspace Drenthe Tuesday presentation a few weeks later, but Ryan wasn't there that evening. She asked about "the radio guy" but never returned. When everything went wrong at Steckerdoser Heide and Eva needed someone outside the system — technically skilled, independent, no government or corporate ties — she remembered the hacker in rural Drenthe. She found his SSTV terminal frequency and made contact. Ryan doesn't remember any of this until Eva tells him during their Meshtastic conversation.
+
+### How the USB reached Ryan
+Eva's father Klaus Weber — a senior engineer at the facility — had a medical appointment in Emmen. Eva asked him to drive across the border and leave a USB stick at the klooster in Ter Apel. He didn't know what was on it; she told him it was a backup of personal files. A retiree visiting a monastery — no one looks twice. Plausible deniability.
+
+### Ies knows
+Ryan tells Ies about the mission before departing for the facility. They trust each other completely. Ies says: "Be careful, darling. Come back safe." She doesn't try to stop him — she knows who she married.
+
+### Why not the police or AIVD?
+Ryan seriously considers calling the AIVD. But E's README says the people protecting Project Echo have infiltrated military AND intelligence. If Ryan calls the wrong person — someone who reports to someone who reports to Hoffmann — the evidence disappears, the casualties get buried deeper, and Ryan becomes a target. He can't risk it. Not with 72 hours. Not when Marlies Bakker's death was already covered up as "equipment malfunction."
+
+### The Meshtastic connection
+Eva planted a clue in the USB README: "P.P.S. If you need to reach me, think mesh. 906.875. I'm listening." 906.875 MHz is the EU LoRa frequency. When Ryan finally identifies Eva through photo analysis and needs to contact her, he remembers this line and connects via Meshtastic — the decentralized mesh network that runs without cell towers or internet.
+
+### Named casualty: Marlies Bakker
+Among the eight confirmed dead in Project Echo's "calibration accidents" is Marlies Bakker, 67, grandmother of four, from the town near Steckerdoser Heide. She went in for routine surgery at a local hospital. During the operation, a 2.4 GHz sustained interference test (ECHO-10) disabled the hospital equipment. She died of cardiac arrest on the operating table. The cover story: "equipment malfunction, patient pre-existing condition." Ryan fixates on her specifically — her name, her age, her grandchildren. She becomes the human face of the abstract casualty numbers.
 
 
 Scene 1: Intro (Cinematic)
@@ -53,14 +71,26 @@ The historic Dwingeloo 25-metre parabolic dish in bright daylight — the telesc
 Scene 12b: Westerbork Memorial (Herinneringscentrum Kamp Westerbork)
 A windswept, overcast memorial site combining two histories: the WWII transit camp (1942–1945) and the nearby WSRT dishes visible on the horizon. Railway tracks end abruptly in open ground with red stop-blocks. Memorial stone columns carry a Star of David. A sign reads "Herinneringscentrum Kamp Westerbork 1942–1945". Barbed wire remnants and barrack foundation outlines (Barak 65, Barak 51) are visible. A modified surveillance camera on a pole has a pulsing red Bluetooth LED — the key gameplay hotspot. Inspecting it reveals a covert ZERFALL network node; using the Flipper Zero cracks its pairing and maps the broader BT mesh. The scene carries deliberate moral weight: surveillance technology and state violence are placed in direct proximity to a site of historical atrocity. Accessible from both the regional map and the Klooster (a sign in the klooster courtyard points south).
 
+Scene 12c: Hackerspace Drenthe (Coevorden)
+A community maker space in a repurposed school building in Coevorden. Workstations for CNC plasma cutting, metal lathe, 3D printing, soldering, welding, and electronics. NPC members (Dennis, Sophie, Marco, Kim, Joris, Linda) work at various stations. Ryan can inspect equipment, learn about manufacturing techniques, and chat with fellow makers. A door leads to the classroom for presentations. Accessible via the Volvo after the mancave is unlocked — a side-quest location that provides background colour and educational content about maker culture and digital fabrication.
+
+Scene 12d: Hackerspace Classroom (Presentations)
+A former school classroom now used for hackerspace presentations. Each visit triggers a different topic from a rotating set: LoRa/LoRaWAN, Meshtastic, MeshCore, Home Automation, Cybersecurity, Blockchain, AI, and more. 8–16 randomly placed audience members fill the seats. The presenter delivers an educational talk with Q&A. Ryan can learn about technologies that are relevant to the investigation, though none are required to complete the main story.
+
 Scene 13: Videocall (Secure Calls)
 Video conference with three expert allies: Dr. David Prinsloo, Cees Bassa, and Jaap Haartsen.
+
+Scene 13b: Drone Hunt (Steckerdoser Heide Forest)
+Hollywood-style action scene. After parking the Volvo in the forest 2 km from the facility, Ryan begins moving on foot through the Steckerdoser woods. Surveillance drones with thermal imaging converge on his position. Five phases: (1) Arrival & Decoy Setup — deploy a Meshtastic Raspberry Pi decoy broadcasting dummy LoRa traffic on 868 MHz; (2) Drone Detection — hide behind tree cover from a FLIR thermal scan; (3) GPS Spoofing — configure the HackRF One to spoof GPS L1 C/A signals (puzzle: set frequency to 1575.42 MHz, TX power to −5 dBm, offset target 200 m south into the swamp); (4) The Spoof — drones' navigation overrides with fake coordinates, they crash into boggy terrain; (5) Proceed to Facility. Educational content covers GPS L1 signal structure, HackRF capabilities, thermal imaging, Meshtastic mesh networking, and why civilian GPS has zero authentication.
 
 Scene 14: Facility Exterior (Stealth)
 Steckerdoser Heide military R&D facility at night. Disable security camera with Flipper Zero, hack gate with captured RFID.
 
 Scene 15: Facility Interior (Stealth)
-Corridor navigation. Eva guides via Meshtastic to basement server room.
+Corridor navigation. Eva guides via Meshtastic to the basement stairs.
+
+Scene 15a: Laser Corridor (Security Gauntlet)
+Underground corridor beneath the facility protecting the server room. Three layers of automated security: (1) Laser Grid Analysis — use Flipper Zero IR analyser to identify the 38 kHz modulation frequency, replay the shutdown command; (2) Motion Sensor Bypass — use HackRF to jam ultrasonic sensors at 40 kHz; (3) Biometric Override — enter Eva's code (2847) to unlock the server room door. The corridor features animated laser beams, red alert lighting, sparking conduits, and steam from pipe leaks. Educational content covers IR modulation frequencies, ultrasonic Doppler sensors, biometric security bypass, and defence-in-depth architecture.
 
 Scene 16: Facility Server Room (Climax)
 The climax. Access Volkov's terminal, download evidence, confront Volkov. Chris Kubecka and Bundeswehr MPs arrive. Eva arrests Volkov.
@@ -269,6 +299,8 @@ You have 72 hours before they realize the files are missing.
 Trust no one. Not even me.
 
 - E
+
+P.S. If you need to reach me, think mesh. 906.875. I'm listening.
 ```
 
 Quest: Unlock the evidence archive
@@ -290,6 +322,8 @@ What are his options?
 Option 1: Go to the authorities
 The Dutch police? The AIVD? They'd laugh him out of the building. "Some stranger left me a USB stick with German military secrets" - that's not a tip, that's a psych evaluation waiting to happen. And even if they believed him, would they act? Germany is an ally. This would be a diplomatic nightmare.
 
+But it's more than that. Ryan actually considers it seriously. Calling the AIVD, handing everything over, letting the professionals handle it. But E said it herself — the people protecting this project have infiltrated military AND intelligence. What if he calls the one person who reports to the wrong person? Marlies Bakker's death was already covered up as "equipment malfunction." It could all just disappear into a classified file that never sees daylight.
+
 Option 2: Contact journalists
 WikiLeaks? Der Spiegel? The Guardian? They've handled leaks before. But 72 hours isn't much time to verify, publish, and create enough noise to matter. And once it's out there, Ryan becomes a target. He'd be the guy who leaked German military secrets to the press.
 
@@ -308,6 +342,8 @@ Quest completed: Enter the frequency to unlock evidence.zip
 The archive opens. Dozens of files spill across his screen. Internal emails. Test reports. And photos. Photos of... accidents. Car crashes. A small plane wreckage. Medical reports. All within a 50km radius of the Steckerdoser Heide facility.
 
 "Collateral damage during calibration tests" - that's what one email calls them. Calibration tests. People died so they could calibrate a weapon.
+
+One file hits Ryan hardest. ECHO-10. A hospital 1.8 km from the facility. A woman named Marlies Bakker, 67, grandmother of four. Routine surgery. The 2.4 GHz sustained interference knocked out hospital equipment mid-operation. She died of cardiac arrest on the table. Cover story: "equipment malfunction, patient pre-existing condition." Her grandchildren think it was just bad luck.
 
 Ryan's hands are shaking again. Not from fear this time. From anger.
 
@@ -709,7 +745,9 @@ Quest: Make contact with Eva Weber
 24 hours remaining.
 
 Story part 16: The Meshtastic Connection
-Ryan stares at his equipment shelf. Meshtastic. The decentralized mesh network that runs on cheap LoRa radios - no cell towers, no internet, no logs. Messages hop from device to device across kilometers. If Eva is smart enough to use SSTV and ROT1 to avoid detection, she's smart enough to have a Meshtastic node.
+Ryan stares at his equipment shelf. Then he remembers. The USB README — that cryptic postscript: "If you need to reach me, think mesh. 906.875. I'm listening."
+
+906.875 MHz. That's the EU LoRa frequency. She's on Meshtastic — the decentralized mesh network that runs on cheap LoRa radios. No cell towers, no internet, no logs. Messages hop from device to device across kilometers. Eva planned this from the beginning.
 
 He grabs two of his Meshtastic devices - a T-Beam with GPS and a smaller Heltec unit. If Eva is monitoring any mesh traffic near the facility, he might be able to reach her. But he'll need to get close.
 
@@ -808,7 +846,15 @@ You have to stop it.
 
 Ryan stares at the screen, his blood running cold. A demonstration. Full power. Groningen - a city of 230,000 people - is within the 50km radius.
 
-He types: "How do I stop it?"
+He types: "One thing I never understood. The USB at the klooster. You're inside a guarded facility. How did you get it to Ter Apel?"
+
+"My father. Before he died, he had a medical appointment in Emmen. He drove across the border, dropped the USB at the klooster, and drove back. A retiree visiting a monastery — no one looks twice."
+
+"He didn't know what was on it?"
+
+"I told him it was a backup of personal files. Plausible deniability. He just knew his daughter needed a favour. That's what fathers do."
+
+Ryan sits with that for a moment. A dying man crossing an international border because his daughter asked him to. Then he types: "How do I stop it?"
 
 "The control software. It runs on an isolated network inside the facility. But there's a maintenance access point - a hardline in the east transformer station, outside the main fence. I can give you the access credentials. But you'll need to physically plug in."
 
@@ -973,12 +1019,49 @@ Ryan lies down on the small couch in his mancave, staring at the ceiling. Somewh
 
 In 18 hours, they'll both find out.
 
+That evening, 22:30. The house is quiet. Ryan finds Ies in the kitchen, making tea.
+
+"Ies. I need to tell you something."
+
+She looks up. She can read his face after thirty years. "I know that face. Something's wrong."
+
+Ryan tells her. Not everything — not the schematics, not the Python script, not the transformer station — but enough. A weapons project. Russian infiltration. A woman named Eva who needs his help tonight. The same Eva from the dog training.
+
+Ies is quiet for a long moment. Then she takes his hand.
+
+"I've been married to you for thirty years. I know who you are. You wouldn't be telling me this if you'd already decided not to go."
+
+"I should be back by midnight. If I'm not..."
+
+"You'll be back. Be careful, darling. Come back safe."
+
+Ryan holds her for a long time. Then he walks to the mancave to get his backpack.
+
 Quest: Rest before the operation
 - Final mental preparation
 - Review timeline one more time
 - Accept that some things are beyond your control
 
 12 hours until the operation.
+
+Story part 17a: The Drone Hunt
+Ryan parks the Volvo on a forest track 2 km from the facility perimeter and continues on foot through the Steckerdoser woods. The air is cold, pine needles crunch underfoot, and distant red lights pulse beyond the treeline.
+
+He sets up a Meshtastic decoy first — a Raspberry Pi with a cellular modem, hidden under bark on a fallen tree, broadcasting dummy LoRa traffic on 868 MHz. If facility security scans for signals, they'll investigate the decoy instead of him.
+
+Minutes later, a buzzing sound cuts through the forest. Surveillance drones — commercial DJI-style quadcopters fitted with FLIR thermal cameras — converge on the area. Ryan dives behind a pine trunk, pressing against the cold bark. The thermal sweep passes. His body heat, masked by the tree's mass, doesn't register.
+
+But the drones are circling. He can't hide forever.
+
+Ryan pulls the HackRF One from his backpack. These drones rely on civilian GPS for navigation — the L1 C/A signal at 1575.42 MHz. No authentication. No encryption. A known vulnerability that GPS researchers have warned about for years.
+
+He configures the spoof: frequency 1575.42 MHz, transmit power −5 dBm (strong enough to override the real satellites, weak enough to avoid detection by the facility's own equipment), target coordinates 200 metres south — directly into the boggy swamp.
+
+He presses transmit.
+
+The HackRF floods the air with counterfeit GPS signals. One by one, the drones' navigation systems accept the fake coordinates as real. Their flight controllers adjust. They drift south — silently, obediently — toward the swamp. A crash. Then another. Rotors splutter and die in the mud.
+
+The sky is clear. Ryan moves fast toward the facility perimeter.
 
 Story part 18: The Operation
 21:47.
@@ -1489,6 +1572,30 @@ Ryan stares at him. "Are you recruiting me?"
 
 They leave their cards and drive away.
 
+Story part 20a: Homecoming
+
+The AIVD car drops Ryan at the farmhouse in Compascuum. Late afternoon. The canal is golden in the low light.
+
+The front door opens before he reaches it. Ies stands in the doorway, arms crossed, eyes red.
+
+"You're back."
+
+"I'm back."
+
+She pulls him into a long embrace. Neither speaks. Tino and Kessy barrel out of the house, tails wagging. ET waddles behind, snorting.
+
+"I saw the news," Ies says. "Der Spiegel. The Guardian. Your name everywhere."
+
+"I should have called sooner."
+
+"You should have. But you're here. That's what matters."
+
+She looks at the government car pulling away. "The AIVD brought you home. That's new."
+
+"They offered me a job."
+
+A long look. "Of course they did. We'll talk about it. Over espresso. After you sleep."
+
 14:00.
 
 Ryan finally sleeps. Three hours, fitful, full of dreams about transformer stations and golf carts and flickering SSTV patterns.
@@ -1598,5 +1705,42 @@ He took the meeting with Van der Berg. Then another meeting. Then a training pro
 These days, when strange signals appear on his SSTV terminal, he doesn't investigate alone.
 
 He has backup now.
+
+---
+
+## NEW SCENES (Added in narrative gap pass)
+
+### Scene 5b: Forensic Analysis Cinematic (Mancave)
+Before analyzing the USB contents, Ryan demonstrates proper forensic discipline. Phase 1: Boots the air-gapped ThinkPad X230 (Coreboot firmware, Kali Linux, hardware WiFi/BT kill switches). Phase 2: Connects a Tableau T35u write-blocker to preserve evidence integrity. Phase 3: Calculates SHA-256 checksums of all 5 files on the USB. Phase 4: Creates a firejail sandbox (no network, read-only mount) to safely examine the files. Sets flag: forensic_prep_complete. Triggered from the air-gapped laptop hotspot in the mancave after obtaining the USB stick.
+
+### Scene 5c: Meshtastic Setup Cinematic (Mancave)
+After identifying Eva Weber through photo analysis, Ryan configures his Meshtastic node to match her specifications. Phase 1: Powers on the LILYGO T-Beam (ESP32 + SX1276 LoRa + GPS). Phase 2: Configures LoRa parameters — 906.875 MHz (Eva's specified frequency from the USB README P.P.S.), EU_868 region, SF12 spreading factor, 250 kHz bandwidth, 20 dBm TX power. Phase 3: Enables AES-256 encryption with a key derived from the shared secret in the USB README, sets channel name "ZERFALL". Phase 4: Scans mesh network, discovers node EVA_W (RSSI: -67 dBm, 1 hop). Sets flag: meshtastic_configured. Triggered from the Meshtastic hotspot when Eva is identified but device not yet configured.
+
+### Scene 5d: Mission Prep Cinematic (Mancave)
+Pre-infiltration preparation sequence after Eva contact is established. Phase 1: Gear check — 8 items reviewed with animated checkmarks (HackRF, Flipper Zero, external drive, Faraday bag, Meshtastic node, backup batteries, lockpick set, gloves). Phase 2: Ally coordination — message exchanges with Cees (WSRT monitoring position), Jaap (dead-man-switch armed, 5-hour timer), David (technical standby). Phase 3: Ies goodbye — emotional departure scene with the dogs. Sets flag: mission_prep_complete. Triggered from Meshtastic hotspot after Eva contacted.
+
+### Scene 5e: Dog Training Flashback (Eva Reveal)
+Visual memory sequence inserted into the Phase 4 realization of eva-reveal.js. When Ryan says "Wait. Weber. Eva Weber..." the scene transitions to a warm-toned flashback: Compascuum two years ago, sunny Saturday morning at the Tony Knight rescue dog training field. Ies introduces Eva. Handshake. Eva visits the house, sees the mancave, asks sharp questions about SDR and Meshtastic. Then life moved on — Ryan forgot. But Eva didn't. Plays between the discovery dialogue and the final realization dialogue.
+
+### Scene 9a: Klaus Drive Flashback (Driving Home)
+During the drive home from the klooster, after Ryan picks up the USB and wonders how it got there, his mind fills in the gaps. A narrative interlude imagines Klaus Weber's journey: a modest Volkswagen Passat with German plates on the A31 heading north, crossing at Bad Bentheim (Schengen, no checks), arriving at Ter Apel, spotting the Volvo, taping the USB under the door handle, and driving south again. No call, no message, no trace — just the USB and trust.
+
+### Scene 10a: LOFAR Superterp (Field Visit)
+Interactive daytime scene at the LOFAR Superterp near Exloo. Ryan visits with Cees Bassa and inspects the array. Hotspots: LBA dipole antennas (30-80 MHz), HBA tiles (120-240 MHz), processing cabinet (13 Tbit/s data from 51 stations across Europe), Cees Bassa (detailed briefing on digital beamforming, correlation of thousands of antenna elements, and how the Echo detection pipeline piggybacks on LOFAR's existing infrastructure). Sets flags: visited_lofar, lofar_briefing_complete. Requires visited_astron flag. Returns via driving_day with home_from_lofar route.
+
+### Scene 7b: Driving — Enhanced Border Crossing
+The drive to the facility now includes a psychologically detailed border crossing. After the small blue "Bundesrepublik Deutschland" sign (no gate, no guard), Ryan processes the legal weight of what he's doing: in the Netherlands he's an amateur poking around; in Germany, trespassing on a Bundeswehr facility means years. "Espionage, if they want to call it that." Hands tighten on the wheel. Heart rate up. "Breathe. You're not a spy. You're a journalist protecting a source."
+
+### Scene 7c: Driving — Home from Facility
+Post-infiltration night drive from Steckerdoser Heide back to Compascuum. 01:00 AM. Hands shaking. Crosses the German border back to Dutch soil. Evidence on external drive: deployment plans, target coordinates, Hoffmann's logs, Volkov's FSB comms. Reflection on allies: Chris corrupted calibration data, Eva guided him through, Kubecka caught Volkov. "Three people who barely know each other. And we just dismantled a weapon of mass disruption." Transitions to long_night scene.
+
+### Scene 16a: The Long Night (Post-Facility)
+Critical scene bridging facility escape to public exposure. 7-phase cinematic spanning 01:30 to 09:30 AM. Phase 1 (01:30): Evidence review on air-gapped laptop. Phase 2: Hoffmann's personal logs — the smoking gun connecting FSB funding to Echo tests. Phase 3 (03:00): Eva sends Meshtastic messages from an undisclosed safe house. Phase 4 (06:00): Brief doubt — what if ZERFALL was sanctioned? Eva's evidence shows test correlation with civilian casualties. Phase 5 (06:30): Press package preparation (journalists at NRC, De Correspondent, Der Spiegel, The Guardian). Phase 6 (07:30): The SEND moment — countdown, irreversible. Phase 7 (08:00-09:30): News breaks internationally, BND calls Ryan directly, AIVD arrives at the house. Uses mancave.svg background. Sets flags: long_night_complete, press_sent, news_broken, bnd_called.
+
+### Scene 17a: Morning After (Post-Debrief)
+Interactive scene between debrief and epilogue. Ryan returns to the mancave after the AIVD debrief. Hotspots: laptop showing 247 unread emails (press, NGOs, concerned citizens), Protonmail with Eva's farewell email ("I'm safe. Thank you for believing a stranger."), AIVD business card from Van der Berg, Ies in the doorway for an emotional conversation ("You did the right thing, lieverd"). Continue button gated behind reading Eva's email AND talking to Ies. Sets flag: morning_after_complete. Transitions to epilogue.
+
+### Facility Ally Coordination Overlay
+Persistent HUD element (top-right corner) during all three facility scenes (exterior, interior, server room). Shows real-time team status: Cees (WSRT/MONITORING), Jaap (DEADMAN/ARMED with countdown timer), David (STANDBY/READY), Eva (INSIDE/POSITION). Status updates periodically to create illusion of live coordination (Cees: RF SCAN → NO ANOMALY → CLEAR; Jaap: countdown timer; Eva: GUIDING during server room). Only shows when mission_prep_complete flag is set.
 
 --- END ---

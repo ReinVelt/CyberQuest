@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- PRESENTER MALE - "Wouter" - South Park Style Generic Character -->
+  <!-- Hackerspace presenter, polo + lanyard, laser pointer, friendly teacher type -->
+
+  <defs>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd9c4"/>
+      <stop offset="100%" style="stop-color:#f5c4aa"/>
+    </linearGradient>
+    <linearGradient id="poloGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00838f"/>
+      <stop offset="100%" style="stop-color:#006064"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+    <filter id="lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- SHOES -->
+  <ellipse cx="78" cy="294" rx="16" ry="5" fill="#333" stroke="#000" stroke-width="2"/>
+  <ellipse cx="122" cy="294" rx="16" ry="5" fill="#333" stroke="#000" stroke-width="2"/>
+  <rect x="65" y="286" width="26" height="9" rx="3" fill="#3a3a3a" stroke="#000" stroke-width="2.5"/>
+  <rect x="109" y="286" width="26" height="9" rx="3" fill="#3a3a3a" stroke="#000" stroke-width="2.5"/>
+
+  <!-- LEGS (dark jeans) -->
+  <rect x="68" y="262" width="22" height="26" fill="#2a3a5a" stroke="#000" stroke-width="2.5" rx="2"/>
+  <rect x="110" y="262" width="22" height="26" fill="#2a3a5a" stroke="#000" stroke-width="2.5" rx="2"/>
+
+  <!-- BODY (teal polo shirt) -->
+  <ellipse cx="100" cy="212" rx="50" ry="60" fill="url(#poloGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+
+  <!-- Polo collar -->
+  <path d="M80,155 L88,168 L100,162 L112,168 L120,155" fill="#009aa0" stroke="#000" stroke-width="2.5"/>
+  <!-- Button placket -->
+  <line x1="100" y1="162" x2="100" y2="188" stroke="#004d54" stroke-width="2"/>
+  <circle cx="100" cy="170" r="2" fill="#eee" stroke="#000" stroke-width="1"/>
+  <circle cx="100" cy="180" r="2" fill="#eee" stroke="#000" stroke-width="1"/>
+
+  <!-- Lanyard -->
+  <path d="M88,155 L85,200" stroke="#ff6f00" stroke-width="3"/>
+  <!-- Badge -->
+  <rect x="76" y="198" width="22" height="28" rx="3" fill="#fff" stroke="#000" stroke-width="1.5"/>
+  <rect x="79" y="201" width="16" height="10" fill="#00838f" rx="1"/>
+  <text x="87" y="209" text-anchor="middle" font-size="5" fill="#fff" font-family="monospace">HSD</text>
+  <rect x="80" y="214" width="14" height="2" fill="#ddd"/>
+  <rect x="82" y="218" width="10" height="2" fill="#ddd"/>
+  <circle cx="87" cy="224" r="1.5" fill="#ccc"/>
+
+  <!-- ARMS -->
+  <ellipse cx="50" cy="202" rx="18" ry="28" fill="url(#poloGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <ellipse cx="150" cy="202" rx="18" ry="28" fill="url(#poloGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+
+  <!-- Hands -->
+  <circle cx="50" cy="232" r="12" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <circle cx="150" cy="232" r="12" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+
+  <!-- Laser pointer in right hand -->
+  <rect x="147" y="220" width="4" height="24" rx="2" fill="#333" stroke="#000" stroke-width="1.5"/>
+  <circle cx="149" cy="220" r="2.5" fill="#ff1744"/>
+  <!-- Laser beam (subtle, going up-right) -->
+  <line x1="149" y1="218" x2="180" y2="120" stroke="#ff1744" stroke-width="1" opacity="0.6"/>
+  <circle cx="180" cy="120" r="3" fill="#ff1744" opacity="0.4"/>
+
+  <!-- HEAD -->
+  <circle cx="100" cy="88" r="56" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+
+  <!-- SHORT BROWN HAIR (neat, parted) -->
+  <path d="M48,72 Q48,32 100,24 Q152,32 152,72"
+        fill="#5a3a1a" stroke="#000" stroke-width="3"/>
+  <!-- Part line -->
+  <path d="M82,28 Q80,42 78,58" stroke="#4a2a10" stroke-width="2" fill="none"/>
+  <!-- Hair sides (trimmed) -->
+  <path d="M48,72 Q44,82 48,92" fill="#4a2a10" stroke="#000" stroke-width="2"/>
+  <path d="M152,72 Q156,82 152,92" fill="#4a2a10" stroke="#000" stroke-width="2"/>
+
+  <!-- EARS -->
+  <ellipse cx="46" cy="92" rx="10" ry="15" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="48" cy="92" rx="5" ry="8" fill="#f0b898"/>
+  <ellipse cx="154" cy="92" rx="10" ry="15" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="152" cy="92" rx="5" ry="8" fill="#f0b898"/>
+
+  <!-- EYES (South Park dot style, friendly) -->
+  <circle cx="80" cy="86" r="5" fill="#2a2a2a"/>
+  <circle cx="120" cy="86" r="5" fill="#2a2a2a"/>
+  <circle cx="78" cy="84" r="1.5" fill="#fff"/>
+  <circle cx="118" cy="84" r="1.5" fill="#fff"/>
+
+  <!-- NOSE -->
+  <ellipse cx="100" cy="100" rx="6" ry="7" fill="#eeb895" stroke="#000" stroke-width="2"/>
+
+  <!-- STUBBLE (5 o'clock shadow) -->
+  <g fill="#8a7a6a" opacity="0.25">
+    <circle cx="80" cy="112" r="1"/>
+    <circle cx="86" cy="115" r="1"/>
+    <circle cx="92" cy="118" r="1"/>
+    <circle cx="100" cy="120" r="1"/>
+    <circle cx="108" cy="118" r="1"/>
+    <circle cx="114" cy="115" r="1"/>
+    <circle cx="120" cy="112" r="1"/>
+    <circle cx="84" cy="120" r="1"/>
+    <circle cx="96" cy="122" r="1"/>
+    <circle cx="104" cy="122" r="1"/>
+    <circle cx="116" cy="120" r="1"/>
+  </g>
+
+  <!-- MOUTH (mid-sentence, presenting) -->
+  <ellipse cx="100" cy="115" rx="12" ry="8" fill="#8b4513" stroke="#000" stroke-width="2"/>
+  <ellipse cx="100" cy="112" rx="10" ry="4" fill="#fff"/>
+  <!-- Tongue -->
+  <ellipse cx="100" cy="118" rx="6" ry="3" fill="#e57373"/>
+
+  <!-- EYEBROWS (animated, one raised — presenting gesture) -->
+  <path d="M60,72 Q76,68 92,72" stroke="#5a3a1a" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M108,68 Q124,62 140,68" stroke="#5a3a1a" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>
