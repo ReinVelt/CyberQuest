@@ -192,6 +192,60 @@ body {
     display: none;
 }
 
+/* Tool hotspots — visible icon overlays for hackable equipment */
+.hotspot.hotspot-tool {
+    border: 2px solid rgba(0, 255, 136, 0.35);
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 4px;
+    transition: all 0.3s ease;
+    animation: tool-pulse 3s ease-in-out infinite;
+}
+.hotspot.hotspot-tool img {
+    width: 60%;
+    height: auto;
+    max-height: 60%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 4px rgba(0, 255, 136, 0.5));
+    pointer-events: none;
+}
+.hotspot.hotspot-tool .tool-label {
+    font-family: 'Courier New', monospace;
+    font-size: clamp(8px, 1vw, 12px);
+    color: rgba(0, 255, 136, 0.85);
+    text-shadow: 0 0 6px rgba(0, 255, 136, 0.4);
+    white-space: nowrap;
+    pointer-events: none;
+}
+.hotspot.hotspot-tool:hover {
+    border-color: rgba(0, 255, 136, 0.8);
+    background: rgba(0, 0, 0, 0.6);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+    transform: scale(1.05);
+}
+.hotspot.hotspot-tool.tool-disabled {
+    border-color: rgba(255, 255, 255, 0.15);
+    opacity: 0.35;
+    animation: none;
+}
+.hotspot.hotspot-tool.tool-disabled:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: none;
+    transform: none;
+}
+.hotspot.hotspot-tool[data-tooltip]:hover::after {
+    display: none;
+}
+@keyframes tool-pulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 136, 0.15); }
+    50% { box-shadow: 0 0 16px rgba(0, 255, 136, 0.35); }
+}
+
 .hotspot[data-tooltip]:hover::after {
     content: attr(data-tooltip);
     position: absolute;

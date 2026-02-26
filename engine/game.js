@@ -522,6 +522,22 @@ class CyberQuestEngine {
                 element.setAttribute('data-tooltip', hotspot.name);
             }
             
+            // Icon image (for tool overlays)
+            if (hotspot.icon) {
+                const img = document.createElement('img');
+                img.src = hotspot.icon;
+                img.alt = hotspot.name || '';
+                element.appendChild(img);
+            }
+            
+            // Label text (for tool overlays)
+            if (hotspot.label) {
+                const lbl = document.createElement('span');
+                lbl.className = 'tool-label';
+                lbl.textContent = hotspot.label;
+                element.appendChild(lbl);
+            }
+            
             // Click and touch handlers
             const handleHotspotInteraction = (e) => {
                 e.preventDefault();

@@ -91,17 +91,30 @@ const LaserCorridorScene = {
         {
             id: 'flipper_zero_scan',
             name: 'Flipper Zero',
-            x: 5,
-            y: 65,
-            width: 12,
-            height: 12,
+            x: 3,
+            y: 62,
+            width: 10,
+            height: 16,
             cursor: 'pointer',
-            enabled: (game) => {
-                const s = LaserCorridorScene.state;
-                return s.phase === 1 && !s.lasersDisabled;
-            },
+            cssClass: 'hotspot-tool',
+            icon: 'assets/images/icons/flipper-zero.svg',
+            label: 'Flipper Zero',
             action: function(game) {
                 const s = LaserCorridorScene.state;
+
+                // Not the right phase — give context
+                if (s.lasersDisabled) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'Flipper did its job. Lasers are history.' }
+                    ]);
+                    return;
+                }
+                if (s.phase !== 1) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'Don\'t need the Flipper right now. Different problem.' }
+                    ]);
+                    return;
+                }
 
                 if (!s.laserAnalysed) {
                     // First interaction: analyse
@@ -127,13 +140,9 @@ const LaserCorridorScene = {
                 } else if (!s.laserFrequencySet) {
                     // Already analysed, show puzzle again
                     LaserCorridorScene._showLaserPuzzle(game);
-                } else if (!s.lasersDisabled) {
+                } else {
                     // Frequency set, execute shutdown
                     LaserCorridorScene._disableLasers(game);
-                } else {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'Flipper did its job. Lasers are history.' }
-                    ]);
                 }
             }
         },
@@ -186,17 +195,36 @@ const LaserCorridorScene = {
         {
             id: 'hackrf_jam',
             name: 'HackRF One',
-            x: 5,
-            y: 50,
-            width: 12,
-            height: 12,
+            x: 14,
+            y: 62,
+            width: 10,
+            height: 16,
             cursor: 'pointer',
-            enabled: (game) => {
-                const s = LaserCorridorScene.state;
-                return s.phase === 2 && !s.sensorsDisabled;
-            },
+            cssClass: 'hotspot-tool',
+            icon: 'assets/images/icons/hackrf.svg',
+            label: 'HackRF One',
             action: function(game) {
                 const s = LaserCorridorScene.state;
+
+                // Not the right phase — give context
+                if (s.sensorsDisabled) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'HackRF jamming at 40 kHz. Sensors are deaf.' }
+                    ]);
+                    return;
+                }
+                if (s.phase < 2) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'HackRF One. Powerful, but I need to deal with the lasers first.' }
+                    ]);
+                    return;
+                }
+                if (s.phase > 2) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'HackRF\'s doing its job. Sensors are down.' }
+                    ]);
+                    return;
+                }
 
                 if (!s.sensorsAnalysed) {
                     game.startDialogue([
@@ -213,12 +241,8 @@ const LaserCorridorScene = {
                     ], () => {
                         LaserCorridorScene._showSensorPuzzle(game);
                     });
-                } else if (!s.sensorsDisabled) {
-                    LaserCorridorScene._disableSensors(game);
                 } else {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'HackRF jamming at 40 kHz. Sensors are deaf.' }
-                    ]);
+                    LaserCorridorScene._disableSensors(game);
                 }
             }
         },
@@ -469,10 +493,26 @@ const LaserCorridorScene = {
                 hint: 'Use the Flipper Zero to analyse the laser grid\'s IR frequency.'
             });
         }
+
+        // Set initial tool overlay state (Flipper active, HackRF dimmed)
+        setTimeout(() => LaserCorridorScene._updateToolOverlays(), 100);
     },
 
     onExit: () => {
         // Cleanup
+    },
+
+    /** Update tool overlay visual state based on current phase */
+    _updateToolOverlays: () => {
+        const s = LaserCorridorScene.state;
+        const flipperEl = document.getElementById('hotspot-flipper_zero_scan');
+        const hackrfEl  = document.getElementById('hotspot-hackrf_jam');
+        if (flipperEl) {
+            flipperEl.classList.toggle('tool-disabled', s.phase !== 1);
+        }
+        if (hackrfEl) {
+            hackrfEl.classList.toggle('tool-disabled', s.phase !== 2);
+        }
     },
 
     // ═══════════════════════════════════════════════════════════
@@ -534,6 +574,7 @@ const LaserCorridorScene = {
             s.phase = 2;
             game.setFlag('lasers_disabled', true);
             game.showNotification('Lasers disabled — motion sensors activated!');
+            LaserCorridorScene._updateToolOverlays();
         });
     },
 
@@ -594,6 +635,7 @@ const LaserCorridorScene = {
             s.phase = 3;
             game.setFlag('sensors_jammed', true);
             game.showNotification('Sensors jammed — approach the biometric panel');
+            LaserCorridorScene._updateToolOverlays();
         });
     },
 
