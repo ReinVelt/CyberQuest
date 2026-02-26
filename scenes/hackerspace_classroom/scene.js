@@ -623,7 +623,7 @@ const HackerspaceClassroomScene = {
         const ctx = this._audioCtx;
 
         const master = ctx.createGain();
-        master.gain.value = 0.30;
+        master.gain.value = 0.10;
         master.connect(ctx.destination);
         this._masterGain = master;
 
@@ -638,7 +638,7 @@ const HackerspaceClassroomScene = {
         const bp = ctx.createBiquadFilter();
         bp.type = 'bandpass'; bp.frequency.value = 300; bp.Q.value = 0.8;
         const mg = ctx.createGain();
-        mg.gain.value = 0.06;
+        mg.gain.value = 0.03;
         murmur.connect(bp).connect(mg).connect(master);
         murmur.start();
         this._audioNodes.push(murmur);
@@ -681,8 +681,8 @@ const HackerspaceClassroomScene = {
             osc.type = 'sine';
             osc.frequency.value = 80 + Math.random() * 60;
             const g = ctx.createGain();
-            g.gain.setValueAtTime(0.04, ctx.currentTime);
-            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+            g.gain.setValueAtTime(0.02, ctx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
             osc.connect(g).connect(master);
             osc.start();
             osc.stop(ctx.currentTime + 0.35);

@@ -211,18 +211,18 @@ const HackerspaceScene = {
         this._audioRunning = true;
         const ctx = this._audioCtx;
 
-        // Master gain
+        // Master gain — kept low for pleasant background ambience
         const master = ctx.createGain();
-        master.gain.value = 0.30;
+        master.gain.value = 0.12;
         master.connect(ctx.destination);
         this._masterGain = master;
 
         // ── 1. Low machine hum (CNC background) ──
         const hum = ctx.createOscillator();
-        hum.type = 'sawtooth';
+        hum.type = 'triangle';
         hum.frequency.value = 55;
         const humGain = ctx.createGain();
-        humGain.gain.value = 0.12;
+        humGain.gain.value = 0.08;
         hum.connect(humGain).connect(master);
         hum.start();
         this._audioNodes.push(hum);
@@ -232,23 +232,23 @@ const HackerspaceScene = {
         mains.type = 'sine';
         mains.frequency.value = 50;
         const mainsGain = ctx.createGain();
-        mainsGain.gain.value = 0.04;
+        mainsGain.gain.value = 0.025;
         mains.connect(mainsGain).connect(master);
         mains.start();
         this._audioNodes.push(mains);
 
-        // ── 3. Higher spindle whine (CNC mill operational) ──
+        // ── 3. Soft spindle whine (CNC mill, subtle background) ──
         const whine = ctx.createOscillator();
         whine.type = 'sine';
-        whine.frequency.value = 1400;
+        whine.frequency.value = 900;
         const whineGain = ctx.createGain();
-        whineGain.gain.value = 0.03;
+        whineGain.gain.value = 0.008;
         // Slow LFO modulation on pitch
         const lfo = ctx.createOscillator();
         lfo.type = 'sine';
-        lfo.frequency.value = 0.3;
+        lfo.frequency.value = 0.15;
         const lfoGain = ctx.createGain();
-        lfoGain.gain.value = 80;
+        lfoGain.gain.value = 40;
         lfo.connect(lfoGain).connect(whine.frequency);
         lfo.start();
         whine.connect(whineGain).connect(master);
@@ -260,14 +260,14 @@ const HackerspaceScene = {
             if (!this._audioRunning) return;
             const osc = ctx.createOscillator();
             osc.type = 'square';
-            osc.frequency.value = 600 + Math.random() * 600;
+            osc.frequency.value = 400 + Math.random() * 300;
             const g = ctx.createGain();
-            g.gain.value = 0.025;
-            g.gain.setTargetAtTime(0, ctx.currentTime + 0.015, 0.008);
+            g.gain.value = 0.008;
+            g.gain.setTargetAtTime(0, ctx.currentTime + 0.01, 0.006);
             osc.connect(g).connect(master);
             osc.start();
-            osc.stop(ctx.currentTime + 0.03);
-            const next = 100 + Math.random() * 80;
+            osc.stop(ctx.currentTime + 0.02);
+            const next = 200 + Math.random() * 200;
             this._audioTimers.push(setTimeout(clickLoop, next));
         };
         this._audioTimers.push(setTimeout(clickLoop, 500));
@@ -276,25 +276,25 @@ const HackerspaceScene = {
         const grinderLoop = () => {
             if (!this._audioRunning) return;
             this._sfxGrinderBurst();
-            this._audioTimers.push(setTimeout(grinderLoop, 12000 + Math.random() * 18000));
+            this._audioTimers.push(setTimeout(grinderLoop, 25000 + Math.random() * 30000));
         };
-        this._audioTimers.push(setTimeout(grinderLoop, 6000));
+        this._audioTimers.push(setTimeout(grinderLoop, 15000));
 
         // ── 6. Occasional compressed air blast ──
         const airLoop = () => {
             if (!this._audioRunning) return;
             this._sfxAirBlast();
-            this._audioTimers.push(setTimeout(airLoop, 20000 + Math.random() * 15000));
+            this._audioTimers.push(setTimeout(airLoop, 30000 + Math.random() * 25000));
         };
-        this._audioTimers.push(setTimeout(airLoop, 10000));
+        this._audioTimers.push(setTimeout(airLoop, 20000));
 
         // ── 7. Random metal clang ──
         const clangLoop = () => {
             if (!this._audioRunning) return;
             this._sfxMetalClang();
-            this._audioTimers.push(setTimeout(clangLoop, 8000 + Math.random() * 12000));
+            this._audioTimers.push(setTimeout(clangLoop, 18000 + Math.random() * 20000));
         };
-        this._audioTimers.push(setTimeout(clangLoop, 4000));
+        this._audioTimers.push(setTimeout(clangLoop, 10000));
 
         // ── 8. Coffee machine gurgle ──
         const coffeeLoop = () => {
@@ -334,18 +334,18 @@ const HackerspaceScene = {
         bp.frequency.value = 3000;
         bp.Q.value = 2;
         const g = ctx.createGain();
-        g.gain.setValueAtTime(0.15, now);
-        g.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        g.gain.setValueAtTime(0.06, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
         noise.connect(bp).connect(g).connect(this._masterGain);
         noise.start(now);
-        noise.stop(now + 0.35);
+        noise.stop(now + 0.3);
         // Arc crackle overtone
         const arc = ctx.createOscillator();
         arc.type = 'sawtooth';
-        arc.frequency.value = 800;
+        arc.frequency.value = 600;
         const ag = ctx.createGain();
-        ag.gain.setValueAtTime(0.08, now);
-        ag.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+        ag.gain.setValueAtTime(0.03, now);
+        ag.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
         arc.connect(ag).connect(this._masterGain);
         arc.start(now);
         arc.stop(now + 0.2);
@@ -359,29 +359,29 @@ const HackerspaceScene = {
         const osc = ctx.createOscillator();
         osc.type = 'sawtooth';
         osc.frequency.setValueAtTime(400, now);
-        osc.frequency.linearRampToValueAtTime(8000, now + 0.3);
-        osc.frequency.setValueAtTime(8000, now + 0.3);
-        osc.frequency.linearRampToValueAtTime(6000, now + 1.5);
+        osc.frequency.linearRampToValueAtTime(4000, now + 0.3);
+        osc.frequency.setValueAtTime(4000, now + 0.3);
+        osc.frequency.linearRampToValueAtTime(3000, now + 1.2);
         const g = ctx.createGain();
         g.gain.setValueAtTime(0, now);
-        g.gain.linearRampToValueAtTime(0.06, now + 0.2);
-        g.gain.setValueAtTime(0.06, now + 1.0);
-        g.gain.exponentialRampToValueAtTime(0.001, now + 1.8);
+        g.gain.linearRampToValueAtTime(0.02, now + 0.2);
+        g.gain.setValueAtTime(0.02, now + 0.8);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 1.3);
         osc.connect(g).connect(this._masterGain);
         osc.start(now);
-        osc.stop(now + 2.0);
-        // High-pitched scream overlay
+        osc.stop(now + 1.5);
+        // Soft high overtone (no harsh scream)
         const scream = ctx.createOscillator();
         scream.type = 'sine';
-        scream.frequency.value = 5000 + Math.random() * 3000;
+        scream.frequency.value = 3000 + Math.random() * 1500;
         const sg = ctx.createGain();
         sg.gain.setValueAtTime(0, now + 0.1);
-        sg.gain.linearRampToValueAtTime(0.035, now + 0.4);
-        sg.gain.setValueAtTime(0.035, now + 1.0);
-        sg.gain.exponentialRampToValueAtTime(0.001, now + 1.7);
+        sg.gain.linearRampToValueAtTime(0.01, now + 0.4);
+        sg.gain.setValueAtTime(0.01, now + 0.8);
+        sg.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
         scream.connect(sg).connect(this._masterGain);
         scream.start(now + 0.1);
-        scream.stop(now + 1.8);
+        scream.stop(now + 1.3);
     },
 
     // ── SFX: Compressed air blast ──
@@ -400,9 +400,9 @@ const HackerspaceScene = {
         hp.frequency.value = 2000;
         const g = ctx.createGain();
         g.gain.setValueAtTime(0, now);
-        g.gain.linearRampToValueAtTime(0.08, now + 0.05);
-        g.gain.setValueAtTime(0.08, now + 0.15);
-        g.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+        g.gain.linearRampToValueAtTime(0.03, now + 0.05);
+        g.gain.setValueAtTime(0.03, now + 0.12);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
         src.connect(hp).connect(g).connect(this._masterGain);
         src.start(now);
         src.stop(now + 0.6);
@@ -416,20 +416,20 @@ const HackerspaceScene = {
         // Ring at metallic frequency
         const osc = ctx.createOscillator();
         osc.type = 'sine';
-        osc.frequency.value = 1200 + Math.random() * 800;
+        osc.frequency.value = 800 + Math.random() * 500;
         const g = ctx.createGain();
-        g.gain.setValueAtTime(0.12, now);
-        g.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+        g.gain.setValueAtTime(0.04, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
         osc.connect(g).connect(this._masterGain);
         osc.start(now);
-        osc.stop(now + 0.7);
+        osc.stop(now + 0.6);
         // Transient click
         const click = ctx.createOscillator();
         click.type = 'square';
-        click.frequency.value = 3000;
+        click.frequency.value = 2000;
         const cg = ctx.createGain();
-        cg.gain.setValueAtTime(0.1, now);
-        cg.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+        cg.gain.setValueAtTime(0.03, now);
+        cg.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
         click.connect(cg).connect(this._masterGain);
         click.start(now);
         click.stop(now + 0.03);
@@ -446,8 +446,8 @@ const HackerspaceScene = {
             osc.type = 'sine';
             osc.frequency.value = 200 + Math.random() * 150;
             const g = ctx.createGain();
-            g.gain.setValueAtTime(0.04, t);
-            g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+            g.gain.setValueAtTime(0.02, t);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
             osc.connect(g).connect(this._masterGain);
             osc.start(t);
             osc.stop(t + 0.15);
