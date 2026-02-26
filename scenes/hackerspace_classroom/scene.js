@@ -623,7 +623,7 @@ const HackerspaceClassroomScene = {
         const ctx = this._audioCtx;
 
         const master = ctx.createGain();
-        master.gain.value = 0.2;
+        master.gain.value = 0.30;
         master.connect(ctx.destination);
         this._masterGain = master;
 

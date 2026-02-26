@@ -213,7 +213,7 @@ const HackerspaceScene = {
 
         // Master gain
         const master = ctx.createGain();
-        master.gain.value = 0.25;
+        master.gain.value = 0.30;
         master.connect(ctx.destination);
         this._masterGain = master;
 
