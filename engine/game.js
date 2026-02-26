@@ -661,7 +661,7 @@ class CyberQuestEngine {
             const element = document.createElement('div');
             element.className = 'inventory-item';
             element.innerHTML = `
-                <img src="${item.icon || 'assets/images/item-default.png'}" alt="${item.name}">
+                <img src="${item.icon || 'assets/images/icons/item-default.svg'}" alt="${item.name}">
                 <span class="item-name">${item.name}</span>
             `;
             element.setAttribute('data-tooltip', item.description || item.name);

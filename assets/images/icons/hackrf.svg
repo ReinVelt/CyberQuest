@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- HackRF One SDR Icon -->
+  <defs>
+    <linearGradient id="boardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#0f0f1e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- PCB board body -->
+  <rect x="6" y="16" width="52" height="32" rx="2" fill="url(#boardGrad)" stroke="#2a2a3e" stroke-width="1.5"/>
+
+  <!-- PCB trace lines -->
+  <g stroke="#1e3a2a" stroke-width="0.6" opacity="0.5">
+    <line x1="10" y1="24" x2="30" y2="24"/>
+    <line x1="30" y1="24" x2="30" y2="36"/>
+    <line x1="34" y1="20" x2="50" y2="20"/>
+    <line x1="12" y1="40" x2="28" y2="40"/>
+    <line x1="40" y1="36" x2="54" y2="36"/>
+  </g>
+
+  <!-- SMA antenna connector (top-left) -->
+  <rect x="8" y="10" width="8" height="8" rx="1" fill="#c0a820" stroke="#887718" stroke-width="0.8"/>
+  <circle cx="12" cy="14" r="2" fill="#ddc040" stroke="#aa8820" stroke-width="0.5"/>
+  <line x1="12" y1="6" x2="12" y2="10" stroke="#c0a820" stroke-width="2"/>
+
+  <!-- USB connector (right side) -->
+  <rect x="54" y="26" width="8" height="12" rx="1" fill="#c0c0c0" stroke="#808080" stroke-width="0.8"/>
+  <rect x="56" y="29" width="3" height="2" fill="#404040"/>
+  <rect x="56" y="33" width="3" height="2" fill="#404040"/>
+
+  <!-- Main IC chip -->
+  <rect x="24" y="26" width="14" height="10" rx="1" fill="#1a1a1a" stroke="#333" stroke-width="0.5"/>
+  <g stroke="#555" stroke-width="0.4">
+    <line x1="26" y1="26" x2="26" y2="24"/>
+    <line x1="29" y1="26" x2="29" y2="24"/>
+    <line x1="32" y1="26" x2="32" y2="24"/>
+    <line x1="35" y1="26" x2="35" y2="24"/>
+    <line x1="26" y1="36" x2="26" y2="38"/>
+    <line x1="29" y1="36" x2="29" y2="38"/>
+    <line x1="32" y1="36" x2="32" y2="38"/>
+    <line x1="35" y1="36" x2="35" y2="38"/>
+  </g>
+
+  <!-- Status LEDs -->
+  <circle cx="14" cy="24" r="1.5" fill="#00cc44" opacity="0.9"/>
+  <circle cx="14" cy="28" r="1.5" fill="#cc4400" opacity="0.5"/>
+  <circle cx="14" cy="32" r="1.5" fill="#0066cc" opacity="0.7"/>
+
+  <!-- Small capacitors/components -->
+  <rect x="42" y="24" width="4" height="2" rx="0.5" fill="#3a3020"/>
+  <rect x="42" y="28" width="4" height="2" rx="0.5" fill="#3a3020"/>
+  <rect x="48" y="30" width="2" height="4" rx="0.5" fill="#2a2a20"/>
+
+  <!-- Oscillator crystal -->
+  <rect x="18" y="34" width="4" height="6" rx="0.5" fill="#c0c0c0" stroke="#888" stroke-width="0.3"/>
+
+  <!-- RF wave hint from antenna -->
+  <g stroke="#00ccff" fill="none" opacity="0.4">
+    <path d="M12,6 Q8,2 12,-1" stroke-width="0.8"/>
+    <path d="M12,6 Q16,2 12,-1" stroke-width="0.8"/>
+  </g>
+
+  <!-- Label -->
+  <text x="31" y="56" text-anchor="middle" font-family="monospace" font-size="5" fill="#666" letter-spacing="0.5">HackRF</text>
+</svg>

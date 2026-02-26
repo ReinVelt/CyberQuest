@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Default Item Icon — generic object placeholder -->
+  <defs>
+    <linearGradient id="defaultGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4a5568"/>
+      <stop offset="100%" stop-color="#2d3748"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Hexagonal container shape -->
+  <polygon points="32,6 56,18 56,46 32,58 8,46 8,18" fill="url(#defaultGrad)" stroke="#5a6a7a" stroke-width="1.5"/>
+
+  <!-- Inner border -->
+  <polygon points="32,10 52,20 52,44 32,54 12,44 12,20" fill="none" stroke="#6a7a8a" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Question mark / unknown item -->
+  <text x="32" y="42" text-anchor="middle" font-family="monospace" font-size="24" fill="#8899aa" font-weight="bold">?</text>
+
+  <!-- Subtle scan lines -->
+  <g stroke="#5a6878" stroke-width="0.3" opacity="0.2">
+    <line x1="12" y1="26" x2="52" y2="26"/>
+    <line x1="10" y1="32" x2="54" y2="32"/>
+    <line x1="12" y1="38" x2="52" y2="38"/>
+  </g>
+</svg>
