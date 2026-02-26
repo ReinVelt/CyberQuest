@@ -83,7 +83,7 @@ const DebriefScene = {
             skipWalk: true,
             action: function(game) {
                 if (game.getFlag('debrief_complete')) {
-                    game.loadScene('morning_after');
+                    game.loadScene('return_to_ies');
                 } else {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Not yet. Still processing all this.' }
@@ -216,43 +216,18 @@ const DebriefScene = {
                 { speaker: 'Agent Van der Berg', text: 'My direct line. When you\'re ready.' },
                 { speaker: '', text: '*The agents stand. Coffee cups empty.*' },
                 { speaker: 'Agent Van der Berg', text: 'Thank you, Ryan. For what you did.' },
-                { speaker: 'Agent Van der Berg', text: 'You may have saved thousands of lives.' },
-                { speaker: '', text: '*A car waits to take Ryan home. The Den Haag skyline recedes in the mirror.*' }
+                { speaker: 'Agent Van der Berg', text: 'You may have saved thousands of lives.' }
             ],
 
-            // ── Ryan's reflection ──
+            // ── Ryan's reflection in the car ──
             [
+                { speaker: '', text: '*A black car waits outside. The Den Haag skyline recedes in the mirror.*' },
                 { speaker: 'Ryan', text: '*In the back of the car, staring at the business card*' },
                 { speaker: 'Ryan', text: 'AIVD. Dutch Intelligence.' },
                 { speaker: 'Ryan', text: 'From freelance hacker to… what? Government agent?' },
                 { speaker: 'Ryan', text: 'Is that who I am now?' },
-                { speaker: 'Ryan', text: '*Watches the flat Dutch landscape scroll past* I need to think about this.' }
-            ],
-
-            // ── Homecoming — Ies ──
-            [
-                { speaker: '', text: '*The black car pulls into the driveway in Compascuum. Late afternoon.*' },
-                { speaker: '', text: '*The front door opens before Ryan reaches it.*' },
-                { speaker: 'Ies', text: '*Standing in the doorway, arms crossed, eyes red*' },
-                { speaker: 'Ies', text: 'You\'re back.' },
-                { speaker: 'Ryan', text: 'I\'m back.' },
-                { speaker: '', text: '*She pulls him into a long, tight embrace. Neither speaks for a while.*' },
-                { speaker: 'Ies', text: 'I saw the news. Der Spiegel. The Guardian. Your name everywhere.' },
-                { speaker: 'Ryan', text: 'I should have called sooner. I\'m sorry.' },
-                { speaker: 'Ies', text: 'You should have. But you\'re here. That\'s what matters.' },
-                { speaker: '', text: '*Tino and Kessy barrel out the door, tails wagging. ET waddles behind, snorting.*' },
-                { speaker: 'Ies', text: 'The AIVD brought you home in a government car. That\'s new.' },
-                { speaker: 'Ryan', text: 'They offered me a job.' },
-                { speaker: 'Ies', text: '*Long look* Of course they did.' },
-                { speaker: 'Ies', text: 'We\'ll talk about it. Over espresso. After you sleep.' },
-                { speaker: 'Ryan', text: '*Smiles* Deal.' }
-            ],
-
-            // ── Mission complete ──
-            [
-                { speaker: '', text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━' },
-                { speaker: '', text: 'MISSION COMPLETE — THE CHOICE IS YOURS' },
-                { speaker: '', text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━' }
+                { speaker: 'Ryan', text: '*Watches the flat Dutch landscape scroll past*' },
+                { speaker: 'Ryan', text: 'First things first. I need to talk to Ies. Tell her everything.' }
             ]
         ];
 
@@ -263,7 +238,7 @@ const DebriefScene = {
                 game.setFlag('debrief_complete', true);
                 game.showNotification('Click to continue…');
                 const tid = setTimeout(() => {
-                    game.loadScene('morning_after');
+                    game.loadScene('return_to_ies');
                 }, 10000);
                 this._timeoutIds.push(tid);
                 return;

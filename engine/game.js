@@ -1679,6 +1679,7 @@ class CyberQuestEngine {
                         <button onclick="game.loadScene('facility_server');game.toggleDebugPanel()">facility_server</button>
                         <span class="scene-group">— Endgame —</span>
                         <button onclick="game.loadScene('debrief');game.toggleDebugPanel()">debrief</button>
+                        <button onclick="game.loadScene('return_to_ies');game.toggleDebugPanel()">return_to_ies</button>
                         <button onclick="game.loadScene('epilogue');game.toggleDebugPanel()">epilogue</button>
                         <button onclick="game.loadScene('credits');game.toggleDebugPanel()">credits</button>
                     </div>
@@ -1698,7 +1699,7 @@ class CyberQuestEngine {
                         <span class="flag-group">— Visited Scenes —</span>
                         ${fb('visited_livingroom')}${fb('visited_garden')}${fb('visited_garden_back')}${fb('visited_mancave')}${fb('visited_sdr_bench')}
                         ${fb('visited_dwingeloo')}${fb('visited_westerbork_memorial')}${fb('visited_astron')}${fb('visited_planboard')}${fb('visited_hackerspace')}${fb('visited_hackerspace_classroom')}${fb('classroom_presentation_index')}
-                        ${fb('visited_videocall')}${fb('visited_klooster')}${fb('visited_facility')}${fb('visited_debrief')}${fb('visited_epilogue')}
+                        ${fb('visited_videocall')}${fb('visited_klooster')}${fb('visited_facility')}${fb('visited_debrief')}${fb('visited_return_to_ies')}${fb('visited_epilogue')}
                         <span class="flag-group">— Interactions / Counters —</span>
                         ${fb('dog_interactions')}${fb('pug_interactions')}${fb('fireplace_interactions')}
                         ${fb('father_call_count')}${fb('mother_call_count')}
@@ -1726,7 +1727,7 @@ class CyberQuestEngine {
                         ${fb('facility_password_solved')}${fb('badge_cloned')}${fb('data_extracted')}
                         ${fb('discovered_zerfall')}${fb('eva_arrived')}${fb('kubecka_arrived')}
                         <span class="flag-group">— Endgame —</span>
-                        ${fb('debrief_complete')}${fb('epilogue_complete')}
+                        ${fb('debrief_complete')}${fb('return_to_ies_complete')}${fb('epilogue_complete')}
                         <span class="flag-group">— Drone Hunt —</span>
                         ${fb('drone_hunt_started')}${fb('meshtastic_decoy_placed')}${fb('hackrf_ready')}${fb('survived_thermal_scan')}
                         ${fb('gps_frequency_set')}${fb('tx_power_set')}${fb('spoof_target_set')}${fb('gps_spoof_executed')}${fb('drones_eliminated')}
