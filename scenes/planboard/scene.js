@@ -52,262 +52,504 @@ const PlanboardScene = {
       overlay.remove();
     }
     
+    // Inject planboard CSS once
+    if (!document.getElementById('planboard-tile-css')) {
+      const css = document.createElement('style');
+      css.id = 'planboard-tile-css';
+      css.textContent = `
+        .pb-tile {
+          position: absolute; opacity: 0; transition: opacity 0.6s ease, transform 0.4s ease;
+          display: flex; flex-direction: column; overflow: hidden; box-sizing: border-box;
+          pointer-events: auto; cursor: pointer;
+        }
+        .pb-tile:hover { transform: scale(1.04); z-index: 2; }
+        /* Polaroid style */
+        .pb-polaroid {
+          background: #f5f0e8; border-radius: 3px;
+          box-shadow: 3px 5px 14px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(0,0,0,0.08);
+          padding: 6% 6% 14% 6%;
+        }
+        .pb-polaroid .pb-photo {
+          flex: 1; border-radius: 2px; overflow: hidden; position: relative;
+          background: #111; display: flex; align-items: center; justify-content: center;
+        }
+        .pb-polaroid .pb-caption {
+          position: absolute; bottom: 0; left: 0; right: 0;
+          text-align: center; font-family: 'Segoe Print','Comic Sans MS',cursive;
+          color: #333; font-size: clamp(7px,1.1vw,14px); padding: 4% 2% 2%;
+        }
+        /* Manila folder style */
+        .pb-folder {
+          background: linear-gradient(175deg, #d4b87a 0%, #c4a460 40%, #b89850 100%);
+          border-radius: 2px 8px 4px 4px; border: 1px solid #a08040;
+          box-shadow: 3px 5px 14px rgba(0,0,0,0.45);
+          padding: 8% 6% 6%; position: relative;
+        }
+        .pb-folder::before {
+          content:''; position: absolute; top: -6%; left: 15%; width: 40%; height: 8%;
+          background: linear-gradient(175deg, #d4b87a, #c4a460);
+          border-radius: 4px 4px 0 0; border: 1px solid #a08040; border-bottom: none;
+        }
+        .pb-folder .pb-label {
+          font-family: 'Courier New', monospace; color: #3a2a10; font-weight: bold;
+          font-size: clamp(7px,1.1vw,14px); text-transform: uppercase; letter-spacing: 1px;
+          margin-bottom: 4%;
+        }
+        .pb-folder .pb-inner {
+          flex: 1; background: #faf6ee; border-radius: 2px; padding: 6%; overflow: hidden;
+          font-family: 'Courier New', monospace; font-size: clamp(5px,0.7vw,10px);
+          color: #2a2a2a; line-height: 1.5; position: relative;
+        }
+        /* Document / typed page */
+        .pb-document {
+          background: #faf6ee; border-radius: 2px;
+          box-shadow: 3px 5px 14px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(0,0,0,0.08);
+          padding: 6%; position: relative;
+        }
+        .pb-document .pb-header {
+          font-family: 'Courier New', monospace; font-weight: bold;
+          font-size: clamp(6px,0.9vw,12px); color: #2a2a2a; text-align: center;
+          border-bottom: 2px solid #2a2a2a; padding-bottom: 4%; margin-bottom: 4%;
+        }
+        .pb-document .pb-body {
+          font-family: 'Courier New', monospace; font-size: clamp(5px,0.65vw,9px);
+          color: #3a3a3a; line-height: 1.4;
+        }
+        /* Tape strips */
+        .pb-tape {
+          position: absolute; width: 40%; height: clamp(6px,1.2vh,14px);
+          background: rgba(200,190,160,0.55); border: 1px solid rgba(160,140,100,0.3);
+          z-index: 3;
+        }
+        .pb-tape-tl { top: -2%; left: 10%; transform: rotate(-8deg); }
+        .pb-tape-tr { top: -2%; right: 10%; transform: rotate(6deg); }
+        .pb-tape-center { top: -2%; left: 30%; transform: rotate(-2deg); }
+        /* Pin */
+        .pb-pin {
+          position: absolute; top: -4%; left: 50%; transform: translateX(-50%);
+          width: clamp(10px,1.6vw,20px); height: clamp(10px,1.6vw,20px); z-index: 4;
+        }
+        /* Classified stamp */
+        .pb-stamp {
+          position: absolute; font-family: Impact, 'Arial Black', sans-serif;
+          color: rgba(180,30,30,0.55); font-size: clamp(8px,1.4vw,18px);
+          text-transform: uppercase; letter-spacing: 3px;
+          transform: rotate(-12deg); pointer-events: none; z-index: 3;
+        }
+        /* Coffee ring stain */
+        .pb-coffee {
+          position: absolute; width: clamp(24px,4vw,50px); height: clamp(24px,4vw,50px);
+          border: 3px solid rgba(100,60,20,0.12); border-radius: 50%;
+          pointer-events: none;
+        }
+      `;
+      document.head.appendChild(css);
+    }
+    
     // Create container for overlays
     overlay = document.createElement('div');
     overlay.id = 'planboard-overlays';
     overlay.style.cssText = `
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 1;
     `;
     
-    // Define evidence slots with their positions and SVG content
+    // Helper: create push-pin SVG
+    const pinSvg = (color='#c41e3a') => `
+      <svg class="pb-pin" viewBox="0 0 24 24">
+        <circle cx="12" cy="10" r="8" fill="${color}" stroke="#8a1020" stroke-width="1"/>
+        <circle cx="12" cy="10" r="5.5" fill="#ff4757"/>
+        <ellipse cx="12" cy="9" rx="5" ry="3.5" fill="#ff6b7a" opacity="0.5"/>
+        <circle cx="10" cy="8" r="1.8" fill="#fff" opacity="0.45"/>
+        <line x1="12" y1="18" x2="12" y2="23" stroke="#888" stroke-width="1.5"/>
+      </svg>`;
+    
+    // Define evidence slots with photo/dossier tile content
     const slots = [
       { 
-        id: 'slot-sstv', 
-        x: 10.42, 
-        y: 22.22, 
-        width: 13.54, 
-        height: 25.93, 
-        color: '#00ff00',
-        svg: this.createSSTVIcon()
+        id: 'slot-sstv', x: 10.42, y: 22.22, w: 13.54, h: 25.93, rot: -2,
+        html: this._tilePolaroid({
+          photo: this._photoSSTVSignal(),
+          caption: 'SSTV Signal — 14.230 MHz',
+          date: '15 Mar 2024  23:47',
+          pin: pinSvg(),
+        })
       },
       { 
-        id: 'slot-usb', 
-        x: 25.52, 
-        y: 22.22, 
-        width: 12.5, 
-        height: 25.93, 
-        color: '#00ccff',
-        svg: this.createUSBIcon()
+        id: 'slot-usb', x: 25.52, y: 22.22, w: 12.5, h: 25.93, rot: 1.5,
+        html: this._tilePolaroid({
+          photo: this._photoUSBStick(),
+          caption: 'USB Stick — Ter Apel',
+          date: 'SanDisk 64 GB',
+          pin: pinSvg('#1e7abf'),
+        })
       },
       { 
-        id: 'slot-eva', 
-        x: 40.63, 
-        y: 22.22, 
-        width: 13.54, 
-        height: 25.93, 
-        color: '#ff9900',
-        svg: this.createContactIcon()
+        id: 'slot-eva', x: 40.63, y: 22.22, w: 13.54, h: 25.93, rot: -1,
+        html: this._tilePolaroid({
+          photo: this._photoEvaSilhouette(),
+          caption: '? EVA — Code: "E"',
+          date: 'INSIDE SOURCE',
+          pin: pinSvg('#d4a020'),
+          stamp: 'CLASSIFIED',
+        })
       },
       { 
-        id: 'slot-facility', 
-        x: 56.77, 
-        y: 22.22, 
-        width: 13.54, 
-        height: 25.93, 
-        color: '#ff3366',
-        svg: this.createFacilityIcon()
+        id: 'slot-facility', x: 56.77, y: 22.22, w: 13.54, h: 25.93, rot: 2,
+        html: this._tilePolaroid({
+          photo: this._photoFacility(),
+          caption: 'Steckerdoser Heide',
+          date: 'Sat. recon photo',
+          pin: pinSvg(),
+          stamp: 'GEHEIM',
+        })
       },
       { 
-        id: 'slot-weapon', 
-        x: 72.92, 
-        y: 22.22, 
-        width: 17.71, 
-        height: 31.48, 
-        color: '#cc00cc',
-        svg: this.createWeaponIcon()
+        id: 'slot-weapon', x: 72.92, y: 22.22, w: 17.71, h: 31.48, rot: -1.5,
+        html: this._tileFolder({
+          label: 'DOSSIER: EM PULSE WEAPON',
+          inner: this._folderWeaponSpecs(),
+          pin: pinSvg('#8b0000'),
+          stamp: 'TOP SECRET',
+        })
       },
       { 
-        id: 'slot-readme', 
-        x: 8.85, 
-        y: 59.26, 
-        width: 21.88, 
-        height: 26.85, 
-        color: '#ffcc00',
-        svg: this.createDocumentIcon()
+        id: 'slot-readme', x: 8.85, y: 59.26, w: 21.88, h: 26.85, rot: 1,
+        html: this._tileDocument({
+          header: 'README.txt — USB CONTENTS',
+          body: this._docReadmeBody(),
+          tape: true,
+          coffee: { right: '5%', bottom: '10%' },
+        })
       },
       { 
-        id: 'slot-experts', 
-        x: 33.33, 
-        y: 59.26, 
-        width: 16.67, 
-        height: 26.85, 
-        color: '#00ff99',
-        svg: this.createExpertsIcon()
+        id: 'slot-experts', x: 33.33, y: 59.26, w: 16.67, h: 26.85, rot: -1.5,
+        html: this._tileFolder({
+          label: 'EXPERT CONTACTS',
+          inner: this._folderExperts(),
+          pin: pinSvg('#2a8a4a'),
+        })
       },
       { 
-        id: 'slot-timeline', 
-        x: 52.6, 
-        y: 59.26, 
-        width: 19.79, 
-        height: 26.85, 
-        color: '#ff6699',
-        svg: this.createTimelineIcon()
+        id: 'slot-timeline', x: 52.6, y: 59.26, w: 19.79, h: 26.85, rot: 0.5,
+        html: this._tileDocument({
+          header: '⚠ 72-HOUR COUNTDOWN ⚠',
+          body: this._docTimeline(),
+          tape: true,
+          stamp: 'URGENT',
+        })
       }
     ];
     
-    // Create visual indicators for each slot
     slots.forEach(slot => {
-      const element = document.createElement('div');
-      element.id = slot.id;
-      element.className = 'planboard-slot';
-      element.style.cssText = `
-        position: absolute;
-        left: ${slot.x}%;
-        top: ${slot.y}%;
-        width: ${slot.width}%;
-        height: ${slot.height}%;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        border: 3px solid ${slot.color};
-        border-radius: 5px;
-        box-shadow: 0 0 20px ${slot.color}80;
-        background: linear-gradient(135deg, ${slot.color}10, #00000080);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 5%;
-        box-sizing: border-box;
+      const el = document.createElement('div');
+      el.id = slot.id;
+      el.className = 'pb-tile';
+      el.style.cssText += `
+        left: ${slot.x}%; top: ${slot.y}%; width: ${slot.w}%; height: ${slot.h}%;
+        transform: rotate(${slot.rot || 0}deg);
       `;
-      element.innerHTML = slot.svg;
-      overlay.appendChild(element);
+      el.innerHTML = slot.html;
+      overlay.appendChild(el);
     });
     
-    // Add connection lines container
+    // Connection lines canvas
     const connectionsCanvas = document.createElement('canvas');
     connectionsCanvas.id = 'planboard-connections';
     connectionsCanvas.style.cssText = `
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       pointer-events: none;
     `;
     overlay.appendChild(connectionsCanvas);
     
-    // Add overlay to scene
     const sceneContainer = document.getElementById('scene-container');
     if (sceneContainer) {
       sceneContainer.appendChild(overlay);
-      
-      // Set canvas size
       const rect = sceneContainer.getBoundingClientRect();
       connectionsCanvas.width = rect.width;
       connectionsCanvas.height = rect.height;
     }
   },
-  
-  // SVG Icon generators
-  createSSTVIcon: function() {
+
+  /* ─── TILE BUILDERS ─── */
+
+  _tilePolaroid({ photo, caption, date, pin, stamp }) {
     return `
-      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
-        <circle cx="50" cy="50" r="8" fill="#00ff00" opacity="0.8">
-          <animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite"/>
+      ${pin || ''}
+      <div class="pb-polaroid" style="width:100%;height:100%;display:flex;flex-direction:column;position:relative;">
+        <div class="pb-photo">${photo}</div>
+        <div class="pb-caption">
+          <div style="font-weight:bold;">${caption}</div>
+          ${date ? `<div style="font-size:0.8em;color:#777;margin-top:2px;">${date}</div>` : ''}
+        </div>
+        ${stamp ? `<div class="pb-stamp" style="bottom:18%;right:5%;">${stamp}</div>` : ''}
+      </div>`;
+  },
+
+  _tileFolder({ label, inner, pin, stamp }) {
+    return `
+      ${pin || ''}
+      <div class="pb-folder" style="width:100%;height:100%;display:flex;flex-direction:column;">
+        <div class="pb-label">${label}</div>
+        <div class="pb-inner">${inner}</div>
+        ${stamp ? `<div class="pb-stamp" style="top:20%;right:6%;">${stamp}</div>` : ''}
+      </div>`;
+  },
+
+  _tileDocument({ header, body, tape, stamp, coffee }) {
+    let extras = '';
+    if (tape) extras += '<div class="pb-tape pb-tape-tl"></div><div class="pb-tape pb-tape-tr"></div>';
+    if (stamp) extras += `<div class="pb-stamp" style="top:15%;right:4%;">${stamp}</div>`;
+    if (coffee) extras += `<div class="pb-coffee" style="right:${coffee.right};bottom:${coffee.bottom};"></div>`;
+    return `
+      ${extras}
+      <div class="pb-document" style="width:100%;height:100%;display:flex;flex-direction:column;">
+        <div class="pb-header">${header}</div>
+        <div class="pb-body" style="flex:1;overflow:hidden;">${body}</div>
+      </div>`;
+  },
+
+  /* ─── PHOTO CONTENT GENERATORS ─── */
+
+  _photoSSTVSignal() {
+    // Green phosphor CRT look with waveform
+    return `
+      <svg viewBox="0 0 200 140" style="width:100%;height:100%;background:#0a0a0a;">
+        <defs>
+          <linearGradient id="pb-crt" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#001a00"/><stop offset="50%" stop-color="#002200"/><stop offset="100%" stop-color="#001000"/>
+          </linearGradient>
+        </defs>
+        <rect width="200" height="140" fill="url(#pb-crt)"/>
+        <!-- Scan lines -->
+        <g opacity="0.08"><line x1="0" y1="10" x2="200" y2="10" stroke="#0f0" stroke-width="0.5"/>
+        <line x1="0" y1="20" x2="200" y2="20" stroke="#0f0" stroke-width="0.5"/>
+        <line x1="0" y1="30" x2="200" y2="30" stroke="#0f0" stroke-width="0.5"/>
+        <line x1="0" y1="40" x2="200" y2="40" stroke="#0f0" stroke-width="0.5"/>
+        <line x1="0" y1="50" x2="200" y2="50" stroke="#0f0" stroke-width="0.5"/>
+        <line x1="0" y1="60" x2="200" y2="60" stroke="#0f0" stroke-width="0.5"/>
+        <line x1="0" y1="70" x2="200" y2="70" stroke="#0f0" stroke-width="0.5"/>
+        <line x1="0" y1="80" x2="200" y2="80" stroke="#0f0" stroke-width="0.5"/>
+        <line x1="0" y1="90" x2="200" y2="90" stroke="#0f0" stroke-width="0.5"/>
+        <line x1="0" y1="100" x2="200" y2="100" stroke="#0f0" stroke-width="0.5"/>
+        <line x1="0" y1="110" x2="200" y2="110" stroke="#0f0" stroke-width="0.5"/>
+        <line x1="0" y1="120" x2="200" y2="120" stroke="#0f0" stroke-width="0.5"/>
+        <line x1="0" y1="130" x2="200" y2="130" stroke="#0f0" stroke-width="0.5"/></g>
+        <!-- Waveform -->
+        <path d="M 10 70 Q 25 30 40 70 T 70 70 T 100 70 T 130 70 T 160 70 T 190 70"
+              stroke="#00ff00" stroke-width="2.5" fill="none" opacity="0.9">
+          <animate attributeName="d"
+            values="M 10 70 Q 25 30 40 70 T 70 70 T 100 70 T 130 70 T 160 70 T 190 70;
+                    M 10 70 Q 25 50 40 70 T 70 65 T 100 75 T 130 60 T 160 80 T 190 70;
+                    M 10 70 Q 25 30 40 70 T 70 70 T 100 70 T 130 70 T 160 70 T 190 70"
+            dur="3s" repeatCount="indefinite"/>
+        </path>
+        <!-- Decoded text overlay -->
+        <text x="100" y="20" font-family="monospace" font-size="9" fill="#00ff00" text-anchor="middle" opacity="0.8">
+          SSTV DECODE — MARTIN M1
+        </text>
+        <text x="15" y="115" font-family="monospace" font-size="7" fill="#00ff00" opacity="0.7">
+          PROJECT ECHO</text>
+        <text x="15" y="125" font-family="monospace" font-size="7" fill="#00ff00" opacity="0.7">
+          STECKERDOSER HEIDE</text>
+        <text x="15" y="135" font-family="monospace" font-size="7" fill="#00ff00" opacity="0.7">
+          FREQ: 14.230 MHz</text>
+        <!-- Glow dot -->
+        <circle cx="185" cy="15" r="3" fill="#00ff00" opacity="0.7">
+          <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.5s" repeatCount="indefinite"/>
         </circle>
-        <path d="M 30 50 Q 40 30, 50 50 T 70 50" stroke="#00ff00" stroke-width="2" fill="none"/>
-        <path d="M 25 50 Q 35 25, 50 50 T 75 50" stroke="#00ff00" stroke-width="1.5" fill="none" opacity="0.6"/>
-        <path d="M 20 50 Q 30 20, 50 50 T 80 50" stroke="#00ff00" stroke-width="1" fill="none" opacity="0.4"/>
-        <text x="50" y="90" font-family="monospace" font-size="10" fill="#00ff00" text-anchor="middle">SSTV</text>
-      </svg>
-    `;
+      </svg>`;
   },
-  
-  createUSBIcon: function() {
+
+  _photoUSBStick() {
+    // Close-up photo of a USB stick on dark surface
     return `
-      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
-        <rect x="30" y="20" width="40" height="50" rx="3" fill="#00ccff" opacity="0.3" stroke="#00ccff" stroke-width="2"/>
-        <rect x="35" y="25" width="30" height="35" fill="#00ccff" opacity="0.5"/>
-        <rect x="40" y="65" width="20" height="10" fill="#00ccff"/>
-        <line x1="45" y1="35" x2="55" y2="35" stroke="#ffffff" stroke-width="2"/>
-        <line x1="45" y1="45" x2="55" y2="45" stroke="#ffffff" stroke-width="2"/>
-        <text x="50" y="92" font-family="monospace" font-size="10" fill="#00ccff" text-anchor="middle">USB</text>
-      </svg>
-    `;
-  },
-  
-  createContactIcon: function() {
-    return `
-      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
-        <circle cx="50" cy="35" r="12" fill="#ff9900" opacity="0.6" stroke="#ff9900" stroke-width="2"/>
-        <path d="M 30 55 Q 50 45, 70 55 L 70 75 Q 50 70, 30 75 Z" fill="#ff9900" opacity="0.6" stroke="#ff9900" stroke-width="2"/>
-        <circle cx="35" cy="65" r="2" fill="#ffffff"/>
-        <circle cx="65" cy="65" r="2" fill="#ffffff"/>
-        <text x="50" y="92" font-family="monospace" font-size="9" fill="#ff9900" text-anchor="middle">EVA</text>
-      </svg>
-    `;
-  },
-  
-  createFacilityIcon: function() {
-    return `
-      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
-        <rect x="25" y="40" width="50" height="35" fill="#ff3366" opacity="0.3" stroke="#ff3366" stroke-width="2"/>
-        <rect x="35" y="50" width="8" height="8" fill="#ff3366" opacity="0.6"/>
-        <rect x="47" y="50" width="8" height="8" fill="#ff3366" opacity="0.6"/>
-        <rect x="59" y="50" width="8" height="8" fill="#ff3366" opacity="0.6"/>
-        <rect x="35" y="62" width="8" height="8" fill="#ff3366" opacity="0.6"/>
-        <rect x="47" y="62" width="8" height="8" fill="#ff3366" opacity="0.6"/>
-        <rect x="59" y="62" width="8" height="8" fill="#ff3366" opacity="0.6"/>
-        <polygon points="25,40 50,25 75,40" fill="#ff3366" opacity="0.5" stroke="#ff3366" stroke-width="2"/>
-        <text x="50" y="92" font-family="monospace" font-size="8" fill="#ff3366" text-anchor="middle">FACILITY</text>
-      </svg>
-    `;
-  },
-  
-  createWeaponIcon: function() {
-    return `
-      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
-        <circle cx="50" cy="45" r="15" fill="none" stroke="#cc00cc" stroke-width="2" opacity="0.6"/>
-        <circle cx="50" cy="45" r="10" fill="none" stroke="#cc00cc" stroke-width="2" opacity="0.8"/>
-        <line x1="50" y1="20" x2="50" y2="70" stroke="#cc00cc" stroke-width="3"/>
-        <line x1="20" y1="45" x2="80" y2="45" stroke="#cc00cc" stroke-width="3"/>
-        <path d="M 50 45 L 60 35 M 50 45 L 60 55 M 50 45 L 40 35 M 50 45 L 40 55" stroke="#cc00cc" stroke-width="2" opacity="0.6"/>
-        <circle cx="50" cy="45" r="3" fill="#cc00cc">
-          <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite"/>
+      <svg viewBox="0 0 200 140" style="width:100%;height:100%;background:#1a1816;">
+        <!-- Dark surface texture -->
+        <rect width="200" height="140" fill="#1a1816"/>
+        <rect x="0" y="0" width="200" height="140" fill="#222018" opacity="0.5"/>
+        <!-- USB body -->
+        <rect x="50" y="30" width="80" height="45" rx="4" fill="#1565c0" stroke="#0d47a1" stroke-width="2"/>
+        <rect x="55" y="35" width="70" height="30" rx="2" fill="#1e88e5" opacity="0.6"/>
+        <!-- USB connector -->
+        <rect x="130" y="38" width="28" height="28" rx="2" fill="#c0c0c0" stroke="#999" stroke-width="1"/>
+        <rect x="133" y="42" width="22" height="8" fill="#888"/>
+        <rect x="133" y="54" width="22" height="8" fill="#888"/>
+        <!-- SanDisk label -->
+        <text x="90" y="56" font-family="Arial" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">SanDisk</text>
+        <text x="90" y="66" font-family="Arial" font-size="6" fill="#ddd" text-anchor="middle">64GB USB 3.0</text>
+        <!-- LED indicator -->
+        <circle cx="62" cy="68" r="3" fill="#00ff00" opacity="0.8">
+          <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
         </circle>
-        <text x="50" y="92" font-family="monospace" font-size="8" fill="#cc00cc" text-anchor="middle">EMP</text>
-      </svg>
-    `;
+        <!-- Duct tape piece -->
+        <rect x="40" y="85" width="120" height="18" rx="1" fill="#8a8060" opacity="0.7" transform="rotate(-3,100,94)"/>
+        <text x="100" y="97" font-family="'Segoe Print',cursive" font-size="7" fill="#3a2a10" text-anchor="middle" transform="rotate(-3,100,97)">
+          AIR-GAPPED ONLY
+        </text>
+        <!-- Evidence marker -->
+        <text x="15" y="130" font-family="monospace" font-size="6" fill="#ff6600" opacity="0.7">EVIDENCE #002</text>
+      </svg>`;
   },
-  
-  createDocumentIcon: function() {
+
+  _photoEvaSilhouette() {
+    // Surveillance-style photo, blurry silhouette
     return `
-      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
-        <rect x="25" y="20" width="50" height="60" rx="3" fill="#ffcc00" opacity="0.2" stroke="#ffcc00" stroke-width="2"/>
-        <line x1="32" y1="32" x2="68" y2="32" stroke="#ffcc00" stroke-width="2" opacity="0.8"/>
-        <line x1="32" y1="42" x2="68" y2="42" stroke="#ffcc00" stroke-width="1.5" opacity="0.6"/>
-        <line x1="32" y1="50" x2="68" y2="50" stroke="#ffcc00" stroke-width="1.5" opacity="0.6"/>
-        <line x1="32" y1="58" x2="55" y2="58" stroke="#ffcc00" stroke-width="1.5" opacity="0.6"/>
-        <text x="50" y="92" font-family="monospace" font-size="8" fill="#ffcc00" text-anchor="middle">README</text>
-      </svg>
-    `;
+      <svg viewBox="0 0 200 140" style="width:100%;height:100%;background:#1a1a22;">
+        <defs>
+          <radialGradient id="pb-surv" cx="50%" cy="45%">
+            <stop offset="0%" stop-color="#2a2a3a"/><stop offset="100%" stop-color="#0a0a12"/>
+          </radialGradient>
+        </defs>
+        <rect width="200" height="140" fill="url(#pb-surv)"/>
+        <!-- Surveillance camera grain lines -->
+        <g opacity="0.06">
+          <rect x="0" y="5" width="200" height="1" fill="#fff"/>
+          <rect x="0" y="15" width="200" height="1" fill="#fff"/>
+          <rect x="0" y="25" width="200" height="1" fill="#fff"/>
+          <rect x="0" y="35" width="200" height="1" fill="#fff"/>
+          <rect x="0" y="45" width="200" height="1" fill="#fff"/>
+          <rect x="0" y="55" width="200" height="1" fill="#fff"/>
+          <rect x="0" y="65" width="200" height="1" fill="#fff"/>
+          <rect x="0" y="75" width="200" height="1" fill="#fff"/>
+          <rect x="0" y="85" width="200" height="1" fill="#fff"/>
+          <rect x="0" y="95" width="200" height="1" fill="#fff"/>
+          <rect x="0" y="105" width="200" height="1" fill="#fff"/>
+          <rect x="0" y="115" width="200" height="1" fill="#fff"/>
+          <rect x="0" y="125" width="200" height="1" fill="#fff"/>
+        </g>
+        <!-- Figure silhouette -->
+        <circle cx="100" cy="48" r="22" fill="#333" opacity="0.9"/>
+        <ellipse cx="100" cy="95" rx="28" ry="35" fill="#333" opacity="0.85"/>
+        <!-- Question mark -->
+        <text x="100" y="58" font-family="serif" font-size="28" fill="#888" text-anchor="middle" font-weight="bold">?</text>
+        <!-- Surveillance HUD -->
+        <text x="5" y="12" font-family="monospace" font-size="6" fill="#ff3333" opacity="0.7">● REC</text>
+        <text x="155" y="12" font-family="monospace" font-size="5" fill="#ff3333" opacity="0.5">CAM-07</text>
+        <text x="5" y="135" font-family="monospace" font-size="5" fill="#888" opacity="0.5">2024-03-14 21:33:12</text>
+        <rect x="2" y="2" width="196" height="136" fill="none" stroke="#ff3333" stroke-width="1" opacity="0.15" rx="2"/>
+      </svg>`;
   },
-  
-  createExpertsIcon: function() {
+
+  _photoFacility() {
+    // Aerial/satellite-style recon photo
     return `
-      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
-        <circle cx="35" cy="35" r="8" fill="#00ff99" opacity="0.6"/>
-        <path d="M 22 50 Q 35 45, 48 50 L 48 65 Q 35 62, 22 65 Z" fill="#00ff99" opacity="0.6"/>
-        <circle cx="65" cy="35" r="8" fill="#00ff99" opacity="0.6"/>
-        <path d="M 52 50 Q 65 45, 78 50 L 78 65 Q 65 62, 52 65 Z" fill="#00ff99" opacity="0.6"/>
-        <circle cx="50" cy="45" r="9" fill="#00ff99" opacity="0.8" stroke="#00ff99" stroke-width="2"/>
-        <path d="M 35 60 Q 50 55, 65 60 L 65 75 Q 50 72, 35 75 Z" fill="#00ff99" opacity="0.8" stroke="#00ff99" stroke-width="2"/>
-        <text x="50" y="92" font-family="monospace" font-size="7" fill="#00ff99" text-anchor="middle">EXPERTS</text>
-      </svg>
-    `;
+      <svg viewBox="0 0 200 140" style="width:100%;height:100%;background:#1a2a1a;">
+        <defs>
+          <linearGradient id="pb-sat" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#2a3a25"/><stop offset="100%" stop-color="#1a2a18"/>
+          </linearGradient>
+        </defs>
+        <rect width="200" height="140" fill="url(#pb-sat)"/>
+        <!-- Terrain -->
+        <rect x="10" y="20" width="180" height="110" fill="#3a4a2a" opacity="0.5"/>
+        <!-- Tree patches -->
+        <ellipse cx="30" cy="45" rx="18" ry="12" fill="#2a4a1a" opacity="0.6"/>
+        <ellipse cx="165" cy="35" rx="22" ry="14" fill="#2a4a1a" opacity="0.6"/>
+        <ellipse cx="40" cy="110" rx="25" ry="10" fill="#2a4a1a" opacity="0.6"/>
+        <!-- Facility buildings -->
+        <rect x="70" y="50" width="45" height="30" fill="#555" stroke="#888" stroke-width="1"/>
+        <rect x="120" y="55" width="30" height="25" fill="#555" stroke="#888" stroke-width="1"/>
+        <rect x="85" y="85" width="40" height="20" fill="#4a4a4a" stroke="#888" stroke-width="1"/>
+        <!-- Antenna/tower -->
+        <line x1="155" y1="48" x2="155" y2="30" stroke="#888" stroke-width="1.5"/>
+        <circle cx="155" cy="28" r="3" fill="none" stroke="#ff3333" stroke-width="1"/>
+        <!-- Road/path -->
+        <path d="M 0 100 Q 40 95 70 90 Q 100 85 140 80 Q 170 78 200 80" fill="none" stroke="#666" stroke-width="3" opacity="0.5"/>
+        <!-- Crosshair overlay -->
+        <line x1="95" y1="0" x2="95" y2="140" stroke="#ff3333" stroke-width="0.5" opacity="0.3"/>
+        <line x1="0" y1="65" x2="200" y2="65" stroke="#ff3333" stroke-width="0.5" opacity="0.3"/>
+        <circle cx="95" cy="65" r="15" fill="none" stroke="#ff3333" stroke-width="0.5" opacity="0.4"/>
+        <!-- HUD data -->
+        <text x="5" y="12" font-family="monospace" font-size="5" fill="#ff6600" opacity="0.7">53°17'N  7°25'E</text>
+        <text x="5" y="135" font-family="monospace" font-size="5" fill="#888">ALT: 820m · ZOOM: 14x</text>
+        <text x="140" y="135" font-family="monospace" font-size="5" fill="#ff3333" opacity="0.7">RECON</text>
+      </svg>`;
   },
-  
-  createTimelineIcon: function() {
+
+  _folderWeaponSpecs() {
+    // Technical schematic inside manila folder
     return `
-      <svg viewBox="0 0 100 100" style="width: 80%; height: 60%;">
-        <line x1="20" y1="50" x2="80" y2="50" stroke="#ff6699" stroke-width="3"/>
-        <circle cx="25" cy="50" r="5" fill="#ff6699"/>
-        <line x1="25" y1="50" x2="25" y2="35" stroke="#ff6699" stroke-width="2"/>
-        <circle cx="45" cy="50" r="5" fill="#ff6699"/>
-        <line x1="45" y1="50" x2="45" y2="65" stroke="#ff6699" stroke-width="2"/>
-        <circle cx="65" cy="50" r="5" fill="#ff6699"/>
-        <line x1="65" y1="50" x2="65" y2="35" stroke="#ff6699" stroke-width="2"/>
-        <circle cx="75" cy="50" r="5" fill="#ff6699"/>
-        <line x1="75" y1="50" x2="75" y2="65" stroke="#ff6699" stroke-width="2"/>
-        <text x="50" y="92" font-family="monospace" font-size="7" fill="#ff6699" text-anchor="middle">TIMELINE</text>
-      </svg>
-    `;
+      <div style="font-size:clamp(5px,0.65vw,9px);line-height:1.6;color:#2a2a2a;">
+        <div style="text-align:center;font-weight:bold;font-size:1.1em;margin-bottom:4%;border-bottom:1px solid #8a7040;padding-bottom:3%;">
+          EM PULSE WEAPON — SPECS
+        </div>
+        <div style="display:flex;gap:4%;">
+          <svg viewBox="0 0 100 80" style="width:48%;flex-shrink:0;border:1px solid #ccc;background:#faf8f0;border-radius:2px;">
+            <circle cx="50" cy="35" r="20" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+            <circle cx="50" cy="35" r="12" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="2,2"/>
+            <line x1="50" y1="10" x2="50" y2="60" stroke="#1a1a1a" stroke-width="1"/>
+            <line x1="25" y1="35" x2="75" y2="35" stroke="#1a1a1a" stroke-width="1"/>
+            <rect x="42" y="3" width="16" height="8" fill="none" stroke="#1a1a1a" stroke-width="1"/>
+            <text x="50" y="72" font-family="monospace" font-size="5" fill="#666" text-anchor="middle">Fig. 3a — Emitter</text>
+          </svg>
+          <div style="flex:1;">
+            <b>Type:</b> EM Pulse<br>
+            <b>Freq:</b> 14.230 MHz<br>
+            <b>Power:</b> 1.21 GW<br>
+            <b>Range:</b> 500 m<br>
+            <span style="color:#cc0000;font-weight:bold;">STATUS: ACTIVE</span>
+          </div>
+        </div>
+      </div>`;
+  },
+
+  _docReadmeBody() {
+    return `
+      <div style="font-family:'Courier New',monospace;font-size:clamp(5px,0.6vw,8px);line-height:1.5;color:#2a2a2a;">
+        <div style="font-weight:bold;margin-bottom:3%;">PROJECT ECHO — CLASSIFIED</div>
+        This USB contains everything you need<br>
+        to know about the EM pulse weapon being<br>
+        developed at Steckerdoser Heide.<br><br>
+        <span style="color:#cc0000;font-weight:bold;">⚠ 72-HOUR COUNTDOWN INITIATED</span><br><br>
+        The weapon will be activated in 72 hours.<br>
+        Target: Major European data center.<br><br>
+        <span style="background:#cc0000;color:#fff;padding:1px 3px;font-size:0.9em;">WARNING: AIR-GAPPED ONLY</span><br><br>
+        Trust the process.<br><br>
+        <span style="font-family:'Segoe Print',cursive;font-size:1.4em;color:#333;">— E</span>
+      </div>`;
+  },
+
+  _folderExperts() {
+    // Contact cards inside folder
+    return `
+      <div style="font-size:clamp(5px,0.6vw,9px);line-height:1.5;color:#2a2a2a;">
+        <div style="display:flex;align-items:center;gap:4%;padding:3% 0;border-bottom:1px solid #d0c0a0;">
+          <div style="width:1.8em;height:1.8em;border-radius:50%;background:#4a90e2;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:0.9em;flex-shrink:0;">DP</div>
+          <div><b>Dr. David Prinsloo</b><br><span style="color:#666;">TU/e — RF Engineering</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:4%;padding:3% 0;border-bottom:1px solid #d0c0a0;">
+          <div style="width:1.8em;height:1.8em;border-radius:50%;background:#e94b3c;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:0.9em;flex-shrink:0;">CB</div>
+          <div><b>Cees Bassa</b><br><span style="color:#666;">ASTRON — Satellites</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:4%;padding:3% 0;">
+          <div style="width:1.8em;height:1.8em;border-radius:50%;background:#50c878;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:0.9em;flex-shrink:0;">JH</div>
+          <div><b>Prof. Jaap Haartsen</b><br><span style="color:#666;">Bluetooth inventor</span></div>
+        </div>
+      </div>`;
+  },
+
+  _docTimeline() {
+    // Typed timeline with colour markers
+    return `
+      <div style="font-family:'Courier New',monospace;font-size:clamp(5px,0.6vw,8px);line-height:1.6;color:#2a2a2a;">
+        <div style="display:flex;align-items:center;gap:4%;margin-bottom:4%;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#22bb44;flex-shrink:0;"></span>
+          <div><b style="color:#22bb44;">T-72h</b> Warning received<br><span style="color:#888;font-size:0.9em;">USB decoded &amp; analysed</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:4%;margin-bottom:4%;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff9800;flex-shrink:0;"></span>
+          <div><b style="color:#ff9800;">T-48h</b> Investigation<br><span style="color:#888;font-size:0.9em;">Experts consulted, facility ID'd</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:4%;margin-bottom:4%;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff5722;flex-shrink:0;"></span>
+          <div><b style="color:#ff5722;">T-24h</b> Infiltration<br><span style="color:#888;font-size:0.9em;">RFID cloned, gear prepped</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:4%;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff0000;flex-shrink:0;animation:pulse 1s infinite;"></span>
+          <div><b style="color:#ff0000;">T-00h ACTIVATION</b><br><span style="color:#cc0000;font-weight:bold;">TARGET: EU DATA CENTER</span></div>
+        </div>
+      </div>`;
   },
   
   /**
@@ -486,153 +728,105 @@ const PlanboardScene = {
   showDossier: function(evidenceType) {
     console.log('Opening dossier:', evidenceType);
     
-    // Close any existing dossier
     if (PlanboardScene.activeDossier) {
       PlanboardScene.closeDossier();
     }
     
-    // Get dossier content
     const dossierData = this.getDossierContent(evidenceType);
     if (!dossierData) return;
     
-    // Create dossier overlay
+    // Inject dossier CSS once
+    if (!document.getElementById('pb-dossier-css')) {
+      const s = document.createElement('style');
+      s.id = 'pb-dossier-css';
+      s.textContent = `
+        @keyframes pb-fadeIn  { from{opacity:0} to{opacity:1} }
+        @keyframes pb-fadeOut { from{opacity:1} to{opacity:0} }
+        @keyframes pb-slideIn { from{opacity:0;transform:translateY(-20px) scale(0.96)} to{opacity:1;transform:none} }
+        #pb-dossier-overlay {
+          position:fixed; inset:0; background:rgba(0,0,0,0.88);
+          display:flex; align-items:center; justify-content:center; z-index:10000;
+          animation:pb-fadeIn 0.3s ease;
+        }
+        #pb-dossier-box {
+          background: linear-gradient(170deg, #faf6ee 0%, #f0e8d4 100%);
+          border:none; border-radius:4px; padding:0; overflow:hidden;
+          max-width:800px; width:90%; max-height:82vh;
+          box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.12);
+          animation:pb-slideIn 0.4s ease; display:flex; flex-direction:column;
+        }
+        .pb-dos-top {
+          background:linear-gradient(90deg,#6b3a2a,#8b5a3a,#6b3a2a);
+          padding:16px 24px; color:#f5e8d0; text-align:center;
+        }
+        .pb-dos-top h2 {
+          margin:0; font-family:'Courier New',monospace; font-size:24px; letter-spacing:3px;
+          text-transform:uppercase; color:#f5e8d0;
+        }
+        .pb-dos-top .pb-dos-sub {
+          font-size:12px; color:#c4a57b; margin-top:4px; font-family:'Courier New',monospace;
+        }
+        .pb-dos-stamp {
+          display:inline-block; border:3px solid rgba(180,30,30,0.7); color:rgba(180,30,30,0.7);
+          padding:2px 12px; font-family:Impact,'Arial Black',sans-serif; font-size:14px;
+          letter-spacing:3px; transform:rotate(-6deg); margin-top:8px; text-transform:uppercase;
+        }
+        .pb-dos-body {
+          padding:24px; overflow-y:auto; flex:1; color:#2a2a2a;
+          font-family:'Georgia',serif; font-size:15px; line-height:1.7;
+        }
+        .pb-dos-body strong { color:#5a3a10; }
+        .pb-dos-detail {
+          background:#faf8f0; border-left:4px solid #8b5a3a; padding:14px 18px; margin:16px 0;
+          border-radius:0 4px 4px 0; font-size:14px;
+        }
+        .pb-dos-notes {
+          border-top:2px dashed #c4a57b; padding-top:16px; margin-top:20px;
+        }
+        .pb-dos-notes h3 {
+          font-family:'Courier New',monospace; color:#6b3a2a; font-size:16px; margin:0 0 8px;
+        }
+        .pb-dos-close {
+          display:block; margin:20px auto 24px; background:#6b3a2a; color:#f5e8d0;
+          border:none; padding:10px 36px; font-size:15px; font-weight:bold;
+          border-radius:4px; cursor:pointer; font-family:'Courier New',monospace;
+          letter-spacing:2px; transition:background 0.2s;
+        }
+        .pb-dos-close:hover { background:#8b5a3a; }
+        #pb-dossier-box::-webkit-scrollbar { width:8px; }
+        #pb-dossier-box::-webkit-scrollbar-track { background:#f0e8d4; }
+        #pb-dossier-box::-webkit-scrollbar-thumb { background:#c4a57b; border-radius:4px; }
+      `;
+      document.head.appendChild(s);
+    }
+
     const overlay = document.createElement('div');
-    overlay.id = 'dossier-overlay';
-    overlay.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      animation: fadeIn 0.3s ease;
-    `;
-    
-    // Create dossier container
-    const container = document.createElement('div');
-    container.id = 'dossier-container';
-    container.style.cssText = `
-      background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
-      border: 3px solid #c4a57b;
-      border-radius: 10px;
-      padding: 30px;
-      max-width: 800px;
-      max-height: 80vh;
-      overflow-y: auto;
-      box-shadow: 0 0 50px rgba(196, 165, 123, 0.5);
-      animation: slideIn 0.4s ease;
-      color: #f5f5f5;
-      font-family: Arial, sans-serif;
-    `;
-    
-    // Build dossier HTML
-    container.innerHTML = `
-      <div style="text-align: center; margin-bottom: 25px;">
-        <h2 style="color: #c4a57b; font-size: 32px; margin: 0; text-transform: uppercase; letter-spacing: 2px;">
-          ${dossierData.title}
-        </h2>
-        <div style="height: 2px; background: linear-gradient(90deg, transparent, #c4a57b, transparent); margin: 10px 0;"></div>
-        ${dossierData.subtitle ? `<p style="color: #888; font-size: 14px; margin: 5px 0;">${dossierData.subtitle}</p>` : ''}
+    overlay.id = 'pb-dossier-overlay';
+
+    const box = document.createElement('div');
+    box.id = 'pb-dossier-box';
+    box.innerHTML = `
+      <div class="pb-dos-top">
+        <h2>${dossierData.title}</h2>
+        ${dossierData.subtitle ? `<div class="pb-dos-sub">${dossierData.subtitle}</div>` : ''}
+        <div class="pb-dos-stamp">CLASSIFIED</div>
       </div>
-      
-      <div style="margin-bottom: 25px;">
+      <div class="pb-dos-body">
         ${dossierData.content}
-      </div>
-      
-      ${dossierData.details ? `
-        <div style="background: rgba(196, 165, 123, 0.1); border-left: 4px solid #c4a57b; padding: 15px; margin: 20px 0;">
-          ${dossierData.details}
-        </div>
-      ` : ''}
-      
-      ${dossierData.notes ? `
-        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #444;">
-          <h3 style="color: #c4a57b; font-size: 18px; margin-bottom: 10px;">NOTES:</h3>
-          ${dossierData.notes}
-        </div>
-      ` : ''}
-      
-      <div style="text-align: center; margin-top: 30px;">
-        <button id="close-dossier-btn" style="
-          background: #c4a57b;
-          color: #1a1a1a;
-          border: none;
-          padding: 12px 40px;
-          font-size: 16px;
-          font-weight: bold;
-          border-radius: 5px;
-          cursor: pointer;
-          transition: all 0.3s;
-        ">CLOSE</button>
+        ${dossierData.details ? `<div class="pb-dos-detail">${dossierData.details}</div>` : ''}
+        ${dossierData.notes ? `<div class="pb-dos-notes"><h3>INVESTIGATOR NOTES</h3>${dossierData.notes}</div>` : ''}
+        <button class="pb-dos-close">CLOSE DOSSIER</button>
       </div>
     `;
-    
-    // Add CSS animations
-    const style = document.createElement('style');
-    style.textContent = `
-      @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-      }
-      @keyframes fadeOut {
-        from { opacity: 1; }
-        to { opacity: 0; }
-      }
-      @keyframes slideIn {
-        from {
-          opacity: 0;
-          transform: translateY(-30px) scale(0.95);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-      #close-dossier-btn:hover {
-        background: #d4b58b !important;
-        transform: scale(1.05);
-      }
-      #dossier-container::-webkit-scrollbar {
-        width: 10px;
-      }
-      #dossier-container::-webkit-scrollbar-track {
-        background: #1a1a1a;
-      }
-      #dossier-container::-webkit-scrollbar-thumb {
-        background: #c4a57b;
-        border-radius: 5px;
-      }
-    `;
-    document.head.appendChild(style);
-    
-    overlay.appendChild(container);
+
+    overlay.appendChild(box);
     document.body.appendChild(overlay);
-    
-    // Add close button handler
-    document.getElementById('close-dossier-btn').addEventListener('click', () => {
-      PlanboardScene.closeDossier();
-    });
-    
-    // Close on overlay click
-    overlay.addEventListener('click', (e) => {
-      if (e.target === overlay) {
-        PlanboardScene.closeDossier();
-      }
-    });
-    
-    // Close on ESC key
-    const escHandler = (e) => {
-      if (e.key === 'Escape') {
-        PlanboardScene.closeDossier();
-        document.removeEventListener('keydown', escHandler);
-      }
-    };
-    document.addEventListener('keydown', escHandler);
-    
+
+    box.querySelector('.pb-dos-close').addEventListener('click', () => PlanboardScene.closeDossier());
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) PlanboardScene.closeDossier(); });
+    const esc = (e) => { if (e.key === 'Escape') { PlanboardScene.closeDossier(); document.removeEventListener('keydown', esc); } };
+    document.addEventListener('keydown', esc);
+
     PlanboardScene.activeDossier = evidenceType;
   },
   
@@ -640,12 +834,10 @@ const PlanboardScene = {
    * Close the dossier popup
    */
   closeDossier: function() {
-    const overlay = document.getElementById('dossier-overlay');
+    const overlay = document.getElementById('pb-dossier-overlay');
     if (overlay) {
-      overlay.style.animation = 'fadeOut 0.3s ease';
-      setTimeout(() => {
-        overlay.remove();
-      }, 300);
+      overlay.style.animation = 'pb-fadeOut 0.3s ease';
+      setTimeout(() => overlay.remove(), 300);
     }
     PlanboardScene.activeDossier = null;
   },
