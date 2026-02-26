@@ -129,27 +129,61 @@ const SdrBenchScene = {
 
                 if (decoded) {
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'Already decoded the transmission. The image showed coordinates near Westerbork.' },
-                        { speaker: 'Ryan', text: 'Signal still active. Someone is still watching — or still sending warnings.' },
+                        { speaker: 'Ryan', text: 'Already decoded the transmission. A surveillance photo of my house — from across the canal. With me in it.' },
+                        { speaker: 'Ryan', text: 'The hidden coordinates point near Westerbork. Someone is watching me — and they want me to know it.' },
                     ]);
                 } else if (receivedTransmission) {
+                    // Show the decoded SSTV image as overlay during the decode sequence
+                    const sstvOverlay = document.createElement('div');
+                    sstvOverlay.id = 'sstv-decode-overlay';
+                    sstvOverlay.style.cssText = `
+                        position:fixed; top:5%; right:2%; width:320px; height:256px;
+                        z-index:800; border:2px solid rgba(0,255,65,0.4);
+                        border-radius:4px; overflow:hidden;
+                        box-shadow: 0 0 20px rgba(0,255,65,0.15), inset 0 0 30px rgba(0,0,0,0.5);
+                        opacity:0; transition: opacity 2s ease;
+                        pointer-events:none;
+                    `;
+                    sstvOverlay.innerHTML = `
+                        <img src="assets/images/scenes/sstv_decoded.svg" style="width:100%;height:100%;display:block;" />
+                        <div style="position:absolute;top:0;left:0;width:100%;height:100%;
+                            background:repeating-linear-gradient(0deg,transparent,transparent 1px,rgba(0,0,0,0.06) 1px,rgba(0,0,0,0.06) 2px);
+                            pointer-events:none;"></div>
+                        <div style="position:absolute;top:4px;left:6px;font-family:monospace;font-size:9px;
+                            color:rgba(0,255,65,0.6);letter-spacing:1px;text-shadow:0 0 4px rgba(0,255,65,0.3);">
+                            SSTV RX — 14.230 MHz — MARTIN M2
+                        </div>
+                    `;
+                    document.body.appendChild(sstvOverlay);
+
+                    // Fade in after a brief delay (simulates image forming)
+                    setTimeout(() => { sstvOverlay.style.opacity = '1'; }, 1500);
+
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Signal detected on 14.230 MHz. Martin M2 format confirmed by the tone cadence.' },
                         { speaker: '', text: '*Ryan clicks the DECODE button*' },
                         { speaker: '', text: '*The SSTV decoder begins reconstructing the image, line by line — a static-streaked photograph slowly resolves...*' },
-                        { speaker: 'Ryan', text: 'It\'s... aerial surveillance photography. A compound. Trees cleared around it. Power lines.' },
-                        { speaker: 'Ryan', text: 'There\'s text overlaid on the image — steganographic encoding hidden in the SSTV frame.' },
+                        { speaker: 'Ryan', text: 'That\'s... that\'s my house. My white farmhouse with the red roof. Taken from across the canal.' },
+                        { speaker: 'Ryan', text: 'The angle — someone was standing on the road, maybe sitting in a parked car. You can see the power lines, the garden... and that\'s me. That\'s me in the garden.' },
+                        { speaker: 'Ryan', text: 'Wait — there\'s data embedded in the image. Steganographic encoding hidden in the SSTV pixel values.' },
                         { speaker: 'Ryan', text: '"52°27\'N 6°36\'E — OPERATION ZERFALL — NODE ACTIVE"' },
-                        { speaker: 'Ryan', text: 'Those are GPS coordinates. Near Westerbork. Right next to WSRT.' },
+                        { speaker: 'Ryan', text: 'GPS coordinates near Westerbork. Right next to WSRT. And a timestamp — tonight.' },
                         { speaker: '', text: '📚 EDUCATIONAL: SSTV steganography — hiding data in the grey values of image pixels — is a real technique used by intelligence services. Operators monitoring amateur bands often miss it entirely.' },
-                        { speaker: 'Ryan', text: 'Someone just told me exactly where to look. But who? And why?' },
+                        { speaker: 'Ryan', text: 'Someone has been watching me. They know where I live. And they just told me exactly where to look.' },
                     ], () => {
+                        // Fade out the SSTV overlay
+                        const overlay = document.getElementById('sstv-decode-overlay');
+                        if (overlay) {
+                            overlay.style.transition = 'opacity 1s ease';
+                            overlay.style.opacity = '0';
+                            setTimeout(() => overlay.remove(), 1200);
+                        }
                         game.setFlag('sstv_decoded', true);
                         game.setFlag('sstv_coordinates_known', true);
                         game.addEvidence({
                             id: 'sstv_decoded_image',
                             name: 'Decoded SSTV Image',
-                            description: 'Aerial photograph with steganographic text: "52°27\'N 6°36\'E — OPERATION ZERFALL — NODE ACTIVE". Transmitted on 14.230 MHz, Martin M2 format.',
+                            description: 'Surveillance photograph of Ryan\'s farmhouse taken from across the canal. Steganographic data: "52°27\'N 6°36\'E — OPERATION ZERFALL — NODE ACTIVE". Transmitted on 14.230 MHz, Martin M2 format.',
                             icon: '📡'
                         });
                         game.showNotification('📡 Evidence added: Decoded SSTV Image');

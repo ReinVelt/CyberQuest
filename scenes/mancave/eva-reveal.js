@@ -80,8 +80,9 @@ Has raised concerns about network anomalies (see incident log 2024-07-22)`,
                 position:relative; overflow:hidden;
             `;
             imageFrame.innerHTML = `
-                <div style="color:rgba(0,255,65,0.5);font-size:12px;letter-spacing:3px;">SSTV IMAGE</div>
-                <div style="position:absolute;bottom:10px;right:10px;font-size:9px;color:rgba(255,255,255,0.3);">Decoded signal</div>
+                <img src="assets/images/scenes/sstv_decoded.svg" alt="SSTV Decoded — Ryan's farmhouse" style="width:100%;height:100%;object-fit:cover;opacity:0.9;" />
+                <div style="position:absolute;top:8px;left:8px;font-size:8px;color:rgba(0,255,65,0.5);letter-spacing:2px;text-shadow:0 0 4px rgba(0,255,65,0.3);">SSTV DECODED — 14.230 MHz</div>
+                <div style="position:absolute;bottom:10px;right:10px;font-size:9px;color:rgba(255,255,255,0.3);">Surveillance photo — Ryan's house</div>
             `;
             analysisDiv.appendChild(imageFrame);
 

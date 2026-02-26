@@ -2139,7 +2139,7 @@ class CyberQuestEngine {
             sstv_decoded_image: {
                 id: 'sstv_decoded_image',
                 name: 'SSTV Decoded Image',
-                description: 'Image decoded from SSTV transmission — shows facility coordinates.',
+                description: 'Surveillance photo of Ryan\'s farmhouse decoded from SSTV transmission on 14.230 MHz. Hidden steganographic data: GPS coordinates near Westerbork + timestamp.',
                 icon: 'assets/images/icons/evidence.svg'
             },
             dwingeloo_signal_log: {

@@ -312,7 +312,7 @@ const PlanboardScene = {
   /* ─── PHOTO CONTENT GENERATORS ─── */
 
   _photoSSTVSignal() {
-    // Green phosphor CRT look with waveform
+    // SSTV decoded surveillance photo — Ryan's farmhouse from across the canal
     return `
       <svg viewBox="0 0 200 140" style="width:100%;height:100%;background:#0a0a0a;">
         <defs>
@@ -335,27 +335,43 @@ const PlanboardScene = {
         <line x1="0" y1="110" x2="200" y2="110" stroke="#0f0" stroke-width="0.5"/>
         <line x1="0" y1="120" x2="200" y2="120" stroke="#0f0" stroke-width="0.5"/>
         <line x1="0" y1="130" x2="200" y2="130" stroke="#0f0" stroke-width="0.5"/></g>
-        <!-- Waveform -->
-        <path d="M 10 70 Q 25 30 40 70 T 70 70 T 100 70 T 130 70 T 160 70 T 190 70"
-              stroke="#00ff00" stroke-width="2.5" fill="none" opacity="0.9">
-          <animate attributeName="d"
-            values="M 10 70 Q 25 30 40 70 T 70 70 T 100 70 T 130 70 T 160 70 T 190 70;
-                    M 10 70 Q 25 50 40 70 T 70 65 T 100 75 T 130 60 T 160 80 T 190 70;
-                    M 10 70 Q 25 30 40 70 T 70 70 T 100 70 T 130 70 T 160 70 T 190 70"
-            dur="3s" repeatCount="indefinite"/>
-        </path>
-        <!-- Decoded text overlay -->
-        <text x="100" y="20" font-family="monospace" font-size="9" fill="#00ff00" text-anchor="middle" opacity="0.8">
-          SSTV DECODE — MARTIN M1
+        <!-- Farmhouse silhouette (green phosphor) -->
+        <g opacity="0.7">
+          <!-- Sky -->
+          <rect x="5" y="18" width="190" height="40" fill="#002a00" opacity="0.3"/>
+          <!-- Trees behind house -->
+          <ellipse cx="25" cy="48" rx="18" ry="12" fill="#003a00"/>
+          <ellipse cx="170" cy="46" rx="16" ry="14" fill="#003a00"/>
+          <!-- House body -->
+          <rect x="65" y="38" width="55" height="32" fill="#00aa00" opacity="0.3"/>
+          <!-- Roof -->
+          <polygon points="60,38 92,22 130,38" fill="#006600" opacity="0.5"/>
+          <!-- Windows -->
+          <rect x="72" y="42" width="8" height="8" fill="#00ff00" opacity="0.3"/>
+          <rect x="100" y="42" width="8" height="8" fill="#00ff00" opacity="0.3"/>
+          <!-- Door -->
+          <rect x="88" y="54" width="8" height="16" fill="#004400" opacity="0.5"/>
+          <!-- Ryan figure -->
+          <circle cx="84" cy="62" r="2" fill="#00ff00" opacity="0.5"/>
+          <rect x="82.5" y="64" width="3" height="5" fill="#00ff00" opacity="0.4"/>
+          <!-- Canal -->
+          <rect x="5" y="73" width="190" height="12" fill="#004444" opacity="0.4"/>
+          <!-- Road -->
+          <rect x="5" y="88" width="190" height="8" fill="#002200" opacity="0.3"/>
+        </g>
+        <!-- Header text -->
+        <text x="100" y="14" font-family="monospace" font-size="8" fill="#00ff00" text-anchor="middle" opacity="0.8">
+          SSTV DECODE — 14.230 MHz
         </text>
-        <text x="15" y="115" font-family="monospace" font-size="7" fill="#00ff00" opacity="0.7">
-          PROJECT ECHO</text>
-        <text x="15" y="125" font-family="monospace" font-size="7" fill="#00ff00" opacity="0.7">
-          STECKERDOSER HEIDE</text>
-        <text x="15" y="135" font-family="monospace" font-size="7" fill="#00ff00" opacity="0.7">
-          FREQ: 14.230 MHz</text>
+        <!-- Overlay data -->
+        <text x="10" y="108" font-family="monospace" font-size="6" fill="#00ff00" opacity="0.6">
+          52°27'N 6°36'E</text>
+        <text x="10" y="118" font-family="monospace" font-size="6" fill="#00ff00" opacity="0.6">
+          OP. ZERFALL — ACTIVE</text>
+        <text x="10" y="128" font-family="monospace" font-size="6" fill="#00ff00" opacity="0.6">
+          SURVEILLANCE — RYAN'S HOUSE</text>
         <!-- Glow dot -->
-        <circle cx="185" cy="15" r="3" fill="#00ff00" opacity="0.7">
+        <circle cx="185" cy="12" r="3" fill="#00ff00" opacity="0.7">
           <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.5s" repeatCount="indefinite"/>
         </circle>
       </svg>`;
@@ -848,33 +864,34 @@ const PlanboardScene = {
   getDossierContent: function(evidenceType) {
     const dossiers = {
       sstv: {
-        title: 'SSTV Transmission',
-        subtitle: 'Decoded: March 15, 2024 - 23:47:22 UTC',
+        title: 'SSTV Transmission — Surveillance Photo',
+        subtitle: 'Decoded: 2026-02-04 — 22:17:33 UTC',
         content: `
           <p style="line-height: 1.8; font-size: 15px;">
             <strong style="color: #ff6b00;">Signal Type:</strong> Slow-Scan Television (SSTV)<br>
             <strong style="color: #ff6b00;">Frequency:</strong> 14.230 MHz (20m Amateur Band)<br>
-            <strong style="color: #ff6b00;">Mode:</strong> Martin M1<br>
-            <strong style="color: #ff6b00;">Origin:</strong> Steckerdoser Heide region, Germany
+            <strong style="color: #ff6b00;">Mode:</strong> Martin M2 (114s/frame)<br>
+            <strong style="color: #ff6b00;">Content:</strong> Surveillance photograph — Ryan's farmhouse
           </p>
           <div style="background: #0a0a1a; padding: 15px; border-radius: 5px; font-family: monospace; color: #0f0; margin: 15px 0;">
-            &gt; PROJECT ECHO<br>
-            &gt; STECKERDOSER HEIDE<br>
-            &gt; EM WEAPON TEST<br>
-            &gt; FREQUENCY: 14.230<br>
-            &gt; [CLASSIFIED]
+            &gt; IMAGE: White farmhouse, red roof — from across canal<br>
+            &gt; SUBJECT VISIBLE: Ryan, garden area<br>
+            &gt; STEGO DATA: 52°27'N 6°36'E<br>
+            &gt; OPERATION ZERFALL — NODE ACTIVE<br>
+            &gt; TIMESTAMP: 2026-02-04 22:17:33
           </div>
         `,
         details: `
           <strong>ANALYSIS:</strong><br>
-          This transmission was intercepted during routine SDR monitoring. The use of SSTV suggests
-          an attempt to communicate covertly using analog methods less likely to be detected by
-          modern digital surveillance systems.
+          Someone photographed Ryan's house from across the canal in Compascuum — likely from a parked
+          car on the road. The image was transmitted via SSTV on 14.230 MHz using Martin M2 format.
+          Steganographic data hidden in the pixel grey values contains GPS coordinates pointing to
+          a location near Westerbork (WSRT) and a timestamp matching tonight.
         `,
         notes: `
-          <p style="color: #ff6b00; font-weight: bold;">⚠ This was the first indication of Project Echo</p>
-          <p>The transmission's timing (23:47 UTC) suggests it was sent after normal working hours,
-          possibly by someone with authorized access attempting to leak information.</p>
+          <p style="color: #ff6b00; font-weight: bold;">⚠ They know where Ryan lives — and they want him to know it</p>
+          <p>The use of SSTV suggests a signals engineer. Someone technical, not just any whistleblower.
+          Coordinates match a facility near the Westerbork Synthesis Radio Telescope array.</p>
         `
       },
       
