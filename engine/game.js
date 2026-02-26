@@ -47,9 +47,12 @@ class CyberQuestEngine {
             questsCompleted: [],
             activeQuests: [],
             flags: {},
+            evidence: [],
+            evidenceViewed: [],
             time: ENGINE_CONFIG.DEFAULT_TIME,
             day: ENGINE_CONFIG.DEFAULT_DAY
         });
+        this._saveVersion = 2; // Bump when save format changes
         this.gameState = JSON.parse(JSON.stringify(this._defaultGameState));
         this.dialogueQueue = [];
         this.isDialogueActive = false;
@@ -360,7 +363,7 @@ class CyberQuestEngine {
         }
     }
     
-    async loadScene(sceneId, transition = 'fade') {
+    async loadScene(sceneId, transition = 'fade', { skipAutoSave = false } = {}) {
         // Auto-resume if paused when changing scenes
         if (this.isPaused) this.togglePause();
         
@@ -403,6 +406,12 @@ class CyberQuestEngine {
         }
         
         this.currentScene = sceneId;
+        
+        // Auto-save on every scene transition (silent — no notification)
+        // Skip during loadGame() to avoid redundant write
+        if (!skipAutoSave) {
+            this.saveGame(true);
+        }
         
         // Load background
         const bgElement = document.getElementById('scene-background');
@@ -1410,54 +1419,93 @@ class CyberQuestEngine {
     }
     
     // Save/Load
-    saveGame() {
+    saveGame(silent = false) {
         try {
+            if (!this._storage) {
+                if (!silent) this.showNotification('Save unavailable — no storage.');
+                return false;
+            }
+
+            // Sync evidence viewer state into gameState before save
+            if (this.evidenceViewer && Array.isArray(this.evidenceViewer.documentHistory)) {
+                this.gameState.evidenceViewed = [...this.evidenceViewer.documentHistory];
+            }
+
             const saveData = {
+                version: this._saveVersion,
                 currentScene: this.currentScene,
                 inventory: this.inventory,
                 gameState: this.gameState,
+                voiceEnabled: this.voiceEnabled,
                 timestamp: new Date().toISOString()
             };
-            if (this._storage) {
-                this._storage.setItem('cyberquest_save', JSON.stringify(saveData));
-            }
-            this.showNotification('Game saved!');
+
+            this._storage.setItem('cyberquest_save', JSON.stringify(saveData));
+            if (!silent) this.showNotification('Game saved!');
+            console.log(`[Save] scene=${this.currentScene}, items=${this.inventory.length}, flags=${Object.keys(this.gameState.flags).length}, quests=${this.gameState.activeQuests.length}`);
+            return true;
         } catch (err) {
             console.error('Failed to save game:', err);
-            this.showNotification('Failed to save game.');
+            if (!silent) this.showNotification('Failed to save game.');
+            return false;
         }
     }
     
     loadGame() {
         try {
-            const saveData = this._storage ? this._storage.getItem('cyberquest_save') : null;
-            if (saveData) {
-                const data = JSON.parse(saveData);
-                this.inventory = Array.isArray(data.inventory) ? data.inventory : [];
-                // Merge with defaults to ensure all fields exist
-                const defaults = JSON.parse(JSON.stringify(this._defaultGameState));
-                this.gameState = { ...defaults, ...data.gameState };
-                // Ensure nested structures exist
-                this.gameState.flags = this.gameState.flags || {};
-                this.gameState.activeQuests = Array.isArray(this.gameState.activeQuests) ? this.gameState.activeQuests : [];
-                this.gameState.questsCompleted = Array.isArray(this.gameState.questsCompleted) ? this.gameState.questsCompleted : [];
-                
-                this.updateInventoryUI();
-                this.updateQuestUI();
-                const dayEl = document.getElementById('game-day');
-                const timeEl = document.getElementById('game-time');
-                if (dayEl) dayEl.textContent = `Day ${this.gameState.day}`;
-                if (timeEl) timeEl.textContent = this.gameState.time;
-                if (data.currentScene) {
-                    this.loadScene(data.currentScene);
-                }
-                this.showNotification('Game loaded!');
-            } else {
+            const raw = this._storage ? this._storage.getItem('cyberquest_save') : null;
+            if (!raw) {
                 this.showNotification('No save file found.');
+                return false;
             }
+
+            const data = JSON.parse(raw);
+
+            // --- Inventory ---
+            this.inventory = Array.isArray(data.inventory) ? data.inventory : [];
+
+            // --- Game state: merge saved over defaults so new fields get defaults ---
+            const defaults = JSON.parse(JSON.stringify(this._defaultGameState));
+            this.gameState = { ...defaults, ...data.gameState };
+
+            // Guard nested structures
+            this.gameState.flags            = (typeof this.gameState.flags === 'object' && this.gameState.flags !== null) ? this.gameState.flags : {};
+            this.gameState.activeQuests      = Array.isArray(this.gameState.activeQuests) ? this.gameState.activeQuests : [];
+            this.gameState.questsCompleted   = Array.isArray(this.gameState.questsCompleted) ? this.gameState.questsCompleted : [];
+            this.gameState.evidence          = Array.isArray(this.gameState.evidence) ? this.gameState.evidence : [];
+            this.gameState.evidenceViewed    = Array.isArray(this.gameState.evidenceViewed) ? this.gameState.evidenceViewed : [];
+
+            // --- Restore sub-system state ---
+            // Evidence viewer viewed-document history
+            if (this.evidenceViewer && Array.isArray(this.gameState.evidenceViewed)) {
+                this.evidenceViewer.documentHistory = [...this.gameState.evidenceViewed];
+            }
+
+            // Voice preference
+            if (typeof data.voiceEnabled === 'boolean') {
+                this.voiceEnabled = data.voiceEnabled;
+            }
+
+            // --- Update all UI ---
+            this.updateInventoryUI();
+            this.updateQuestUI();
+            const dayEl = document.getElementById('game-day');
+            const timeEl = document.getElementById('game-time');
+            if (dayEl) dayEl.textContent = `Day ${this.gameState.day}`;
+            if (timeEl) timeEl.textContent = this.gameState.time;
+
+            // --- Navigate to saved scene ---
+            if (data.currentScene) {
+                this.loadScene(data.currentScene, 'fade', { skipAutoSave: true });
+            }
+
+            console.log(`[Load] scene=${data.currentScene}, items=${this.inventory.length}, flags=${Object.keys(this.gameState.flags).length}, quests=${this.gameState.activeQuests.length}, evidence=${this.gameState.evidence.length}`);
+            this.showNotification('Game loaded!');
+            return true;
         } catch (err) {
             console.error('Failed to load game:', err);
             this.showNotification('Failed to load saved game. Save data may be corrupted.');
+            return false;
         }
     }
     

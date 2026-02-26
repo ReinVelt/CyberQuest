@@ -342,20 +342,49 @@ TestRunner.suite('Save/Load System', (assert) => {
     // Set up state
     engine.addToInventory({ id: 'test', name: 'Test Item' });
     engine.setFlag('tested', true);
+    engine.setFlag('count', 42);
     engine.gameState.storyPart = 5;
+    engine.gameState.evidence = [{ id: 'doc1', type: 'text', title: 'Evidence' }];
+    engine.gameState.evidenceViewed = ['doc1'];
+    engine.voiceEnabled = false;
+    engine.currentScene = 'mancave';
+    engine.addQuest({ id: 'quest1', name: 'Test Quest', description: 'Desc', hint: 'Hint' });
     
     // Save
-    engine.saveGame();
+    const saved = engine.saveGame(true);
+    assert.ok(saved, 'saveGame returns true on success');
     assert.ok(mockStorage.getItem('cyberquest_save'), 'Save data written to storage');
+    
+    // Verify save data structure
+    const saveData = JSON.parse(mockStorage.getItem('cyberquest_save'));
+    assert.equal(saveData.currentScene, 'mancave', 'Scene saved');
+    assert.equal(saveData.inventory.length, 1, 'Inventory saved');
+    assert.equal(saveData.gameState.storyPart, 5, 'Story part in save data');
+    assert.equal(saveData.voiceEnabled, false, 'Voice pref in save data');
+    assert.equal(saveData.gameState.evidence.length, 1, 'Evidence in save data');
+    assert.equal(saveData.gameState.evidenceViewed.length, 1, 'Evidence history in save data');
+    assert.equal(Object.keys(saveData.gameState.flags).length, 2, 'All flags in save data');
+    assert.equal(saveData.gameState.activeQuests.length, 1, 'Active quests in save data');
+    assert.ok(saveData.version, 'Save includes version');
+    assert.ok(saveData.timestamp, 'Save includes timestamp');
     
     // Create new engine and load
     const engine2 = createTestEngine({ storage: mockStorage });
-    engine2.registerScene({ id: 'test-scene', hotspots: [] });
-    engine2.loadGame();
+    engine2.registerScene({ id: 'mancave', hotspots: [] });
+    const loaded = engine2.loadGame();
     
+    assert.ok(loaded, 'loadGame returns true on success');
     assert.equal(engine2.inventory.length, 1, 'Inventory restored');
+    assert.equal(engine2.inventory[0].id, 'test', 'Inventory item ID correct');
+    assert.equal(engine2.inventory[0].name, 'Test Item', 'Inventory item name correct');
     assert.equal(engine2.gameState.storyPart, 5, 'Story part restored');
     assert.equal(engine2.getFlag('tested'), true, 'Flags restored');
+    assert.equal(engine2.getFlag('count'), 42, 'Numeric flag restored');
+    assert.equal(engine2.voiceEnabled, false, 'Voice pref restored');
+    assert.equal(engine2.gameState.evidence.length, 1, 'Evidence restored');
+    assert.equal(engine2.gameState.evidenceViewed.length, 1, 'Evidence viewed restored');
+    assert.equal(engine2.gameState.activeQuests.length, 1, 'Active quests restored');
+    assert.equal(engine2.gameState.activeQuests[0].hint, 'Hint', 'Quest hint restored');
     
     engine.destroy();
     engine2.destroy();
@@ -368,20 +397,29 @@ TestRunner.suite('Save/Load Error Handling', (assert) => {
     
     const engine = createTestEngine({ storage: mockStorage });
     
-    assert.doesNotThrow(() => {
-        engine.loadGame();
-    }, 'Corrupted save data does not crash');
+    const result1 = engine.loadGame();
+    assert.ok(!result1, 'Corrupted data returns false');
     
     // Missing fields
     mockStorage.setItem('cyberquest_save', JSON.stringify({ gameState: {} }));
-    assert.doesNotThrow(() => {
-        engine.loadGame();
-    }, 'Partial save data does not crash');
+    const result2 = engine.loadGame();
+    assert.ok(result2, 'Partial data loads successfully');
     
     assert.ok(engine.gameState.flags, 'Flags exist after partial load');
     assert.ok(Array.isArray(engine.gameState.activeQuests), 'activeQuests is array after partial load');
+    assert.ok(Array.isArray(engine.gameState.questsCompleted), 'questsCompleted is array after partial load');
+    assert.ok(Array.isArray(engine.gameState.evidence), 'evidence is array after partial load');
+    assert.ok(Array.isArray(engine.gameState.evidenceViewed), 'evidenceViewed is array after partial load');
+    assert.equal(engine.gameState.storyPart, 0, 'storyPart defaults after partial load');
+    assert.equal(engine.gameState.day, 1, 'day defaults after partial load');
+    
+    // Null storage
+    const engine3 = createTestEngine({ storage: null });
+    const result3 = engine3.saveGame(true);
+    assert.ok(!result3, 'Save with null storage returns false');
     
     engine.destroy();
+    engine3.destroy();
 });
 
 // 12. Condition Checking
