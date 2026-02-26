@@ -1719,146 +1719,410 @@ class CyberQuestEngine {
         panel.id = 'debug-panel';
         panel.className = 'debug-panel';
 
+        // Scene jump helper
+        const sb = (scene, label, extra) => {
+            const cmd = extra ? `${extra}game.loadScene('${scene}');game.toggleDebugPanel()` : `game.loadScene('${scene}');game.toggleDebugPanel()`;
+            const active = cur.currentScene === scene ? ' style="background:#00ff88;color:#000;font-weight:bold"' : '';
+            return `<button onclick="${cmd}"${active}>${label || scene}</button>`;
+        };
+        // Driving scene helper
+        const drv = (dest, scene, label) => {
+            return `<button onclick="game.setFlag('driving_destination','${dest}');game.loadScene('${scene}');game.toggleDebugPanel()">${label}</button>`;
+        };
+        // Story part indicator
+        const sp = (n) => {
+            const active = cur.storyPart === n;
+            return `<span class="dbg-sp ${active ? 'dbg-sp-active' : ''}" onclick="game.debugSetStoryPart(${n})" title="Click to set story part ${n}">SP${n}</span>`;
+        };
+
         panel.innerHTML = `
-            <div class="debug-header">🛠️ DEBUG PANEL — D to close &nbsp;|&nbsp; Scene: <b>${cur.currentScene || 'none'}</b> &nbsp;|&nbsp; Story Part: <b>${cur.storyPart}</b></div>
+            <div class="debug-header">
+                🛠️ DEBUG TIMELINE — D to close
+                &nbsp;|&nbsp; Scene: <b>${cur.currentScene || 'none'}</b>
+                &nbsp;|&nbsp; Story Part: <b>${cur.storyPart}</b>
+                &nbsp;|&nbsp; Day ${cur.day} ${cur.time || ''}
+            </div>
             <div class="debug-content">
 
-                <div class="debug-section">
-                    <h3>📍 Jump to Scene</h3>
-                    <div class="debug-scene-grid">
-                        <span class="scene-group">— Intro / Home —</span>
-                        <button onclick="game.loadScene('intro');game.toggleDebugPanel()">intro</button>
-                        <button onclick="game.loadScene('home');game.toggleDebugPanel()">home</button>
-                        <button onclick="game.loadScene('livingroom');game.toggleDebugPanel()">livingroom</button>
-                        <button onclick="game.loadScene('tvdocumentary');game.toggleDebugPanel()">tvdocumentary</button>
-                        <span class="scene-group">— Mancave Hub —</span>
-                        <button onclick="game.loadScene('mancave');game.toggleDebugPanel()">mancave</button>
-                        <button onclick="game.loadScene('sdr_bench');game.toggleDebugPanel()">sdr_bench</button>
-                        <button onclick="game.loadScene('planboard');game.toggleDebugPanel()">planboard</button>
-                        <button onclick="game.loadScene('videocall');game.toggleDebugPanel()">videocall</button>
-                        <span class="scene-group">— Outdoors / Travel —</span>
-                        <button onclick="game.loadScene('garden');game.toggleDebugPanel()">garden</button>
-                        <button onclick="game.loadScene('garden_back');game.toggleDebugPanel()">garden_back</button>
-                        <button onclick="game.loadScene('regional_map');game.toggleDebugPanel()">regional_map</button>
-                        <button onclick="game.setFlag('driving_destination','klooster');game.loadScene('driving');game.toggleDebugPanel()">driving→klooster</button>
-                        <button onclick="game.setFlag('driving_destination','home');game.loadScene('driving');game.toggleDebugPanel()">driving→home</button>
-                        <button onclick="game.setFlag('driving_destination','facility');game.loadScene('driving');game.toggleDebugPanel()">driving→facility</button>
-                        <button onclick="game.setFlag('driving_destination','astron');game.loadScene('driving_day');game.toggleDebugPanel()">driving_day→astron</button>
-                        <button onclick="game.setFlag('driving_destination','home_from_astron');game.loadScene('driving_day');game.toggleDebugPanel()">driving_day→home</button>
-                        <span class="scene-group">— Field Locations —</span>
-                        <button onclick="game.loadScene('klooster');game.toggleDebugPanel()">klooster</button>
-                        <button onclick="game.loadScene('car_discovery');game.toggleDebugPanel()">car_discovery</button>
-                        <button onclick="game.loadScene('dwingeloo');game.toggleDebugPanel()">dwingeloo</button>
-                        <button onclick="game.loadScene('westerbork_memorial');game.toggleDebugPanel()">westerbork_memorial</button>
-                        <button onclick="game.loadScene('drone_hunt');game.toggleDebugPanel()">drone_hunt</button>
-                        <span class="scene-group">— Community —</span>
-                        <button onclick="game.loadScene('hackerspace');game.toggleDebugPanel()">hackerspace</button>
-                        <button onclick="game.loadScene('hackerspace_classroom');game.toggleDebugPanel()">hackerspace_classroom</button>
-                        <span class="scene-group">— WSRT / ASTRON —</span>
-                        <button onclick="game.loadScene('astron');game.toggleDebugPanel()">astron</button>
-                        <span class="scene-group">— Facility —</span>
-                        <button onclick="game.loadScene('facility');game.toggleDebugPanel()">facility</button>
-                        <button onclick="game.loadScene('facility_interior');game.toggleDebugPanel()">facility_interior</button>
-                        <button onclick="game.loadScene('laser_corridor');game.toggleDebugPanel()">laser_corridor</button>
-                        <button onclick="game.loadScene('facility_server');game.toggleDebugPanel()">facility_server</button>
-                        <span class="scene-group">— Endgame —</span>
-                        <button onclick="game.loadScene('debrief');game.toggleDebugPanel()">debrief</button>
-                        <button onclick="game.loadScene('return_to_ies');game.toggleDebugPanel()">return_to_ies</button>
-                        <button onclick="game.loadScene('epilogue');game.toggleDebugPanel()">epilogue</button>
-                        <button onclick="game.loadScene('credits');game.toggleDebugPanel()">credits</button>
+            <!-- ═══════════ DAY 1 — MONDAY FEB 9 ═══════════ -->
+            <div class="dbg-day">
+                <div class="dbg-day-header">📅 DAY 1 — Monday Feb 9 — Morning</div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">07:27</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('intro','🎬 Intro')} ${sp(0)} — Ryan wakes, game starts</div>
+                        <div class="dbg-flags">${fb('game_started')}</div>
                     </div>
                 </div>
 
-                <div class="debug-section">
-                    <h3>📖 Story Part &nbsp;<small style="color:#888">current: <b>${cur.storyPart}</b></small></h3>
-                    ${[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18].map(n => `<button onclick="game.debugSetStoryPart(${n})" ${cur.storyPart === n ? 'style="background:#00ff88;color:#000;font-weight:bold"' : ''}>${n}</button>`).join('')}
-                </div>
-
-                <div class="debug-section">
-                    <h3>🚩 Flags &nbsp;<small style="color:#888">click to toggle — <span style="color:#00ff88">green=true</span> / dim=false</small></h3>
-                    <div class="debug-flags-grid">
-                        <span class="flag-group">— Game Start / Home —</span>
-                        ${fb('game_started')}${fb('made_espresso')}${fb('espresso_count')}${fb('talked_to_ies')}
-                        ${fb('saw_tv_documentary')}${fb('tv_documentary_watched')}${fb('documentary_completed_once')}${fb('post_documentary_reminder_shown')}
-                        <span class="flag-group">— Visited Scenes —</span>
-                        ${fb('visited_livingroom')}${fb('visited_garden')}${fb('visited_garden_back')}${fb('visited_mancave')}${fb('visited_sdr_bench')}
-                        ${fb('visited_dwingeloo')}${fb('visited_westerbork_memorial')}${fb('visited_astron')}${fb('visited_planboard')}${fb('visited_hackerspace')}${fb('visited_hackerspace_classroom')}${fb('classroom_presentation_index')}
-                        ${fb('visited_videocall')}${fb('visited_klooster')}${fb('visited_facility')}${fb('visited_debrief')}${fb('visited_return_to_ies')}${fb('visited_epilogue')}
-                        <span class="flag-group">— Interactions / Counters —</span>
-                        ${fb('dog_interactions')}${fb('pug_interactions')}${fb('fireplace_interactions')}
-                        ${fb('father_call_count')}${fb('mother_call_count')}
-                        <span class="flag-group">— SSTV / Signal —</span>
-                        ${fb('frequency_tuned')}${fb('military_frequency')}${fb('sstv_transmission_received')}${fb('sstv_decoded')}
-                        ${fb('sstv_coordinates_known')}${fb('second_transmission_ready')}
-                        ${fb('first_message_decoded')}${fb('second_message_decoded')}${fb('message_decoded')}
-                        <span class="flag-group">— Klooster —</span>
-                        ${fb('klooster_unlocked')}${fb('first_klooster_visit')}${fb('checked_courtyard')}
-                        ${fb('found_usb_stick')}${fb('saw_usb_first_time')}${fb('picked_up_usb')}
-                        <span class="flag-group">— Investigation —</span>
-                        ${fb('usb_analyzed')}${fb('evidence_unlocked')}${fb('viewed_schematics')}${fb('started_ally_search')}
-                        ${fb('volkov_investigated')}${fb('collected_evidence')}${fb('contacted_allies')}${fb('all_allies_contacted')}${fb('checked_email')}
-                        <span class="flag-group">— Allies —</span>
-                        ${fb('cees_contacted')}${fb('jaap_contacted')}${fb('henk_contacted')}${fb('contacted_kubecka')}
-                        ${fb('eva_contacted')}${fb('identified_eva')}${fb('has_flipper_zero')}
-                        <span class="flag-group">— Field: Dwingeloo / Westerbork —</span>
-                        ${fb('dwingeloo_broadcast_found')}${fb('dwingeloo_transmitter_found')}
-                        ${fb('westerbork_camera_inspected')}${fb('westerbork_bt_cracked')}
-                        ${fb('bt_camera_quest_started')}${fb('zerfall_network_mapped')}${fb('zerfall_duration_known')}
-                        <span class="flag-group">— WSRT / ASTRON —</span>
-                        ${fb('astron_unlocked')}${fb('astron_complete')}${fb('schematics_verified')}${fb('signal_triangulated')}
-                        <span class="flag-group">— Facility —</span>
-                        ${fb('facility_unlocked')}${fb('drove_to_facility')}${fb('entered_facility')}${fb('facility_interior_entered')}
-                        ${fb('facility_password_solved')}${fb('badge_cloned')}${fb('data_extracted')}
-                        ${fb('discovered_zerfall')}${fb('eva_arrived')}${fb('kubecka_arrived')}
-                        <span class="flag-group">— Endgame —</span>
-                        ${fb('debrief_complete')}${fb('return_to_ies_complete')}${fb('epilogue_complete')}
-                        <span class="flag-group">— Drone Hunt —</span>
-                        ${fb('drone_hunt_started')}${fb('meshtastic_decoy_placed')}${fb('hackrf_ready')}${fb('survived_thermal_scan')}
-                        ${fb('gps_frequency_set')}${fb('tx_power_set')}${fb('spoof_target_set')}${fb('gps_spoof_executed')}${fb('drones_eliminated')}
-                        <span class="flag-group">— Laser Corridor —</span>
-                        ${fb('laser_corridor_entered')}${fb('laser_grid_analysed')}${fb('motion_sensors_analysed')}${fb('biometric_panel_activated')}
-                        ${fb('ir_frequency_set')}${fb('lasers_disabled')}${fb('jam_frequency_set')}${fb('sensors_jammed')}
-                        ${fb('biometric_code_entered')}${fb('server_door_unlocked')}${fb('laser_corridor_complete')}
+                <div class="dbg-step">
+                    <div class="dbg-time">07:45</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('home','🏠 Home (Kitchen)')} ${sp(1)} — Make espresso, discover mancave door</div>
+                        <div class="dbg-flags">${fb('made_espresso')}${fb('espresso_count')}</div>
                     </div>
                 </div>
 
-                <div class="debug-section">
-                    <h3>🎒 Give Items</h3>
-                    <span style="color:#888;font-size:0.78rem">Inventory: </span>
-                    <button onclick="game.giveDebugItem('flipper_zero')">Flipper Zero</button>
-                    <button onclick="game.giveDebugItem('meshtastic')">Meshtastic</button>
-                    <button onclick="game.giveDebugItem('usb_stick')">USB Stick</button>
-                    <button onclick="game.giveDebugItem('wifi_pineapple')">WiFi Pineapple</button>
-                    <button onclick="game.giveDebugItem('hackrf')">HackRF One</button>
-                    <button onclick="game.giveDebugItem('night_vision')">Night Vision</button>
-                    <button onclick="game.giveDebugItem('security_badge')">Security Badge</button>
-                    <button onclick="game.giveDebugItem('astron_mesh_radio')">Astron Mesh Radio</button>
-                    <br/>
-                    <span style="color:#888;font-size:0.78rem">Evidence: </span>
-                    <button onclick="game.giveDebugItem('sstv_decoded_image')">SSTV Image</button>
-                    <button onclick="game.giveDebugItem('dwingeloo_signal_log')">Dwingeloo Log</button>
-                    <button onclick="game.giveDebugItem('relay_transmitter')">Relay Transmitter</button>
-                    <button onclick="game.giveDebugItem('modified_camera')">Modified Camera</button>
-                    <button onclick="game.giveDebugItem('zerfall_bt_node')">Zerfall BT Node</button>
+                <div class="dbg-step">
+                    <div class="dbg-time">08:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('livingroom','🛋️ Living Room')} — IES calls, dog greets Ryan</div>
+                        <div class="dbg-flags">${fb('visited_livingroom')}${fb('talked_to_ies')}${fb('dog_interactions')}${fb('pug_interactions')}${fb('fireplace_interactions')}</div>
+                    </div>
                 </div>
 
-                <div class="debug-section">
-                    <h3>⚡ Quick Presets</h3>
-                    <button onclick="game.setupKloosterTest();game.toggleDebugPanel()">✅ Klooster Test</button>
-                    <button onclick="game.debugPreset('unlock_field')">✅ Unlock Field Ops (part 8)</button>
-                    <button onclick="game.debugPreset('unlock_facility')">✅ Unlock Facility (part 12)</button>
-                    <button onclick="game.debugPreset('complete_all')">✅ Set ALL Flags True</button>
-                    <button onclick="game.debugPreset('reset_all')" style="border-color:#ff4444;color:#ff4444">⛔ Reset ALL Flags</button>
+                <div class="dbg-step">
+                    <div class="dbg-time">08:15</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('tvdocumentary','📺 TV Documentary')} — Watch Drenthe documentary</div>
+                        <div class="dbg-flags">${fb('saw_tv_documentary')}${fb('tv_documentary_watched')}${fb('documentary_completed_once')}${fb('post_documentary_reminder_shown')}</div>
+                    </div>
                 </div>
 
-                <div class="debug-section">
-                    <h3>🧪 Test Tools</h3>
-                    <button onclick="game.testEvidenceViewer()">Evidence Viewer</button>
-                    <button onclick="game.testPasswordPuzzle()">Password Puzzle</button>
-                    <button onclick="game.testChatSignal()">Signal Chat</button>
-                    <button onclick="game.testChatMeshtastic()">Meshtastic Chat</button>
-                    <button onclick="game.testChatBBS()">BBS Terminal</button>
+                <div class="dbg-step">
+                    <div class="dbg-time">09:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('mancave','🖥️ Mancave')} ${sp(2)}${sp(3)}${sp(4)}${sp(5)}${sp(6)} — SSTV sequence, decode messages, tune frequency</div>
+                        <div class="dbg-flags">
+                            ${fb('visited_mancave')}${fb('frequency_tuned')}${fb('military_frequency')}${fb('sstv_transmission_received')}
+                            ${fb('first_message_decoded')}${fb('second_transmission_ready')}${fb('second_message_decoded')}${fb('message_decoded')}
+                            ${fb('father_call_count')}${fb('mother_call_count')}${fb('checked_email')}
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <div class="dbg-day">
+                <div class="dbg-day-header">📅 DAY 1 — Monday Feb 9 — Afternoon</div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">16:15</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('sdr_bench','📡 SDR Bench')} — Decode SSTV image of Ryan's house</div>
+                        <div class="dbg-flags">${fb('visited_sdr_bench')}${fb('sstv_decoded')}${fb('sstv_coordinates_known')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">16:30</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('planboard','📋 Planboard')} — Review investigation board</div>
+                        <div class="dbg-flags">${fb('visited_planboard')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">16:45</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('videocall','📹 Video Call')} — Contact IES / allies</div>
+                        <div class="dbg-flags">${fb('visited_videocall')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">17:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('garden','🌳 Garden')} ${sb('garden_back','🌿 Garden Back')} — Go to car</div>
+                        <div class="dbg-flags">${fb('visited_garden')}${fb('visited_garden_back')}${fb('klooster_unlocked')}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dbg-day">
+                <div class="dbg-day-header">📅 DAY 1 — Monday Feb 9 — Night</div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">22:30</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${drv('klooster','driving','🚗 Drive → Klooster')} ${sp(7)} — Night drive to Ter Apel</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">22:55</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('klooster','⛪ Klooster')} — Medieval monastery, find USB on car</div>
+                        <div class="dbg-flags">${fb('visited_klooster')}${fb('first_klooster_visit')}${fb('checked_courtyard')}${fb('found_usb_stick')}${fb('saw_usb_first_time')}${fb('picked_up_usb')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">23:15</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('car_discovery','🚙 Car Discovery')} — Find USB stick taped to Volvo</div>
+                        <div class="dbg-flags">${fb('found_usb_stick')}${fb('picked_up_usb')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">23:30</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${drv('home','driving','🚗 Drive → Home')} — Return to Compascuum</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════ DAY 2 — TUESDAY FEB 10 ═══════════ -->
+            <div class="dbg-day">
+                <div class="dbg-day-header">📅 DAY 2 — Tuesday Feb 10 — Morning (Mancave Investigation)</div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">08:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('mancave','🖥️ Mancave — USB Analysis')} ${sp(8)} — Analyse USB on air-gapped laptop</div>
+                        <div class="dbg-flags">${fb('usb_analyzed')}${fb('evidence_unlocked')}${fb('viewed_schematics')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">08:30</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('mancave','🖥️ Mancave — Dilemma')} ${sp(9)} — Acknowledge the threat, begin ally search</div>
+                        <div class="dbg-flags">${fb('started_ally_search')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">09:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('mancave','🖥️ Mancave — Recruit Allies')} ${sp(10)} — Contact Cees, Jaap, Henk</div>
+                        <div class="dbg-flags">${fb('cees_contacted')}${fb('jaap_contacted')}${fb('henk_contacted')}${fb('contacted_allies')}${fb('all_allies_contacted')}${fb('has_flipper_zero')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">09:30</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('mancave','🖥️ Mancave — Volkov Investigation')} ${sp(11)}${sp(12)}${sp(13)}${sp(14)} — Track Volkov, contact Kubecka, discover Zerfall</div>
+                        <div class="dbg-flags">${fb('volkov_investigated')}${fb('contacted_kubecka')}${fb('collected_evidence')}${fb('discovered_zerfall')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">10:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('mancave','🖥️ Mancave — Eva Reveal')} ${sp(15)} — Photo analysis, identify Eva Weber</div>
+                        <div class="dbg-flags">${fb('identified_eva')}${fb('eva_contacted')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">10:30</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('mancave','🖥️ Mancave — Eva Contact')} ${sp(16)} — Establish contact with Eva</div>
+                        <div class="dbg-flags">${fb('eva_contacted')}</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dbg-day">
+                <div class="dbg-day-header">📅 DAY 2 — Tuesday Feb 10 — Field Operations</div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">11:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('dwingeloo','📡 Dwingeloo Radio Telescope')} — Find relay transmitter, signal log</div>
+                        <div class="dbg-flags">${fb('visited_dwingeloo')}${fb('dwingeloo_broadcast_found')}${fb('dwingeloo_transmitter_found')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">12:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('westerbork_memorial','🏛️ Westerbork Memorial')} — Inspect cameras, crack Bluetooth node</div>
+                        <div class="dbg-flags">${fb('visited_westerbork_memorial')}${fb('westerbork_camera_inspected')}${fb('westerbork_bt_cracked')}${fb('bt_camera_quest_started')}${fb('zerfall_network_mapped')}${fb('zerfall_duration_known')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">13:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('hackerspace','🔧 Hackerspace')} ${sb('hackerspace_classroom','🎓 Classroom')} — Community presentation</div>
+                        <div class="dbg-flags">${fb('visited_hackerspace')}${fb('visited_hackerspace_classroom')}${fb('classroom_presentation_index')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">15:30</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">
+                            ${drv('astron','driving_day','🚗 Drive → ASTRON')}
+                            ${sb('astron','🔭 ASTRON / WSRT')} — Verify schematics, triangulate signal
+                        </div>
+                        <div class="dbg-flags">${fb('visited_astron')}${fb('astron_unlocked')}${fb('astron_complete')}${fb('schematics_verified')}${fb('signal_triangulated')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">17:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${drv('home_from_astron','driving_day','🚗 Drive → Home')} — Return, prepare for infiltration</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dbg-day">
+                <div class="dbg-day-header">📅 DAY 2 — Tuesday Feb 10 — Night Infiltration</div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">20:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('regional_map','🗺️ Regional Map')} — Plan route to facility</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">21:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('drone_hunt','🛸 Drone Hunt')} — GPS spoofing, eliminate surveillance drones</div>
+                        <div class="dbg-flags">${fb('drone_hunt_started')}${fb('meshtastic_decoy_placed')}${fb('hackrf_ready')}${fb('survived_thermal_scan')}${fb('gps_frequency_set')}${fb('tx_power_set')}${fb('spoof_target_set')}${fb('gps_spoof_executed')}${fb('drones_eliminated')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">21:47</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">
+                            ${drv('facility','driving','🚗 Drive → Facility')} ${sp(17)}
+                            ${sb('facility','🏭 Facility Gate')} ${sp(18)} — Infiltrate Steckerdoser Heide
+                        </div>
+                        <div class="dbg-flags">${fb('facility_unlocked')}${fb('drove_to_facility')}${fb('entered_facility')}${fb('badge_cloned')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">22:06</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('facility_interior','🏢 Facility Interior')} — Navigate corridors</div>
+                        <div class="dbg-flags">${fb('facility_interior_entered')}${fb('facility_password_solved')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">22:07</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('laser_corridor','🔴 Laser Corridor')} — Disable lasers, jam motion sensors, bypass biometric</div>
+                        <div class="dbg-flags">${fb('laser_corridor_entered')}${fb('laser_grid_analysed')}${fb('motion_sensors_analysed')}${fb('biometric_panel_activated')}${fb('ir_frequency_set')}${fb('lasers_disabled')}${fb('jam_frequency_set')}${fb('sensors_jammed')}${fb('biometric_code_entered')}${fb('server_door_unlocked')}${fb('laser_corridor_complete')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">22:08</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('facility_server','💾 Server Room')} ${sp(19)}${sp(20)} — Extract data, neutralise Operation Zerfall</div>
+                        <div class="dbg-flags">${fb('data_extracted')}${fb('eva_arrived')}${fb('kubecka_arrived')}${fb('discovered_zerfall')}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════ DAY 3 — WEDNESDAY FEB 11 ═══════════ -->
+            <div class="dbg-day">
+                <div class="dbg-day-header">📅 DAY 3 — Wednesday Feb 11 — Aftermath</div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">11:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('debrief','📝 Debrief')} — Review with IES</div>
+                        <div class="dbg-flags">${fb('visited_debrief')}${fb('debrief_complete')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">20:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('return_to_ies','🎤 Return to IES')} — Hollywood ending</div>
+                        <div class="dbg-flags">${fb('visited_return_to_ies')}${fb('return_to_ies_complete')}</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════ EPILOGUE ═══════════ -->
+            <div class="dbg-day">
+                <div class="dbg-day-header">📅 EPILOGUE — May 2026</div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">14:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('epilogue','🌅 Epilogue')} — 3 months later</div>
+                        <div class="dbg-flags">${fb('visited_epilogue')}${fb('epilogue_complete')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time"></div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('credits','🎬 Credits')} — Roll credits</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════════ TOOLS SECTION ═══════════ -->
+            <div class="dbg-day" style="border-color:#555;">
+                <div class="dbg-day-header" style="color:#ccc;">🧰 Tools &amp; Presets</div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time" style="color:#888;">SP</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row" style="font-size:0.78rem;color:#888;">Story Part: <b style="color:#00ff88">${cur.storyPart}</b> — click to set →
+                            ${[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].map(n => `<button onclick="game.debugSetStoryPart(${n})" ${cur.storyPart === n ? 'style="background:#00ff88;color:#000;font-weight:bold"' : ''} class="dbg-sp-btn">${n}</button>`).join('')}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time" style="color:#888;">🎒</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row" style="font-size:0.78rem;color:#888;">Inventory:</div>
+                        <div>
+                            <button onclick="game.giveDebugItem('flipper_zero')">Flipper Zero</button>
+                            <button onclick="game.giveDebugItem('meshtastic')">Meshtastic</button>
+                            <button onclick="game.giveDebugItem('usb_stick')">USB Stick</button>
+                            <button onclick="game.giveDebugItem('wifi_pineapple')">WiFi Pineapple</button>
+                            <button onclick="game.giveDebugItem('hackrf')">HackRF One</button>
+                            <button onclick="game.giveDebugItem('night_vision')">Night Vision</button>
+                            <button onclick="game.giveDebugItem('security_badge')">Security Badge</button>
+                            <button onclick="game.giveDebugItem('astron_mesh_radio')">Astron Mesh</button>
+                        </div>
+                        <div style="margin-top:4px;">
+                            <span style="font-size:0.72rem;color:#888;">Evidence: </span>
+                            <button onclick="game.giveDebugItem('sstv_decoded_image')">SSTV Image</button>
+                            <button onclick="game.giveDebugItem('dwingeloo_signal_log')">Dwingeloo Log</button>
+                            <button onclick="game.giveDebugItem('relay_transmitter')">Relay Transmitter</button>
+                            <button onclick="game.giveDebugItem('modified_camera')">Modified Camera</button>
+                            <button onclick="game.giveDebugItem('zerfall_bt_node')">Zerfall BT Node</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time" style="color:#888;">⚡</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row" style="font-size:0.78rem;color:#888;">Quick Presets:</div>
+                        <div>
+                            <button onclick="game.setupKloosterTest();game.toggleDebugPanel()">✅ Klooster Test</button>
+                            <button onclick="game.debugPreset('unlock_field')">✅ Field Ops (SP 8)</button>
+                            <button onclick="game.debugPreset('unlock_facility')">✅ Facility (SP 12)</button>
+                            <button onclick="game.debugPreset('complete_all')">✅ ALL Flags True</button>
+                            <button onclick="game.debugPreset('reset_all')" style="border-color:#ff4444;color:#ff4444">⛔ Reset ALL</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time" style="color:#888;">🧪</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row" style="font-size:0.78rem;color:#888;">Test Tools:</div>
+                        <div>
+                            <button onclick="game.testEvidenceViewer()">Evidence Viewer</button>
+                            <button onclick="game.testPasswordPuzzle()">Password Puzzle</button>
+                            <button onclick="game.testChatSignal()">Signal Chat</button>
+                            <button onclick="game.testChatMeshtastic()">Meshtastic Chat</button>
+                            <button onclick="game.testChatBBS()">BBS Terminal</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             </div>
         `;
@@ -1879,7 +2143,7 @@ class CyberQuestEngine {
                     padding: 20px;
                     z-index: 9999;
                     width: 92vw;
-                    max-width: 1100px;
+                    max-width: 900px;
                     max-height: 88vh;
                     overflow-y: auto;
                     font-family: 'Courier New', monospace;
@@ -1887,57 +2151,131 @@ class CyberQuestEngine {
                 .debug-panel.hidden { display: none; }
                 .debug-header {
                     color: #00ff88;
-                    font-size: 0.95rem;
+                    font-size: 0.9rem;
                     font-weight: bold;
                     margin-bottom: 14px;
                     text-align: center;
                     border-bottom: 1px solid #00ff88;
                     padding-bottom: 10px;
+                    position: sticky;
+                    top: -20px;
+                    background: rgba(0,0,0,0.97);
+                    z-index: 1;
+                    padding-top: 4px;
                 }
                 .debug-content { color: #eaeaea; }
-                .debug-section {
-                    margin-bottom: 12px;
-                    padding: 10px;
-                    background: rgba(0,255,136,0.04);
-                    border-radius: 4px;
+
+                /* Day block */
+                .dbg-day {
+                    border-left: 3px solid #00ff88;
+                    margin: 0 0 16px 12px;
+                    padding-left: 0;
                 }
-                .debug-section h3 {
+                .dbg-day-header {
                     color: #00ff88;
                     font-size: 0.85rem;
-                    margin: 0 0 8px 0;
+                    font-weight: bold;
+                    padding: 6px 12px;
+                    background: rgba(0,255,136,0.06);
+                    border-bottom: 1px solid rgba(0,255,136,0.15);
+                    margin-bottom: 2px;
                 }
-                .debug-section button {
+
+                /* Timeline step */
+                .dbg-step {
+                    display: flex;
+                    align-items: flex-start;
+                    padding: 5px 0 5px 0;
+                    border-bottom: 1px solid rgba(255,255,255,0.04);
+                    position: relative;
+                }
+                .dbg-step::before {
+                    content: '';
+                    position: absolute;
+                    left: -2px;
+                    top: 12px;
+                    width: 8px;
+                    height: 8px;
+                    background: #00ff88;
+                    border-radius: 50%;
+                    border: 2px solid #000;
+                    z-index: 1;
+                }
+                .dbg-time {
+                    width: 52px;
+                    min-width: 52px;
+                    color: #ffaa00;
+                    font-size: 0.78rem;
+                    font-weight: bold;
+                    padding: 4px 6px 0 14px;
+                    text-align: right;
+                }
+                .dbg-body {
+                    flex: 1;
+                    padding: 2px 8px;
+                }
+                .dbg-scene-row {
+                    font-size: 0.82rem;
+                    margin-bottom: 3px;
+                }
+                .dbg-flags {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 2px;
+                }
+
+                /* Buttons inside timeline */
+                .dbg-body button, .dbg-scene-row button {
                     background: #111;
                     color: #00ff88;
                     border: 1px solid #00ff88;
-                    padding: 4px 8px;
-                    margin: 2px;
-                    cursor: pointer;
-                    border-radius: 3px;
-                    font-family: 'Courier New', monospace;
-                    font-size: 0.78rem;
-                }
-                .debug-section button:hover { background: #00ff88; color: #000; }
-                .debug-scene-grid, .debug-flags-grid {
-                    display: flex;
-                    flex-wrap: wrap;
-                    gap: 3px;
-                    align-items: center;
-                }
-                .scene-group, .flag-group {
-                    color: #666;
-                    font-size: 0.72rem;
-                    width: 100%;
-                    margin-top: 5px;
-                    display: block;
-                }
-                .debug-flag-btn {
                     padding: 3px 7px;
-                    margin: 2px;
+                    margin: 1px 2px;
                     cursor: pointer;
                     border-radius: 3px;
                     font-family: 'Courier New', monospace;
-                    font-size: 0.72rem;
+                    font-size: 0.76rem;
+                }
+                .dbg-body button:hover, .dbg-scene-row button:hover {
+                    background: #00ff88;
+                    color: #000;
+                }
+                .dbg-sp-btn {
+                    padding: 2px 5px !important;
+                    font-size: 0.7rem !important;
+                    min-width: 22px;
+                    text-align: center;
+                }
+
+                /* Story part badges */
+                .dbg-sp {
+                    display: inline-block;
+                    background: #1a1a2a;
+                    color: #667;
+                    border: 1px solid #334;
+                    border-radius: 3px;
+                    padding: 1px 4px;
+                    font-size: 0.65rem;
+                    margin: 0 1px;
+                    cursor: pointer;
+                    vertical-align: middle;
+                }
+                .dbg-sp:hover { color: #00ff88; border-color: #00ff88; }
+                .dbg-sp-active {
+                    background: #0a2e1a;
+                    color: #00ff88;
+                    border-color: #00ff88;
+                    font-weight: bold;
+                }
+
+                /* Flag buttons */
+                .debug-flag-btn {
+                    padding: 2px 5px;
+                    margin: 1px;
+                    cursor: pointer;
+                    border-radius: 3px;
+                    font-family: 'Courier New', monospace;
+                    font-size: 0.68rem;
                     border: 1px solid;
                 }
                 .debug-flag-btn.flag-on {
@@ -1951,6 +2289,11 @@ class CyberQuestEngine {
                     color: #444;
                 }
                 .debug-flag-btn:hover { background: #00ff88 !important; color: #000 !important; border-color: #00ff88 !important; }
+
+                /* Scrollbar */
+                .debug-panel::-webkit-scrollbar { width: 6px; }
+                .debug-panel::-webkit-scrollbar-track { background: #111; }
+                .debug-panel::-webkit-scrollbar-thumb { background: #00ff88; border-radius: 3px; }
             `;
             document.head.appendChild(style);
         }
