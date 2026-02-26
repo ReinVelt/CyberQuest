@@ -1105,8 +1105,15 @@ class CyberQuestEngine {
             element.innerHTML = `
                 <div class="quest-name">${quest.name}</div>
                 <div class="quest-description">${quest.description}</div>
-                ${quest.hint ? `<div class="quest-hint">💡 ${quest.hint}</div>` : ''}
+                ${quest.hint ? `<div class="quest-hint"><button class="quest-hint-btn">💡 Hint</button><p class="quest-hint-text hidden">${quest.hint}</p></div>` : ''}
             `;
+            const hintBtn = element.querySelector('.quest-hint-btn');
+            if (hintBtn) {
+                hintBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    hintBtn.nextElementSibling.classList.toggle('hidden');
+                });
+            }
             container.appendChild(element);
         });
     }

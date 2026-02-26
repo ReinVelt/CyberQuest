@@ -504,11 +504,34 @@ body {
 }
 
 .quest-hint {
+    margin-top: 8px;
+}
+
+.quest-hint-btn {
+    padding: 4px 12px;
+    background-color: var(--color-accent);
+    border: none;
+    border-radius: 4px;
+    color: var(--color-text);
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.quest-hint-btn:hover {
+    opacity: 0.85;
+}
+
+.quest-hint-text {
     font-size: 12px;
     color: var(--color-warning);
     padding: 8px;
+    margin-top: 6px;
     background-color: rgba(255, 193, 7, 0.1);
     border-radius: 4px;
+}
+
+.quest-hint-text.hidden {
+    display: none;
 }
 
 .quest-empty {
