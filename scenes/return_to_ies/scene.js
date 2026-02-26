@@ -7,10 +7,9 @@
  * Cinematic layer-cake:
  *  ▸ Letterbox bars + fade-in
  *  ▸ Headlight sweep on arrival
- *  ▸ Rain-on-window particle overlay
  *  ▸ Warm fireplace glow pulsing
  *  ▸ Emotional synthesized piano stings per section
- *  ▸ Layered ambient audio (fire, rain, wind, clock, dog whimper)
+ *  ▸ Layered ambient audio (fire, wind, clock, dog whimper)
  *  ▸ Dog idle fidget animations
  *  ▸ Section-transition cinematic wipes
  *  ▸ Vignette intensity shifts with dramatic beats
@@ -34,8 +33,6 @@ const ReturnToIesScene = {
     _audioCtx: null,
     _audioNodes: [],
     _masterGain: null,
-    _rainCanvas: null,
-    _rainRAF: null,
     _dogAnimRAF: null,
 
     hotspots: [
@@ -74,7 +71,6 @@ const ReturnToIesScene = {
         // ── Visual layers ──
         this._addNightOverlay();
         this._addFireplaceGlow();
-        this._addRainOverlay();
         this._addLetterbox();
 
         // ── Audio ──
@@ -108,9 +104,7 @@ const ReturnToIesScene = {
         this._timeoutIds = [];
         this._intervalIds = [];
         this._stopAudio();
-        if (this._rainRAF) cancelAnimationFrame(this._rainRAF);
         if (this._dogAnimRAF) cancelAnimationFrame(this._dogAnimRAF);
-        this._rainRAF = null;
         this._dogAnimRAF = null;
     },
 
@@ -166,63 +160,6 @@ const ReturnToIesScene = {
                 100% { opacity: 0.7; transform: scale(0.97); }
             }
         `);
-    },
-
-    /* ═══════════════════════════════════════════════════════
-     *  RAIN ON WINDOW — canvas particle overlay
-     * ═══════════════════════════════════════════════════════ */
-    _addRainOverlay() {
-        this._removeEl('rti-rain');
-        const canvas = document.createElement('canvas');
-        canvas.id = 'rti-rain';
-        Object.assign(canvas.style, {
-            position: 'absolute', inset: '0',
-            pointerEvents: 'none', zIndex: '3',
-            opacity: '0.35'
-        });
-        this._sceneEl().appendChild(canvas);
-        this._rainCanvas = canvas;
-
-        const resize = () => {
-            const r = canvas.parentElement.getBoundingClientRect();
-            canvas.width = r.width;
-            canvas.height = r.height;
-        };
-        resize();
-        window.addEventListener('resize', resize);
-
-        // Rain drops
-        const drops = [];
-        for (let i = 0; i < 120; i++) {
-            drops.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                len: 4 + Math.random() * 10,
-                speed: 1.2 + Math.random() * 2.5,
-                opacity: 0.15 + Math.random() * 0.25
-            });
-        }
-
-        const ctx2d = canvas.getContext('2d');
-        const draw = () => {
-            if (!this._rainCanvas) return;
-            ctx2d.clearRect(0, 0, canvas.width, canvas.height);
-            for (const d of drops) {
-                d.y += d.speed;
-                if (d.y > canvas.height) {
-                    d.y = -d.len;
-                    d.x = Math.random() * canvas.width;
-                }
-                ctx2d.strokeStyle = `rgba(180,200,220,${d.opacity})`;
-                ctx2d.lineWidth = 0.8;
-                ctx2d.beginPath();
-                ctx2d.moveTo(d.x, d.y);
-                ctx2d.lineTo(d.x - 0.3, d.y + d.len);
-                ctx2d.stroke();
-            }
-            this._rainRAF = requestAnimationFrame(draw);
-        };
-        this._rainRAF = requestAnimationFrame(draw);
     },
 
     /* ═══════════════════════════════════════════════════════
@@ -384,7 +321,7 @@ const ReturnToIesScene = {
     },
 
     /* ═══════════════════════════════════════════════════════
-     *  AMBIENT AUDIO — layered night atmosphere
+     *  AMBIENT AUDIO — 6-layer night atmosphere
      * ═══════════════════════════════════════════════════════ */
     _startAmbientAudio() {
         try {
@@ -413,17 +350,7 @@ const ReturnToIesScene = {
             fire.start();
             this._audioNodes.push(fire);
 
-            // ── 2. Rain on glass (high-shelf filtered noise) ──
-            const rain = ctx.createBufferSource();
-            rain.buffer = noiseBuf; rain.loop = true;
-            const rainHP = ctx.createBiquadFilter();
-            rainHP.type = 'highpass'; rainHP.frequency.value = 3000;
-            const rainG = ctx.createGain(); rainG.gain.value = 0.12;
-            rain.connect(rainHP).connect(rainG).connect(master);
-            rain.start();
-            this._audioNodes.push(rain);
-
-            // ── 3. Wind outside (very low filtered noise swell) ──
+            // ── 2. Wind outside (very low filtered noise swell) ──
             const wind = ctx.createBufferSource();
             wind.buffer = noiseBuf; wind.loop = true;
             const windLP = ctx.createBiquadFilter();
@@ -439,7 +366,7 @@ const ReturnToIesScene = {
             wind.start();
             this._audioNodes.push(wind, windLFO);
 
-            // ── 4. House hum ──
+            // ── 3. House hum ──
             const hum = ctx.createOscillator();
             hum.type = 'sine'; hum.frequency.value = 50;
             const humG = ctx.createGain(); humG.gain.value = 0.04;
@@ -447,7 +374,7 @@ const ReturnToIesScene = {
             hum.start();
             this._audioNodes.push(hum);
 
-            // ── 5. Clock tick ──
+            // ── 4. Clock tick ──
             const tickLoop = () => {
                 if (!this._audioCtx) return;
                 const t = ctx.currentTime;
@@ -479,7 +406,7 @@ const ReturnToIesScene = {
             const tid = setTimeout(tickLoop, 3000);
             this._timeoutIds.push(tid);
 
-            // ── 6. Random fireplace pop/crackle ──
+            // ── 5. Random fireplace pop/crackle ──
             const popLoop = () => {
                 if (!this._audioCtx) return;
                 const t = ctx.currentTime;
@@ -499,7 +426,7 @@ const ReturnToIesScene = {
             const tid2 = setTimeout(popLoop, 5000);
             this._timeoutIds.push(tid2);
 
-            // ── 7. Occasional dog whimper/sigh ──
+            // ── 6. Occasional dog whimper/sigh ──
             const dogLoop = () => {
                 if (!this._audioCtx) return;
                 const t = ctx.currentTime;
@@ -864,9 +791,8 @@ const ReturnToIesScene = {
     },
 
     _removeAllOverlays() {
-        ['rti-night', 'rti-fireglow', 'rti-rain', 'rti-ltop', 'rti-lbot',
+        ['rti-night', 'rti-fireglow', 'rti-ltop', 'rti-lbot',
          'rti-headlight', 'rti-titlecard', 'rti-wipe', 'rti-blackout'].forEach(id => this._removeEl(id));
-        if (this._rainCanvas) { this._rainCanvas = null; }
         this._removeInjectedCSS('rti-fire-css');
     },
 

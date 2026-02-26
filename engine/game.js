@@ -18,6 +18,49 @@ const ENGINE_CONFIG = Object.freeze({
 });
 
 /**
+ * Scene → clock mapping.
+ * When entering a scene the game clock is set to at least this value.
+ * If the current clock is already past this time (player explored freely),
+ * the clock is NOT wound backwards — only forward jumps are applied.
+ * Scenes not listed here leave the clock unchanged.
+ */
+const SCENE_TIME_MAP = Object.freeze({
+    // ── Day 1 — Monday Feb 9 ──
+    intro:                { day: 1, time: '07:27' },
+    home:                 { day: 1, time: '07:45' },
+    livingroom:           { day: 1, time: '08:00' },
+    tvdocumentary:        { day: 1, time: '08:15' },
+    mancave:              { day: 1, time: '09:00' },
+    sdr_bench:            { day: 1, time: '16:15' },
+    garden:               { day: 1, time: '17:00' },
+    garden_back:          { day: 1, time: '17:00' },
+    klooster:             { day: 1, time: '22:55' },
+    usb_discovery:        { day: 1, time: '22:55' },
+    car_discovery:        { day: 1, time: '23:15' },
+
+    // ── Day 2 — Tuesday Feb 10 ──
+    dwingeloo:            { day: 2, time: '11:00' },
+    westerbork_memorial:  { day: 2, time: '12:00' },
+    hackerspace:          { day: 2, time: '13:00' },
+    hackerspace_classroom:{ day: 2, time: '13:30' },
+    astron:               { day: 2, time: '15:30' },
+    lofar:                { day: 2, time: '16:00' },
+    facility:             { day: 2, time: '21:47' },
+    facility_interior:    { day: 2, time: '22:06' },
+    laser_corridor:       { day: 2, time: '22:07' },
+    facility_server:      { day: 2, time: '22:08' },
+
+    // ── Day 3 — Wednesday Feb 11 ──
+    long_night:           { day: 3, time: '01:00' },
+    debrief:              { day: 3, time: '11:00' },
+    return_to_ies:        { day: 3, time: '20:00' },
+    morning_after:        { day: 4, time: '08:00' },
+
+    // ── Epilogue — May 2026 ──
+    epilogue:             { day: 90, time: '14:00' },
+});
+
+/**
  * Utility: attach both click and touchend handlers to an element.
  * @param {HTMLElement} el
  * @param {Function} handler
@@ -406,6 +449,9 @@ class CyberQuestEngine {
         }
         
         this.currentScene = sceneId;
+
+        // Advance the game clock to match this scene's timeline
+        this._applySceneClock(sceneId);
         
         // Auto-save on every scene transition (silent — no notification)
         // Skip during loadGame() to avoid redundant write
@@ -1346,6 +1392,37 @@ class CyberQuestEngine {
         this.gameState.time = `${String(newHours).padStart(2, '0')}:${String(newMins).padStart(2, '0')}`;
         const timeEl = document.getElementById('game-time');
         if (timeEl) timeEl.textContent = this.gameState.time;
+    }
+
+    /**
+     * Set the game clock to an absolute day + time.
+     * Only moves the clock FORWARD — never backwards.
+     * @param {number} day
+     * @param {string} time  e.g. '14:30'
+     */
+    setTime(day, time) {
+        const [newH, newM] = time.split(':').map(Number);
+        const [curH, curM] = this.gameState.time.split(':').map(Number);
+        const newTotal = day * 1440 + newH * 60 + newM;
+        const curTotal = this.gameState.day * 1440 + curH * 60 + curM;
+        if (newTotal <= curTotal) return;   // never wind back
+
+        this.gameState.day = day;
+        this.gameState.time = `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}`;
+
+        const dayEl = document.getElementById('game-day');
+        const timeEl = document.getElementById('game-time');
+        if (dayEl) dayEl.textContent = `Day ${day}`;
+        if (timeEl) timeEl.textContent = this.gameState.time;
+    }
+
+    /**
+     * Auto-apply scene clock from SCENE_TIME_MAP (called inside loadScene).
+     * @param {string} sceneId
+     */
+    _applySceneClock(sceneId) {
+        const entry = SCENE_TIME_MAP[sceneId];
+        if (entry) this.setTime(entry.day, entry.time);
     }
     
     setStoryPart(part) {
