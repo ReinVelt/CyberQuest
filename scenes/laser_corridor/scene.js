@@ -34,6 +34,483 @@ const LaserCorridorScene = {
         'Standard IR modulation. Should be 38 kHz.'
     ],
 
+    /* ═══════════════════════════════════════════════════════════
+     *  AUDIO ENGINE — Web Audio API synthesised SFX
+     *  Bunker ambience, laser hum, sparks, pipe drips, phase SFX
+     * ═══════════════════════════════════════════════════════════ */
+    _audioCtx: null,
+    _audioNodes: [],
+    _audioIntervals: [],
+    _masterGain: null,
+    _laserGain: null,
+    _sensorGain: null,
+    _ambienceGain: null,
+
+    _getAudioCtx() {
+        if (!this._audioCtx || this._audioCtx.state === 'closed') {
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if (!AC) return null;
+            this._audioCtx = new AC();
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+
+    /** Start all ambient audio layers */
+    _initAudio() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+
+            // Master gain — fade in over 2s
+            const master = ctx.createGain();
+            master.gain.setValueAtTime(0, now);
+            master.gain.linearRampToValueAtTime(1, now + 2);
+            master.connect(ctx.destination);
+            this._masterGain = master;
+            this._audioNodes.push(master);
+
+            // ── TENSION DRONE (sub-bass bunker atmosphere) ──
+            const droneOsc = ctx.createOscillator();
+            droneOsc.type = 'sawtooth';
+            droneOsc.frequency.value = 36;
+            const droneFilter = ctx.createBiquadFilter();
+            droneFilter.type = 'lowpass';
+            droneFilter.frequency.value = 80;
+            droneFilter.Q.value = 3;
+            const droneGain = ctx.createGain();
+            droneGain.gain.value = 0.04;
+            droneOsc.connect(droneFilter).connect(droneGain).connect(master);
+            droneOsc.start();
+            this._audioNodes.push(droneOsc, droneFilter, droneGain);
+            this._ambienceGain = droneGain;
+
+            // Drone slow pitch wobble
+            const droneLfo = ctx.createOscillator();
+            droneLfo.type = 'sine';
+            droneLfo.frequency.value = 0.15;
+            const droneLfoG = ctx.createGain();
+            droneLfoG.gain.value = 2;
+            droneLfo.connect(droneLfoG).connect(droneOsc.frequency);
+            droneLfo.start();
+            this._audioNodes.push(droneLfo, droneLfoG);
+
+            // ── EMERGENCY LIGHT HUM (50 Hz mains buzz) ──
+            const mainsOsc = ctx.createOscillator();
+            mainsOsc.type = 'square';
+            mainsOsc.frequency.value = 50;
+            const mainsFilter = ctx.createBiquadFilter();
+            mainsFilter.type = 'bandpass';
+            mainsFilter.frequency.value = 100;
+            mainsFilter.Q.value = 5;
+            const mainsGain = ctx.createGain();
+            mainsGain.gain.value = 0.008;
+            mainsOsc.connect(mainsFilter).connect(mainsGain).connect(master);
+            mainsOsc.start();
+            this._audioNodes.push(mainsOsc, mainsFilter, mainsGain);
+
+            // ── LASER HUM (characteristic IR emitter buzz) ──
+            const laserGain = ctx.createGain();
+            laserGain.gain.value = 0.035;
+            this._laserGain = laserGain;
+
+            [120, 180, 240].forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                osc.type = i === 0 ? 'sawtooth' : 'square';
+                osc.frequency.value = freq;
+                osc.detune.value = Math.random() * 6 - 3;
+                const g = ctx.createGain();
+                g.gain.value = 0.015 - i * 0.003;
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.value = freq;
+                filter.Q.value = 8;
+                osc.connect(filter).connect(g).connect(laserGain);
+                osc.start();
+                this._audioNodes.push(osc, g, filter);
+            });
+
+            // Laser pulsing modulation
+            const laserLfo = ctx.createOscillator();
+            laserLfo.type = 'sine';
+            laserLfo.frequency.value = 0.3;
+            const laserLfoG = ctx.createGain();
+            laserLfoG.gain.value = 0.015;
+            laserLfo.connect(laserLfoG).connect(laserGain.gain);
+            laserLfo.start();
+            this._audioNodes.push(laserLfo, laserLfoG);
+
+            laserGain.connect(master);
+            this._audioNodes.push(laserGain);
+
+            // ── WATER DRIP (random timed plips) ──
+            const dripInterval = setInterval(() => {
+                try {
+                    if (!this._audioCtx || this._audioCtx.state === 'closed') {
+                        clearInterval(dripInterval);
+                        return;
+                    }
+                    const t = ctx.currentTime;
+                    const freq = 1800 + Math.random() * 600;
+                    const osc = ctx.createOscillator();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, t);
+                    osc.frequency.exponentialRampToValueAtTime(freq * 0.4, t + 0.08);
+                    const g = ctx.createGain();
+                    g.gain.setValueAtTime(0.03 + Math.random() * 0.02, t);
+                    g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+                    osc.connect(g).connect(master);
+                    osc.start(t);
+                    osc.stop(t + 0.15);
+                } catch (e) { /* ctx might be gone */ }
+            }, 2000 + Math.random() * 4000);
+            this._audioIntervals.push(dripInterval);
+
+            // ── SPARK CRACKLE (random timed electrical arcs) ──
+            const sparkInterval = setInterval(() => {
+                try {
+                    if (!this._audioCtx || this._audioCtx.state === 'closed') {
+                        clearInterval(sparkInterval);
+                        return;
+                    }
+                    const t = ctx.currentTime;
+                    const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.06), ctx.sampleRate);
+                    const data = buf.getChannelData(0);
+                    for (let s = 0; s < data.length; s++) {
+                        data[s] = (Math.random() * 2 - 1) * Math.exp(-s / (ctx.sampleRate * 0.01));
+                    }
+                    const src = ctx.createBufferSource();
+                    src.buffer = buf;
+                    const sparkFilter = ctx.createBiquadFilter();
+                    sparkFilter.type = 'highpass';
+                    sparkFilter.frequency.value = 3000;
+                    const sparkGain = ctx.createGain();
+                    sparkGain.gain.setValueAtTime(0.08 + Math.random() * 0.06, t);
+                    sparkGain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
+                    src.connect(sparkFilter).connect(sparkGain).connect(master);
+                    src.start(t);
+
+                    // Double spark sometimes
+                    if (Math.random() > 0.6) {
+                        const buf2 = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.03), ctx.sampleRate);
+                        const d2 = buf2.getChannelData(0);
+                        for (let s = 0; s < d2.length; s++) {
+                            d2[s] = (Math.random() * 2 - 1) * Math.exp(-s / (ctx.sampleRate * 0.008));
+                        }
+                        const src2 = ctx.createBufferSource();
+                        src2.buffer = buf2;
+                        const g2 = ctx.createGain();
+                        g2.gain.setValueAtTime(0.05, t + 0.08);
+                        g2.gain.exponentialRampToValueAtTime(0.001, t + 0.14);
+                        src2.connect(sparkFilter).connect(g2).connect(master);
+                        src2.start(t + 0.07);
+                    }
+                } catch (e) { /* ctx might be gone */ }
+            }, 3000 + Math.random() * 5000);
+            this._audioIntervals.push(sparkInterval);
+
+        } catch (e) {
+            console.warn('[LaserCorridor] Audio init failed:', e);
+        }
+    },
+
+    // ─── ONE-SHOT SFX ─────────────────────────────────────────
+
+    /** Flipper Zero electronic chirp */
+    _sfxFlipperBeep() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(800, t);
+            osc.frequency.linearRampToValueAtTime(1800, t + 0.08);
+            osc.frequency.setValueAtTime(2200, t + 0.12);
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0.06, t);
+            g.gain.setValueAtTime(0.08, t + 0.1);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 1500;
+            filter.Q.value = 2;
+            osc.connect(filter).connect(g).connect(this._masterGain || ctx.destination);
+            osc.start(t);
+            osc.stop(t + 0.25);
+        } catch (e) { /* silent */ }
+    },
+
+    /** Flipper IR replay (descending confirmation tones) */
+    _sfxFlipperReplay() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime;
+            const dest = this._masterGain || ctx.destination;
+            [1600, 1200, 800].forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                osc.type = 'square';
+                osc.frequency.value = freq;
+                const g = ctx.createGain();
+                g.gain.setValueAtTime(0, t + i * 0.15);
+                g.gain.linearRampToValueAtTime(0.06, t + i * 0.15 + 0.02);
+                g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.15 + 0.12);
+                osc.connect(g).connect(dest);
+                osc.start(t + i * 0.15);
+                osc.stop(t + i * 0.15 + 0.15);
+            });
+        } catch (e) { /* silent */ }
+    },
+
+    /** Laser beam dying — descending whine + pop */
+    _sfxLaserDie(delay) {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime + (delay || 0);
+            const dest = this._masterGain || ctx.destination;
+            const osc = ctx.createOscillator();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(400, t);
+            osc.frequency.exponentialRampToValueAtTime(40, t + 0.6);
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'lowpass';
+            filter.frequency.setValueAtTime(2000, t);
+            filter.frequency.exponentialRampToValueAtTime(100, t + 0.5);
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0.07, t);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 0.7);
+            osc.connect(filter).connect(g).connect(dest);
+            osc.start(t);
+            osc.stop(t + 0.75);
+            // Pop at the end
+            const pop = ctx.createOscillator();
+            pop.type = 'sine';
+            pop.frequency.value = 60;
+            const popG = ctx.createGain();
+            popG.gain.setValueAtTime(0.1, t + 0.5);
+            popG.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
+            pop.connect(popG).connect(dest);
+            pop.start(t + 0.5);
+            pop.stop(t + 0.65);
+        } catch (e) { /* silent */ }
+    },
+
+    /** Sensor activation whir (servo spin-up) */
+    _sfxSensorActivate() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime;
+            const dest = this._masterGain || ctx.destination;
+            const osc = ctx.createOscillator();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(100, t);
+            osc.frequency.exponentialRampToValueAtTime(600, t + 1.5);
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 400;
+            filter.Q.value = 3;
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0, t);
+            g.gain.linearRampToValueAtTime(0.04, t + 0.3);
+            g.gain.setValueAtTime(0.04, t + 1.2);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 2);
+            osc.connect(filter).connect(g).connect(dest);
+            osc.start(t);
+            osc.stop(t + 2.1);
+        } catch (e) { /* silent */ }
+    },
+
+    /** HackRF ultrasonic jam (high-pitched interference whine) */
+    _sfxHackRFJam() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime;
+            const dest = this._masterGain || ctx.destination;
+            const osc = ctx.createOscillator();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(8000, t);
+            osc.frequency.linearRampToValueAtTime(12000, t + 0.5);
+            osc.frequency.setValueAtTime(10000, t + 1);
+            osc.frequency.linearRampToValueAtTime(14000, t + 2);
+            osc.frequency.exponentialRampToValueAtTime(6000, t + 3);
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 10000;
+            filter.Q.value = 2;
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0, t);
+            g.gain.linearRampToValueAtTime(0.03, t + 0.3);
+            g.gain.setValueAtTime(0.04, t + 1);
+            g.gain.linearRampToValueAtTime(0.02, t + 2.5);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 3.5);
+            osc.connect(filter).connect(g).connect(dest);
+            osc.start(t);
+            osc.stop(t + 3.6);
+            // Warbling modulation
+            const lfo = ctx.createOscillator();
+            lfo.type = 'sine';
+            lfo.frequency.value = 6;
+            const lfoG = ctx.createGain();
+            lfoG.gain.value = 800;
+            lfo.connect(lfoG).connect(osc.frequency);
+            lfo.start(t);
+            lfo.stop(t + 3.6);
+        } catch (e) { /* silent */ }
+    },
+
+    /** Sensor jam/die sound (stuttering off) */
+    _sfxSensorDie(delay) {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime + (delay || 0);
+            const dest = this._masterGain || ctx.destination;
+            const osc = ctx.createOscillator();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(500, t);
+            osc.frequency.exponentialRampToValueAtTime(80, t + 0.8);
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0.05, t);
+            g.gain.setValueAtTime(0.01, t + 0.1);
+            g.gain.setValueAtTime(0.06, t + 0.15);
+            g.gain.setValueAtTime(0.01, t + 0.25);
+            g.gain.setValueAtTime(0.04, t + 0.35);
+            g.gain.setValueAtTime(0.01, t + 0.5);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 0.9);
+            osc.connect(g).connect(dest);
+            osc.start(t);
+            osc.stop(t + 1);
+        } catch (e) { /* silent */ }
+    },
+
+    /** Heavy mechanical door clunk */
+    _sfxDoorClunk() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime;
+            const dest = this._masterGain || ctx.destination;
+            // Deep impact thud
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(60, t);
+            osc.frequency.exponentialRampToValueAtTime(25, t + 0.4);
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0.3, t);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 0.5);
+            osc.connect(g).connect(dest);
+            osc.start(t);
+            osc.stop(t + 0.55);
+            // Metallic ring
+            const ring = ctx.createOscillator();
+            ring.type = 'sine';
+            ring.frequency.value = 440;
+            const ringG = ctx.createGain();
+            ringG.gain.setValueAtTime(0.04, t + 0.02);
+            ringG.gain.exponentialRampToValueAtTime(0.001, t + 0.8);
+            const ringF = ctx.createBiquadFilter();
+            ringF.type = 'bandpass';
+            ringF.frequency.value = 500;
+            ringF.Q.value = 10;
+            ring.connect(ringF).connect(ringG).connect(dest);
+            ring.start(t);
+            ring.stop(t + 0.85);
+            // Noise burst (mechanical clatter)
+            const buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * 0.1), ctx.sampleRate);
+            const data = buf.getChannelData(0);
+            for (let s = 0; s < data.length; s++) {
+                data[s] = (Math.random() * 2 - 1) * Math.exp(-s / (ctx.sampleRate * 0.02));
+            }
+            const src = ctx.createBufferSource();
+            src.buffer = buf;
+            const nG = ctx.createGain();
+            nG.gain.setValueAtTime(0.08, t);
+            nG.gain.exponentialRampToValueAtTime(0.001, t + 0.15);
+            const nF = ctx.createBiquadFilter();
+            nF.type = 'lowpass';
+            nF.frequency.value = 1200;
+            src.connect(nF).connect(nG).connect(dest);
+            src.start(t);
+        } catch (e) { /* silent */ }
+    },
+
+    /** Keypad beep */
+    _sfxKeypadBeep() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime;
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.value = 1047;
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0.06, t);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+            osc.connect(g).connect(this._masterGain || ctx.destination);
+            osc.start(t);
+            osc.stop(t + 0.12);
+        } catch (e) { /* silent */ }
+    },
+
+    /** Biometric success chime (ascending arpeggio) */
+    _sfxBiometricSuccess() {
+        try {
+            const ctx = this._getAudioCtx();
+            if (!ctx) return;
+            const t = ctx.currentTime;
+            const dest = this._masterGain || ctx.destination;
+            [523, 659, 784, 1047].forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                const g = ctx.createGain();
+                g.gain.setValueAtTime(0, t + i * 0.12);
+                g.gain.linearRampToValueAtTime(0.06, t + i * 0.12 + 0.02);
+                g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.12 + 0.25);
+                osc.connect(g).connect(dest);
+                osc.start(t + i * 0.12);
+                osc.stop(t + i * 0.12 + 0.3);
+            });
+        } catch (e) { /* silent */ }
+    },
+
+    /** Fade out laser hum (called during _disableLasers) */
+    _fadeOutLaserHum() {
+        try {
+            if (this._laserGain && this._audioCtx) {
+                const t = this._audioCtx.currentTime;
+                this._laserGain.gain.setValueAtTime(this._laserGain.gain.value, t);
+                this._laserGain.gain.linearRampToValueAtTime(0, t + 2.5);
+            }
+        } catch (e) { /* silent */ }
+    },
+
+    /** Stop all audio and clean up */
+    _stopAudio() {
+        this._audioIntervals.forEach(id => clearInterval(id));
+        this._audioIntervals = [];
+        this._audioNodes.forEach(node => {
+            try {
+                if (node.stop) node.stop();
+                if (node.disconnect) node.disconnect();
+            } catch (e) { /* already stopped */ }
+        });
+        this._audioNodes = [];
+        if (this._audioCtx) {
+            try { this._audioCtx.close(); } catch (e) { /* ok */ }
+            this._audioCtx = null;
+        }
+        this._masterGain = null;
+        this._laserGain = null;
+        this._sensorGain = null;
+        this._ambienceGain = null;
+    },
+
     // ── Scene state ──────────────────────────────────────────
     state: {
         phase: 1,
@@ -131,6 +608,7 @@ const LaserCorridorScene = {
                     ], () => {
                         s.laserAnalysed = true;
                         game.setFlag('laser_grid_analysed', true);
+                        LaserCorridorScene._sfxFlipperBeep();
                         game.showNotification('Flipper Zero IR receiver active');
                         // Now show the puzzle
                         setTimeout(() => {
@@ -479,6 +957,9 @@ const LaserCorridorScene = {
         // Create dynamic overlay elements (lasers, sensors, door lock, biometric)
         LaserCorridorScene._createOverlays();
 
+        // Start ambient audio (bunker drone, laser hum, drips, sparks)
+        LaserCorridorScene._initAudio();
+
         setTimeout(() => {
             game.startDialogue([
                 { speaker: '', text: '*Concrete stairs end. A heavy fire door opens into a long corridor.*' },
@@ -512,6 +993,8 @@ const LaserCorridorScene = {
         // Remove dynamic overlays
         const overlay = document.getElementById('laser-corridor-overlay');
         if (overlay) overlay.remove();
+        // Stop all audio
+        LaserCorridorScene._stopAudio();
     },
 
     /** Update tool overlay visual state based on current phase */
@@ -588,9 +1071,15 @@ const LaserCorridorScene = {
             game.showNotification('Lasers disabled — motion sensors activated!');
             LaserCorridorScene._updateToolOverlays();
 
+            // Audio: Flipper replay SFX + fade laser hum + beam death sounds
+            LaserCorridorScene._sfxFlipperReplay();
+            LaserCorridorScene._fadeOutLaserHum();
+            [0, 0.4, 0.8, 1.2, 1.6].forEach(d => LaserCorridorScene._sfxLaserDie(d));
+
             // Animate lasers dying one by one
             LaserCorridorScene._animateLaserDeath();
-            // Activate sensor pods (green dormant → red active)
+            // Activate sensor pods (green dormant → red active) + activation whir
+            LaserCorridorScene._sfxSensorActivate();
             LaserCorridorScene._activateSensors();
         });
     },
@@ -654,6 +1143,10 @@ const LaserCorridorScene = {
             game.showNotification('Sensors jammed — approach the biometric panel');
             LaserCorridorScene._updateToolOverlays();
 
+            // Audio: HackRF jam whine + individual sensor death sounds
+            LaserCorridorScene._sfxHackRFJam();
+            [0, 0.5, 1.0].forEach(d => LaserCorridorScene._sfxSensorDie(d));
+
             // Animate sensors jamming and dying
             LaserCorridorScene._animateSensorDeath();
         });
@@ -714,6 +1207,11 @@ const LaserCorridorScene = {
             game.questManager.updateProgress('breach_corridor', 'door_unlocked');
             game.completeQuest('breach_corridor');
             game.showNotification('Door unlocked — Enter the server room');
+
+            // Audio: keypad beep, success chime, mechanical clunk
+            LaserCorridorScene._sfxKeypadBeep();
+            setTimeout(() => LaserCorridorScene._sfxBiometricSuccess(), 300);
+            setTimeout(() => LaserCorridorScene._sfxDoorClunk(), 900);
 
             // Animate door lock: red → green
             LaserCorridorScene._animateDoorUnlock();
