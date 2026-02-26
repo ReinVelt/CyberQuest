@@ -257,18 +257,25 @@ const LaserCorridorScene = {
             width: 8,
             height: 12,
             cursor: 'pointer',
-            enabled: (game) => {
-                const s = LaserCorridorScene.state;
-                return s.phase >= 3;
-            },
             action: function(game) {
                 const s = LaserCorridorScene.state;
 
-                if (s.phase < 3) {
+                if (s.phase === 1) {
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'Biometric panel. Can\'t reach it yet — lasers in the way.' }
+                        { speaker: 'Ryan', text: 'Biometric panel by the door. Can\'t reach it — lasers in the way.' },
+                        { speaker: 'Ryan', text: 'One step at a time. Lasers first.' }
                     ]);
-                } else if (s.doorUnlocked) {
+                    return;
+                }
+                if (s.phase === 2) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'Biometric panel. But motion sensors would spot me before I get there.' },
+                        { speaker: 'Ryan', text: 'Deal with the sensors first.' }
+                    ]);
+                    return;
+                }
+
+                if (s.doorUnlocked) {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Panel shows green. Door is unlocked.' }
                     ]);
@@ -469,6 +476,9 @@ const LaserCorridorScene = {
         game.setFlag('laser_corridor_entered', true);
         game.showNotification('Basement Level B — Security Corridor');
 
+        // Create dynamic overlay elements (lasers, sensors, door lock, biometric)
+        LaserCorridorScene._createOverlays();
+
         setTimeout(() => {
             game.startDialogue([
                 { speaker: '', text: '*Concrete stairs end. A heavy fire door opens into a long corridor.*' },
@@ -499,7 +509,9 @@ const LaserCorridorScene = {
     },
 
     onExit: () => {
-        // Cleanup
+        // Remove dynamic overlays
+        const overlay = document.getElementById('laser-corridor-overlay');
+        if (overlay) overlay.remove();
     },
 
     /** Update tool overlay visual state based on current phase */
@@ -554,7 +566,7 @@ const LaserCorridorScene = {
         }
     },
 
-    /** Phase 1 completion: disable lasers */
+    /** Phase 1 completion: disable lasers with animated beam death */
     _disableLasers: (game) => {
         const s = LaserCorridorScene.state;
         game.startDialogue([
@@ -575,6 +587,11 @@ const LaserCorridorScene = {
             game.setFlag('lasers_disabled', true);
             game.showNotification('Lasers disabled — motion sensors activated!');
             LaserCorridorScene._updateToolOverlays();
+
+            // Animate lasers dying one by one
+            LaserCorridorScene._animateLaserDeath();
+            // Activate sensor pods (green dormant → red active)
+            LaserCorridorScene._activateSensors();
         });
     },
 
@@ -613,7 +630,7 @@ const LaserCorridorScene = {
         }
     },
 
-    /** Phase 2 completion: disable sensors */
+    /** Phase 2 completion: disable sensors with animated jam sequence */
     _disableSensors: (game) => {
         const s = LaserCorridorScene.state;
         game.startDialogue([
@@ -636,6 +653,9 @@ const LaserCorridorScene = {
             game.setFlag('sensors_jammed', true);
             game.showNotification('Sensors jammed — approach the biometric panel');
             LaserCorridorScene._updateToolOverlays();
+
+            // Animate sensors jamming and dying
+            LaserCorridorScene._animateSensorDeath();
         });
     },
 
@@ -669,7 +689,7 @@ const LaserCorridorScene = {
         }
     },
 
-    /** Phase 3 completion: unlock door */
+    /** Phase 3 completion: unlock door with visual feedback */
     _unlockDoor: (game) => {
         const s = LaserCorridorScene.state;
         game.startDialogue([
@@ -694,7 +714,430 @@ const LaserCorridorScene = {
             game.questManager.updateProgress('breach_corridor', 'door_unlocked');
             game.completeQuest('breach_corridor');
             game.showNotification('Door unlocked — Enter the server room');
+
+            // Animate door lock: red → green
+            LaserCorridorScene._animateDoorUnlock();
+            // Update biometric panel: LOCKED → UNLOCKED
+            LaserCorridorScene._animateBiometricUnlock();
         });
+    },
+
+    // ═══════════════════════════════════════════════════════════
+    // DYNAMIC OVERLAY SYSTEM
+    // ═══════════════════════════════════════════════════════════
+
+    /**
+     * Create the inline SVG overlay with all dynamic elements:
+     * - Laser beams (5 beams + emitter LEDs + haze) — Phase 1
+     * - Sensor pods (3 pods with LEDs + cones) — visible all phases
+     * - Door lock indicator — until unlocked
+     * - Biometric panel status LED + text — until unlocked
+     */
+    _createOverlays: () => {
+        // Remove any existing overlay
+        const old = document.getElementById('laser-corridor-overlay');
+        if (old) old.remove();
+
+        const NS = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(NS, 'svg');
+        svg.id = 'laser-corridor-overlay';
+        svg.setAttribute('viewBox', '0 0 1920 1080');
+        svg.setAttribute('preserveAspectRatio', 'none');
+        svg.classList.add('scene-overlay-svg');
+
+        // Re-use filter defs (blur3 is in bg SVG, but overlay needs its own)
+        const defs = document.createElementNS(NS, 'defs');
+        defs.innerHTML = `
+            <filter id="ov-blur3"><feGaussianBlur stdDeviation="3"/></filter>
+            <filter id="ov-blur8"><feGaussianBlur stdDeviation="8"/></filter>
+            <filter id="ov-blur25"><feGaussianBlur stdDeviation="25"/></filter>
+        `;
+        svg.appendChild(defs);
+
+        // ── LASER GROUP (Phase 1) ─────────────────────────────
+        const laserGroup = document.createElementNS(NS, 'g');
+        laserGroup.id = 'overlay-lasers';
+        laserGroup.innerHTML = `
+            <!-- Emitter LEDs -->
+            <circle cx="212" cy="354" r="2" fill="#ff0000" opacity="0.8" class="emitter-led">
+                <animate attributeName="opacity" values="0.8;0.3;0.8" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="360" cy="403.5" r="1.8" fill="#ff0000" opacity="0.7" class="emitter-led">
+                <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.8s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="479" cy="443" r="1.5" fill="#ff0000" opacity="0.6" class="emitter-led">
+                <animate attributeName="opacity" values="0.6;0.15;0.6" dur="2s" repeatCount="indefinite"/>
+            </circle>
+
+            <!-- Beam 1: low diagonal sweeping -->
+            <g class="laser-beam" data-beam="1" opacity="0.7">
+                <line x1="212" y1="354" x2="1700" y2="600" stroke="#ff0000" stroke-width="2">
+                    <animate attributeName="y2" values="600;500;650;550;600" dur="6s" repeatCount="indefinite"/>
+                </line>
+                <line x1="212" y1="354" x2="1700" y2="600" stroke="#ff0000" stroke-width="8" opacity="0.15" filter="url(#ov-blur3)">
+                    <animate attributeName="y2" values="600;500;650;550;600" dur="6s" repeatCount="indefinite"/>
+                </line>
+            </g>
+
+            <!-- Beam 2: mid horizontal pulsing -->
+            <g class="laser-beam" data-beam="2" opacity="0.6">
+                <line x1="360" y1="403" x2="1560" y2="480" stroke="#ff0000" stroke-width="1.8">
+                    <animate attributeName="y1" values="403;380;420;390;403" dur="8s" repeatCount="indefinite"/>
+                    <animate attributeName="y2" values="480;500;460;490;480" dur="8s" repeatCount="indefinite"/>
+                </line>
+                <line x1="360" y1="403" x2="1560" y2="480" stroke="#ff0000" stroke-width="7" opacity="0.12" filter="url(#ov-blur3)">
+                    <animate attributeName="y1" values="403;380;420;390;403" dur="8s" repeatCount="indefinite"/>
+                    <animate attributeName="y2" values="480;500;460;490;480" dur="8s" repeatCount="indefinite"/>
+                </line>
+            </g>
+
+            <!-- Beam 3: high crossing -->
+            <g class="laser-beam" data-beam="3" opacity="0.5">
+                <line x1="479" y1="443" x2="1420" y2="350" stroke="#ff0000" stroke-width="1.5">
+                    <animate attributeName="x2" values="1420;1350;1450;1380;1420" dur="7s" repeatCount="indefinite"/>
+                    <animate attributeName="y2" values="350;370;340;360;350" dur="7s" repeatCount="indefinite"/>
+                </line>
+                <line x1="479" y1="443" x2="1420" y2="350" stroke="#ff0000" stroke-width="6" opacity="0.1" filter="url(#ov-blur3)">
+                    <animate attributeName="x2" values="1420;1350;1450;1380;1420" dur="7s" repeatCount="indefinite"/>
+                    <animate attributeName="y2" values="350;370;340;360;350" dur="7s" repeatCount="indefinite"/>
+                </line>
+            </g>
+
+            <!-- Beam 4: floor-level tripwire -->
+            <g class="laser-beam" data-beam="4" opacity="0.65">
+                <line x1="180" y1="680" x2="1740" y2="690" stroke="#ff0000" stroke-width="1.5"/>
+                <line x1="180" y1="680" x2="1740" y2="690" stroke="#ff0000" stroke-width="6" opacity="0.12" filter="url(#ov-blur3)"/>
+                <line x1="180" y1="684" x2="1740" y2="694" stroke="#ff0000" stroke-width="4" opacity="0.04" filter="url(#ov-blur8)"/>
+            </g>
+
+            <!-- Beam 5: vertical slicer -->
+            <g class="laser-beam" data-beam="5" opacity="0.55">
+                <line x1="960" y1="300" x2="960" y2="690" stroke="#ff0000" stroke-width="1.5">
+                    <animate attributeName="x1" values="960;800;1100;900;960" dur="10s" repeatCount="indefinite"/>
+                    <animate attributeName="x2" values="960;820;1080;910;960" dur="10s" repeatCount="indefinite"/>
+                </line>
+                <line x1="960" y1="300" x2="960" y2="690" stroke="#ff0000" stroke-width="8" opacity="0.08" filter="url(#ov-blur3)">
+                    <animate attributeName="x1" values="960;800;1100;900;960" dur="10s" repeatCount="indefinite"/>
+                    <animate attributeName="x2" values="960;820;1080;910;960" dur="10s" repeatCount="indefinite"/>
+                </line>
+            </g>
+
+            <!-- Red atmospheric haze -->
+            <rect class="laser-haze" x="200" y="280" width="1520" height="430" fill="rgba(255,0,0,0.02)" filter="url(#ov-blur25)">
+                <animate attributeName="opacity" values="1;0.5;0.8;0.4;1" dur="5s" repeatCount="indefinite"/>
+            </rect>
+        `;
+        svg.appendChild(laserGroup);
+
+        // ── SENSOR GROUP ──────────────────────────────────────
+        const sensorGroup = document.createElementNS(NS, 'g');
+        sensorGroup.id = 'overlay-sensors';
+        sensorGroup.innerHTML = `
+            <!-- Sensor Pod 1 (near, left-center) -->
+            <g class="sensor-pod" data-pod="1" transform="translate(700,310)">
+                <rect x="-18" y="-12" width="36" height="18" rx="4" fill="#181824"/>
+                <rect x="-14" y="-8" width="28" height="12" rx="2" fill="#1e2830"/>
+                <circle cx="0" cy="-2" r="5" fill="#0a0a12"/>
+                <circle cx="0" cy="-2" r="3" class="sensor-led" fill="#00ff40" opacity="0.3">
+                    <animate attributeName="opacity" values="0.3;0.08;0.3" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <polygon class="sensor-cone" points="0,6 -80,250 80,250" fill="rgba(0,200,60,0.01)" opacity="0.5"/>
+            </g>
+
+            <!-- Sensor Pod 2 (mid, right-center) -->
+            <g class="sensor-pod" data-pod="2" transform="translate(1100,330)">
+                <rect x="-16" y="-10" width="32" height="16" rx="3" fill="#181824"/>
+                <rect x="-12" y="-7" width="24" height="10" rx="2" fill="#1e2830"/>
+                <circle cx="0" cy="-2" r="4" fill="#0a0a12"/>
+                <circle cx="0" cy="-2" r="2.5" class="sensor-led" fill="#00ff40" opacity="0.25">
+                    <animate attributeName="opacity" values="0.25;0.06;0.25" dur="3.5s" repeatCount="indefinite"/>
+                </circle>
+                <polygon class="sensor-cone" points="0,5 -60,200 60,200" fill="rgba(0,200,60,0.01)" opacity="0.4"/>
+            </g>
+
+            <!-- Sensor Pod 3 (far, center) -->
+            <g class="sensor-pod" data-pod="3" transform="translate(920,295)">
+                <rect x="-12" y="-8" width="24" height="12" rx="3" fill="#181824"/>
+                <circle cx="0" cy="-2" r="3" fill="#0a0a12"/>
+                <circle cx="0" cy="-2" r="2" class="sensor-led" fill="#00ff40" opacity="0.2">
+                    <animate attributeName="opacity" values="0.2;0.05;0.2" dur="4s" repeatCount="indefinite"/>
+                </circle>
+            </g>
+        `;
+        svg.appendChild(sensorGroup);
+
+        // ── DOOR LOCK INDICATOR ───────────────────────────────
+        const lockGroup = document.createElementNS(NS, 'g');
+        lockGroup.id = 'overlay-door-lock';
+        lockGroup.innerHTML = `
+            <g transform="translate(660, 310)">
+                <circle cx="520" cy="140" r="5" class="lock-dot" fill="#ff2200" opacity="0.8">
+                    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="520" cy="140" r="12" class="lock-ring" fill="none" stroke="#ff2200" stroke-width="0.5" opacity="0">
+                    <animate attributeName="opacity" values="0;0.3;0" dur="2s" repeatCount="indefinite"/>
+                    <animate attributeName="r" values="12;22;12" dur="2s" repeatCount="indefinite"/>
+                </circle>
+            </g>
+        `;
+        svg.appendChild(lockGroup);
+
+        // ── BIOMETRIC PANEL STATUS ─────────────────────────────
+        const bioGroup = document.createElementNS(NS, 'g');
+        bioGroup.id = 'overlay-biometric';
+        bioGroup.innerHTML = `
+            <g transform="translate(1290, 420)">
+                <circle cx="22" cy="-32" r="2" class="bio-led" fill="#ff4400" opacity="0.7">
+                    <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.5s" repeatCount="indefinite"/>
+                </circle>
+                <text x="0" y="-16" text-anchor="middle" font-family="monospace" font-size="7" fill="#4488cc" opacity="0.6">BIOMETRIC</text>
+                <text x="0" y="-8" text-anchor="middle" font-family="monospace" font-size="6" class="bio-status-text" fill="#ff4400" opacity="0.7">LOCKED</text>
+            </g>
+        `;
+        svg.appendChild(bioGroup);
+
+        // Insert into scene container
+        const container = document.getElementById('scene-container');
+        if (container) {
+            container.appendChild(svg);
+        }
+    },
+
+    // ═══════════════════════════════════════════════════════════
+    // OVERLAY ANIMATIONS
+    // ═══════════════════════════════════════════════════════════
+
+    /** Animate laser beams dying one by one, then remove laser group */
+    _animateLaserDeath: () => {
+        const laserGroup = document.getElementById('overlay-lasers');
+        if (!laserGroup) return;
+
+        const beams = laserGroup.querySelectorAll('.laser-beam');
+        const leds  = laserGroup.querySelectorAll('.emitter-led');
+        const haze  = laserGroup.querySelector('.laser-haze');
+
+        // Stagger beam death: beam 1 at 0ms, beam 3 at 400ms, beam 2 at 800ms, beam 5 at 1200ms, beam 4 at 1600ms
+        const deathOrder = [0, 2, 1, 4, 3]; // indices matching data-beam 1,3,2,5,4
+        deathOrder.forEach((idx, i) => {
+            const beam = beams[idx];
+            if (!beam) return;
+            setTimeout(() => {
+                beam.style.animation = 'laser-flicker-die 0.8s ease-out forwards';
+            }, i * 400);
+        });
+
+        // Fade emitter LEDs
+        leds.forEach((led, i) => {
+            setTimeout(() => {
+                // Stop SMIL animation and fade
+                const anims = led.querySelectorAll('animate');
+                anims.forEach(a => a.setAttribute('repeatCount', '0'));
+                led.style.transition = 'opacity 0.6s ease-out';
+                led.setAttribute('opacity', '0.05');
+                led.setAttribute('fill', '#330000');
+            }, 600 + i * 400);
+        });
+
+        // Fade haze
+        if (haze) {
+            setTimeout(() => {
+                const anims = haze.querySelectorAll('animate');
+                anims.forEach(a => a.setAttribute('repeatCount', '0'));
+                haze.style.transition = 'opacity 2s ease-out';
+                haze.setAttribute('opacity', '0');
+            }, 1800);
+        }
+
+        // Remove entire laser group after animations complete
+        setTimeout(() => {
+            if (laserGroup.parentNode) {
+                laserGroup.style.transition = 'opacity 0.5s';
+                laserGroup.style.opacity = '0';
+                setTimeout(() => laserGroup.remove(), 600);
+            }
+        }, 3200);
+    },
+
+    /** Activate sensor pods: dormant green → active red pulsing with cones */
+    _activateSensors: () => {
+        const sensorGroup = document.getElementById('overlay-sensors');
+        if (!sensorGroup) return;
+
+        const pods = sensorGroup.querySelectorAll('.sensor-pod');
+        pods.forEach((pod, i) => {
+            setTimeout(() => {
+                const led = pod.querySelector('.sensor-led');
+                const cone = pod.querySelector('.sensor-cone');
+
+                if (led) {
+                    // Stop SMIL dormant animation
+                    const anims = led.querySelectorAll('animate');
+                    anims.forEach(a => a.remove());
+                    // Flash to red
+                    led.setAttribute('fill', '#ff2200');
+                    led.setAttribute('opacity', '0.8');
+
+                    // Create new active SMIL pulsing animation
+                    const NS = 'http://www.w3.org/2000/svg';
+                    const anim = document.createElementNS(NS, 'animate');
+                    anim.setAttribute('attributeName', 'opacity');
+                    anim.setAttribute('values', '0.8;0.2;0.8');
+                    anim.setAttribute('dur', (1.8 + i * 0.2) + 's');
+                    anim.setAttribute('repeatCount', 'indefinite');
+                    led.appendChild(anim);
+                }
+
+                if (cone) {
+                    // Brighten cone + change color to red-ish
+                    cone.setAttribute('fill', 'rgba(255,40,0,0.03)');
+                    cone.setAttribute('opacity', '1');
+
+                    const NS = 'http://www.w3.org/2000/svg';
+                    const anim = document.createElementNS(NS, 'animate');
+                    anim.setAttribute('attributeName', 'opacity');
+                    anim.setAttribute('values', '1;0.3;1');
+                    anim.setAttribute('dur', (2 + i * 0.3) + 's');
+                    anim.setAttribute('repeatCount', 'indefinite');
+                    cone.appendChild(anim);
+                }
+            }, i * 300);
+        });
+    },
+
+    /** Animate sensors getting jammed: red → amber flicker → dark */
+    _animateSensorDeath: () => {
+        const sensorGroup = document.getElementById('overlay-sensors');
+        if (!sensorGroup) return;
+
+        const pods = sensorGroup.querySelectorAll('.sensor-pod');
+        pods.forEach((pod, i) => {
+            const led = pod.querySelector('.sensor-led');
+            const cone = pod.querySelector('.sensor-cone');
+
+            setTimeout(() => {
+                if (led) {
+                    // Remove SMIL animations
+                    const anims = led.querySelectorAll('animate');
+                    anims.forEach(a => a.remove());
+
+                    // Amber flicker phase
+                    led.setAttribute('fill', '#ffaa00');
+                    led.setAttribute('opacity', '0.9');
+
+                    // Fast strobe
+                    let flicks = 0;
+                    const strobeInterval = setInterval(() => {
+                        flicks++;
+                        const on = flicks % 2 === 0;
+                        led.setAttribute('opacity', on ? '0.8' : '0.1');
+                        led.setAttribute('fill', on ? '#ffaa00' : '#ff4400');
+                        if (flicks > 8) {
+                            clearInterval(strobeInterval);
+                            // Go dark
+                            led.setAttribute('fill', '#220800');
+                            led.setAttribute('opacity', '0.15');
+                        }
+                    }, 100);
+                }
+
+                if (cone) {
+                    // Remove SMIL and fade
+                    const anims = cone.querySelectorAll('animate');
+                    anims.forEach(a => a.remove());
+                    cone.style.transition = 'opacity 1s ease-out';
+                    cone.setAttribute('opacity', '0');
+                }
+            }, i * 500);
+        });
+
+        // Fade entire sensor overlay after jam completes
+        setTimeout(() => {
+            if (sensorGroup.parentNode) {
+                // Keep housings barely visible (dead hardware)
+                pods.forEach(pod => {
+                    const led = pod.querySelector('.sensor-led');
+                    if (led) {
+                        led.setAttribute('opacity', '0.08');
+                        led.setAttribute('fill', '#111');
+                    }
+                });
+            }
+        }, 2500);
+    },
+
+    /** Animate door lock indicator: red → green */
+    _animateDoorUnlock: () => {
+        const lockGroup = document.getElementById('overlay-door-lock');
+        if (!lockGroup) return;
+
+        const dot  = lockGroup.querySelector('.lock-dot');
+        const ring = lockGroup.querySelector('.lock-ring');
+
+        if (dot) {
+            // Remove SMIL pulse
+            const anims = dot.querySelectorAll('animate');
+            anims.forEach(a => a.remove());
+
+            // Flash sequence: red → amber → green
+            dot.setAttribute('fill', '#ff8800');
+            dot.setAttribute('opacity', '0.9');
+
+            setTimeout(() => {
+                dot.setAttribute('fill', '#00ff40');
+                dot.setAttribute('opacity', '1');
+
+                // Add gentle green pulse
+                const NS = 'http://www.w3.org/2000/svg';
+                const anim = document.createElementNS(NS, 'animate');
+                anim.setAttribute('attributeName', 'opacity');
+                anim.setAttribute('values', '1;0.6;1');
+                anim.setAttribute('dur', '2s');
+                anim.setAttribute('repeatCount', 'indefinite');
+                dot.appendChild(anim);
+            }, 400);
+        }
+
+        if (ring) {
+            // Remove SMIL and switch to green
+            const anims = ring.querySelectorAll('animate');
+            anims.forEach(a => a.remove());
+            ring.setAttribute('stroke', '#00ff40');
+            ring.setAttribute('opacity', '0.3');
+
+            setTimeout(() => {
+                ring.style.transition = 'opacity 2s';
+                ring.setAttribute('opacity', '0');
+            }, 1500);
+        }
+    },
+
+    /** Animate biometric panel: LOCKED → UNLOCKED */
+    _animateBiometricUnlock: () => {
+        const bioGroup = document.getElementById('overlay-biometric');
+        if (!bioGroup) return;
+
+        const led  = bioGroup.querySelector('.bio-led');
+        const text = bioGroup.querySelector('.bio-status-text');
+
+        if (led) {
+            const anims = led.querySelectorAll('animate');
+            anims.forEach(a => a.remove());
+            led.setAttribute('fill', '#00ff40');
+            led.setAttribute('opacity', '0.8');
+
+            const NS = 'http://www.w3.org/2000/svg';
+            const anim = document.createElementNS(NS, 'animate');
+            anim.setAttribute('attributeName', 'opacity');
+            anim.setAttribute('values', '0.8;0.5;0.8');
+            anim.setAttribute('dur', '2s');
+            anim.setAttribute('repeatCount', 'indefinite');
+            led.appendChild(anim);
+        }
+
+        if (text) {
+            text.setAttribute('fill', '#00ff40');
+            text.textContent = 'UNLOCKED';
+        }
     }
 };
 

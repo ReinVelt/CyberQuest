@@ -257,50 +257,7 @@
     </circle>
   </g>
 
-  <!-- ======================================================================== -->
-  <!-- ===== MOTION SENSOR PODS - CEILING MOUNTED ===== -->
-  <!-- ======================================================================== -->
-
-  <!-- Sensor Pod 1 (near, left-center ceiling) -->
-  <g transform="translate(700,310)">
-    <rect x="-18" y="-12" width="36" height="18" rx="4" fill="#181824"/>
-    <rect x="-14" y="-8" width="28" height="12" rx="2" fill="url(#sensorEye)"/>
-    <circle cx="0" cy="-2" r="5" fill="#0a0a12"/>
-    <!-- Sensor active LED (pulses) -->
-    <circle cx="0" cy="-2" r="3" fill="#00ff40" opacity="0.6">
-      <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="0" cy="-2" r="8" fill="none" stroke="#00ff40" stroke-width="0.5" opacity="0">
-      <animate attributeName="opacity" values="0;0.3;0" dur="2s" repeatCount="indefinite"/>
-      <animate attributeName="r" values="8;16;8" dur="2s" repeatCount="indefinite"/>
-    </circle>
-    <!-- Ultrasonic detection cone (faint) -->
-    <polygon points="0,6 -80,250 80,250" fill="rgba(0,200,60,0.02)">
-      <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
-    </polygon>
-  </g>
-
-  <!-- Sensor Pod 2 (mid, right-center ceiling) -->
-  <g transform="translate(1100,330)">
-    <rect x="-16" y="-10" width="32" height="16" rx="3" fill="#181824"/>
-    <rect x="-12" y="-7" width="24" height="10" rx="2" fill="url(#sensorEye)"/>
-    <circle cx="0" cy="-2" r="4" fill="#0a0a12"/>
-    <circle cx="0" cy="-2" r="2.5" fill="#00ff40" opacity="0.5">
-      <animate attributeName="opacity" values="0.5;0.1;0.5" dur="2.3s" repeatCount="indefinite"/>
-    </circle>
-    <polygon points="0,5 -60,200 60,200" fill="rgba(0,200,60,0.015)">
-      <animate attributeName="opacity" values="1;0.2;1" dur="2.3s" repeatCount="indefinite"/>
-    </polygon>
-  </g>
-
-  <!-- Sensor Pod 3 (far, center ceiling) -->
-  <g transform="translate(920,295)">
-    <rect x="-12" y="-8" width="24" height="12" rx="3" fill="#181824"/>
-    <circle cx="0" cy="-2" r="3" fill="#0a0a12"/>
-    <circle cx="0" cy="-2" r="2" fill="#00ff40" opacity="0.4">
-      <animate attributeName="opacity" values="0.4;0.08;0.4" dur="1.8s" repeatCount="indefinite"/>
-    </circle>
-  </g>
+  <!-- MOTION SENSOR PODS — rendered as dynamic overlay by scene.js -->
 
   <!-- ======================================================================== -->
   <!-- ===== SERVER ROOM DOOR - FAR END ===== -->
@@ -332,14 +289,7 @@
     <!-- Heavy handle -->
     <rect x="530" y="160" width="40" height="12" rx="3" fill="#2a2a36"/>
     <rect x="540" y="155" width="20" height="22" rx="2" fill="#222230"/>
-    <!-- Lock status indicator -->
-    <circle cx="520" cy="140" r="5" fill="#ff2200" opacity="0.8">
-      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="2s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="520" cy="140" r="12" fill="none" stroke="#ff2200" stroke-width="0.5" opacity="0">
-      <animate attributeName="opacity" values="0;0.3;0" dur="2s" repeatCount="indefinite"/>
-      <animate attributeName="r" values="12;22;12" dur="2s" repeatCount="indefinite"/>
-    </circle>
+    <!-- Lock status indicator — rendered as dynamic overlay by scene.js -->
   </g>
 
   <!-- ======================================================================== -->
@@ -357,15 +307,9 @@
     <ellipse cx="0" cy="20" rx="10" ry="8" fill="none" stroke="#1a2838" stroke-width="0.8" opacity="0.5"/>
     <ellipse cx="0" cy="20" rx="7" ry="6" fill="none" stroke="#1a2838" stroke-width="0.5" opacity="0.4"/>
     <ellipse cx="0" cy="20" rx="4" ry="3.5" fill="none" stroke="#1a2838" stroke-width="0.5" opacity="0.3"/>
-    <!-- Status LED -->
-    <circle cx="22" cy="-32" r="2" fill="#ff4400" opacity="0.7">
-      <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.5s" repeatCount="indefinite"/>
-    </circle>
+    <!-- Status LED + screen text — rendered as dynamic overlay by scene.js -->
     <!-- Panel glow -->
     <ellipse cx="0" cy="0" rx="50" ry="60" fill="url(#panelGlow)" opacity="0.3"/>
-    <!-- Screen text -->
-    <text x="0" y="-16" text-anchor="middle" font-family="monospace" font-size="7" fill="#4488cc" opacity="0.6">BIOMETRIC</text>
-    <text x="0" y="-8" text-anchor="middle" font-family="monospace" font-size="6" fill="#ff4400" opacity="0.7">LOCKED</text>
   </g>
 
   <!-- ======================================================================== -->
@@ -386,85 +330,14 @@
     <circle cx="14" cy="8" r="2" fill="#221100" opacity="0.4" transform="rotate(15,-1,10)"/>
   </g>
 
-  <!-- ======================================================================== -->
-  <!-- ===== LASER GRID - ANIMATED RED BEAMS ===== -->
-  <!-- ======================================================================== -->
+  <!-- LASER GRID — rendered as dynamic overlay by scene.js -->
 
-  <!-- Laser emitter housings on walls -->
-  <!-- Left wall emitters -->
+  <!-- Laser emitter housings (static architecture) -->
   <g>
     <rect x="200" y="350" width="12" height="8" rx="1" fill="#1a1a22"/>
-    <circle cx="212" cy="354" r="2" fill="#ff0000" opacity="0.8">
-      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="1.5s" repeatCount="indefinite"/>
-    </circle>
     <rect x="350" y="400" width="10" height="7" rx="1" fill="#1a1a22"/>
-    <circle cx="360" cy="403.5" r="1.8" fill="#ff0000" opacity="0.7">
-      <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.8s" begin="0.3s" repeatCount="indefinite"/>
-    </circle>
     <rect x="470" y="440" width="9" height="6" rx="1" fill="#1a1a22"/>
-    <circle cx="479" cy="443" r="1.5" fill="#ff0000" opacity="0.6">
-      <animate attributeName="opacity" values="0.6;0.15;0.6" dur="2s" begin="0.7s" repeatCount="indefinite"/>
-    </circle>
   </g>
-
-  <!-- Laser Beam 1: low diagonal, sweeping -->
-  <g opacity="0.7">
-    <line x1="212" y1="354" x2="1700" y2="600" stroke="#ff0000" stroke-width="2">
-      <animate attributeName="y2" values="600;500;650;550;600" dur="6s" repeatCount="indefinite"/>
-    </line>
-    <line x1="212" y1="354" x2="1700" y2="600" stroke="#ff0000" stroke-width="8" opacity="0.15" filter="url(#blur3)">
-      <animate attributeName="y2" values="600;500;650;550;600" dur="6s" repeatCount="indefinite"/>
-    </line>
-  </g>
-
-  <!-- Laser Beam 2: mid horizontal, pulsing -->
-  <g opacity="0.6">
-    <line x1="360" y1="403" x2="1560" y2="480" stroke="#ff0000" stroke-width="1.8">
-      <animate attributeName="y1" values="403;380;420;390;403" dur="8s" repeatCount="indefinite"/>
-      <animate attributeName="y2" values="480;500;460;490;480" dur="8s" repeatCount="indefinite"/>
-    </line>
-    <line x1="360" y1="403" x2="1560" y2="480" stroke="#ff0000" stroke-width="7" opacity="0.12" filter="url(#blur3)">
-      <animate attributeName="y1" values="403;380;420;390;403" dur="8s" repeatCount="indefinite"/>
-      <animate attributeName="y2" values="480;500;460;490;480" dur="8s" repeatCount="indefinite"/>
-    </line>
-  </g>
-
-  <!-- Laser Beam 3: high crossing beam -->
-  <g opacity="0.5">
-    <line x1="479" y1="443" x2="1420" y2="350" stroke="#ff0000" stroke-width="1.5">
-      <animate attributeName="x2" values="1420;1350;1450;1380;1420" dur="7s" repeatCount="indefinite"/>
-      <animate attributeName="y2" values="350;370;340;360;350" dur="7s" repeatCount="indefinite"/>
-    </line>
-    <line x1="479" y1="443" x2="1420" y2="350" stroke="#ff0000" stroke-width="6" opacity="0.1" filter="url(#blur3)">
-      <animate attributeName="x2" values="1420;1350;1450;1380;1420" dur="7s" repeatCount="indefinite"/>
-      <animate attributeName="y2" values="350;370;340;360;350" dur="7s" repeatCount="indefinite"/>
-    </line>
-  </g>
-
-  <!-- Laser Beam 4: floor-level tripwire -->
-  <g opacity="0.65">
-    <line x1="180" y1="680" x2="1740" y2="690" stroke="#ff0000" stroke-width="1.5"/>
-    <line x1="180" y1="680" x2="1740" y2="690" stroke="#ff0000" stroke-width="6" opacity="0.12" filter="url(#blur3)"/>
-    <!-- Floor reflection -->
-    <line x1="180" y1="684" x2="1740" y2="694" stroke="#ff0000" stroke-width="4" opacity="0.04" filter="url(#blur8)"/>
-  </g>
-
-  <!-- Laser Beam 5: vertical slicer, moving side to side -->
-  <g opacity="0.55">
-    <line x1="960" y1="300" x2="960" y2="690" stroke="#ff0000" stroke-width="1.5">
-      <animate attributeName="x1" values="960;800;1100;900;960" dur="10s" repeatCount="indefinite"/>
-      <animate attributeName="x2" values="960;820;1080;910;960" dur="10s" repeatCount="indefinite"/>
-    </line>
-    <line x1="960" y1="300" x2="960" y2="690" stroke="#ff0000" stroke-width="8" opacity="0.08" filter="url(#blur3)">
-      <animate attributeName="x1" values="960;800;1100;900;960" dur="10s" repeatCount="indefinite"/>
-      <animate attributeName="x2" values="960;820;1080;910;960" dur="10s" repeatCount="indefinite"/>
-    </line>
-  </g>
-
-  <!-- Atmospheric red haze from lasers -->
-  <rect x="200" y="280" width="1520" height="430" fill="rgba(255,0,0,0.02)" filter="url(#blur25)">
-    <animate attributeName="opacity" values="1;0.5;0.8;0.4;1" dur="5s" repeatCount="indefinite"/>
-  </rect>
 
   <!-- ======================================================================== -->
   <!-- ===== EMERGENCY LIGHTING ===== -->
