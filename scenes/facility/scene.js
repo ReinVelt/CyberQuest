@@ -45,9 +45,11 @@ const FacilityScene = {
             width: (70 / 1920) * 100,   // 3.65%
             height: (80 / 1080) * 100,  // 7.41%
             cursor: 'pointer',
-            enabled: (game) => game.gameState.storyPart >= 17,
             action: function(game) {
-                if (!game.hasItem('security_badge')) {
+                if (game.hasItem('security_badge')) {
+                    game.showDialogue(["Already have the badge."], "Ryan");
+                } else if (game.gameState.storyPart >= 17 || game.getFlag('eva_contacted')) {
+                    // Eva told Ryan the badge is here — search the bin
                     game.startDialogue([
                         { speaker: 'Ryan', text: '*Reaches under the plastic bin liner*' },
                         { speaker: 'Ryan', text: 'There. Something taped underneath.' },
@@ -76,7 +78,11 @@ const FacilityScene = {
                         }, 1500);
                     }, 500);
                 } else {
-                    game.showDialogue(["Already have the badge."], "Ryan");
+                    // Player hasn't been told about the badge yet
+                    game.showDialogue([
+                        "Standard-issue facility trash bin. Nothing interesting.",
+                        "...Why would I dig through garbage?"
+                    ], "Ryan");
                 }
             }
         },
