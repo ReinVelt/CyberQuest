@@ -74,9 +74,8 @@ const ReturnToIesScene = {
         // ── Ambient audio — crackling fire, ticking clock, soft wind ──
         this._startAmbientAudio();
 
-        // ── Show Ies + dogs after a beat ──
+        // ── Show dogs after a beat (Ies is already in the livingroom SVG) ──
         game.sceneTimeout(() => {
-            game.showCharacter('ies', 22, 45, 0.22);
             game.showCharacter('dog_white', 35, 77, 0.12);
             game.showCharacter('dog_white', 40, 78, 0.12);
             game.showCharacter('pug', 38, 83, 0.10);
