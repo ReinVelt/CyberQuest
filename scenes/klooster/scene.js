@@ -164,14 +164,11 @@ const KloosterScene = {
                 });
                 
                 if (!game.getFlag('found_usb_stick')) {
-                    // First time approaching the car - discover the USB stick
-                    game.setFlag('found_usb_stick', true);
-                    console.log('[Klooster] Setting found_usb_stick flag and loading car_discovery scene');
+                    // First time approaching the car — play Hollywood cinematic
+                    console.log('[Klooster] First Volvo click → USB discovery cinematic');
                     
-                    // Transition to the close-up car discovery scene
                     game.sceneTimeout(() => {
-                        console.log('[Klooster] Now calling loadScene for car_discovery');
-                        game.loadScene('car_discovery');
+                        game.loadScene('usb_discovery');
                     }, 500);
                 } else if (game.getFlag('picked_up_usb')) {
                     // Already picked up USB, allow driving home

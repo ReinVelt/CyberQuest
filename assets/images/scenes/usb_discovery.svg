@@ -1,0 +1,236 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- Night sky -->
+    <linearGradient id="nightSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0a1e"/>
+      <stop offset="40%" stop-color="#0f0f28"/>
+      <stop offset="80%" stop-color="#101825"/>
+      <stop offset="100%" stop-color="#0a1015"/>
+    </linearGradient>
+
+    <!-- Ground (dark parking area) -->
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#12161a"/>
+      <stop offset="100%" stop-color="#0a0e10"/>
+    </linearGradient>
+
+    <!-- Moonlight pool on ground -->
+    <radialGradient id="moonPool" cx="55%" cy="60%" r="30%">
+      <stop offset="0%" stop-color="rgba(180,190,210,0.06)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+
+    <!-- Moon glow -->
+    <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fffff0"/>
+      <stop offset="30%" stop-color="rgba(220,225,240,0.4)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+
+    <!-- Volvo body -->
+    <linearGradient id="volvoBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3a4550"/>
+      <stop offset="50%" stop-color="#2a3540"/>
+      <stop offset="100%" stop-color="#1e2830"/>
+    </linearGradient>
+
+    <!-- USB glow (subtle, eerie) -->
+    <radialGradient id="usbGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(255,220,100,0.15)"/>
+      <stop offset="60%" stop-color="rgba(255,200,80,0.05)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0)"/>
+    </radialGradient>
+
+    <!-- Cinematic vignette -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="65%">
+      <stop offset="0%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="60%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.5)"/>
+    </radialGradient>
+
+    <filter id="softGlow"><feGaussianBlur stdDeviation="8"/></filter>
+    <filter id="moonBlur"><feGaussianBlur stdDeviation="15"/></filter>
+    <filter id="shadow"><feDropShadow dx="0" dy="3" stdDeviation="6" flood-opacity="0.4"/></filter>
+  </defs>
+
+  <!-- ===== NIGHT SKY ===== -->
+  <rect width="1920" height="1080" fill="url(#nightSky)"/>
+
+  <!-- Stars -->
+  <g fill="#fff">
+    <circle cx="120" cy="80" r="1.2" opacity="0.7"/>
+    <circle cx="340" cy="120" r="0.8" opacity="0.5"/>
+    <circle cx="500" cy="60" r="1" opacity="0.6"/>
+    <circle cx="680" cy="140" r="0.7" opacity="0.4"/>
+    <circle cx="850" cy="50" r="1.1" opacity="0.7"/>
+    <circle cx="1050" cy="100" r="0.8" opacity="0.5"/>
+    <circle cx="1200" cy="70" r="1" opacity="0.6"/>
+    <circle cx="1380" cy="130" r="0.9" opacity="0.5"/>
+    <circle cx="1550" cy="45" r="1.2" opacity="0.7"/>
+    <circle cx="1780" cy="90" r="0.7" opacity="0.4"/>
+    <circle cx="260" cy="200" r="0.6" opacity="0.3"/>
+    <circle cx="760" cy="190" r="0.8" opacity="0.4"/>
+    <circle cx="1450" cy="200" r="0.7" opacity="0.3"/>
+    <!-- Twinkling star -->
+    <circle cx="420" cy="95" r="1.3" opacity="0.6">
+      <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="1650" cy="75" r="1" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;0.15;0.5" dur="4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Moon -->
+  <circle cx="1650" cy="180" r="180" fill="url(#moonGlow)" filter="url(#moonBlur)" opacity="0.5"/>
+  <circle cx="1650" cy="180" r="55" fill="#f8f8f0" opacity="0.9"/>
+  <circle cx="1642" cy="172" r="10" fill="#eeeeea" opacity="0.5"/>
+  <circle cx="1658" cy="188" r="7" fill="#eeeeea" opacity="0.4"/>
+
+  <!-- ===== MONASTERY SILHOUETTE (distant, dark) ===== -->
+  <g opacity="0.25" fill="#0a0e14">
+    <!-- Tower -->
+    <rect x="280" y="200" width="80" height="280" rx="2"/>
+    <polygon points="280,200 320,140 360,200"/>
+    <!-- Cross -->
+    <rect x="314" y="120" width="12" height="35"/>
+    <rect x="306" y="130" width="28" height="10"/>
+    <!-- Left wing -->
+    <rect x="100" y="300" width="200" height="180" rx="3"/>
+    <!-- Right wing -->
+    <rect x="340" y="310" width="180" height="170" rx="3"/>
+    <!-- Windows (faint glow) -->
+    <rect x="160" y="340" width="18" height="30" rx="2" fill="#1a1a2a" opacity="0.4"/>
+    <rect x="210" y="340" width="18" height="30" rx="2" fill="#1a1a2a" opacity="0.3"/>
+    <rect x="260" y="340" width="18" height="30" rx="2" fill="#1a1a2a" opacity="0.4"/>
+    <rect x="390" y="350" width="18" height="28" rx="2" fill="#1a1a2a" opacity="0.3"/>
+    <rect x="440" y="350" width="18" height="28" rx="2" fill="#1a1a2a" opacity="0.35"/>
+  </g>
+
+  <!-- ===== TREE (old oak over the car) ===== -->
+  <g transform="translate(950, 180)">
+    <!-- Trunk -->
+    <rect x="-12" y="120" width="24" height="200" fill="#0e1214"/>
+    <rect x="-18" y="280" width="36" height="40" fill="#0c1012" rx="3"/>
+    <!-- Canopy (dark mass) -->
+    <ellipse cx="0" cy="80" rx="180" ry="100" fill="#0a1210" opacity="0.8"/>
+    <ellipse cx="-60" cy="60" rx="120" ry="80" fill="#081010" opacity="0.7"/>
+    <ellipse cx="70" cy="90" rx="130" ry="70" fill="#0a1210" opacity="0.7"/>
+    <!-- Moonlight filtering through leaves -->
+    <g opacity="0.08">
+      <circle cx="40" cy="100" r="3" fill="#b0b8c0"/>
+      <circle cx="-20" cy="80" r="2" fill="#a8b0b8"/>
+      <circle cx="80" cy="110" r="2.5" fill="#b0b8c0"/>
+      <circle cx="-50" cy="95" r="1.8" fill="#a8b0b8"/>
+    </g>
+  </g>
+
+  <!-- ===== GROUND / PARKING AREA ===== -->
+  <rect x="0" y="480" width="1920" height="600" fill="url(#ground)"/>
+
+  <!-- Gravel texture -->
+  <g opacity="0.08" fill="#2a3038">
+    <circle cx="200" cy="600" r="1.5"/>
+    <circle cx="350" cy="650" r="1"/>
+    <circle cx="500" cy="580" r="1.2"/>
+    <circle cx="700" cy="620" r="1.5"/>
+    <circle cx="900" cy="600" r="1"/>
+    <circle cx="1100" cy="650" r="1.3"/>
+    <circle cx="1300" cy="590" r="1.5"/>
+    <circle cx="1500" cy="630" r="1"/>
+    <circle cx="1700" cy="610" r="1.2"/>
+    <circle cx="400" cy="700" r="1.5"/>
+    <circle cx="800" cy="720" r="1"/>
+    <circle cx="1200" cy="690" r="1.3"/>
+    <circle cx="1600" cy="710" r="1.5"/>
+  </g>
+
+  <!-- Moonlight pool on ground -->
+  <rect width="1920" height="1080" fill="url(#moonPool)"/>
+
+  <!-- ===== THE VOLVO 240 ===== -->
+  <g transform="translate(820, 520)" filter="url(#shadow)">
+    <!-- Shadow underneath car -->
+    <ellipse cx="220" cy="195" rx="250" ry="15" fill="rgba(0,0,0,0.35)"/>
+
+    <!-- Body -->
+    <path d="M40,100 L40,60 Q45,55 60,55 L120,10 Q130,5 150,5 L340,5 Q360,5 370,15 L400,60 Q410,58 420,60 L430,100 Z"
+          fill="url(#volvoBody)" stroke="#1a2028" stroke-width="1"/>
+
+    <!-- Roof line -->
+    <path d="M120,10 Q130,5 150,5 L340,5 Q360,5 370,15" fill="none" stroke="#4a5560" stroke-width="0.5" opacity="0.3"/>
+
+    <!-- Windows -->
+    <path d="M130,15 L155,15 L155,55 L125,55 Z" fill="#0a1218" opacity="0.8" stroke="#2a3540" stroke-width="0.5"/>
+    <path d="M160,15 L260,15 L260,55 L160,55 Z" fill="#0a1218" opacity="0.8" stroke="#2a3540" stroke-width="0.5"/>
+    <path d="M265,15 L350,18 L365,55 L265,55 Z" fill="#0a1218" opacity="0.8" stroke="#2a3540" stroke-width="0.5"/>
+
+    <!-- Moonlight reflection on roof -->
+    <path d="M200,6 L300,6 L290,8 L210,8 Z" fill="rgba(180,190,210,0.1)"/>
+
+    <!-- Front -->
+    <rect x="38" y="60" width="15" height="35" rx="2" fill="#1e2830"/>
+    <!-- Headlights (off) -->
+    <rect x="38" y="62" width="12" height="12" rx="2" fill="#1a2228"/>
+
+    <!-- Rear -->
+    <rect x="420" y="60" width="12" height="35" rx="2" fill="#1e2830"/>
+    <!-- Tail light -->
+    <rect x="422" y="62" width="8" height="10" rx="1" fill="#2a1015"/>
+
+    <!-- Wheels -->
+    <circle cx="110" cy="100" r="28" fill="#0a0c0e"/>
+    <circle cx="110" cy="100" r="20" fill="#141618"/>
+    <circle cx="110" cy="100" r="8" fill="#1a1c1e"/>
+    <circle cx="360" cy="100" r="28" fill="#0a0c0e"/>
+    <circle cx="360" cy="100" r="20" fill="#141618"/>
+    <circle cx="360" cy="100" r="8" fill="#1a1c1e"/>
+
+    <!-- === DOOR HANDLE (the important bit) === -->
+    <rect x="175" y="60" width="30" height="6" rx="2" fill="#2a3540" stroke="#1a2028" stroke-width="0.5"/>
+
+    <!-- === USB STICK (barely visible, mysterious) === -->
+    <g transform="translate(190, 66)">
+      <!-- Subtle glow around it -->
+      <circle cx="0" cy="4" r="20" fill="url(#usbGlow)">
+        <animate attributeName="r" values="18;22;18" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      <!-- The USB stick itself (tiny, dark) -->
+      <rect x="-4" y="0" width="8" height="14" rx="1" fill="#1a1a1e" stroke="#2a2a30" stroke-width="0.5"/>
+      <rect x="-2" y="12" width="4" height="4" rx="0.5" fill="#c0c0c0" opacity="0.3"/>
+      <!-- Tape -->
+      <rect x="-6" y="3" width="12" height="3" rx="0.5" fill="#888" opacity="0.2"/>
+    </g>
+  </g>
+
+  <!-- ===== FOREGROUND ELEMENTS ===== -->
+
+  <!-- Hedge/bushes (dark silhouettes) -->
+  <g opacity="0.5">
+    <ellipse cx="100" cy="900" rx="120" ry="50" fill="#080e0a"/>
+    <ellipse cx="250" cy="920" rx="80" ry="40" fill="#0a100c"/>
+    <ellipse cx="1700" cy="890" rx="100" ry="45" fill="#080e0a"/>
+    <ellipse cx="1850" cy="910" rx="90" ry="40" fill="#0a100c"/>
+  </g>
+
+  <!-- Old lamp post (distant, not lit — abandoned) -->
+  <g transform="translate(600, 350)" opacity="0.2">
+    <rect x="0" y="0" width="4" height="130" fill="#1a1e22"/>
+    <ellipse cx="2" cy="-5" rx="12" ry="8" fill="#141820"/>
+  </g>
+
+  <!-- ===== ATMOSPHERE ===== -->
+
+  <!-- Fog / mist layer -->
+  <g opacity="0.04" filter="url(#softGlow)">
+    <ellipse cx="600" cy="600" rx="500" ry="80" fill="#8090a0"/>
+    <ellipse cx="1400" cy="650" rx="400" ry="60" fill="#8090a0">
+      <animate attributeName="cx" values="1400;1500;1400" dur="30s" repeatCount="indefinite"/>
+    </ellipse>
+  </g>
+
+  <!-- ===== CINEMATIC VIGNETTE ===== -->
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+
+  <!-- Scene label (very subtle) -->
+  <text x="960" y="1065" text-anchor="middle" font-family="monospace" font-size="10" fill="#1a2028" opacity="0.15" letter-spacing="4">TER APEL — 23:14</text>
+</svg>
