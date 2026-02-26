@@ -1,8 +1,14 @@
 /**
- * Hackerspace Drenthe Scene
+ * Hackerspace Drenthe Scene — HOLLYWOOD EDITION
  * Located in Coevorden, inside a repurposed school building.
  * Workshops: metal working, 3D printing, soldering, CNC plasma/steel/lathe/milling, welding.
- * Accessible after mancave is unlocked (documentary watched).
+ *
+ * Dynamic features:
+ *   • NPC characters move between workstations on idle patrol paths
+ *   • Full Web Audio API synthesized ambient soundscape (machines, sparks, hum)
+ *   • Periodic ambient voice chatter (TTS snippets from NPCs)
+ *   • Welding flash / spark VFX overlay
+ *   • Cinematic entrance sequence with camera pan feeling
  */
 
 const HackerspaceScene = {
@@ -15,19 +21,38 @@ const HackerspaceScene = {
 
     playerStart: { x: 90, y: 85 },
 
-    // ── NPC Characters placed at workstations ──────────────────────
+    // ═══════════════════════════════════════════════════════════════
+    // ── NPC Characters with patrol paths ──────────────────────────
+    // ═══════════════════════════════════════════════════════════════
     _characters: [
-        { name: 'Dennis',  key: 'hacker_male_2',   x: 41, y: 73, scale: 0.075 }, // soldering bench
-        { name: 'Sophie',  key: 'hacker_female_1',  x: 84, y: 62, scale: 0.075 }, // 3D printers
-        { name: 'Marco',   key: 'hacker_male_1',    x: 12, y: 62, scale: 0.075 }, // CNC area
-        { name: 'Kim',     key: 'hacker_female_4',  x: 66, y: 60, scale: 0.075 }, // welding
-        { name: 'Joris',   key: 'hacker_male_3',    x: 50, y: 73, scale: 0.075 }, // near electronics
-        { name: 'Linda',   key: 'hacker_female_2',  x: 6,  y: 76, scale: 0.075 }, // metal workbench
+        { name: 'Dennis',  key: 'hacker_male_2',   home: { x: 41, y: 73 }, scale: 0.075,
+          patrol: [{ x: 41, y: 73 }, { x: 38, y: 73 }, { x: 35, y: 68 }, { x: 41, y: 73 }] },
+        { name: 'Sophie',  key: 'hacker_female_1',  home: { x: 84, y: 62 }, scale: 0.075,
+          patrol: [{ x: 84, y: 62 }, { x: 80, y: 65 }, { x: 88, y: 60 }, { x: 84, y: 62 }] },
+        { name: 'Marco',   key: 'hacker_male_1',    home: { x: 12, y: 62 }, scale: 0.075,
+          patrol: [{ x: 12, y: 62 }, { x: 18, y: 60 }, { x: 25, y: 65 }, { x: 12, y: 62 }] },
+        { name: 'Kim',     key: 'hacker_female_4',  home: { x: 66, y: 60 }, scale: 0.075,
+          patrol: [{ x: 66, y: 60 }, { x: 70, y: 63 }, { x: 62, y: 58 }, { x: 66, y: 60 }] },
+        { name: 'Joris',   key: 'hacker_male_3',    home: { x: 50, y: 73 }, scale: 0.075,
+          patrol: [{ x: 50, y: 73 }, { x: 46, y: 70 }, { x: 54, y: 75 }, { x: 50, y: 73 }] },
+        { name: 'Linda',   key: 'hacker_female_2',  home: { x: 6,  y: 76 }, scale: 0.075,
+          patrol: [{ x: 6, y: 76 }, { x: 10, y: 74 }, { x: 14, y: 78 }, { x: 6, y: 76 }] },
     ],
 
+    // ── Character element refs for animation ──
+    _charElements: [],
+    _patrolTimers: [],
+    _vfxTimers: [],
+
     _spawnCharacters: function(game) {
-        this._characters.forEach(c => {
-            game.showCharacter(c.key, c.x, c.y, c.scale);
+        this._charElements = [];
+        this._characters.forEach((c, i) => {
+            const el = game.showCharacter(c.key, c.home.x, c.home.y, c.scale);
+            if (el) {
+                el.style.transition = 'left 3s ease-in-out, bottom 3s ease-in-out, opacity 0.8s';
+                el.setAttribute('data-npc-name', c.name);
+                this._charElements[i] = el;
+            }
         });
     },
 
@@ -36,6 +61,488 @@ const HackerspaceScene = {
         if (container) {
             container.querySelectorAll('.npc-character').forEach(el => el.remove());
         }
+        this._charElements = [];
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // ── NPC Patrol Movement ───────────────────────────────────────
+    // ═══════════════════════════════════════════════════════════════
+    _startPatrols: function() {
+        this._stopPatrols();
+        this._characters.forEach((c, i) => {
+            let step = 0;
+            const patrol = () => {
+                const el = this._charElements[i];
+                if (!el) return;
+                step = (step + 1) % c.patrol.length;
+                const target = c.patrol[step];
+                el.style.left = target.x + '%';
+                el.style.bottom = (100 - target.y) + '%';
+            };
+            // Stagger patrol starts, move every 4-7 seconds
+            const delay = 3000 + Math.random() * 4000;
+            const interval = 4000 + Math.random() * 3000;
+            const startTimer = setTimeout(() => {
+                patrol();
+                const loopTimer = setInterval(patrol, interval);
+                this._patrolTimers.push(loopTimer);
+            }, delay);
+            this._patrolTimers.push(startTimer);
+        });
+    },
+
+    _stopPatrols: function() {
+        this._patrolTimers.forEach(id => { clearTimeout(id); clearInterval(id); });
+        this._patrolTimers = [];
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // ── Welding Flash / Spark VFX ────────────────────────────────
+    // ═══════════════════════════════════════════════════════════════
+    _startVFX: function() {
+        this._stopVFX();
+        // Welding sparks flash near Kim's station
+        const sparkLoop = () => {
+            if (!this._vfxRunning) return;
+            this._weldFlash();
+            const next = 5000 + Math.random() * 10000;
+            this._vfxTimers.push(setTimeout(sparkLoop, next));
+        };
+        this._vfxRunning = true;
+        this._vfxTimers.push(setTimeout(sparkLoop, 3000));
+
+        // Occasional 3D printer "ding" flash near Sophie's station
+        const printerDing = () => {
+            if (!this._vfxRunning) return;
+            this._printerFlash();
+            this._vfxTimers.push(setTimeout(printerDing, 15000 + Math.random() * 20000));
+        };
+        this._vfxTimers.push(setTimeout(printerDing, 8000));
+    },
+
+    _stopVFX: function() {
+        this._vfxRunning = false;
+        this._vfxTimers.forEach(id => clearTimeout(id));
+        this._vfxTimers = [];
+        const el = document.getElementById('hs-vfx-overlay');
+        if (el) el.remove();
+    },
+
+    _ensureVFXOverlay: function() {
+        let overlay = document.getElementById('hs-vfx-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'hs-vfx-overlay';
+            overlay.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:20;overflow:hidden;';
+            const sc = document.getElementById('scene-container');
+            if (sc) sc.appendChild(overlay);
+        }
+        return overlay;
+    },
+
+    _weldFlash: function() {
+        const overlay = this._ensureVFXOverlay();
+        // Bright blue-white flash at welding position
+        const flash = document.createElement('div');
+        flash.className = 'hs-weld-flash';
+        flash.style.cssText = `
+            position:absolute; left:66%; top:42%;
+            width:14px; height:14px; border-radius:50%;
+            background:radial-gradient(circle, #fff 0%, #8af 40%, transparent 70%);
+            box-shadow: 0 0 30px 15px rgba(130,200,255,0.7), 0 0 60px 30px rgba(100,150,255,0.3);
+            animation: hs-weld-pulse 0.15s ease-in-out 5;
+            pointer-events:none;
+        `;
+        overlay.appendChild(flash);
+        // Throw sparks
+        for (let s = 0; s < 8; s++) {
+            const spark = document.createElement('div');
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 20 + Math.random() * 60;
+            const dx = Math.cos(angle) * dist;
+            const dy = Math.sin(angle) * dist;
+            spark.style.cssText = `
+                position:absolute; left:66%; top:42%;
+                width:3px; height:3px; border-radius:50%;
+                background:#ffa; box-shadow: 0 0 4px 2px rgba(255,200,50,0.8);
+                pointer-events:none;
+                animation: hs-spark-fly 0.4s ease-out forwards;
+                --spark-dx: ${dx}px; --spark-dy: ${dy}px;
+            `;
+            setTimeout(() => overlay.appendChild(spark), s * 50);
+        }
+        // Play welding sound
+        this._sfxWeldBurst();
+        // Cleanup
+        setTimeout(() => {
+            flash.remove();
+            overlay.querySelectorAll('[style*="hs-spark-fly"]').forEach(el => el.remove());
+        }, 1200);
+    },
+
+    _printerFlash: function() {
+        const overlay = this._ensureVFXOverlay();
+        const ding = document.createElement('div');
+        ding.style.cssText = `
+            position:absolute; left:85%; top:45%;
+            color:#0f0; font-size:14px; font-weight:bold; font-family:monospace;
+            animation: hs-printer-ding 2s ease-out forwards;
+            pointer-events:none; text-shadow: 0 0 6px #0f0;
+        `;
+        ding.textContent = '✓ PRINT COMPLETE';
+        overlay.appendChild(ding);
+        this._sfxPrinterDing();
+        setTimeout(() => ding.remove(), 2500);
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // ── Web Audio API — Synthesized Soundscape ───────────────────
+    // ═══════════════════════════════════════════════════════════════
+    _audioCtx: null,
+    _audioNodes: [],
+    _audioTimers: [],
+    _audioRunning: false,
+
+    _initAudio: function() {
+        if (this._audioRunning) return;
+        try {
+            this._audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        } catch (e) { return; }
+        this._audioRunning = true;
+        const ctx = this._audioCtx;
+
+        // Master gain
+        const master = ctx.createGain();
+        master.gain.value = 0.25;
+        master.connect(ctx.destination);
+        this._masterGain = master;
+
+        // ── 1. Low machine hum (CNC background) ──
+        const hum = ctx.createOscillator();
+        hum.type = 'sawtooth';
+        hum.frequency.value = 55;
+        const humGain = ctx.createGain();
+        humGain.gain.value = 0.12;
+        hum.connect(humGain).connect(master);
+        hum.start();
+        this._audioNodes.push(hum);
+
+        // ── 2. 50 Hz mains hum ──
+        const mains = ctx.createOscillator();
+        mains.type = 'sine';
+        mains.frequency.value = 50;
+        const mainsGain = ctx.createGain();
+        mainsGain.gain.value = 0.04;
+        mains.connect(mainsGain).connect(master);
+        mains.start();
+        this._audioNodes.push(mains);
+
+        // ── 3. Higher spindle whine (CNC mill operational) ──
+        const whine = ctx.createOscillator();
+        whine.type = 'sine';
+        whine.frequency.value = 1400;
+        const whineGain = ctx.createGain();
+        whineGain.gain.value = 0.03;
+        // Slow LFO modulation on pitch
+        const lfo = ctx.createOscillator();
+        lfo.type = 'sine';
+        lfo.frequency.value = 0.3;
+        const lfoGain = ctx.createGain();
+        lfoGain.gain.value = 80;
+        lfo.connect(lfoGain).connect(whine.frequency);
+        lfo.start();
+        whine.connect(whineGain).connect(master);
+        whine.start();
+        this._audioNodes.push(whine, lfo);
+
+        // ── 4. 3D printer stepper clicks ──
+        const clickLoop = () => {
+            if (!this._audioRunning) return;
+            const osc = ctx.createOscillator();
+            osc.type = 'square';
+            osc.frequency.value = 600 + Math.random() * 600;
+            const g = ctx.createGain();
+            g.gain.value = 0.025;
+            g.gain.setTargetAtTime(0, ctx.currentTime + 0.015, 0.008);
+            osc.connect(g).connect(master);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.03);
+            const next = 100 + Math.random() * 80;
+            this._audioTimers.push(setTimeout(clickLoop, next));
+        };
+        this._audioTimers.push(setTimeout(clickLoop, 500));
+
+        // ── 5. Periodic angle grinder burst ──
+        const grinderLoop = () => {
+            if (!this._audioRunning) return;
+            this._sfxGrinderBurst();
+            this._audioTimers.push(setTimeout(grinderLoop, 12000 + Math.random() * 18000));
+        };
+        this._audioTimers.push(setTimeout(grinderLoop, 6000));
+
+        // ── 6. Occasional compressed air blast ──
+        const airLoop = () => {
+            if (!this._audioRunning) return;
+            this._sfxAirBlast();
+            this._audioTimers.push(setTimeout(airLoop, 20000 + Math.random() * 15000));
+        };
+        this._audioTimers.push(setTimeout(airLoop, 10000));
+
+        // ── 7. Random metal clang ──
+        const clangLoop = () => {
+            if (!this._audioRunning) return;
+            this._sfxMetalClang();
+            this._audioTimers.push(setTimeout(clangLoop, 8000 + Math.random() * 12000));
+        };
+        this._audioTimers.push(setTimeout(clangLoop, 4000));
+
+        // ── 8. Coffee machine gurgle ──
+        const coffeeLoop = () => {
+            if (!this._audioRunning) return;
+            this._sfxCoffeeGurgle();
+            this._audioTimers.push(setTimeout(coffeeLoop, 25000 + Math.random() * 20000));
+        };
+        this._audioTimers.push(setTimeout(coffeeLoop, 15000));
+    },
+
+    _stopAudio: function() {
+        this._audioRunning = false;
+        this._audioTimers.forEach(id => clearTimeout(id));
+        this._audioTimers = [];
+        this._audioNodes.forEach(n => { try { n.stop(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) {
+            try { this._audioCtx.close(); } catch(e) {}
+            this._audioCtx = null;
+        }
+    },
+
+    // ── SFX: Welding burst (bright noise + ring) ──
+    _sfxWeldBurst: function() {
+        if (!this._audioCtx || !this._audioRunning) return;
+        const ctx = this._audioCtx;
+        const now = ctx.currentTime;
+        // White noise burst
+        const bufSize = ctx.sampleRate * 0.3;
+        const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * 0.5;
+        const noise = ctx.createBufferSource();
+        noise.buffer = buf;
+        const bp = ctx.createBiquadFilter();
+        bp.type = 'bandpass';
+        bp.frequency.value = 3000;
+        bp.Q.value = 2;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.15, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        noise.connect(bp).connect(g).connect(this._masterGain);
+        noise.start(now);
+        noise.stop(now + 0.35);
+        // Arc crackle overtone
+        const arc = ctx.createOscillator();
+        arc.type = 'sawtooth';
+        arc.frequency.value = 800;
+        const ag = ctx.createGain();
+        ag.gain.setValueAtTime(0.08, now);
+        ag.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+        arc.connect(ag).connect(this._masterGain);
+        arc.start(now);
+        arc.stop(now + 0.2);
+    },
+
+    // ── SFX: Angle grinder burst ──
+    _sfxGrinderBurst: function() {
+        if (!this._audioCtx || !this._audioRunning) return;
+        const ctx = this._audioCtx;
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.linearRampToValueAtTime(8000, now + 0.3);
+        osc.frequency.setValueAtTime(8000, now + 0.3);
+        osc.frequency.linearRampToValueAtTime(6000, now + 1.5);
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0, now);
+        g.gain.linearRampToValueAtTime(0.06, now + 0.2);
+        g.gain.setValueAtTime(0.06, now + 1.0);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 1.8);
+        osc.connect(g).connect(this._masterGain);
+        osc.start(now);
+        osc.stop(now + 2.0);
+        // High-pitched scream overlay
+        const scream = ctx.createOscillator();
+        scream.type = 'sine';
+        scream.frequency.value = 5000 + Math.random() * 3000;
+        const sg = ctx.createGain();
+        sg.gain.setValueAtTime(0, now + 0.1);
+        sg.gain.linearRampToValueAtTime(0.035, now + 0.4);
+        sg.gain.setValueAtTime(0.035, now + 1.0);
+        sg.gain.exponentialRampToValueAtTime(0.001, now + 1.7);
+        scream.connect(sg).connect(this._masterGain);
+        scream.start(now + 0.1);
+        scream.stop(now + 1.8);
+    },
+
+    // ── SFX: Compressed air blast ──
+    _sfxAirBlast: function() {
+        if (!this._audioCtx || !this._audioRunning) return;
+        const ctx = this._audioCtx;
+        const now = ctx.currentTime;
+        const bufSize = ctx.sampleRate * 0.6;
+        const buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1);
+        const src = ctx.createBufferSource();
+        src.buffer = buf;
+        const hp = ctx.createBiquadFilter();
+        hp.type = 'highpass';
+        hp.frequency.value = 2000;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0, now);
+        g.gain.linearRampToValueAtTime(0.08, now + 0.05);
+        g.gain.setValueAtTime(0.08, now + 0.15);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+        src.connect(hp).connect(g).connect(this._masterGain);
+        src.start(now);
+        src.stop(now + 0.6);
+    },
+
+    // ── SFX: Metal clang (workshop hammer) ──
+    _sfxMetalClang: function() {
+        if (!this._audioCtx || !this._audioRunning) return;
+        const ctx = this._audioCtx;
+        const now = ctx.currentTime;
+        // Ring at metallic frequency
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.value = 1200 + Math.random() * 800;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.12, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+        osc.connect(g).connect(this._masterGain);
+        osc.start(now);
+        osc.stop(now + 0.7);
+        // Transient click
+        const click = ctx.createOscillator();
+        click.type = 'square';
+        click.frequency.value = 3000;
+        const cg = ctx.createGain();
+        cg.gain.setValueAtTime(0.1, now);
+        cg.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+        click.connect(cg).connect(this._masterGain);
+        click.start(now);
+        click.stop(now + 0.03);
+    },
+
+    // ── SFX: Coffee machine gurgle ──
+    _sfxCoffeeGurgle: function() {
+        if (!this._audioCtx || !this._audioRunning) return;
+        const ctx = this._audioCtx;
+        const now = ctx.currentTime;
+        for (let i = 0; i < 6; i++) {
+            const t = now + i * 0.15 + Math.random() * 0.05;
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.value = 200 + Math.random() * 150;
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0.04, t);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+            osc.connect(g).connect(this._masterGain);
+            osc.start(t);
+            osc.stop(t + 0.15);
+        }
+    },
+
+    // ── SFX: Printer ding ──
+    _sfxPrinterDing: function() {
+        if (!this._audioCtx || !this._audioRunning) return;
+        const ctx = this._audioCtx;
+        const now = ctx.currentTime;
+        [880, 1100, 1320].forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0.08, now + i * 0.12);
+            g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.3);
+            osc.connect(g).connect(this._masterGain);
+            osc.start(now + i * 0.12);
+            osc.stop(now + i * 0.12 + 0.35);
+        });
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // ── Ambient NPC Voice Chatter (TTS) ──────────────────────────
+    // ═══════════════════════════════════════════════════════════════
+    _chatterLines: [
+        { name: 'Dennis',  text: 'Hand me the flux pen, will you?' },
+        { name: 'Sophie',  text: 'This PETG is stringing like crazy. Need to bump retraction.' },
+        { name: 'Marco',   text: 'The plasma torch needs a new electrode. Third one this week.' },
+        { name: 'Kim',     text: 'Whoever left the angle grinder on the floor — not cool.' },
+        { name: 'Joris',   text: 'InfluxDB is throwing write errors again. Probably disk space.' },
+        { name: 'Linda',   text: 'Coffee anyone? Fresh pot just brewed.' },
+        { name: 'Dennis',  text: 'Check this out — clean solder joints on the first try.' },
+        { name: 'Sophie',  text: 'Print time estimate: seven hours. Reality: twelve hours.' },
+        { name: 'Marco',   text: 'The DXF looks good. Starting the plasma cutter now.' },
+        { name: 'Kim',     text: 'Safety glasses on! I\'m striking an arc.' },
+        { name: 'Joris',   text: 'Grafana alert — node seven in Dalen is offline again. Probably pigeons.' },
+        { name: 'Linda',   text: 'Has anyone seen the Mitutoyo calipers? They were right here.' },
+        { name: 'Dennis',  text: 'The oscilloscope shows a beautiful 868 MHz chirp. LoRa is alive.' },
+        { name: 'Sophie',  text: 'Bambu X1C just finished. Come look at this multicolour gear!' },
+        { name: 'Marco',   text: 'CNC is done. Beautiful cuts. Zero burrs.' },
+        { name: 'Kim',     text: 'That weld bead is gorgeous. Come see — perfect ripples.' },
+    ],
+    _chatterTimer: null,
+
+    _startChatter: function() {
+        this._stopChatter();
+        const doChatter = () => {
+            if (!this._audioRunning) return;
+            // Pick a random line and speak it with TTS if available
+            const line = this._chatterLines[Math.floor(Math.random() * this._chatterLines.length)];
+            if (window.voiceManager && window.voiceManager.enabled && window.speechSynthesis) {
+                const utterance = new SpeechSynthesisUtterance(line.text);
+                utterance.volume = 0.25; // Background chatter — quiet
+                utterance.rate = 0.95 + Math.random() * 0.15;
+                utterance.pitch = 0.8 + Math.random() * 0.4;
+                try { window.speechSynthesis.speak(utterance); } catch(e) {}
+            }
+            // Also flash a subtle text bubble over the NPC
+            this._showChatterBubble(line.name, line.text);
+            const next = 12000 + Math.random() * 18000;
+            this._chatterTimer = setTimeout(doChatter, next);
+        };
+        this._chatterTimer = setTimeout(doChatter, 5000 + Math.random() * 5000);
+    },
+
+    _stopChatter: function() {
+        if (this._chatterTimer) { clearTimeout(this._chatterTimer); this._chatterTimer = null; }
+    },
+
+    _showChatterBubble: function(npcName, text) {
+        const overlay = this._ensureVFXOverlay();
+        // Find the NPC element to position the bubble near them
+        const npcEl = this._charElements.find(el => el && el.getAttribute('data-npc-name') === npcName);
+        let leftPct = 50, topPct = 50;
+        if (npcEl) {
+            leftPct = parseFloat(npcEl.style.left) || 50;
+            topPct = 100 - (parseFloat(npcEl.style.bottom) || 50) - 12;
+        }
+        const bubble = document.createElement('div');
+        bubble.className = 'hs-chatter-bubble';
+        bubble.style.cssText = `
+            position:absolute; left:${leftPct}%; top:${topPct}%;
+            transform: translateX(-50%);
+            background:rgba(0,0,0,0.75); color:#eee; border:1px solid #555;
+            border-radius:8px; padding:4px 10px; font-size:11px; max-width:200px;
+            white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+            pointer-events:none; z-index:25;
+            animation: hs-bubble-fade 4s ease-out forwards;
+        `;
+        bubble.innerHTML = `<strong style="color:#7bf">${npcName}:</strong> ${text}`;
+        overlay.appendChild(bubble);
+        setTimeout(() => bubble.remove(), 4500);
     },
 
     hotspots: [
@@ -541,86 +1048,63 @@ const HackerspaceScene = {
         // Clear any leftover NPC characters
         this._removeCharacters();
 
-        // Spawn the workshop crew
+        // Spawn the workshop crew with fade-in
         setTimeout(() => { this._spawnCharacters(game); }, 200);
+
+        // Start NPC patrol movement after they've appeared
+        setTimeout(() => { this._startPatrols(); }, 2000);
+
+        // Start synthesized ambient audio
+        setTimeout(() => { this._initAudio(); }, 300);
+
+        // Start VFX (welding sparks, printer dings)
+        setTimeout(() => { this._startVFX(); }, 2000);
+
+        // Start ambient voice chatter
+        setTimeout(() => { this._startChatter(); }, 4000);
 
         if (!game.getFlag('visited_hackerspace')) {
             game.setFlag('visited_hackerspace', true);
+
+            // ── Cinematic entrance sequence ──
             setTimeout(() => {
                 game.startDialogue([
+                    { speaker: '', text: '*The heavy steel door swings open. A wall of sound hits Ryan — machine hum, stepper motors, the crackle of a welding arc.*' },
                     { speaker: 'Ryan', text: 'Hackerspace Drenthe in Coevorden. Housed in an old school building — high ceilings, big windows, concrete floor.' },
-                    { speaker: 'Ryan', text: 'The smell of machine oil and solder flux. CNC machines humming, 3D printers clicking away, the occasional arc flash from the welding station.' },
-                    { speaker: 'Ryan', text: 'And people. Makers, hackers, builders — each at their workstation, deep in their projects. This is where things get made.' },
-                    { speaker: 'Ryan', text: 'This is where people build things. Real things, with real tools. I love it.' },
+                    { speaker: '', text: '*The CNC plasma cutter throws blue sparks across the far wall. A row of 3D printers click in rhythm. The air smells of machine oil, solder flux, and fresh coffee.*' },
+                    { speaker: 'Ryan', text: 'People everywhere. Makers, hackers, builders — each at their workstation, deep in their projects.' },
+                    { speaker: '', text: '*Kim flips her welding helmet down — CRACK — an arc strikes. Marco feeds steel into the plasma cutter. Sophie swaps a filament spool. Dennis hunches over a PCB.*' },
+                    { speaker: 'Ryan', text: 'This is where things get made. This is where people build things. Real things, with real tools.' },
+                    { speaker: 'Ryan', text: 'I love it.' },
                 ]);
-            }, 500);
+            }, 600);
         } else {
             setTimeout(() => {
                 const greetings = [
-                    [{ speaker: 'Ryan', text: 'Back at the hackerspace. The crew\'s all here tonight.' }],
-                    [{ speaker: 'Ryan', text: 'Hackerspace Drenthe. The machines are running, the coffee is flowing.' }],
-                    [{ speaker: 'Ryan', text: 'The familiar hum of stepper motors and the smell of solder flux. Good to be back.' }],
+                    [
+                        { speaker: '', text: '*The familiar symphony of machines greets Ryan. Stepper motors, plasma hiss, the distant ring of a hammer on steel.*' },
+                        { speaker: 'Ryan', text: 'Back at the hackerspace. The crew\'s all here tonight.' },
+                    ],
+                    [
+                        { speaker: '', text: '*A welding arc flashes blue in the corner. The 3D printers click away like mechanical crickets.*' },
+                        { speaker: 'Ryan', text: 'Hackerspace Drenthe. The machines are running, the coffee is flowing.' },
+                    ],
+                    [
+                        { speaker: '', text: '*The angle grinder screams briefly, then quiets. Someone laughs near the soldering bench.*' },
+                        { speaker: 'Ryan', text: 'The familiar hum of stepper motors and the smell of solder flux. Good to be back.' },
+                    ],
                 ];
                 game.startDialogue(greetings[Math.floor(Math.random() * greetings.length)]);
             }, 500);
         }
     },
 
-    _startAmbientAudio: function(game) {
-        if (this._ambientRunning) return;
-        this._ambientRunning = true;
-        const ctx = game.audioContext || (game.audioContext = new (window.AudioContext || window.webkitAudioContext)());
-
-        // Low machine hum (CNC background)
-        const hum = ctx.createOscillator();
-        hum.type = 'sawtooth';
-        hum.frequency.value = 60;
-        const humGain = ctx.createGain();
-        humGain.gain.value = 0.015;
-        hum.connect(humGain).connect(ctx.destination);
-        hum.start();
-
-        // Higher whine (spindle)
-        const whine = ctx.createOscillator();
-        whine.type = 'sine';
-        whine.frequency.value = 1200;
-        const whineGain = ctx.createGain();
-        whineGain.gain.value = 0.008;
-        whine.connect(whineGain).connect(ctx.destination);
-        whine.start();
-
-        // Periodic clicking (3D printer stepper motors)
-        const clickInterval = setInterval(() => {
-            if (!this._ambientRunning) { clearInterval(clickInterval); return; }
-            const osc = ctx.createOscillator();
-            osc.type = 'square';
-            osc.frequency.value = 800 + Math.random() * 400;
-            const g = ctx.createGain();
-            g.gain.value = 0.01;
-            g.gain.setTargetAtTime(0, ctx.currentTime + 0.02, 0.01);
-            osc.connect(g).connect(ctx.destination);
-            osc.start();
-            osc.stop(ctx.currentTime + 0.04);
-        }, 150 + Math.random() * 100);
-
-        this._ambientNodes = [hum, whine];
-        this._ambientGains = [humGain, whineGain];
-        this._clickInterval = clickInterval;
-    },
-
-    _stopAmbientAudio: function() {
-        this._ambientRunning = false;
-        if (this._ambientNodes) {
-            this._ambientNodes.forEach(n => { try { n.stop(); } catch(e) {} });
-        }
-        if (this._clickInterval) clearInterval(this._clickInterval);
-        this._ambientNodes = null;
-        this._ambientGains = null;
-    },
-
     onExit: function() {
         this._removeCharacters();
-        this._stopAmbientAudio();
+        this._stopPatrols();
+        this._stopAudio();
+        this._stopVFX();
+        this._stopChatter();
     }
 };
 

@@ -1951,3 +1951,46 @@ button,
     60%  { opacity: 0.8; }
     100% { opacity: 1; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   Hackerspace Workshop VFX
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Welding flash pulse */
+@keyframes hs-weld-pulse {
+    0%   { opacity: 1; transform: scale(1); }
+    50%  { opacity: 0.4; transform: scale(1.5); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Spark fly outward */
+@keyframes hs-spark-fly {
+    0%   { opacity: 1; transform: translate(0, 0); }
+    100% { opacity: 0; transform: translate(var(--spark-dx), var(--spark-dy)); }
+}
+
+/* Printer ding text float */
+@keyframes hs-printer-ding {
+    0%   { opacity: 0; transform: translateY(0); }
+    15%  { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-30px); }
+}
+
+/* Chatter bubble appear and fade */
+@keyframes hs-bubble-fade {
+    0%   { opacity: 0; transform: translateX(-50%) translateY(5px); }
+    10%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+    80%  { opacity: 1; }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   Hackerspace Classroom VFX
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Audience reaction emoji float up */
+@keyframes hsc-reaction-float {
+    0%   { opacity: 0; transform: translateY(0) scale(0.5); }
+    20%  { opacity: 1; transform: translateY(-10px) scale(1); }
+    100% { opacity: 0; transform: translateY(-40px) scale(0.8); }
+}

@@ -63,6 +63,18 @@ class VoiceManager {
             'Team Check-in':       { ...britishMale, pitch: 1.0, rate: 0.95 },
             'Epilogue':            { ...britishMale, pitch: 0.95, rate: 0.85 },
             
+            // Hackerspace Drenthe members
+            'Dennis':              { ...britishMale, pitch: 1.05, rate: 1.0 },
+            'Sophie':              { ...britishFemale, pitch: 1.2, rate: 1.05 },
+            'Marco':               { ...britishMale, pitch: 0.85, rate: 1.0 },
+            'Kim':                 { ...britishFemale, pitch: 1.0, rate: 0.95 },
+            'Joris':               { ...britishMale, pitch: 1.1, rate: 1.1 },
+            'Linda':               { ...britishFemale, pitch: 0.95, rate: 0.88 },
+            'Aisha':               { ...britishFemale, pitch: 1.15, rate: 1.0 },
+            'Presenter':           { ...britishMale, pitch: 1.0, rate: 0.92 },
+            'Wouter':              { ...britishMale, pitch: 0.95, rate: 0.92 },
+            'Marieke':             { ...britishFemale, pitch: 1.1, rate: 0.92 },
+            
             // Narrator - neutral, clear voice
             '':                    { ...britishFemale, pitch: 1.0, rate: 0.9 },
             'Narrator':            { ...britishFemale, pitch: 1.0, rate: 0.9 },

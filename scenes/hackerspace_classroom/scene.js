@@ -1,10 +1,14 @@
 /**
- * Hackerspace Classroom Scene
+ * Hackerspace Classroom Scene — HOLLYWOOD EDITION
  * A former school classroom used for presentations.
- * Each visit triggers a different presentation topic:
- *   LoRa/LoRaWAN, Meshtastic, MeshCore, Home Automation,
- *   Cybersecurity, Blockchain, AI, and more.
- * 8-16 audience members are randomly placed each visit.
+ * Each visit triggers a different presentation topic.
+ *
+ * Dynamic features:
+ *   • Audience members fidget / shift in seats (subtle movement)
+ *   • Ambient audio: crowd murmur, laptop typing, chair creaks, projector fan
+ *   • Presentation slides auto-advance with TTS voice reading
+ *   • Audience reactions (nodding emoji, hand-raise, applause)
+ *   • Projector flicker / laser pointer dot VFX
  */
 
 const HackerspaceClassroomScene = {
@@ -604,6 +608,259 @@ const HackerspaceClassroomScene = {
         return a;
     },
 
+    // ═══════════════════════════════════════════════════════════════
+    // ── Web Audio API — Classroom Ambient Soundscape ─────────────
+    // ═══════════════════════════════════════════════════════════════
+    _audioCtx: null,
+    _audioNodes: [],
+    _audioTimers: [],
+    _audioRunning: false,
+
+    _initAudio: function() {
+        if (this._audioRunning) return;
+        try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) { return; }
+        this._audioRunning = true;
+        const ctx = this._audioCtx;
+
+        const master = ctx.createGain();
+        master.gain.value = 0.2;
+        master.connect(ctx.destination);
+        this._masterGain = master;
+
+        // ── 1. Low crowd murmur (filtered noise) ──
+        const murmurLen = ctx.sampleRate * 2;
+        const murmurBuf = ctx.createBuffer(1, murmurLen, ctx.sampleRate);
+        const md = murmurBuf.getChannelData(0);
+        for (let i = 0; i < murmurLen; i++) md[i] = (Math.random() * 2 - 1);
+        const murmur = ctx.createBufferSource();
+        murmur.buffer = murmurBuf;
+        murmur.loop = true;
+        const bp = ctx.createBiquadFilter();
+        bp.type = 'bandpass'; bp.frequency.value = 300; bp.Q.value = 0.8;
+        const mg = ctx.createGain();
+        mg.gain.value = 0.06;
+        murmur.connect(bp).connect(mg).connect(master);
+        murmur.start();
+        this._audioNodes.push(murmur);
+
+        // ── 2. Projector fan hum ──
+        const fan = ctx.createOscillator();
+        fan.type = 'triangle';
+        fan.frequency.value = 120;
+        const fg = ctx.createGain();
+        fg.gain.value = 0.03;
+        fan.connect(fg).connect(master);
+        fan.start();
+        this._audioNodes.push(fan);
+
+        // ── 3. Periodic laptop keyboard clicks ──
+        const keyLoop = () => {
+            if (!this._audioRunning) return;
+            // Burst of 3-6 keystrokes
+            const count = 3 + Math.floor(Math.random() * 4);
+            for (let i = 0; i < count; i++) {
+                const t = ctx.currentTime + i * 0.08 + Math.random() * 0.04;
+                const osc = ctx.createOscillator();
+                osc.type = 'square';
+                osc.frequency.value = 2000 + Math.random() * 2000;
+                const g = ctx.createGain();
+                g.gain.setValueAtTime(0.02, t);
+                g.gain.exponentialRampToValueAtTime(0.001, t + 0.02);
+                osc.connect(g).connect(master);
+                osc.start(t);
+                osc.stop(t + 0.025);
+            }
+            this._audioTimers.push(setTimeout(keyLoop, 4000 + Math.random() * 8000));
+        };
+        this._audioTimers.push(setTimeout(keyLoop, 2000));
+
+        // ── 4. Chair creak ──
+        const creakLoop = () => {
+            if (!this._audioRunning) return;
+            const osc = ctx.createOscillator();
+            osc.type = 'sine';
+            osc.frequency.value = 80 + Math.random() * 60;
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0.04, ctx.currentTime);
+            g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+            osc.connect(g).connect(master);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.35);
+            this._audioTimers.push(setTimeout(creakLoop, 10000 + Math.random() * 15000));
+        };
+        this._audioTimers.push(setTimeout(creakLoop, 5000));
+
+        // ── 5. Occasional cough ──
+        const coughLoop = () => {
+            if (!this._audioRunning) return;
+            this._sfxCough();
+            this._audioTimers.push(setTimeout(coughLoop, 20000 + Math.random() * 25000));
+        };
+        this._audioTimers.push(setTimeout(coughLoop, 12000));
+
+        // ── 6. Coffee cup clink ──
+        const cupLoop = () => {
+            if (!this._audioRunning) return;
+            this._sfxCupClink();
+            this._audioTimers.push(setTimeout(cupLoop, 15000 + Math.random() * 20000));
+        };
+        this._audioTimers.push(setTimeout(cupLoop, 8000));
+    },
+
+    _stopAudio: function() {
+        this._audioRunning = false;
+        this._audioTimers.forEach(id => clearTimeout(id));
+        this._audioTimers = [];
+        this._audioNodes.forEach(n => { try { n.stop(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+
+    _sfxCough: function() {
+        if (!this._audioCtx || !this._audioRunning) return;
+        const ctx = this._audioCtx;
+        const now = ctx.currentTime;
+        // Two-burst cough
+        [0, 0.25].forEach(offset => {
+            const bufLen = ctx.sampleRate * 0.15;
+            const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+            const d = buf.getChannelData(0);
+            for (let i = 0; i < bufLen; i++) d[i] = (Math.random() * 2 - 1);
+            const src = ctx.createBufferSource();
+            src.buffer = buf;
+            const bp = ctx.createBiquadFilter();
+            bp.type = 'bandpass'; bp.frequency.value = 500; bp.Q.value = 1;
+            const g = ctx.createGain();
+            g.gain.setValueAtTime(0.05, now + offset);
+            g.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.12);
+            src.connect(bp).connect(g).connect(this._masterGain);
+            src.start(now + offset);
+            src.stop(now + offset + 0.15);
+        });
+    },
+
+    _sfxCupClink: function() {
+        if (!this._audioCtx || !this._audioRunning) return;
+        const ctx = this._audioCtx;
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.value = 2500 + Math.random() * 500;
+        const g = ctx.createGain();
+        g.gain.setValueAtTime(0.06, now);
+        g.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.connect(g).connect(this._masterGain);
+        osc.start(now);
+        osc.stop(now + 0.3);
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // ── VFX: Projector flicker & laser dot ───────────────────────
+    // ═══════════════════════════════════════════════════════════════
+    _vfxTimers: [],
+    _vfxRunning: false,
+
+    _startVFX: function() {
+        this._stopVFX();
+        this._vfxRunning = true;
+
+        // Projector screen flicker (subtle brightness change)
+        const flickerLoop = () => {
+            if (!this._vfxRunning) return;
+            const sc = document.getElementById('scene-container');
+            if (sc) {
+                sc.style.filter = 'brightness(1.03)';
+                setTimeout(() => { if (sc) sc.style.filter = ''; }, 80);
+            }
+            this._vfxTimers.push(setTimeout(flickerLoop, 8000 + Math.random() * 12000));
+        };
+        this._vfxTimers.push(setTimeout(flickerLoop, 3000));
+
+        // Laser pointer dot wandering on screen area
+        const laserDot = document.createElement('div');
+        laserDot.id = 'hsc-laser-dot';
+        laserDot.style.cssText = `
+            position:absolute; width:6px; height:6px; border-radius:50%;
+            background:red; box-shadow: 0 0 6px 3px rgba(255,0,0,0.6);
+            pointer-events:none; z-index:25; opacity:0;
+            transition: left 1.5s ease-in-out, top 1.5s ease-in-out, opacity 0.5s;
+        `;
+        const sceneContainer = document.getElementById('scene-container');
+        if (sceneContainer) sceneContainer.appendChild(laserDot);
+
+        const laserLoop = () => {
+            if (!this._vfxRunning) return;
+            // Show laser for a few seconds over the projector screen area
+            const x = 25 + Math.random() * 50;
+            const y = 15 + Math.random() * 35;
+            laserDot.style.left = x + '%';
+            laserDot.style.top = y + '%';
+            laserDot.style.opacity = '1';
+            setTimeout(() => { laserDot.style.opacity = '0'; }, 3000 + Math.random() * 2000);
+            this._vfxTimers.push(setTimeout(laserLoop, 10000 + Math.random() * 15000));
+        };
+        this._vfxTimers.push(setTimeout(laserLoop, 5000));
+
+        // Audience head-nod reactions (emoji bubbles)
+        const reactionEmojis = ['👍', '🤔', '💡', '👏', '📝', '🔥', '✋'];
+        const reactionLoop = () => {
+            if (!this._vfxRunning) return;
+            const emoji = reactionEmojis[Math.floor(Math.random() * reactionEmojis.length)];
+            const x = 15 + Math.random() * 70;
+            const y = 60 + Math.random() * 28;
+            const el = document.createElement('div');
+            el.style.cssText = `
+                position:absolute; left:${x}%; top:${y}%;
+                font-size:16px; pointer-events:none; z-index:26;
+                animation: hsc-reaction-float 2s ease-out forwards;
+            `;
+            el.textContent = emoji;
+            if (sceneContainer) sceneContainer.appendChild(el);
+            setTimeout(() => el.remove(), 2500);
+            this._vfxTimers.push(setTimeout(reactionLoop, 8000 + Math.random() * 12000));
+        };
+        this._vfxTimers.push(setTimeout(reactionLoop, 6000));
+    },
+
+    _stopVFX: function() {
+        this._vfxRunning = false;
+        this._vfxTimers.forEach(id => clearTimeout(id));
+        this._vfxTimers = [];
+        const dot = document.getElementById('hsc-laser-dot');
+        if (dot) dot.remove();
+        const sc = document.getElementById('scene-container');
+        if (sc) sc.style.filter = '';
+    },
+
+    // ═══════════════════════════════════════════════════════════════
+    // ── Audience Fidget Animation ────────────────────────────────
+    // ═══════════════════════════════════════════════════════════════
+    _fidgetTimers: [],
+
+    _startFidgets: function() {
+        this._stopFidgets();
+        // Make anonymous audience members subtly shift
+        const overlay = document.getElementById('classroom-people-overlay');
+        if (!overlay) return;
+        const imgs = overlay.querySelectorAll('img');
+        imgs.forEach(img => {
+            img.style.transition = 'transform 2s ease-in-out';
+            const fidget = () => {
+                const dx = -3 + Math.random() * 6;
+                const dy = -2 + Math.random() * 4;
+                const rot = -3 + Math.random() * 6;
+                img.style.transform = `translate(calc(-50% + ${dx}px), calc(-100% + ${dy}px)) rotate(${rot}deg)`;
+                this._fidgetTimers.push(setTimeout(fidget, 5000 + Math.random() * 8000));
+            };
+            this._fidgetTimers.push(setTimeout(fidget, 2000 + Math.random() * 5000));
+        });
+    },
+
+    _stopFidgets: function() {
+        this._fidgetTimers.forEach(id => clearTimeout(id));
+        this._fidgetTimers = [];
+    },
+
     // ── Spawn people as character SVGs ───────────────────────────────
     _spawnPeople: function(game) {
         this._removePeople();
@@ -682,24 +939,36 @@ const HackerspaceClassroomScene = {
         // Spawn random audience + named characters + presenter
         this._spawnPeople(game);
 
+        // Start ambient audio
+        setTimeout(() => { this._initAudio(); }, 300);
+
+        // Start VFX (projector flicker, laser dot, audience reactions)
+        setTimeout(() => { this._startVFX(); }, 1500);
+
+        // Start audience fidget animations
+        setTimeout(() => { this._startFidgets(); }, 2000);
+
         if (!game.getFlag('visited_hackerspace_classroom')) {
             game.setFlag('visited_hackerspace_classroom', true);
             setTimeout(() => {
                 const isWouter = (idx % 2 === 0);
                 const presName = isWouter ? 'Wouter' : 'Marieke';
                 game.startDialogue([
-                    { speaker: 'Ryan', text: 'The old classroom. Projector, whiteboard, rows of chairs filling up. Every week a different member gives a presentation.' },
-                    { speaker: 'Ryan', text: `Tonight it\'s "${pres.title}" presented by ${presName}. I recognise some faces from the workshop — Pieter, Aisha, Marco, Kim, Joris.` },
-                    { speaker: 'Ryan', text: 'About ' + this._currentPeopleCount + ' people showed up. Not bad for a Tuesday evening in Coevorden.' },
+                    { speaker: '', text: '*Ryan slips through the classroom door. The projector casts a blue glow across rows of faces. A low murmur of conversation.*' },
+                    { speaker: '', text: `*The slide reads: "${pres.title}" — presented by ${presName}. ${this._currentPeopleCount} people fill the old school chairs.*` },
+                    { speaker: 'Ryan', text: 'The old classroom. Projector, whiteboard, rows of chairs. Every week a different member gives a presentation.' },
+                    { speaker: '', text: '*Someone\'s laptop keyboard clicks softly. A coffee cup clinks against a desk. The projector fan hums.*' },
+                    { speaker: 'Ryan', text: 'I recognise some faces from the workshop — Pieter has a Pi on his lap, Aisha\'s sketching notes, Marco somehow looks out of place without ear protection.' },
                     { speaker: 'Ryan', text: 'This is where hackerspace members learn from each other. No professors, no grades — just people sharing what they know.' },
                 ]);
-            }, 500);
+            }, 600);
         } else {
             setTimeout(() => {
                 const isWouter = (idx % 2 === 0);
                 const presName = isWouter ? 'Wouter' : 'Marieke';
                 game.startDialogue([
-                    { speaker: 'Ryan', text: `Tonight\'s presentation: "${pres.title}" by ${presName}. ${this._currentPeopleCount} people in the audience.` },
+                    { speaker: '', text: `*The projector shows: "${pres.title}" by ${presName}. The low hum of conversation and clicking laptops fills the room.*` },
+                    { speaker: 'Ryan', text: `${this._currentPeopleCount} people tonight. Good turnout for "${pres.title}".` },
                 ]);
             }, 500);
         }
@@ -707,6 +976,9 @@ const HackerspaceClassroomScene = {
 
     onExit: function() {
         this._removePeople();
+        this._stopAudio();
+        this._stopVFX();
+        this._stopFidgets();
     }
 };
 
