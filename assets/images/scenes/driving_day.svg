@@ -423,7 +423,7 @@
   <!-- ============ VOLVO 740 (same boxy shape - daytime colors) ============ -->
   <g>
     <animateTransform attributeName="transform" type="translate"
-      values="700,746; 700,748; 700,746; 700,745; 700,746" dur="0.8s" repeatCount="indefinite" calcMode="linear"/>
+      values="0,0; 0,2; 0,0; 0,-1; 0,0" dur="0.8s" repeatCount="indefinite" calcMode="linear"/>
 
     <!-- Car body shadow on road -->
     <ellipse cx="900" cy="915" rx="185" ry="12" fill="#0a0a0a" opacity="0.25"/>
