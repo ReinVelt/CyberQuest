@@ -126,9 +126,6 @@ const VideocallScene = {
                         { speaker: 'Ryan', text: 'Your work ended up in 5G networks worldwide. That\'s impressive.' },
                         { speaker: 'Cees Bassa', text: 'True. Strange to think my signal processing code is running on millions of devices.' },
                         { speaker: 'Cees Bassa', text: 'Never imagined radio astronomy would lead to telecommunications.' },
-                        { speaker: 'Ryan', text: 'How\'s retirement treating you?' },
-                        { speaker: 'Cees Bassa', text: 'Wonderfully! I still consult occasionally, but mostly I garden and read.' },
-                        { speaker: 'Cees Bassa', text: 'Though I do miss the technical challenges sometimes.' },
                         { speaker: 'Ryan', text: 'Well, if I find any interesting signal puzzles, you\'ll be my first call.' },
                         { speaker: 'Cees Bassa', text: '*Smiles* I\'d like that. Stay curious, Ryan!' }
                     ]);

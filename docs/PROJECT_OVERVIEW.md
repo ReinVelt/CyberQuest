@@ -1,6 +1,6 @@
 # CyberQuest: Project Overview & Documentation Index
-**Last Updated:** February 15, 2026  
-**Version:** 1.0  
+**Last Updated:** February 27, 2026  
+**Version:** 1.1  
 **Status:** Production Ready
 
 ---
@@ -29,7 +29,7 @@ You are **Ryan Weylant**, a 55-year-old Dutch hacker living in Compascuum, Nethe
 
 ### Core Gameplay
 
-- **Point-and-click navigation** through 18 handcrafted scenes
+- **Point-and-click navigation** through 33 handcrafted scenes
 - **Dialogue-driven story** with branching conversations
 - **Puzzle solving** (ciphers, passwords, stealth challenges)
 - **Evidence collection** (emails, documents, schematics)
@@ -73,7 +73,7 @@ This project contains comprehensive documentation across multiple files:
 ---
 
 ### 🗺️ [SCENES.md](SCENES.md)
-**Complete catalog of all 18 scenes**  
+**Complete catalog of all 33 scenes**  
 - Scene descriptions and backgrounds
 - Hotspot maps with positions
 - Dialogue sequences
@@ -109,50 +109,6 @@ This project contains comprehensive documentation across multiple files:
 
 ---
 
-### ✅ [CONSISTENCY_CHECK.md](CONSISTENCY_CHECK.md)
-**Quality assurance report**  
-- Story consistency verification
-- Technical accuracy checks
-- Scene transition validation
-- Flag logic verification
-- All 16 scene transitions tested
-
-**Read this if:** You're QA testing or verifying game completeness.
-
----
-
-### 📋 [VALIDATION_REPORT.md](VALIDATION_REPORT.md)
-**Integration validation**  
-- Scene flow verification
-- Modified files list
-- Integration changes documented
-- Intro and epilogue implementation notes
-
-**Read this if:** You're reviewing recent changes or integration work.
-
----
-
-### 📝 [FIXES_LOG.md](FIXES_LOG.md)
-**Implementation log**  
-- Immediate fixes applied
-- Asset path corrections
-- Quest completion fixes
-- Files modified tracking
-
-**Read this if:** You're debugging or reviewing recent bug fixes.
-
----
-
-### 🎯 [ACTION_PLAN.md](ACTION_PLAN.md)
-**Development roadmap**  
-- Phase-by-phase development plan
-- Scene implementation priorities
-- System integration planning
-
-**Read this if:** You're planning future development or tracking project phases.
-
----
-
 ### ⚙️ [RULES.md](RULES.md)
 **Game design rules**  
 - Design philosophy
@@ -170,24 +126,24 @@ This project contains comprehensive documentation across multiple files:
 
 | Component | Files | Lines of Code | Size |
 |-----------|-------|---------------|------|
-| **Engine** | 6 | ~3,500 | ~180 KB |
-| **Scenes** | 18 | ~8,000 | ~400 KB |
+| **Engine** | 6 | ~5,500 | ~270 KB |
+| **Scenes** | 33 | ~22,000 | ~1.1 MB |
 | **Assets (SVG)** | 20+ | N/A | ~10 MB |
-| **Documentation** | 10+ | N/A | ~500 KB |
-| **Total** | 54+ | ~11,500+ | ~11 MB |
+| **Documentation** | 7+ | N/A | ~500 KB |
+| **Total** | 66+ | ~27,500+ | ~12 MB |
 
 ### Content
 
 | Category | Count |
 |----------|-------|
-| **Scenes** | 18 |
-| **Hotspots** | ~120 |
-| **Dialogue Lines** | ~800+ |
-| **Evidence Documents** | ~30 |
-| **Quests** | ~15 |
-| **Puzzles** | 5 |
-| **Characters** | 10+ |
-| **Locations** | 6 (mapped) |
+| **Scenes** | 33 |
+| **Hotspots** | ~250+ |
+| **Dialogue Lines** | ~2,000+ |
+| **Evidence Documents** | ~40+ |
+| **Quests** | ~20+ |
+| **Puzzles** | 5+ |
+| **Characters** | 15+ |
+| **Locations** | 10+ (mapped) |
 
 ### Gameplay
 
@@ -586,6 +542,17 @@ A: Quest log provides hints. Future versions will have progressive hint system.
 
 ## Version History
 
+**v1.1 (February 27, 2026)**
+- ✅ Expanded to 33 scenes (15 new scenes)
+- ✅ Pause system added
+- ✅ Scene-based clock (SCENE_TIME_MAP)
+- ✅ Save format v2 (evidence tracking)
+- ✅ Debug panel overhauled
+- ✅ Hackerspace / Dwingeloo / ASTRON / LOFAR / Westerbork scenes
+- ✅ Laser corridor stealth scene
+- ✅ Long night / morning after / return to Ies scenes
+- ✅ Drone hunt scene
+
 **v1.0 (February 15, 2026)**
 - ✅ Complete game (18 scenes)
 - ✅ All core systems implemented
@@ -594,12 +561,6 @@ A: Quest log provides hints. Future versions will have progressive hint system.
 - ✅ Mobile support
 - ✅ Save/load system
 - ✅ Voice narration (optional)
-
-**In Development (v1.1)**
-- ⏳ Achievement system
-- ⏳ Multiple save slots
-- ⏳ Hint system
-- ⏳ Translations
 
 ---
 
@@ -619,8 +580,8 @@ A: Quest log provides hints. Future versions will have progressive hint system.
 *A techno-thriller adventure built with curiosity, code, and coffee.*
 
 **Status:** Production Ready ✅  
-**Last Updated:** February 15, 2026  
-**Version:** 1.0
+**Last Updated:** February 27, 2026  
+**Version:** 1.1
 
 ---
 

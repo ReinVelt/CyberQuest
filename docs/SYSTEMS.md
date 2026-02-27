@@ -1,6 +1,6 @@
 # CyberQuest: Game Systems Documentation
-**Last Updated:** February 15, 2026  
-**Version:** 1.0
+**Last Updated:** February 27, 2026  
+**Version:** 1.1
 
 ---
 
@@ -24,9 +24,26 @@
 
 ### CyberQuestEngine
 **File:** `engine/game.js`  
-**Lines:** 1490
+**Lines:** 2704
 
 The central engine that coordinates all game systems.
+
+#### Engine Configuration
+
+All timing constants live in a frozen `ENGINE_CONFIG` object:
+
+```javascript
+const ENGINE_CONFIG = Object.freeze({
+    TRANSITION_DURATION: 500,   // ms — scene fade
+    SCENE_CHANGE_DELAY:  300,   // ms — delay before loading next scene
+    INVENTORY_AUTO_CLOSE: 2000, // ms — auto-close inventory flash
+    TYPEWRITER_SPEED:    40,    // ms per character
+    NOTIFICATION_DURATION: 3000,// ms — notification display time
+    NOTIFICATION_FADE:   500,   // ms — notification fade-out
+    DEFAULT_TIME: '08:00',
+    DEFAULT_DAY:  1,
+});
+```
 
 #### Initialization Sequence
 ```javascript
@@ -48,10 +65,15 @@ gameState: {
   questsCompleted: [],       // Array of completed quest IDs
   activeQuests: [],          // Array of quest objects
   flags: {},                 // Key-value boolean flags
+  evidence: [],              // Collected evidence items
+  evidenceViewed: [],        // IDs of evidence documents viewed
   time: '08:00',             // In-game time (HH:MM format)
   day: 1                     // Current day number
 }
 ```
+
+> **Save version:** `_saveVersion = 2`. The `loadGame()` method merges saved state
+> over a fresh default, so new fields are always initialised even on old saves.
 
 #### Core Event Handlers
 - **Dialogue Click:** Advance dialogue on click/touch
@@ -59,7 +81,8 @@ gameState: {
 - **Hotspot Click:** Execute hotspot action
 - **Inventory Toggle:** Show/hide inventory bar
 - **Quest Toggle:** Show/hide quest log
-- **Menu Buttons:** Save, load, settings, voice toggle
+- **Menu Buttons:** Pause, Save, Load, Settings, Voice toggle
+- **Keyboard:** `P` pause/resume, `Space` advance dialogue, `V` voice toggle, `D` debug panel, `Escape` resume if paused
 
 ---
 
@@ -93,20 +116,46 @@ gameState: {
 ```javascript
 {
   id: 'unique_id',              // Unique identifier
-  name: 'Display Name',         // Shown on hover/click
+  name: 'Display Name',         // Shown on hover/click (tooltip)
   x: 20,                        // X position (% of scene width)
   y: 30,                        // Y position (% of scene height)
   width: 15,                    // Width (%)
   height: 10,                   // Height (%)
   cursor: 'pointer',            // CSS cursor: pointer, look, talk, use
-  
+  cssClass: 'hotspot-nav',      // Extra CSS class (optional)
+  icon: 'assets/images/…svg',   // Image overlaid on hotspot (optional)
+  label: 'Go North',            // Text label overlaid on hotspot (optional)
+  visible: true,                // false = not rendered at all
+  skipWalk: false,              // true = execute immediately, skip player walk
+  lookMessage: 'A sturdy door.',// Ryan thinks this on click (optional)
+  disabledMessage: 'Locked.',   // Thought shown when enabled === false
+  failMessage: 'Need a key.',   // Thought shown when condition fails
+
+  // Dynamic enable guard (function or static boolean)
+  enabled: function(game) { return game.getFlag('door_unlocked'); },
+
+  // Prerequisite flag check (string = flag name, or function)
+  condition: 'picked_up_usb',
+
   // Option 1: Direct scene transition
   targetScene: 'other_scene',
-  
+
   // Option 2: Custom action function
   action: function(game) {
     // Custom behavior
-  }
+  },
+
+  // Option 3: Interactions pattern (look / use / default)
+  interactions: {
+    look: function(game) { game.playerThink('I see a control panel.'); },
+    use:  function(game) { game.startDialogue([...]); },
+  },
+
+  // Shorthand: auto-add item on click
+  item: { id: 'usb', name: 'USB Stick', icon: '💾' },
+
+  // Shorthand: auto-start dialogue on click
+  dialogue: [ { speaker: 'Ryan', text: 'Hello.' } ],
 }
 ```
 
@@ -129,16 +178,25 @@ Hotspots are created as invisible DIV overlays positioned absolutely within the 
 ### Starting Dialogue
 
 ```javascript
+// Full form — optional onComplete callback fires when dialogue ends:
 game.startDialogue([
   { 
     speaker: 'Ryan',           // Speaker name (or '' for narration)
     text: 'What is this?',     // Dialogue text
-    portrait: 'path/to.jpg'    // Optional portrait image
+    portrait: 'path/to.jpg'    // Optional portrait override
   },
   { speaker: 'Ies', text: 'It looks dangerous.' },
   { speaker: '', text: '*alarm blares*' }  // Narration/sound effect
-]);
+], function(game) {
+  // Called when all lines are done
+});
+
+// Convenience shorthand (all lines share the same speaker):
+game.showDialogue(['Coffee first.', 'Then we talk.'], 'Ryan');
 ```
+
+**Auto-portrait lookup:** if no `portrait` is given, the engine derives the
+portrait path from the speaker name via an internal `PORTRAIT_MAP`.
 
 ### Dialogue Box Structure
 
@@ -163,10 +221,13 @@ game.startDialogue([
 
 ### Typewriter Effect
 
-Text appears character-by-character with configurable speed:
+Text appears character-by-character:
 ```javascript
-typewriterSpeed: 30  // milliseconds per character
+ENGINE_CONFIG.TYPEWRITER_SPEED = 40  // milliseconds per character
 ```
+
+An `AbortController` (`typewriterAbortController`) cancels in-flight typing
+whenever the player advances or the game is paused.
 
 **Skip Functionality:**
 - Click during typing → complete current line instantly
@@ -311,83 +372,68 @@ game.completeQuest('quest_id');
 ## Evidence Viewer
 
 **File:** `engine/evidence-viewer.js`  
-**Lines:** 530
+**Lines:** 612
 
 Full-screen document viewing system for evidence, emails, photos, schematics.
 
+### API
+
+The engine exposes `game.showEvidence(documentData)` which delegates to
+`evidenceViewer.showDocument(documentData)`. Document type is set via the
+`type` field of the data object.
+
 ### Document Types
 
-#### 1. Email
+#### 1. Text / Report
 ```javascript
 game.showEvidence({
+  id: 'usb_readme',
+  type: 'text',          // or 'report'
+  title: 'README.txt',
+  author: 'E. Weber',
+  date: 'Feb 9, 2026',
+  classification: 'CONFIDENTIAL',  // Optional
+  content: 'Document text content…'
+  // content can also be an array of strings for multi-page documents
+});
+```
+
+#### 2. Email
+```javascript
+game.showEvidence({
+  id: 'email_001',
   type: 'email',
-  from: 'sender@example.com',
-  to: 'recipient@example.com',
-  subject: 'Email Subject',
-  body: 'Email body text...',
-  timestamp: 'Feb 10, 2026 14:32'
+  title: 'Email: Project Status',
+  // All standard fields: author, date, content, etc.
+  content: 'From: volkov@…\nTo: hoffmann@…\n\nEmail body…'
 });
 ```
 
-**Rendering:**
-- Email header (From, To, Subject, Date)
-- Body text (formatted with line breaks)
-- Reply chain support (nested emails)
-
-#### 2. Document
+#### 3. Image / Schematic
 ```javascript
 game.showEvidence({
-  type: 'document',
-  title: 'Document Title',
-  subtitle: 'Optional subtitle',
-  author: 'Author Name',
-  date: 'Feb 10, 2026',
-  classification: 'CONFIDENTIAL',    // Optional
-  content: 'Document text content...'
+  id: 'facility_schematic',
+  type: 'image',        // or 'schematic'
+  title: 'Facility Floor Plan',
+  content: 'assets/images/evidence/floorplan.svg'
 });
 ```
 
-**Rendering:**
-- Header with title, author, date
-- Classification marking (if present)
-- Body text (formatted)
-- Supports markdown-style formatting
+#### 4. onRead Callback
 
-#### 3. Image
+Any document can include an `onRead` callback fired the first time it is viewed:
 ```javascript
 game.showEvidence({
-  type: 'image',
-  title: 'Image Title',
-  imagePath: 'assets/images/evidence/photo.jpg',
-  caption: 'Optional caption',
-  metadata: 'EXIF: Date, Location, etc.'  // Optional
+  id: 'critical_doc',
+  type: 'text',
+  title: '…',
+  content: '…',
+  onRead: function(game) {
+    game.setFlag('read_critical_doc', true);
+    game.completeQuest('find_evidence');
+  }
 });
 ```
-
-**Rendering:**
-- Centered image
-- Title above
-- Caption below
-- Metadata footer
-
-#### 4. Chat Log
-```javascript
-game.showEvidence({
-  type: 'chat',
-  title: 'Signal Conversation',
-  contact: 'Chris Kubecka',
-  messages: [
-    { sender: 'Ryan', text: 'Message', time: '10:23' },
-    { sender: 'Chris', text: 'Reply', time: '10:24' }
-  ]
-});
-```
-
-**Rendering:**
-- Chat bubble interface
-- Left-aligned (sent) and right-aligned (received)
-- Timestamps
-- Contact name in header
 
 ### Controls
 
@@ -402,12 +448,13 @@ game.showEvidence({
 
 ### Evidence Tracking
 
-**Viewed Evidence:**
 ```javascript
 game.hasViewedEvidence('document_id')  // Returns true/false
+game.addEvidence(evidenceData)         // Store in gameState.evidence
 ```
 
-Evidence viewing is tracked in game state for quest progression.
+Viewed document IDs are stored in `evidenceViewer.documentHistory` and
+sync'd into `gameState.evidenceViewed` on every save.
 
 ---
 
@@ -595,6 +642,25 @@ game.chatInterface.showSequence({
 
 ---
 
+## Pause System
+
+**Location:** Integrated in `engine/game.js`
+
+`game.togglePause()` freezes the entire game state:
+
+| Effect | Paused | Resumed |
+|--------|--------|---------|
+| Pause overlay | Shown | Hidden |
+| CSS animations | `animationPlayState: paused` | Restored |
+| Speech synthesis | `.pause()` | `.resume()` |
+| Typewriter | Aborted | — |
+| Player idle timer | Cleared | Restarted |
+| Hotspot / dialogue clicks | Blocked | Unblocked |
+
+**Keyboard:** `P` toggles pause; `Escape` also resumes if paused.
+
+---
+
 ## Voice Narration
 
 **File:** `engine/voice.js`
@@ -617,26 +683,31 @@ const voiceManager = new VoiceManager();
 
 ### Character Voice Profiles
 
+The VoiceManager has built-in profiles for all named characters:
+
 ```javascript
-voices: {
-  'Ryan': {
-    rate: 0.9,          // Speed (0.1 to 10)
-    pitch: 0.8,         // Pitch (0 to 2)
-    volume: 1.0,        // Volume (0 to 1)
-    voiceName: 'Google US English'  // Preferred voice
-  },
-  'Ies': {
-    rate: 1.0,
-    pitch: 1.2,
-    voiceName: 'Google UK English Female'
-  },
-  'Narrator': {
-    rate: 0.85,
-    pitch: 0.7,
-    volume: 0.9
-  }
-}
+// Protagonist
+'Ryan':          { pitch: 0.90, rate: 0.95, lang: 'en-GB', … }
+"Ryan's Thoughts": { pitch: 0.85, rate: 0.90, … }
+
+// Contacts / allies
+'Ies':           { pitch: 1.15, rate: 0.95, … }   // Dutch female
+'Eva':           { pitch: 1.15, rate: 0.90, … }   // German female
+'Chris Kubecka': { pitch: 1.10, rate: 1.00, lang: 'en-US', … }
+'David Prinsloo':{ pitch: 0.95, rate: 1.00, … }
+'Cees Bassa':    { pitch: 1.00, rate: 0.95, … }
+'Jaap Haartsen': { pitch: 0.88, rate: 0.92, … }
+
+// Antagonist
+'Volkov':        { pitch: 0.70, rate: 0.85, … }   // Deep, menacing
+
+// Hackerspace members (Dennis, Sophie, Marco, Kim, Joris, Linda, Aisha, …)
+// Documentary narrator, Presenter, Narrator, and more
+// See engine/voice.js for the full list.
 ```
+
+**Voice archetypes** (`britishMale`, `britishFemale`, `americanFemale`) reduce
+duplication — each profile inherits preferred voice names and language tag.
 
 ### Usage in Dialogue
 
@@ -692,73 +763,55 @@ Uses browser localStorage for persistent save data.
 
 ```javascript
 {
-  version: '1.0',
-  timestamp: 1707996345678,      // Unix timestamp
+  version: 2,                          // _saveVersion (integer, bumped on format changes)
+  timestamp: '2026-02-27T14:00:00Z',   // ISO 8601 timestamp
   currentScene: 'mancave',
+  voiceEnabled: true,
   gameState: {
     storyPart: 5,
     questsCompleted: ['decode_message'],
     activeQuests: [...],
-    flags: { ... },
+    flags: { … },
+    evidence: [...],
+    evidenceViewed: ['usb_readme', 'email_001'],
     time: '14:30',
     day: 1
   },
-  inventory: [...],
-  viewedEvidence: [...]
+  inventory: [...]
 }
 ```
 
-### Saving Game
+### Saving
 
-**Manual Save:**
 ```javascript
-game.saveGameState();
-// Saves to localStorage under key: 'cyberquest_save'
+game.saveGame();              // Manual save to auto-slot — shows 'Game saved!' notification
+game.saveGame(true);          // Silent auto-save (no notification)
+game.saveGame(false, 2);      // Save to named Slot 2
+game.openSaveSlotModal('save'); // Open 3-slot picker UI
 ```
 
-**Auto-Save:**
-Game automatically saves:
-- On scene transition
-- After quest completion
-- After important story flags
+Auto-save fires on **every scene transition** (silent, no notification).
 
-**Save Notification:**
-"Game saved" notification appears briefly.
+### Loading
 
-### Loading Game
-
-**On Game Start:**
 ```javascript
-game.loadGameState();
-// Restores all progress from localStorage
+game.loadGame();              // Load from auto-slot
+game.loadGame(2);             // Load from Slot 2
+game.openSaveSlotModal('load'); // Open 3-slot picker UI
 ```
 
-**Load from Menu:**
-Future feature: Multiple save slots
+**On startup**, `loadGameState()` checks the URL hash — if it matches a
+registered scene the game jumps directly there (dev/debug convenience).
 
-### Save Data Management
+### Storage Key
 
-**Check for Save:**
 ```javascript
-if (localStorage.getItem('cyberquest_save')) {
-  // Save exists
-}
-```
-
-**Delete Save:**
-```javascript
-localStorage.removeItem('cyberquest_save');
-```
-
-**Export Save (Future):**
-```javascript
-const saveData = game.exportSaveData();
-// Returns JSON string for backup
-```
-
-**Import Save (Future):**
-```javascript
-game.importSaveData(jsonString);
+localStorage.getItem('cyberquest_save')     // Auto-save / legacy slot
+localStorage.getItem('cyberquest_save_1')   // Named Slot 1
+localStorage.getItem('cyberquest_save_2')   // Named Slot 2
+localStorage.getItem('cyberquest_save_3')   // Named Slot 3
+localStorage.getItem('cyberquest_settings') // User settings (text/anim speed)
+localStorage.removeItem('cyberquest_save')  // Delete auto-save
 ```
 
 ---
@@ -986,14 +1039,12 @@ Here's how all systems work together in a typical interaction:
     // 3. Set flag for future checks
     game.setFlag('usb_found', true);
     
-    // 4. Start dialogue sequence
+    // 4. Start dialogue; pass callback for post-dialogue logic
     game.startDialogue([
       { speaker: 'Ryan', text: 'Found it. A black USB stick.' },
       { speaker: '', text: '*Pockets the device carefully*' }
-    ]);
-    
-    // 5. After dialogue, add quest
-    setTimeout(() => {
+    ], function(game) {
+      // 5. After last dialogue line, add quest
       game.addQuest({
         id: 'analyze_usb',
         name: 'Analyze USB Contents',
@@ -1004,10 +1055,8 @@ Here's how all systems work together in a typical interaction:
       // 6. Complete previous quest
       game.completeQuest('find_usb');
       
-      // 7. Save progress
-      game.saveGameState();
-      
-    }, 5000);  // Wait for dialogue to finish
+      // saveGame fires automatically on the next scene transition
+    });
   }
 }
 ```
@@ -1028,9 +1077,17 @@ Here's how all systems work together in a typical interaction:
 
 **Scene Cleanup:**
 - `onExit()` removes temporary elements
-- Event listeners detached
-- Timers/intervals cleared
+- `clearSceneTimeouts()` cancels all `sceneTimeout()` timers automatically on scene exit
+- `_boundHandlers` tracked globally; full cleanup via `game.destroy()`
 - Character sprites removed
+
+**Scene-scoped Timers:**
+
+Use `game.sceneTimeout(fn, delay)` instead of bare `setTimeout` for anything
+that should not fire after the player has left the scene:
+```javascript
+game.sceneTimeout(() => { game.showNotification('Beep!'); }, 3000);
+```
 
 **Asset Loading:**
 - SVGs loaded on-demand per scene
@@ -1097,7 +1154,7 @@ game.removeFromInventory('item_id');
 ### Planned
 - [ ] Achievement system (track milestones)
 - [ ] Statistics (time played, scenes visited, choices made)
-- [ ] Multiple save slots (3-5 slots)
+- [x] Multiple save slots (3-5 slots) ✅
 - [ ] Cloud save sync
 - [ ] Accessibility mode (skip puzzles, auto-solve)
 - [ ] Hint system (progressive hints on timers)

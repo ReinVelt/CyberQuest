@@ -1,6 +1,6 @@
 # CyberQuest: Game Architecture Documentation
-**Last Updated:** February 15, 2026  
-**Version:** 1.0  
+**Last Updated:** February 27, 2026  
+**Version:** 1.1  
 **Status:** Production
 
 ---
@@ -32,12 +32,49 @@
 Loading Screen → Title Screen → Intro Scene → Main Game → Epilogue → Credits
 ```
 
+### Engine Constants
+
+```javascript
+const ENGINE_CONFIG = Object.freeze({
+    TRANSITION_DURATION: 500,
+    SCENE_CHANGE_DELAY: 300,
+    INVENTORY_AUTO_CLOSE: 2000,
+    TYPEWRITER_SPEED: 40,
+    NOTIFICATION_DURATION: 3000,
+    NOTIFICATION_FADE: 500,
+    DEFAULT_TIME: '08:00',
+    DEFAULT_DAY: 1,
+});
+```
+
+### Scene-Clock Map
+
+`SCENE_TIME_MAP` maps every scene to a canonical in-game day/time.
+When a scene is entered the clock advances to that value — but **never backwards**.
+Scenes not listed leave the clock unchanged.
+
+```javascript
+const SCENE_TIME_MAP = Object.freeze({
+    // Day 1 — Mon Feb 9
+    intro: { day: 1, time: '07:27' }, home: { day: 1, time: '07:45' },
+    mancave: { day: 1, time: '09:00' }, sdr_bench: { day: 1, time: '16:15' },
+    klooster: { day: 1, time: '22:55' }, car_discovery: { day: 1, time: '23:15' },
+    // Day 2 — Tue Feb 10
+    dwingeloo: { day: 2, time: '11:00' }, astron: { day: 2, time: '15:30' },
+    facility: { day: 2, time: '21:47' }, facility_server: { day: 2, time: '22:08' },
+    // Day 3+ — see source for full list
+    long_night: { day: 3, time: '01:00' }, morning_after: { day: 4, time: '08:00' },
+    epilogue: { day: 90, time: '14:00' },
+    // ... (see engine/game.js SCENE_TIME_MAP for complete list)
+});
+```
+
 ---
 
 ## Core Engine
 
 ### CyberQuestEngine Class
-**Location:** `engine/game.js` (1490 lines)
+**Location:** `engine/game.js` (2704 lines)
 
 The main game engine manages all game state, scene transitions, and system coordination.
 
@@ -57,18 +94,26 @@ The main game engine manages all game state, scene transitions, and system coord
   currentScene: null,           // Current scene ID
   scenes: {},                   // Registered scene objects
   inventory: [],                // Player inventory items
+  _saveVersion: 2,             // Save file format version
   gameState: {
     storyPart: 0,              // Current story progression
     questsCompleted: [],       // Completed quest IDs
     activeQuests: [],          // Active quest objects
     flags: {},                 // Boolean flags for game state
+    evidence: [],              // Collected evidence items
+    evidenceViewed: [],        // IDs of viewed evidence documents
     time: '08:00',             // In-game time
     day: 1                     // Current day
   },
   dialogueQueue: [],           // Queued dialogue sequences
   isDialogueActive: false,     // Dialogue system state
   isPuzzleActive: false,       // Puzzle system state
+  isPaused: false,             // Pause overlay state
+  _sceneLoading: false,        // Scene transition guard
   voiceEnabled: true,          // Voice narration toggle
+  typewriterAbortController: null, // Cancels in-progress typewriter
+  _sceneTimeouts: [],          // Scene-scoped setTimeout IDs (auto-cleared)
+  _boundHandlers: [],          // Tracked global event handlers for cleanup
   player: PlayerCharacter,     // Player character instance
   evidenceViewer: EvidenceViewer,  // Evidence display system
   passwordPuzzle: PasswordPuzzle,  // Password puzzle system
@@ -87,8 +132,11 @@ The main game engine manages all game state, scene transitions, and system coord
 **Game State**
 - `setFlag(flagId, value)` - Set a boolean flag
 - `getFlag(flagId)` - Get a flag value
-- `saveGameState()` - Persist state to localStorage
-- `loadGameState()` - Restore state from localStorage
+- `setStoryPart(n)` - Advance story progression counter
+- `setTime(day, time)` - Advance in-game clock (never winds backwards)
+- `saveGame(silent?)` - Persist state to localStorage
+- `loadGame()` - Restore state from localStorage
+- `destroy()` - Full engine teardown (removes all event listeners)
 
 **Inventory & Quests**
 - `addToInventory(item)` - Add item to player inventory
@@ -109,6 +157,16 @@ The main game engine manages all game state, scene transitions, and system coord
 - `playerThink(thought)` - Show player's internal monologue
 - `wait(ms)` - Async delay utility
 - `advanceTime(hours)` - Progress in-game time
+- `sceneTimeout(fn, delay)` - setTimeout that auto-clears on scene exit
+- `togglePause()` - Toggle pause overlay
+- `toggleDebugPanel()` - Toggle in-game debug UI
+- `addEvidence(evidenceData)` - Add evidence item to game state
+- `showEvidence(documentData)` - Open evidence viewer
+- `hasViewedEvidence(id)` - Check if evidence was viewed
+- `showPasswordPuzzle(config)` - Show password puzzle overlay
+- `showChat(config)` - Show chat interface
+- `addChatMessage(conversationId, message)` - Add message to chat log
+- `sendChatMessagesWithDelay(id, messages, delay)` - Sequentially add messages
 
 ---
 
@@ -416,7 +474,7 @@ CyberQuest/
 
 ## Scene Catalog
 
-### Complete Scene List (18 Scenes)
+### Complete Scene List (33 Scenes)
 
 | # | Scene ID | Name | Type | Story Phase |
 |---|----------|------|------|-------------|
@@ -425,19 +483,34 @@ CyberQuest/
 | 3 | **livingroom** | Living Room | Exploration | Act 1: Setup |
 | 4 | **tvdocumentary** | TV Documentary | Cinematic | Act 1: Context |
 | 5 | **mancave** | Mancave Workshop | Hub | Act 1-3: Investigation |
-| 6 | **planboard** | Investigation Board | Interface | Act 2: Analysis |
-| 7 | **regional_map** | Regional Map | Interface | Act 2: Geography |
-| 8 | **videocall** | Video Conference | Interface | Act 2: Allies |
-| 9 | **garden** | Backyard Garden | Exploration | Act 1-3: Transitions |
-| 10 | **car_discovery** | Volvo Discovery | Exploration | Act 1: Setup |
-| 11 | **driving** | Night Drive | Cinematic | Act 2-3: Transitions |
-| 12 | **klooster** | Ter Apel Monastery | Exploration | Act 2: Dead Drop |
-| 13 | **facility** | Facility Exterior | Stealth | Act 3: Infiltration |
-| 14 | **facility_interior** | Facility Corridors | Stealth | Act 3: Infiltration |
-| 15 | **facility_server** | Server Room | Climax | Act 3: Confrontation |
-| 16 | **debrief** | Aftermath | Interface | Act 3: Resolution |
-| 17 | **epilogue** | Three Months Later | Cinematic | Epilogue |
-| 18 | **credits** | End Credits | Cinematic | Epilogue |
+| 6 | **sdr_bench** | SDR Bench | Interface | Act 1: SSTV Decoding |
+| 7 | **planboard** | Investigation Board | Interface | Act 2: Analysis |
+| 8 | **regional_map** | Regional Map | Interface | Act 2: Geography |
+| 9 | **videocall** | Video Conference | Interface | Act 2: Allies |
+| 10 | **garden** | Backyard Garden | Exploration | Act 1-3: Transitions |
+| 11 | **garden_back** | Garden Back Area | Exploration | Act 1-3: Transitions |
+| 12 | **car_discovery** | Volvo Discovery | Exploration | Act 1: Setup |
+| 13 | **usb_discovery** | USB Discovery | Story | Act 2: Evidence |
+| 14 | **driving** | Night Drive | Cinematic | Act 2-3: Transitions |
+| 15 | **driving_day** | Daytime Drive | Cinematic | Act 2: Transitions |
+| 16 | **klooster** | Ter Apel Monastery | Exploration | Act 2: Dead Drop |
+| 17 | **dwingeloo** | Dwingeloo Observatory | Exploration | Act 2: Allies |
+| 18 | **westerbork_memorial** | Westerbork Memorial | Exploration | Act 2: Allies |
+| 19 | **astron** | ASTRON Campus | Exploration | Act 2: Allies |
+| 20 | **lofar** | LOFAR Station | Exploration | Act 2: Allies |
+| 21 | **hackerspace** | Hackerspace Drenthe | Exploration | Act 2: Allies |
+| 22 | **hackerspace_classroom** | Hackerspace Classroom | Exploration | Act 2: Allies |
+| 23 | **drone_hunt** | Drone Hunt | Stealth/Puzzle | Act 3: Preparation |
+| 24 | **facility** | Facility Exterior | Stealth | Act 3: Infiltration |
+| 25 | **facility_interior** | Facility Corridors | Stealth | Act 3: Infiltration |
+| 26 | **laser_corridor** | Laser Corridor | Stealth/Puzzle | Act 3: Infiltration |
+| 27 | **facility_server** | Server Room | Climax | Act 3: Confrontation |
+| 28 | **long_night** | Long Night | Story | Act 3: Aftermath |
+| 29 | **debrief** | Aftermath | Interface | Act 3: Resolution |
+| 30 | **return_to_ies** | Return to Ies | Story | Act 3: Resolution |
+| 31 | **morning_after** | Morning After | Story | Act 3: Resolution |
+| 32 | **epilogue** | Three Months Later | Cinematic | Epilogue |
+| 33 | **credits** | End Credits | Cinematic | Epilogue |
 
 ---
 

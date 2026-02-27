@@ -110,6 +110,7 @@ class CyberQuestEngine {
         this.chatInterface = null;
         this.typewriterAbortController = null;
         this.isPaused = false;
+        this._autoAdvanceTimer = null;
         
         // Dependency injection for testing
         this._deps = deps;
@@ -120,14 +121,23 @@ class CyberQuestEngine {
         
         // Track scene-scoped timeouts — auto-cleared on scene exit
         this._sceneTimeouts = [];
+
+        // Mutable per-session settings (mirrors ENGINE_CONFIG defaults)
+        this.settings = {
+            textSpeed:         40,  // ms per character (0 = instant)
+            animSpeed:        500,  // ms for scene fade transitions (0 = none)
+            autoAdvanceDelay:   0,  // ms before auto-advancing dialogue (0 = manual)
+        };
     }
-    
+
     init() {
         if (this.initialized) return;
         this.initialized = true;
         
         // Create DOM structure
         this.createGameContainer();
+        this._loadSettings();
+        this._applySettings();
         this.bindEvents();
         this.loadGameState();
         
@@ -337,10 +347,11 @@ class CyberQuestEngine {
             btn?.addEventListener('click', wrappedHandler);
             btn?.addEventListener('touchend', wrappedHandler);
         };
-        addButtonHandler('menu-pause', () => this.togglePause());
-        addButtonHandler('menu-save', () => this.saveGame());
-        addButtonHandler('menu-load', () => this.loadGame());
-        addButtonHandler('menu-voice', () => this.toggleVoice());
+        addButtonHandler('menu-pause',    () => this.togglePause());
+        addButtonHandler('menu-save',     () => this.openSaveSlotModal('save'));
+        addButtonHandler('menu-load',     () => this.openSaveSlotModal('load'));
+        addButtonHandler('menu-voice',    () => this.toggleVoice());
+        addButtonHandler('menu-settings', () => this.openSettingsModal());
         
         // Pause overlay — click to resume
         const pauseOverlay = document.getElementById('pause-overlay');
@@ -445,7 +456,7 @@ class CyberQuestEngine {
         // Transition out
         if (transition === 'fade') {
             sceneContainer.classList.add('fade-out');
-            await this.wait(ENGINE_CONFIG.TRANSITION_DURATION);
+            await this.wait(this.settings.animSpeed);
         }
         
         this.currentScene = sceneId;
@@ -517,7 +528,7 @@ class CyberQuestEngine {
         if (transition === 'fade') {
             sceneContainer.classList.remove('fade-out');
             sceneContainer.classList.add('fade-in');
-            await this.wait(ENGINE_CONFIG.TRANSITION_DURATION);
+            await this.wait(this.settings.animSpeed);
             sceneContainer.classList.remove('fade-in');
         }
         
@@ -660,7 +671,7 @@ class CyberQuestEngine {
             // Short delay for scene transitions
             setTimeout(() => {
                 this.loadScene(hotspot.targetScene);
-            }, ENGINE_CONFIG.SCENE_CHANGE_DELAY);
+            }, this.settings.animSpeed ? ENGINE_CONFIG.SCENE_CHANGE_DELAY : 0);
         }
         
         // Collect item
@@ -835,9 +846,16 @@ class CyberQuestEngine {
             current.action(this);
         }
         
-        // Typewriter effect
-        this.typeText(textEl, current.text || '', ENGINE_CONFIG.TYPEWRITER_SPEED, this.typewriterAbortController.signal);
-        
+        // Typewriter effect + optional auto-advance
+        const _twSignal = this.typewriterAbortController.signal;
+        this.typeText(textEl, current.text || '', this.settings.textSpeed, _twSignal).then(() => {
+            if (!_twSignal.aborted && this.settings.autoAdvanceDelay > 0 && this.isDialogueActive) {
+                this._autoAdvanceTimer = setTimeout(() => {
+                    if (this.isDialogueActive && !this.isPaused) this.advanceDialogue();
+                }, this.settings.autoAdvanceDelay);
+            }
+        });
+
         // Speak the dialogue
         this.speakText(current.text, speaker);
     }
@@ -859,6 +877,8 @@ class CyberQuestEngine {
     }
     
     advanceDialogue() {
+        // Clear any pending auto-advance timer
+        if (this._autoAdvanceTimer) { clearTimeout(this._autoAdvanceTimer); this._autoAdvanceTimer = null; }
         // Stop current speech when advancing
         this.stopSpeech();
         
@@ -876,6 +896,7 @@ class CyberQuestEngine {
     }
     
     endDialogue() {
+        if (this._autoAdvanceTimer) { clearTimeout(this._autoAdvanceTimer); this._autoAdvanceTimer = null; }
         this.isDialogueActive = false;
         this.stopSpeech();
         
@@ -1519,7 +1540,7 @@ class CyberQuestEngine {
     }
     
     // Save/Load
-    saveGame(silent = false) {
+    saveGame(silent = false, slot = 0) {
         try {
             if (!this._storage) {
                 if (!silent) this.showNotification('Save unavailable — no storage.');
@@ -1533,6 +1554,8 @@ class CyberQuestEngine {
 
             const saveData = {
                 version: this._saveVersion,
+                slot,
+                slotLabel: slot > 0 ? `Slot ${slot}` : 'Auto',
                 currentScene: this.currentScene,
                 inventory: this.inventory,
                 gameState: this.gameState,
@@ -1540,9 +1563,13 @@ class CyberQuestEngine {
                 timestamp: new Date().toISOString()
             };
 
-            this._storage.setItem('cyberquest_save', JSON.stringify(saveData));
-            if (!silent) this.showNotification('Game saved!');
-            console.log(`[Save] scene=${this.currentScene}, items=${this.inventory.length}, flags=${Object.keys(this.gameState.flags).length}, quests=${this.gameState.activeQuests.length}`);
+            const key = this._getSaveKey(slot);
+            this._storage.setItem(key, JSON.stringify(saveData));
+            if (!silent) {
+                const label = slot > 0 ? ` (Slot ${slot})` : '';
+                this.showNotification(`Game saved${label}!`);
+            }
+            console.log(`[Save] key=${key}, scene=${this.currentScene}, items=${this.inventory.length}, flags=${Object.keys(this.gameState.flags).length}, quests=${this.gameState.activeQuests.length}`);
             return true;
         } catch (err) {
             console.error('Failed to save game:', err);
@@ -1551,9 +1578,14 @@ class CyberQuestEngine {
         }
     }
     
-    loadGame() {
+    loadGame(slot = 0) {
         try {
-            const raw = this._storage ? this._storage.getItem('cyberquest_save') : null;
+            // Try the requested slot; for slot 1 fall back to the legacy key for migration
+            const key = this._getSaveKey(slot);
+            let raw = this._storage ? this._storage.getItem(key) : null;
+            if (!raw && slot === 1) {
+                raw = this._storage ? this._storage.getItem('cyberquest_save') : null;
+            }
             if (!raw) {
                 this.showNotification('No save file found.');
                 return false;
@@ -1600,7 +1632,8 @@ class CyberQuestEngine {
             }
 
             console.log(`[Load] scene=${data.currentScene}, items=${this.inventory.length}, flags=${Object.keys(this.gameState.flags).length}, quests=${this.gameState.activeQuests.length}, evidence=${this.gameState.evidence.length}`);
-            this.showNotification('Game loaded!');
+            const slotLabel = data.slot > 0 ? ` (Slot ${data.slot})` : '';
+            this.showNotification(`Game loaded${slotLabel}!`);
             return true;
         } catch (err) {
             console.error('Failed to load game:', err);
@@ -1608,7 +1641,366 @@ class CyberQuestEngine {
             return false;
         }
     }
-    
+
+    // ── Save-slot helpers ──────────────────────────────────────────────────────
+
+    /**
+     * Return the localStorage key for a save slot.
+     * Slot 0 = legacy auto-save key.  Slots 1-3 = named slots.
+     * @param {number} slot
+     * @returns {string}
+     */
+    _getSaveKey(slot) {
+        if (!slot || slot < 1) return 'cyberquest_save';
+        return `cyberquest_save_${slot}`;
+    }
+
+    /** Read persisted settings from localStorage and merge over defaults. */
+    _loadSettings() {
+        try {
+            const raw = this._storage ? this._storage.getItem('cyberquest_settings') : null;
+            if (raw) {
+                const saved = JSON.parse(raw);
+                if (typeof saved.textSpeed        === 'number') this.settings.textSpeed        = saved.textSpeed;
+                if (typeof saved.animSpeed        === 'number') this.settings.animSpeed        = saved.animSpeed;
+                if (typeof saved.autoAdvanceDelay === 'number') this.settings.autoAdvanceDelay = saved.autoAdvanceDelay;
+            }
+        } catch (e) {
+            console.warn('[Settings] Failed to load settings:', e);
+        }
+    }
+
+    /** Persist current settings to localStorage. */
+    _saveSettings() {
+        try {
+            if (this._storage) {
+                this._storage.setItem('cyberquest_settings', JSON.stringify(this.settings));
+            }
+        } catch (e) {
+            console.warn('[Settings] Failed to save settings:', e);
+        }
+    }
+
+    /**
+     * Apply current settings to live engine state.
+     * Call after _loadSettings() or after the user changes a slider.
+     */
+    _applySettings() {
+        // Voice speech rate
+        if (this.voiceManager && typeof this.voiceManager.setRate === 'function') {
+            // Map autoAdvanceDelay to a speech rate: 0→1.0, 500→0.9, 1000→0.8
+            // (voice rate is independently user-controlled via voice profiles;
+            //  we only nudge it slightly based on dialogue speed preference)
+        }
+        // textSpeed and animSpeed are read inline at call-sites — no extra work needed here.
+        console.log('[Settings] applied:', JSON.stringify(this.settings));
+    }
+
+    // ── Save-slot picker modal ─────────────────────────────────────────────────
+
+    /**
+     * Open a 3-slot save/load picker.
+     * @param {'save'|'load'} mode
+     */
+    openSaveSlotModal(mode) {
+        // Remove any existing instance
+        document.getElementById('save-slot-modal')?.remove();
+
+        const NUM_SLOTS = 3;
+
+        // Read existing slot data for display
+        const slots = [];
+        for (let i = 1; i <= NUM_SLOTS; i++) {
+            const key = this._getSaveKey(i);
+            const raw = this._storage ? this._storage.getItem(key) : null;
+            if (raw) {
+                try {
+                    const d = JSON.parse(raw);
+                    slots.push({
+                        slot: i,
+                        scene: d.currentScene || '—',
+                        storyPart: d.gameState?.storyPart ?? '?',
+                        timestamp: d.timestamp ? new Date(d.timestamp).toLocaleString() : '—',
+                        empty: false,
+                        raw: d
+                    });
+                } catch {
+                    slots.push({ slot: i, empty: true });
+                }
+            } else {
+                // Check legacy key for slot 1 migration
+                const legacyRaw = i === 1 && this._storage ? this._storage.getItem('cyberquest_save') : null;
+                if (legacyRaw) {
+                    try {
+                        const d = JSON.parse(legacyRaw);
+                        slots.push({
+                            slot: i,
+                            scene: d.currentScene || '—',
+                            storyPart: d.gameState?.storyPart ?? '?',
+                            timestamp: d.timestamp ? new Date(d.timestamp).toLocaleString() : '(legacy save)',
+                            empty: false,
+                            raw: d
+                        });
+                    } catch {
+                        slots.push({ slot: i, empty: true });
+                    }
+                } else {
+                    slots.push({ slot: i, empty: true });
+                }
+            }
+        }
+
+        const title = mode === 'save' ? '💾 Save Game' : '📂 Load Game';
+
+        const cardsHtml = slots.map(s => {
+            if (s.empty) {
+                return `
+                    <div class="slot-card slot-card--empty" data-slot="${s.slot}">
+                        <div class="slot-card__number">Slot ${s.slot}</div>
+                        <div class="slot-card__info slot-card__info--empty">— Empty —</div>
+                        ${mode === 'save' ? `<button class="slot-action-btn" data-slot="${s.slot}" data-action="save">Save Here</button>` : `<button class="slot-action-btn slot-action-btn--disabled" disabled>Empty</button>`}
+                    </div>`;
+            }
+            const sceneName = s.scene.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            return `
+                <div class="slot-card" data-slot="${s.slot}">
+                    <div class="slot-card__header">
+                        <span class="slot-card__number">Slot ${s.slot}</span>
+                        <button class="slot-delete-btn" data-slot="${s.slot}" title="Delete save">✕</button>
+                    </div>
+                    <div class="slot-card__scene">${sceneName}</div>
+                    <div class="slot-card__meta">Part ${s.storyPart}</div>
+                    <div class="slot-card__timestamp">${s.timestamp}</div>
+                    ${mode === 'save'
+                        ? `<button class="slot-action-btn slot-action-btn--overwrite" data-slot="${s.slot}" data-action="save">Overwrite</button>`
+                        : `<button class="slot-action-btn" data-slot="${s.slot}" data-action="load">Load</button>`}
+                </div>`;
+        }).join('');
+
+        const modal = document.createElement('div');
+        modal.id = 'save-slot-modal';
+        modal.className = 'modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content save-slot-modal-content">
+                <div class="modal-header">
+                    <h2>${title}</h2>
+                    <button class="modal-close" id="save-slot-close">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="save-slot-grid">${cardsHtml}</div>
+                </div>
+            </div>`;
+
+        document.body.appendChild(modal);
+
+        // Close button
+        modal.querySelector('#save-slot-close').addEventListener('click', () => modal.remove());
+        modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+
+        // Action buttons (save / load)
+        modal.querySelectorAll('.slot-action-btn[data-action]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const slot = parseInt(btn.dataset.slot, 10);
+                const action = btn.dataset.action;
+                modal.remove();
+                if (action === 'save') {
+                    this.saveGame(false, slot);
+                } else if (action === 'load') {
+                    this.loadGame(slot);
+                }
+            });
+        });
+
+        // Delete buttons
+        modal.querySelectorAll('.slot-delete-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const slot = parseInt(btn.dataset.slot, 10);
+                const key = this._getSaveKey(slot);
+                if (confirm(`Delete Slot ${slot} save? This cannot be undone.`)) {
+                    this._storage?.removeItem(key);
+                    // Also remove legacy key if slot 1
+                    if (slot === 1) this._storage?.removeItem('cyberquest_save');
+                    modal.remove();
+                    this.openSaveSlotModal(mode); // refresh
+                }
+            });
+        });
+    }
+
+    // ── Settings modal ─────────────────────────────────────────────────────────
+
+    openSettingsModal() {
+        document.getElementById('settings-modal')?.remove();
+
+        // Snapshot current values so Cancel can restore them
+        const prev = { ...this.settings };
+
+        const textLabels  = { 0: 'Instant', 15: 'Fast', 40: 'Normal', 80: 'Slow' };
+        const animLabels  = { 0: 'None', 200: 'Fast', 500: 'Normal', 1000: 'Slow' };
+        const autoLabels  = { 0: 'Manual', 1500: 'Fast', 3000: 'Normal', 5000: 'Slow' };
+
+        const labelFor = (map, val) => {
+            // Find closest key
+            const keys = Object.keys(map).map(Number);
+            const closest = keys.reduce((a, b) => Math.abs(b - val) < Math.abs(a - val) ? b : a);
+            return map[closest] || val + 'ms';
+        };
+
+        const modal = document.createElement('div');
+        modal.id = 'settings-modal';
+        modal.className = 'modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content settings-modal-content">
+                <div class="modal-header">
+                    <h2>⚙️ Settings</h2>
+                    <button class="modal-close" id="settings-close">✕</button>
+                </div>
+                <div class="modal-body">
+                    <div class="settings-section">
+                        <h3 class="settings-section-title">Dialogue &amp; Text</h3>
+
+                        <div class="settings-row">
+                            <div class="settings-row__labels">
+                                <span class="settings-row__name">Text Speed</span>
+                                <span class="settings-row__value" id="lbl-text-speed">${labelFor(textLabels, this.settings.textSpeed)}</span>
+                            </div>
+                            <div class="settings-row__presets">
+                                <button class="preset-btn${this.settings.textSpeed===0?' preset-btn--active':''}" data-target="textSpeed" data-value="0">Instant</button>
+                                <button class="preset-btn${this.settings.textSpeed===15?' preset-btn--active':''}" data-target="textSpeed" data-value="15">Fast</button>
+                                <button class="preset-btn${this.settings.textSpeed===40?' preset-btn--active':''}" data-target="textSpeed" data-value="40">Normal</button>
+                                <button class="preset-btn${this.settings.textSpeed===80?' preset-btn--active':''}" data-target="textSpeed" data-value="80">Slow</button>
+                            </div>
+                            <input class="settings-slider" type="range" id="slider-text-speed"
+                                min="0" max="100" step="5" value="${this.settings.textSpeed}">
+                        </div>
+
+                        <div class="settings-row">
+                            <div class="settings-row__labels">
+                                <span class="settings-row__name">Auto-advance</span>
+                                <span class="settings-row__value" id="lbl-auto-advance">${labelFor(autoLabels, this.settings.autoAdvanceDelay)}</span>
+                            </div>
+                            <div class="settings-row__presets">
+                                <button class="preset-btn${this.settings.autoAdvanceDelay===0?' preset-btn--active':''}" data-target="autoAdvanceDelay" data-value="0">Manual</button>
+                                <button class="preset-btn${this.settings.autoAdvanceDelay===1500?' preset-btn--active':''}" data-target="autoAdvanceDelay" data-value="1500">Fast</button>
+                                <button class="preset-btn${this.settings.autoAdvanceDelay===3000?' preset-btn--active':''}" data-target="autoAdvanceDelay" data-value="3000">Normal</button>
+                                <button class="preset-btn${this.settings.autoAdvanceDelay===5000?' preset-btn--active':''}" data-target="autoAdvanceDelay" data-value="5000">Slow</button>
+                            </div>
+                            <input class="settings-slider" type="range" id="slider-auto-advance"
+                                min="0" max="6000" step="500" value="${this.settings.autoAdvanceDelay}">
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3 class="settings-section-title">Visuals</h3>
+
+                        <div class="settings-row">
+                            <div class="settings-row__labels">
+                                <span class="settings-row__name">Animation Speed</span>
+                                <span class="settings-row__value" id="lbl-anim-speed">${labelFor(animLabels, this.settings.animSpeed)}</span>
+                            </div>
+                            <div class="settings-row__presets">
+                                <button class="preset-btn${this.settings.animSpeed===0?' preset-btn--active':''}" data-target="animSpeed" data-value="0">None</button>
+                                <button class="preset-btn${this.settings.animSpeed===200?' preset-btn--active':''}" data-target="animSpeed" data-value="200">Fast</button>
+                                <button class="preset-btn${this.settings.animSpeed===500?' preset-btn--active':''}" data-target="animSpeed" data-value="500">Normal</button>
+                                <button class="preset-btn${this.settings.animSpeed===1000?' preset-btn--active':''}" data-target="animSpeed" data-value="1000">Slow</button>
+                            </div>
+                            <input class="settings-slider" type="range" id="slider-anim-speed"
+                                min="0" max="1200" step="100" value="${this.settings.animSpeed}">
+                        </div>
+                    </div>
+
+                    <div class="settings-footer">
+                        <button class="settings-btn settings-btn--apply" id="settings-apply">Apply &amp; Close</button>
+                        <button class="settings-btn settings-btn--cancel" id="settings-cancel">Cancel</button>
+                        <button class="settings-btn settings-btn--reset" id="settings-reset">Reset to Defaults</button>
+                    </div>
+                </div>
+            </div>`;
+
+        document.body.appendChild(modal);
+
+        // Live label map
+        const labelMap = {
+            'slider-text-speed':   { lblId: 'lbl-text-speed',    map: textLabels,  key: 'textSpeed' },
+            'slider-auto-advance': { lblId: 'lbl-auto-advance',   map: autoLabels,  key: 'autoAdvanceDelay' },
+            'slider-anim-speed':   { lblId: 'lbl-anim-speed',     map: animLabels,  key: 'animSpeed' },
+        };
+
+        // Update label + active preset buttons when slider moves
+        const syncPresets = (key, val) => {
+            modal.querySelectorAll(`.preset-btn[data-target="${key}"]`).forEach(b => {
+                b.classList.toggle('preset-btn--active', parseInt(b.dataset.value, 10) === val);
+            });
+        };
+
+        Object.entries(labelMap).forEach(([sliderId, cfg]) => {
+            const slider = modal.querySelector(`#${sliderId}`);
+            const lbl    = modal.querySelector(`#${cfg.lblId}`);
+            slider?.addEventListener('input', () => {
+                const v = parseInt(slider.value, 10);
+                this.settings[cfg.key] = v;
+                if (lbl) lbl.textContent = labelFor(cfg.map, v);
+                syncPresets(cfg.key, v);
+            });
+        });
+
+        // Preset buttons update slider + label
+        modal.querySelectorAll('.preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const key = btn.dataset.target;
+                const val = parseInt(btn.dataset.value, 10);
+                this.settings[key] = val;
+                // Update corresponding slider
+                const cfg = Object.values(labelMap).find(c => c.key === key);
+                if (cfg) {
+                    const slider = modal.querySelector(`#${Object.keys(labelMap).find(k => labelMap[k].key === key)}`);
+                    if (slider) slider.value = val;
+                    const lbl = modal.querySelector(`#${cfg.lblId}`);
+                    if (lbl) lbl.textContent = labelFor(cfg.map, val);
+                }
+                syncPresets(key, val);
+            });
+        });
+
+        const close = () => modal.remove();
+
+        modal.querySelector('#settings-close').addEventListener('click', () => {
+            // Close without saving — restore previous values
+            Object.assign(this.settings, prev);
+            close();
+        });
+
+        modal.querySelector('#settings-cancel').addEventListener('click', () => {
+            Object.assign(this.settings, prev);
+            close();
+        });
+
+        modal.querySelector('#settings-apply').addEventListener('click', () => {
+            this._applySettings();
+            this._saveSettings();
+            this.showNotification('Settings saved.');
+            close();
+        });
+
+        modal.querySelector('#settings-reset').addEventListener('click', () => {
+            this.settings.textSpeed        = 40;
+            this.settings.animSpeed        = 500;
+            this.settings.autoAdvanceDelay = 0;
+            // Reset sliders
+            Object.entries(labelMap).forEach(([sliderId, cfg]) => {
+                const slider = modal.querySelector(`#${sliderId}`);
+                if (slider) slider.value = this.settings[cfg.key];
+                const lbl = modal.querySelector(`#${cfg.lblId}`);
+                if (lbl) lbl.textContent = labelFor(cfg.map, this.settings[cfg.key]);
+                syncPresets(cfg.key, this.settings[cfg.key]);
+            });
+        });
+
+        modal.addEventListener('click', e => { if (e.target === modal) { Object.assign(this.settings, prev); close(); } });
+    }
+
     loadGameState() {
         // Check URL hash for direct scene loading
         const hash = window.location.hash.substring(1);

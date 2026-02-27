@@ -41,8 +41,23 @@ Next to the house is a small garage, Ryan's mancave. In this cave you can see a 
 Scene 5a: SDR Bench (Signal Analysis Lab)
 A dedicated Software-Defined Radio workbench accessible from the mancave. Features a dual-monitor setup: left screen shows a spectrum analyzer (14.000–14.500 MHz with a strong spike at 14.230 MHz), right screen shows a scrolling waterfall display revealing SSTV bursts. An RTL-SDR dongle with blinking LED sits connected between the monitors. A frequency control panel and SSTV decoder (Martin M2 mode) complete the station. This is where Ryan decodes the SSTV transmission and extracts the image carrying the Klooster coordinates. Educational hotspots explain SDR technology, the SSTV protocol, and the connection to LOFAR signal processing.
 
-Scene 6: Garden
-Behind the house is a garden with flowers, grass, an enormous far sight over the acres and the 16 windturbines near the german border 500 meters in the east. The windturbines have flickering lights in the top. The environment is quiet. Some birds singing. There is also a large antenna near the windturbines. Ryan's Volvo estate is parked here — the car is the way to travel to other locations.
+Scene 5b: Forensic Analysis Cinematic (Mancave)
+Before examining the USB contents, Ryan demonstrates proper forensic discipline: air-gapped ThinkPad boot, Tableau T35u write-blocker connection, SHA-256 checksums of all USB files, firejail sandbox setup. Sets flag: forensic_prep_complete. Triggered from the air-gapped laptop hotspot in the mancave after obtaining the USB stick.
+
+Scene 5c: Meshtastic Setup Cinematic (Mancave)
+After identifying Eva Weber through photo analysis, Ryan configures his Meshtastic node to match her specs: LILYGO T-Beam (ESP32 + SX1276 LoRa + GPS), 906.875 MHz, EU_868 region, SF12 spreading factor, 250 kHz bandwidth, 20 dBm TX power, AES-256 channel "ZERFALL". Discovers node EVA_W (RSSI: −67 dBm, 1 hop). Sets flag: meshtastic_configured.
+
+Scene 5d: Mission Prep Cinematic (Mancave)
+Pre-infiltration preparation sequence: gear check (HackRF, Flipper Zero, external drive, Faraday bag, Meshtastic node, backup batteries, lockpick set, gloves), ally coordination messages to Cees/Jaap/David, and an emotional goodbye with Ies at the door. Sets flag: mission_prep_complete.
+
+Scene 5e: Dog Training Flashback (Eva Reveal)
+Visual memory sequence triggered during the Eva identification phase. Ryan recalls a sunny Saturday morning at the Tony Knight rescue dog training field in Compascuum, two years earlier: Ies introduces Eva. A handshake. A visit to the mancave. Sharp questions about SDR and Meshtastic. Life moved on — Ryan forgot. Eva didn't.
+
+Scene 6: Garden (Front)
+Behind the house is a garden with flowers, grass, an enormous far sight over the acres and the 16 windturbines near the German border 500 metres to the east. The windturbines have flickering lights. The environment is quiet. There is also a large antenna near the windturbines. Ryan's Volvo estate is parked here — the car is the way to travel to other locations.
+
+Scene 6a: The Back Garden *(optional)*
+The rear garden: fruit trees, berry bushes, a smouldering steel fire drum, sit-mower on the grass. Tino and Kessy sprawl in the sunshine; ET the pug waddles between them. Rich with idle thoughts that foreshadow the investigation. The windmill row and the antenna mast are visible on the eastern horizon. Accessible any time from the front garden; no progression gates.
 
 Scene 7: Driving Night (Cinematic Transition)
 Interior view of Ryan's Volvo. Night-time internal monologue for three routes: (1) Compascuum → Ter Apel Klooster — anxious, uncertain, unable to turn back; (2) Klooster → Compascuum — processing the USB delivery, the weight of the files; (3) Compascuum → Steckerdoser Heide — full infiltration tension, border crossing, military lights through the trees.
@@ -53,56 +68,74 @@ Interior view of Ryan's Volvo in daylight. Afternoon sun on the N34, flat Drenth
 Scene 8: Klooster (Ter Apel Monastery)
 The medieval monastery at night. Ryan arrives at 22:55, finds nobody, explores the courtyard, and eventually finds a USB stick taped under a bench.
 
+Scene 8a: USB Discovery (Cinematic)
+A close-up cinematic bridging the klooster courtyard and the car. Ryan peels the USB stick from under the bench in the dark, reads the tape message ("TRUST THE PROCESS — PLUG IN ONLY ON AIR-GAPPED MACHINE"), and holds it under the lamplight for a long moment before walking to the Volvo.
+
 Scene 9: Car Discovery
-Close-up of the Volvo. After finding the USB, Ryan returns to the car and drives home.
+Close-up of the Volvo. After finding the USB, Ryan sits in the driver's seat, USB clenched in his palm. He does not start the engine immediately — the weight of the moment. Then the drive home through dark countryside, watching the mirrors.
+
+Scene 9a: Klaus Drive Flashback
+A narrative interlude during the drive home. Ryan's mind reconstructs Klaus Weber's journey in reverse: a Volkswagen Passat with German plates heading north on the A31, crossing at Bad Bentheim, arriving at Ter Apel, taping the USB under the bench, driving south again. No call, no message — just the USB and a stranger's trust.
 
 Scene 10: WSRT / Astron (Westerbork Synthesis Radio Telescope)
 Ryan visits the WSRT observatory between Westerbork and Hooghalen. Cees Bassa verifies the schematics, confirms weaponised radio technology with Russian-school algorithms, and helps triangulate the signal to Steckerdoser Heide (53.28°N, 7.42°E). This visit unlocks the facility infiltration.
 
-Scene 11: Planboard (Investigation Board)
+Scene 11: Dwingeloo Radio Observatory
+The historic Dwingeloo 25-metre parabolic dish in bright daylight — the telescope that first mapped the spiral arms of the Milky Way in 1951. A yoke-mounted dish on a concrete pedestal, a low control building marked "DWINGELOO RADIO OBSERVATORY", an information sign, and a perimeter fence. Ryan investigates the control building and discovers a structured transmission at 1420.500 MHz (the hydrogen line) containing encoded data. He finds a covert relay transmitter hidden on the dish structure — evidence that someone is using the historic telescope as a clandestine repeater node.
+
+Scene 12: Westerbork Memorial (Herinneringscentrum Kamp Westerbork)
+A windswept, overcast memorial site combining two histories: the WWII transit camp (1942–1945) and the nearby WSRT dishes visible on the horizon. Railway tracks end abruptly in open ground with red stop-blocks. Memorial stone columns carry a Star of David. A modified surveillance camera on a pole has a pulsing red Bluetooth LED — the key gameplay hotspot. Inspecting it reveals a covert ZERFALL network node; using the Flipper Zero cracks its pairing and maps the broader BT mesh. The scene carries deliberate moral weight: surveillance technology and state violence placed in direct proximity to a site of historical atrocity.
+
+Scene 13: LOFAR Superterp (Near Exloo)
+Interactive daytime field visit with Cees Bassa at the LOFAR Superterp. Ryan inspects LBA dipole antennas (30–80 MHz), HBA tile clusters (120–240 MHz), and the processing cabinet (13 Tbit/s from 51 stations across Europe). Cees delivers a detailed briefing on digital beamforming and how the Echo detection pipeline piggybacks on LOFAR's existing infrastructure — making the array an accidental early-warning system. Sets flags: visited_lofar, lofar_briefing_complete. Requires visited_astron flag.
+
+Scene 14: Planboard (Investigation Board)
 Detective-style evidence board with dossiers on suspects, locations, evidence, and timeline.
 
-Scene 12: Regional Map
-Michelin-style road map showing Compascuum, Ter Apel, WSRT, LOFAR, Steckerdoser Heide, and Meppen. Hotspots for all field locations, including two newly added: Dwingeloo and Westerbork Memorial.
+Scene 15: Regional Map
+Michelin-style road map showing Compascuum, Ter Apel, WSRT, LOFAR, Dwingeloo, Westerbork Memorial, Steckerdoser Heide, and Meppen. Hotspots unlock as Ryan visits each location.
 
-Scene 12a: Dwingeloo Radio Observatory
-The historic Dwingeloo 25-metre parabolic dish in bright daylight — the telescope that first mapped the spiral arms of the Milky Way in 1951. A yoke-mounted dish on a concrete pedestal, a low control building marked "DWINGELOO RADIO OBSERVATORY", an information sign, and a perimeter fence. Ryan investigates the control building and discovers a structured transmission at 1420.500 MHz (the hydrogen line) containing encoded data. He finds a covert relay transmitter hidden on the dish structure — evidence that someone is using the historic telescope as a clandestine repeater node. The site teaches the hydrogen line, radio astronomy history, and signal relay concepts.
+Scene 15a: Hackerspace Drenthe (Coevorden)
+A community maker space in a repurposed school building in Coevorden. Workstations for CNC plasma cutting, metal lathe, 3D printing, soldering, welding, and electronics. NPC members (Dennis, Sophie, Marco, Kim, Joris, Linda) work at various stations. Ryan can inspect equipment, learn about manufacturing techniques, and chat with fellow makers. A door leads to the classroom for presentations. Accessible via the Volvo after the mancave is unlocked.
 
-Scene 12b: Westerbork Memorial (Herinneringscentrum Kamp Westerbork)
-A windswept, overcast memorial site combining two histories: the WWII transit camp (1942–1945) and the nearby WSRT dishes visible on the horizon. Railway tracks end abruptly in open ground with red stop-blocks. Memorial stone columns carry a Star of David. A sign reads "Herinneringscentrum Kamp Westerbork 1942–1945". Barbed wire remnants and barrack foundation outlines (Barak 65, Barak 51) are visible. A modified surveillance camera on a pole has a pulsing red Bluetooth LED — the key gameplay hotspot. Inspecting it reveals a covert ZERFALL network node; using the Flipper Zero cracks its pairing and maps the broader BT mesh. The scene carries deliberate moral weight: surveillance technology and state violence are placed in direct proximity to a site of historical atrocity. Accessible from both the regional map and the Klooster (a sign in the klooster courtyard points south).
+Scene 15b: Hackerspace Classroom (Presentations)
+A former school classroom now used for hackerspace presentations. Each visit triggers a different topic from a rotating set: LoRa/LoRaWAN, Meshtastic, MeshCore, Home Automation, Cybersecurity, Blockchain, AI, SDR, and more. 8–16 randomly placed audience members fill the seats. The presenter delivers an educational talk with Q&A. None are required to complete the main story.
 
-Scene 12c: Hackerspace Drenthe (Coevorden)
-A community maker space in a repurposed school building in Coevorden. Workstations for CNC plasma cutting, metal lathe, 3D printing, soldering, welding, and electronics. NPC members (Dennis, Sophie, Marco, Kim, Joris, Linda) work at various stations. Ryan can inspect equipment, learn about manufacturing techniques, and chat with fellow makers. A door leads to the classroom for presentations. Accessible via the Volvo after the mancave is unlocked — a side-quest location that provides background colour and educational content about maker culture and digital fabrication.
-
-Scene 12d: Hackerspace Classroom (Presentations)
-A former school classroom now used for hackerspace presentations. Each visit triggers a different topic from a rotating set: LoRa/LoRaWAN, Meshtastic, MeshCore, Home Automation, Cybersecurity, Blockchain, AI, and more. 8–16 randomly placed audience members fill the seats. The presenter delivers an educational talk with Q&A. Ryan can learn about technologies that are relevant to the investigation, though none are required to complete the main story.
-
-Scene 13: Videocall (Secure Calls)
+Scene 16: Videocall (Secure Calls)
 Video conference with three expert allies: Dr. David Prinsloo, Cees Bassa, and Jaap Haartsen.
 
-Scene 13b: Drone Hunt (Steckerdoser Heide Forest)
-Hollywood-style action scene. After parking the Volvo in the forest 2 km from the facility, Ryan begins moving on foot through the Steckerdoser woods. Surveillance drones with thermal imaging converge on his position. Five phases: (1) Arrival & Decoy Setup — deploy a Meshtastic Raspberry Pi decoy broadcasting dummy LoRa traffic on 868 MHz; (2) Drone Detection — hide behind tree cover from a FLIR thermal scan; (3) GPS Spoofing — configure the HackRF One to spoof GPS L1 C/A signals (puzzle: set frequency to 1575.42 MHz, TX power to −5 dBm, offset target 200 m south into the swamp); (4) The Spoof — drones' navigation overrides with fake coordinates, they crash into boggy terrain; (5) Proceed to Facility. Educational content covers GPS L1 signal structure, HackRF capabilities, thermal imaging, Meshtastic mesh networking, and why civilian GPS has zero authentication.
+Scene 16b: Drone Hunt (Steckerdoser Heide Forest)
+Hollywood-style action scene. After parking the Volvo in the forest 2 km from the facility, Ryan moves on foot through the Steckerdoser woods. Surveillance drones with thermal imaging converge on his position. Five phases: (1) Arrival & Decoy Setup — Meshtastic Raspberry Pi decoy on 868 MHz; (2) Drone Detection — cover from FLIR thermal scan; (3) GPS Spoofing — HackRF spoof at 1575.42 MHz; (4) The Spoof — drones drift into boggy terrain; (5) Proceed to Facility.
 
-Scene 14: Facility Exterior (Stealth)
-Steckerdoser Heide military R&D facility at night. Disable security camera with Flipper Zero, hack gate with captured RFID.
+Scene 17: Facility Exterior (Stealth)
+Steckerdoser Heide military R&D facility at night. Disable security camera with Flipper Zero, hack gate with cloned RFID badge. Eva guides via Meshtastic from inside. Ally coordination HUD active.
 
-Scene 15: Facility Interior (Stealth)
-Corridor navigation. Eva guides via Meshtastic to the basement stairs.
+Scene 18: Facility Interior (Stealth)
+Corridor navigation inside the compound. Fluorescent-lit concrete corridors, ventilation hum, card readers on every door. Eva guides via Meshtastic to the basement stairs.
 
-Scene 15a: Laser Corridor (Security Gauntlet)
-Underground corridor beneath the facility protecting the server room. Three layers of automated security: (1) Laser Grid Analysis — use Flipper Zero IR analyser to identify the 38 kHz modulation frequency, replay the shutdown command; (2) Motion Sensor Bypass — use HackRF to jam ultrasonic sensors at 40 kHz; (3) Biometric Override — enter Eva's code (2847) to unlock the server room door. The corridor features animated laser beams, red alert lighting, sparking conduits, and steam from pipe leaks. Educational content covers IR modulation frequencies, ultrasonic Doppler sensors, biometric security bypass, and defence-in-depth architecture.
+Scene 18a: Laser Corridor (Security Gauntlet)
+Underground corridor protecting the server room. Three layers of automated security: (1) Laser Grid Analysis — Flipper Zero IR analyser, identify 38 kHz modulation, replay shutdown command; (2) Motion Sensor Bypass — HackRF jams ultrasonic sensors at 40 kHz; (3) Biometric Override — enter Eva's code (2847). Animated laser beams, red alert lighting, sparking conduits.
 
-Scene 16: Facility Server Room (Climax)
-The climax. Access Volkov's terminal, download evidence, confront Volkov. Chris Kubecka and Bundeswehr MPs arrive. Eva arrests Volkov.
+Scene 19: Facility Server Room (Climax)
+The climax. Access Volkov's terminal, download evidence, corrupt calibration data. Eva assists from inside. The data is exfiltrated; the test is sabotaged.
 
-Scene 17: Debrief (AIVD Headquarters, Zoetermeer)
-Ryan is driven to AIVD headquarters in Zoetermeer for debriefing by Agent Van der Berg. The debrief covers the full operation. Van der Berg makes a recruitment offer.
+Scene 19a: The Long Night (Post-Facility)
+7-phase cinematic in the mancave, 01:30–09:30 AM. Hoffmann's personal logs, Eva's Meshtastic messages, confirmed test failure, press package assembly, the SEND moment, international news breaking, BND phone call, AIVD arriving at the house. Sets flags: long_night_complete, press_sent, news_broken, bnd_called.
 
-Scene 18: Epilogue (Three Months Later)
-Spring in Compascuum, May 2026. Narrator summarizes character fates: facility shut down, Volkov awaiting trial outside Munich, Hoffmann in witness protection in Canada, Eva testified to parliament, Chris published ZERFALL report, Cees back at ASTRON, Jaap started security consulting firm. Ryan took the AIVD offer.
+Scene 20: AIVD Debrief (Zoetermeer)
+Ryan is driven to AIVD headquarters for debriefing by Agent Van der Berg. The debrief covers the full operation. Van der Berg makes a recruitment offer.
 
-Scene 19: Credits
-Scrolling credits with developer and character information.
+Scene 20a: Return to Ies
+The farmhouse at night. Ies has been waiting, watching the news since dawn. An emotional return: she opens her arms before Ryan says a word. A quiet conversation about what happened and what it means.
+
+Scene 20b: Morning After
+Back in the mancave the morning after. 247 unread emails. Eva's farewell Protonmail ("I'm safe. Thank you for believing a stranger."). Van der Berg's business card. Ies in the doorway. Gated behind reading Eva's email AND talking to Ies. Sets flag: morning_after_complete.
+
+Scene 21: Epilogue (Three Months Later)
+Spring in Compascuum, May 2026. Multi-part narrated sequence: facility shut down, seven officials arrested, Volkov awaiting trial in Munich, Hoffmann in witness protection, Eva testified to parliament, Chris published the ZERFALL report, Cees back at ASTRON, Jaap started a security consulting firm. Ryan took the AIVD offer.
+
+Scene 22: Credits
+Scrolling credits over a mancave dusk backdrop with MIDI theme music.
 
 Story part 0: Intro
 A cinematic Star Wars-style text scroll introduces Ryan Weylant, his location in Compascuum, his equipment, and his contacts. Sets the date: February 9, 2026, 07:45 AM.
@@ -232,6 +265,17 @@ The grounds are empty. The museum closed hours ago. No tourists, no guards in si
 
 Ryan checks his watch: 22:55. He finds a position near the old herb garden with a clear view of the main entrance. And he waits.
 
+Story part 6a: The Back Garden
+Earlier that afternoon, while the preparations were still half-done, Ryan had stepped outside through the back door — not for any particular reason, just to think.
+
+The rear garden was quiet. Fruit trees lined the western fence, their branches still bare from winter. The steel fire drum smouldered with the week's garden waste, filling the still air with a thin curl of woodsmoke. The sit-mower waited on the grass where he'd parked it last autumn, patient and unhurried.
+
+Tino and Kessy had claimed a patch of afternoon sunlight beside the shed. ET the pug had installed himself near the fire drum's warmth and refused to be moved. The dogs knew nothing was wrong. Ryan had always envied dogs that.
+
+He'd walked to the garden's eastern edge and stood there a while, looking out across the flat expanse of fields. The windmill row was still and pale against a thin sky — sixteen turbines stretching south toward the German border, their navigation lights just beginning to flicker as dusk settled. And between them, the tall antenna mast, a fixed point on the horizon. That antenna. That signal. The question hadn't gone away just because he'd been busy packing a bag.
+
+He stayed until the fire drum died to embers, then went back inside to finish getting ready.
+
 Story part 7: The USB Stick
 23:00 comes and goes. No one appears.
 
@@ -256,6 +300,20 @@ Someone was here. Someone left this for him to find. They were never going to me
 Ryan carefully removes the USB stick, holding it like it might explode. Whatever is on this drive, someone went to a lot of trouble to deliver it. And they knew exactly what kind of person Ryan is - the kind who would have an air-gapped machine ready for exactly this situation.
 
 He heads back to the Volvo and drives home through the dark countryside.
+
+Story part 7a: USB Discovery
+The moment his hand closed around the USB stick is its own kind of silence. He peeled the tape slowly — careful, deliberate, the way you handle something that might not be real. The black rectangle in his palm, so small. The note still stuck to one side: TRUST THE PROCESS — PLUG IN ONLY ON AIR-GAPPED MACHINE. Someone typed that. Someone printed it at home, cut it with scissors, pressed it under a bench in a medieval monastery courtyard in the middle of the night. There is something almost absurd about it, and something absolutely not absurd at all.
+
+He stands in the lamplight for a moment, monastery stones behind him, the weight of the grounds around him. Then he walks to the Volvo.
+
+Story part 7b: The Drive Home
+The road back to Compascuum is dark and empty. Ryan drives slowly, watching the mirrors more than the road. No headlights behind him. Nobody followed — or nobody he could see.
+
+His mind drifts, as it always does on long straight roads, to the logistics of how it got there. A chain of events, reconstructed in reverse. A Volkswagen with German plates, probably — nothing conspicuous. A man who drove north on the A31 on a weeknight, pretending to be something unremarkable. Bad Bentheim: the Schengen crossing, no gate, no guard, just a blue EU sign and the road continuing. N34 to Ter Apel. Parked somewhere quiet. Walked through the same entrance Ryan used, maybe twenty minutes before him. Found the bench — been here before, knew exactly which one. Knelt. Taped the drive. Stood. Walked back to the car. Drove south again. No message sent. No call received.
+
+No trace. Just this small black rectangle and the expectation that the right person would find it.
+
+The light in Ter Apel fades in the rear-view mirror. Ryan drives on.
 
 Story part 8: The Contents
 The drive home feels endless. Ryan keeps checking his mirrors, half-expecting to see headlights following him through the dark countryside. But the roads are empty. Just him, the Volvo, and a USB stick that could contain anything from malware to state secrets.
@@ -420,6 +478,23 @@ Quest: Crack the Westerbork surveillance camera
 - This evidence is critical for mapping the ZERFALL network before the facility infiltration
 
 Ryan drives back north in silence. He thinks about the people who left on those trains, and wonders if the scientist who hid a surveillance node here ever thought about that. Probably not. That's how atrocities hide in plain sight — surrounded by people who simply don't think.
+
+Story part 10c: The LOFAR Superterp
+Cees Bassa picks Ryan up from the WSRT operations building early the next morning and drives him twenty minutes south to Exloo. They park on a track beside a flat, treeless field, and then Ryan sees it.
+
+The LOFAR Superterp is not what most people picture when they think of a radio telescope. There is no dish, no tower, no obvious pointing toward the sky. Instead: a circular arrangement of white dipole antennas rising from an artificial island, surrounded by a shallow moat. Two crossed metal rods per antenna, each tilted at 45 degrees from a small ground plane, utterly simple in design. And around the central island, dense clusters of Low-Band Array tiles — flat panels lying on the ground like enormous grey doormats, 48 of them in the inner core alone.
+
+"One hundred and sixty thousand euros per antenna," Cees says, watching Ryan's face. "In 2009. At today's prices, you'd laugh."
+
+Ryan crouches beside one of the LBA dipoles. The antenna picks up signals from 30 to 80 MHz. The HBA tiles extend the upper range to 240 MHz. The processing cabinet nearby — a grey box the size of a shipping container — handles 13 terabits per second from 51 stations spread across eight European countries, all correlating in near-real time. The array doesn't point at the sky. It listens to all of it, simultaneously, and the pointing happens in software.
+
+"We call it the Echo detection pipeline," Cees says, walking between the tile clusters. "It wasn't built for this. We built it to study the sun, the epoch of reionisation, pulsars. But the same beamforming system that isolates a pulsar at 400 light-years can isolate a ground-based interference pattern at 400 kilometres. When we started seeing structured signals correlating with the WSRT anomalies, I wrote the pipeline myself. Nights and weekends."
+
+"So LOFAR is already watching it."
+
+"LOFAR has been watching it for six weeks. I just hadn't told anyone yet." A pause. "I wasn't sure who to tell."
+
+Ryan looks at the antenna field — a hundred white crosses against a flat Dutch sky. An instrument built to hear the oldest light in the universe, quietly redeployed to watch a weapons program two countries away. There is something very Drenthe about that, he thinks. Getting on with it. No fuss.
 
 Story part 11: The Designer
 While waiting for his allies to respond, Ryan digs deeper into the files. There has to be a trail. Someone designed this thing. Engineers leave fingerprints - coding styles, naming conventions, documentation habits.
@@ -1705,42 +1780,3 @@ He took the meeting with Van der Berg. Then another meeting. Then a training pro
 These days, when strange signals appear on his SSTV terminal, he doesn't investigate alone.
 
 He has backup now.
-
----
-
-## NEW SCENES (Added in narrative gap pass)
-
-### Scene 5b: Forensic Analysis Cinematic (Mancave)
-Before analyzing the USB contents, Ryan demonstrates proper forensic discipline. Phase 1: Boots the air-gapped ThinkPad X230 (Coreboot firmware, Kali Linux, hardware WiFi/BT kill switches). Phase 2: Connects a Tableau T35u write-blocker to preserve evidence integrity. Phase 3: Calculates SHA-256 checksums of all 5 files on the USB. Phase 4: Creates a firejail sandbox (no network, read-only mount) to safely examine the files. Sets flag: forensic_prep_complete. Triggered from the air-gapped laptop hotspot in the mancave after obtaining the USB stick.
-
-### Scene 5c: Meshtastic Setup Cinematic (Mancave)
-After identifying Eva Weber through photo analysis, Ryan configures his Meshtastic node to match her specifications. Phase 1: Powers on the LILYGO T-Beam (ESP32 + SX1276 LoRa + GPS). Phase 2: Configures LoRa parameters — 906.875 MHz (Eva's specified frequency from the USB README P.P.S.), EU_868 region, SF12 spreading factor, 250 kHz bandwidth, 20 dBm TX power. Phase 3: Enables AES-256 encryption with a key derived from the shared secret in the USB README, sets channel name "ZERFALL". Phase 4: Scans mesh network, discovers node EVA_W (RSSI: -67 dBm, 1 hop). Sets flag: meshtastic_configured. Triggered from the Meshtastic hotspot when Eva is identified but device not yet configured.
-
-### Scene 5d: Mission Prep Cinematic (Mancave)
-Pre-infiltration preparation sequence after Eva contact is established. Phase 1: Gear check — 8 items reviewed with animated checkmarks (HackRF, Flipper Zero, external drive, Faraday bag, Meshtastic node, backup batteries, lockpick set, gloves). Phase 2: Ally coordination — message exchanges with Cees (WSRT monitoring position), Jaap (dead-man-switch armed, 5-hour timer), David (technical standby). Phase 3: Ies goodbye — emotional departure scene with the dogs. Sets flag: mission_prep_complete. Triggered from Meshtastic hotspot after Eva contacted.
-
-### Scene 5e: Dog Training Flashback (Eva Reveal)
-Visual memory sequence inserted into the Phase 4 realization of eva-reveal.js. When Ryan says "Wait. Weber. Eva Weber..." the scene transitions to a warm-toned flashback: Compascuum two years ago, sunny Saturday morning at the Tony Knight rescue dog training field. Ies introduces Eva. Handshake. Eva visits the house, sees the mancave, asks sharp questions about SDR and Meshtastic. Then life moved on — Ryan forgot. But Eva didn't. Plays between the discovery dialogue and the final realization dialogue.
-
-### Scene 9a: Klaus Drive Flashback (Driving Home)
-During the drive home from the klooster, after Ryan picks up the USB and wonders how it got there, his mind fills in the gaps. A narrative interlude imagines Klaus Weber's journey: a modest Volkswagen Passat with German plates on the A31 heading north, crossing at Bad Bentheim (Schengen, no checks), arriving at Ter Apel, spotting the Volvo, taping the USB under the door handle, and driving south again. No call, no message, no trace — just the USB and trust.
-
-### Scene 10a: LOFAR Superterp (Field Visit)
-Interactive daytime scene at the LOFAR Superterp near Exloo. Ryan visits with Cees Bassa and inspects the array. Hotspots: LBA dipole antennas (30-80 MHz), HBA tiles (120-240 MHz), processing cabinet (13 Tbit/s data from 51 stations across Europe), Cees Bassa (detailed briefing on digital beamforming, correlation of thousands of antenna elements, and how the Echo detection pipeline piggybacks on LOFAR's existing infrastructure). Sets flags: visited_lofar, lofar_briefing_complete. Requires visited_astron flag. Returns via driving_day with home_from_lofar route.
-
-### Scene 7b: Driving — Enhanced Border Crossing
-The drive to the facility now includes a psychologically detailed border crossing. After the small blue "Bundesrepublik Deutschland" sign (no gate, no guard), Ryan processes the legal weight of what he's doing: in the Netherlands he's an amateur poking around; in Germany, trespassing on a Bundeswehr facility means years. "Espionage, if they want to call it that." Hands tighten on the wheel. Heart rate up. "Breathe. You're not a spy. You're a journalist protecting a source."
-
-### Scene 7c: Driving — Home from Facility
-Post-infiltration night drive from Steckerdoser Heide back to Compascuum. 01:00 AM. Hands shaking. Crosses the German border back to Dutch soil. Evidence on external drive: deployment plans, target coordinates, Hoffmann's logs, Volkov's FSB comms. Reflection on allies: Chris corrupted calibration data, Eva guided him through, Kubecka caught Volkov. "Three people who barely know each other. And we just dismantled a weapon of mass disruption." Transitions to long_night scene.
-
-### Scene 16a: The Long Night (Post-Facility)
-Critical scene bridging facility escape to public exposure. 7-phase cinematic spanning 01:30 to 09:30 AM. Phase 1 (01:30): Evidence review on air-gapped laptop. Phase 2: Hoffmann's personal logs — the smoking gun connecting FSB funding to Echo tests. Phase 3 (03:00): Eva sends Meshtastic messages from an undisclosed safe house. Phase 4 (06:00): Brief doubt — what if ZERFALL was sanctioned? Eva's evidence shows test correlation with civilian casualties. Phase 5 (06:30): Press package preparation (journalists at NRC, De Correspondent, Der Spiegel, The Guardian). Phase 6 (07:30): The SEND moment — countdown, irreversible. Phase 7 (08:00-09:30): News breaks internationally, BND calls Ryan directly, AIVD arrives at the house. Uses mancave.svg background. Sets flags: long_night_complete, press_sent, news_broken, bnd_called.
-
-### Scene 17a: Morning After (Post-Debrief)
-Interactive scene between debrief and epilogue. Ryan returns to the mancave after the AIVD debrief. Hotspots: laptop showing 247 unread emails (press, NGOs, concerned citizens), Protonmail with Eva's farewell email ("I'm safe. Thank you for believing a stranger."), AIVD business card from Van der Berg, Ies in the doorway for an emotional conversation ("You did the right thing, lieverd"). Continue button gated behind reading Eva's email AND talking to Ies. Sets flag: morning_after_complete. Transitions to epilogue.
-
-### Facility Ally Coordination Overlay
-Persistent HUD element (top-right corner) during all three facility scenes (exterior, interior, server room). Shows real-time team status: Cees (WSRT/MONITORING), Jaap (DEADMAN/ARMED with countdown timer), David (STANDBY/READY), Eva (INSIDE/POSITION). Status updates periodically to create illusion of live coordination (Cees: RF SCAN → NO ANOMALY → CLEAR; Jaap: countdown timer; Eva: GUIDING during server room). Only shows when mission_prep_complete flag is set.
-
---- END ---

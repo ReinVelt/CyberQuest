@@ -106,7 +106,7 @@ python -m http.server 8000
 ## 💻 Technology Stack
 
 - **Pure HTML/CSS/JavaScript** - No frameworks, no build process, no dependencies
-- **SVG Graphics** - Scalable vector graphics for all 18 scenes (~10 MB)
+- **SVG Graphics** - Scalable vector graphics for all 33 scenes (~10 MB)
 - **Web Speech API** - Optional voice narration
 - **localStorage** - Save game progress
 - **Pointer Events** - Touch and mouse support
@@ -122,8 +122,8 @@ python -m http.server 8000
 CyberQuest/
 ├── index.html              # Main game entry point
 ├── README.md               # This file
-├── engine/                 # Core game systems (~3,500 LOC)
-│   ├── game.js            # Main engine (1490 lines)
+├── engine/                 # Core game systems (~5,500 LOC)
+│   ├── game.js            # Main engine (2704 lines)
 │   ├── player.js          # Player character system
 │   ├── voice.js           # Voice narration system
 │   ├── evidence-viewer.js # Evidence display system
@@ -131,23 +131,38 @@ CyberQuest/
 │   ├── styles.css         # Game styles
 │   └── puzzles/
 │       └── password-puzzle.js # Password/cipher puzzles
-├── scenes/                 # 18 game scenes (~8,000 LOC)
+├── scenes/                 # 33 game scenes (~22,000 LOC)
 │   ├── intro/             # Opening sequence
 │   ├── home/              # Kitchen (tutorial)
 │   ├── livingroom/        # Living room + TV
 │   ├── tvdocumentary/     # Documentary viewing
 │   ├── mancave/           # Investigation hub ⭐
+│   ├── sdr_bench/         # SDR workbench (SSTV decode)
 │   ├── planboard/         # Evidence board
 │   ├── regional_map/      # Area map (Michelin style)
 │   ├── videocall/         # Video conference with allies
 │   ├── garden/            # Backyard + car
+│   ├── garden_back/       # Back garden
 │   ├── car_discovery/     # Volvo discovery
+│   ├── usb_discovery/     # USB find sequence
 │   ├── driving/           # Night drive transitions
+│   ├── driving_day/       # Daytime drive transitions
 │   ├── klooster/          # USB dead drop  
+│   ├── dwingeloo/         # Dwingeloo Observatory
+│   ├── westerbork_memorial/ # Westerbork memorial
+│   ├── astron/            # ASTRON campus
+│   ├── lofar/             # LOFAR station
+│   ├── hackerspace/       # Hackerspace Drenthe
+│   ├── hackerspace_classroom/ # Hackerspace workshop
+│   ├── drone_hunt/        # Drone neutralisation puzzle
 │   ├── facility/          # Infiltration exterior ⚠️
 │   ├── facility_interior/ # Stealth corridors
+│   ├── laser_corridor/    # Laser-grid stealth puzzle
 │   ├── facility_server/   # Climax scene 🎯
+│   ├── long_night/        # Post-infiltration night
 │   ├── debrief/           # Aftermath
+│   ├── return_to_ies/     # Coming home
+│   ├── morning_after/     # Next morning
 │   ├── epilogue/          # Three months later
 │   └── credits/           # End credits
 ├── assets/
@@ -239,25 +254,25 @@ CyberQuest/
 
 | Category | Count | Details |
 |----------|-------|---------|
-| **Total Files** | 54+ | HTML, JS, SVG, Docs |
-| **Lines of Code** | 11,500+ | Engine + Scenes |
-| **Documentation** | 200+ pages | 10+ markdown files |
-| **Scenes** | 18 | Fully implemented |
-| **Hotspots** | 120+ | Interactive elements |
-| **Dialogue Lines** | 800+ | All characters |
-| **Evidence Docs** | 30+ | Emails, PDFs, images |
-| **Quests** | 15 | Main and side quests |
-| **Puzzles** | 5 | Varied difficulty |
+| **Total Files** | 80+ | HTML, JS, SVG, Docs |
+| **Lines of Code** | 27,500+ | Engine + Scenes |
+| **Documentation** | 200+ pages | 7+ markdown files |
+| **Scenes** | 33 | Fully implemented |
+| **Hotspots** | 250+ | Interactive elements |
+| **Dialogue Lines** | 2,000+ | All characters |
+| **Evidence Docs** | 40+ | Emails, PDFs, images |
+| **Quests** | 20+ | Main and side quests |
+| **Puzzles** | 5+ | Varied difficulty |
 
 ---
 
 ## 🎯 Development Status
 
-**Version 1.0 - Production Ready** ✅
+**Version 1.1 - Production Ready** ✅
 
 ### Completed
 - ✅ Complete story (20 parts + epilogue)
-- ✅  18 scenes fully implemented
+- ✅ 33 scenes fully implemented
 - ✅ All core systems functional (dialogue, inventory, quests, evidence, puzzles)
 - ✅ Evidence viewer with multiple document types
 - ✅ Password puzzle system with ROT1 decoder
@@ -266,10 +281,12 @@ CyberQuest/
 - ✅ Regional map (Michelin paper map style, accurate GPS)
 - ✅ Voice narration (optional, Web Speech API)
 - ✅ Mobile support (touch controls)
-- ✅ Save/load system (localStorage)
+- ✅ Save/load system (localStorage, format v2)
+- ✅ Pause system (P key, menu button)
+- ✅ Scene-based clock (SCENE_TIME_MAP)
 - ✅ 200+ pages of documentation
 
-### Planned (v1.1+)
+### Planned (v1.2+)
 - ⏳ Achievement system
 - ⏳ Multiple save slots (3-5)
 - ⏳ Statistics tracking
@@ -313,7 +330,7 @@ python -m http.server 8000
 ### Created By
 [Your Name/Team]  
 Development: 2025-2026  
-Version: 1.0
+Version: 1.1
 
 ### Technology Credits
 - **Web Speech API** (W3C Standard)
@@ -346,6 +363,13 @@ Version: 1.0
 
 ## 🏆 Version History
 
+**v1.1 (February 27, 2026)** - Expanded Release
+- Expanded to 33 scenes (15 new scenes)
+- Pause system, scene-based clock, save format v2
+- Hackerspace, ASTRON, LOFAR, Westerbork scenes
+- Laser corridor, drone hunt, long night, return to Ies, morning after
+- Engine line count: 1490 → 2704
+
 **v1.0 (February 15, 2026)** - Production Release
 - Complete game (18 scenes, 20 story parts + epilogue)
 - All systems implemented and tested
@@ -359,7 +383,7 @@ Version: 1.0
 - **[📘 Start Here: Project Overview](docs/PROJECT_OVERVIEW.md)** - Complete overview, FAQ
 - **[🏗️ Architecture Guide](docs/GAME_ARCHITECTURE.md)** - Technical documentation
 - **[🎮 Game Systems](docs/SYSTEMS.md)** - Mechanics explained
-- **[🗺️ Scene Catalog](docs/SCENES.md)** - All 18 scenes detailed
+- **[🗺️ Scene Catalog](docs/SCENES.md)** - All 33 scenes detailed
 - **[📖 Full Story](docs/STORY.md)** - Complete screenplay
 
 ---
@@ -369,7 +393,7 @@ Version: 1.0
 
 **Genre:** Point-and-Click Adventure / Techno-Thriller  
 **Platform:** Web Browser (Desktop & Mobile)  
-**Status:** v1.0 Production Ready ✅  
+**Status:** v1.1 Production Ready ✅  
 **Playtime:** 2-4 hours  
 
 *"When strange signals appear, investigate. But don't do it alone."* — Ryan Weylant

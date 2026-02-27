@@ -1,14 +1,17 @@
 # CyberQuest: Complete Scene Catalog
-**Last Updated:** February 15, 2026  
-**Version:** 1.0
+**Last Updated:** February 27, 2026  
+**Version:** 1.1
 
 ---
 
 ## Scene Overview
 
-**Total Scenes:** 18  
-**Scene Types:** Exploration (7), Interface (4), Cinematic (4), Stealth (3)  
-**Estimated Playtime:** 2-4 hours
+**Total Scenes:** 33  
+**Scene Types:** Exploration (10), Interface (5), Cinematic (6), Stealth/Puzzle (5), Story (7)  
+**Estimated Playtime:** 3-6 hours
+
+> **Note:** For a complete scene-transition graph and per-scene flag analysis see
+> [GAME_FLOW_ANALYSIS.md](GAME_FLOW_ANALYSIS.md).
 
 ### Scene Flow Diagram
 
@@ -1601,20 +1604,260 @@ Scrolling credits over stylized cyber background. Acknowledgments, technology cr
 
 ---
 
+## Scene 19: SDR_BENCH - SDR Workbench
+
+**ID:** `sdr_bench`  
+**File:** `scenes/sdr_bench/scene.js` (269 lines)  
+**Type:** Interface  
+**Player Visible:** Yes  
+**Clock:** Day 1 · 16:15
+
+### Description
+Ryan's SDR (Software Defined Radio) workbench in the mancave. Features
+HackRF One, PortaPack, spectrum display. Used to decode the SSTV signal
+received in the first act.
+
+### Key Interactions
+- Decode the SSTV transmission (sets `sstv_decoded`, `sstv_coordinates_known`)
+- Add quest `decode_sstv_signal` on enter  
+- Back doorstopper → return to `mancave`
+
+---
+
+## Scene 20: GARDEN_BACK - Back Garden
+
+**ID:** `garden_back`  
+**File:** `scenes/garden_back/scene.js` (617 lines)  
+**Type:** Exploration  
+**Player Visible:** Yes  
+**Clock:** Day 1 · 17:00
+
+### Description
+The rear portion of Ryan's garden — vegetable beds, tool shed, view toward
+the German border. Connects to the main `garden` scene.
+
+---
+
+## Scene 21: USB_DISCOVERY - USB Discovery
+
+**ID:** `usb_discovery`  
+**File:** `scenes/usb_discovery/scene.js` (565 lines)  
+**Type:** Story  
+**Player Visible:** Yes  
+**Clock:** Day 1 · 22:55
+
+### Description
+Immediate story beat at Ter Apel after finding the USB stick. Shows the
+device close-up and triggers the discovery dialogue sequence. Transitions
+back to `klooster`.
+
+---
+
+## Scene 22: CAR_DISCOVERY - Volvo Night Discovery
+
+**ID:** `car_discovery`  
+**File:** `scenes/car_discovery/scene.js` (169 lines)  
+**Type:** Story  
+**Player Visible:** Yes  
+**Clock:** Day 1 · 23:15
+
+### Description
+Brief scene at the Klooster car park. Ryan notices something odd near the
+Volvo — leads into the drive home.
+
+---
+
+## Scene 23: DRIVING_DAY - Daytime Drive
+
+**ID:** `driving_day`  
+**File:** `scenes/driving_day/scene.js` (669 lines)  
+**Type:** Cinematic  
+**Player Visible:** No  
+**Clock:** Day 2 (depends on destination)
+
+### Description
+Daytime counterpart to `driving`. Used for Act 2 journeys to ASTRON and
+other daytime destinations. Destination stored in `driving_destination` flag
+before loading.
+
+---
+
+## Scene 24: DWINGELOO - Dwingeloo Observatory
+
+**ID:** `dwingeloo`  
+**File:** `scenes/dwingeloo/scene.js` (189 lines)  
+**Type:** Exploration  
+**Player Visible:** Yes  
+**Clock:** Day 2 · 11:00
+
+### Description
+The Dwingeloo Radio Observatory — historic 25 m dish telescope. Ryan visits
+to gather expert context or support for his investigation.
+
+---
+
+## Scene 25: WESTERBORK_MEMORIAL - Westerbork Memorial
+
+**ID:** `westerbork_memorial`  
+**File:** `scenes/westerbork_memorial/scene.js` (270 lines)  
+**Type:** Exploration  
+**Player Visible:** Yes  
+**Clock:** Day 2 · 12:00
+
+### Description
+The Westerbork Synthesis Radio Telescope site and WWII memorial. An optional
+contextual stop during the Act 2 road trip through Drenthe.
+
+---
+
+## Scene 26: ASTRON - ASTRON Campus
+
+**ID:** `astron`  
+**File:** `scenes/astron/scene.js` (483 lines)  
+**Type:** Exploration  
+**Player Visible:** Yes  
+**Clock:** Day 2 · 15:30
+
+### Description
+The ASTRON institute campus in Dwingeloo. Ryan meets Cees Bassa here for
+in-person signal analysis support. Sets `visited_astron` and `astron_unlocked`.
+
+---
+
+## Scene 27: LOFAR - LOFAR Station
+
+**ID:** `lofar`  
+**File:** `scenes/lofar/scene.js` (294 lines)  
+**Type:** Exploration  
+**Player Visible:** Yes  
+**Clock:** Day 2 · 16:00
+
+### Description
+The LOFAR superterp — hundreds of low-frequency antenna arrays. Accessible
+after visiting ASTRON. Provides technical confirmation of the RF signal source.
+
+---
+
+## Scene 28: HACKERSPACE - Hackerspace Drenthe
+
+**ID:** `hackerspace`  
+**File:** `scenes/hackerspace/scene.js` (1113 lines)  
+**Type:** Exploration  
+**Player Visible:** Yes  
+**Clock:** Day 2 · 13:00
+
+### Description
+The Hackerspace Drenthe makerspace. Ryan attends a meeting to recruit local
+tech allies (Dennis, Sophie, Marco, Kim, Joris, Linda, Aisha). Large dialogue
+tree with hackerspace community members.
+
+---
+
+## Scene 29: HACKERSPACE_CLASSROOM - Hackerspace Classroom
+
+**ID:** `hackerspace_classroom`  
+**File:** `scenes/hackerspace_classroom/scene.js` (987 lines)  
+**Type:** Exploration  
+**Player Visible:** Yes  
+**Clock:** Day 2 · 13:30
+
+### Description
+The teaching / workshop area inside the hackerspace. Runs in parallel with
+the main hackerspace scene — more focused technical briefing and equipment
+demonstration.
+
+---
+
+## Scene 30: DRONE_HUNT - Drone Hunt
+
+**ID:** `drone_hunt`  
+**File:** `scenes/drone_hunt/scene.js` (1282 lines)  
+**Type:** Stealth/Puzzle  
+**Player Visible:** Yes  
+**Clock:** Day 2 (evening)
+
+### Description
+Ryan must neutralise a surveillance drone near the facility perimeter using
+RF jamming tools. Puzzle-heavy stealth scene before the final infiltration.
+Design notes in `scenes/drone_hunt/design.md`.
+
+---
+
+## Scene 31: LASER_CORRIDOR - Laser Corridor
+
+**ID:** `laser_corridor`  
+**File:** `scenes/laser_corridor/scene.js` (1645 lines)  
+**Type:** Stealth/Puzzle  
+**Player Visible:** Yes  
+**Clock:** Day 2 · 22:07
+
+### Description
+Narrow facility corridor protected by laser-tripwire security grid. Ryan must
+time his movements or disable sensors to pass without triggering an alarm.
+One of the longest scene files in the project.
+Design notes in `scenes/laser_corridor/design.md`.
+
+---
+
+## Scene 32: LONG_NIGHT - Long Night
+
+**ID:** `long_night`  
+**File:** `scenes/long_night/scene.js` (333 lines)  
+**Type:** Story  
+**Player Visible:** Yes  
+**Clock:** Day 3 · 01:00
+
+### Description
+Immediate aftermath of the facility infiltration. Ryan at a safe location,
+exhausted, processing what just happened. Bridges facility events to the
+morning debriefing.
+
+---
+
+## Scene 33: RETURN_TO_IES - Return to Ies
+
+**ID:** `return_to_ies`  
+**File:** `scenes/return_to_ies/scene.js` (813 lines)  
+**Type:** Story  
+**Player Visible:** Yes  
+**Clock:** Day 3 · 20:00
+
+### Description
+Ryan returns home and tells Ies everything. Emotional resolution scene;
+longest of the aftermath scenes. Sets final relationship flags before epilogue.
+
+---
+
+## Scene 34: MORNING_AFTER - Morning After
+
+**ID:** `morning_after`  
+**File:** `scenes/morning_after/scene.js` (235 lines)  
+**Type:** Story  
+**Player Visible:** Yes  
+**Clock:** Day 4 · 08:00
+
+### Description
+The morning after the confrontation. Ryan, Ies, and possibly some allies at
+the kitchen table. News coverage in background. Short quiet scene that
+transitions to the epilogue timeline jump.
+
+---
+
 ## Scene Summary Statistics
 
 | Category | Count | Notes |
 |----------|-------|-------|
-| **Total Scenes** | 18 | Complete game |
-| **Exploration** | 7 | Player walks around, interacts |
-| **Interface** | 4 | Evidence, map, planboard, videocall |
-| **Cinematic** | 4 | Intro, documentary, epilogue, credits |
-| **Stealth** | 3 | Facility exterior, interior, server |
-| **Average Playtime** | 2-4 hrs | Depends on reading speed, exploration |
-| **Total Dialogue Lines** | ~800+ | Estimated across all scenes |
-| **Unique Hotspots** | ~120+ | Interactive elements |
-| **Evidence Documents** | ~30+ | Emails, PDFs, images viewable |
-| **Puzzles** | 5 | ROT1, passwords, stealth challenges |
+| **Total Scenes** | 33 | Complete game |
+| **Exploration** | 10 | Player walks around, interacts |
+| **Interface** | 5 | Planboard, map, videocall, sdr_bench, debrief |
+| **Cinematic** | 6 | Intro, documentary, driving ×2, epilogue, credits |
+| **Stealth / Puzzle** | 5 | Facility exterior, interior, laser corridor, server, drone hunt |
+| **Story / Aftermath** | 7 | USB/car discovery, long night, return to Ies, morning after, etc. |
+| **Average Playtime** | 3-6 hrs | Depends on reading speed, exploration |
+| **Total Dialogue Lines** | ~2,000+ | Estimated across all scenes |
+| **Unique Hotspots** | ~250+ | Interactive elements |
+| **Evidence Documents** | ~40+ | Emails, PDFs, images viewable |
+| **Puzzles** | 5+ | ROT1, passwords, stealth challenges, drone hunt |
 
 ---
 
