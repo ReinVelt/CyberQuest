@@ -39,10 +39,10 @@ const WsrtParkingScene = {
         {
             id: 'direction_board',
             name: 'Direction Board',
-            x: 35,
-            y: 30,
-            width: 30,
-            height: 35,
+            x: 30,
+            y: 40,
+            width: 28,
+            height: 24,
             cursor: 'pointer',
             action: function(game) {
                 game.startDialogue([
@@ -111,10 +111,10 @@ const WsrtParkingScene = {
         {
             id: 'walk_planetenpad',
             name: 'Planetenpad → 1 km',
-            x: 44,
-            y: 0,
-            width: 12,
-            height: 15,
+            x: 43,
+            y: 29,
+            width: 14,
+            height: 10,
             cursor: 'pointer',
             cssClass: 'hotspot-nav',
             skipWalk: true,
