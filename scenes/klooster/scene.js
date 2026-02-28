@@ -15,7 +15,10 @@ const KloosterScene = {
     
     // Player starting position
     playerStart: { x: 75, y: 85 },
-    
+
+    // 🎬 Accessibility / Movie Mode
+    accessibilityPath: ['bench', 'volvo'],
+
     // Random idle thoughts for this scene
     idleThoughts: [
         "This place creeps me out...",
@@ -660,6 +663,9 @@ const KloosterScene = {
         console.log('[Klooster] Scene entered');
         console.log('[Klooster] Hotspots:', this.hotspots.map(h => h.id));
         game.showNotification('Arrived at Ter Apel Klooster - Click the Volvo (bottom right)');
+
+        // Mark visited so the garden Volvo picker won't offer this destination again
+        game.setFlag('visited_klooster', true);
 
         // Start creepy ambient audio
         this._startCreepyAudio();
