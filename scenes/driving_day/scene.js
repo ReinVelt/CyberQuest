@@ -421,15 +421,24 @@ const DrivingDayScene = {
         }
 
         // Wait for the Web Audio jingle + pips + news stinger (8.5 s),
-        // then speak the bulletin and resolve when speech ends.
+        // then FIRE the bulletin TTS as a side-effect and resolve after a
+        // short fixed cap (10.5 s total). This lets the player hear the
+        // opening of the news before Ryan's dialogue begins.
+        // We do NOT await the full TTS Promise — the bulletin can be 80+
+        // seconds at the Documentary rate, which would feel like the car
+        // never arrives. The TTS is cleanly cancelled by the first dialogue
+        // line when it fires its own speak() call.
         return new Promise(resolve => {
-            const tid = setTimeout(async () => {
+            const tid = setTimeout(() => {
                 try {
-                    await vm.speak(bulletin, 'Documentary');
+                    if (vm.speak) vm.speak(bulletin, 'Documentary');
                 } catch (e) {
                     console.warn('[DrivingDay] Radio TTS failed:', e);
                 }
-                resolve();
+                // Resolve after 2 more seconds so the player hears a few
+                // words of the bulletin before the dialogue box appears.
+                const tid2 = setTimeout(resolve, 2000);
+                this._timeoutIds.push(tid2);
             }, 8500);
             this._timeoutIds.push(tid);
         });
