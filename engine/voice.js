@@ -80,7 +80,7 @@ class VoiceManager {
             'Narrator':            { ...britishFemale, pitch: 1.0, rate: 0.9 },
             
             // System messages
-            'System':              { ...britishMale, pitch: , rate: 1.0, voicePreference: ['Google UK English Female', 'Microsoft Zira', 'female'] }
+            'System':              { ...britishMale, pitch: 1.0, rate: 1.0, voicePreference: ['Google UK English Female', 'Microsoft Zira', 'female'] }
         };
         
         // Default profile for unknown speakers

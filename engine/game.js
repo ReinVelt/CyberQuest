@@ -566,8 +566,9 @@ class CyberQuestEngine {
             element.style.height = `${hotspot.height}%`;
             
             // Support custom CSS classes (e.g. 'hotspot-nav' for visible nav buttons)
+            // Split on whitespace so callers can pass multiple classes in one string.
             if (hotspot.cssClass) {
-                element.classList.add(hotspot.cssClass);
+                element.classList.add(...hotspot.cssClass.trim().split(/\s+/));
             }
             
             if (hotspot.cursor) {
