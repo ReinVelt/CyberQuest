@@ -121,8 +121,8 @@ const WsrtParkingScene = {
             action: function(game) {
                 if (game.getFlag('planetenpad_complete')) {
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'The Planetenpad. One kilometre through the heath, past scale models of all the planets.' },
-                        { speaker: 'Ryan', text: 'I walked it already. Impressive how big the solar system feels, even at scale.' },
+                        { speaker: '', text: 'The Planetenpad. One kilometre through the heath, past scale models of all the planets.' },
+                        { speaker: '', text: 'I walked it already. Impressive how big the solar system feels, even at scale.' },
                         { speaker: '', text: '*Ryan starts down the path again, past the Pluto marker*' },
                     ], () => {
                         game.loadScene('planetenpad');
@@ -130,8 +130,8 @@ const WsrtParkingScene = {
                 } else {
                     game.startDialogue([
                         { speaker: '', text: '*A narrow path heads north into the heath. A small sign reads: PLANETENPAD — Schaalmodel Zonnestelsel*' },
-                        { speaker: 'Ryan', text: 'A scale model of the solar system? One kilometre walk from Pluto to the Sun.' },
-                        { speaker: 'Ryan', text: 'That\'s... actually kind of cool. Let\'s see how big space really is.' },
+                        { speaker: '', text: 'A scale model of the solar system? One kilometre walk from Pluto to the Sun.' },
+                        { speaker: '', text: 'That\'s... actually kind of cool. Let\'s see how big space really is.' },
                         { speaker: '', text: '*Ryan starts down the path. The first marker is already visible ahead.*' },
                     ], () => {
                         game.loadScene('planetenpad');
