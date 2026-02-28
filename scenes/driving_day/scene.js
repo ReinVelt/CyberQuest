@@ -412,34 +412,21 @@ const DrivingDayScene = {
 
         const vm = window.voiceManager;
 
-        // No bulletin (wsrt routes) or no TTS — just a brief engine-settle delay
-        if (!bulletin || !vm || typeof vm.speak !== 'function') {
-            return new Promise(resolve => {
-                const tid = setTimeout(resolve, 1000);
-                this._timeoutIds.push(tid);
-            });
+        // Fire the bulletin TTS as a background side-effect after the jingle
+        // (8.5 s), but resolve the Promise immediately after a 1 s settle so
+        // dialogue starts quickly on every route. The news TTS will be
+        // cancelled by the first dialogue speak() call — that is fine; the
+        // player still hears the jingle + pips atmosphere from Web Audio.
+        if (bulletin && vm && typeof vm.speak === 'function') {
+            const tid = setTimeout(() => {
+                try { vm.speak(bulletin, 'Documentary'); } catch (e) {}
+            }, 8500);
+            this._timeoutIds.push(tid);
         }
 
-        // Wait for the Web Audio jingle + pips + news stinger (8.5 s),
-        // then FIRE the bulletin TTS as a side-effect and resolve after a
-        // short fixed cap (10.5 s total). This lets the player hear the
-        // opening of the news before Ryan's dialogue begins.
-        // We do NOT await the full TTS Promise — the bulletin can be 80+
-        // seconds at the Documentary rate, which would feel like the car
-        // never arrives. The TTS is cleanly cancelled by the first dialogue
-        // line when it fires its own speak() call.
+        // Always resolve after 1 s so dialogue starts promptly.
         return new Promise(resolve => {
-            const tid = setTimeout(() => {
-                try {
-                    if (vm.speak) vm.speak(bulletin, 'Documentary');
-                } catch (e) {
-                    console.warn('[DrivingDay] Radio TTS failed:', e);
-                }
-                // Resolve after 2 more seconds so the player hears a few
-                // words of the bulletin before the dialogue box appears.
-                const tid2 = setTimeout(resolve, 2000);
-                this._timeoutIds.push(tid2);
-            }, 8500);
+            const tid = setTimeout(resolve, 1000);
             this._timeoutIds.push(tid);
         });
     },
@@ -491,6 +478,11 @@ const DrivingDayScene = {
         this._speakRadioNews(destination).then(() => {
             // Guard: bail if the scene was exited while the news was playing
             if (!window.game || window.game.currentScene !== 'driving_day') return;
+
+            // Enable auto-advance for this cinematic so the player doesn't
+            // have to click through every line. Restore their setting after.
+            this._prevAutoAdvance = g.settings.autoAdvanceDelay;
+            g.settings.autoAdvanceDelay = 4000;
 
             if (destination === 'wsrt_parking') {
                 g.startDialogue([
@@ -687,6 +679,13 @@ const DrivingDayScene = {
     onExit: function() {
         this._timeoutIds.forEach(id => clearTimeout(id));
         this._timeoutIds = [];
+
+        // Restore the player's auto-advance setting (was temporarily set to
+        // 4000 ms for the driving cinematic).
+        if (this._prevAutoAdvance !== undefined && window.game) {
+            window.game.settings.autoAdvanceDelay = this._prevAutoAdvance;
+            delete this._prevAutoAdvance;
+        }
 
         // Stop RTV Drenthe radio
         this._stopRadio();
