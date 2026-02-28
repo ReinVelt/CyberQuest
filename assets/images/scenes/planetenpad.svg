@@ -1,0 +1,696 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+<defs>
+  <!-- Sky — bright afternoon, vast Drenthe sky -->
+  <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#2e5588"/>
+    <stop offset="20%"  stop-color="#4a72a8"/>
+    <stop offset="45%"  stop-color="#6a90c2"/>
+    <stop offset="70%"  stop-color="#8eb0d8"/>
+    <stop offset="90%"  stop-color="#b0cce8"/>
+    <stop offset="100%" stop-color="#c8ddf0"/>
+  </linearGradient>
+
+  <!-- Ground — heathland, rich varied green-brown -->
+  <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#6a7a5a"/>
+    <stop offset="15%"  stop-color="#5e6e4c"/>
+    <stop offset="40%"  stop-color="#556444"/>
+    <stop offset="70%"  stop-color="#4d5c3c"/>
+    <stop offset="100%" stop-color="#3e4e30"/>
+  </linearGradient>
+
+  <!-- Sandy path with warmth -->
+  <linearGradient id="pathGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%"   stop-color="#b0a880"/>
+    <stop offset="40%"  stop-color="#a89c74"/>
+    <stop offset="100%" stop-color="#9a9068"/>
+  </linearGradient>
+
+  <!-- Path edge shadow -->
+  <linearGradient id="pathEdge" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#7a7258"/>
+    <stop offset="100%" stop-color="#6a6248"/>
+  </linearGradient>
+
+  <!-- Planet pedestal concrete -->
+  <linearGradient id="pedestalGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#a0a0a0"/>
+    <stop offset="100%" stop-color="#707070"/>
+  </linearGradient>
+
+  <!-- Sun model — gold/orange glow -->
+  <radialGradient id="sunGrad" cx="0.35" cy="0.3" r="0.65">
+    <stop offset="0%"   stop-color="#fff0a0"/>
+    <stop offset="25%"  stop-color="#ffe060"/>
+    <stop offset="55%"  stop-color="#ffc020"/>
+    <stop offset="80%"  stop-color="#e8a010"/>
+    <stop offset="100%" stop-color="#c08000"/>
+  </radialGradient>
+
+  <!-- Sun outer glow -->
+  <radialGradient id="sunGlow" cx="0.5" cy="0.5" r="0.5">
+    <stop offset="0%"   stop-color="#ffe060" stop-opacity="0.35"/>
+    <stop offset="50%"  stop-color="#ffc830" stop-opacity="0.12"/>
+    <stop offset="100%" stop-color="#ffa800" stop-opacity="0"/>
+  </radialGradient>
+
+  <!-- Experiment panel -->
+  <linearGradient id="panelGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#4a5560"/>
+    <stop offset="100%" stop-color="#3a4550"/>
+  </linearGradient>
+
+  <!-- Info board green -->
+  <linearGradient id="boardGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#2a5a2a"/>
+    <stop offset="100%" stop-color="#1a4a1a"/>
+  </linearGradient>
+
+  <!-- Cloud -->
+  <radialGradient id="cloudGrad" cx="0.5" cy="0.6" r="0.5">
+    <stop offset="0%"   stop-color="#eaeaf4" stop-opacity="0.85"/>
+    <stop offset="100%" stop-color="#c8c8d8" stop-opacity="0.2"/>
+  </radialGradient>
+
+  <!-- Dish distant metal -->
+  <linearGradient id="dishGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#e0e0e0"/>
+    <stop offset="100%" stop-color="#b0b0b0"/>
+  </linearGradient>
+
+  <!-- Birch bark -->
+  <linearGradient id="birchBark" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%"   stop-color="#d8d4c8"/>
+    <stop offset="30%"  stop-color="#e8e4d8"/>
+    <stop offset="70%"  stop-color="#d8d4c8"/>
+    <stop offset="100%" stop-color="#c8c4b8"/>
+  </linearGradient>
+
+  <!-- Pine trunk -->
+  <linearGradient id="pineTrunk" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%"   stop-color="#5a3a20"/>
+    <stop offset="50%"  stop-color="#6a4a2a"/>
+    <stop offset="100%" stop-color="#4a3018"/>
+  </linearGradient>
+
+  <!-- Pine canopy dark -->
+  <radialGradient id="pineCanopy" cx="0.5" cy="0.7" r="0.6">
+    <stop offset="0%"   stop-color="#2a5030"/>
+    <stop offset="60%"  stop-color="#1e4028"/>
+    <stop offset="100%" stop-color="#183820"/>
+  </radialGradient>
+
+  <!-- Birch foliage spring green -->
+  <radialGradient id="birchFoliage" cx="0.45" cy="0.4" r="0.55">
+    <stop offset="0%"   stop-color="#7aa858"/>
+    <stop offset="50%"  stop-color="#5a8a3a"/>
+    <stop offset="100%" stop-color="#4a7a2a"/>
+  </radialGradient>
+
+  <!-- Foreground bush dark -->
+  <radialGradient id="bushDark" cx="0.4" cy="0.5" r="0.55">
+    <stop offset="0%"   stop-color="#3a5a30"/>
+    <stop offset="60%"  stop-color="#2a4a22"/>
+    <stop offset="100%" stop-color="#1e3818"/>
+  </radialGradient>
+
+  <!-- Foreground bush heather -->
+  <radialGradient id="bushHeather" cx="0.45" cy="0.45" r="0.55">
+    <stop offset="0%"   stop-color="#7a5070"/>
+    <stop offset="40%"  stop-color="#6a4560"/>
+    <stop offset="100%" stop-color="#5a3a50"/>
+  </radialGradient>
+
+  <!-- Sundial stone -->
+  <radialGradient id="stoneGrad" cx="0.45" cy="0.4" r="0.55">
+    <stop offset="0%"   stop-color="#a0a090"/>
+    <stop offset="100%" stop-color="#707060"/>
+  </radialGradient>
+
+  <!-- Bench wood -->
+  <linearGradient id="benchWood" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#8a6a40"/>
+    <stop offset="100%" stop-color="#6a5030"/>
+  </linearGradient>
+
+  <!-- Animated elements -->
+  <style>
+    @keyframes cloudDrift1 { 0% { transform: translateX(0); } 100% { transform: translateX(80px); } }
+    @keyframes cloudDrift2 { 0% { transform: translateX(0); } 100% { transform: translateX(-60px); } }
+    @keyframes cloudDrift3 { 0% { transform: translateX(0); } 100% { transform: translateX(50px); } }
+    @keyframes sunPulse { 0% { opacity: 0.3; } 50% { opacity: 0.45; } 100% { opacity: 0.3; } }
+    @keyframes heatherSway { 0% { transform: skewX(0deg); } 50% { transform: skewX(1.5deg); } 100% { transform: skewX(0deg); } }
+    @keyframes birdGlide { 0% { transform: translate(0,0); } 25% { transform: translate(40px,-15px); } 50% { transform: translate(90px,-5px); } 75% { transform: translate(130px,-20px); } 100% { transform: translate(180px,0); } }
+    @keyframes grassSway { 0% { transform: rotate(0deg); } 50% { transform: rotate(2deg); } 100% { transform: rotate(0deg); } }
+  </style>
+</defs>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  SKY — vast, atmospheric                      -->
+<!-- ═══════════════════════════════════════════════ -->
+<rect width="1600" height="420" fill="url(#skyGrad)"/>
+
+<!-- Thin high cirrus wisps -->
+<path d="M100,40 Q200,35 350,42 Q450,38 580,44" fill="none" stroke="#d0d8e8" stroke-width="1.5" opacity="0.25"/>
+<path d="M700,25 Q850,20 1000,28 Q1100,22 1250,30" fill="none" stroke="#d0d8e8" stroke-width="1" opacity="0.2"/>
+<path d="M1200,55 Q1300,48 1400,56" fill="none" stroke="#d0d8e8" stroke-width="1.2" opacity="0.18"/>
+
+<!-- Cumulus clouds — animated drift -->
+<g style="animation: cloudDrift1 45s ease-in-out infinite alternate">
+  <ellipse cx="200" cy="85" rx="120" ry="30" fill="url(#cloudGrad)" opacity="0.55"/>
+  <ellipse cx="240" cy="78" rx="80"  ry="25" fill="url(#cloudGrad)" opacity="0.45"/>
+  <ellipse cx="170" cy="80" rx="60"  ry="22" fill="url(#cloudGrad)" opacity="0.4"/>
+</g>
+<g style="animation: cloudDrift2 55s ease-in-out infinite alternate">
+  <ellipse cx="750" cy="55" rx="160" ry="35" fill="url(#cloudGrad)" opacity="0.5"/>
+  <ellipse cx="800" cy="48" rx="100" ry="28" fill="url(#cloudGrad)" opacity="0.4"/>
+  <ellipse cx="690" cy="52" rx="70"  ry="22" fill="url(#cloudGrad)" opacity="0.35"/>
+</g>
+<g style="animation: cloudDrift3 40s ease-in-out infinite alternate">
+  <ellipse cx="1280" cy="100" rx="130" ry="28" fill="url(#cloudGrad)" opacity="0.5"/>
+  <ellipse cx="1320" cy="92"  rx="90"  ry="24" fill="url(#cloudGrad)" opacity="0.4"/>
+</g>
+<g style="animation: cloudDrift1 60s ease-in-out infinite alternate">
+  <ellipse cx="480" cy="130" rx="100" ry="22" fill="url(#cloudGrad)" opacity="0.3"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  DISTANT WSRT DISHES (horizon, right side)     -->
+<!-- ═══════════════════════════════════════════════ -->
+<g opacity="0.35" transform="translate(1200, 280)">
+  <line x1="0"   y1="40" x2="0"   y2="5"  stroke="#b0b0b0" stroke-width="2.5"/>
+  <ellipse cx="0"   cy="5"  rx="20" ry="7" fill="url(#dishGrad)" stroke="#999" stroke-width="0.5"/>
+  <line x1="50"  y1="40" x2="50"  y2="2"  stroke="#b0b0b0" stroke-width="2.5"/>
+  <ellipse cx="50"  cy="2"  rx="20" ry="7" fill="url(#dishGrad)" stroke="#999" stroke-width="0.5"/>
+  <line x1="100" y1="40" x2="100" y2="4"  stroke="#b0b0b0" stroke-width="2.5"/>
+  <ellipse cx="100" cy="4"  rx="20" ry="7" fill="url(#dishGrad)" stroke="#999" stroke-width="0.5"/>
+  <line x1="150" y1="40" x2="150" y2="6"  stroke="#b0b0b0" stroke-width="2.5"/>
+  <ellipse cx="150" cy="6"  rx="20" ry="7" fill="url(#dishGrad)" stroke="#999" stroke-width="0.5"/>
+  <line x1="200" y1="40" x2="200" y2="3"  stroke="#b0b0b0" stroke-width="2.5"/>
+  <ellipse cx="200" cy="3"  rx="20" ry="7" fill="url(#dishGrad)" stroke="#999" stroke-width="0.5"/>
+  <line x1="250" y1="40" x2="250" y2="5"  stroke="#b0b0b0" stroke-width="2.5"/>
+  <ellipse cx="250" cy="5"  rx="20" ry="7" fill="url(#dishGrad)" stroke="#999" stroke-width="0.5"/>
+  <line x1="300" y1="40" x2="300" y2="4"  stroke="#b0b0b0" stroke-width="2.5"/>
+  <ellipse cx="300" cy="4"  rx="20" ry="7" fill="url(#dishGrad)" stroke="#999" stroke-width="0.5"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  DISTANT TREE LINE (horizon depth)             -->
+<!-- ═══════════════════════════════════════════════ -->
+
+<!-- Far tree line — soft blue-green haze -->
+<path d="M0,330 Q40,320 80,328 Q120,315 160,325 Q200,312 250,322 Q300,310 350,320 Q400,308 450,318 Q500,310 550,316 Q600,306 650,315 Q700,305 750,314 Q800,306 850,312 Q900,304 950,313 Q1000,305 1050,312 Q1100,303 1150,311 Q1200,304 1250,310 Q1300,302 1350,310 Q1400,305 1450,312 Q1500,304 1550,310 L1600,308 L1600,350 L0,350 Z"
+      fill="#3a5a3a" opacity="0.4"/>
+
+<!-- Nearer tree line — darker, more defined -->
+<path d="M0,340 Q30,332 70,338 Q110,328 150,336 Q190,325 230,334 Q270,322 320,332 Q360,320 410,330 Q460,318 510,328 Q560,316 610,326 Q660,315 710,324 Q760,314 810,322 Q860,312 910,320 Q960,310 1010,318 Q1060,308 1110,316 Q1160,306 1210,314 Q1260,305 1310,313 Q1360,306 1410,314 Q1460,306 1510,312 L1600,310 L1600,360 L0,360 Z"
+      fill="#2a4a2a" opacity="0.5"/>
+
+<!-- Individual distant pines on horizon -->
+<g opacity="0.4">
+  <polygon points="120,318 130,295 140,318" fill="#1e4028"/>
+  <polygon points="125,308 130,290 135,308" fill="#244a2e"/>
+  <polygon points="290,320 302,292 314,320" fill="#1e4028"/>
+  <polygon points="296,308 302,287 308,308" fill="#244a2e"/>
+  <polygon points="500,316 510,290 520,316" fill="#1e4028"/>
+  <polygon points="505,304 510,285 515,304" fill="#244a2e"/>
+  <polygon points="720,314 732,286 744,314" fill="#1e4028"/>
+  <polygon points="726,302 732,280 738,302" fill="#244a2e"/>
+  <polygon points="1000,310 1012,282 1024,310" fill="#1e4028"/>
+  <polygon points="1006,298 1012,276 1018,298" fill="#244a2e"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  HEATHLAND                                     -->
+<!-- ═══════════════════════════════════════════════ -->
+<rect x="0" y="350" width="1600" height="550" fill="url(#groundGrad)"/>
+
+<!-- Ground texture patches -->
+<ellipse cx="100"  cy="400" rx="80"   ry="12" fill="#5a6844" opacity="0.4"/>
+<ellipse cx="350"  cy="385" rx="100"  ry="14" fill="#4e5e3a" opacity="0.35"/>
+<ellipse cx="600"  cy="410" rx="90"   ry="11" fill="#5a6844" opacity="0.3"/>
+<ellipse cx="850"  cy="395" rx="70"   ry="10" fill="#4e5e3a" opacity="0.35"/>
+<ellipse cx="1100" cy="405" rx="80"   ry="12" fill="#5a6844" opacity="0.3"/>
+<ellipse cx="1400" cy="390" rx="90"   ry="13" fill="#4e5e3a" opacity="0.25"/>
+
+<!-- Bare earth / sand patches -->
+<ellipse cx="250"  cy="520" rx="40"  ry="8"  fill="#8a7a5a" opacity="0.2"/>
+<ellipse cx="680"  cy="580" rx="35"  ry="7"  fill="#8a7a5a" opacity="0.15"/>
+<ellipse cx="1050" cy="490" rx="30"  ry="6"  fill="#8a7a5a" opacity="0.18"/>
+
+<!-- Heather patches — purple-brown with sway animation -->
+<g style="animation: heatherSway 6s ease-in-out infinite">
+  <ellipse cx="80"   cy="400" rx="65"  ry="13" fill="#6a4a68" opacity="0.45"/>
+  <ellipse cx="45"   cy="405" rx="35"  ry="9"  fill="#7a5878" opacity="0.35"/>
+</g>
+<g style="animation: heatherSway 7s ease-in-out infinite; animation-delay: 1s">
+  <ellipse cx="300"  cy="380" rx="85"  ry="15" fill="#604a60" opacity="0.4"/>
+  <ellipse cx="340"  cy="385" rx="50"  ry="10" fill="#7a5878" opacity="0.3"/>
+</g>
+<g style="animation: heatherSway 5.5s ease-in-out infinite; animation-delay: 0.5s">
+  <ellipse cx="550"  cy="420" rx="95"  ry="14" fill="#6a4a68" opacity="0.38"/>
+  <ellipse cx="500"  cy="425" rx="45"  ry="9"  fill="#7a5878" opacity="0.28"/>
+</g>
+<g style="animation: heatherSway 6.5s ease-in-out infinite; animation-delay: 2s">
+  <ellipse cx="900"  cy="390" rx="75"  ry="12" fill="#604a60" opacity="0.35"/>
+</g>
+<g style="animation: heatherSway 5s ease-in-out infinite; animation-delay: 1.5s">
+  <ellipse cx="1200" cy="410" rx="100" ry="15" fill="#6a4a68" opacity="0.32"/>
+  <ellipse cx="1250" cy="415" rx="55"  ry="10" fill="#7a5878" opacity="0.25"/>
+</g>
+<ellipse cx="1500" cy="395" rx="75"  ry="11" fill="#604a60" opacity="0.28"/>
+<ellipse cx="150"  cy="510" rx="55"  ry="10" fill="#6a4a68" opacity="0.25"/>
+<ellipse cx="450"  cy="560" rx="70"  ry="12" fill="#604a60" opacity="0.22"/>
+<ellipse cx="1100" cy="540" rx="65"  ry="11" fill="#6a4a68" opacity="0.25"/>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  MID-GROUND TREES — Scots Pine & Birch         -->
+<!-- ═══════════════════════════════════════════════ -->
+
+<!-- Pine cluster LEFT of path -->
+<g transform="translate(40, 340)">
+  <rect x="-3" y="-5" width="6" height="55" fill="url(#pineTrunk)"/>
+  <polygon points="-22,-5 0,-55 22,-5" fill="url(#pineCanopy)"/>
+  <polygon points="-18,-15 0,-50 18,-15" fill="#2a5a34" opacity="0.7"/>
+  <polygon points="-14,-25 0,-48 14,-25" fill="#306038" opacity="0.5"/>
+</g>
+<g transform="translate(85, 345)">
+  <rect x="-2.5" y="-3" width="5" height="48" fill="url(#pineTrunk)"/>
+  <polygon points="-18,-3 0,-48 18,-3" fill="url(#pineCanopy)"/>
+  <polygon points="-14,-12 0,-44 14,-12" fill="#2a5a34" opacity="0.6"/>
+</g>
+
+<!-- Birch LEFT side, near entrance -->
+<g transform="translate(150, 360)">
+  <rect x="-3" y="-8" width="6" height="60" fill="url(#birchBark)"/>
+  <line x1="-2" y1="5"  x2="2" y2="6"  stroke="#4a4a40" stroke-width="0.8" opacity="0.5"/>
+  <line x1="-1" y1="15" x2="3" y2="16" stroke="#4a4a40" stroke-width="0.8" opacity="0.5"/>
+  <line x1="-2" y1="28" x2="1" y2="29" stroke="#4a4a40" stroke-width="0.6" opacity="0.4"/>
+  <ellipse cx="-5"  cy="-18" rx="20" ry="16" fill="url(#birchFoliage)" opacity="0.85"/>
+  <ellipse cx="10"  cy="-22" rx="18" ry="14" fill="#6a9a48" opacity="0.75"/>
+  <ellipse cx="0"   cy="-28" rx="15" ry="12" fill="#7aaa58" opacity="0.65"/>
+</g>
+
+<!-- Pine cluster RIGHT of path, mid section -->
+<g transform="translate(1050, 350)">
+  <rect x="-3" y="-5" width="6" height="50" fill="url(#pineTrunk)"/>
+  <polygon points="-20,-5 0,-50 20,-5" fill="url(#pineCanopy)"/>
+  <polygon points="-16,-14 0,-46 16,-14" fill="#2a5a34" opacity="0.6"/>
+</g>
+<g transform="translate(1090, 355)">
+  <rect x="-2" y="-2" width="4" height="42" fill="url(#pineTrunk)"/>
+  <polygon points="-16,-2 0,-42 16,-2" fill="url(#pineCanopy)"/>
+  <polygon points="-12,-10 0,-38 12,-10" fill="#2a5a34" opacity="0.5"/>
+</g>
+
+<!-- Birch pair RIGHT side -->
+<g transform="translate(1140, 360)">
+  <rect x="-2.5" y="-5" width="5" height="52" fill="url(#birchBark)"/>
+  <line x1="-1" y1="8"  x2="1.5" y2="9" stroke="#4a4a40" stroke-width="0.7" opacity="0.5"/>
+  <line x1="-1.5" y1="20" x2="1" y2="21" stroke="#4a4a40" stroke-width="0.7" opacity="0.4"/>
+  <ellipse cx="-3" cy="-14" rx="16" ry="13" fill="url(#birchFoliage)" opacity="0.8"/>
+  <ellipse cx="8"  cy="-18" rx="14" ry="11" fill="#6a9a48" opacity="0.7"/>
+  <ellipse cx="2"  cy="-24" rx="12" ry="10" fill="#7aaa58" opacity="0.6"/>
+</g>
+
+<!-- Scattered mid-distance trees -->
+<g transform="translate(1450, 348)" opacity="0.6">
+  <rect x="-2" y="-3" width="4" height="40" fill="url(#pineTrunk)"/>
+  <polygon points="-14,-3 0,-38 14,-3" fill="url(#pineCanopy)"/>
+  <polygon points="-10,-10 0,-34 10,-10" fill="#2a5a34" opacity="0.5"/>
+</g>
+<g transform="translate(370, 365)" opacity="0.55">
+  <rect x="-2" y="-4" width="4" height="44" fill="url(#birchBark)"/>
+  <line x1="-1" y1="10" x2="1" y2="11" stroke="#4a4a40" stroke-width="0.6" opacity="0.4"/>
+  <ellipse cx="0" cy="-12" rx="14" ry="12" fill="url(#birchFoliage)" opacity="0.75"/>
+  <ellipse cx="6" cy="-17" rx="11" ry="9"  fill="#6a9a48" opacity="0.6"/>
+</g>
+<g transform="translate(750, 355)" opacity="0.5">
+  <rect x="-2" y="-3" width="4" height="38" fill="url(#pineTrunk)"/>
+  <polygon points="-13,-3 0,-36 13,-3" fill="url(#pineCanopy)"/>
+  <polygon points="-9,-10 0,-32 9,-10" fill="#2a5a34" opacity="0.5"/>
+</g>
+<g transform="translate(1380, 330)" opacity="0.5">
+  <rect x="-2" y="-4" width="4" height="40" fill="url(#birchBark)"/>
+  <ellipse cx="0" cy="-12" rx="12" ry="10" fill="url(#birchFoliage)" opacity="0.7"/>
+  <ellipse cx="5" cy="-16" rx="10" ry="8"  fill="#7aaa58" opacity="0.55"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  THE WALKING PATH                              -->
+<!-- ═══════════════════════════════════════════════ -->
+<path d="M15,790 Q180,710 380,630 Q560,555 760,480 Q960,410 1160,360 Q1320,325 1480,300"
+      fill="none" stroke="url(#pathEdge)" stroke-width="32" stroke-linecap="round" opacity="0.35"/>
+<path d="M15,790 Q180,710 380,630 Q560,555 760,480 Q960,410 1160,360 Q1320,325 1480,300"
+      fill="none" stroke="url(#pathGrad)" stroke-width="22" stroke-linecap="round" opacity="0.85"/>
+<path d="M18,788 Q182,708 382,628 Q562,553 762,478 Q962,408 1162,358 Q1322,323 1482,298"
+      fill="none" stroke="#b8b090" stroke-width="8" stroke-linecap="round" opacity="0.2"/>
+
+<!-- Footprints in the sand -->
+<g opacity="0.12" fill="#7a7258">
+  <ellipse cx="120" cy="748" rx="3" ry="5"/>
+  <ellipse cx="127" cy="745" rx="3" ry="5"/>
+  <ellipse cx="300" cy="680" rx="3" ry="4.5"/>
+  <ellipse cx="307" cy="677" rx="3" ry="4.5"/>
+  <ellipse cx="520" cy="600" rx="2.5" ry="4"/>
+  <ellipse cx="527" cy="597" rx="2.5" ry="4"/>
+  <ellipse cx="750" cy="478" rx="2.5" ry="4"/>
+  <ellipse cx="757" cy="475" rx="2.5" ry="4"/>
+  <ellipse cx="1000" cy="395" rx="2.5" ry="3.5"/>
+  <ellipse cx="1007" cy="392" rx="2.5" ry="3.5"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  PLANET MARKERS                                -->
+<!-- ═══════════════════════════════════════════════ -->
+
+<!-- Pluto -->
+<g transform="translate(55, 750)">
+  <rect x="-4" y="-30" width="8" height="30" fill="url(#pedestalGrad)" rx="1"/>
+  <circle cx="0" cy="-33" r="2" fill="#b0a890"/>
+  <text x="15" y="-20" font-family="sans-serif" font-size="9" fill="#8a8a7a" opacity="0.7">Pluto</text>
+</g>
+
+<!-- Neptune -->
+<g transform="translate(185, 690)">
+  <rect x="-4" y="-35" width="8" height="35" fill="url(#pedestalGrad)" rx="1"/>
+  <circle cx="0" cy="-39" r="3.5" fill="#3858b0"/>
+  <circle cx="0" cy="-39" r="4.5" fill="none" stroke="#5878d0" stroke-width="0.5" opacity="0.4"/>
+  <text x="12" y="-26" font-family="sans-serif" font-size="9" fill="#8a8a7a" opacity="0.7">Neptunus</text>
+</g>
+
+<!-- Uranus -->
+<g transform="translate(316, 625)">
+  <rect x="-4" y="-35" width="8" height="35" fill="url(#pedestalGrad)" rx="1"/>
+  <circle cx="0" cy="-39" r="3.5" fill="#70a8c8"/>
+  <text x="12" y="-26" font-family="sans-serif" font-size="9" fill="#8a8a7a" opacity="0.7">Uranus</text>
+</g>
+
+<!-- Saturn with rings -->
+<g transform="translate(505, 558)">
+  <rect x="-5" y="-42" width="10" height="42" fill="url(#pedestalGrad)" rx="1"/>
+  <circle cx="0" cy="-48" r="6" fill="#c8a848"/>
+  <line x1="-5" y1="-50" x2="5" y2="-50" stroke="#b09038" stroke-width="0.8" opacity="0.4"/>
+  <line x1="-5" y1="-46" x2="5" y2="-46" stroke="#b09038" stroke-width="0.8" opacity="0.4"/>
+  <ellipse cx="0" cy="-48" rx="12" ry="3.5" fill="none" stroke="#d8b858" stroke-width="1.8" opacity="0.6"/>
+  <ellipse cx="0" cy="-48" rx="9"  ry="2.5" fill="none" stroke="#c8a848" stroke-width="1" opacity="0.4"/>
+  <text x="18" y="-40" font-family="sans-serif" font-size="10" fill="#8a8a7a" opacity="0.75">Saturnus</text>
+</g>
+
+<!-- Jupiter -->
+<g transform="translate(655, 495)">
+  <rect x="-5" y="-44" width="10" height="44" fill="url(#pedestalGrad)" rx="1"/>
+  <circle cx="0" cy="-51" r="8" fill="#c89048"/>
+  <path d="M-7,-53 Q0,-54 7,-53" fill="none" stroke="#a07030" stroke-width="1.2" opacity="0.45"/>
+  <path d="M-7,-49 Q0,-48 7,-49" fill="none" stroke="#a07030" stroke-width="1.2" opacity="0.45"/>
+  <path d="M-6,-46 Q0,-45 6,-46" fill="none" stroke="#b08040" stroke-width="0.8" opacity="0.35"/>
+  <ellipse cx="3" cy="-50" rx="2.5" ry="1.8" fill="#c06030" opacity="0.5"/>
+  <text x="14" y="-42" font-family="sans-serif" font-size="10" fill="#8a8a7a" opacity="0.75">Jupiter</text>
+</g>
+
+<!-- Mars -->
+<g transform="translate(870, 435)">
+  <rect x="-3" y="-32" width="6" height="32" fill="url(#pedestalGrad)" rx="1"/>
+  <circle cx="0" cy="-35" r="2.8" fill="#c04030"/>
+  <ellipse cx="0" cy="-37" rx="1.5" ry="0.6" fill="#e0d0c0" opacity="0.5"/>
+  <text x="10" y="-26" font-family="sans-serif" font-size="9" fill="#8a8a7a" opacity="0.7">Mars</text>
+</g>
+
+<!-- Earth & Moon -->
+<g transform="translate(985, 403)">
+  <rect x="-3" y="-34" width="6" height="34" fill="url(#pedestalGrad)" rx="1"/>
+  <circle cx="0" cy="-38" r="3.2" fill="#3070b0"/>
+  <ellipse cx="1"  cy="-38" rx="1.8" ry="2.2" fill="#4a8a3a" opacity="0.55"/>
+  <ellipse cx="-1" cy="-40" rx="1"   ry="1"   fill="#4a8a3a" opacity="0.4"/>
+  <line x1="3.2" y1="-37" x2="9" y2="-36" stroke="#a0a090" stroke-width="0.4"/>
+  <circle cx="10" cy="-36" r="1.2" fill="#c0c0b0"/>
+  <text x="16" y="-30" font-family="sans-serif" font-size="9" fill="#8a8a7a" opacity="0.7">Aarde</text>
+</g>
+
+<!-- Venus -->
+<g transform="translate(1060, 383)">
+  <rect x="-3" y="-32" width="6" height="32" fill="url(#pedestalGrad)" rx="1"/>
+  <circle cx="0" cy="-35" r="3" fill="#e0c060"/>
+  <circle cx="0" cy="-35" r="4" fill="#e0c060" opacity="0.15"/>
+  <text x="10" y="-26" font-family="sans-serif" font-size="9" fill="#8a8a7a" opacity="0.7">Venus</text>
+</g>
+
+<!-- Mercury -->
+<g transform="translate(1145, 363)">
+  <rect x="-3" y="-30" width="6" height="30" fill="url(#pedestalGrad)" rx="1"/>
+  <circle cx="0" cy="-33" r="2.2" fill="#808078"/>
+  <circle cx="1"  cy="-34" r="0.6" fill="#6a6a62" opacity="0.4"/>
+  <circle cx="-1" cy="-32" r="0.4" fill="#6a6a62" opacity="0.35"/>
+  <text x="10" y="-24" font-family="sans-serif" font-size="9" fill="#8a8a7a" opacity="0.7">Mercurius</text>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  THE SUN MODEL (animated glow)                 -->
+<!-- ═══════════════════════════════════════════════ -->
+<g transform="translate(1340, 285)">
+  <circle cx="0" cy="0" r="55" fill="url(#sunGlow)" style="animation: sunPulse 4s ease-in-out infinite"/>
+  <circle cx="0" cy="0" r="38" fill="url(#sunGlow)" style="animation: sunPulse 3s ease-in-out infinite; animation-delay: 1s"/>
+  <rect x="-10" y="14" width="20" height="38" fill="#707060" rx="2"/>
+  <rect x="-18" y="48" width="36" height="10" fill="#606050" rx="3"/>
+  <circle cx="0" cy="-2" r="24" fill="url(#sunGrad)" stroke="#c09000" stroke-width="1.2"/>
+  <circle cx="8"  cy="-8"  r="2"   fill="#c08800" opacity="0.3"/>
+  <circle cx="-5" cy="3"   r="1.5" fill="#c08800" opacity="0.25"/>
+  <ellipse cx="-7" cy="-12" rx="9" ry="7" fill="#fff8d0" opacity="0.25"/>
+  <text x="0" y="68" font-family="sans-serif" font-size="12" fill="#c8a030" text-anchor="middle" font-weight="bold">☀ ZON</text>
+  <text x="0" y="80" font-family="sans-serif" font-size="8" fill="#8a8a7a" text-anchor="middle">∅ 23 cm (schaal)</text>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  PHYSICS EXPERIMENTS                           -->
+<!-- ═══════════════════════════════════════════════ -->
+
+<!-- Experiment 1: Gravity (between Jupiter and Mars) -->
+<g transform="translate(765, 455)">
+  <rect x="-32" y="-42" width="64" height="52" fill="url(#panelGrad)" stroke="#2a3540" stroke-width="1.5" rx="3"/>
+  <rect x="-28" y="-38" width="56" height="36" fill="#354555" rx="2"/>
+  <line x1="-16" y1="-32" x2="-16" y2="-10" stroke="#80a0c0" stroke-width="1.5"/>
+  <rect x="-21" y="-10" width="10" height="6" fill="#60808a" rx="1"/>
+  <text x="10" y="-22" font-family="sans-serif" font-size="6" fill="#90b0c0">GEWICHT</text>
+  <text x="10" y="-14" font-family="sans-serif" font-size="6" fill="#90b0c0">OP ANDERE</text>
+  <text x="10" y="-6"  font-family="sans-serif" font-size="6" fill="#90b0c0">PLANETEN</text>
+  <rect x="-27" y="10" width="5" height="26" fill="#3a4550" rx="1"/>
+  <rect x="22"  y="10" width="5" height="26" fill="#3a4550" rx="1"/>
+  <text x="0" y="46" font-family="sans-serif" font-size="8" fill="#6a8a8a" text-anchor="middle">🔬 Zwaartekracht</text>
+</g>
+
+<!-- Experiment 2: Light speed (between Mercury and Sun) -->
+<g transform="translate(1225, 345)">
+  <rect x="-30" y="-38" width="60" height="48" fill="url(#panelGrad)" stroke="#2a3540" stroke-width="1.5" rx="3"/>
+  <rect x="-26" y="-34" width="52" height="32" fill="#354555" rx="2"/>
+  <circle cx="-16" cy="-24" r="2" fill="#60e060" opacity="0.8"/>
+  <circle cx="-9"  cy="-24" r="2" fill="#60e060" opacity="0.6"/>
+  <circle cx="-2"  cy="-24" r="2" fill="#60e060" opacity="0.4"/>
+  <circle cx="5"   cy="-24" r="2" fill="#60e060" opacity="0.3"/>
+  <circle cx="12"  cy="-24" r="2" fill="#60c040" opacity="0.2"/>
+  <path d="M-20,-14 L18,-14" stroke="#80c080" stroke-width="1" fill="none"/>
+  <polygon points="18,-14 14,-17 14,-11" fill="#80c080"/>
+  <text x="0" y="-6" font-family="sans-serif" font-size="5.5" fill="#90b0c0" text-anchor="middle">5 cm/s op deze schaal</text>
+  <rect x="-25" y="10" width="5" height="22" fill="#3a4550" rx="1"/>
+  <rect x="20"  y="10" width="5" height="22" fill="#3a4550" rx="1"/>
+  <text x="0" y="42" font-family="sans-serif" font-size="8" fill="#6a8a8a" text-anchor="middle">🔬 Lichtsnelheid</text>
+</g>
+
+<!-- Experiment 3: Sundial -->
+<g transform="translate(585, 525)">
+  <ellipse cx="0" cy="0" rx="28" ry="11" fill="url(#stoneGrad)"/>
+  <line x1="-18" y1="-2" x2="-22" y2="-6" stroke="#505040" stroke-width="0.8"/>
+  <line x1="-10" y1="-4" x2="-12" y2="-9" stroke="#505040" stroke-width="0.8"/>
+  <line x1="0"   y1="-5" x2="0"   y2="-11" stroke="#505040" stroke-width="0.8"/>
+  <line x1="10"  y1="-4" x2="12"  y2="-9"  stroke="#505040" stroke-width="0.8"/>
+  <line x1="18"  y1="-2" x2="22"  y2="-6"  stroke="#505040" stroke-width="0.8"/>
+  <polygon points="0,-5 0,-3 10,0" fill="#606050" opacity="0.8"/>
+  <line x1="0" y1="-4" x2="-14" y2="2" stroke="#404030" stroke-width="1" opacity="0.4"/>
+  <text x="0" y="20" font-family="sans-serif" font-size="8" fill="#6a8a8a" text-anchor="middle">🔬 Zonnewijzer</text>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  WOODEN BENCH (rustpunt)                       -->
+<!-- ═══════════════════════════════════════════════ -->
+<g transform="translate(720, 470)">
+  <rect x="-18" y="0"  width="3" height="12" fill="#5a4020" rx="0.5"/>
+  <rect x="15"  y="0"  width="3" height="12" fill="#5a4020" rx="0.5"/>
+  <rect x="-20" y="-3" width="40" height="3" fill="url(#benchWood)" rx="1"/>
+  <rect x="-20" y="-7" width="40" height="3" fill="#7a5a30" rx="1"/>
+  <rect x="-18" y="-18" width="3"  height="16" fill="#5a4020" rx="0.5"/>
+  <rect x="15"  y="-18" width="3"  height="16" fill="#5a4020" rx="0.5"/>
+  <rect x="-18" y="-18" width="36" height="3" fill="url(#benchWood)" rx="1"/>
+  <rect x="-18" y="-14" width="36" height="2.5" fill="#7a5a30" rx="1"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  INFO BOARDS at each planet                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<g fill="url(#boardGrad)" opacity="0.4">
+  <g transform="translate(70, 720)"><rect x="0" y="-18" width="4" height="22" fill="#5a3a1a" rx="0.5"/><rect x="-4" y="-22" width="16" height="10" rx="1"/></g>
+  <g transform="translate(200, 665)"><rect x="0" y="-18" width="4" height="22" fill="#5a3a1a" rx="0.5"/><rect x="-4" y="-22" width="16" height="10" rx="1"/></g>
+  <g transform="translate(332, 600)"><rect x="0" y="-18" width="4" height="22" fill="#5a3a1a" rx="0.5"/><rect x="-4" y="-22" width="16" height="10" rx="1"/></g>
+  <g transform="translate(520, 535)"><rect x="0" y="-18" width="4" height="22" fill="#5a3a1a" rx="0.5"/><rect x="-4" y="-22" width="16" height="10" rx="1"/></g>
+  <g transform="translate(670, 473)"><rect x="0" y="-18" width="4" height="22" fill="#5a3a1a" rx="0.5"/><rect x="-4" y="-22" width="16" height="10" rx="1"/></g>
+  <g transform="translate(890, 416)"><rect x="0" y="-16" width="4" height="20" fill="#5a3a1a" rx="0.5"/><rect x="-4" y="-20" width="14" height="9" rx="1"/></g>
+  <g transform="translate(1000, 384)"><rect x="0" y="-16" width="4" height="20" fill="#5a3a1a" rx="0.5"/><rect x="-4" y="-20" width="14" height="9" rx="1"/></g>
+  <g transform="translate(1076, 364)"><rect x="0" y="-16" width="4" height="20" fill="#5a3a1a" rx="0.5"/><rect x="-4" y="-20" width="14" height="9" rx="1"/></g>
+  <g transform="translate(1160, 344)"><rect x="0" y="-16" width="4" height="20" fill="#5a3a1a" rx="0.5"/><rect x="-4" y="-20" width="14" height="9" rx="1"/></g>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  ENTRANCE SIGN                                 -->
+<!-- ═══════════════════════════════════════════════ -->
+<g transform="translate(28, 730)">
+  <rect x="2" y="-52" width="8" height="62" fill="#5a3a1a" rx="1"/>
+  <rect x="-22" y="-58" width="74" height="32" fill="url(#boardGrad)" stroke="#1a3a1a" stroke-width="1.5" rx="2"/>
+  <text x="15" y="-44" font-family="sans-serif" font-size="8.5" fill="#e8e8d0" font-weight="bold">PLANETENPAD</text>
+  <text x="15" y="-34" font-family="sans-serif" font-size="6" fill="#c8d8c0">Schaalmodel</text>
+  <text x="15" y="-26" font-family="sans-serif" font-size="6" fill="#c8d8c0">Zonnestelsel  1 km</text>
+</g>
+
+<!-- Binoculars on pole (near sun model) -->
+<g transform="translate(1280, 310)">
+  <rect x="-2" y="-30" width="4" height="40" fill="#606060" rx="1"/>
+  <rect x="-8" y="-34" width="6" height="6" fill="#404040" rx="1"/>
+  <rect x="2"  y="-34" width="6" height="6" fill="#404040" rx="1"/>
+  <circle cx="-5" cy="-31" r="2" fill="#505050"/>
+  <circle cx="5"  cy="-31" r="2" fill="#505050"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  GRASS TUFTS along path (animated)             -->
+<!-- ═══════════════════════════════════════════════ -->
+<g fill="#4a6a3a" opacity="0.5">
+  <g style="animation: grassSway 3s ease-in-out infinite"><path d="M95,758 L91,744 L95,748 L99,736 L103,749 L107,741 L110,758 Z"/></g>
+  <g style="animation: grassSway 3.5s ease-in-out infinite; animation-delay: 0.5s"><path d="M245,695 L242,683 L246,686 L250,675 L254,687 L258,680 L260,695 Z"/></g>
+  <g style="animation: grassSway 2.8s ease-in-out infinite; animation-delay: 1s"><path d="M430,615 L427,603 L431,606 L435,596 L439,607 L442,601 L445,615 Z"/></g>
+  <g style="animation: grassSway 3.2s ease-in-out infinite; animation-delay: 1.5s"><path d="M615,535 L612,523 L616,526 L620,517 L624,527 L627,521 L630,535 Z"/></g>
+  <g style="animation: grassSway 3s ease-in-out infinite; animation-delay: 0.8s"><path d="M825,462 L822,450 L826,453 L830,444 L834,454 L837,448 L840,462 Z"/></g>
+  <g style="animation: grassSway 3.4s ease-in-out infinite; animation-delay: 1.2s"><path d="M1045,393 L1042,381 L1046,384 L1050,376 L1054,385 L1057,379 L1060,393 Z"/></g>
+</g>
+<g fill="#3a5a2a" opacity="0.35">
+  <g style="animation: grassSway 4s ease-in-out infinite; animation-delay: 0.3s"><path d="M170,620 L167,610 L171,613 L175,604 L178,612 L182,606 L184,620 Z"/></g>
+  <g style="animation: grassSway 3.8s ease-in-out infinite; animation-delay: 1.8s"><path d="M910,460 L907,448 L911,452 L915,442 L919,452 L922,446 L925,460 Z"/></g>
+</g>
+
+<!-- Wildflowers -->
+<g opacity="0.6">
+  <circle cx="200" cy="500" r="1.5" fill="#e8d040"/>
+  <circle cx="205" cy="504" r="1.2" fill="#e8d040"/>
+  <circle cx="430" cy="570" r="1.5" fill="#e8d040"/>
+  <circle cx="805" cy="445" r="1.3" fill="#e8d040"/>
+  <circle cx="320" cy="540" r="1.8" fill="#f0f0e8"/>
+  <circle cx="650" cy="500" r="1.5" fill="#f0f0e8"/>
+  <circle cx="1020" cy="420" r="1.3" fill="#f0f0e8"/>
+  <circle cx="100" cy="405" r="1" fill="#9a6898"/>
+  <circle cx="108" cy="402" r="0.8" fill="#9a6898"/>
+  <circle cx="310" cy="382" r="1" fill="#9a6898"/>
+  <circle cx="560" cy="424" r="0.9" fill="#9a6898"/>
+</g>
+
+<!-- Butterfly -->
+<g transform="translate(480, 415)" opacity="0.55">
+  <ellipse cx="-3" cy="0"  rx="3" ry="2" fill="#e08050" transform="rotate(-20)"/>
+  <ellipse cx="3"  cy="0"  rx="3" ry="2" fill="#e08050" transform="rotate(20)"/>
+  <line x1="0" y1="-1" x2="0" y2="2" stroke="#504030" stroke-width="0.5"/>
+</g>
+
+<!-- Rabbit hiding behind bush -->
+<g transform="translate(1120, 428)" opacity="0.35">
+  <ellipse cx="0" cy="0" rx="6" ry="4" fill="#a09078"/>
+  <circle cx="4" cy="-3" r="2.5" fill="#a89880"/>
+  <ellipse cx="6" cy="-7" rx="1.2" ry="3" fill="#a89880"/>
+  <ellipse cx="3" cy="-7" rx="1" ry="2.8" fill="#a89880"/>
+  <circle cx="5" cy="-3.5" r="0.6" fill="#302820"/>
+  <circle cx="-5" cy="1" r="1.5" fill="#d8d0c0"/>
+</g>
+
+<!-- Skylarks (animated) -->
+<g style="animation: birdGlide 20s ease-in-out infinite" opacity="0.4">
+  <g transform="translate(500, 180)"><path d="M0,0 L-9,-6 L-3,0 L-9,6 Z" fill="#3a3a30"/><circle cx="2.5" cy="0" r="2.8" fill="#3a3a30"/></g>
+</g>
+<g style="animation: birdGlide 25s ease-in-out infinite; animation-delay: 5s" opacity="0.3">
+  <g transform="translate(300, 160)"><path d="M0,0 L-7,-4.5 L-2,0 L-7,4.5 Z" fill="#3a3a30"/><circle cx="2" cy="0" r="2.2" fill="#3a3a30"/></g>
+</g>
+<g style="animation: birdGlide 22s ease-in-out infinite; animation-delay: 10s" opacity="0.25">
+  <g transform="translate(800, 140)"><path d="M0,0 L-6,-4 L-2,0 L-6,4 Z" fill="#3a3a30"/><circle cx="1.5" cy="0" r="1.8" fill="#3a3a30"/></g>
+</g>
+
+<!-- Navigation labels -->
+<text x="18" y="870" font-family="sans-serif" font-size="13" fill="#a0a088" opacity="0.5">← Parkeerplaats</text>
+<text x="1420" y="265" font-family="sans-serif" font-size="13" fill="#a0a088" opacity="0.5">WSRT →</text>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  FOREGROUND LAYER — large overlapping bushes   -->
+<!-- ═══════════════════════════════════════════════ -->
+
+<!-- Large heather bush bottom-left -->
+<g transform="translate(0, 870)">
+  <ellipse cx="80"  cy="0"   rx="90"  ry="30" fill="url(#bushDark)"/>
+  <ellipse cx="60"  cy="-8"  rx="70"  ry="25" fill="#2e4c24" opacity="0.8"/>
+  <ellipse cx="100" cy="-5"  rx="55"  ry="20" fill="#3a5830" opacity="0.7"/>
+  <ellipse cx="50"  cy="-12" rx="30" ry="8" fill="url(#bushHeather)" opacity="0.5"/>
+  <ellipse cx="90"  cy="-15" rx="25" ry="7" fill="#7a5878" opacity="0.4"/>
+  <ellipse cx="30"  cy="-5"  rx="12" ry="6" fill="#2a4820" opacity="0.6"/>
+  <ellipse cx="120" cy="-2"  rx="15" ry="7" fill="#2a4820" opacity="0.5"/>
+</g>
+
+<!-- Gorse bush bottom-left-center -->
+<g transform="translate(200, 885)">
+  <ellipse cx="0"  cy="0"  rx="50" ry="22" fill="url(#bushDark)"/>
+  <ellipse cx="-8" cy="-6" rx="40" ry="18" fill="#2e4c24" opacity="0.75"/>
+  <ellipse cx="10" cy="-4" rx="35" ry="15" fill="#3a5830" opacity="0.6"/>
+  <circle cx="-15" cy="-10" r="2" fill="#e0c020" opacity="0.6"/>
+  <circle cx="-8"  cy="-12" r="1.5" fill="#e0c020" opacity="0.5"/>
+  <circle cx="5"   cy="-9"  r="1.8" fill="#e0c020" opacity="0.55"/>
+  <circle cx="18"  cy="-8"  r="1.3" fill="#e0c020" opacity="0.45"/>
+</g>
+
+<!-- Dark bush cluster bottom-center -->
+<g transform="translate(380, 895)">
+  <ellipse cx="0"  cy="0"  rx="55" ry="18" fill="url(#bushDark)"/>
+  <ellipse cx="15" cy="-5" rx="40" ry="14" fill="#2a4820" opacity="0.7"/>
+</g>
+
+<!-- Large heather mass bottom-right-center -->
+<g transform="translate(680, 890)">
+  <ellipse cx="0"   cy="0"   rx="80" ry="25" fill="url(#bushDark)"/>
+  <ellipse cx="-15" cy="-6"  rx="60" ry="20" fill="#2e4c24" opacity="0.75"/>
+  <ellipse cx="20"  cy="-4"  rx="50" ry="18" fill="#3a5830" opacity="0.65"/>
+  <ellipse cx="-5"  cy="-10" rx="35" ry="10" fill="url(#bushHeather)" opacity="0.45"/>
+  <ellipse cx="30"  cy="-8"  rx="25" ry="8"  fill="#7a5878" opacity="0.35"/>
+</g>
+
+<!-- Dense green bush bottom-right -->
+<g transform="translate(1000, 895)">
+  <ellipse cx="0"  cy="0"  rx="60" ry="20" fill="url(#bushDark)"/>
+  <ellipse cx="-10" cy="-5" rx="45" ry="16" fill="#2e4c24" opacity="0.7"/>
+  <ellipse cx="15"  cy="-3" rx="35" ry="13" fill="#3a5830" opacity="0.6"/>
+</g>
+
+<!-- Birch sapling + heather far-right -->
+<g transform="translate(1250, 880)">
+  <ellipse cx="0"  cy="5"  rx="70" ry="22" fill="url(#bushDark)"/>
+  <ellipse cx="10" cy="0"  rx="55" ry="18" fill="#2e4c24" opacity="0.75"/>
+  <rect x="40" y="-30" width="3" height="35" fill="url(#birchBark)"/>
+  <ellipse cx="42" cy="-35" rx="10" ry="8" fill="url(#birchFoliage)" opacity="0.7"/>
+  <ellipse cx="47" cy="-38" rx="8"  ry="6" fill="#7aaa58" opacity="0.5"/>
+  <ellipse cx="-20" cy="-3" rx="20" ry="7" fill="url(#bushHeather)" opacity="0.4"/>
+</g>
+
+<!-- Edge bush far right -->
+<g transform="translate(1480, 890)">
+  <ellipse cx="0"  cy="0"  rx="65" ry="22" fill="url(#bushDark)"/>
+  <ellipse cx="20" cy="-5" rx="50" ry="18" fill="#2e4c24" opacity="0.7"/>
+  <ellipse cx="-10" cy="-3" rx="35" ry="12" fill="#3a5830" opacity="0.55"/>
+  <ellipse cx="5"   cy="-8" rx="25" ry="8"  fill="url(#bushHeather)" opacity="0.35"/>
+</g>
+
+<!-- Forgotten water bottle near Saturn -->
+<g transform="translate(530, 570)" opacity="0.35">
+  <rect x="0" y="-8" width="3.5" height="8" fill="#8ab8e0" rx="1"/>
+  <rect x="0.5" y="-10" width="2.5" height="3" fill="#70a0c8" rx="0.5"/>
+  <rect x="0.8" y="-11" width="1.8" height="1.5" fill="#a0d0f0" rx="0.5"/>
+</g>
+
+</svg>

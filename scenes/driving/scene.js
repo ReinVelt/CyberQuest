@@ -540,6 +540,69 @@ const DrivingScene = {
             }, 1000);
             this._timeoutIds.push(timeoutId1);
 
+        } else if (destination === 'hackerspace') {
+            // Night drive TO Hackerspace Drenthe in Coevorden (~25 min)
+            const timeoutId1 = setTimeout(() => {
+                g.startDialogue([
+                    { speaker: '', text: '*The Volvo rumbles through the darkness toward Coevorden.*' },
+                    { speaker: '', text: '*Rick Astley fades on the radio. The road is empty.*' },
+                    { speaker: 'Ryan', text: 'Hackerspace night. Twenty-five minutes south-east.' },
+                    { speaker: 'Ryan', text: 'Late start tonight. But that\'s when the best conversations happen.' },
+                    { speaker: '', text: '*Flat fields stretch into the dark. A distant farmhouse light.*' },
+                    { speaker: 'Ryan', text: 'CNC machines, 3D printers, welding rigs. My kind of people.' },
+                    { speaker: 'Ryan', text: 'Sometimes you need to step away from the screen and build something physical.' },
+                    { speaker: '', text: '*Road sign: Coevorden 5 km*' },
+                    { speaker: 'Ryan', text: 'There it is. Lights on. Good — someone\'s already there.' },
+                    { speaker: 'Ryan', text: 'Let\'s see what\'s happening tonight.' }
+                ], () => {
+                    g.advanceTime(25);
+                    g.loadScene('hackerspace');
+                });
+            }, 1000);
+            this._timeoutIds.push(timeoutId1);
+
+        } else if (destination === 'home_from_wsrt_parking') {
+            // Night drive FROM WSRT parking area back to garden (~20 min)
+            const timeoutId1wp = setTimeout(() => {
+                g.startDialogue([
+                    { speaker: '', text: '*Night. The Volvo crunches over the gravel and onto the road.*' },
+                    { speaker: '', text: '*Stars above. The WSRT dishes are silhouettes against the Milky Way.*' },
+                    { speaker: 'Ryan', text: 'Three completely different worlds radiating from one parking lot.' },
+                    { speaker: 'Ryan', text: 'Radio telescopes. A war memorial. A scale model of the solar system.' },
+                    { speaker: 'Ryan', text: 'Only in Drenthe.' },
+                    { speaker: '', text: '*Dark heath stretches out on both sides. Headlights on empty road.*' },
+                    { speaker: 'Ryan', text: 'Quiet out here at night. Eerily quiet.' },
+                    { speaker: '', text: '*Approaching Compascuum. Familiar territory.*' },
+                    { speaker: 'Ryan', text: 'Home. Good night for some tea and tinkering.' }
+                ], () => {
+                    g.advanceTime(20);
+                    g.loadScene('garden');
+                    g.showNotification('Returned to garden');
+                });
+            }, 1000);
+            this._timeoutIds.push(timeoutId1wp);
+
+        } else if (destination === 'home_from_hackerspace') {
+            // Night drive FROM Hackerspace back to garden (~25 min)
+            const timeoutId1 = setTimeout(() => {
+                g.startDialogue([
+                    { speaker: '', text: '*Night. The Volvo pulls out of the hackerspace parking lot.*' },
+                    { speaker: '', text: '*Stars above. Engine ticking over. Rick Astley on the radio again.*' },
+                    { speaker: 'Ryan', text: 'Good evening. Always is, at the hackerspace.' },
+                    { speaker: 'Ryan', text: 'Good people. Smart people. People who build things.' },
+                    { speaker: '', text: '*Dark countryside. Headlights carving through the Drenthe night.*' },
+                    { speaker: 'Ryan', text: 'Picked up a few ideas tonight. And some useful contacts.' },
+                    { speaker: 'Ryan', text: 'The mesh networking crowd knows their stuff. Could be useful.' },
+                    { speaker: '', text: '*Approaching Compascuum. Familiar roads.*' },
+                    { speaker: 'Ryan', text: 'Home. Time for some late-night tinkering.' }
+                ], () => {
+                    g.advanceTime(25);
+                    g.loadScene('garden');
+                    g.showNotification('Returned to garden');
+                });
+            }, 1000);
+            this._timeoutIds.push(timeoutId1);
+
         } else {
             console.warn('Driving scene: No destination set!');
             // Fallback - return to mancave

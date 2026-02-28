@@ -444,20 +444,24 @@ const GardenScene = {
             });
         }
 
-        // ASTRON / WSRT — day drive south-west
-        if (game.getFlag('astron_unlocked')) {
-            const visited = !!game.getFlag('visited_astron');
+        // WSRT Parking Area — always available as a day drive
+        {
+            const astronUnlocked = !!game.getFlag('astron_unlocked');
+            const visitedParking = !!game.getFlag('visited_wsrt_parking');
+            const visitedAstron = !!game.getFlag('visited_astron');
             destinations.push({
-                id: 'astron',
-                name: 'ASTRON / WSRT',
-                desc: 'Westerbork Synthesis Radio Telescope. Cees Bassa.',
+                id: 'wsrt_parking',
+                name: 'WSRT / Memorial Area',
+                desc: astronUnlocked && !visitedAstron
+                    ? 'WSRT parking. Cees Bassa is waiting at ASTRON.'
+                    : 'WSRT parking. Memorial, Planetenpad & radio telescopes.',
                 distance: '40 min · South-west',
                 icon: '📡',
                 drivingScene: 'driving_day',
-                drivingDest: 'astron',
+                drivingDest: astronUnlocked && !visitedAstron ? 'astron' : 'wsrt_parking',
                 night: false,
-                visited: visited,
-                urgent: !visited
+                visited: astronUnlocked ? visitedAstron : visitedParking,
+                urgent: astronUnlocked && !visitedAstron
             });
         }
 
@@ -510,13 +514,13 @@ const GardenScene = {
             });
         }
 
-        // Westerbork Memorial — accessible after visiting klooster
-        // (200 m from WSRT — same location area, same ~40 min drive)
-        if (game.getFlag('visited_klooster')) {
+        // Westerbork Memorial — accessible after visiting ASTRON/WSRT
+        // Now routes through wsrt_parking hub (same drive)
+        if (game.getFlag('visited_astron')) {
             destinations.push({
                 id: 'westerbork',
                 name: 'Westerbork Memorial',
-                desc: 'Camp Westerbork. 200 m from the WSRT dishes.',
+                desc: 'Camp Westerbork via WSRT parking area.',
                 distance: '40 min · South-west',
                 icon: '✡️',
                 drivingScene: 'driving_day',
@@ -527,17 +531,19 @@ const GardenScene = {
             });
         }
 
-        // Hackerspace Drenthe — available after mancave unlocked
-        if (game.getFlag('mancave_unlocked')) {
+        // Hackerspace Drenthe — always available
+        {
+            const hour = parseInt(game.gameState.time.split(':')[0], 10);
+            const isNight = hour >= 20 || hour < 7;
             destinations.push({
                 id: 'hackerspace',
                 name: 'Hackerspace Drenthe',
                 desc: 'Community maker space in Coevorden. CNC, 3D printing, welding, soldering.',
                 distance: '25 min · South-east',
                 icon: '🔧',
-                drivingScene: 'driving_day',
+                drivingScene: isNight ? 'driving' : 'driving_day',
                 drivingDest: 'hackerspace',
-                night: false,
+                night: isNight,
                 visited: !!game.getFlag('visited_hackerspace'),
                 urgent: false
             });

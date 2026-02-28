@@ -1,0 +1,348 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+<defs>
+  <!-- Sky — crisp Drenthe afternoon, slightly hazy horizon -->
+  <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#4a6fa5"/>
+    <stop offset="35%"  stop-color="#6a8ec0"/>
+    <stop offset="65%"  stop-color="#8aa8d4"/>
+    <stop offset="85%"  stop-color="#b0c8e8"/>
+    <stop offset="100%" stop-color="#c8d8e8"/>
+  </linearGradient>
+
+  <!-- Ground — heathland, sandy/brown -->
+  <linearGradient id="groundGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#7a7a5a"/>
+    <stop offset="30%"  stop-color="#6a6a48"/>
+    <stop offset="100%" stop-color="#585838"/>
+  </linearGradient>
+
+  <!-- Gravel parking surface -->
+  <linearGradient id="gravelGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#8a8478"/>
+    <stop offset="50%"  stop-color="#7a7468"/>
+    <stop offset="100%" stop-color="#6a6458"/>
+  </linearGradient>
+
+  <!-- Direction board wood -->
+  <linearGradient id="woodGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#6a4a2a"/>
+    <stop offset="50%"  stop-color="#5a3a1a"/>
+    <stop offset="100%" stop-color="#4a2a0a"/>
+  </linearGradient>
+
+  <!-- Sign plate green -->
+  <linearGradient id="signGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#2a5a2a"/>
+    <stop offset="100%" stop-color="#1a4a1a"/>
+  </linearGradient>
+
+  <!-- Heather purple-brown -->
+  <radialGradient id="heatherGrad" cx="0.5" cy="0.5" r="0.5">
+    <stop offset="0%"   stop-color="#6a5070"/>
+    <stop offset="60%"  stop-color="#5a4858"/>
+    <stop offset="100%" stop-color="#4a3a48"/>
+  </radialGradient>
+
+  <!-- Birch bark -->
+  <linearGradient id="birkGrad" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%"   stop-color="#d8d0c0"/>
+    <stop offset="30%"  stop-color="#e8e0d0"/>
+    <stop offset="70%"  stop-color="#d8d0c0"/>
+    <stop offset="100%" stop-color="#c8c0b0"/>
+  </linearGradient>
+
+  <!-- Volvo blue-green -->
+  <linearGradient id="volvoGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#2a6a5a"/>
+    <stop offset="50%"  stop-color="#1a5a4a"/>
+    <stop offset="100%" stop-color="#0a4a3a"/>
+  </linearGradient>
+
+  <!-- Cloud -->
+  <radialGradient id="cloudGrad" cx="0.5" cy="0.6" r="0.5">
+    <stop offset="0%"   stop-color="#e8e8f0" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#c8c8d8" stop-opacity="0.5"/>
+  </radialGradient>
+
+  <!-- Dish metal -->
+  <linearGradient id="dishGrad" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#e0e0e0"/>
+    <stop offset="50%"  stop-color="#c8c8c8"/>
+    <stop offset="100%" stop-color="#a8a8a8"/>
+  </linearGradient>
+</defs>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  SKY                                           -->
+<!-- ═══════════════════════════════════════════════ -->
+<rect width="1600" height="450" fill="url(#skyGrad)"/>
+
+<!-- Clouds -->
+<ellipse cx="300" cy="80" rx="180" ry="40" fill="url(#cloudGrad)" opacity="0.6"/>
+<ellipse cx="350" cy="75" rx="120" ry="35" fill="url(#cloudGrad)" opacity="0.5"/>
+<ellipse cx="900" cy="120" rx="200" ry="45" fill="url(#cloudGrad)" opacity="0.5"/>
+<ellipse cx="1350" cy="60" rx="150" ry="35" fill="url(#cloudGrad)" opacity="0.4"/>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  DISTANT WSRT DISHES (background, right side)  -->
+<!-- ═══════════════════════════════════════════════ -->
+<g opacity="0.5" transform="translate(1000, 330)">
+  <!-- Dish 1 -->
+  <line x1="0" y1="35" x2="0" y2="0" stroke="#a0a0a0" stroke-width="1.5"/>
+  <ellipse cx="0" cy="0" rx="15" ry="5" fill="url(#dishGrad)" stroke="#888" stroke-width="0.5"/>
+  <!-- Dish 2 -->
+  <line x1="60" y1="35" x2="60" y2="2" stroke="#a0a0a0" stroke-width="1.5"/>
+  <ellipse cx="60" cy="2" rx="15" ry="5" fill="url(#dishGrad)" stroke="#888" stroke-width="0.5"/>
+  <!-- Dish 3 -->
+  <line x1="120" y1="35" x2="120" y2="1" stroke="#a0a0a0" stroke-width="1.5"/>
+  <ellipse cx="120" cy="1" rx="15" ry="5" fill="url(#dishGrad)" stroke="#888" stroke-width="0.5"/>
+  <!-- Dish 4 -->
+  <line x1="180" y1="35" x2="180" y2="3" stroke="#a0a0a0" stroke-width="1.5"/>
+  <ellipse cx="180" cy="3" rx="15" ry="5" fill="url(#dishGrad)" stroke="#888" stroke-width="0.5"/>
+  <!-- Dish 5 -->
+  <line x1="240" y1="35" x2="240" y2="1" stroke="#a0a0a0" stroke-width="1.5"/>
+  <ellipse cx="240" cy="1" rx="15" ry="5" fill="url(#dishGrad)" stroke="#888" stroke-width="0.5"/>
+  <!-- Dish 6 -->
+  <line x1="300" y1="35" x2="300" y2="2" stroke="#a0a0a0" stroke-width="1.5"/>
+  <ellipse cx="300" cy="2" rx="15" ry="5" fill="url(#dishGrad)" stroke="#888" stroke-width="0.5"/>
+  <!-- Dish 7 -->
+  <line x1="360" y1="35" x2="360" y2="0" stroke="#a0a0a0" stroke-width="1.5"/>
+  <ellipse cx="360" cy="0" rx="15" ry="5" fill="url(#dishGrad)" stroke="#888" stroke-width="0.5"/>
+</g>
+
+<!-- Tree line (distant, behind heath) -->
+<rect x="0" y="345" width="1600" height="25" fill="#3a5a3a" opacity="0.4" rx="5"/>
+<rect x="0" y="355" width="400" height="15" fill="#2a4a2a" opacity="0.3" rx="3"/>
+<rect x="600" y="350" width="300" height="20" fill="#2a4a2a" opacity="0.3" rx="3"/>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  HEATHLAND (middle ground)                     -->
+<!-- ═══════════════════════════════════════════════ -->
+<rect x="0" y="370" width="1600" height="530" fill="url(#groundGrad)"/>
+
+<!-- Heather patches -->
+<ellipse cx="100"  cy="420" rx="90"  ry="18" fill="#5a4858" opacity="0.6"/>
+<ellipse cx="350"  cy="410" rx="120" ry="20" fill="#604a60" opacity="0.5"/>
+<ellipse cx="700"  cy="430" rx="150" ry="22" fill="#5a4858" opacity="0.5"/>
+<ellipse cx="1100" cy="415" rx="130" ry="18" fill="#604a60" opacity="0.4"/>
+<ellipse cx="1400" cy="425" rx="100" ry="16" fill="#5a4858" opacity="0.5"/>
+<ellipse cx="200"  cy="500" rx="80"  ry="14" fill="#604a60" opacity="0.4"/>
+<ellipse cx="500"  cy="520" rx="100" ry="15" fill="#5a4858" opacity="0.3"/>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  GRAVEL PARKING AREA                           -->
+<!-- ═══════════════════════════════════════════════ -->
+<path d="M300,520 Q500,480 900,500 Q1200,515 1400,540 L1400,780 Q1100,810 700,800 Q400,790 300,760 Z" fill="url(#gravelGrad)"/>
+
+<!-- Gravel texture marks -->
+<g fill="#9a9488" opacity="0.3">
+  <circle cx="450" cy="560" r="2"/><circle cx="500" cy="580" r="1.5"/><circle cx="550" cy="555" r="1.8"/>
+  <circle cx="600" cy="590" r="1.2"/><circle cx="650" cy="570" r="2"/><circle cx="700" cy="600" r="1.5"/>
+  <circle cx="750" cy="565" r="1.8"/><circle cx="800" cy="585" r="1.3"/><circle cx="850" cy="610" r="2"/>
+  <circle cx="900" cy="575" r="1.5"/><circle cx="950" cy="595" r="1.8"/><circle cx="1000" cy="620" r="1.2"/>
+  <circle cx="1050" cy="580" r="2"/><circle cx="1100" cy="605" r="1.5"/><circle cx="1150" cy="630" r="1.8"/>
+  <circle cx="500" cy="650" r="1.5"/><circle cx="600" cy="680" r="2"/><circle cx="700" cy="660" r="1.3"/>
+  <circle cx="800" cy="700" r="1.8"/><circle cx="900" cy="680" r="1.5"/><circle cx="1000" cy="710" r="2"/>
+  <circle cx="1100" cy="690" r="1.3"/><circle cx="1200" cy="720" r="1.8"/>
+</g>
+
+<!-- Parking border stones -->
+<g fill="#888880" opacity="0.5">
+  <rect x="310" y="518" width="20" height="8" rx="2" transform="rotate(-5, 320, 522)"/>
+  <rect x="380" y="505" width="20" height="8" rx="2" transform="rotate(-3, 390, 509)"/>
+  <rect x="460" y="495" width="20" height="8" rx="2" transform="rotate(-2, 470, 499)"/>
+  <rect x="540" y="490" width="20" height="8" rx="2" transform="rotate(-1, 550, 494)"/>
+  <rect x="1250" y="530" width="20" height="8" rx="2" transform="rotate(3, 1260, 534)"/>
+  <rect x="1330" y="540" width="20" height="8" rx="2" transform="rotate(5, 1340, 544)"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  PATHS leading out from parking                -->
+<!-- ═══════════════════════════════════════════════ -->
+
+<!-- Path to Memorial (left, south) -->
+<path d="M350,600 Q200,570 80,480 Q20,440 -10,400" fill="none" stroke="#7a7468" stroke-width="18" stroke-linecap="round" opacity="0.7"/>
+<text x="30" y="530" font-family="sans-serif" font-size="14" fill="#c8c8b0" opacity="0.7" transform="rotate(-35, 30, 530)">← Memorial 200m</text>
+
+<!-- Path to WSRT (right) -->
+<path d="M1200,560 Q1400,510 1550,440 Q1600,410 1610,380" fill="none" stroke="#7a7468" stroke-width="18" stroke-linecap="round" opacity="0.7"/>
+<text x="1400" y="478" font-family="sans-serif" font-size="14" fill="#c8c8b0" opacity="0.7" transform="rotate(-20, 1400, 478)">WSRT 400m →</text>
+
+<!-- Path to Planetenpad (north, center-top) -->
+<path d="M700,510 Q720,450 750,400 Q780,340 800,280" fill="none" stroke="#7a7468" stroke-width="14" stroke-linecap="round" opacity="0.6"/>
+<text x="760" y="320" font-family="sans-serif" font-size="12" fill="#c8c8b0" opacity="0.6">↑ Planetenpad 1km</text>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  DIRECTION BOARD (central element)             -->
+<!-- ═══════════════════════════════════════════════ -->
+<g transform="translate(650, 350)">
+  <!-- Main post -->
+  <rect x="45" y="0" width="12" height="200" fill="url(#woodGrad)" rx="2"/>
+  
+  <!-- Cross-beam -->
+  <rect x="20" y="-5" width="60" height="10" fill="#5a3a1a" rx="2"/>
+
+  <!-- Sign: Memorial (pointing left) -->
+  <g transform="translate(-80, 15)">
+    <polygon points="0,15 10,0 200,0 200,38 10,38" fill="url(#signGrad)" stroke="#1a3a1a" stroke-width="1"/>
+    <text x="25" y="14" font-family="sans-serif" font-size="10" fill="#e8e8d0" font-weight="bold">Herinneringscentrum</text>
+    <text x="25" y="27" font-family="sans-serif" font-size="10" fill="#e8e8d0" font-weight="bold">Kamp Westerbork</text>
+    <text x="155" y="35" font-family="sans-serif" font-size="8" fill="#c8d8c0">200 m</text>
+  </g>
+
+  <!-- Sign: WSRT (pointing right) -->
+  <g transform="translate(-15, 60)">
+    <polygon points="0,0 190,0 200,18 190,38 0,38" fill="url(#signGrad)" stroke="#1a3a1a" stroke-width="1"/>
+    <text x="15" y="15" font-family="sans-serif" font-size="11" fill="#e8e8d0" font-weight="bold">WSRT / ASTRON</text>
+    <text x="15" y="30" font-family="sans-serif" font-size="8" fill="#c8d8c0">Radiotelescoop — 400 m</text>
+  </g>
+
+  <!-- Sign: Planetenpad (pointing right/up) -->
+  <g transform="translate(-15, 108)">
+    <polygon points="0,0 190,0 200,15 190,32 0,32" fill="#2a4a5a" stroke="#1a3a4a" stroke-width="1"/>
+    <text x="15" y="13" font-family="sans-serif" font-size="10" fill="#e8e8d0" font-weight="bold">Planetenpad ☀</text>
+    <text x="15" y="26" font-family="sans-serif" font-size="8" fill="#c8d8c0">Schaalmodel Zonnestelsel — 1 km</text>
+  </g>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  INFORMATION KIOSK (left of direction board)   -->
+<!-- ═══════════════════════════════════════════════ -->
+<g transform="translate(300, 380)">
+  <!-- Panel frame -->
+  <rect x="0" y="20" width="120" height="80" fill="#3a3530" stroke="#2a2520" stroke-width="2" rx="3"/>
+  <!-- Panel glass -->
+  <rect x="5" y="25" width="110" height="55" fill="#252a20" opacity="0.8" rx="2"/>
+  <!-- Text lines -->
+  <line x1="12" y1="35" x2="105" y2="35" stroke="#6a8a6a" stroke-width="1" opacity="0.6"/>
+  <line x1="12" y1="42" x2="90"  y2="42" stroke="#6a8a6a" stroke-width="1" opacity="0.5"/>
+  <line x1="12" y1="49" x2="100" y2="49" stroke="#6a8a6a" stroke-width="1" opacity="0.5"/>
+  <line x1="12" y1="56" x2="80"  y2="56" stroke="#6a8a6a" stroke-width="1" opacity="0.4"/>
+  <line x1="12" y1="63" x2="95"  y2="63" stroke="#6a8a6a" stroke-width="1" opacity="0.4"/>
+  <line x1="12" y1="70" x2="85"  y2="70" stroke="#6a8a6a" stroke-width="1" opacity="0.3"/>
+  <!-- Legs -->
+  <rect x="10"  y="100" width="6" height="50" fill="#3a3530" rx="1"/>
+  <rect x="104" y="100" width="6" height="50" fill="#3a3530" rx="1"/>
+  <!-- Header -->
+  <text x="60" y="14" font-family="sans-serif" font-size="8" fill="#8a8a7a" text-anchor="middle">ℹ INFORMATIE</text>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  BIRCH TREE (right side, shade for Volvo)      -->
+<!-- ═══════════════════════════════════════════════ -->
+<g transform="translate(1100, 300)">
+  <!-- Trunk -->
+  <rect x="0" y="80" width="14" height="220" fill="url(#birkGrad)" rx="3"/>
+  <!-- Bark marks -->
+  <line x1="2" y1="120" x2="12" y2="118" stroke="#2a2a2a" stroke-width="1" opacity="0.4"/>
+  <line x1="3" y1="160" x2="11" y2="162" stroke="#2a2a2a" stroke-width="1" opacity="0.3"/>
+  <line x1="2" y1="200" x2="10" y2="199" stroke="#2a2a2a" stroke-width="1" opacity="0.3"/>
+  <line x1="3" y1="240" x2="12" y2="241" stroke="#2a2a2a" stroke-width="1" opacity="0.3"/>
+  <!-- Branches -->
+  <line x1="7" y1="100" x2="-40" y2="50" stroke="#c0b8a8" stroke-width="4" stroke-linecap="round"/>
+  <line x1="7" y1="120" x2="60" y2="60" stroke="#c0b8a8" stroke-width="4" stroke-linecap="round"/>
+  <line x1="7" y1="90" x2="20" y2="30" stroke="#c0b8a8" stroke-width="3" stroke-linecap="round"/>
+  <line x1="7" y1="140" x2="-30" y2="90" stroke="#c0b8a8" stroke-width="3" stroke-linecap="round"/>
+  <!-- Foliage clusters -->
+  <ellipse cx="-30" cy="45" rx="45" ry="30" fill="#4a7a3a" opacity="0.8"/>
+  <ellipse cx="50"  cy="50" rx="50" ry="35" fill="#3a6a2a" opacity="0.7"/>
+  <ellipse cx="10"  cy="20" rx="40" ry="28" fill="#5a8a4a" opacity="0.8"/>
+  <ellipse cx="-10" cy="60" rx="35" ry="22" fill="#3a6a2a" opacity="0.6"/>
+  <ellipse cx="40"  cy="30" rx="30" ry="20" fill="#4a7a3a" opacity="0.7"/>
+  <!-- Dappled shadow on ground -->
+  <ellipse cx="10" cy="310" rx="80" ry="20" fill="#404028" opacity="0.3"/>
+</g>
+
+<!-- Second smaller birch -->
+<g transform="translate(180, 350)">
+  <rect x="0" y="40" width="8" height="140" fill="url(#birkGrad)" rx="2"/>
+  <line x1="1" y1="70" x2="7" y2="69" stroke="#2a2a2a" stroke-width="0.7" opacity="0.3"/>
+  <line x1="1" y1="110" x2="7" y2="111" stroke="#2a2a2a" stroke-width="0.7" opacity="0.3"/>
+  <line x1="4" y1="50" x2="-20" y2="20" stroke="#c0b8a8" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="4" y1="55" x2="30" y2="25" stroke="#c0b8a8" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="-10" cy="15" rx="30" ry="20" fill="#4a7a3a" opacity="0.7"/>
+  <ellipse cx="25"  cy="20" rx="28" ry="18" fill="#3a6a2a" opacity="0.7"/>
+  <ellipse cx="5"   cy="5"  rx="25" ry="18" fill="#5a8a4a" opacity="0.6"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  THE VOLVO (parked under birch)                -->
+<!-- ═══════════════════════════════════════════════ -->
+<g transform="translate(1020, 590)">
+  <!-- Shadow -->
+  <ellipse cx="120" cy="110" rx="140" ry="20" fill="#303020" opacity="0.35"/>
+  
+  <!-- Body -->
+  <rect x="20" y="30" width="240" height="70" fill="url(#volvoGrad)" rx="8"/>
+  <!-- Roof -->
+  <rect x="60" y="5" width="150" height="35" fill="#1a5a4a" rx="10"/>
+  <!-- Windshields -->
+  <rect x="65" y="8" width="60" height="28" fill="#5a8aa0" rx="4" opacity="0.7"/>
+  <rect x="140" y="8" width="65" height="28" fill="#5a8aa0" rx="4" opacity="0.7"/>
+  <!-- Headlights -->
+  <rect x="248" y="48" width="16" height="12" fill="#e8d870" rx="3" opacity="0.6"/>
+  <rect x="248" y="65" width="16" height="12" fill="#e8d870" rx="3" opacity="0.6"/>
+  <!-- Taillights -->
+  <rect x="16" y="50" width="10" height="10" fill="#c03030" rx="2" opacity="0.7"/>
+  <rect x="16" y="68" width="10" height="10" fill="#c03030" rx="2" opacity="0.7"/>
+  <!-- Wheels -->
+  <circle cx="80" cy="102" r="18" fill="#1a1a1a"/>
+  <circle cx="80" cy="102" r="10" fill="#3a3a3a"/>
+  <circle cx="200" cy="102" r="18" fill="#1a1a1a"/>
+  <circle cx="200" cy="102" r="10" fill="#3a3a3a"/>
+  <!-- Door line -->
+  <line x1="130" y1="35" x2="130" y2="95" stroke="#0a3a2a" stroke-width="1" opacity="0.5"/>
+  <!-- Label -->
+  <text x="140" y="70" font-family="sans-serif" font-size="8" fill="#8ac0a0" opacity="0.6" text-anchor="middle">VOLVO 240</text>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  FOREGROUND — gravel detail, grass             -->
+<!-- ═══════════════════════════════════════════════ -->
+
+<!-- Grass tufts at parking edge -->
+<g fill="#4a6a3a" opacity="0.5">
+  <path d="M300,770 L295,755 L300,760 L305,748 L308,762 L312,752 L315,770 Z"/>
+  <path d="M400,780 L397,768 L401,772 L405,760 L409,773 L413,764 L416,780 Z"/>
+  <path d="M1300,755 L1296,740 L1300,745 L1304,733 L1308,746 L1312,738 L1315,755 Z"/>
+</g>
+
+<!-- Small stones scattered -->
+<g fill="#a09888" opacity="0.25">
+  <ellipse cx="500" cy="730" rx="4" ry="3"/>
+  <ellipse cx="650" cy="740" rx="3" ry="2"/>
+  <ellipse cx="800" cy="750" rx="5" ry="3"/>
+  <ellipse cx="950" cy="735" rx="3" ry="2"/>
+  <ellipse cx="1100" cy="745" rx="4" ry="3"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  MAGPIE (small detail on birch tree)           -->
+<!-- ═══════════════════════════════════════════════ -->
+<g transform="translate(1090, 395)">
+  <ellipse cx="0" cy="0" rx="6" ry="4" fill="#1a1a2a"/>
+  <circle cx="-5" cy="-2" r="3" fill="#1a1a2a"/>
+  <circle cx="-6" cy="-3" r="0.8" fill="#e8e8e8"/>
+  <path d="M6,0 L16,3" stroke="#1a1a2a" stroke-width="1.5"/>
+  <line x1="0" y1="4" x2="-1" y2="8" stroke="#3a3a3a" stroke-width="0.8"/>
+  <line x1="2" y1="4" x2="3" y2="8" stroke="#3a3a3a" stroke-width="0.8"/>
+  <!-- White wing patch -->
+  <ellipse cx="2" cy="-1" rx="3" ry="2" fill="#d8d8d8" opacity="0.7"/>
+</g>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!--  WIND TURBINES (far distance)                  -->
+<!-- ═══════════════════════════════════════════════ -->
+<g opacity="0.25">
+  <line x1="200" y1="370" x2="200" y2="320" stroke="#b0b0b0" stroke-width="1.5"/>
+  <line x1="200" y1="320" x2="185" y2="335" stroke="#b0b0b0" stroke-width="1"/>
+  <line x1="200" y1="320" x2="215" y2="335" stroke="#b0b0b0" stroke-width="1"/>
+  <line x1="200" y1="320" x2="200" y2="305" stroke="#b0b0b0" stroke-width="1"/>
+  
+  <line x1="480" y1="365" x2="480" y2="315" stroke="#b0b0b0" stroke-width="1.5"/>
+  <line x1="480" y1="315" x2="465" y2="330" stroke="#b0b0b0" stroke-width="1"/>
+  <line x1="480" y1="315" x2="495" y2="330" stroke="#b0b0b0" stroke-width="1"/>
+  <line x1="480" y1="315" x2="480" y2="300" stroke="#b0b0b0" stroke-width="1"/>
+</g>
+
+</svg>

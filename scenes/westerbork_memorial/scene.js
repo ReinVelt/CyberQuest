@@ -29,16 +29,32 @@ const WesterborkMemorialScene = {
             height: 42,
             cursor: 'pointer',
             action: (game) => {
-                game.startDialogue([
-                    { speaker: 'Ryan', text: '...' },
-                    { speaker: 'Ryan', text: 'The track ends here. Right here.' },
-                    { speaker: 'Ryan', text: 'Between 1942 and 1945, 102,000 people were put on trains from this spot. To Auschwitz. To Sobibor. To Bergen-Belsen.' },
-                    { speaker: 'Ryan', text: 'Anne Frank was on one of those trains.' },
-                    { speaker: '', text: '*Silence*' },
-                    { speaker: 'Ryan', text: 'The Nazis built this camp specifically as a holding and sorting facility. They monitored everyone here. Catalogued them. Assigned them numbers.' },
-                    { speaker: 'Ryan', text: 'And now, less than two kilometres from here, someone is running a mass surveillance operation. Using the same ground. The same infrastructure.' },
-                    { speaker: 'Ryan', text: 'I don\'t think that\'s a coincidence. I think someone chose this location deliberately.' },
-                ]);
+                const knowsSurveillance = game.getFlag('visited_klooster');
+                if (knowsSurveillance) {
+                    // Ryan knows about the surveillance network from the USB analysis
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: '...' },
+                        { speaker: 'Ryan', text: 'The track ends here. Right here.' },
+                        { speaker: 'Ryan', text: 'Between 1942 and 1945, 102,000 people were put on trains from this spot. To Auschwitz. To Sobibor. To Bergen-Belsen.' },
+                        { speaker: 'Ryan', text: 'Anne Frank was on one of those trains.' },
+                        { speaker: '', text: '*Silence*' },
+                        { speaker: 'Ryan', text: 'The Nazis built this camp specifically as a holding and sorting facility. They monitored everyone here. Catalogued them. Assigned them numbers.' },
+                        { speaker: 'Ryan', text: 'And now, less than two kilometres from here, someone is running a mass surveillance operation. Using the same ground. The same infrastructure.' },
+                        { speaker: 'Ryan', text: 'I don\'t think that\'s a coincidence. I think someone chose this location deliberately.' },
+                    ]);
+                } else {
+                    // Ryan has only been to ASTRON — doesn't know about the surveillance network yet
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: '...' },
+                        { speaker: 'Ryan', text: 'The track ends here. Right here.' },
+                        { speaker: 'Ryan', text: 'Between 1942 and 1945, 102,000 people were put on trains from this spot. To Auschwitz. To Sobibor. To Bergen-Belsen.' },
+                        { speaker: 'Ryan', text: 'Anne Frank was on one of those trains.' },
+                        { speaker: '', text: '*Silence*' },
+                        { speaker: 'Ryan', text: 'The Nazis built this camp specifically as a holding and sorting facility. They monitored everyone here. Catalogued them. Assigned them numbers.' },
+                        { speaker: 'Ryan', text: 'Bureaucratic efficiency applied to genocide. The worst part is how ordinary it all was.' },
+                        { speaker: 'Ryan', text: 'And just 200 metres away, the WSRT dishes listen to the cosmos. The contrast is almost unbearable.' },
+                    ]);
+                }
             }
         },
 
@@ -75,6 +91,7 @@ const WesterborkMemorialScene = {
             action: (game) => {
                 const cameraInspected = game.getFlag('westerbork_camera_inspected');
                 const hasFlipperZero = game.hasItem('flipper_zero');
+                const knowsSurveillance = game.getFlag('visited_klooster');
 
                 if (cameraInspected && !game.getFlag('westerbork_bt_cracked')) {
                     if (hasFlipperZero) {
@@ -107,7 +124,8 @@ const WesterborkMemorialScene = {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Already documented the Zerfall node here. The Flipper caught everything I need.' },
                     ]);
-                } else {
+                } else if (knowsSurveillance) {
+                    // Ryan knows about the surveillance network from the USB — immediately suspicious
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'That\'s... not a standard memorial camera.' },
                         { speaker: '', text: '*Ryan looks more closely*' },
@@ -115,6 +133,7 @@ const WesterborkMemorialScene = {
                         { speaker: 'Ryan', text: 'That\'s a Bluetooth module. A surveillance camera with a Bluetooth transmitter bolted in.' },
                         { speaker: 'Ryan', text: 'No legitimate security system needs that. Bluetooth range is at best 100 metres. This isn\'t for camera control.' },
                         { speaker: 'Ryan', text: 'It\'s a beacon. It\'s broadcasting something. And the LED is pulsing in a pattern — not random.' },
+                        { speaker: 'Ryan', text: 'The USB data mentioned sensor nodes across the region. This must be one of them. Right here at the memorial.' },
                         { speaker: 'Ryan', text: 'If I had the Flipper Zero, I could read what it\'s transmitting. I need to come back with it.' },
                         { speaker: '', text: '💡 HINT: Get the Flipper Zero from the mancave, then return here.' },
                     ], () => {
@@ -122,7 +141,7 @@ const WesterborkMemorialScene = {
                         game.addEvidence({
                             id: 'modified_camera',
                             name: 'Modified Surveillance Camera',
-                            description: 'Security camera at Westerbork memorial with non-standard Bluetooth module installed. LED pulses in structured pattern. Located on pole near the railway track.',
+                            description: 'Security camera at Westerbork memorial with non-standard Bluetooth module installed. LED pulses in structured pattern. Likely part of the sensor network mentioned in the USB data.',
                             icon: '📷'
                         });
                         game.showNotification('📷 Evidence added: Modified Surveillance Camera');
@@ -132,6 +151,36 @@ const WesterborkMemorialScene = {
                                 id: 'trace_bluetooth_network',
                                 name: 'Trace the Bluetooth Network',
                                 description: 'A modified camera at Westerbork memorial is transmitting Bluetooth signals. Return with the Flipper Zero to read the beacon data.'
+                            });
+                        }
+                    });
+                } else {
+                    // Ryan has only been to ASTRON — no prior knowledge of surveillance network
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'A security camera. Nothing unusual about that at a memorial site...' },
+                        { speaker: '', text: '*Ryan looks more closely*' },
+                        { speaker: 'Ryan', text: 'Wait. The housing is a Hikvision body, but something\'s been added. I can see a secondary circuit board through the ventilation slot.' },
+                        { speaker: 'Ryan', text: 'That\'s... a Bluetooth module? On a heritage site security camera?' },
+                        { speaker: 'Ryan', text: 'The LED is pulsing in a pattern. Not random. Not standard status blinking either.' },
+                        { speaker: 'Ryan', text: 'Strange. Why would a memorial camera need Bluetooth? The signal range is only about 100 metres.' },
+                        { speaker: 'Ryan', text: 'Probably nothing. But my SDR instincts are tingling. I should note this down.' },
+                        { speaker: 'Ryan', text: 'If I had my Flipper Zero, I could scan what it\'s broadcasting. Something to keep in mind.' },
+                        { speaker: '', text: '💡 HINT: Get the Flipper Zero from the mancave, then return here.' },
+                    ], () => {
+                        game.setFlag('westerbork_camera_inspected', true);
+                        game.addEvidence({
+                            id: 'modified_camera',
+                            name: 'Modified Surveillance Camera',
+                            description: 'Security camera at Westerbork memorial with non-standard Bluetooth module installed. LED pulses in structured pattern. Purpose unclear.',
+                            icon: '📷'
+                        });
+                        game.showNotification('📷 Evidence added: Modified Surveillance Camera');
+                        if (!game.getFlag('bt_camera_quest_started')) {
+                            game.setFlag('bt_camera_quest_started', true);
+                            game.addQuest({
+                                id: 'trace_bluetooth_network',
+                                name: 'Trace the Bluetooth Network',
+                                description: 'A modified camera at Westerbork memorial has an unusual Bluetooth module. Return with the Flipper Zero to scan it.'
                             });
                         }
                     });
@@ -149,12 +198,22 @@ const WesterborkMemorialScene = {
             height: 15,
             cursor: 'pointer',
             action: (game) => {
-                game.startDialogue([
-                    { speaker: 'Ryan', text: 'The WSRT dishes. Just 300 metres away.' },
-                    { speaker: 'Ryan', text: 'The radio telescope was built in the 1960s, right next to this memorial. They chose this flat, radio-quiet stretch of Drenthe deliberately.' },
-                    { speaker: 'Ryan', text: 'In a way, I understand the irony. This ground was used to watch and catalogue people. Now it watches the cosmos.' },
-                    { speaker: 'Ryan', text: 'Except someone has decided to start watching people again.' },
-                ]);
+                const knowsSurveillance = game.getFlag('visited_klooster');
+                if (knowsSurveillance) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'The WSRT dishes. Just 300 metres away.' },
+                        { speaker: 'Ryan', text: 'The radio telescope was built in the 1960s, right next to this memorial. They chose this flat, radio-quiet stretch of Drenthe deliberately.' },
+                        { speaker: 'Ryan', text: 'In a way, I understand the irony. This ground was used to watch and catalogue people. Now it watches the cosmos.' },
+                        { speaker: 'Ryan', text: 'Except someone has decided to start watching people again.' },
+                    ]);
+                } else {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'The WSRT dishes. Just 300 metres away. I was there an hour ago with Cees.' },
+                        { speaker: 'Ryan', text: 'The radio telescope was built in the 1960s, right next to this memorial. They chose this flat, radio-quiet stretch of Drenthe deliberately.' },
+                        { speaker: 'Ryan', text: 'This ground was used to watch and catalogue people. Now it watches the cosmos.' },
+                        { speaker: 'Ryan', text: 'History and science, side by side. The contrast is staggering.' },
+                    ]);
+                }
             }
         },
 
@@ -196,10 +255,10 @@ const WesterborkMemorialScene = {
             }
         },
 
-        // ── Walk to WSRT / ASTRON (200 m across the heath) ──
+        // ── Walk to WSRT Parking (back to hub) ──
         {
             id: 'walk_to_wsrt',
-            name: '← WSRT',
+            name: '← Parking',
             x: 0,
             y: 60,
             width: 8,
@@ -208,23 +267,16 @@ const WesterborkMemorialScene = {
             cssClass: 'hotspot-nav',
             skipWalk: true,
             action: (game) => {
-                if (game.getFlag('visited_astron')) {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'The WSRT control room is just 200 metres across the heath.' },
-                        { speaker: '', text: '*Ryan walks across the field toward the radio telescope array*' }
-                    ], () => {
-                        game.loadScene('astron');
-                    });
-                } else {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'I can see the WSRT dishes from here — maybe 200 metres away.' },
-                        { speaker: 'Ryan', text: 'No reason to go to the control room right now.' }
-                    ]);
-                }
+                game.startDialogue([
+                    { speaker: 'Ryan', text: 'Back to the parking area. The WSRT and the Planetenpad are from there too.' },
+                    { speaker: '', text: '*Ryan walks across the field toward the parking area*' }
+                ], () => {
+                    game.loadScene('wsrt_parking');
+                });
             }
         },
 
-        // ── Drive home (via Volvo / driving_day) ──
+        // ── Drive home (via parking → Volvo) ──
         {
             id: 'drive_home',
             name: '← Drive Home',
@@ -238,10 +290,9 @@ const WesterborkMemorialScene = {
             action: (game) => {
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'Time to head home. I need to process all of this.' },
-                    { speaker: '', text: '*Ryan walks back to the Volvo*' }
+                    { speaker: '', text: '*Ryan walks back to the parking area*' }
                 ], () => {
-                    game.setFlag('driving_destination', 'home_from_westerbork');
-                    game.loadScene('driving_day');
+                    game.loadScene('wsrt_parking');
                 });
             }
         }
@@ -250,14 +301,28 @@ const WesterborkMemorialScene = {
     onEnter: (game) => {
         if (!game.getFlag('visited_westerbork_memorial')) {
             game.setFlag('visited_westerbork_memorial', true);
+            const knowsSurveillance = game.getFlag('visited_klooster');
             setTimeout(() => {
-                game.startDialogue([
-                    { speaker: 'Ryan', text: 'The memorial. I\'ve been here before but it never gets easier.' },
-                    { speaker: 'Ryan', text: 'The railway track. The stones. The flat Drenthe sky.' },
-                    { speaker: '', text: '*Ryan is quiet for a moment*' },
-                    { speaker: 'Ryan', text: 'I came here because the WSRT signal logs pointed toward this area. But something else caught my eye.' },
-                    { speaker: 'Ryan', text: 'That camera on the pole. It doesn\'t look right.' },
-                ]);
+                if (knowsSurveillance) {
+                    // Ryan has USB data, knows about the surveillance network
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'The memorial. I\'ve been here before but it never gets easier.' },
+                        { speaker: 'Ryan', text: 'The railway track. The stones. The flat Drenthe sky.' },
+                        { speaker: '', text: '*Ryan is quiet for a moment*' },
+                        { speaker: 'Ryan', text: 'The USB data mentioned sensor nodes across the region. And the WSRT signal logs pointed toward this area.' },
+                        { speaker: 'Ryan', text: 'If they\'ve placed surveillance equipment on a Holocaust memorial site...' },
+                        { speaker: 'Ryan', text: 'That camera on the pole. It doesn\'t look right.' },
+                    ]);
+                } else {
+                    // Ryan only knows about WSRT radio anomalies — visiting after ASTRON
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'The memorial. I\'ve been here before but it never gets easier.' },
+                        { speaker: 'Ryan', text: 'The railway track. The stones. The flat Drenthe sky.' },
+                        { speaker: '', text: '*Ryan is quiet for a moment*' },
+                        { speaker: 'Ryan', text: 'Cees mentioned the WSRT dishes are just 200 metres away. The same ground, but worlds apart.' },
+                        { speaker: 'Ryan', text: 'Hmm. That camera on the pole — is that new? Something about it looks off.' },
+                    ]);
+                }
             }, 600);
         }
     },

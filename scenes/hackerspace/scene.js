@@ -1008,7 +1008,7 @@ const HackerspaceScene = {
             }
         },
 
-        // ── Exit Door → drive back home ──
+        // ── Exit Door → drive back home (day or night depending on time) ──
         {
             id: 'exit_door',
             name: '← Drive Home',
@@ -1023,8 +1023,10 @@ const HackerspaceScene = {
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'Time to head home. Good session tonight.' }
                 ], function() {
+                    var hour = parseInt(game.gameState.time.split(':')[0], 10);
+                    var isNight = hour >= 20 || hour < 7;
                     game.setFlag('driving_destination', 'home_from_hackerspace');
-                    game.loadScene('driving_day');
+                    game.loadScene(isNight ? 'driving' : 'driving_day');
                 });
             }
         },

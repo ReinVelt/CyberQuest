@@ -234,6 +234,318 @@ const HackerspaceClassroomScene = {
         },
     ],
 
+    // ── Talk Picker: icons per topic ──────────────────────────────
+    _talkIcons: {
+        'LoRa & LoRaWAN':                  '📡',
+        'Meshtastic':                      '🔗',
+        'MeshCore':                        '🏗',
+        'Home Automation':                 '🏠',
+        'Cybersecurity Fundamentals':      '🔒',
+        'Blockchain & Decentralisation':   '⛓',
+        'AI & Machine Learning':           '🤖',
+        'Software Defined Radio':          '📻',
+        'MQTT & Node-RED':                 '🔌',
+        'Zigbee & Matter':                 '💡',
+        'Raspberry Pi & Embedded Linux':   '🍓',
+        'Antenna Design for LoRa':         '📏',
+    },
+
+    _injectTalkPickerStyles: function() {
+        if (document.getElementById('talk-picker-style')) return;
+        var style = document.createElement('style');
+        style.id = 'talk-picker-style';
+        style.textContent = `
+/* === TALK PICKER === */
+#talk-picker-overlay {
+    position: fixed; inset: 0; z-index: 8000;
+    background: rgba(0,0,0,0.88);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.4s ease;
+    cursor: default;
+}
+#talk-picker-overlay.visible { opacity: 1; }
+
+.talk-picker {
+    background: linear-gradient(180deg, #0a1520 0%, #070d14 100%);
+    border: 1px solid rgba(0,255,255,0.15);
+    border-radius: 4px; padding: 0; width: 520px; max-width: 94vw;
+    max-height: 85vh; overflow-y: auto;
+    box-shadow: 0 0 60px rgba(0,255,255,0.08), 0 0 1px rgba(0,255,255,0.3);
+}
+.talk-picker::-webkit-scrollbar { width: 4px; }
+.talk-picker::-webkit-scrollbar-track { background: transparent; }
+.talk-picker::-webkit-scrollbar-thumb { background: rgba(0,255,255,0.15); border-radius: 2px; }
+
+/* Header */
+.tp-header {
+    padding: 22px 28px 16px;
+    border-bottom: 1px solid rgba(0,255,255,0.08);
+    text-align: center;
+}
+.tp-projector-ascii {
+    font-family: 'Courier New', monospace;
+    font-size: 0.55em; line-height: 1.15;
+    color: rgba(0,255,255,0.22);
+    margin-bottom: 12px; white-space: pre;
+    letter-spacing: 1px;
+}
+.tp-title {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1em; letter-spacing: 5px;
+    color: rgba(0,255,255,0.7);
+    text-transform: uppercase; margin: 0;
+}
+.tp-subtitle {
+    font-family: 'Georgia', serif;
+    font-size: 0.78em; color: rgba(255,255,255,0.3);
+    margin-top: 6px; letter-spacing: 1px;
+}
+
+/* Talk list */
+.tp-talks { padding: 8px 12px 10px; }
+
+.tp-talk {
+    display: flex; align-items: center; gap: 14px;
+    padding: 12px 16px; margin: 5px 0;
+    background: rgba(0,255,255,0.02);
+    border: 1px solid rgba(0,255,255,0.06);
+    border-radius: 3px; cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative; overflow: hidden;
+}
+.tp-talk:hover {
+    background: rgba(0,255,255,0.06);
+    border-color: rgba(0,255,255,0.2);
+    transform: translateX(3px);
+}
+.tp-talk:hover .tp-talk-title { color: #00ffff; }
+.tp-talk:active { transform: translateX(3px) scale(0.99); }
+
+/* Seen state */
+.tp-talk.seen {
+    opacity: 0.45;
+}
+.tp-talk.seen .tp-talk-title { color: rgba(255,255,255,0.5); }
+.tp-talk.seen:hover {
+    opacity: 0.65;
+    background: rgba(0,255,255,0.04);
+    border-color: rgba(0,255,255,0.12);
+}
+.tp-talk.seen:hover .tp-talk-title { color: rgba(0,255,255,0.7); }
+
+/* New talk highlight */
+.tp-talk.new-talk {
+    border-color: rgba(0,255,200,0.18);
+    background: rgba(0,255,200,0.03);
+}
+.tp-talk.new-talk:hover {
+    border-color: rgba(0,255,200,0.3);
+    background: rgba(0,255,200,0.06);
+}
+
+/* Scan line on hover */
+.tp-talk::before {
+    content: ''; position: absolute;
+    top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,255,255,0.04), transparent);
+    transition: left 0.4s ease;
+    pointer-events: none;
+}
+.tp-talk:hover::before { left: 100%; }
+
+/* Icon */
+.tp-talk-icon {
+    font-size: 1.5em; min-width: 34px;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* Text block */
+.tp-talk-info { flex: 1; min-width: 0; }
+.tp-talk-title {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85em; letter-spacing: 2px;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    transition: color 0.25s ease;
+    margin: 0 0 3px;
+}
+.tp-talk-presenter {
+    font-family: 'Georgia', serif;
+    font-size: 0.75em; color: rgba(255,255,255,0.35);
+    margin: 0;
+}
+.tp-talk-tags {
+    display: flex; gap: 8px; margin-top: 4px;
+}
+.tp-talk-tag {
+    font-family: 'Courier New', monospace;
+    font-size: 0.55em; letter-spacing: 2px;
+    padding: 2px 8px; border-radius: 2px;
+    text-transform: uppercase;
+}
+.tp-tag-new {
+    color: rgba(0,255,200,0.8);
+    background: rgba(0,255,200,0.08);
+    border: 1px solid rgba(0,255,200,0.15);
+}
+.tp-tag-seen {
+    color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* Arrow */
+.tp-talk-arrow {
+    display: flex; align-items: center;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1em; color: rgba(0,255,255,0.15);
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+.tp-talk:hover .tp-talk-arrow { color: rgba(0,255,255,0.5); transform: translateX(3px); }
+
+/* Footer */
+.tp-footer {
+    padding: 12px 28px 18px;
+    border-top: 1px solid rgba(0,255,255,0.06);
+    text-align: center;
+}
+.tp-cancel-btn {
+    font-family: 'Courier New', monospace;
+    font-size: 0.72em; letter-spacing: 3px;
+    color: rgba(255,255,255,0.25);
+    background: none; border: 1px solid rgba(255,255,255,0.08);
+    padding: 8px 24px; cursor: pointer;
+    border-radius: 2px; text-transform: uppercase;
+    transition: all 0.25s ease;
+}
+.tp-cancel-btn:hover {
+    color: rgba(255,255,255,0.6);
+    border-color: rgba(255,255,255,0.2);
+}
+
+/* Responsive */
+@media (max-width: 560px) {
+    .talk-picker { width: 96vw; }
+    .tp-header { padding: 16px 18px 12px; }
+    .tp-talk { padding: 10px 12px; gap: 10px; }
+    .tp-talk-icon { font-size: 1.2em; min-width: 28px; }
+    .tp-talk-title { font-size: 0.75em; }
+    .tp-projector-ascii { font-size: 0.45em; }
+}
+`;
+        document.head.appendChild(style);
+    },
+
+    _showTalkPicker: function(game, onPick) {
+        var self = this;
+        self._injectTalkPickerStyles();
+
+        // Remove existing picker
+        var existing = document.getElementById('talk-picker-overlay');
+        if (existing) existing.remove();
+
+        var overlay = document.createElement('div');
+        overlay.id = 'talk-picker-overlay';
+
+        var picker = document.createElement('div');
+        picker.className = 'talk-picker';
+
+        picker.innerHTML =
+            '<div class="tp-header">' +
+                '<div class="tp-projector-ascii">' +
+                    '    ┌───────────────────┐\n' +
+                    '    │  ▓▓▓  PROJECTOR ▓▓▓│\n' +
+                    '    └───────┬─────┬───────┘\n' +
+                    '            │ ◉◉◉ │\n' +
+                    '            └─────┘' +
+                '</div>' +
+                '<div class="tp-title">Tonight\'s Programme</div>' +
+                '<div class="tp-subtitle">Choose a presentation</div>' +
+            '</div>' +
+            '<div class="tp-talks" id="tp-talk-list"></div>' +
+            '<div class="tp-footer">' +
+                '<button class="tp-cancel-btn" id="tp-cancel-btn">Back to workshop</button>' +
+            '</div>';
+
+        overlay.appendChild(picker);
+        document.body.appendChild(overlay);
+
+        var talkList = document.getElementById('tp-talk-list');
+
+        self._presentations.forEach(function(pres, idx) {
+            var seen = !!(game.getFlag('talk_seen_' + idx));
+            var icon = self._talkIcons[pres.title] || '📋';
+
+            var card = document.createElement('div');
+            card.className = 'tp-talk';
+            if (seen) card.classList.add('seen');
+            if (!seen) card.classList.add('new-talk');
+
+            var tag = seen
+                ? '<span class="tp-talk-tag tp-tag-seen">Seen</span>'
+                : '<span class="tp-talk-tag tp-tag-new">New</span>';
+
+            card.innerHTML =
+                '<div class="tp-talk-icon">' + icon + '</div>' +
+                '<div class="tp-talk-info">' +
+                    '<div class="tp-talk-title">' + pres.title + '</div>' +
+                    '<div class="tp-talk-presenter">Presented by ' + pres.presenter + '</div>' +
+                    '<div class="tp-talk-tags">' + tag + '</div>' +
+                '</div>' +
+                '<div class="tp-talk-arrow">&#9654;</div>';
+
+            card.addEventListener('click', function() {
+                self._closeTalkPicker();
+                game.setFlag('classroom_presentation_index', idx);
+                game.setFlag('talk_seen_' + idx, true);
+                if (onPick) onPick(idx);
+            });
+
+            talkList.appendChild(card);
+        });
+
+        // Cancel button → back to hackerspace
+        document.getElementById('tp-cancel-btn').addEventListener('click', function(e) {
+            e.stopPropagation();
+            self._closeTalkPicker();
+            game.loadScene('hackerspace');
+        });
+
+        // Click overlay to cancel
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) {
+                self._closeTalkPicker();
+                game.loadScene('hackerspace');
+            }
+        });
+
+        // Escape key
+        self._talkPickerEscHandler = function(e) {
+            if (e.key === 'Escape') {
+                self._closeTalkPicker();
+                game.loadScene('hackerspace');
+            }
+        };
+        document.addEventListener('keydown', self._talkPickerEscHandler);
+
+        // Fade in
+        requestAnimationFrame(function() {
+            overlay.classList.add('visible');
+        });
+    },
+
+    _closeTalkPicker: function() {
+        var overlay = document.getElementById('talk-picker-overlay');
+        if (overlay) {
+            overlay.classList.remove('visible');
+            setTimeout(function() { overlay.remove(); }, 400);
+        }
+        if (this._talkPickerEscHandler) {
+            document.removeEventListener('keydown', this._talkPickerEscHandler);
+            this._talkPickerEscHandler = null;
+        }
+    },
+
     hotspots: [
 
         // ── Projector Screen ──
@@ -264,9 +576,8 @@ const HackerspaceClassroomScene = {
             action: (game) => {
                 const idx = game.getFlag('classroom_presentation_index') || 0;
                 const pres = HackerspaceClassroomScene._presentations[idx];
-                const presName = (idx % 2 === 0) ? 'Wouter' : 'Marieke';
                 game.startDialogue([
-                    { speaker: 'Ryan', text: `The presenter's laptop. The slides are about "${pres.title}" — presented by ${presName}.` },
+                    { speaker: 'Ryan', text: `The presenter's laptop. The slides are about "${pres.title}" — presented by ${pres.presenter}.` },
                     { speaker: 'Ryan', text: 'LibreOffice Impress on Linux. Of course. This is a hackerspace.' },
                 ]);
             }
@@ -375,13 +686,12 @@ const HackerspaceClassroomScene = {
             action: (game) => {
                 const idx = game.getFlag('classroom_presentation_index') || 0;
                 const pres = HackerspaceClassroomScene._presentations[idx];
-                const isWouter = (idx % 2 === 0);
-                const presName = isWouter ? 'Wouter' : 'Marieke';
+                const presName = pres.presenter;
                 const visits = game.getFlag('presenter_talks') || 0;
                 game.setFlag('presenter_talks', visits + 1);
                 const lines = [
                     [
-                        { speaker: presName, text: `*notices Ryan watching* Ah, a new face! Welcome. I\'m ${presName}, one of the regular presenters here at HSD.` },
+                        { speaker: presName, text: `*notices Ryan watching* Ah, a new face! Welcome. I\'m ${presName}, tonight\'s presenter here at HSD.` },
                         { speaker: presName, text: `Tonight I\'m covering "${pres.title}". We try to keep it practical — theory plus hands-on.` },
                         { speaker: 'Ryan', text: `Nice setup. How often do you do these presentations?` },
                         { speaker: presName, text: 'Every Tuesday evening, 20:00 sharp. Different topic each week. We have about twelve regulars who take turns presenting. Anyone can volunteer.' },
@@ -867,7 +1177,9 @@ const HackerspaceClassroomScene = {
 
         // 1) Place the presenter at the front
         const idx = game.getFlag('classroom_presentation_index') || 0;
-        const presenterKey = (idx % 2 === 0) ? 'presenter_male' : 'presenter_female';
+        const pres = this._presentations[idx];
+        const femaleNames = ['Femke', 'Sophie', 'Lisa', 'Anke'];
+        const presenterKey = femaleNames.indexOf(pres.presenter) >= 0 ? 'presenter_female' : 'presenter_male';
         game.showCharacter(presenterKey, 46, 62, 0.07);
 
         // 2) Place named audience members via showCharacter
@@ -926,52 +1238,47 @@ const HackerspaceClassroomScene = {
     },
 
     onEnter: function(game) {
-        // Advance to next presentation (cycling through all)
-        let idx = game.getFlag('classroom_presentation_index') || 0;
-        // On subsequent visits, advance to next topic
-        if (game.getFlag('visited_hackerspace_classroom')) {
-            idx = (idx + 1) % this._presentations.length;
-        }
-        game.setFlag('classroom_presentation_index', idx);
+        var self = this;
 
-        const pres = this._presentations[idx];
+        // Show talk picker so the player chooses which presentation to attend
+        this._showTalkPicker(game, function(idx) {
+            var pres = self._presentations[idx];
 
-        // Spawn random audience + named characters + presenter
-        this._spawnPeople(game);
+            // Spawn random audience + named characters + presenter
+            self._spawnPeople(game);
 
-        // Start ambient audio
-        setTimeout(() => { this._initAudio(); }, 300);
+            // Start ambient audio
+            setTimeout(function() { self._initAudio(); }, 300);
 
-        // Start VFX (projector flicker, laser dot, audience reactions)
-        setTimeout(() => { this._startVFX(); }, 1500);
+            // Start VFX (projector flicker, laser dot, audience reactions)
+            setTimeout(function() { self._startVFX(); }, 1500);
 
-        // Start audience fidget animations
-        setTimeout(() => { this._startFidgets(); }, 2000);
+            // Start audience fidget animations
+            setTimeout(function() { self._startFidgets(); }, 2000);
 
-        if (!game.getFlag('visited_hackerspace_classroom')) {
-            game.setFlag('visited_hackerspace_classroom', true);
-            setTimeout(() => {
-                const isWouter = (idx % 2 === 0);
-                const presName = isWouter ? 'Wouter' : 'Marieke';
-                game.startDialogue([
-                    { speaker: '', text: '*Ryan slips through the classroom door. The projector casts a blue glow across rows of faces. A low murmur of conversation.*' },
-                    { speaker: '', text: `*The slide reads: "${pres.title}" — presented by ${presName}. ${this._currentPeopleCount} people fill the old school chairs.*` },
-                    { speaker: 'Ryan', text: 'The old classroom. Projector, whiteboard, rows of chairs. Every week a different member gives a presentation.' },
-                    { speaker: '', text: '*Someone\'s laptop keyboard clicks softly. A coffee cup clinks against a desk. The projector fan hums.*' },
-                    { speaker: 'Ryan', text: 'I recognise some faces from the workshop — Pieter has a Pi on his lap, Aisha\'s sketching notes, Marco somehow looks out of place without ear protection.' },
-                    { speaker: 'Ryan', text: 'This is where hackerspace members learn from each other. No professors, no grades — just people sharing what they know.' },
-                ]);
-            }, 600);
-        } else {
-            setTimeout(() => {
-                const isWouter = (idx % 2 === 0);
-                const presName = isWouter ? 'Wouter' : 'Marieke';
-                game.startDialogue([
-                    { speaker: '', text: `*The projector shows: "${pres.title}" by ${presName}. The low hum of conversation and clicking laptops fills the room.*` },
-                    { speaker: 'Ryan', text: `${this._currentPeopleCount} people tonight. Good turnout for "${pres.title}".` },
-                ]);
-            }, 500);
-        }
+            if (!game.getFlag('visited_hackerspace_classroom')) {
+                game.setFlag('visited_hackerspace_classroom', true);
+                setTimeout(function() {
+                    var isWouter = (idx % 2 === 0);
+                    var presName = isWouter ? 'Wouter' : 'Marieke';
+                    game.startDialogue([
+                        { speaker: '', text: '*Ryan slips through the classroom door. The projector casts a blue glow across rows of faces. A low murmur of conversation.*' },
+                        { speaker: '', text: '*The slide reads: "' + pres.title + '" — presented by ' + pres.presenter + '. ' + self._currentPeopleCount + ' people fill the old school chairs.*' },
+                        { speaker: 'Ryan', text: 'The old classroom. Projector, whiteboard, rows of chairs. Every week a different member gives a presentation.' },
+                        { speaker: '', text: '*Someone\'s laptop keyboard clicks softly. A coffee cup clinks against a desk. The projector fan hums.*' },
+                        { speaker: 'Ryan', text: 'I recognise some faces from the workshop — Pieter has a Pi on his lap, Aisha\'s sketching notes, Marco somehow looks out of place without ear protection.' },
+                        { speaker: 'Ryan', text: 'This is where hackerspace members learn from each other. No professors, no grades — just people sharing what they know.' },
+                    ]);
+                }, 600);
+            } else {
+                setTimeout(function() {
+                    game.startDialogue([
+                        { speaker: '', text: '*The projector shows: "' + pres.title + '" by ' + pres.presenter + '. The low hum of conversation and clicking laptops fills the room.*' },
+                        { speaker: 'Ryan', text: self._currentPeopleCount + ' people tonight. Good turnout for "' + pres.title + '".' },
+                    ]);
+                }, 500);
+            }
+        });
     },
 
     onExit: function() {

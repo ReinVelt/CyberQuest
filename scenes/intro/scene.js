@@ -374,6 +374,15 @@ const IntroScene = {
     position: relative; z-index: 5;
 }
 .prod-line.visible { background: rgba(255,255,255,0.25); width: 120px; }
+.prod-director {
+    font-family: 'Georgia', serif;
+    font-size: 0.85em !important; letter-spacing: 6px !important;
+    font-style: italic; margin-bottom: 2px;
+    color: rgba(255,215,0,0) !important;
+    transition: color 2s ease;
+}
+.prod-director.visible { color: rgba(255,215,0,0.6) !important; }
+.prod-director.fade { color: rgba(255,215,0,0) !important; transition: color 1.2s ease; }
 
 /* === ACT 2: BUNKER === */
 .scene-bunker { background: #000; overflow: hidden; }
@@ -727,6 +736,17 @@ const IntroScene = {
     30%  { transform: scaleX(1.2); opacity: 1; }
     100% { transform: scaleX(2); opacity: 0; }
 }
+.title-director {
+    font-family: 'Georgia', serif;
+    font-size: 1.8em; letter-spacing: 8px; font-style: italic;
+    color: rgba(255,215,0,0); position: relative; z-index: 8;
+    margin-bottom: 10px;
+    transition: color 1.5s ease 0.3s, text-shadow 1.5s ease 0.3s;
+}
+.title-director.visible {
+    color: rgba(255,215,0,0.7);
+    text-shadow: 0 0 20px rgba(255,215,0,0.3), 0 0 60px rgba(255,215,0,0.15);
+}
 .title-main {
     font-family: 'Courier New', monospace;
     font-size: 6.5em; font-weight: bold; letter-spacing: 30px;
@@ -790,6 +810,7 @@ const IntroScene = {
 /* === RESPONSIVE === */
 @media (max-width: 768px) {
     .title-main  { font-size: 2.8em; letter-spacing: 10px; }
+    .title-director { font-size: 1em; letter-spacing: 4px; }
     .title-sub   { font-size: 1.3em; letter-spacing: 8px; }
     .ryan-name   { font-size: 2.5em; letter-spacing: 8px; }
     .loc-place   { font-size: 2em; letter-spacing: 10px; }
@@ -839,6 +860,7 @@ const IntroScene = {
             '<div class="cine-scene scene-production" id="scene-1">' +
                 '<div class="prod-text" id="prod-1">A</div>' +
                 '<div class="prod-line" id="prod-line"></div>' +
+                '<div class="prod-text prod-director" id="prod-director">Ryan Weylant\'s</div>' +
                 '<div class="prod-text" id="prod-2" style="font-size:1.4em;letter-spacing:12px;margin:8px 0">CYBERQUEST</div>' +
                 '<div class="prod-line" id="prod-line2"></div>' +
                 '<div class="prod-text" id="prod-3">INTERACTIVE PRODUCTION</div>' +
@@ -971,6 +993,7 @@ const IntroScene = {
             '<div class="cine-scene scene-title" id="scene-10">' +
                 '<div class="title-ring" id="title-ring"></div>' +
                 '<div class="title-flare" id="title-flare"></div>' +
+                '<div class="title-director" id="title-director">Ryan Weylant\'s</div>' +
                 '<div class="title-main" id="title-main">CYBERQUEST</div>' +
                 '<div class="title-line" id="title-line"></div>' +
                 '<div class="title-sub" id="title-sub">OPERATION ZERFALL</div>' +
@@ -1224,6 +1247,7 @@ const IntroScene = {
             self._schedule(function() {
                 document.getElementById('prod-1')?.classList.add('visible');
                 document.getElementById('prod-line')?.classList.add('visible');
+                document.getElementById('prod-director')?.classList.add('visible');
                 document.getElementById('prod-2')?.classList.add('visible');
                 document.getElementById('prod-line2')?.classList.add('visible');
                 document.getElementById('prod-3')?.classList.add('visible');
@@ -1372,6 +1396,7 @@ const IntroScene = {
                 if (flare) flare.classList.add('active');
             }, 1500);
             self._schedule(function() {
+                document.getElementById('title-director')?.classList.add('visible');
                 document.getElementById('title-main')?.classList.add('visible');
                 triggerFlash();
                 triggerShake();

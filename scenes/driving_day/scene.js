@@ -456,7 +456,29 @@ const DrivingDayScene = {
         this._startRadio();
         this._speakRadioNews(destination);
 
-        if (destination === 'astron') {
+        if (destination === 'wsrt_parking') {
+            // Compascuum → WSRT Parking (~40 min, casual day trip)
+            const t1 = setTimeout(() => {
+                g.startDialogue([
+                    { speaker: '',      text: '*Afternoon sun on the N34. The Volvo heads south-west toward Westerbork.*' },
+                    { speaker: '',      text: '*The autoradio is tuned to RTV Drenthe. Music, then a weather forecast.*' },
+                    { speaker: 'Ryan',  text: 'Forty minutes to the WSRT area. Nice day for a drive.' },
+                    { speaker: '',      text: '*The flat Drenthe fields stretch to every horizon. Wind turbines turning slowly.*' },
+                    { speaker: 'Ryan',  text: 'The memorial, the radio telescopes, and a scale model of the solar system.' },
+                    { speaker: 'Ryan',  text: 'Three completely different worlds from one parking lot. Classic Drenthe.' },
+                    { speaker: '',      text: '*Road sign flashes past: Westerbork 12 km*' },
+                    { speaker: 'Ryan',  text: 'Almost there. Let\'s see what the day brings.' },
+                    { speaker: '',      text: '*White parabolic dishes appear above the treeline, glinting in the sun.*' },
+                    { speaker: '',      text: '*The Volvo rolls into a gravel parking area. A wooden direction board stands at the edge of the heath.*' },
+                    { speaker: 'Ryan',  text: 'And here we are. Three paths from one parking spot.' }
+                ], () => {
+                    g.advanceTime(40);
+                    g.loadScene('wsrt_parking');
+                });
+            }, 1000);
+            this._timeoutIds.push(t1);
+
+        } else if (destination === 'astron') {
             // Compascuum → Westerbork (~40 min, afternoon)
             const t1 = setTimeout(() => {
                 g.startDialogue([
@@ -475,10 +497,11 @@ const DrivingDayScene = {
                     { speaker: 'Ryan',  text: 'Today they listen for something man-made.' },
                     { speaker: '',      text: '*White parabolic dishes appear above the treeline, glinting in the sun.*' },
                     { speaker: 'Ryan',  text: 'There they are. Fourteen ears, all pointing the same way.' },
-                    { speaker: 'Ryan',  text: 'Let\'s hear what Cees has to say.' }
+                    { speaker: '',      text: '*The Volvo rolls into a gravel parking area. A wooden direction board stands at the edge of the heath.*' },
+                    { speaker: 'Ryan',  text: 'Parking. The control room is 400 metres from here.' }
                 ], () => {
                     g.advanceTime(40);
-                    g.loadScene('astron');
+                    g.loadScene('wsrt_parking');
                 });
             }, 1000);
             this._timeoutIds.push(t1);
@@ -496,10 +519,11 @@ const DrivingDayScene = {
                     { speaker: 'Ryan',  text: 'Camp Westerbork. Transit camp during the war. 102,000 people deported from there.' },
                     { speaker: 'Ryan',  text: 'The WSRT dishes are literally 200 metres away. History and science, side by side.' },
                     { speaker: '',      text: '*Road sign: Hooghalen 5 km — Herinneringscentrum Kamp Westerbork*' },
-                    { speaker: 'Ryan',  text: 'Almost there. Let\'s see what\'s really going on.' }
+                    { speaker: 'Ryan',  text: 'Almost there. Let\'s see what\'s really going on.' },
+                    { speaker: '',      text: '*The Volvo turns into a gravel parking area. A direction board points to three paths.*' }
                 ], () => {
                     g.advanceTime(40);
-                    g.loadScene('westerbork_memorial');
+                    g.loadScene('wsrt_parking');
                 });
             }, 1000);
             this._timeoutIds.push(t1);
@@ -517,6 +541,27 @@ const DrivingDayScene = {
                     { speaker: 'Ryan',  text: 'I need to think about what I found there.' },
                     { speaker: '',      text: '*Approaching Compascuum. The farmhouse appears on the horizon.*' },
                     { speaker: 'Ryan',  text: 'Home. Time to regroup.' }
+                ], () => {
+                    g.advanceTime(40);
+                    g.loadScene('garden');
+                    g.showNotification('Returned to garden');
+                });
+            }, 1000);
+            this._timeoutIds.push(t1);
+
+        } else if (destination === 'home_from_wsrt_parking') {
+            // WSRT Parking → Compascuum (~40 min)
+            const t1 = setTimeout(() => {
+                g.startDialogue([
+                    { speaker: '',      text: '*The Volvo pulls out of the gravel parking area. The WSRT dishes shrink in the rear mirror.*' },
+                    { speaker: '',      text: '*RTV Drenthe plays on the autoradio. Afternoon news, then music.*' },
+                    { speaker: 'Ryan',  text: 'Heading home. Forty minutes through Drenthe.' },
+                    { speaker: '',      text: '*N34 heading north-east. Flat fields to every horizon.*' },
+                    { speaker: 'Ryan',  text: 'That parking lot has three completely different worlds radiating from it.' },
+                    { speaker: 'Ryan',  text: 'A Holocaust memorial. A radio telescope. A model of the solar system.' },
+                    { speaker: 'Ryan',  text: 'Only in Drenthe.' },
+                    { speaker: '',      text: '*Approaching Compascuum. The farmhouse appears on the horizon.*' },
+                    { speaker: 'Ryan',  text: 'Home.' }
                 ], () => {
                     g.advanceTime(40);
                     g.loadScene('garden');
