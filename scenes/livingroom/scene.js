@@ -33,12 +33,8 @@ const LivingroomScene = {
                         game.loadScene('tvdocumentary');
                     }, 2000);
                 } else {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'The documentary is playing. Should I watch it again?' }
-                    ]);
-                    game.sceneTimeout(() => {
-                        game.loadScene('tvdocumentary');
-                    }, 1500);
+                    // Show channel picker overlay
+                    LivingroomScene._showChannelPicker(game);
                 }
             }
         },
@@ -202,7 +198,97 @@ const LivingroomScene = {
             targetScene: 'home'
         }
     ],
-    
+
+    /* ═══════════════════════════════════════════════════
+     *  CHANNEL PICKER — TV remote overlay
+     * ═══════════════════════════════════════════════════ */
+    _showChannelPicker(game) {
+        // Remove any existing picker
+        const existing = document.getElementById('channel-picker-overlay');
+        if (existing) existing.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = 'channel-picker-overlay';
+        Object.assign(overlay.style, {
+            position: 'fixed', inset: '0', zIndex: '9000',
+            background: 'rgba(0,0,0,0.75)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontFamily: "'Courier New', monospace"
+        });
+
+        const channels = [
+            { id: 'tvdocumentary', label: 'NPO DOC', desc: 'Drenthe: The Unexpected Tech Hub', icon: '🎬' },
+            { id: 'tvnews',        label: 'NOS Journaal', desc: 'Latest news',                  icon: '📺' }
+        ];
+
+        const card = document.createElement('div');
+        Object.assign(card.style, {
+            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+            border: '2px solid #0f3460', borderRadius: '12px',
+            padding: '28px 32px', minWidth: '340px', maxWidth: '440px',
+            boxShadow: '0 0 40px rgba(15,52,96,0.6)'
+        });
+
+        const title = document.createElement('div');
+        title.textContent = '📡  SELECT CHANNEL';
+        Object.assign(title.style, {
+            color: '#e0e0e0', fontSize: '15px', fontWeight: 'bold',
+            textAlign: 'center', marginBottom: '18px', letterSpacing: '2px'
+        });
+        card.appendChild(title);
+
+        channels.forEach(ch => {
+            const btn = document.createElement('button');
+            btn.innerHTML = `<span style="font-size:22px;margin-right:10px">${ch.icon}</span>
+                             <span><strong style="color:#e0e0e0">${ch.label}</strong>
+                             <br><small style="color:#8899aa">${ch.desc}</small></span>`;
+            Object.assign(btn.style, {
+                display: 'flex', alignItems: 'center', width: '100%',
+                padding: '12px 16px', marginBottom: '10px',
+                background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
+                borderRadius: '8px', cursor: 'pointer', textAlign: 'left',
+                transition: 'background 0.2s, border-color 0.2s'
+            });
+            btn.addEventListener('mouseenter', () => {
+                btn.style.background = 'rgba(15,52,96,0.6)';
+                btn.style.borderColor = '#4a9eff';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.background = 'rgba(255,255,255,0.06)';
+                btn.style.borderColor = 'rgba(255,255,255,0.12)';
+            });
+            btn.addEventListener('click', () => {
+                overlay.remove();
+                game.loadScene(ch.id);
+            });
+            card.appendChild(btn);
+        });
+
+        // Cancel / back button
+        const cancel = document.createElement('button');
+        cancel.textContent = '✕  Back';
+        Object.assign(cancel.style, {
+            display: 'block', margin: '14px auto 0', padding: '6px 18px',
+            background: 'transparent', border: '1px solid rgba(255,255,255,0.2)',
+            borderRadius: '6px', color: '#8899aa', cursor: 'pointer',
+            fontSize: '12px', fontFamily: 'inherit',
+            transition: 'color 0.2s'
+        });
+        cancel.addEventListener('mouseenter', () => { cancel.style.color = '#e0e0e0'; });
+        cancel.addEventListener('mouseleave', () => { cancel.style.color = '#8899aa'; });
+        cancel.addEventListener('click', () => overlay.remove());
+        card.appendChild(cancel);
+
+        overlay.appendChild(card);
+
+        // Close on overlay click (outside card)
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) overlay.remove();
+        });
+
+        document.body.appendChild(overlay);
+    },
+
     onEnter: (game) => {
         // Remove any existing NPC characters from previous visits (preserve player character)
         const charactersContainer = document.getElementById('scene-characters');

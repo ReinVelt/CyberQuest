@@ -36,9 +36,14 @@ const TvdocumentaryScene = {
     ],
 
     /* ═══════════════════════════════════════════════════════
-     *  AUDIO ENGINE — Web Audio API synthesised FX
+     *  AUDIO ENGINE — Cinematic Documentary Sound Design
+     *  Rich layered Web Audio API synthesis with reverb,
+     *  noise textures, evolving pads, and ambient music bed
      * ═══════════════════════════════════════════════════════ */
     _audioCtx: null,
+    _masterGain: null,
+    _reverbNodes: {},   // keyed by 'duration-decay'
+    _noiseBuffer: null,
 
     _getAudioCtx() {
         if (!this._audioCtx) {
@@ -47,176 +52,439 @@ const TvdocumentaryScene = {
         if (this._audioCtx.state === 'suspended') {
             this._audioCtx.resume();
         }
+        // Create master gain (soft-limits overall volume)
+        if (!this._masterGain) {
+            this._masterGain = this._audioCtx.createGain();
+            this._masterGain.gain.value = 0.7;
+            this._masterGain.connect(this._audioCtx.destination);
+        }
         return this._audioCtx;
     },
 
-    /** Cinematic whoosh (transition sound) */
+    /** Get or create a shared white-noise buffer (1 second) */
+    _getNoiseBuffer() {
+        if (this._noiseBuffer) return this._noiseBuffer;
+        const ctx = this._getAudioCtx();
+        const len = ctx.sampleRate;
+        const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+        const data = buf.getChannelData(0);
+        for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+        this._noiseBuffer = buf;
+        return buf;
+    },
+
+    /** Create a convolution reverb impulse response (cached per unique params) */
+    _createReverb(duration = 2.5, decay = 2.0) {
+        const key = `${duration}-${decay}`;
+        if (this._reverbNodes[key]) return this._reverbNodes[key];
+        const ctx = this._getAudioCtx();
+        const len = ctx.sampleRate * duration;
+        const buf = ctx.createBuffer(2, len, ctx.sampleRate);
+        for (let ch = 0; ch < 2; ch++) {
+            const data = buf.getChannelData(ch);
+            for (let i = 0; i < len; i++) {
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+            }
+        }
+        const conv = ctx.createConvolver();
+        conv.buffer = buf;
+        this._reverbNodes[key] = conv;
+        // Wire reverb → master
+        conv.connect(this._masterGain);
+        return conv;
+    },
+
+    /** Helper: create a noise source node */
+    _createNoise(ctx) {
+        const src = ctx.createBufferSource();
+        src.buffer = this._getNoiseBuffer();
+        src.loop = true;
+        return src;
+    },
+
+    /* ─── WHOOSH — layered noise sweep with reverb ─── */
     _playWhoosh() {
         try {
             const ctx = this._getAudioCtx();
             const now = ctx.currentTime;
+            const rev = this._createReverb();
+            const master = this._masterGain;
 
-            // Noise burst via oscillator sweep
+            // Layer 1: filtered noise sweep (the "air" texture)
+            const noise = this._createNoise(ctx);
+            const nGain = ctx.createGain();
+            const bp = ctx.createBiquadFilter();
+            bp.type = 'bandpass';
+            bp.Q.value = 1.2;
+            bp.frequency.setValueAtTime(300, now);
+            bp.frequency.exponentialRampToValueAtTime(4000, now + 0.18);
+            bp.frequency.exponentialRampToValueAtTime(200, now + 0.6);
+            nGain.gain.setValueAtTime(0, now);
+            nGain.gain.linearRampToValueAtTime(0.18, now + 0.06);
+            nGain.gain.linearRampToValueAtTime(0.12, now + 0.18);
+            nGain.gain.exponentialRampToValueAtTime(0.001, now + 0.7);
+            noise.connect(bp).connect(nGain);
+            nGain.connect(master);
+            nGain.connect(rev);
+
+            // Layer 2: tonal sweep for body
             const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            const filter = ctx.createBiquadFilter();
-
+            const oGain = ctx.createGain();
             osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(200, now);
-            osc.frequency.exponentialRampToValueAtTime(2000, now + 0.15);
-            osc.frequency.exponentialRampToValueAtTime(100, now + 0.4);
+            osc.frequency.setValueAtTime(150, now);
+            osc.frequency.exponentialRampToValueAtTime(2500, now + 0.15);
+            osc.frequency.exponentialRampToValueAtTime(80, now + 0.55);
+            oGain.gain.setValueAtTime(0, now);
+            oGain.gain.linearRampToValueAtTime(0.06, now + 0.04);
+            oGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+            osc.connect(oGain);
+            oGain.connect(master);
+            oGain.connect(rev);
 
-            filter.type = 'bandpass';
-            filter.frequency.setValueAtTime(800, now);
-            filter.frequency.exponentialRampToValueAtTime(3000, now + 0.15);
-            filter.frequency.exponentialRampToValueAtTime(400, now + 0.4);
-            filter.Q.value = 0.5;
-
-            gain.gain.setValueAtTime(0, now);
-            gain.gain.linearRampToValueAtTime(0.12, now + 0.05);
-            gain.gain.linearRampToValueAtTime(0.08, now + 0.15);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
-
-            osc.connect(filter).connect(gain).connect(ctx.destination);
+            noise.start(now);
+            noise.stop(now + 0.8);
             osc.start(now);
-            osc.stop(now + 0.5);
+            osc.stop(now + 0.7);
         } catch (e) { /* silent fail */ }
     },
 
-    /** Deep cinematic impact/boom */
+    /* ─── IMPACT — deep cinematic boom with sub-bass, transient & reverb tail ─── */
     _playImpact() {
         try {
             const ctx = this._getAudioCtx();
             const now = ctx.currentTime;
+            const rev = this._createReverb();
+            const master = this._masterGain;
 
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
+            // Sub-bass thud
+            const sub = ctx.createOscillator();
+            const subGain = ctx.createGain();
+            sub.type = 'sine';
+            sub.frequency.setValueAtTime(90, now);
+            sub.frequency.exponentialRampToValueAtTime(25, now + 1.2);
+            subGain.gain.setValueAtTime(0.22, now);
+            subGain.gain.exponentialRampToValueAtTime(0.001, now + 1.5);
+            sub.connect(subGain);
+            subGain.connect(master);
+            subGain.connect(rev);
 
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(80, now);
-            osc.frequency.exponentialRampToValueAtTime(30, now + 0.8);
+            // Mid transient punch
+            const mid = ctx.createOscillator();
+            const midGain = ctx.createGain();
+            mid.type = 'triangle';
+            mid.frequency.setValueAtTime(250, now);
+            mid.frequency.exponentialRampToValueAtTime(60, now + 0.3);
+            midGain.gain.setValueAtTime(0.12, now);
+            midGain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+            mid.connect(midGain);
+            midGain.connect(master);
 
-            gain.gain.setValueAtTime(0.2, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 1.0);
+            // Noise crack layer
+            const noise = this._createNoise(ctx);
+            const nGain = ctx.createGain();
+            const hp = ctx.createBiquadFilter();
+            hp.type = 'highpass';
+            hp.frequency.value = 2000;
+            nGain.gain.setValueAtTime(0.1, now);
+            nGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+            noise.connect(hp).connect(nGain);
+            nGain.connect(master);
+            nGain.connect(rev);
 
-            osc.connect(gain).connect(ctx.destination);
-            osc.start(now);
-            osc.stop(now + 1.0);
-
-            // Click layer
-            const osc2 = ctx.createOscillator();
-            const gain2 = ctx.createGain();
-            osc2.type = 'square';
-            osc2.frequency.value = 150;
-            gain2.gain.setValueAtTime(0.08, now);
-            gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-            osc2.connect(gain2).connect(ctx.destination);
-            osc2.start(now);
-            osc2.stop(now + 0.12);
+            sub.start(now); sub.stop(now + 1.6);
+            mid.start(now); mid.stop(now + 0.4);
+            noise.start(now); noise.stop(now + 0.15);
         } catch (e) { /* silent fail */ }
     },
 
-    /** Ambient pad drone (returns stop function) */
+    /* ─── DRONE — rich evolving ambient pad with LFO modulation ─── */
     _playDrone() {
         try {
             const ctx = this._getAudioCtx();
             const now = ctx.currentTime;
+            const rev = this._createReverb(3.5, 1.8);
+            const master = this._masterGain;
 
-            const osc1 = ctx.createOscillator();
-            const osc2 = ctx.createOscillator();
-            const gain = ctx.createGain();
-            const filter = ctx.createBiquadFilter();
+            // Master drone gain (for fade-out)
+            const droneGain = ctx.createGain();
+            droneGain.gain.setValueAtTime(0, now);
+            droneGain.gain.linearRampToValueAtTime(1, now + 3);
+            droneGain.connect(master);
 
-            osc1.type = 'sine';
-            osc1.frequency.value = 65;
-            osc2.type = 'sine';
-            osc2.frequency.value = 98; // fifth
+            // Warm filter
+            const lp = ctx.createBiquadFilter();
+            lp.type = 'lowpass';
+            lp.frequency.value = 350;
+            lp.Q.value = 0.7;
+            lp.connect(droneGain);
+            lp.connect(rev);
 
-            filter.type = 'lowpass';
-            filter.frequency.value = 200;
+            // LFO for filter modulation (slow breathing)
+            const lfo = ctx.createOscillator();
+            const lfoGain = ctx.createGain();
+            lfo.type = 'sine';
+            lfo.frequency.value = 0.08; // very slow
+            lfoGain.gain.value = 100;
+            lfo.connect(lfoGain);
+            lfoGain.connect(lp.frequency);
+            lfo.start(now);
 
-            gain.gain.setValueAtTime(0, now);
-            gain.gain.linearRampToValueAtTime(0.06, now + 2);
+            // 4 detuned oscillators for richness
+            const freqs = [55, 82.5, 110, 165]; // A1, E2, A2, E3
+            const types = ['sine', 'sine', 'triangle', 'sine'];
+            const gains = [0.07, 0.05, 0.03, 0.02];
+            const oscs = freqs.map((f, i) => {
+                const o = ctx.createOscillator();
+                const g = ctx.createGain();
+                o.type = types[i];
+                o.frequency.value = f;
+                // Slight random detune for warmth
+                o.detune.value = (Math.random() - 0.5) * 12;
+                g.gain.value = gains[i];
+                o.connect(g).connect(lp);
+                o.start(now);
+                return o;
+            });
 
-            osc1.connect(filter);
-            osc2.connect(filter);
-            filter.connect(gain).connect(ctx.destination);
-            osc1.start(now);
-            osc2.start(now);
+            // Sub-bass breathe layer (very slow vibrato)
+            const subLfo = ctx.createOscillator();
+            const subLfoG = ctx.createGain();
+            subLfo.type = 'sine';
+            subLfo.frequency.value = 0.15;
+            subLfoG.gain.value = 3;
+            subLfo.connect(subLfoG);
+            oscs[0] && subLfoG.connect(oscs[0].frequency);
+            subLfo.start(now);
 
             return () => {
                 const t = ctx.currentTime;
-                gain.gain.linearRampToValueAtTime(0.001, t + 1);
-                osc1.stop(t + 1.1);
-                osc2.stop(t + 1.1);
+                droneGain.gain.linearRampToValueAtTime(0.001, t + 2);
+                setTimeout(() => {
+                    oscs.forEach(o => { try { o.stop(); } catch(e){} });
+                    try { lfo.stop(); subLfo.stop(); } catch(e){}
+                }, 2200);
             };
         } catch (e) { return () => {}; }
     },
 
-    /** Soft typing / reveal tick */
+    /* ─── TICK — warm piano-like pluck with harmonics ─── */
     _playTick() {
         try {
             const ctx = this._getAudioCtx();
             const now = ctx.currentTime;
+            const master = this._masterGain;
+            const rev = this._createReverb();
 
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
+            // Fundamental
+            const baseFreq = 800 + Math.random() * 300;
+            const harmonics = [1, 2, 3, 5];
+            const hGains = [0.05, 0.025, 0.012, 0.006];
 
-            osc.type = 'sine';
-            osc.frequency.value = 1200 + Math.random() * 400;
-            gain.gain.setValueAtTime(0.04, now);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
-
-            osc.connect(gain).connect(ctx.destination);
-            osc.start(now);
-            osc.stop(now + 0.06);
+            harmonics.forEach((h, i) => {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = baseFreq * h;
+                gain.gain.setValueAtTime(hGains[i], now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2 + i * 0.05);
+                osc.connect(gain);
+                gain.connect(master);
+                if (i === 0) gain.connect(rev);
+                osc.start(now);
+                osc.stop(now + 0.3 + i * 0.05);
+            });
         } catch (e) { /* silent fail */ }
     },
 
-    /** Rising tension tone */
+    /* ─── RISER — multi-layered tension build ─── */
     _playRiser() {
         try {
             const ctx = this._getAudioCtx();
             const now = ctx.currentTime;
+            const rev = this._createReverb();
+            const master = this._masterGain;
 
+            // Tonal sweep
             const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
+            const oGain = ctx.createGain();
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(120, now);
+            osc.frequency.exponentialRampToValueAtTime(900, now + 2.0);
+            oGain.gain.setValueAtTime(0, now);
+            oGain.gain.linearRampToValueAtTime(0.05, now + 0.3);
+            oGain.gain.linearRampToValueAtTime(0.07, now + 1.6);
+            oGain.gain.exponentialRampToValueAtTime(0.001, now + 2.2);
+            const lp = ctx.createBiquadFilter();
+            lp.type = 'lowpass';
+            lp.frequency.setValueAtTime(400, now);
+            lp.frequency.exponentialRampToValueAtTime(3000, now + 2.0);
+            osc.connect(lp).connect(oGain);
+            oGain.connect(master);
+            oGain.connect(rev);
 
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(200, now);
-            osc.frequency.exponentialRampToValueAtTime(800, now + 1.5);
+            // Noise texture rising underneath
+            const noise = this._createNoise(ctx);
+            const nGain = ctx.createGain();
+            const bp = ctx.createBiquadFilter();
+            bp.type = 'bandpass';
+            bp.Q.value = 2;
+            bp.frequency.setValueAtTime(500, now);
+            bp.frequency.exponentialRampToValueAtTime(5000, now + 2.0);
+            nGain.gain.setValueAtTime(0, now);
+            nGain.gain.linearRampToValueAtTime(0.04, now + 1.0);
+            nGain.gain.linearRampToValueAtTime(0.08, now + 1.8);
+            nGain.gain.exponentialRampToValueAtTime(0.001, now + 2.3);
+            noise.connect(bp).connect(nGain);
+            nGain.connect(master);
 
-            gain.gain.setValueAtTime(0, now);
-            gain.gain.linearRampToValueAtTime(0.06, now + 0.5);
-            gain.gain.linearRampToValueAtTime(0.06, now + 1.2);
-            gain.gain.exponentialRampToValueAtTime(0.001, now + 1.6);
+            // Sub-bass swell
+            const sub = ctx.createOscillator();
+            const sGain = ctx.createGain();
+            sub.type = 'sine';
+            sub.frequency.setValueAtTime(55, now);
+            sub.frequency.linearRampToValueAtTime(80, now + 2.0);
+            sGain.gain.setValueAtTime(0, now);
+            sGain.gain.linearRampToValueAtTime(0.08, now + 1.5);
+            sGain.gain.exponentialRampToValueAtTime(0.001, now + 2.3);
+            sub.connect(sGain);
+            sGain.connect(master);
 
-            osc.connect(gain).connect(ctx.destination);
-            osc.start(now);
-            osc.stop(now + 1.6);
+            osc.start(now); osc.stop(now + 2.4);
+            noise.start(now); noise.stop(now + 2.5);
+            sub.start(now); sub.stop(now + 2.5);
         } catch (e) { /* silent fail */ }
     },
 
-    /** Success / resolution chime */
+    /* ─── CHIME — bell-like harmonics with pentatonic resolution ─── */
     _playChime() {
         try {
             const ctx = this._getAudioCtx();
             const now = ctx.currentTime;
-            const notes = [523, 659, 784]; // C5 E5 G5
+            const rev = this._createReverb();
+            const master = this._masterGain;
+
+            // Pentatonic: C5, D5, E5, G5, A5, C6
+            const notes = [523, 587, 659, 784, 880, 1047];
             notes.forEach((freq, i) => {
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.value = freq;
-                gain.gain.setValueAtTime(0, now + i * 0.15);
-                gain.gain.linearRampToValueAtTime(0.06, now + i * 0.15 + 0.05);
-                gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.8);
-                osc.connect(gain).connect(ctx.destination);
-                osc.start(now + i * 0.15);
-                osc.stop(now + i * 0.15 + 0.8);
+                const t = now + i * 0.18;
+                // Fundamental + 2nd partial for bell-like quality
+                [1, 2.76].forEach((partial, pi) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = pi === 0 ? 'sine' : 'triangle';
+                    osc.frequency.value = freq * partial;
+                    const vol = pi === 0 ? 0.06 : 0.015;
+                    gain.gain.setValueAtTime(0, t);
+                    gain.gain.linearRampToValueAtTime(vol, t + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.001, t + 1.2 - pi * 0.3);
+                    osc.connect(gain);
+                    gain.connect(master);
+                    gain.connect(rev);
+                    osc.start(t);
+                    osc.stop(t + 1.4);
+                });
             });
         } catch (e) { /* silent fail */ }
     },
+
+    /* ─── MUSIC BED — gentle ambient generative music ─── */
+    _playMusicBed() {
+        try {
+            const ctx = this._getAudioCtx();
+            const now = ctx.currentTime;
+            const rev = this._createReverb(4, 1.5);
+            const master = this._masterGain;
+
+            const musicGain = ctx.createGain();
+            musicGain.gain.setValueAtTime(0, now);
+            musicGain.gain.linearRampToValueAtTime(1, now + 4);
+
+            const lp = ctx.createBiquadFilter();
+            lp.type = 'lowpass';
+            lp.frequency.value = 600;
+            lp.Q.value = 0.5;
+            lp.connect(musicGain);
+            musicGain.connect(master);
+
+            // Warm pad — slow chord tones
+            // Am → C → F → G progression (gentle, cinematic)
+            const chords = [
+                [220, 261.6, 329.6],    // Am (A3, C4, E4)
+                [261.6, 329.6, 392],     // C  (C4, E4, G4)
+                [174.6, 220, 261.6],     // F  (F3, A3, C4)
+                [196, 246.9, 293.7],     // G  (G3, B3, D4)
+            ];
+
+            const chordDur = 8; // seconds per chord
+            let activeOscs = [];
+
+            const playChord = (chordIdx) => {
+                const chord = chords[chordIdx % chords.length];
+                const t = ctx.currentTime;
+
+                chord.forEach((freq) => {
+                    // Two detuned oscillators per note for warmth
+                    [-4, 4].forEach((detune) => {
+                        const osc = ctx.createOscillator();
+                        const g = ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.value = freq;
+                        osc.detune.value = detune;
+                        g.gain.setValueAtTime(0, t);
+                        g.gain.linearRampToValueAtTime(0.025, t + 1.5);
+                        g.gain.linearRampToValueAtTime(0.025, t + chordDur - 1.5);
+                        g.gain.linearRampToValueAtTime(0, t + chordDur);
+                        osc.connect(g).connect(lp);
+                        g.connect(rev);
+                        osc.start(t);
+                        osc.stop(t + chordDur + 0.1);
+                        activeOscs.push(osc);
+                    });
+                });
+
+                // Simple arpeggio on top (sparse, atmospheric)
+                const arpNotes = [...chord, chord[0] * 2]; // octave up
+                arpNotes.forEach((freq, i) => {
+                    const at = t + i * 1.8 + 0.5;
+                    const osc = ctx.createOscillator();
+                    const g = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.value = freq * 2; // one octave up
+                    g.gain.setValueAtTime(0, at);
+                    g.gain.linearRampToValueAtTime(0.015, at + 0.1);
+                    g.gain.exponentialRampToValueAtTime(0.001, at + 2.5);
+                    osc.connect(g).connect(lp);
+                    g.connect(rev);
+                    osc.start(at);
+                    osc.stop(at + 3);
+                    activeOscs.push(osc);
+                });
+            };
+
+            // Start chord progression loop
+            let chordIndex = 0;
+            let stopped = false;
+            const scheduleNext = () => {
+                if (stopped) return;
+                playChord(chordIndex);
+                chordIndex++;
+                TvdocumentaryScene._musicTimer = setTimeout(scheduleNext, chordDur * 1000);
+            };
+            scheduleNext();
+
+            return () => {
+                stopped = true;
+                clearTimeout(TvdocumentaryScene._musicTimer);
+                const t = ctx.currentTime;
+                musicGain.gain.linearRampToValueAtTime(0.001, t + 2);
+                setTimeout(() => {
+                    activeOscs.forEach(o => { try { o.stop(); } catch(e){} });
+                    activeOscs = [];
+                }, 2500);
+            };
+        } catch (e) { return () => {}; }
+    },
+    _musicTimer: null,
 
     /* ═══════════════════════════════════════════════════════
      *  CLEANUP
@@ -230,21 +498,27 @@ const TvdocumentaryScene = {
             TvdocumentaryScene._stopDrone();
             TvdocumentaryScene._stopDrone = null;
         }
+        if (TvdocumentaryScene._musicStop) {
+            TvdocumentaryScene._musicStop();
+            TvdocumentaryScene._musicStop = null;
+        }
         // Stop any ongoing TTS
         TvdocumentaryScene._stopSpeech();
     },
 
     _stopDrone: null,
+    _musicStop: null,
 
-    /** Speak text via the game voice system (with speaker profile) */
+    /** Speak text via the game voice system (with speaker profile). Returns a Promise. */
     _speak(text, speaker = 'Documentary') {
         try {
             const vm = window.voiceManager;
             if (vm && vm.enabled) {
-                vm.stop();                      // cancel any running utterance
-                vm.speak(text, speaker);
+                // vm.speak() internally cancels any prior utterance
+                return vm.speak(text, speaker); // returns a Promise
             }
         } catch (e) { /* TTS not critical */ }
+        return Promise.resolve();
     },
 
     /** Stop any ongoing TTS */
@@ -718,8 +992,9 @@ const TvdocumentaryScene = {
         overlay.id = 'docu-overlay';
         document.body.appendChild(overlay);
 
-        // Start background drone
+        // Start background drone + ambient music bed
         self._stopDrone = self._playDrone();
+        self._musicStop = self._playMusicBed();
 
         // ── Documentary sequence ──
         const sequence = [
@@ -812,7 +1087,7 @@ const TvdocumentaryScene = {
                         </div>
                     </div>
                     <div class="docu-quote-bubble">
-                        <p>The beauty of a phased array is that you steer the beam electronically, not mechanically. No moving parts. You combine the signals with precise time delays, and suddenly you have a virtual dish the size of a football field.</p>
+                        <p>The beauty of a phased array is that you steer the beam electronically, not mechanically. No moving parts. You combine the signals from each individual antenna with precise time delays, and suddenly you have a virtual dish the size of a football field.</p>
                     </div>
                 `
             },
@@ -838,7 +1113,7 @@ const TvdocumentaryScene = {
                         </div>
                     </div>
                     <div class="docu-quote-bubble">
-                        <p>We're designing antennas for the lunar far side &mdash; radio telescopes on the Moon, free from Earth's interference. The Dark Ages Explorer will listen for signals from the very first stars, over thirteen billion years ago.</p>
+                        <p>We're designing antennas for the lunar far side &mdash; radio telescopes on the Moon, completely shielded from Earth's radio interference. The Dark Ages Explorer will listen for signals from the very first stars, over thirteen billion years ago. It is the ultimate quiet zone for radio astronomy.</p>
                     </div>
                 `
             },
@@ -891,7 +1166,7 @@ const TvdocumentaryScene = {
                         </div>
                     </div>
                     <div class="docu-quote-bubble">
-                        <p>We built the most advanced digital radio telescope on Earth. Fifty thousand simple antennas, no moving parts. The genius is entirely in the software &mdash; the computer does the pointing.</p>
+                        <p>We built the most advanced digital radio telescope on Earth. Fifty thousand simple antennas spread across Europe, all connected by fibre optics. No moving parts whatsoever. The genius is entirely in the software &mdash; the computer does the pointing.</p>
                     </div>
                 `
             },
@@ -917,7 +1192,7 @@ const TvdocumentaryScene = {
                         </div>
                     </div>
                     <div class="docu-quote-bubble">
-                        <p>We can point the telescope anywhere in the sky &mdash; without moving a single antenna. It's all mathematics. We can even observe multiple directions simultaneously.</p>
+                        <p>We can point the telescope anywhere in the sky &mdash; without moving a single antenna. It is all done with mathematics. We add tiny time delays to each signal, and they combine constructively in exactly the direction we want. We can even look at multiple parts of the sky simultaneously.</p>
                     </div>
                 `
             },
@@ -943,7 +1218,7 @@ const TvdocumentaryScene = {
                         </div>
                     </div>
                     <div class="docu-quote-bubble">
-                        <p>Then came Starlink. SpaceX satellites leaking radio emissions into our frequencies. I converted the interference into sound to show people what we were losing. It was like trying to hear a pin drop at a rock concert.</p>
+                        <p>Then came Starlink. We discovered that SpaceX satellites were leaking unintended radio emissions right into our observation frequencies. Thousands of satellites, drowning out the faintest whispers from the cosmos. I converted the interference patterns into sound and video to show people what we were losing. It was like trying to listen to a pin drop at a rock concert.</p>
                     </div>
                 `
             },
@@ -999,7 +1274,7 @@ const TvdocumentaryScene = {
                         </div>
                     </div>
                     <div class="docu-quote-bubble">
-                        <p>The solution was frequency-hopping spread spectrum. The radio hops between 79 frequencies, 1,600 times per second. If another device is on one frequency, you've already moved to the next.</p>
+                        <p>The challenge was enormous. We needed a protocol that could work in the unlicensed spectrum, the same crowded band used by microwave ovens and baby monitors. The solution was frequency-hopping spread spectrum. The radio hops between 79 frequencies, 1,600 times per second. If another device is on one frequency, you've already moved to the next one.</p>
                     </div>
                 `
             },
@@ -1025,9 +1300,9 @@ const TvdocumentaryScene = {
                         </div>
                     </div>
                     <div class="docu-quote-bubble">
-                        <p>Over five billion Bluetooth devices ship every year. Your phone, your car, your hearing aids. The best technology is the kind you never notice.</p>
+                        <p>When we started, people said short-range wireless would never replace cables. Now over five billion Bluetooth devices ship every single year. Your phone, your car, your hearing aids, your medical devices. The technology has become invisible, and that was always the goal. The best technology is the kind you never notice.</p>
                     </div>
-                    <div class="docu-text-overlay" style="bottom: 24%; left: 55%; width: 38%; transform: none; animation-delay: 1.2s;">
+                    <div class="docu-text-overlay" style="top: 6%; right: 4%; bottom: auto; left: auto; width: auto; transform: none; animation-delay: 1.2s; text-align: right;">
                         <p><a href="https://www.youtube.com/watch?v=IAHM4SoT3eY" target="_blank">&#127909; Watch Real Interview &rarr;</a></p>
                     </div>
                 `
@@ -1097,11 +1372,24 @@ const TvdocumentaryScene = {
             } catch (e) { /* audio not critical */ }
 
             // Speak voice-over / interview dialogue via TTS
+            // speechDone resolves when TTS finishes (or immediately if no TTS)
+            let speechDone = Promise.resolve();
             if (step.voice) {
-                setTimeout(() => {
-                    self._speak(step.voice.text, step.voice.speaker || 'Documentary');
-                }, 600);  // slight delay so sound FX lands first
+                speechDone = new Promise(resolve => {
+                    setTimeout(() => {
+                        self._speak(step.voice.text, step.voice.speaker || 'Documentary')
+                            .then(resolve)
+                            .catch(resolve);
+                    }, 600);  // slight delay so sound FX lands first
+                });
             }
+
+            // Calculate minimum reading time from word count (~160 WPM comfortable reading)
+            // This guarantees text stays on screen long enough even if TTS isn't working
+            const voiceText = step.voice ? step.voice.text : '';
+            const wordCount = voiceText.split(/\s+/).filter(w => w).length;
+            const minReadMs = Math.max(4000, wordCount * 375);  // ~160 WPM, floor 4s
+            const minReadTimer = new Promise(resolve => setTimeout(resolve, minReadMs));
 
             // Build screen
             const screen = document.createElement('div');
@@ -1168,12 +1456,17 @@ const TvdocumentaryScene = {
                 }
             }, 50);
 
-            // Auto-advance
-            setTimeout(() => {
-                if (screen.parentElement) {
-                    continueBtn.click();
-                }
-            }, step.duration);
+            // Auto-advance: wait for BOTH speech AND minimum reading time, then pause
+            Promise.all([speechDone, minReadTimer]).then(() => {
+                const pauseMs = (window.game && window.game.settings)
+                    ? (window.game.settings.docuPauseDuration ?? 1500)
+                    : 1500;
+                setTimeout(() => {
+                    if (screen.parentElement) {
+                        continueBtn.click();
+                    }
+                }, pauseMs);
+            });
         };
 
         showStep();
@@ -1185,19 +1478,9 @@ const TvdocumentaryScene = {
     onEnter(game) {
         if (game.player) game.player.hide();
 
-        if (!game.getFlag('tv_documentary_watched')) {
-            setTimeout(() => {
-                TvdocumentaryScene.showDocumentaryOverlay(game);
-            }, 500);
-        } else {
-            game.startDialogue([
-                { speaker: 'Ryan', text: 'I\'ve already seen this documentary.' },
-                { speaker: 'Ryan', text: 'Those engineers are incredible. Time to get back to work.' }
-            ]);
-            game.sceneTimeout(() => {
-                game.loadScene('livingroom');
-            }, 2000);
-        }
+        setTimeout(() => {
+            TvdocumentaryScene.showDocumentaryOverlay(game);
+        }, 500);
     },
 
     onExit(game) {

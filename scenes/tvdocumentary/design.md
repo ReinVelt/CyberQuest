@@ -46,7 +46,7 @@ An immersive full-screen TV viewing experience where Ryan watches a documentary 
 
 ### Jaap Haartsen
 - **Role:** Bluetooth Inventor, Former Ericsson Engineer
-- **Background:** Joined Ericsson in 1991, developed the Bluetooth protocol while at Ericsson in Lund, Sweden (1993–1997)
+- **Background:** Joined Ericsson in 1991, developed the Bluetooth protocol while at Ericsson in Emmen, Netherlands (1993–1997)
 - **Specialty:** Frequency-hopping spread spectrum, protocol design
 - **Impact:** Created protocols connecting 5+ billion devices annually
 - **Passion:** Making technology invisible and effortless

@@ -19,68 +19,116 @@ class VoiceManager {
         // Try to load voices multiple times
         this.loadVoicesWithRetry();
         
-        // Voice archetypes to reduce duplication
-        const britishMale = { voicePreference: ['Google UK English Male', 'Microsoft David', 'Daniel', 'male'], lang: 'en-GB' };
-        const britishFemale = { voicePreference: ['Google UK English Female', 'Microsoft Zira', 'Samantha', 'Karen', 'female'], lang: 'en-GB' };
-        const americanFemale = { voicePreference: ['Google US English Female', 'Microsoft Zira', 'Samantha', 'female'], lang: 'en-US' };
+        // Each character gets a unique voice profile with different preferred voices,
+        // regional accents, pitch and rate to sound as distinct as possible.
+        // Chrome on Linux provides these Google voices:
+        //   Google US English, Google UK English Male, Google UK English Female
+        // We use pitch, rate and voice selection to create distinct characters.
+        // Accent simulation: Dutch/German/Russian accents are approximated via
+        // pitch shifts and rate changes since Web Speech API doesn't support accents.
 
         // Character voice profiles (pitch, rate, voice preference)
         this.characterProfiles = {
-            // Main protagonist - Dutch male, mature
-            'Ryan':                { ...britishMale, pitch: 0.9, rate: 0.95 },
-            "Ryan's Thoughts":     { ...britishMale, pitch: 0.85, rate: 0.9 },
-            'Ryan observes':       { ...britishMale, pitch: 0.9, rate: 0.85 },
-            'Ryan analyzes':       { ...britishMale, pitch: 0.9, rate: 0.85 },
+            // ── Ryan: low-pitched male, confident pace ──
+            'Ryan':                { pitch: 0.75, rate: 0.95, lang: 'en-GB',
+                voicePreference: ['Google UK English Male', 'Microsoft David', 'Alex', 'male'] },
+            "Ryan's Thoughts":     { pitch: 0.65, rate: 0.85, lang: 'en-GB',
+                voicePreference: ['Google UK English Male', 'Microsoft David', 'Alex', 'male'] },
+            'Ryan observes':       { pitch: 0.70, rate: 0.88, lang: 'en-GB',
+                voicePreference: ['Google UK English Male', 'Microsoft David', 'Alex', 'male'] },
+            'Ryan analyzes':       { pitch: 0.72, rate: 0.90, lang: 'en-GB',
+                voicePreference: ['Google UK English Male', 'Microsoft David', 'Alex', 'male'] },
             
-            // German female intelligence agent
-            'Eva':                 { ...britishFemale, pitch: 1.15, rate: 0.9 },
-            'Eva Weber':           { ...britishFemale, pitch: 1.15, rate: 0.9 },
+            // ── Eva Weber: German female, crisp and precise ──
+            // Higher pitch + measured rate = precise German accent
+            'Eva':                 { pitch: 1.25, rate: 0.88, lang: 'en-GB',
+                voicePreference: ['Google UK English Female', 'Kate', 'Microsoft Zira', 'female'] },
+            'Eva Weber':           { pitch: 1.25, rate: 0.88, lang: 'en-GB',
+                voicePreference: ['Google UK English Female', 'Kate', 'Microsoft Zira', 'female'] },
             
-            // Chris Kubecka - American female expert
-            'Chris':               { ...americanFemale, pitch: 1.1, rate: 1.0 },
-            'Chris Kubecka':       { ...americanFemale, pitch: 1.1, rate: 1.0 },
+            // ── Ies (Ryan's wife): Dutch female, warm and gentle ──
+            // Different voice from Eva: US English, softer, warmer pitch
+            'Ies':                 { pitch: 1.1,  rate: 0.85, lang: 'en-US',
+                voicePreference: ['Google US English', 'Samantha', 'Victoria', 'female'] },
             
-            // Dmitri Volkov - Russian antagonist (deep, menacing)
-            'Volkov':              { ...britishMale, pitch: 0.7, rate: 0.85 },
-            'Dmitri Volkov':       { ...britishMale, pitch: 0.7, rate: 0.85 },
+            // ── Chris Kubecka: Puerto Rican American female, confident, low pitch ──
+            // Low female pitch + steady rate = authoritative American
+            'Chris':               { pitch: 0.85, rate: 0.95, lang: 'en-US',
+                voicePreference: ['Google US English', 'Samantha', 'Microsoft Zira', 'female'] },
+            'Chris Kubecka':       { pitch: 0.85, rate: 0.95, lang: 'en-US',
+                voicePreference: ['Google US English', 'Samantha', 'Microsoft Zira', 'female'] },
             
-            // Dutch friends - varied male voices
-            'David Prinsloo':      { ...britishMale, pitch: 0.95, rate: 1.0 },
-            'Pieter':              { ...britishMale, pitch: 1.05, rate: 0.95 },
-            'Cees Bassa':          { ...britishMale, pitch: 1.0, rate: 0.95 },
-            'Jaap Haartsen':       { ...britishMale, pitch: 0.88, rate: 0.92 },
+            // ── Volkov: Russian male, deep menacing, slow deliberate ──
+            // Very low pitch + very slow = threatening Russian accent
+            'Volkov':              { pitch: 0.45, rate: 0.70, lang: 'en-GB',
+                voicePreference: ['Google UK English Male', 'Microsoft Mark', 'Daniel', 'male'] },
+            'Dmitri Volkov':       { pitch: 0.45, rate: 0.70, lang: 'en-GB',
+                voicePreference: ['Google UK English Male', 'Microsoft Mark', 'Daniel', 'male'] },
             
-            // Documentary narrator - authoritative, warm
-            'Documentary':         { ...britishFemale, pitch: 1.05, rate: 0.88 },
+            // ── David Prinsloo: Harvard accent, refined American male ──
+            // Smooth US voice, articulate pace
+            'David Prinsloo':      { pitch: 1.05, rate: 0.92, lang: 'en-US',
+                voicePreference: ['Google UK English Male', 'Google US English', 'Alex', 'Microsoft David', 'male'] },
             
-            // Ryan's wife - Dutch female, warm voice
-            'Ies':                 { ...britishFemale, pitch: 1.15, rate: 0.95 },
+            // ── Pieter: young Dutch male, energetic ──
+            'Pieter':              { pitch: 1.3,  rate: 1.10, lang: 'en-US',
+                voicePreference: ['Google UK English Male', 'Google US English', 'Microsoft David', 'male'] },
             
-            // Scene voices
-            'Meeting':             { ...britishMale, pitch: 1.0, rate: 0.9 },
-            'Infiltration':        { ...britishMale, pitch: 0.95, rate: 0.95 },
-            'Confrontation':       { ...britishMale, pitch: 0.9, rate: 0.9 },
-            'Team Check-in':       { ...britishMale, pitch: 1.0, rate: 0.95 },
-            'Epilogue':            { ...britishMale, pitch: 0.95, rate: 0.85 },
+            // ── Cees Bassa: British English accent, calm academic ──
+            'Cees Bassa':          { pitch: 0.95, rate: 0.85, lang: 'en-GB',
+                voicePreference: ['Google UK English Male', 'Daniel', 'Microsoft David', 'male'] },
             
-            // Hackerspace Drenthe members
-            'Dennis':              { ...britishMale, pitch: 1.05, rate: 1.0 },
-            'Sophie':              { ...britishFemale, pitch: 1.2, rate: 1.05 },
-            'Marco':               { ...britishMale, pitch: 0.85, rate: 1.0 },
-            'Kim':                 { ...britishFemale, pitch: 1.0, rate: 0.95 },
-            'Joris':               { ...britishMale, pitch: 1.1, rate: 1.1 },
-            'Linda':               { ...britishFemale, pitch: 0.95, rate: 0.88 },
-            'Aisha':               { ...britishFemale, pitch: 1.15, rate: 1.0 },
-            'Presenter':           { ...britishMale, pitch: 1.0, rate: 0.92 },
-            'Wouter':              { ...britishMale, pitch: 0.95, rate: 0.92 },
-            'Marieke':             { ...britishFemale, pitch: 1.1, rate: 0.92 },
+            // ── Jaap Haartsen: Australian English accent, older, measured ──
+            'Jaap Haartsen':       { pitch: 0.75, rate: 0.82, lang: 'en-AU',
+                voicePreference: ['Google UK English Male', 'Lee', 'Google US English', 'male'] },
             
-            // Narrator - neutral, clear voice
-            '':                    { ...britishFemale, pitch: 1.0, rate: 0.9 },
-            'Narrator':            { ...britishFemale, pitch: 1.0, rate: 0.9 },
+            // ── Documentary narrator: authoritative warm female ──
+            'Documentary':         { pitch: 1.05, rate: 0.82, lang: 'en-GB',
+                voicePreference: ['Google UK English Female', 'Karen', 'Moira', 'female'] },
             
-            // System messages
-            'System':              { ...britishMale, pitch: 1.0, rate: 1.0, voicePreference: ['Google UK English Female', 'Microsoft Zira', 'female'] }
+            // ── Scene voices ──
+            'Meeting':             { pitch: 0.95, rate: 0.90, lang: 'en-GB',
+                voicePreference: ['Google UK English Male', 'Daniel', 'male'] },
+            'Infiltration':        { pitch: 0.70, rate: 0.92, lang: 'en-GB',
+                voicePreference: ['Google UK English Male', 'Daniel', 'male'] },
+            'Confrontation':       { pitch: 0.60, rate: 0.82, lang: 'en-US',
+                voicePreference: ['Google US English', 'Microsoft Mark', 'male'] },
+            'Team Check-in':       { pitch: 1.1,  rate: 1.0,  lang: 'en-US',
+                voicePreference: ['Google US English', 'Microsoft David', 'male'] },
+            'Epilogue':            { pitch: 0.90, rate: 0.75, lang: 'en-GB',
+                voicePreference: ['Google UK English Male', 'Daniel', 'male'] },
+            
+            // ── Hackerspace Drenthe members ──
+            'Dennis':              { pitch: 1.15, rate: 1.05, lang: 'en-US',
+                voicePreference: ['Google US English', 'Alex', 'Microsoft David', 'male'] },
+            'Sophie':              { pitch: 1.55, rate: 1.12, lang: 'en-US',
+                voicePreference: ['Google US English', 'Samantha', 'female'] },
+            'Marco':               { pitch: 0.55, rate: 0.80, lang: 'en-GB',
+                voicePreference: ['Google UK English Male', 'Daniel', 'male'] },
+            'Kim':                 { pitch: 1.15, rate: 0.92, lang: 'en-GB',
+                voicePreference: ['Google UK English Female', 'Kate', 'female'] },
+            'Joris':               { pitch: 1.45, rate: 1.20, lang: 'en-US',
+                voicePreference: ['Google US English', 'Microsoft David', 'male'] },
+            'Linda':               { pitch: 0.90, rate: 0.80, lang: 'en-GB',
+                voicePreference: ['Google UK English Female', 'Moira', 'female'] },
+            'Aisha':               { pitch: 1.40, rate: 1.0,  lang: 'en-GB',
+                voicePreference: ['Google UK English Female', 'Fiona', 'female'] },
+            'Presenter':           { pitch: 0.95, rate: 0.95, lang: 'en-US',
+                voicePreference: ['Google US English', 'Alex', 'male'] },
+            'Wouter':              { pitch: 0.70, rate: 0.85, lang: 'en-GB',
+                voicePreference: ['Google UK English Male', 'Daniel', 'male'] },
+            'Marieke':             { pitch: 1.20, rate: 0.90, lang: 'en-GB',
+                voicePreference: ['Google UK English Female', 'Moira', 'Karen', 'female'] },
+            
+            // ── Narrator: soft, gentle, slow narrative voice ──
+            '':                    { pitch: 0.95, rate: 0.78, volume: 0.7, lang: 'en-GB',
+                voicePreference: ['Google UK English Female', 'Karen', 'Moira', 'female'] },
+            'Narrator':            { pitch: 0.95, rate: 0.78, volume: 0.7, lang: 'en-GB',
+                voicePreference: ['Google UK English Female', 'Karen', 'Moira', 'female'] },
+            
+            // ── System: flat robotic computer voice ──
+            'System':              { pitch: 1.0,  rate: 1.2,  lang: 'en-US',
+                voicePreference: ['Google US English', 'Microsoft Zira', 'female'] }
         };
         
         // Default profile for unknown speakers
@@ -276,10 +324,14 @@ class VoiceManager {
         return new Promise((resolve) => {
             this.synth.cancel();
             
-            // Clear any previous safety timeout
+            // Clear any previous safety timeout & keepalive
             if (this._utteranceTimeout) {
                 clearTimeout(this._utteranceTimeout);
                 this._utteranceTimeout = null;
+            }
+            if (this._keepAliveInterval) {
+                clearInterval(this._keepAliveInterval);
+                this._keepAliveInterval = null;
             }
             
             const utterance = new SpeechSynthesisUtterance(cleanText);
@@ -295,13 +347,20 @@ class VoiceManager {
             
             utterance.pitch = profile.pitch;
             utterance.rate = profile.rate;
-            utterance.volume = this.volume;
+            utterance.volume = profile.volume != null ? profile.volume : this.volume;
             
+            let resolved = false;
             const cleanup = () => {
+                if (resolved) return;   // prevent double-resolve
+                resolved = true;
                 this.currentUtterance = null;
                 if (this._utteranceTimeout) {
                     clearTimeout(this._utteranceTimeout);
                     this._utteranceTimeout = null;
+                }
+                if (this._keepAliveInterval) {
+                    clearInterval(this._keepAliveInterval);
+                    this._keepAliveInterval = null;
                 }
                 resolve();
             };
@@ -318,12 +377,14 @@ class VoiceManager {
             this.currentUtterance = utterance;
             
             // Chrome safety: resolve after max duration if onend never fires
-            // Estimate ~150ms per word as max speaking time
+            // Account for speaking rate — slower rates need more time per word
             const wordCount = cleanText.split(/\s+/).length;
-            const maxDuration = Math.max(10000, wordCount * 300);
+            const effectiveRate = Math.max(0.5, profile.rate || 1.0);
+            const msPerWord = 600 / effectiveRate;  // ~600ms/word at rate 1.0
+            const maxDuration = Math.max(12000, wordCount * msPerWord + 3000);
             this._utteranceTimeout = setTimeout(() => {
                 if (this.currentUtterance === utterance) {
-                    console.warn('TTS utterance timed out (Chrome bug workaround)');
+                    console.warn('TTS utterance timed out after', maxDuration, 'ms');
                     try { this.synth.cancel(); } catch (e) { /* ignore */ }
                     cleanup();
                 }
@@ -333,6 +394,18 @@ class VoiceManager {
                 try {
                     if (this.synth.paused) this.synth.resume();
                     this.synth.speak(utterance);
+                    
+                    // Chrome keepalive: periodically pause/resume to prevent
+                    // Chrome's ~15-second speech cutoff bug
+                    this._keepAliveInterval = setInterval(() => {
+                        if (!this.synth.speaking) {
+                            // Speech finished but onend didn't fire
+                            cleanup();
+                            return;
+                        }
+                        this.synth.pause();
+                        this.synth.resume();
+                    }, 5000);
                 } catch (err) {
                     cleanup();
                 }
@@ -423,6 +496,12 @@ class VoiceManager {
         if (this._utteranceTimeout) {
             clearTimeout(this._utteranceTimeout);
             this._utteranceTimeout = null;
+        }
+        
+        // Clear Chrome keepalive interval
+        if (this._keepAliveInterval) {
+            clearInterval(this._keepAliveInterval);
+            this._keepAliveInterval = null;
         }
         
         // Clear subtitle timeout

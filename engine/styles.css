@@ -118,6 +118,135 @@ body {
     opacity: 1;
 }
 
+/* ═══════════════════════════════════════════════════════
+ *  CINEMATIC SCENE TRANSITIONS — Hollywood thriller style
+ * ═══════════════════════════════════════════════════════ */
+#scene-transition-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 500;
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* Black curtain */
+#scene-transition-overlay .trans-curtain {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: 0;
+}
+
+/* Horizontal light sweep (anamorphic lens flare vibe) */
+#scene-transition-overlay .trans-sweep {
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(180,210,255,0.06) 30%,
+        rgba(255,255,255,0.12) 50%,
+        rgba(180,210,255,0.06) 70%,
+        transparent 100%
+    );
+    opacity: 0;
+}
+
+/* Film-flash — a brief bright blip */
+#scene-transition-overlay .trans-flash {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.08);
+    opacity: 0;
+}
+
+/* Active transition states ––––––––––––––––––––––––––– */
+
+/* Phase 1: fade to black + slight zoom-out on old scene */
+#scene-container.cine-out {
+    transition: transform 0.9s cubic-bezier(0.4,0,0.2,1),
+                filter 0.9s cubic-bezier(0.4,0,0.2,1);
+    transform: scale(0.97);
+    filter: brightness(0.4) saturate(0.6);
+}
+
+#scene-transition-overlay.cine-out {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#scene-transition-overlay.cine-out .trans-curtain {
+    animation: cineCurtainIn 0.9s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+
+#scene-transition-overlay.cine-out .trans-flash {
+    animation: cineFlash 0.35s ease-out 0.7s forwards;
+}
+
+/* Phase 2: hold at black (sweep plays) */
+#scene-transition-overlay.cine-hold {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#scene-transition-overlay.cine-hold .trans-curtain {
+    opacity: 1;
+}
+
+#scene-transition-overlay.cine-hold .trans-sweep {
+    animation: cineSweep 0.6s ease-in-out forwards;
+}
+
+/* Phase 3: fade from black + slight zoom-in on new scene */
+#scene-container.cine-in {
+    transform: scale(1.03);
+    filter: brightness(1.15) saturate(1.2);
+    transition: none;
+}
+
+#scene-container.cine-in-play {
+    transition: transform 1.0s cubic-bezier(0.0,0,0.2,1),
+                filter 1.0s cubic-bezier(0.0,0,0.2,1);
+    transform: scale(1);
+    filter: brightness(1) saturate(1);
+}
+
+#scene-transition-overlay.cine-in {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#scene-transition-overlay.cine-in .trans-curtain {
+    animation: cineCurtainOut 1.0s cubic-bezier(0.0,0,0.2,1) forwards;
+}
+
+/* Keyframes –––––––––––––––––––––––––––––––––––––––––– */
+@keyframes cineCurtainIn {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes cineCurtainOut {
+    0%   { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+@keyframes cineSweep {
+    0%   { left: -60%; opacity: 0; }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { left: 120%; opacity: 0; }
+}
+
+@keyframes cineFlash {
+    0%   { opacity: 0; }
+    30%  { opacity: 1; }
+    100% { opacity: 0; }
+}
+
 #scene-background {
     position: absolute;
     top: 0;

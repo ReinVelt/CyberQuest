@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberQuest - Voice Test</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #c0c0c0;
+            padding: 20px;
+        }
+        h1 {
+            color: #00ff88;
+            margin-bottom: 6px;
+            font-size: 1.4em;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.85em;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .controls button {
+            padding: 8px 16px;
+            font-family: inherit;
+            font-size: 13px;
+            cursor: pointer;
+            background: #1a1a2e;
+            color: #00ff88;
+            border: 1px solid #00ff88;
+            border-radius: 4px;
+            transition: all 0.15s;
+        }
+        .controls button:hover { background: #00ff88; color: #000; }
+        .controls button.stop { border-color: #ff4444; color: #ff4444; }
+        .controls button.stop:hover { background: #ff4444; color: #000; }
+        #voiceInfo {
+            font-size: 12px;
+            color: #888;
+            padding: 4px 8px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 10px;
+        }
+        .card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 6px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: border-color 0.2s;
+        }
+        .card:hover { border-color: #00ff88; }
+        .card.speaking {
+            border-color: #00ff88;
+            box-shadow: 0 0 12px rgba(0, 255, 136, 0.15);
+        }
+        .card.narrator { border-left: 3px solid #8888ff; }
+        .card.female { border-left: 3px solid #ff66aa; }
+        .card.male { border-left: 3px solid #44aaff; }
+        .card.scene { border-left: 3px solid #ffaa00; }
+        .play-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 2px solid #00ff88;
+            background: transparent;
+            color: #00ff88;
+            font-size: 16px;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+        .play-btn:hover { background: #00ff88; color: #000; }
+        .info { flex: 1; min-width: 0; }
+        .info .name {
+            font-weight: bold;
+            color: #eee;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+        .info .details {
+            font-size: 11px;
+            color: #666;
+        }
+        .info .details span {
+            margin-right: 8px;
+        }
+        .info .sample {
+            font-size: 11px;
+            color: #888;
+            margin-top: 3px;
+            font-style: italic;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .section-title {
+            grid-column: 1 / -1;
+            color: #00ff88;
+            font-size: 13px;
+            padding: 8px 0 2px;
+            border-bottom: 1px solid #222;
+            margin-top: 6px;
+        }
+        #log {
+            margin-top: 20px;
+            padding: 10px;
+            background: #0d0d0d;
+            border: 1px solid #222;
+            border-radius: 4px;
+            font-size: 11px;
+            max-height: 180px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            color: #666;
+        }
+        .log-entry { margin-bottom: 2px; }
+        .log-entry.match { color: #00ff88; }
+        .log-entry.warn { color: #ffaa00; }
+        .log-entry.err { color: #ff4444; }
+
+        /* Play All progress */
+        .progress-bar {
+            height: 3px;
+            background: #222;
+            border-radius: 2px;
+            overflow: hidden;
+            display: none;
+        }
+        .progress-bar .fill {
+            height: 100%;
+            background: #00ff88;
+            width: 0%;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <h1>&#x1f50a; CyberQuest Voice Test</h1>
+    <p class="subtitle">Click a character to hear their voice. Adjust pitch/rate with the sliders.</p>
+
+    <div class="controls">
+        <button onclick="playAll()">&#9654; Play All</button>
+        <button class="stop" onclick="stopAll()">&#9632; Stop</button>
+        <span id="voiceInfo">Loading voices...</span>
+    </div>
+    <div class="progress-bar" id="progressBar"><div class="fill" id="progressFill"></div></div>
+
+    <div class="grid" id="grid"></div>
+    <div id="log"></div>
+
+<script>
+// ── Character profiles (mirrored from engine/voice.js) ──
+// Each character has unique voice + pitch + rate for maximum distinction.
+
+const characters = [
+    // ── Main Characters ──
+    { section: 'Main Characters' },
+    { name: 'Ryan',             profile: { pitch: 0.75, rate: 0.95, lang: 'en-US',
+        voicePreference: ['Google US English', 'Microsoft David', 'Alex', 'male'] },
+      sample: "Something's not right with these network logs.", accent: 'American male (low)' },
+    { name: "Ryan's Thoughts",  profile: { pitch: 0.65, rate: 0.85, lang: 'en-US',
+        voicePreference: ['Google US English', 'Microsoft David', 'Alex', 'male'] },
+      sample: "I need to think about this more carefully...", accent: 'American male (inner)' },
+    { name: 'Ryan observes',    profile: { pitch: 0.70, rate: 0.88, lang: 'en-US',
+        voicePreference: ['Google US English', 'Microsoft David', 'Alex', 'male'] },
+      sample: "The server room is unusually quiet tonight.", accent: 'American male (low)' },
+    { name: 'Ryan analyzes',    profile: { pitch: 0.72, rate: 0.90, lang: 'en-US',
+        voicePreference: ['Google US English', 'Microsoft David', 'Alex', 'male'] },
+      sample: "The packet headers show signs of data exfiltration.", accent: 'American male (low)' },
+    { name: 'Eva',              profile: { pitch: 1.25, rate: 0.88, lang: 'en-GB',
+        voicePreference: ['Google UK English Female', 'Kate', 'Microsoft Zira', 'female'] },
+      sample: "We don't have much time. Volkov is already moving.", accent: 'German female' },
+    { name: 'Eva Weber',        profile: { pitch: 1.25, rate: 0.88, lang: 'en-GB',
+        voicePreference: ['Google UK English Female', 'Kate', 'Microsoft Zira', 'female'] },
+      sample: "I've been tracking this operation for months.", accent: 'German female' },
+    { name: 'Ies',              profile: { pitch: 1.1,  rate: 0.85, lang: 'en-US',
+        voicePreference: ['Google US English', 'Samantha', 'Victoria', 'female'] },
+      sample: "Be careful out there, Ryan. Come home safe.", accent: 'Dutch female' },
+    { name: 'Chris Kubecka',    profile: { pitch: 0.85, rate: 0.95, lang: 'en-US',
+        voicePreference: ['Google US English', 'Samantha', 'Microsoft Zira', 'female'] },
+      sample: "The attack surface is wider than we thought.", accent: 'American female (low)' },
+
+    // ── Antagonist ──
+    { section: 'Antagonist' },
+    { name: 'Volkov',           profile: { pitch: 0.45, rate: 0.70, lang: 'en-GB',
+        voicePreference: ['Google UK English Male', 'Microsoft Mark', 'Daniel', 'male'] },
+      sample: "You think you can stop me? You're already too late.", accent: 'Russian male' },
+    { name: 'Dmitri Volkov',    profile: { pitch: 0.45, rate: 0.70, lang: 'en-GB',
+        voicePreference: ['Google UK English Male', 'Microsoft Mark', 'Daniel', 'male'] },
+      sample: "The infrastructure will fall, one node at a time.", accent: 'Russian male' },
+
+    // ── Dutch Friends ──
+    { section: 'Dutch Friends' },
+    { name: 'David Prinsloo',   profile: { pitch: 1.05, rate: 0.92, lang: 'en-US',
+        voicePreference: ['Google UK English Male', 'Google US English', 'Alex', 'Microsoft David', 'male'] },
+      sample: "I found something interesting in the radio spectrum.", accent: 'Harvard' },
+    { name: 'Pieter',           profile: { pitch: 1.30, rate: 1.10, lang: 'en-US',
+        voicePreference: ['Google UK English Male', 'Google US English', 'Microsoft David', 'male'] },
+      sample: "The mesh network is up and running.", accent: 'Dutch male' },
+    { name: 'Cees Bassa',       profile: { pitch: 0.95, rate: 0.85, lang: 'en-GB',
+        voicePreference: ['Google UK English Male', 'Daniel', 'Microsoft David', 'male'] },
+      sample: "The LOFAR array detected an anomalous signal.", accent: 'British' },
+    { name: 'Jaap Haartsen',    profile: { pitch: 0.75, rate: 0.82, lang: 'en-AU',
+        voicePreference: ['Google UK English Male', 'Lee', 'Google US English', 'male'] },
+      sample: "Bluetooth was just the beginning of my work.", accent: 'Australian' },
+
+    // ── Hackerspace Drenthe ──
+    { section: 'Hackerspace Drenthe' },
+    { name: 'Dennis',           profile: { pitch: 1.15, rate: 1.05, lang: 'en-US',
+        voicePreference: ['Google US English', 'Alex', 'Microsoft David', 'male'] },
+      sample: "Let's set up the software-defined radio." },
+    { name: 'Sophie',           profile: { pitch: 1.55, rate: 1.12, lang: 'en-US',
+        voicePreference: ['Google US English', 'Samantha', 'female'] },
+      sample: "I've cracked the encryption layer!" },
+    { name: 'Marco',            profile: { pitch: 0.55, rate: 0.80, lang: 'en-GB',
+        voicePreference: ['Google UK English Male', 'Daniel', 'male'] },
+      sample: "The hardware is ready for deployment." },
+    { name: 'Kim',              profile: { pitch: 1.15, rate: 0.92, lang: 'en-GB',
+        voicePreference: ['Google UK English Female', 'Kate', 'female'] },
+      sample: "I'll handle the social engineering side." },
+    { name: 'Joris',            profile: { pitch: 1.45, rate: 1.20, lang: 'en-US',
+        voicePreference: ['Google US English', 'Microsoft David', 'male'] },
+      sample: "This exploit chain is beautiful, check it out!" },
+    { name: 'Linda',            profile: { pitch: 0.90, rate: 0.80, lang: 'en-GB',
+        voicePreference: ['Google UK English Female', 'Moira', 'female'] },
+      sample: "The documentation is all in order." },
+    { name: 'Aisha',            profile: { pitch: 1.40, rate: 1.0,  lang: 'en-GB',
+        voicePreference: ['Google UK English Female', 'Fiona', 'female'] },
+      sample: "I traced the traffic back to the source." },
+    { name: 'Wouter',           profile: { pitch: 0.70, rate: 0.85, lang: 'en-GB',
+        voicePreference: ['Google UK English Male', 'Daniel', 'male'] },
+      sample: "The antenna modifications are complete." },
+    { name: 'Marieke',          profile: { pitch: 1.20, rate: 0.90, lang: 'en-GB',
+        voicePreference: ['Google UK English Female', 'Moira', 'Karen', 'female'] },
+      sample: "The forensic analysis reveals everything." },
+
+    // ── Scene & Narration ──
+    { section: 'Narration & Scene' },
+    { name: 'Narrator',         profile: { pitch: 0.95, rate: 0.78, volume: 0.7, lang: 'en-GB',
+        voicePreference: ['Google UK English Female', 'Karen', 'Moira', 'female'] },
+      sample: "The cold night air carried the hum of distant servers across the Drenthe countryside." },
+    { name: '(empty speaker)',   realName: '', profile: { pitch: 0.95, rate: 0.78, volume: 0.7, lang: 'en-GB',
+        voicePreference: ['Google UK English Female', 'Karen', 'Moira', 'female'] },
+      sample: "A faint glow from the monitor illuminated the darkened room." },
+    { name: 'Documentary',      profile: { pitch: 1.05, rate: 0.82, lang: 'en-GB',
+        voicePreference: ['Google UK English Female', 'Karen', 'Moira', 'female'] },
+      sample: "In the summer of 2026, a series of cyber attacks shook the Netherlands." },
+    { name: 'Presenter',        profile: { pitch: 0.95, rate: 0.95, lang: 'en-US',
+        voicePreference: ['Google US English', 'Alex', 'male'] },
+      sample: "Welcome to tonight's special report on critical infrastructure." },
+
+    // ── Scene Voices ──
+    { section: 'Scene Voices' },
+    { name: 'Meeting',          profile: { pitch: 0.95, rate: 0.90, lang: 'en-GB',
+        voicePreference: ['Google UK English Male', 'Daniel', 'male'] },
+      sample: "Let's review the intelligence we've gathered so far." },
+    { name: 'Infiltration',     profile: { pitch: 0.70, rate: 0.92, lang: 'en-GB',
+        voicePreference: ['Google UK English Male', 'Daniel', 'male'] },
+      sample: "Moving through the facility's east corridor now." },
+    { name: 'Confrontation',    profile: { pitch: 0.60, rate: 0.82, lang: 'en-US',
+        voicePreference: ['Google US English', 'Microsoft Mark', 'male'] },
+      sample: "It ends here, Volkov. There's nowhere left to run." },
+    { name: 'Team Check-in',    profile: { pitch: 1.1,  rate: 1.0,  lang: 'en-US',
+        voicePreference: ['Google US English', 'Microsoft David', 'male'] },
+      sample: "All teams report in. Status check." },
+    { name: 'Epilogue',         profile: { pitch: 0.90, rate: 0.75, lang: 'en-GB',
+        voicePreference: ['Google UK English Male', 'Daniel', 'male'] },
+      sample: "In the weeks that followed, a quiet calm returned to Drenthe." },
+
+    // ── System ──
+    { section: 'System' },
+    { name: 'System',           profile: { pitch: 1.0,  rate: 1.2,  lang: 'en-US',
+        voicePreference: ['Google US English', 'Microsoft Zira', 'female'] },
+      sample: "Evidence collected. New item added to inventory.", accent: 'Computer' },
+];
+
+// ── Speech engine ──
+const synth = window.speechSynthesis;
+let voices = [];
+let currentUtterance = null;
+let playAllRunning = false;
+
+function loadVoices() {
+    voices = synth.getVoices();
+    const en = voices.filter(v => v.lang.startsWith('en'));
+    document.getElementById('voiceInfo').textContent =
+        `${voices.length} voices loaded (${en.length} English)`;
+}
+loadVoices();
+if (synth.onvoiceschanged !== undefined) synth.onvoiceschanged = loadVoices;
+
+function log(msg, cls = '') {
+    const el = document.getElementById('log');
+    const d = document.createElement('div');
+    d.className = 'log-entry ' + cls;
+    d.textContent = msg;
+    el.appendChild(d);
+    el.scrollTop = el.scrollHeight;
+}
+
+function findVoice(profile) {
+    const english = voices.filter(v => v.lang.toLowerCase().startsWith('en'));
+    const pool = english.length > 0 ? english : voices;
+
+    for (const pref of (profile.voicePreference || [])) {
+        let v = pool.find(x => x.name === pref);
+        if (v) return v;
+        v = pool.find(x => x.name.toLowerCase().includes(pref.toLowerCase()));
+        if (v) return v;
+        if (pref === 'male' || pref === 'female') {
+            v = pool.find(x => {
+                const n = x.name.toLowerCase();
+                return pref === 'female'
+                    ? /female|zira|samantha|karen|moira|fiona|victoria|kate/.test(n)
+                    : /male|david|daniel|alex|james|mark|tom/.test(n);
+            });
+            if (v) return v;
+        }
+    }
+    // lang match
+    let v = pool.find(x => x.lang.startsWith(profile.lang));
+    if (v) return v;
+    return pool[0] || null;
+}
+
+function speakChar(charObj, onEnd) {
+    synth.cancel();
+    const p = charObj.profile;
+    const text = charObj.sample;
+    const utt = new SpeechSynthesisUtterance(text);
+    const voice = findVoice(p);
+    if (voice) {
+        utt.voice = voice;
+        utt.lang = voice.lang;
+        log(`  → voice: ${voice.name} (${voice.lang})`, 'match');
+    } else {
+        log('  → no voice found!', 'err');
+    }
+    utt.pitch = p.pitch;
+    utt.rate = p.rate;
+    utt.volume = p.volume != null ? p.volume : 0.8;
+
+    const card = document.querySelector(`.card[data-name="${charObj.name}"]`);
+    if (card) card.classList.add('speaking');
+
+    utt.onend = utt.onerror = () => {
+        if (card) card.classList.remove('speaking');
+        currentUtterance = null;
+        if (onEnd) onEnd();
+    };
+
+    const displayName = charObj.realName !== undefined ? `"${charObj.realName}" (empty)` : charObj.name;
+    log(`Playing: ${displayName}  pitch=${p.pitch} rate=${p.rate} vol=${utt.volume}`);
+    currentUtterance = utt;
+    synth.speak(utt);
+}
+
+function stopAll() {
+    playAllRunning = false;
+    synth.cancel();
+    document.querySelectorAll('.card.speaking').forEach(c => c.classList.remove('speaking'));
+    document.getElementById('progressBar').style.display = 'none';
+    log('Stopped.', 'warn');
+}
+
+function playAll() {
+    const playable = characters.filter(c => !c.section);
+    let idx = 0;
+    playAllRunning = true;
+    const bar = document.getElementById('progressBar');
+    const fill = document.getElementById('progressFill');
+    bar.style.display = 'block';
+    fill.style.width = '0%';
+
+    function next() {
+        if (!playAllRunning || idx >= playable.length) {
+            playAllRunning = false;
+            bar.style.display = 'none';
+            log('── Play All finished ──');
+            return;
+        }
+        fill.style.width = ((idx / playable.length) * 100) + '%';
+        speakChar(playable[idx], () => { idx++; next(); });
+    }
+    next();
+}
+
+// ── Build UI ──
+const grid = document.getElementById('grid');
+characters.forEach(c => {
+    if (c.section) {
+        const h = document.createElement('div');
+        h.className = 'section-title';
+        h.textContent = c.section;
+        grid.appendChild(h);
+        return;
+    }
+    const p = c.profile;
+    const prefs = (p.voicePreference || []).join(' ').toLowerCase();
+    const genderClass = prefs.includes('female') || /samantha|karen|moira|fiona|victoria|kate|zira/.test(prefs) ? 'female' :
+                        (c.name === 'Narrator' || c.realName === '') ? 'narrator' :
+                        ['Meeting','Infiltration','Confrontation','Team Check-in','Epilogue'].includes(c.name) ? 'scene' : 'male';
+
+    const card = document.createElement('div');
+    card.className = `card ${genderClass}`;
+    card.dataset.name = c.name;
+
+    const vol = p.volume != null ? p.volume : 0.8;
+    const accentLabel = c.accent ? `<span style="color:#ffaa00">${c.accent}</span>` : '';
+    card.innerHTML = `
+        <button class="play-btn" title="Play">&#9654;</button>
+        <div class="info">
+            <div class="name">${c.realName !== undefined ? `"" (empty speaker)` : c.name} ${accentLabel}</div>
+            <div class="details">
+                <span>pitch ${p.pitch}</span>
+                <span>rate ${p.rate}</span>
+                <span>vol ${vol}</span>
+                <span>${p.lang}</span>
+            </div>
+            <div class="sample">${c.sample}</div>
+        </div>`;
+
+    card.querySelector('.play-btn').addEventListener('click', () => speakChar(c));
+    grid.appendChild(card);
+});
+
+log('Voice test ready. Click a character or "Play All".');
+</script>
+</body>
+</html>

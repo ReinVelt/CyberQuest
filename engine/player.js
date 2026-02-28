@@ -196,7 +196,7 @@ class PlayerCharacter {
         }
     }
     
-    // Think out loud with voice
+    // Think out loud — visual only (never interrupts other speech)
     think(thought, duration = 4000) {
         if (this.isThinking) return;
         if (!this.thoughtBubble) {
@@ -212,15 +212,12 @@ class PlayerCharacter {
         this.thoughtBubble.classList.remove('hidden');
         this.thoughtBubble.classList.add('visible');
         
-        // Speak the thought
-        this.game.speakText(thought, "Ryan's Thoughts");
-        
         // Clear any previous think timeout
         if (this._thinkTimeout) {
             clearTimeout(this._thinkTimeout);
         }
         
-        // Hide after duration
+        // Hide after the fixed duration (no TTS — thoughts are silent)
         this._thinkTimeout = setTimeout(() => {
             if (this.thoughtBubble) {
                 this.thoughtBubble.classList.remove('visible');

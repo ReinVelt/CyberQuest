@@ -127,6 +127,7 @@ class CyberQuestEngine {
             textSpeed:         40,  // ms per character (0 = instant)
             animSpeed:        500,  // ms for scene fade transitions (0 = none)
             autoAdvanceDelay:   0,  // ms before auto-advancing dialogue (0 = manual)
+            docuPauseDuration: 1500, // ms pause after documentary speech finishes
         };
     }
 
@@ -227,6 +228,11 @@ class CyberQuestEngine {
                     <div id="scene-background"></div>
                     <div id="scene-hotspots"></div>
                     <div id="scene-characters"></div>
+                    <div id="scene-transition-overlay">
+                        <div class="trans-curtain"></div>
+                        <div class="trans-sweep"></div>
+                        <div class="trans-flash"></div>
+                    </div>
                     <div id="ui-overlay">
                         <div id="dialogue-box" class="hidden">
                             <div id="dialogue-portrait"></div>
@@ -453,8 +459,19 @@ class CyberQuestEngine {
             return;
         }
         
-        // Transition out
-        if (transition === 'fade') {
+        // ── Cinematic transition out ──
+        const overlay = document.getElementById('scene-transition-overlay');
+        if (transition === 'fade' && overlay) {
+            // Phase 1: darken + zoom-out old scene
+            overlay.className = 'cine-out';
+            sceneContainer.classList.add('cine-out');
+            await this.wait(900);
+
+            // Phase 2: hold at black with light sweep
+            overlay.className = 'cine-hold';
+            sceneContainer.style.opacity = '0';
+            await this.wait(350);
+        } else if (transition === 'fade') {
             sceneContainer.classList.add('fade-out');
             await this.wait(this.settings.animSpeed);
         }
@@ -524,8 +541,24 @@ class CyberQuestEngine {
             }
         }
         
-        // Transition in
-        if (transition === 'fade') {
+        // ── Cinematic transition in ──
+        if (transition === 'fade' && overlay) {
+            // Prepare new scene slightly zoomed-in & bright
+            sceneContainer.classList.remove('cine-out');
+            sceneContainer.style.opacity = '';
+            sceneContainer.classList.add('cine-in');
+
+            // Phase 3: reveal new scene from black
+            overlay.className = 'cine-in';
+            // Force a reflow so the starting state (cine-in) is painted
+            void sceneContainer.offsetWidth;
+            sceneContainer.classList.add('cine-in-play');
+            await this.wait(1000);
+
+            // Cleanup
+            sceneContainer.classList.remove('cine-in', 'cine-in-play');
+            overlay.className = '';
+        } else if (transition === 'fade') {
             sceneContainer.classList.remove('fade-out');
             sceneContainer.classList.add('fade-in');
             await this.wait(this.settings.animSpeed);
@@ -847,18 +880,18 @@ class CyberQuestEngine {
             current.action(this);
         }
         
-        // Typewriter effect + optional auto-advance
+        // Typewriter effect + speech in parallel; auto-advance waits for both
         const _twSignal = this.typewriterAbortController.signal;
-        this.typeText(textEl, current.text || '', this.settings.textSpeed, _twSignal).then(() => {
+        const typePromise = this.typeText(textEl, current.text || '', this.settings.textSpeed, _twSignal);
+        const speechPromise = this.speakText(current.text, speaker);
+
+        Promise.all([typePromise, speechPromise]).then(() => {
             if (!_twSignal.aborted && this.settings.autoAdvanceDelay > 0 && this.isDialogueActive) {
                 this._autoAdvanceTimer = setTimeout(() => {
                     if (this.isDialogueActive && !this.isPaused) this.advanceDialogue();
                 }, this.settings.autoAdvanceDelay);
             }
         });
-
-        // Speak the dialogue
-        this.speakText(current.text, speaker);
     }
     
     async typeText(element, text, speed = 30, signal = null) {
@@ -925,8 +958,23 @@ class CyberQuestEngine {
             // Ensure text is a string
             const textStr = typeof text === 'string' ? text : String(text);
             console.log(`Speaking: "${textStr.substring(0, 50)}..." as ${speaker || 'Narrator'}`);
-            this.voiceManager.speak(textStr, speaker);
+            return this.voiceManager.speak(textStr, speaker);
         }
+        return Promise.resolve();
+    }
+
+    /**
+     * Speak text and wait for speech to finish (plus optional extra pause).
+     * Use this in cinematic sequences to ensure timing stays in sync with voice.
+     * @param {string} text - Text to speak
+     * @param {string} speaker - Character name
+     * @param {number} [minDuration=0] - Minimum ms to wait (even if speech is shorter)
+     * @returns {Promise<void>}
+     */
+    async speakAndWait(text, speaker = '', minDuration = 0) {
+        const speechPromise = this.speakText(text, speaker);
+        const timerPromise = minDuration > 0 ? this.wait(minDuration) : Promise.resolve();
+        await Promise.all([speechPromise, timerPromise]);
     }
     
     stopSpeech() {
@@ -1665,6 +1713,7 @@ class CyberQuestEngine {
                 if (typeof saved.textSpeed        === 'number') this.settings.textSpeed        = saved.textSpeed;
                 if (typeof saved.animSpeed        === 'number') this.settings.animSpeed        = saved.animSpeed;
                 if (typeof saved.autoAdvanceDelay === 'number') this.settings.autoAdvanceDelay = saved.autoAdvanceDelay;
+                if (typeof saved.docuPauseDuration === 'number') this.settings.docuPauseDuration = saved.docuPauseDuration;
             }
         } catch (e) {
             console.warn('[Settings] Failed to load settings:', e);
@@ -1840,6 +1889,7 @@ class CyberQuestEngine {
         const textLabels  = { 0: 'Instant', 15: 'Fast', 40: 'Normal', 80: 'Slow' };
         const animLabels  = { 0: 'None', 200: 'Fast', 500: 'Normal', 1000: 'Slow' };
         const autoLabels  = { 0: 'Manual', 1500: 'Fast', 3000: 'Normal', 5000: 'Slow' };
+        const docuLabels  = { 0: 'None', 500: 'Quick', 1500: 'Normal', 3000: 'Relaxed', 5000: 'Slow' };
 
         const labelFor = (map, val) => {
             // Find closest key
@@ -1894,6 +1944,26 @@ class CyberQuestEngine {
                     </div>
 
                     <div class="settings-section">
+                        <h3 class="settings-section-title">Documentary</h3>
+
+                        <div class="settings-row">
+                            <div class="settings-row__labels">
+                                <span class="settings-row__name">Pause After Speech</span>
+                                <span class="settings-row__value" id="lbl-docu-pause">${labelFor(docuLabels, this.settings.docuPauseDuration)}</span>
+                            </div>
+                            <div class="settings-row__presets">
+                                <button class="preset-btn${this.settings.docuPauseDuration===0?' preset-btn--active':''}" data-target="docuPauseDuration" data-value="0">None</button>
+                                <button class="preset-btn${this.settings.docuPauseDuration===500?' preset-btn--active':''}" data-target="docuPauseDuration" data-value="500">Quick</button>
+                                <button class="preset-btn${this.settings.docuPauseDuration===1500?' preset-btn--active':''}" data-target="docuPauseDuration" data-value="1500">Normal</button>
+                                <button class="preset-btn${this.settings.docuPauseDuration===3000?' preset-btn--active':''}" data-target="docuPauseDuration" data-value="3000">Relaxed</button>
+                                <button class="preset-btn${this.settings.docuPauseDuration===5000?' preset-btn--active':''}" data-target="docuPauseDuration" data-value="5000">Slow</button>
+                            </div>
+                            <input class="settings-slider" type="range" id="slider-docu-pause"
+                                min="0" max="6000" step="250" value="${this.settings.docuPauseDuration}">
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
                         <h3 class="settings-section-title">Visuals</h3>
 
                         <div class="settings-row">
@@ -1926,6 +1996,7 @@ class CyberQuestEngine {
         const labelMap = {
             'slider-text-speed':   { lblId: 'lbl-text-speed',    map: textLabels,  key: 'textSpeed' },
             'slider-auto-advance': { lblId: 'lbl-auto-advance',   map: autoLabels,  key: 'autoAdvanceDelay' },
+            'slider-docu-pause':   { lblId: 'lbl-docu-pause',     map: docuLabels,  key: 'docuPauseDuration' },
             'slider-anim-speed':   { lblId: 'lbl-anim-speed',     map: animLabels,  key: 'animSpeed' },
         };
 
@@ -1989,6 +2060,7 @@ class CyberQuestEngine {
             this.settings.textSpeed        = 40;
             this.settings.animSpeed        = 500;
             this.settings.autoAdvanceDelay = 0;
+            this.settings.docuPauseDuration = 1500;
             // Reset sliders
             Object.entries(labelMap).forEach(([sliderId, cfg]) => {
                 const slider = modal.querySelector(`#${sliderId}`);
