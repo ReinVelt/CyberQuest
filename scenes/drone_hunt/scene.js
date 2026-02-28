@@ -807,6 +807,8 @@ const DroneHuntScene = {
         {
             id: 'gps_frequency',
             name: 'GPS Frequency',
+            label: '📡 Frequency',
+            cssClass: 'hotspot-nav hotspot-gps-param',
             // Lower center — puzzle interaction area
             x: 35,
             y: 75,
@@ -840,6 +842,7 @@ const DroneHuntScene = {
                                 game.setFlag('gps_frequency_set', true);
                                 game.showNotification('Frequency locked: 1575.42 MHz');
                                 DroneHuntScene._playSuccessChime();
+                                DroneHuntScene._updateGPSOverlay();
                                 game.startDialogue([
                                     { speaker: '', text: '*HackRF display: TX FREQ 1575.42 MHz — LOCKED*' },
                                     { speaker: 'Ryan', text: '1575.42 MHz. GPS L1 C/A. Locked and loaded.' },
@@ -863,6 +866,8 @@ const DroneHuntScene = {
         {
             id: 'power_level',
             name: 'Transmit Power',
+            label: '⚡ TX Power',
+            cssClass: 'hotspot-nav hotspot-gps-param',
             // Near the frequency dial
             x: 50,
             y: 75,
@@ -897,6 +902,7 @@ const DroneHuntScene = {
                                 game.setFlag('tx_power_set', true);
                                 game.showNotification('TX power calibrated');
                                 DroneHuntScene._playSuccessChime();
+                                DroneHuntScene._updateGPSOverlay();
                                 game.startDialogue([
                                     { speaker: '', text: '*HackRF display: TX POWER -5 dBm — CALIBRATED*' },
                                     { speaker: 'Ryan', text: 'Subtle. The drones\' receivers will accept this as a legitimate satellite.' },
@@ -920,6 +926,8 @@ const DroneHuntScene = {
         {
             id: 'spoof_target',
             name: 'Target Coordinates',
+            label: '🎯 Target',
+            cssClass: 'hotspot-nav hotspot-gps-param',
             // Right side, toward swamp
             x: 65,
             y: 72,
@@ -953,6 +961,7 @@ const DroneHuntScene = {
                                 game.setFlag('spoof_target_set', true);
                                 game.showNotification('Target coordinates locked');
                                 DroneHuntScene._playSuccessChime();
+                                DroneHuntScene._updateGPSOverlay();
                                 game.startDialogue([
                                     { speaker: '', text: '*HackRF display: SPOOF OFFSET +200m NORTH — TARGET LOCKED*' },
                                     { speaker: '', text: '*The swamp pools glint coldly in the moonlight*' },
@@ -976,6 +985,8 @@ const DroneHuntScene = {
         {
             id: 'execute_spoof',
             name: 'Execute GPS Spoof',
+            label: '▶ EXECUTE SPOOF',
+            cssClass: 'hotspot-nav hotspot-execute-spoof',
             // Center-bottom, prominent action
             x: 42,
             y: 82,
@@ -1145,6 +1156,7 @@ const DroneHuntScene = {
     onExit: () => {
         DroneHuntScene._stopAudio();
         DroneHuntScene._cleanupCrash();
+        DroneHuntScene._hideGPSParamOverlay();
     },
 
     // ═══════════════════════════════════════════════════════════
@@ -1173,6 +1185,8 @@ const DroneHuntScene = {
     _startPhase3: (game) => {
         const s = DroneHuntScene.state;
         s.phase = 3;
+
+        DroneHuntScene._showGPSParamOverlay();
 
         game.startDialogue([
             { speaker: '', text: '*Three more drones converge. The sky buzzes with rotors.*' },
@@ -1218,12 +1232,108 @@ const DroneHuntScene = {
         }
     },
 
+    // ── GPS Parameter Overlay (HackRF display panel) ────────────────────────
+
+    /** Build the inner HTML for the HackRF status panel */
+    _buildGPSOverlayHTML() {
+        const s = DroneHuntScene.state;
+        const na  = '<span style="color:#335533">─────────────</span>';
+        const ok  = (v) => `<span style="color:#00ff41;text-shadow:0 0 6px #00ff41">${v} ✓</span>`;
+        const freq = s.frequencySet ? ok('1575.42 MHz') : na;
+        const pwr  = s.powerSet    ? ok('-5 dBm')       : na;
+        const tgt  = s.targetSet   ? ok('+200 m North') : na;
+        const allSet = s.frequencySet && s.powerSet && s.targetSet;
+        const status = allSet
+            ? '<span style="color:#00ff41;animation:hackrf-blink 0.8s step-end infinite">▶ READY — click EXECUTE SPOOF</span>'
+            : `<span style="color:#556655">${[!s.frequencySet && 'FREQ', !s.powerSet && 'PWR', !s.targetSet && 'TARGET'].filter(Boolean).join(' • ')} needed</span>`;
+        return `
+            <div style="color:#00cc33;font-size:0.68rem;letter-spacing:0.12em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #003311;text-align:center">
+                ◈ HackRF One — GPS SPOOF CONFIG
+            </div>
+            <table style="width:100%;border-collapse:collapse;font-size:0.82rem">
+                <tr>
+                    <td style="color:#557755;padding:3px 0;vertical-align:top">TX FREQ</td>
+                    <td style="text-align:right;padding:3px 0">${freq}</td>
+                </tr>
+                <tr>
+                    <td style="color:#557755;padding:3px 0;vertical-align:top">TX PWR</td>
+                    <td style="text-align:right;padding:3px 0">${pwr}</td>
+                </tr>
+                <tr>
+                    <td style="color:#557755;padding:3px 0;vertical-align:top">OFFSET</td>
+                    <td style="text-align:right;padding:3px 0">${tgt}</td>
+                </tr>
+            </table>
+            <div style="margin-top:8px;padding-top:6px;border-top:1px solid #003311;font-size:0.73rem">${status}</div>
+        `;
+    },
+
+    /** Show the HackRF GPS parameter overlay panel */
+    _showGPSParamOverlay() {
+        document.getElementById('gps-param-overlay')?.remove();
+        const el = document.createElement('div');
+        el.id = 'gps-param-overlay';
+        el.style.cssText = [
+            'position:fixed',
+            'top:80px',
+            'right:20px',
+            'background:rgba(0,10,3,0.93)',
+            'border:2px solid #00ff41',
+            'border-radius:6px',
+            'padding:14px 18px',
+            'font-family:\'Courier New\',monospace',
+            'color:#00ff41',
+            'z-index:5000',
+            'min-width:270px',
+            'box-shadow:0 0 24px rgba(0,255,65,0.25),inset 0 0 16px rgba(0,0,0,0.6)',
+            'pointer-events:none',
+            'animation:hackrf-slide-in 0.3s ease',
+        ].join(';');
+        el.innerHTML = DroneHuntScene._buildGPSOverlayHTML();
+        // Inject keyframe animations if not already present
+        if (!document.getElementById('hackrf-overlay-style')) {
+            const style = document.createElement('style');
+            style.id = 'hackrf-overlay-style';
+            style.textContent = `
+                @keyframes hackrf-slide-in {
+                    from { opacity:0; transform:translateX(20px); }
+                    to   { opacity:1; transform:translateX(0); }
+                }
+                @keyframes hackrf-blink {
+                    0%,100% { opacity:1; } 50% { opacity:0.3; }
+                }
+                #hotspot-execute_spoof.hotspot-execute-spoof {
+                    background: rgba(0,255,65,0.12);
+                    border: 2px solid #00ff41 !important;
+                    box-shadow: 0 0 12px rgba(0,255,65,0.4);
+                    animation: hackrf-blink 1s ease-in-out infinite;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        document.body.appendChild(el);
+    },
+
+    /** Refresh the overlay with current parameter state */
+    _updateGPSOverlay() {
+        const el = document.getElementById('gps-param-overlay');
+        if (el) el.innerHTML = DroneHuntScene._buildGPSOverlayHTML();
+    },
+
+    /** Remove the overlay */
+    _hideGPSParamOverlay() {
+        document.getElementById('gps-param-overlay')?.remove();
+    },
+
     /** Phase 4: Execute the spoof — cinematic sequence */
     _executeSpoof: (game) => {
         const s = DroneHuntScene.state;
         s.spoofExecuted = true;
         s.phase = 4;
         game.setFlag('gps_spoof_executed', true);
+
+        // Remove the parameter overlay — we're transmitting now
+        DroneHuntScene._hideGPSParamOverlay();
 
         // Audio: GPS transmit warble + crash sequence
         DroneHuntScene._playGPSTransmit();
