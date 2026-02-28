@@ -70,9 +70,9 @@ const PlanetenpadScene = {
             playerTarget: { x: 8, y: 88 },
             bgZoom: 1.0, bgOffsetX: 0, bgOffsetY: 0,
             narration: [
-                { speaker: '', text: '*A narrow sandy path winds through the Drenthe heathland. A wooden sign at the trailhead reads:*' },
-                { speaker: '', text: '*PLANETENPAD — Schaalmodel van ons Zonnestelsel — Wandel van Pluto naar de Zon — 1 kilometer*' },
-                { speaker: '', text: '*The air smells of warm heather and pine resin. A skylark trills somewhere overhead.*' },
+                { speaker: 'Narrator', text: '*A narrow sandy path winds through the Drenthe heathland. A wooden sign at the trailhead reads:*' },
+                { speaker: 'Narrator', text: '*PLANETENPAD — Schaalmodel van ons Zonnestelsel — Wandel van Pluto naar de Zon — 1 kilometer*' },
+                { speaker: 'Narrator', text: '*The air smells of warm heather and pine resin. A skylark trills somewhere overhead.*' },
                 { speaker: 'Ryan', text: 'One kilometre from Pluto to the Sun. Let\'s see how big space really is.' },
             ]
         },
@@ -81,8 +81,8 @@ const PlanetenpadScene = {
             playerTarget: { x: 12, y: 86 },
             bgZoom: 1.05, bgOffsetX: -2, bgOffsetY: -1,
             narration: [
-                { speaker: '', text: '*A few steps in. The first pedestal appears — barely visible. A tiny sphere, smaller than a grain of rice.*' },
-                { speaker: '', text: '*A green information board reads: PLUTO — 985 m van de Zon*' },
+                { speaker: 'Narrator', text: '*A few steps in. The first pedestal appears — barely visible. A tiny sphere, smaller than a grain of rice.*' },
+                { speaker: 'Narrator', text: '*A green information board reads: PLUTO — 985 m van de Zon*' },
                 { speaker: 'Ryan', text: 'Pluto. Almost a kilometre from the Sun model. At this scale, you really feel the emptiness of the outer solar system.' },
                 { speaker: 'Ryan', text: 'The next planet — Neptune — is 235 metres closer. That\'s a long walk just for the first step.' },
             ]
@@ -92,9 +92,9 @@ const PlanetenpadScene = {
             playerTarget: { x: 22, y: 82 },
             bgZoom: 1.08, bgOffsetX: -6, bgOffsetY: -3,
             narration: [
-                { speaker: '', text: '*The heather stretches out on both sides. Purple blooms sway gently in the wind. Birch trees rustle overhead.*' },
-                { speaker: '', text: '*After a long stretch of empty path, another pedestal. A blue-tinted sphere.*' },
-                { speaker: '', text: '*🔵 NEPTUNE — 750 m from the Sun*' },
+                { speaker: 'Narrator', text: '*The heather stretches out on both sides. Purple blooms sway gently in the wind. Birch trees rustle overhead.*' },
+                { speaker: 'Narrator', text: '*After a long stretch of empty path, another pedestal. A blue-tinted sphere.*' },
+                { speaker: 'Narrator', text: '*🔵 NEPTUNE — 750 m from the Sun*' },
                 { speaker: 'Ryan', text: 'Discovered by mathematics. Le Verrier pointed the telescope and there it was. Pure logic finding a world.' },
                 { speaker: 'Ryan', text: 'Two hundred and thirty-five metres of nothing between Pluto and Neptune. Most of the solar system is just... emptiness.' },
             ]
@@ -104,9 +104,9 @@ const PlanetenpadScene = {
             playerTarget: { x: 30, y: 78 },
             bgZoom: 1.10, bgOffsetX: -10, bgOffsetY: -5,
             narration: [
-                { speaker: '', text: '*The path curves slightly. A butterfly drifts past, orange wings catching the light.*' },
-                { speaker: '', text: '*Another pedestal emerges from the waist-high heather.*' },
-                { speaker: '', text: '*🔵 URANUS — 480 m from the Sun*' },
+                { speaker: 'Narrator', text: '*The path curves slightly. A butterfly drifts past, orange wings catching the light.*' },
+                { speaker: 'Narrator', text: '*Another pedestal emerges from the waist-high heather.*' },
+                { speaker: 'Narrator', text: '*🔵 URANUS — 480 m from the Sun*' },
                 { speaker: 'Ryan', text: 'Tilted 98 degrees. Rolling around the Sun like a bowling ball.' },
                 { speaker: 'Ryan', text: 'Something absolutely enormous must have collided with it. The early solar system was violent.' },
             ]
@@ -116,9 +116,9 @@ const PlanetenpadScene = {
             playerTarget: { x: 40, y: 73 },
             bgZoom: 1.15, bgOffsetX: -15, bgOffsetY: -8,
             narration: [
-                { speaker: '', text: '*The gaps between planets are shrinking. A Scots pine towers beside the path, its trunk rough with bark.*' },
-                { speaker: '', text: '*A golden sphere with delicate rings — the most detailed model on the path.*' },
-                { speaker: '', text: '*🪐 SATURN — 238 m from the Sun*' },
+                { speaker: 'Narrator', text: '*The gaps between planets are shrinking. A Scots pine towers beside the path, its trunk rough with bark.*' },
+                { speaker: 'Narrator', text: '*A golden sphere with delicate rings — the most detailed model on the path.*' },
+                { speaker: 'Narrator', text: '*🪐 SATURN — 238 m from the Sun*' },
                 { speaker: 'Ryan', text: 'The rings are the most beautiful thing in the solar system. Even at this tiny scale.' },
                 { speaker: 'Ryan', text: 'Less dense than water. A planet that would float in your bathtub — if you had one big enough.' },
             ]
@@ -128,10 +128,10 @@ const PlanetenpadScene = {
             playerTarget: { x: 52, y: 68 },
             bgZoom: 1.20, bgOffsetX: -22, bgOffsetY: -12,
             narration: [
-                { speaker: '', text: '*A stone sundial is set beside the path. The gnomon casts a sharp shadow across roman numerals.*' },
+                { speaker: 'Narrator', text: '*A stone sundial is set beside the path. The gnomon casts a sharp shadow across roman numerals.*' },
                 { speaker: 'Ryan', text: 'Ancient tech. Still accurate. No batteries required.' },
-                { speaker: '', text: '*Further along — the largest planet model. About the size of a walnut, with painted bands.*' },
-                { speaker: '', text: '*🟠 JUPITER — 130 m from the Sun*' },
+                { speaker: 'Narrator', text: '*Further along — the largest planet model. About the size of a walnut, with painted bands.*' },
+                { speaker: 'Narrator', text: '*🟠 JUPITER — 130 m from the Sun*' },
                 { speaker: 'Ryan', text: 'The king of the planets. Even the Sun dances to its tune.' },
                 { speaker: 'Ryan', text: 'And the Great Red Spot is a storm bigger than Earth that\'s been raging for at least 350 years.' },
             ]
@@ -141,10 +141,10 @@ const PlanetenpadScene = {
             playerTarget: { x: 58, y: 65 },
             bgZoom: 1.22, bgOffsetX: -26, bgOffsetY: -14,
             narration: [
-                { speaker: '', text: '*An interactive panel stands between the gas giants and inner planets. A spring scale with planet-marked indicators.*' },
-                { speaker: '', text: '*🔬 EXPERIMENT: HOW MUCH DO YOU WEIGH ON OTHER PLANETS?*' },
+                { speaker: 'Narrator', text: '*An interactive panel stands between the gas giants and inner planets. A spring scale with planet-marked indicators.*' },
+                { speaker: 'Narrator', text: '*🔬 EXPERIMENT: HOW MUCH DO YOU WEIGH ON OTHER PLANETS?*' },
                 { speaker: 'Ryan', text: 'On Jupiter, I\'d weigh over 150 kilos. My knees hurt already.' },
-                { speaker: '', text: '*A weathered wooden bench offers a view across the entire path. Ryan pauses.*' },
+                { speaker: 'Narrator', text: '*A weathered wooden bench offers a view across the entire path. Ryan pauses.*' },
                 { speaker: 'Ryan', text: 'Someone sat here and designed all of this. Calculated every distance, every model size. Beautiful work.' },
             ]
         },
@@ -153,9 +153,9 @@ const PlanetenpadScene = {
             playerTarget: { x: 72, y: 62 },
             bgZoom: 1.30, bgOffsetX: -34, bgOffsetY: -18,
             narration: [
-                { speaker: '', text: '*Now the planets come fast. Mars — a red pinhead. Earth — two millimetres of blue-green.*' },
+                { speaker: 'Narrator', text: '*Now the planets come fast. Mars — a red pinhead. Earth — two millimetres of blue-green.*' },
                 { speaker: 'Ryan', text: 'Two millimetres. Everything we know. Every war, every symphony, every line of code. On a two-millimetre sphere.' },
-                { speaker: '', text: '*Venus — yellowish, almost identical to Earth in size. Mercury — a dark speck with craters.*' },
+                { speaker: 'Narrator', text: '*Venus — yellowish, almost identical to Earth in size. Mercury — a dark speck with craters.*' },
                 { speaker: 'Ryan', text: 'Four planets in thirty metres. After seven hundred metres of nearly nothing. That\'s the inner solar system.' },
                 { speaker: 'Ryan', text: 'Carl Sagan was right. It\'s a pale blue dot.' },
             ]
@@ -165,8 +165,8 @@ const PlanetenpadScene = {
             playerTarget: { x: 80, y: 62 },
             bgZoom: 1.35, bgOffsetX: -40, bgOffsetY: -20,
             narration: [
-                { speaker: '', text: '*An information panel with LED strips along the ground.*' },
-                { speaker: '', text: '*🔬 EXPERIMENT: HOW FAST IS LIGHT? — At this scale, light travels 5 cm per second.*' },
+                { speaker: 'Narrator', text: '*An information panel with LED strips along the ground.*' },
+                { speaker: 'Narrator', text: '*🔬 EXPERIMENT: HOW FAST IS LIGHT? — At this scale, light travels 5 cm per second.*' },
                 { speaker: 'Ryan', text: 'Five centimetres per second. That\'s glacier speed.' },
                 { speaker: 'Ryan', text: 'The real speed is 300,000 km/s. And even at that, the nearest star is over four years away.' },
                 { speaker: 'Ryan', text: 'Space is incomprehensibly vast. This path makes that tangible.' },
@@ -177,11 +177,11 @@ const PlanetenpadScene = {
             playerTarget: { x: 88, y: 62 },
             bgZoom: 1.40, bgOffsetX: -48, bgOffsetY: -22,
             narration: [
-                { speaker: '', text: '*At the end of the path — a bright golden sphere on a sturdy pedestal. About the size of a beach ball. It seems to glow in the afternoon light.*' },
-                { speaker: '', text: '*☀️ THE SUN — diameter 23 cm | Real: 1,392,000 km — 99.86% of all mass in the solar system.*' },
+                { speaker: 'Narrator', text: '*At the end of the path — a bright golden sphere on a sturdy pedestal. About the size of a beach ball. It seems to glow in the afternoon light.*' },
+                { speaker: 'Narrator', text: '*☀️ THE SUN — diameter 23 cm | Real: 1,392,000 km — 99.86% of all mass in the solar system.*' },
                 { speaker: 'Ryan', text: 'The whole walk. A kilometre. And THIS is the centre of it all.' },
                 { speaker: 'Ryan', text: 'A thousand-metre walk and most of it was empty space. Just like the real solar system.' },
-                { speaker: '', text: '*Beyond the sun model, the WSRT dishes are visible through the trees — 14 parabolic ears listening to the void of space this path just walked through.*' },
+                { speaker: 'Narrator', text: '*Beyond the sun model, the WSRT dishes are visible through the trees — 14 parabolic ears listening to the void of space this path just walked through.*' },
                 { speaker: 'Ryan', text: 'Perspective. That\'s what this path gives you. The universe doesn\'t care about your to-do list.' },
             ]
         },
@@ -566,6 +566,9 @@ const PlanetenpadScene = {
         this._clearTimeouts();
         this._cinematicActive = false;
 
+        // Stop any TTS currently playing
+        if (window.game) window.game.stopSpeech();
+
         // Hide narration immediately
         const narr = document.getElementById('pp-narration');
         if (narr) narr.classList.remove('visible');
@@ -640,6 +643,9 @@ const PlanetenpadScene = {
 
             container.innerHTML = html;
             container.classList.add('visible');
+
+            // Speak via TTS (uses narrator or Ryan voice profile)
+            if (window.game) window.game.speakText(line.text, line.speaker || 'Narrator');
 
             // Play footstep occasionally during narration
             if (Math.random() < 0.3) this._playFootstep();
@@ -767,9 +773,9 @@ const PlanetenpadScene = {
             this._schedule(() => {
                 // Show ending dialogue through normal system
                 game.startDialogue([
-                    { speaker: '', text: '*Ryan stands beside the sun model. The WSRT dishes loom beyond the trees.*' },
+                    { speaker: 'Narrator', text: '*Ryan stands beside the sun model. The WSRT dishes loom beyond the trees.*' },
                     { speaker: 'Ryan', text: 'What a walk. A kilometre of perspective.' },
-                    { speaker: '', text: '*The path back leads to the parking area. Or there\'s a trail forward toward the WSRT.*' },
+                    { speaker: 'Narrator', text: '*The path back leads to the parking area. Or there\'s a trail forward toward the WSRT.*' },
                 ]);
             }, 1500);
         }, 3000);
@@ -791,9 +797,9 @@ const PlanetenpadScene = {
             action: function(game) {
                 const p = PlanetenpadScene._planets.pluto;
                 game.startDialogue([
-                    { speaker: '', text: `*A small pedestal with a tiny sphere — barely visible. A sign reads: "${p.name}"*` },
-                    { speaker: '', text: `⚪ PLUTO — ${p.dist} from the Sun model | Real distance: ${p.real}` },
-                    { speaker: '', text: `Model size: ${p.size} | ${p.fact}` },
+                    { speaker: 'Narrator', text: `*A small pedestal with a tiny sphere — barely visible. A sign reads: "${p.name}"*` },
+                    { speaker: 'Narrator', text: `⚪ PLUTO — ${p.dist} from the Sun model | Real distance: ${p.real}` },
+                    { speaker: 'Narrator', text: `Model size: ${p.size} | ${p.fact}` },
                     { speaker: 'Ryan', text: 'Almost a kilometre from the Sun model. At this scale, you really feel the emptiness of the outer solar system.' },
                 ]);
             }
@@ -811,9 +817,9 @@ const PlanetenpadScene = {
             action: function(game) {
                 const p = PlanetenpadScene._planets.neptune;
                 game.startDialogue([
-                    { speaker: '', text: `*A blue-tinted sphere on a dark pedestal*` },
-                    { speaker: '', text: `🔵 NEPTUNE — ${p.dist} from the Sun model | Real distance: ${p.real}` },
-                    { speaker: '', text: `Model size: ${p.size} | ${p.fact}` },
+                    { speaker: 'Narrator', text: `*A blue-tinted sphere on a dark pedestal*` },
+                    { speaker: 'Narrator', text: `🔵 NEPTUNE — ${p.dist} from the Sun model | Real distance: ${p.real}` },
+                    { speaker: 'Narrator', text: `Model size: ${p.size} | ${p.fact}` },
                     { speaker: 'Ryan', text: 'Discovered by mathematics. That still blows my mind.' },
                 ]);
             }
@@ -831,9 +837,9 @@ const PlanetenpadScene = {
             action: function(game) {
                 const p = PlanetenpadScene._planets.uranus;
                 game.startDialogue([
-                    { speaker: '', text: `*A pale blue sphere on a tilted pedestal*` },
-                    { speaker: '', text: `🔵 URANUS — ${p.dist} from the Sun model | Real distance: ${p.real}` },
-                    { speaker: '', text: `Model size: ${p.size} | ${p.fact}` },
+                    { speaker: 'Narrator', text: `*A pale blue sphere on a tilted pedestal*` },
+                    { speaker: 'Narrator', text: `🔵 URANUS — ${p.dist} from the Sun model | Real distance: ${p.real}` },
+                    { speaker: 'Narrator', text: `Model size: ${p.size} | ${p.fact}` },
                     { speaker: 'Ryan', text: 'Tilted 98 degrees. Rolling around the Sun like a bowling ball.' },
                 ]);
             }
@@ -851,9 +857,9 @@ const PlanetenpadScene = {
             action: function(game) {
                 const p = PlanetenpadScene._planets.saturn;
                 game.startDialogue([
-                    { speaker: '', text: `*A golden sphere with delicate rings — the most detailed model on the path*` },
-                    { speaker: '', text: `🪐 SATURN — ${p.dist} from the Sun model | Real distance: ${p.real}` },
-                    { speaker: '', text: `Model size: ${p.size} (with rings ~4 cm) | ${p.fact}` },
+                    { speaker: 'Narrator', text: `*A golden sphere with delicate rings — the most detailed model on the path*` },
+                    { speaker: 'Narrator', text: `🪐 SATURN — ${p.dist} from the Sun model | Real distance: ${p.real}` },
+                    { speaker: 'Narrator', text: `Model size: ${p.size} (with rings ~4 cm) | ${p.fact}` },
                     { speaker: 'Ryan', text: 'The rings are the most beautiful thing in the solar system.' },
                 ]);
             }
@@ -871,9 +877,9 @@ const PlanetenpadScene = {
             action: function(game) {
                 const p = PlanetenpadScene._planets.jupiter;
                 game.startDialogue([
-                    { speaker: '', text: `*The largest planet model on the path — about the size of a walnut*` },
-                    { speaker: '', text: `🟠 JUPITER — ${p.dist} from the Sun model | Real distance: ${p.real}` },
-                    { speaker: '', text: `Model size: ${p.size} | ${p.fact}` },
+                    { speaker: 'Narrator', text: `*The largest planet model on the path — about the size of a walnut*` },
+                    { speaker: 'Narrator', text: `🟠 JUPITER — ${p.dist} from the Sun model | Real distance: ${p.real}` },
+                    { speaker: 'Narrator', text: `Model size: ${p.size} | ${p.fact}` },
                     { speaker: 'Ryan', text: 'The king of the planets. Even the Sun dances to its tune.' },
                 ]);
             }
@@ -890,9 +896,9 @@ const PlanetenpadScene = {
             cursor: 'pointer',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*An interactive panel between the gas giants and inner planets*' },
-                    { speaker: '', text: '🔬 EXPERIMENT: HOW MUCH DO YOU WEIGH ON OTHER PLANETS?' },
-                    { speaker: '', text: '• Moon: 16.6% of Earth — Mars: 37.6% — Jupiter: 252.8% — Sun: 2,800%' },
+                    { speaker: 'Narrator', text: '*An interactive panel between the gas giants and inner planets*' },
+                    { speaker: 'Narrator', text: '🔬 EXPERIMENT: HOW MUCH DO YOU WEIGH ON OTHER PLANETS?' },
+                    { speaker: 'Narrator', text: '• Moon: 16.6% of Earth — Mars: 37.6% — Jupiter: 252.8% — Sun: 2,800%' },
                     { speaker: 'Ryan', text: 'On Jupiter, I\'d weigh over 150 kilos. My knees hurt already.' },
                 ]);
             }
@@ -910,9 +916,9 @@ const PlanetenpadScene = {
             action: function(game) {
                 const p = PlanetenpadScene._planets.mars;
                 game.startDialogue([
-                    { speaker: '', text: `*A tiny red sphere. Barely a millimetre across.*` },
-                    { speaker: '', text: `🔴 MARS — ${p.dist} from the Sun model | Real distance: ${p.real}` },
-                    { speaker: '', text: `Model size: ${p.size} | ${p.fact}` },
+                    { speaker: 'Narrator', text: `*A tiny red sphere. Barely a millimetre across.*` },
+                    { speaker: 'Narrator', text: `🔴 MARS — ${p.dist} from the Sun model | Real distance: ${p.real}` },
+                    { speaker: 'Narrator', text: `Model size: ${p.size} | ${p.fact}` },
                     { speaker: 'Ryan', text: 'Olympus Mons. Twenty-two kilometres high. At this scale it would be invisible on a pinhead.' },
                 ]);
             }
@@ -930,9 +936,9 @@ const PlanetenpadScene = {
             action: function(game) {
                 const p = PlanetenpadScene._planets.earth;
                 game.startDialogue([
-                    { speaker: '', text: `*Two tiny spheres — one blue-green, one grey, mounted 6.4 cm apart*` },
-                    { speaker: '', text: `🌍 EARTH — ${p.dist} from the Sun model | Real distance: ${p.real}` },
-                    { speaker: '', text: `Model size: ${p.size} | ${p.fact}` },
+                    { speaker: 'Narrator', text: `*Two tiny spheres — one blue-green, one grey, mounted 6.4 cm apart*` },
+                    { speaker: 'Narrator', text: `🌍 EARTH — ${p.dist} from the Sun model | Real distance: ${p.real}` },
+                    { speaker: 'Narrator', text: `Model size: ${p.size} | ${p.fact}` },
                     { speaker: 'Ryan', text: 'Two millimetres. Everything we know. Every war, every symphony, every line of code.' },
                     { speaker: 'Ryan', text: 'Carl Sagan was right. It\'s a pale blue dot.' },
                 ]);
@@ -951,9 +957,9 @@ const PlanetenpadScene = {
             action: function(game) {
                 const p = PlanetenpadScene._planets.venus;
                 game.startDialogue([
-                    { speaker: '', text: `*A yellowish sphere, almost identical in size to the Earth model*` },
-                    { speaker: '', text: `🟡 VENUS — ${p.dist} from the Sun model | Real distance: ${p.real}` },
-                    { speaker: '', text: `Model size: ${p.size} | ${p.fact}` },
+                    { speaker: 'Narrator', text: `*A yellowish sphere, almost identical in size to the Earth model*` },
+                    { speaker: 'Narrator', text: `🟡 VENUS — ${p.dist} from the Sun model | Real distance: ${p.real}` },
+                    { speaker: 'Narrator', text: `Model size: ${p.size} | ${p.fact}` },
                     { speaker: 'Ryan', text: 'Earth\'s twin in size. But 460 degrees on the surface. Don\'t move to Venus.' },
                 ]);
             }
@@ -971,9 +977,9 @@ const PlanetenpadScene = {
             action: function(game) {
                 const p = PlanetenpadScene._planets.mercury;
                 game.startDialogue([
-                    { speaker: '', text: `*A dark, cratered sphere. Smallest of the planetary models.*` },
-                    { speaker: '', text: `⚫ MERCURY — ${p.dist} from the Sun model | Real distance: ${p.real}` },
-                    { speaker: '', text: `Model size: ${p.size} | ${p.fact}` },
+                    { speaker: 'Narrator', text: `*A dark, cratered sphere. Smallest of the planetary models.*` },
+                    { speaker: 'Narrator', text: `⚫ MERCURY — ${p.dist} from the Sun model | Real distance: ${p.real}` },
+                    { speaker: 'Narrator', text: `Model size: ${p.size} | ${p.fact}` },
                     { speaker: 'Ryan', text: 'Not the hottest planet. Venus wins that, thanks to the greenhouse effect.' },
                 ]);
             }
@@ -990,10 +996,10 @@ const PlanetenpadScene = {
             cursor: 'pointer',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*An information panel with LED light strips*' },
-                    { speaker: '', text: '🔬 EXPERIMENT: HOW FAST IS LIGHT? — At this scale: ~5 cm/s' },
-                    { speaker: '', text: '• Sun→Earth: 8 min 20 s — Sun→Neptune: 4 h 10 min — Sun→Pluto: 5 h 28 min' },
-                    { speaker: '', text: '• Nearest star at this scale: 6,800 km away (London to Lahore)' },
+                    { speaker: 'Narrator', text: '*An information panel with LED light strips*' },
+                    { speaker: 'Narrator', text: '🔬 EXPERIMENT: HOW FAST IS LIGHT? — At this scale: ~5 cm/s' },
+                    { speaker: 'Narrator', text: '• Sun→Earth: 8 min 20 s — Sun→Neptune: 4 h 10 min — Sun→Pluto: 5 h 28 min' },
+                    { speaker: 'Narrator', text: '• Nearest star at this scale: 6,800 km away (London to Lahore)' },
                     { speaker: 'Ryan', text: 'Five centimetres per second. Glacier speed. Space is vast.' },
                 ]);
             }
@@ -1010,8 +1016,8 @@ const PlanetenpadScene = {
             cursor: 'pointer',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*A bright golden sphere on a sturdy pedestal. About the size of a beach ball.*' },
-                    { speaker: '', text: '☀️ THE SUN — diameter 23 cm | Real: 1,392,000 km — 99.86% of all mass in the solar system' },
+                    { speaker: 'Narrator', text: '*A bright golden sphere on a sturdy pedestal. About the size of a beach ball.*' },
+                    { speaker: 'Narrator', text: '☀️ THE SUN — diameter 23 cm | Real: 1,392,000 km — 99.86% of all mass in the solar system' },
                     { speaker: 'Ryan', text: 'The whole walk. A kilometre. And THIS is the centre of it all.' },
                     { speaker: 'Ryan', text: 'Twenty-three centimetres across. Every planet I walked past fits inside it with room to spare.' },
                 ]);
@@ -1031,8 +1037,8 @@ const PlanetenpadScene = {
                 const hour = parseInt((game.gameState.time || '14:00').split(':')[0], 10);
                 const timeDesc = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
                 game.startDialogue([
-                    { speaker: '', text: '*A large stone sundial set into the ground beside the path*' },
-                    { speaker: '', text: '🔬 EXPERIMENT: TELLING TIME BY THE SUN' },
+                    { speaker: 'Narrator', text: '*A large stone sundial set into the ground beside the path*' },
+                    { speaker: 'Narrator', text: '🔬 EXPERIMENT: TELLING TIME BY THE SUN' },
                     { speaker: 'Ryan', text: `It's ${timeDesc}. The shadow confirms it — this thing actually works.` },
                     { speaker: 'Ryan', text: 'Ancient tech. Fifty-two point nine degrees latitude. Still accurate. No batteries required.' },
                 ]);
@@ -1050,7 +1056,7 @@ const PlanetenpadScene = {
             cursor: 'pointer',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*A weathered wooden bench between the gas giants and inner planets. A view across the entire path.*' },
+                    { speaker: 'Narrator', text: '*A weathered wooden bench between the gas giants and inner planets. A view across the entire path.*' },
                     { speaker: 'Ryan', text: 'Someone sat here and designed all of this. Calculated every distance, every model size.' },
                     { speaker: 'Ryan', text: 'The kids would love this. Remind me to bring them next summer.' },
                 ]);
@@ -1089,7 +1095,7 @@ const PlanetenpadScene = {
                     PlanetenpadScene._startCinematicWalk(game);
                 } else {
                     game.startDialogue([
-                        { speaker: '', text: '*A sandy path stretches through the heathland toward the distant WSRT dishes*' },
+                        { speaker: 'Narrator', text: '*A sandy path stretches through the heathland toward the distant WSRT dishes*' },
                         { speaker: 'Ryan', text: 'A kilometre of solar system. From Pluto to the Sun.' },
                         { speaker: 'Ryan', text: 'Most of the walk is between the outer planets. Neptune to Jupiter is 620 metres. Jupiter to the Sun? Only 130.' },
                     ]);
@@ -1110,7 +1116,7 @@ const PlanetenpadScene = {
             skipWalk: true,
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*Ryan turns back toward the parking area*' },
+                    { speaker: 'Narrator', text: '*Ryan turns back toward the parking area*' },
                     { speaker: 'Ryan', text: 'Back to the parking lot. That was a good walk.' },
                 ], () => {
                     game.loadScene('wsrt_parking');
@@ -1137,7 +1143,7 @@ const PlanetenpadScene = {
                     return;
                 }
                 game.startDialogue([
-                    { speaker: '', text: '*Past the sun model, the path leads straight to the WSRT*' },
+                    { speaker: 'Narrator', text: '*Past the sun model, the path leads straight to the WSRT*' },
                     { speaker: 'Ryan', text: 'From the Sun model to the real radio telescopes. A fitting transition.' },
                 ], () => {
                     game.loadScene('astron');
@@ -1164,7 +1170,7 @@ const PlanetenpadScene = {
             // Been here before but haven't done the full walk
             this._schedule(() => {
                 game.startDialogue([
-                    { speaker: '', text: '*The Planetenpad stretches ahead. Click the path to walk it.*' },
+                    { speaker: 'Narrator', text: '*The Planetenpad stretches ahead. Click the path to walk it.*' },
                     { speaker: 'Ryan', text: 'Back at the trail. The planets are waiting.' },
                 ]);
             }, 400);
@@ -1173,7 +1179,7 @@ const PlanetenpadScene = {
             game.player.setPosition(88, 62);
             this._schedule(() => {
                 game.startDialogue([
-                    { speaker: '', text: '*The Planetenpad. Planet markers line the sandy path through the Drenthe heath.*' },
+                    { speaker: 'Narrator', text: '*The Planetenpad. Planet markers line the sandy path through the Drenthe heath.*' },
                     { speaker: 'Ryan', text: 'Back on the solar system walk. Still impressive.' },
                 ]);
             }, 300);
@@ -1199,6 +1205,9 @@ const PlanetenpadScene = {
 
         // Stop audio
         this._stopAudio();
+
+        // Stop any TTS
+        if (window.game) window.game.stopSpeech();
 
         // Remove injected stylesheet
         const style = document.getElementById('planetenpad-cinematic-style');
