@@ -371,6 +371,10 @@ const DrivingDayScene = {
             const vm = window.voiceManager;
             if (!vm) return;
 
+            // Short drives to/from wsrt parking don't need TTS news
+            // (the dialogue starts immediately and the 8.5s delay would interrupt it)
+            if (destination === 'wsrt_parking' || destination === 'home_from_wsrt_parking') return;
+
             // Build news bulletin based on where the player is going
             let bulletin;
             if (destination === 'hackerspace' || destination === 'home_from_hackerspace') {
@@ -406,12 +410,13 @@ const DrivingDayScene = {
             }
 
             // Delay the TTS to start after the news jingle
-            setTimeout(() => {
+            // Tracked in _timeoutIds so it is cancelled if the scene exits early
+            const radioTtsId = setTimeout(() => {
                 if (vm.speak) {
-                    vm.stop();
                     vm.speak(bulletin, 'Documentary');
                 }
             }, 8500); // after jingle + pips + news stinger
+            this._timeoutIds.push(radioTtsId);
 
         } catch (e) {
             console.warn('[DrivingDay] Radio TTS failed:', e);

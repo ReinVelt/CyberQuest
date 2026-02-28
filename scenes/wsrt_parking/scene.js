@@ -24,19 +24,11 @@ const WsrtParkingScene = {
     playerStart: { x: 50, y: 85 },
 
     idleThoughts: [
-        "The heath stretches in every direction. Flat as a pancake.",
-        "Three destinations from one parking spot. Only in Drenthe.",
-        "That direction board has seen better days. But the arrows still point true.",
+        "Three destinations from one parking lot. Only in Drenthe.",
         "The Volvo ticks quietly as the engine cools.",
-        "Birch trees and heather. Classic Drenthe landscape.",
         "I can see the WSRT dishes from here. Still impressive.",
-        "The memorial is close. You can feel it, even from here.",
-        "A thousand-metre walking model of the solar system. That's... unexpected.",
         "Wind rustles through the heather. Otherwise silence.",
-        "Parking is free. Only thing that is, these days.",
-        "The gravel crunches under my shoes.",
         "A magpie watches me from the birch tree. Judgmental.",
-        "Good place to stretch my legs after forty minutes in the Volvo.",
         "Fresh Drenthe air. Smells like heather and damp earth.",
     ],
 
