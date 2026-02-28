@@ -519,6 +519,11 @@ const DroneHuntScene = {
     _playCrashAnimation() {
         this._injectCrashStyles();
 
+        // Hide the static SVG drones — the CSS crash sprites take over
+        ['drone1', 'drone2', 'drone3', 'drone4'].forEach(id => {
+            this._setSVGElementOpacity(id, 0);
+        });
+
         const overlay = document.createElement('div');
         overlay.id = 'drone-crash-overlay';
         document.body.appendChild(overlay);
@@ -596,13 +601,11 @@ const DroneHuntScene = {
         }, 8000);
     },
 
-    /** Helper to set opacity on SVG elements by ID */
+    /** Helper to set opacity on SVG elements by ID (works with inline SVG) */
     _setSVGElementOpacity(id, opacity) {
         try {
-            const bg = document.getElementById('scene-background');
-            if (!bg) return;
-            // The SVG is set as a background-image, so we can't directly access elements
-            // Instead we use an inline SVG overlay approach
+            const el = document.getElementById(id);
+            if (el) el.style.opacity = opacity;
         } catch (e) { /* silent */ }
     },
 
@@ -1121,6 +1124,24 @@ const DroneHuntScene = {
         s.spoofExecuted = false;
         s.dronesDown = false;
 
+        // ── Inject SVG inline so _setSVGElementOpacity can reach its elements ──
+        // The engine loads the SVG as a background-image (inaccessible to JS);
+        // we fetch & inject it as inline DOM instead, giving full element access.
+        fetch('assets/images/scenes/drone_hunt.svg')
+            .then(r => r.text())
+            .then(svgText => {
+                const bgEl = document.getElementById('scene-background');
+                if (!bgEl || !bgEl.classList.contains('scene-drone_hunt')) return;
+                bgEl.style.backgroundImage = 'none';
+                bgEl.innerHTML = svgText;
+                const svg = bgEl.querySelector('svg');
+                if (svg) {
+                    svg.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;';
+                    svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
+                }
+            })
+            .catch(e => console.warn('[DroneHunt] SVG inline load failed:', e));
+
         game.setFlag('drone_hunt_started', true);
 
         // Start ambient audio (drone rotors + wind)
@@ -1157,6 +1178,9 @@ const DroneHuntScene = {
         DroneHuntScene._stopAudio();
         DroneHuntScene._cleanupCrash();
         DroneHuntScene._hideGPSParamOverlay();
+        // Clear any inline SVG we injected (engine will set next scene's background)
+        const bgEl = document.getElementById('scene-background');
+        if (bgEl) { bgEl.innerHTML = ''; }
     },
 
     // ═══════════════════════════════════════════════════════════
