@@ -614,29 +614,30 @@ const PlanetenpadScene = {
         const container = document.getElementById('pp-narration');
         if (!container) { if (callback) callback(); return; }
 
-        let lineIdx = 0;
-        const showNext = () => {
+        // Tiny helper — cancellable sleep that still registers in _timeoutIds
+        const sleep = (ms) => new Promise(resolve => this._schedule(resolve, ms));
+
+        const showNext = async (lineIdx) => {
+            if (!this._cinematicActive) return;
+
             if (lineIdx >= lines.length) {
-                // Pause then fade out
-                this._schedule(() => {
-                    container.classList.remove('visible');
-                    this._schedule(() => {
-                        if (callback) callback();
-                    }, 800);
-                }, 1200);
+                // Last line finished — brief hold, then fade out and call back
+                await sleep(1200);
+                if (!this._cinematicActive) return;
+                container.classList.remove('visible');
+                await sleep(800);
+                if (!this._cinematicActive) return;
+                if (callback) callback();
                 return;
             }
 
             const line = lines[lineIdx];
-            lineIdx++;
 
-            // Build content
+            // Build HTML content
             let html = '';
-            if (line.speaker && line.speaker !== '') {
+            if (line.speaker && line.speaker !== 'Narrator') {
                 html += `<span class="pp-speaker">${line.speaker}</span>`;
             }
-
-            // Format text (italics for stage directions)
             let text = line.text;
             text = text.replace(/\*([^*]+)\*/g, '<em style="color:rgba(200,210,220,0.7);font-style:italic;">$1</em>');
             html += text;
@@ -644,24 +645,28 @@ const PlanetenpadScene = {
             container.innerHTML = html;
             container.classList.add('visible');
 
-            // Speak via TTS (uses narrator or Ryan voice profile)
-            if (window.game) window.game.speakText(line.text, line.speaker || 'Narrator');
+            // Speak via TTS and WAIT for it to finish before advancing
+            const speechPromise = window.game
+                ? window.game.speakText(line.text, line.speaker || 'Narrator')
+                : Promise.resolve();
 
             // Play footstep occasionally during narration
             if (Math.random() < 0.3) this._playFootstep();
 
-            // Timing: longer for stage directions, shorter for dialogue
-            const isStageDir = line.text.startsWith('*');
-            const charCount = line.text.length;
-            const readTime = Math.max(2500, Math.min(5500, charCount * 35 + (isStageDir ? 800 : 0)));
+            // Wait for TTS to complete
+            await speechPromise;
+            if (!this._cinematicActive) return;
 
-            this._schedule(() => {
-                container.classList.remove('visible');
-                this._schedule(() => showNext(), 500);
-            }, readTime);
+            // Brief visual hold after speech ends, then fade out
+            await sleep(400);
+            if (!this._cinematicActive) return;
+            container.classList.remove('visible');
+            await sleep(500);
+
+            showNext(lineIdx + 1);
         };
 
-        showNext();
+        showNext(0);
     },
 
     // ═══════════════════════════════════════════════
