@@ -1345,6 +1345,11 @@ class CyberQuestEngine {
     
     // Puzzle System
     startPuzzle(puzzleConfig) {
+        if (this.accessibilityMode) {
+            // 🎬 Movie mode: show the puzzle UI, then fill fields one by one and submit
+            this._autoSolveLegacyPuzzle(puzzleConfig);
+            return;
+        }
         this.isPuzzleActive = true;
         const overlay = document.getElementById('puzzle-overlay');
         const container = document.getElementById('puzzle-container');
@@ -1723,8 +1728,8 @@ class CyberQuestEngine {
     }
 
     /**
-     * 🎬 Auto-solve a password puzzle in accessibility/movie mode.
-     * Shows the puzzle UI, types the correct answer, then submits it.
+     * 🎬 Auto-solve a PasswordPuzzle (new system) in accessibility/movie mode.
+     * Shows the puzzle UI, then types the correct answer into each field one by one.
      */
     async _autoSolvePuzzle(config) {
         if (!this.passwordPuzzle) {
@@ -1738,14 +1743,19 @@ class CyberQuestEngine {
         // Wait for the puzzle UI to render
         await this.wait(900);
 
-        const input = document.getElementById('password-input');
-        if (!input) {
+        // Collect all input/textarea fields in the puzzle overlay, in DOM order
+        const puzzleEl = document.getElementById('password-puzzle');
+        const inputs = puzzleEl
+            ? Array.from(puzzleEl.querySelectorAll('input, textarea'))
+            : [document.getElementById('password-input')].filter(Boolean);
+
+        if (!inputs.length) {
             if (config.onSuccess) config.onSuccess(this);
             return;
         }
 
-        // Determine answer: use correctAnswer or correctPassword field
-        const candidates = Array.isArray(config.correctAnswer)
+        // Build answer list — use correctAnswer or correctPassword; each index maps to a field
+        const rawAnswers = Array.isArray(config.correctAnswer)
             ? config.correctAnswer
             : config.correctAnswer
                 ? [config.correctAnswer]
@@ -1753,14 +1763,20 @@ class CyberQuestEngine {
                     ? [config.correctPassword]
                     : [];
 
-        const answer = candidates[0] || '';
+        // Type into each field one by one
+        for (let f = 0; f < inputs.length; f++) {
+            const input  = inputs[f];
+            const answer = rawAnswers[f] ?? rawAnswers[0] ?? '';
 
-        // Type the answer character by character visually
-        input.value = '';
-        input.focus();
-        for (let i = 0; i < answer.length; i++) {
-            input.value += answer[i];
-            await this.wait(80);
+            input.value = '';
+            input.focus();
+            for (let i = 0; i < answer.length; i++) {
+                input.value += answer[i];
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                await this.wait(80);
+            }
+            // Brief pause between fields before moving to the next one
+            if (f < inputs.length - 1) await this.wait(400);
         }
 
         await this.wait(600);
@@ -1768,6 +1784,95 @@ class CyberQuestEngine {
         // Submit
         if (this.passwordPuzzle && this.passwordPuzzle.isActive) {
             this.passwordPuzzle.checkAnswer();
+        }
+    }
+
+    /**
+     * 🎬 Auto-solve a legacy startPuzzle() puzzle in accessibility/movie mode.
+     * Renders the full puzzle UI, fills each field one by one, then submits.
+     * Handles types: 'rot1', 'password' (text input), 'frequency' (slider).
+     */
+    async _autoSolveLegacyPuzzle(config) {
+        // Render the puzzle UI exactly as startPuzzle() would (minus the interceptor)
+        this.isPuzzleActive = true;
+        const overlay   = document.getElementById('puzzle-overlay');
+        const container = document.getElementById('puzzle-container');
+        if (!overlay || !container) {
+            this.puzzleSolved(config);
+            return;
+        }
+        overlay.classList.remove('hidden');
+        switch (config.type) {
+            case 'rot1':      this.loadROT1Puzzle(container, config);       break;
+            case 'frequency': this.loadFrequencyPuzzle(container, config);  break;
+            case 'password':  this.loadPasswordPuzzle(container, config);   break;
+            default:
+                this.puzzleSolved(config);
+                return;
+        }
+
+        // Wait for the UI to render
+        await this.wait(900);
+
+        if (config.type === 'frequency') {
+            // ── Frequency puzzle: animate the slider from start → target ──
+            const slider    = document.getElementById('freq-slider');
+            const freqLabel = document.getElementById('freq-value');
+            const sigBar    = document.getElementById('signal-strength');
+            if (slider) {
+                const target = parseFloat(config.solution);
+                let cur      = parseFloat(slider.value);
+                const step   = cur <= target ? 0.5 : -0.5;
+                while (Math.abs(cur - target) >= Math.abs(step) + 0.01) {
+                    cur = Math.round((cur + step) * 10) / 10;
+                    slider.value = cur;
+                    if (freqLabel) freqLabel.textContent = cur.toFixed(1);
+                    if (sigBar) {
+                        const proximity = Math.max(0, 100 - Math.abs(cur - target) * 10);
+                        sigBar.style.width = proximity + '%';
+                    }
+                    slider.dispatchEvent(new Event('input', { bubbles: true }));
+                    await this.wait(80);
+                }
+                // Land exactly on target
+                slider.value = target;
+                if (freqLabel) freqLabel.textContent = target.toFixed(1);
+                if (sigBar) sigBar.style.width = '100%';
+                slider.dispatchEvent(new Event('input', { bubbles: true }));
+            }
+            await this.wait(600);
+        } else {
+            // ── rot1 / password: find ALL text inputs/textareas, fill each one by one ──
+            const puzzleOverlay = document.getElementById('puzzle-overlay') || document;
+            const inputs = Array.from(
+                puzzleOverlay.querySelectorAll('#puzzle-answer, .puzzle input, .puzzle textarea')
+            );
+            const answers = Array.isArray(config.solution)
+                ? config.solution
+                : [config.solution || ''];
+
+            for (let f = 0; f < inputs.length; f++) {
+                const inp    = inputs[f];
+                const answer = answers[f] ?? answers[0] ?? '';
+                inp.value = '';
+                inp.focus();
+                for (let i = 0; i < answer.length; i++) {
+                    inp.value += answer[i];
+                    inp.dispatchEvent(new Event('input', { bubbles: true }));
+                    await this.wait(80);
+                }
+                // Brief pause before moving to the next field
+                if (f < inputs.length - 1) await this.wait(400);
+            }
+            await this.wait(600);
+        }
+
+        // Click submit (or fall back to direct puzzleSolved)
+        const submitBtn = document.getElementById('puzzle-submit');
+        if (submitBtn) {
+            submitBtn.click();
+        } else {
+            this.puzzleSolved(config);
         }
     }
     
