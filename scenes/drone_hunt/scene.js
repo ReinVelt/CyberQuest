@@ -341,10 +341,10 @@ const DroneHuntScene = {
                 }
             });
 
-            // Final: silence falls — wind only
+            // Final: silence falls — wind fades out with the rotors
             if (this._windGain) {
                 this._windGain.gain.setValueAtTime(0.02, t + 6);
-                this._windGain.gain.linearRampToValueAtTime(0.04, t + 8);
+                this._windGain.gain.linearRampToValueAtTime(0, t + 10);
             }
         } catch (e) { /* silent */ }
     },
@@ -393,6 +393,7 @@ const DroneHuntScene = {
      * ═══════════════════════════════════════════════════════════ */
     _crashStyleEl: null,
     _crashOverlayEl: null,
+    _droneOverlayEl: null,
 
     _injectCrashStyles() {
         if (document.getElementById('drone-crash-styles')) return;
@@ -519,10 +520,8 @@ const DroneHuntScene = {
     _playCrashAnimation() {
         this._injectCrashStyles();
 
-        // Hide the static SVG drones — the CSS crash sprites take over
-        ['drone1', 'drone2', 'drone3', 'drone4'].forEach(id => {
-            this._setSVGElementOpacity(id, 0);
-        });
+        // Remove foreground drone sprites — CSS crash sprites take over
+        this._removeDroneSprites();
 
         const overlay = document.createElement('div');
         overlay.id = 'drone-crash-overlay';
@@ -626,6 +625,182 @@ const DroneHuntScene = {
             this._crashStyleEl.remove();
             this._crashStyleEl = null;
         }
+        this._removeDroneSprites();
+    },
+
+    /* ═══════════════════════════════════════════════════════════
+     *  DRONE FOREGROUND SPRITES
+     *  Dynamic SVG overlay so drones are DOM elements, not baked
+     *  into the background image — can be removed on crash/exit.
+     * ═══════════════════════════════════════════════════════════ */
+
+    _spawnDroneSprites() {
+        if (document.getElementById('drone-fg-overlay')) return;
+        const sceneEl = document.getElementById('scene-container');
+        if (!sceneEl) return;
+
+        const div = document.createElement('div');
+        div.id = 'drone-fg-overlay';
+        div.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;';
+        div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"
+  preserveAspectRatio="xMidYMid slice"
+  style="width:100%;height:100%;display:block;">
+  <defs>
+    <linearGradient id="dfo-beam1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,220,0.35)"/>
+      <stop offset="20%" stop-color="rgba(255,255,220,0.15)"/>
+      <stop offset="60%" stop-color="rgba(255,255,200,0.04)"/>
+      <stop offset="100%" stop-color="rgba(255,255,200,0)"/>
+    </linearGradient>
+    <linearGradient id="dfo-beam2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(200,220,255,0.25)"/>
+      <stop offset="30%" stop-color="rgba(180,200,255,0.08)"/>
+      <stop offset="100%" stop-color="rgba(150,170,240,0)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- DRONE 1: MAIN PREDATOR — sweeping patrol -->
+  <g id="fg-drone1">
+    <polygon points="0,25 -160,650 160,650" fill="url(#dfo-beam1)" opacity="0.3">
+      <animate attributeName="opacity" values="0.3;0.15;0.25;0.1;0.3" dur="4s" repeatCount="indefinite"/>
+    </polygon>
+    <ellipse cx="0" cy="650" rx="160" ry="40" fill="rgba(255,255,200,0.04)">
+      <animate attributeName="opacity" values="1;0.5;0.8;0.4;1" dur="4s" repeatCount="indefinite"/>
+    </ellipse>
+    <g>
+      <line x1="-40" y1="0" x2="-75" y2="-18" stroke="#383838" stroke-width="3.5"/>
+      <line x1="40" y1="0" x2="75" y2="-18" stroke="#383838" stroke-width="3.5"/>
+      <line x1="-35" y1="6" x2="-65" y2="24" stroke="#383838" stroke-width="3.5"/>
+      <line x1="35" y1="6" x2="65" y2="24" stroke="#383838" stroke-width="3.5"/>
+      <circle cx="-75" cy="-18" r="6" fill="#222"/>
+      <circle cx="75" cy="-18" r="6" fill="#222"/>
+      <circle cx="-65" cy="24" r="6" fill="#222"/>
+      <circle cx="65" cy="24" r="6" fill="#222"/>
+      <polygon points="-32,0 -28,-12 28,-12 32,0 28,12 -28,12" fill="#1c1c1c"/>
+      <polygon points="-26,-2 -22,-10 22,-10 26,-2 22,8 -22,8" fill="#252525"/>
+      <rect x="-10" y="12" width="20" height="10" rx="3" fill="#111"/>
+      <circle cx="0" cy="17" r="4" fill="#0a0505">
+        <animate attributeName="fill" values="#0a0505;#1a0808;#0a0505" dur="1.2s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="0" cy="17" r="6" fill="none" stroke="#300808" stroke-width="0.5" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0.2;0.6" dur="1.2s" repeatCount="indefinite"/>
+      </circle>
+      <g opacity="0.35">
+        <ellipse cx="-75" cy="-18" rx="28" ry="4" fill="#666">
+          <animate attributeName="rx" values="28;22;28" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="75" cy="-18" rx="28" ry="4" fill="#666">
+          <animate attributeName="rx" values="22;28;22" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="-65" cy="24" rx="28" ry="4" fill="#666">
+          <animate attributeName="rx" values="25;28;25" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="65" cy="24" rx="28" ry="4" fill="#666">
+          <animate attributeName="rx" values="28;25;28" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+      </g>
+      <circle cx="-75" cy="-18" r="2.5" fill="#ff0000">
+        <animate attributeName="opacity" values="1;0;1" dur="0.4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="75" cy="-18" r="2.5" fill="#00ff00">
+        <animate attributeName="opacity" values="0;1;0" dur="0.4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="0" cy="-12" r="2" fill="#ffffff" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;0;0;0;0;0" dur="2s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <animateMotion dur="16s" repeatCount="indefinite" rotate="auto"
+      path="M800,100 C600,80 350,140 200,110 C80,85 40,160 120,180 C280,210 500,130 750,150 C1000,170 1350,80 1550,120 C1700,150 1800,90 1650,70 C1450,55 1050,130 800,100"/>
+  </g>
+
+  <!-- DRONE 2: FLANKER — perimeter patrol -->
+  <g id="fg-drone2" opacity="0.65">
+    <polygon points="0,18 -60,400 60,400" fill="url(#dfo-beam2)" opacity="0.2">
+      <animate attributeName="opacity" values="0.2;0.08;0.15;0.05;0.2" dur="5s" repeatCount="indefinite"/>
+    </polygon>
+    <g>
+      <line x1="-18" y1="0" x2="-35" y2="-10" stroke="#353535" stroke-width="2.5"/>
+      <line x1="18" y1="0" x2="35" y2="-10" stroke="#353535" stroke-width="2.5"/>
+      <line x1="-15" y1="5" x2="-30" y2="15" stroke="#353535" stroke-width="2.5"/>
+      <line x1="15" y1="5" x2="30" y2="15" stroke="#353535" stroke-width="2.5"/>
+      <circle cx="-35" cy="-10" r="4" fill="#222"/>
+      <circle cx="35" cy="-10" r="4" fill="#222"/>
+      <circle cx="-30" cy="15" r="4" fill="#222"/>
+      <circle cx="30" cy="15" r="4" fill="#222"/>
+      <polygon points="-16,0 -14,-8 14,-8 16,0 14,8 -14,8" fill="#1c1c1c"/>
+      <polygon points="-12,-1 -10,-6 10,-6 12,-1 10,6 -10,6" fill="#252525"/>
+      <circle cx="0" cy="10" r="3" fill="#0a0505">
+        <animate attributeName="fill" values="#0a0505;#180808;#0a0505" dur="1.6s" repeatCount="indefinite"/>
+      </circle>
+      <g opacity="0.3">
+        <ellipse cx="-35" cy="-10" rx="16" ry="3" fill="#666">
+          <animate attributeName="rx" values="16;12;16" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="35" cy="-10" rx="16" ry="3" fill="#666">
+          <animate attributeName="rx" values="12;16;12" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="-30" cy="15" rx="16" ry="3" fill="#666">
+          <animate attributeName="rx" values="14;16;14" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+        <ellipse cx="30" cy="15" rx="16" ry="3" fill="#666">
+          <animate attributeName="rx" values="16;14;16" dur="0.06s" repeatCount="indefinite"/>
+        </ellipse>
+      </g>
+      <circle cx="-35" cy="-10" r="2" fill="#ff0000">
+        <animate attributeName="opacity" values="1;0;1" dur="0.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="35" cy="-10" r="2" fill="#00ff00">
+        <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <animateMotion dur="22s" repeatCount="indefinite" rotate="auto"
+      path="M1500,160 C1700,130 1880,180 1850,140 C1820,100 1650,70 1400,90 C1100,115 800,180 550,155 C350,135 150,80 80,120 C30,150 150,200 350,185 C600,165 1000,195 1300,175 C1400,168 1480,165 1500,160"/>
+  </g>
+
+  <!-- DRONE 3: FAST INTERCEPTOR — racing across horizon -->
+  <g id="fg-drone3" opacity="0.35">
+    <g>
+      <ellipse cx="0" cy="0" rx="10" ry="4" fill="#1c1c1c"/>
+      <circle cx="-20" cy="-5" r="1.5" fill="#ff0000">
+        <animate attributeName="opacity" values="1;0;1" dur="0.3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="20" cy="-5" r="1.5" fill="#ff0000">
+        <animate attributeName="opacity" values="0;1;0" dur="0.3s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="0" cy="-4" r="1" fill="#fff" opacity="0">
+        <animate attributeName="opacity" values="0;0;1;0;0;0" dur="1.5s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <animateMotion dur="10s" repeatCount="indefinite"
+      path="M-100,300 L400,280 L800,310 L1200,285 L1600,305 L2020,290 L2020,280 L1600,295 L1200,275 L800,300 L400,270 L-100,300"/>
+  </g>
+
+  <!-- DRONE 4: HIGH ALTITUDE SPOTTER — tiny, circling -->
+  <g id="fg-drone4" opacity="0.2">
+    <circle cx="0" cy="0" r="3" fill="#181818"/>
+    <circle cx="-8" cy="-3" r="0.8" fill="#ff0000">
+      <animate attributeName="opacity" values="1;0;1" dur="0.7s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="8" cy="-3" r="0.8" fill="#00ff00">
+      <animate attributeName="opacity" values="0;1;0" dur="0.7s" repeatCount="indefinite"/>
+    </circle>
+    <animateMotion dur="30s" repeatCount="indefinite"
+      path="M960,200 C1200,180 1400,220 1500,200 C1600,180 1550,160 1400,170 C1200,185 1000,210 800,195 C600,180 400,200 350,210 C300,220 400,230 600,215 C800,200 900,200 960,200"/>
+  </g>
+</svg>`;
+
+        sceneEl.appendChild(div);
+        this._droneOverlayEl = div;
+    },
+
+    _removeDroneSprites() {
+        if (this._droneOverlayEl) {
+            this._droneOverlayEl.remove();
+            this._droneOverlayEl = null;
+        }
+        // Belt-and-suspenders: remove by ID in case reference was lost
+        const el = document.getElementById('drone-fg-overlay');
+        if (el) el.remove();
     },
 
     // Scene state tracking
@@ -1147,6 +1322,9 @@ const DroneHuntScene = {
         // Start ambient audio (drone rotors + wind)
         DroneHuntScene._initAudio();
 
+        // Spawn drone foreground sprites (independent of SVG background)
+        DroneHuntScene._spawnDroneSprites();
+
         game.showNotification('Steckerdoser Heide — Forest');
 
         setTimeout(() => {
@@ -1176,7 +1354,7 @@ const DroneHuntScene = {
     // ─── Scene exit ──────────────────────────────────────────
     onExit: () => {
         DroneHuntScene._stopAudio();
-        DroneHuntScene._cleanupCrash();
+        DroneHuntScene._cleanupCrash(); // also calls _removeDroneSprites()
         DroneHuntScene._hideGPSParamOverlay();
         // Clear any inline SVG we injected (engine will set next scene's background)
         const bgEl = document.getElementById('scene-background');

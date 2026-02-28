@@ -593,7 +593,7 @@
   <!-- ======================================================================== -->
 
   <!-- ===== DRONE 1: MAIN HUNTER — aggressive search pattern with searchlight ===== -->
-  <g id="drone1">
+  <g id="drone1" opacity="0">
     <polygon points="0,25 -160,650 160,650" fill="url(#beam1)" opacity="0.3">
       <animate attributeName="opacity" values="0.3;0.15;0.25;0.1;0.3" dur="4s" repeatCount="indefinite"/>
     </polygon>
@@ -647,7 +647,7 @@
   </g>
 
   <!-- ===== DRONE 2: FLANKER — perimeter patrol ===== -->
-  <g id="drone2" opacity="0.65">
+  <g id="drone2" opacity="0">
     <polygon points="0,18 -60,400 60,400" fill="url(#beam2)" opacity="0.2">
       <animate attributeName="opacity" values="0.2;0.08;0.15;0.05;0.2" dur="5s" repeatCount="indefinite"/>
     </polygon>
@@ -691,7 +691,7 @@
   </g>
 
   <!-- ===== DRONE 3: FAST INTERCEPTOR — racing across horizon ===== -->
-  <g id="drone3" opacity="0.35">
+  <g id="drone3" opacity="0">
     <g>
       <ellipse cx="0" cy="0" rx="10" ry="4" fill="#1c1c1c"/>
       <circle cx="-20" cy="-5" r="1.5" fill="#ff0000">
@@ -709,7 +709,7 @@
   </g>
 
   <!-- ===== DRONE 4: HIGH ALTITUDE SPOTTER — tiny, circling ===== -->
-  <g id="drone4" opacity="0.2">
+  <g id="drone4" opacity="0">
     <circle cx="0" cy="0" r="3" fill="#181818"/>
     <circle cx="-8" cy="-3" r="0.8" fill="#ff0000">
       <animate attributeName="opacity" values="1;0;1" dur="0.7s" repeatCount="indefinite"/>
