@@ -394,6 +394,7 @@ const DroneHuntScene = {
     _crashStyleEl: null,
     _crashOverlayEl: null,
     _droneOverlayEl: null,
+    _effectsOverlayEl: null,
 
     _injectCrashStyles() {
         if (document.getElementById('drone-crash-styles')) return;
@@ -432,6 +433,9 @@ const DroneHuntScene = {
                 60% { transform: rotate(45deg); opacity: 0.6; }
                 80% { transform: rotate(-35deg); opacity: 0.1; }
                 100% { transform: rotate(60deg); opacity: 0; }
+            }
+            @keyframes hackrfPulse {
+                0%,100% { opacity:1; } 50% { opacity:0.15; }
             }
             @keyframes crashFlash {
                 0% { opacity: 0; }
@@ -600,11 +604,16 @@ const DroneHuntScene = {
         }, 8000);
     },
 
-    /** Helper to set opacity on SVG elements by ID (works with inline SVG) */
+    /** Helper to set opacity on SVG elements by ID (works with foreground overlays) */
     _setSVGElementOpacity(id, opacity) {
         try {
             const el = document.getElementById(id);
-            if (el) el.style.opacity = opacity;
+            if (!el) return;
+            el.style.opacity = opacity;
+            // HackRF TX LED pulses when active, stops when off
+            if (id === 'hackrf-tx-led') {
+                el.style.animation = opacity > 0 ? 'hackrfPulse 0.4s linear infinite' : 'none';
+            }
         } catch (e) { /* silent */ }
     },
 
@@ -626,6 +635,7 @@ const DroneHuntScene = {
             this._crashStyleEl = null;
         }
         this._removeDroneSprites();
+        this._removeEffectsOverlay();
     },
 
     /* ═══════════════════════════════════════════════════════════
@@ -798,8 +808,107 @@ const DroneHuntScene = {
             this._droneOverlayEl.remove();
             this._droneOverlayEl = null;
         }
-        // Belt-and-suspenders: remove by ID in case reference was lost
         const el = document.getElementById('drone-fg-overlay');
+        if (el) el.remove();
+    },
+
+    /* ═══════════════════════════════════════════════════════════
+     *  EFFECTS FOREGROUND OVERLAY
+     *  hackrf-tx-led, crashed-drones, spoof-waves as DOM elements.
+     *  No fetch() needed — works on file:// and http:// alike.
+     * ═══════════════════════════════════════════════════════════ */
+
+    _spawnEffectsOverlay() {
+        if (document.getElementById('drone-fx-overlay')) return;
+        const sceneEl = document.getElementById('scene-container');
+        if (!sceneEl) return;
+
+        const div = document.createElement('div');
+        div.id = 'drone-fx-overlay';
+        div.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;';
+        div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"
+  preserveAspectRatio="xMidYMid slice"
+  style="width:100%;height:100%;display:block;">
+  <defs>
+    <linearGradient id="fx-swampWater" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a1018"/>
+      <stop offset="50%" stop-color="#060c14"/>
+      <stop offset="100%" stop-color="#040810"/>
+    </linearGradient>
+    <filter id="fx-cloudBlur"><feGaussianBlur stdDeviation="8"/></filter>
+  </defs>
+
+  <!-- HackRF TX LED — position matches background SVG device (translate(495,618) + cx=36,cy=6) -->
+  <circle id="hackrf-tx-led" cx="531" cy="624" r="2.5" fill="#ff2200" style="opacity:0;"/>
+
+  <!-- Crashed drone wreckage — revealed after the crash sequence -->
+  <g id="crashed-drones" style="opacity:0;">
+    <g transform="translate(520,710)">
+      <line x1="0" y1="0" x2="-15" y2="-8" stroke="#383838" stroke-width="2.5"/>
+      <line x1="0" y1="0" x2="12" y2="-6" stroke="#383838" stroke-width="2.5"/>
+      <polygon points="-8,-2 -6,-6 6,-6 8,-2 6,4 -6,4" fill="#1c1c1c"/>
+      <line x1="-15" y1="-8" x2="-25" y2="-12" stroke="#555" stroke-width="1.5"/>
+      <line x1="-15" y1="-8" x2="-18" y2="-18" stroke="#555" stroke-width="1"/>
+      <circle cx="5" cy="-3" r="2" fill="#ff8800" opacity="0.6">
+        <animate attributeName="opacity" values="0.6;0;0.3;0;0.6;0;0" dur="2s" repeatCount="indefinite"/>
+      </circle>
+      <rect x="-20" y="2" width="40" height="12" fill="url(#fx-swampWater)" opacity="0.7"/>
+    </g>
+    <g transform="translate(680,685)">
+      <line x1="-5" y1="0" x2="-20" y2="5" stroke="#383838" stroke-width="2"/>
+      <line x1="5" y1="0" x2="18" y2="8" stroke="#383838" stroke-width="2"/>
+      <polygon points="-6,-1 -4,-5 4,-5 6,-1 4,3 -4,3" fill="#1c1c1c" transform="rotate(35)"/>
+      <line x1="18" y1="8" x2="30" y2="5" stroke="#444" stroke-width="1"/>
+      <line x1="-20" y1="5" x2="-30" y2="12" stroke="#444" stroke-width="1.5"/>
+      <circle cx="0" cy="-5" r="1.5" fill="#ff0000" opacity="0.4">
+        <animate attributeName="opacity" values="0.4;0;0;0;0.4;0;0;0;0;0" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </g>
+    <g transform="translate(1370,755)">
+      <polygon points="-5,-1 -3,-4 3,-4 5,-1 3,2 -3,2" fill="#1c1c1c" transform="rotate(-20)"/>
+      <line x1="-5" y1="0" x2="-12" y2="3" stroke="#383838" stroke-width="1.5"/>
+      <line x1="5" y1="0" x2="14" y2="-2" stroke="#383838" stroke-width="1.5"/>
+      <g opacity="0.12" filter="url(#fx-cloudBlur)">
+        <circle cx="0" cy="-5" r="4" fill="#506070">
+          <animate attributeName="cy" values="-5;-30;-60" dur="6s" repeatCount="indefinite"/>
+          <animate attributeName="r" values="4;10;18" dur="6s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.12;0.06;0" dur="6s" repeatCount="indefinite"/>
+        </circle>
+      </g>
+      <ellipse cx="0" cy="5" rx="20" ry="4" fill="none" stroke="rgba(100,120,160,0.08)" stroke-width="0.5">
+        <animate attributeName="rx" values="20;30;40" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="1;0.5;0" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+    </g>
+  </g>
+
+  <!-- GPS spoof radio waves — shown briefly during spoof, then hidden -->
+  <g id="spoof-waves" style="opacity:0;">
+    <circle cx="520" cy="630" r="20" fill="none" stroke="rgba(0,255,100,0.3)" stroke-width="1.5">
+      <animate attributeName="r" values="20;200;500" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0.1;0" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="520" cy="630" r="20" fill="none" stroke="rgba(0,255,100,0.25)" stroke-width="1">
+      <animate attributeName="r" values="20;200;500" dur="3s" begin="1s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.25;0.08;0" dur="3s" begin="1s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="520" cy="630" r="20" fill="none" stroke="rgba(0,200,80,0.2)" stroke-width="1">
+      <animate attributeName="r" values="20;200;500" dur="3s" begin="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.2;0.06;0" dur="3s" begin="2s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+</svg>`;
+
+        sceneEl.appendChild(div);
+        this._effectsOverlayEl = div;
+    },
+
+    _removeEffectsOverlay() {
+        if (this._effectsOverlayEl) {
+            this._effectsOverlayEl.remove();
+            this._effectsOverlayEl = null;
+        }
+        const el = document.getElementById('drone-fx-overlay');
         if (el) el.remove();
     },
 
@@ -1299,31 +1408,14 @@ const DroneHuntScene = {
         s.spoofExecuted = false;
         s.dronesDown = false;
 
-        // ── Inject SVG inline so _setSVGElementOpacity can reach its elements ──
-        // The engine loads the SVG as a background-image (inaccessible to JS);
-        // we fetch & inject it as inline DOM instead, giving full element access.
-        fetch('assets/images/scenes/drone_hunt.svg')
-            .then(r => r.text())
-            .then(svgText => {
-                const bgEl = document.getElementById('scene-background');
-                if (!bgEl || !bgEl.classList.contains('scene-drone_hunt')) return;
-                bgEl.style.backgroundImage = 'none';
-                bgEl.innerHTML = svgText;
-                const svg = bgEl.querySelector('svg');
-                if (svg) {
-                    svg.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;';
-                    svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-                }
-            })
-            .catch(e => console.warn('[DroneHunt] SVG inline load failed:', e));
-
         game.setFlag('drone_hunt_started', true);
 
         // Start ambient audio (drone rotors + wind)
         DroneHuntScene._initAudio();
 
-        // Spawn drone foreground sprites (independent of SVG background)
+        // Spawn foreground overlays (no fetch needed — works on file:// too)
         DroneHuntScene._spawnDroneSprites();
+        DroneHuntScene._spawnEffectsOverlay();
 
         game.showNotification('Steckerdoser Heide — Forest');
 
@@ -1354,11 +1446,8 @@ const DroneHuntScene = {
     // ─── Scene exit ──────────────────────────────────────────
     onExit: () => {
         DroneHuntScene._stopAudio();
-        DroneHuntScene._cleanupCrash(); // also calls _removeDroneSprites()
+        DroneHuntScene._cleanupCrash(); // also calls _removeDroneSprites() + _removeEffectsOverlay()
         DroneHuntScene._hideGPSParamOverlay();
-        // Clear any inline SVG we injected (engine will set next scene's background)
-        const bgEl = document.getElementById('scene-background');
-        if (bgEl) { bgEl.innerHTML = ''; }
     },
 
     // ═══════════════════════════════════════════════════════════
