@@ -128,7 +128,12 @@ class CyberQuestEngine {
             animSpeed:        500,  // ms for scene fade transitions (0 = none)
             autoAdvanceDelay:   0,  // ms before auto-advancing dialogue (0 = manual)
             docuPauseDuration: 1500, // ms pause after documentary speech finishes
+            accessibilityMode: false, // 🎬 Movie mode — auto-plays story path, voices and puzzles
         };
+
+        // Accessibility mode runner state
+        this.accessibilityMode = false;
+        this._accessibilityRunnerActive = false;
     }
 
     init() {
@@ -252,6 +257,7 @@ class CyberQuestEngine {
                 <div id="game-menu">
                     <button id="menu-pause" title="Pause / Resume (P)">⏸️ Pause</button>
                     <button id="menu-voice" title="Toggle Voice">🔊 Voice</button>
+                    <button id="menu-movie" title="Toggle Movie / Accessibility Mode">🎬 Movie</button>
                     <button id="menu-save">💾 Save</button>
                     <button id="menu-load">📂 Load</button>
                     <button id="menu-settings">⚙️ Settings</button>
@@ -265,6 +271,7 @@ class CyberQuestEngine {
                 </div>
             </div>
             <div id="notification-area"></div>
+            <div id="accessibility-badge" class="hidden">🎬 Movie Mode</div>
         `;
     }
     
@@ -357,6 +364,7 @@ class CyberQuestEngine {
         addButtonHandler('menu-save',     () => this.openSaveSlotModal('save'));
         addButtonHandler('menu-load',     () => this.openSaveSlotModal('load'));
         addButtonHandler('menu-voice',    () => this.toggleVoice());
+        addButtonHandler('menu-movie',    () => this.toggleAccessibilityMode());
         addButtonHandler('menu-settings', () => this.openSettingsModal());
         
         // Pause overlay — click to resume
@@ -571,6 +579,12 @@ class CyberQuestEngine {
         }
         
         console.log(`Scene loaded: ${sceneId}`);
+
+        // 🎬 Accessibility mode: start the auto-play runner for this scene
+        if (this.accessibilityMode && scene.accessibilityPath?.length) {
+            // Give onEnter() and any scene-start dialogue a moment to settle
+            setTimeout(() => this._startAccessibilityRunner(scene), 1500);
+        }
         } finally {
             this._sceneLoading = false;
         }
@@ -886,7 +900,11 @@ class CyberQuestEngine {
         const speechPromise = this.speakText(current.text, speaker);
 
         Promise.all([typePromise, speechPromise]).then(() => {
-            if (!_twSignal.aborted && this.settings.autoAdvanceDelay > 0 && this.isDialogueActive) {
+            if (_twSignal.aborted || !this.isDialogueActive) return;
+            if (this.accessibilityMode) {
+                // 🎬 Movie mode: auto-advance immediately after TTS finishes
+                if (!this.isPaused) this.advanceDialogue();
+            } else if (this.settings.autoAdvanceDelay > 0) {
                 this._autoAdvanceTimer = setTimeout(() => {
                     if (this.isDialogueActive && !this.isPaused) this.advanceDialogue();
                 }, this.settings.autoAdvanceDelay);
@@ -997,9 +1015,146 @@ class CyberQuestEngine {
         this.showNotification(this.voiceEnabled ? 'Voice enabled' : 'Voice muted');
         return this.voiceEnabled;
     }
-    
+
+    // ── Accessibility / Movie Mode ─────────────────────────────────────────────
+
     /**
-     * Toggle pause state. Freezes all game activity instantly.
+     * Toggle accessibility (movie) mode on/off.
+     * In movie mode the game auto-plays the good story path:
+     *   - Dialogue auto-advances after TTS finishes
+     *   - Puzzles are displayed and auto-solved
+     *   - Hotspots defined in scene.accessibilityPath are clicked automatically
+     */
+    toggleAccessibilityMode() {
+        this.accessibilityMode = !this.accessibilityMode;
+        this.settings.accessibilityMode = this.accessibilityMode;
+        this._saveSettings();
+        this._updateAccessibilityBadge();
+
+        if (this.accessibilityMode) {
+            this.showNotification('🎬 Movie Mode ON — sit back and enjoy the story');
+            // If a scene with an accessibilityPath is already active, start runner
+            const scene = this.scenes?.[this.currentScene];
+            if (scene?.accessibilityPath?.length) {
+                setTimeout(() => this._startAccessibilityRunner(scene), 500);
+            }
+        } else {
+            this._stopAccessibilityRunner();
+            this.showNotification('🎮 Movie Mode OFF — manual control restored');
+        }
+        return this.accessibilityMode;
+    }
+
+    /** Update the 🎬 badge visibility and the menu button label. */
+    _updateAccessibilityBadge() {
+        const badge = document.getElementById('accessibility-badge');
+        if (badge) badge.classList.toggle('hidden', !this.accessibilityMode);
+
+        const btn = document.getElementById('menu-movie');
+        if (btn) {
+            btn.textContent = this.accessibilityMode ? '🎬 Movie ON' : '🎬 Movie';
+            btn.classList.toggle('accessibility-active', this.accessibilityMode);
+        }
+    }
+
+    /**
+     * 🎬 Accessibility runner: walks through scene.accessibilityPath in order,
+     * triggering each hotspot as if the player clicked it, and waiting for
+     * dialogue/puzzles to finish before moving to the next.
+     * @param {Object} scene - The scene object that was just loaded
+     */
+    async _startAccessibilityRunner(scene) {
+        // Cancel any existing runner
+        this._accessibilityRunnerActive = false;
+        await this.wait(50); // let old runner notice the flag
+        this._accessibilityRunnerActive = true;
+
+        const path = scene.accessibilityPath || [];
+        console.log(`[🎬] Starting accessibility runner for ${this.currentScene}, path:`, path);
+
+        for (const entry of path) {
+            if (!this._accessibilityRunnerActive || !this.accessibilityMode) break;
+            // Stop if the scene changed under us
+            if (this.currentScene !== scene.id && scene.id !== undefined) break;
+
+            // Wait until the engine is idle (no active dialogue/puzzle/loading)
+            await this._waitForIdle();
+            if (!this._accessibilityRunnerActive || !this.accessibilityMode) break;
+
+            // Pacing pause so the player can follow along
+            await this.wait(600);
+            if (!this._accessibilityRunnerActive || !this.accessibilityMode) break;
+
+            // ── Function entry: custom async action (e.g. conditional scene load) ──
+            if (typeof entry === 'function') {
+                console.log(`[🎬] Executing function entry in '${this.currentScene}'`);
+                await entry(this);
+                await this.wait(300);
+                await this._waitForIdle(30000); // wait for any triggered scene load
+                continue;
+            }
+
+            const hotspotId = entry;
+            // Find hotspot by id in the current scene hotspots list
+            const hotspots = this.scenes?.[this.currentScene]?.hotspots || [];
+            const hotspot = hotspots.find(h => h.id === hotspotId);
+            if (!hotspot) {
+                console.warn(`[🎬] Hotspot '${hotspotId}' not found in scene '${this.currentScene}' — skipping`);
+                continue;
+            }
+
+            // Check enabled/condition guards (same as handleHotspotClick)
+            if (hotspot.enabled !== undefined) {
+                const en = typeof hotspot.enabled === 'function' ? hotspot.enabled(this) : hotspot.enabled;
+                if (!en) { console.warn(`[🎬] Skip disabled hotspot '${hotspotId}'`); continue; }
+            }
+            if (hotspot.condition && !this.checkCondition(hotspot.condition)) {
+                console.warn(`[🎬] Skip hotspot '${hotspotId}': condition not met`);
+                continue;
+            }
+
+            // Walk player to hotspot, then execute action
+            if (this.player && !hotspot.skipWalk) {
+                const tx = hotspot.x + (hotspot.width / 2);
+                const ty = Math.min(hotspot.y + hotspot.height, 90);
+                await new Promise(resolve => this.player.walkTo(tx, ty, resolve));
+            }
+
+            if (!this._accessibilityRunnerActive || !this.accessibilityMode) break;
+
+            console.log(`[🎬] Executing hotspot '${hotspotId}'`);
+            this.executeHotspotAction(hotspot);
+
+            // Wait for the action to settle (dialogue / puzzle that was triggered)
+            await this.wait(300);
+            await this._waitForIdle(30000);
+        }
+
+        console.log(`[🎬] Accessibility runner finished for ${scene.id ?? this.currentScene}`);
+    }
+
+    /** Signal the current accessibility runner to stop. */
+    _stopAccessibilityRunner() {
+        this._accessibilityRunnerActive = false;
+    }
+
+    /**
+     * Wait until the engine is fully idle: no active dialogue, puzzle, or scene load.
+     * @param {number} [timeout=20000] - Maximum wait in ms before giving up
+     * @returns {Promise<void>}
+     */
+    async _waitForIdle(timeout = 20000) {
+        const start = Date.now();
+        while (this.isDialogueActive || this.isPuzzleActive || this._sceneLoading) {
+            if (Date.now() - start > timeout) {
+                console.warn('[🎬] _waitForIdle timed out');
+                break;
+            }
+            await this.wait(150);
+        }
+    }
+
+    /**
      * Pauses CSS animations, speech, typewriter, and blocks all interaction.
      * @returns {boolean} new pause state
      */
@@ -1554,11 +1709,65 @@ class CyberQuestEngine {
     
     // Password Puzzle System
     showPasswordPuzzle(config) {
+        if (this.accessibilityMode) {
+            // 🎬 Movie mode: show puzzle, auto-type correct answer, submit
+            this._autoSolvePuzzle(config);
+            return;
+        }
         if (this.passwordPuzzle) {
             this.passwordPuzzle.show(config);
         } else {
             console.error('Password puzzle system not initialized');
             this.showNotification('Cannot display puzzle');
+        }
+    }
+
+    /**
+     * 🎬 Auto-solve a password puzzle in accessibility/movie mode.
+     * Shows the puzzle UI, types the correct answer, then submits it.
+     */
+    async _autoSolvePuzzle(config) {
+        if (!this.passwordPuzzle) {
+            // No puzzle UI — just call onSuccess directly
+            if (config.onSuccess) config.onSuccess(this);
+            return;
+        }
+
+        this.passwordPuzzle.show(config);
+
+        // Wait for the puzzle UI to render
+        await this.wait(900);
+
+        const input = document.getElementById('password-input');
+        if (!input) {
+            if (config.onSuccess) config.onSuccess(this);
+            return;
+        }
+
+        // Determine answer: use correctAnswer or correctPassword field
+        const candidates = Array.isArray(config.correctAnswer)
+            ? config.correctAnswer
+            : config.correctAnswer
+                ? [config.correctAnswer]
+                : config.correctPassword
+                    ? [config.correctPassword]
+                    : [];
+
+        const answer = candidates[0] || '';
+
+        // Type the answer character by character visually
+        input.value = '';
+        input.focus();
+        for (let i = 0; i < answer.length; i++) {
+            input.value += answer[i];
+            await this.wait(80);
+        }
+
+        await this.wait(600);
+
+        // Submit
+        if (this.passwordPuzzle && this.passwordPuzzle.isActive) {
+            this.passwordPuzzle.checkAnswer();
         }
     }
     
@@ -1710,10 +1919,11 @@ class CyberQuestEngine {
             const raw = this._storage ? this._storage.getItem('cyberquest_settings') : null;
             if (raw) {
                 const saved = JSON.parse(raw);
-                if (typeof saved.textSpeed        === 'number') this.settings.textSpeed        = saved.textSpeed;
-                if (typeof saved.animSpeed        === 'number') this.settings.animSpeed        = saved.animSpeed;
-                if (typeof saved.autoAdvanceDelay === 'number') this.settings.autoAdvanceDelay = saved.autoAdvanceDelay;
+                if (typeof saved.textSpeed        === 'number')  this.settings.textSpeed        = saved.textSpeed;
+                if (typeof saved.animSpeed        === 'number')  this.settings.animSpeed        = saved.animSpeed;
+                if (typeof saved.autoAdvanceDelay === 'number')  this.settings.autoAdvanceDelay = saved.autoAdvanceDelay;
                 if (typeof saved.docuPauseDuration === 'number') this.settings.docuPauseDuration = saved.docuPauseDuration;
+                if (typeof saved.accessibilityMode === 'boolean') this.settings.accessibilityMode = saved.accessibilityMode;
             }
         } catch (e) {
             console.warn('[Settings] Failed to load settings:', e);
@@ -1743,6 +1953,9 @@ class CyberQuestEngine {
             //  we only nudge it slightly based on dialogue speed preference)
         }
         // textSpeed and animSpeed are read inline at call-sites — no extra work needed here.
+        // Restore accessibilityMode from persisted setting.
+        this.accessibilityMode = !!this.settings.accessibilityMode;
+        this._updateAccessibilityBadge();
         console.log('[Settings] applied:', JSON.stringify(this.settings));
     }
 
