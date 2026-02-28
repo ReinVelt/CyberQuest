@@ -23,6 +23,35 @@ const WsrtParkingScene = {
 
     playerStart: { x: 50, y: 85 },
 
+    // 🎬 Accessibility / Movie Mode — visit destinations in story order:
+    //   1. Planetenpad (always first, if not yet complete)
+    //   2. WSRT / ASTRON (once astron_unlocked)
+    //   3. Westerbork Memorial (once astron visited)
+    //   4. Drive home (all done)
+    accessibilityPath: [
+        async function(game) {
+            if (!game.getFlag('planetenpad_complete')) {
+                // First priority: walk the Planetenpad
+                game.loadScene('planetenpad');
+            } else if (game.getFlag('astron_unlocked') && !game.getFlag('visited_astron')) {
+                // Second: visit ASTRON / WSRT
+                game.loadScene('astron');
+            } else if (game.getFlag('visited_astron') && !game.getFlag('visited_westerbork_memorial')) {
+                // Third: visit the memorial
+                game.loadScene('westerbork_memorial');
+            } else {
+                // All done — drive home
+                game.setFlag('driving_destination', 'home_from_wsrt_parking');
+                const hour = parseInt((game.gameState.time || '14:00').split(':')[0], 10);
+                if (hour >= 20 || hour < 7) {
+                    game.loadScene('driving');
+                } else {
+                    game.loadScene('driving_day');
+                }
+            }
+        },
+    ],
+
     idleThoughts: [
         "Three destinations from one parking lot. Only in Drenthe.",
         "The Volvo ticks quietly as the engine cools.",
