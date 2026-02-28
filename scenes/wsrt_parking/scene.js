@@ -46,10 +46,10 @@ const WsrtParkingScene = {
             cursor: 'pointer',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*A weathered wooden direction board stands at the edge of the parking area*' },
-                    { speaker: '', text: '→ Herinneringscentrum Kamp Westerbork — 200 m' },
-                    { speaker: '', text: '→ WSRT / ASTRON — 400 m' },
-                    { speaker: '', text: '→ Planetenpad (schaalmodel zonnestelsel) — 1000 m wandeling' },
+                    { speaker: 'Narrator', text: '*A weathered wooden direction board stands at the edge of the parking area*' },
+                    { speaker: 'Narrator', text: '→ Herinneringscentrum Kamp Westerbork — 200 m' },
+                    { speaker: 'Narrator', text: '→ WSRT / ASTRON — 400 m' },
+                    { speaker: 'Narrator', text: '→ Planetenpad (schaalmodel zonnestelsel) — 1000 m wandeling' },
                     { speaker: 'Ryan', text: 'Three paths from one parking spot. Memorial, radio telescope, and a scale model of the solar system.' },
                     { speaker: 'Ryan', text: 'Only in the middle of Drenthe.' },
                 ]);
@@ -69,9 +69,9 @@ const WsrtParkingScene = {
             skipWalk: true,
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*A gravel path leads south through the heather toward the memorial*' },
+                    { speaker: 'Narrator', text: '*A gravel path leads south through the heather toward the memorial*' },
                     { speaker: 'Ryan', text: 'The memorial. Two hundred metres through the heath.' },
-                    { speaker: '', text: '*Ryan starts walking. The WSRT dishes are visible to the west.*' },
+                    { speaker: 'Narrator', text: '*Ryan starts walking. The WSRT dishes are visible to the west.*' },
                 ], () => {
                     game.loadScene('westerbork_memorial');
                 });
@@ -98,9 +98,9 @@ const WsrtParkingScene = {
                     return;
                 }
                 game.startDialogue([
-                    { speaker: '', text: '*A paved path heads west toward the radio telescope array*' },
+                    { speaker: 'Narrator', text: '*A paved path heads west toward the radio telescope array*' },
                     { speaker: 'Ryan', text: 'The WSRT. Four hundred metres. Cees should be in the control room.' },
-                    { speaker: '', text: '*Ryan walks past the heather. The 14 dishes grow larger with each step.*' },
+                    { speaker: 'Narrator', text: '*Ryan walks past the heather. The 14 dishes grow larger with each step.*' },
                 ], () => {
                     game.loadScene('astron');
                 });
@@ -121,18 +121,18 @@ const WsrtParkingScene = {
             action: function(game) {
                 if (game.getFlag('planetenpad_complete')) {
                     game.startDialogue([
-                        { speaker: '', text: 'The Planetenpad. One kilometre through the heath, past scale models of all the planets.' },
-                        { speaker: '', text: 'I walked it already. Impressive how big the solar system feels, even at scale.' },
-                        { speaker: '', text: '*Ryan starts down the path again, past the Pluto marker*' },
+                        { speaker: 'Narrator', text: 'The Planetenpad. One kilometre through the heath, past scale models of all the planets.' },
+                        { speaker: 'Narrator', text: 'I walked it already. Impressive how big the solar system feels, even at scale.' },
+                        { speaker: 'Narrator', text: '*Ryan starts down the path again, past the Pluto marker*' },
                     ], () => {
                         game.loadScene('planetenpad');
                     });
                 } else {
                     game.startDialogue([
-                        { speaker: '', text: '*A narrow path heads north into the heath. A small sign reads: PLANETENPAD — Schaalmodel Zonnestelsel*' },
-                        { speaker: '', text: 'A scale model of the solar system? One kilometre walk from Pluto to the Sun.' },
-                        { speaker: '', text: 'That\'s... actually kind of cool. Let\'s see how big space really is.' },
-                        { speaker: '', text: '*Ryan starts down the path. The first marker is already visible ahead.*' },
+                        { speaker: 'Narrator', text: '*A narrow path heads north into the heath. A small sign reads: PLANETENPAD — Schaalmodel Zonnestelsel*' },
+                        { speaker: 'Narrator', text: 'A scale model of the solar system? One kilometre walk from Pluto to the Sun.' },
+                        { speaker: 'Narrator', text: 'That\'s... actually kind of cool. Let\'s see how big space really is.' },
+                        { speaker: 'Narrator', text: '*Ryan starts down the path. The first marker is already visible ahead.*' },
                     ], () => {
                         game.loadScene('planetenpad');
                     });
@@ -152,7 +152,7 @@ const WsrtParkingScene = {
             action: function(game) {
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'The Volvo. Ready to head home whenever I am.' },
-                    { speaker: '', text: '*Ryan gets in and starts the engine*' },
+                    { speaker: 'Narrator', text: '*Ryan gets in and starts the engine*' },
                 ], () => {
                     game.setFlag('driving_destination', 'home_from_wsrt_parking');
                     // Decide day/night driving
@@ -177,11 +177,11 @@ const WsrtParkingScene = {
             cursor: 'pointer',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '📚 HERINNERINGSCENTRUM KAMP WESTERBORK — BEZOEKERSGEBIED' },
-                    { speaker: '', text: 'This area lies between the former Camp Westerbork (now a national memorial) and the Westerbork Synthesis Radio Telescope (WSRT).' },
-                    { speaker: '', text: 'The WSRT was built in the 1960s on the adjacent heathland. Fourteen 25-metre radio dishes form a 2.7 km east-west baseline.' },
-                    { speaker: '', text: 'The Planetenpad is a walking route featuring a scale model of our solar system. Starting from the outer planets near this parking area, the path leads 1 kilometre to a sun model near the WSRT.' },
-                    { speaker: '', text: 'At this scale, the Earth is smaller than a marble and the Sun is the size of a beach ball. The distances between planets are vast — even in miniature.' },
+                    { speaker: 'Narrator', text: '📚 HERINNERINGSCENTRUM KAMP WESTERBORK — BEZOEKERSGEBIED' },
+                    { speaker: 'Narrator', text: 'This area lies between the former Camp Westerbork (now a national memorial) and the Westerbork Synthesis Radio Telescope (WSRT).' },
+                    { speaker: 'Narrator', text: 'The WSRT was built in the 1960s on the adjacent heathland. Fourteen 25-metre radio dishes form a 2.7 km east-west baseline.' },
+                    { speaker: 'Narrator', text: 'The Planetenpad is a walking route featuring a scale model of our solar system. Starting from the outer planets near this parking area, the path leads 1 kilometre to a sun model near the WSRT.' },
+                    { speaker: 'Narrator', text: 'At this scale, the Earth is smaller than a marble and the Sun is the size of a beach ball. The distances between planets are vast — even in miniature.' },
                     { speaker: 'Ryan', text: 'History, science, and education. All from one gravel car park in the middle of Drenthe.' },
                 ]);
             }
@@ -236,10 +236,10 @@ const WsrtParkingScene = {
 
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: '', text: '*The Volvo rolls into a small gravel parking area. A wooden direction board stands at the edge of the heath.*' },
+                    { speaker: 'Narrator', text: '*The Volvo rolls into a small gravel parking area. A wooden direction board stands at the edge of the heath.*' },
                     { speaker: 'Ryan', text: 'This is it. The WSRT parking area.' },
                     { speaker: 'Ryan', text: 'Three paths diverge from here. The memorial, the radio telescope, and...' },
-                    { speaker: '', text: '*Ryan reads the third sign*' },
+                    { speaker: 'Narrator', text: '*Ryan reads the third sign*' },
                     { speaker: 'Ryan', text: '"Planetenpad — Schaalmodel Zonnestelsel." A scale model of the solar system. One kilometre.' },
                     { speaker: 'Ryan', text: 'Interesting. But first things first.' },
                 ]);
@@ -247,7 +247,7 @@ const WsrtParkingScene = {
         } else {
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: '', text: '*Back at the WSRT parking area. The direction board, the heather, the distant dishes.*' },
+                    { speaker: 'Narrator', text: '*Back at the WSRT parking area. The direction board, the heather, the distant dishes.*' },
                     { speaker: 'Ryan', text: 'Same three paths. Same flat Drenthe sky.' },
                 ]);
             }, 300);
