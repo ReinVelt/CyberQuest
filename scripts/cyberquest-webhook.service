@@ -1,0 +1,28 @@
+[Unit]
+Description=CyberQuest GitHub Webhook Listener
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/CyberQuest
+ExecStart=/usr/bin/python3 /var/www/CyberQuest/scripts/webhook-pull.py \
+    --port 9000 \
+    --repo /var/www/CyberQuest \
+    --branch main
+EnvironmentFile=-/etc/cyberquest-webhook.env
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=cyberquest-webhook
+
+# Hardening
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/var/www/CyberQuest
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target
