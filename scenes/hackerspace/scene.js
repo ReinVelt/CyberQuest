@@ -21,6 +21,21 @@ const HackerspaceScene = {
 
     playerStart: { x: 90, y: 85 },
 
+    // 🎬 Accessibility / Movie Mode
+    // Talk to Dennis and Sophie, attend the classroom presentation, then drive home.
+    accessibilityPath: [
+        'npc_dennis',   // workshop organiser — may unlock ally info
+        'npc_sophie',   // electronics specialist
+        'npc_marco',    // RF hardware specialist
+        async function(game) {
+            // Visit the classroom once for the presentation
+            if (!game.getFlag('visited_hackerspace_classroom')) {
+                game.loadScene('hackerspace_classroom');
+            }
+        },
+        'exit_door',    // drive home (sets driving_destination → home_from_hackerspace)
+    ],
+
     // ═══════════════════════════════════════════════════════════════
     // ── NPC Characters with patrol paths ──────────────────────────
     // ═══════════════════════════════════════════════════════════════

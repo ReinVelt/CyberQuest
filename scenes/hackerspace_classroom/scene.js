@@ -21,6 +21,16 @@ const HackerspaceClassroomScene = {
 
     playerStart: { x: 5, y: 90 },
 
+    // 🎬 Accessibility / Movie Mode
+    // Watch the current presentation, chat with the presenter and a front-row audience
+    // member, then head back to the workshop.
+    accessibilityPath: [
+        'screen',           // look at the presentation slide (triggers TTS reading)
+        'npc_presenter',    // talk to whoever is presenting
+        'npc_pieter_class', // front-row audience member
+        'back_to_workshop', // ← return to hackerspace workshop
+    ],
+
     // ── All possible seat positions (row, x%, y%) ──────────────────
     // Defined as percentage positions matching the 4 rows of chairs
     _seatPositions: [

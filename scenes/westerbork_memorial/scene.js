@@ -18,6 +18,17 @@ const WesterborkMemorialScene = {
 
     playerStart: { x: 50, y: 85 },
 
+    // 🎬 Accessibility / Movie Mode
+    // Study the memorial, inspect the modified surveillance camera (Flipper Zero
+    // should already be in inventory from the mancave gear section), then walk
+    // back to WSRT parking.
+    accessibilityPath: [
+        'memorial_monument',   // historical context
+        'railway_track',       // emotional core of the scene
+        'surveillance_camera', // key evidence: Zerfall BT node (needs Flipper Zero)
+        'walk_to_wsrt',        // ← back to wsrt_parking hub
+    ],
+
     hotspots: [
         // ── Railway Track ──
         {

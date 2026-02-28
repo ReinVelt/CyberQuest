@@ -11,7 +11,36 @@ const GardenScene = {
     
     // Player starting position
     playerStart: { x: 50, y: 85 },
-    
+
+    // 🎬 Accessibility / Movie Mode — drive to the current urgent destination
+    accessibilityPath: [
+        async function(game) {
+            // 1. Klooster first (after sstv_decoded unlock)
+            if (game.getFlag('klooster_unlocked') && !game.getFlag('visited_klooster')) {
+                game.setFlag('driving_destination', 'klooster');
+                game.loadScene('driving');
+            // 2. Hackerspace Drenthe (first visit — always available)
+            } else if (!game.getFlag('visited_hackerspace')) {
+                game.setFlag('driving_destination', 'hackerspace');
+                game.loadScene('driving_day');
+            // 3. WSRT / ASTRON visit (astron_unlocked by ally-recruitment)
+            } else if (game.getFlag('astron_unlocked') && !game.getFlag('visited_astron')) {
+                game.setFlag('driving_destination', 'astron');
+                game.loadScene('driving_day');
+            // 4. Westerbork Memorial (after visiting ASTRON)
+            } else if (game.getFlag('visited_astron') && !game.getFlag('visited_westerbork_memorial')) {
+                game.setFlag('driving_destination', 'westerbork');
+                game.loadScene('driving_day');
+            // 5. Facility infiltration (mission_prep_complete + quest active)
+            } else if (game.questManager?.hasQuest('infiltrate_facility')
+                       && !game.getFlag('drove_to_facility')) {
+                game.setFlag('drove_to_facility', true);
+                game.setFlag('driving_destination', 'facility');
+                game.loadScene('driving');
+            }
+        }
+    ],
+
     // Random idle thoughts for this scene
     idleThoughts: [
         "Fresh air... nice.",

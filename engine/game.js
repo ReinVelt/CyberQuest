@@ -1190,10 +1190,12 @@ class CyberQuestEngine {
      */
     _gardenHasPendingDestination() {
         const f = this.gameState.flags;
-        const kloosterPending = f.klooster_unlocked && !f.visited_klooster;
-        const astronPending   = f.astron_unlocked   && !f.visited_astron;
-        const facilityPending = this.questManager?.hasQuest('infiltrate_facility') && !f.drove_to_facility;
-        return !!(kloosterPending || astronPending || facilityPending);
+        const kloosterPending    = f.klooster_unlocked && !f.visited_klooster;
+        const hackerspacePending = !f.visited_hackerspace;
+        const astronPending      = f.astron_unlocked   && !f.visited_astron;
+        const westerborkPending  = f.visited_astron    && !f.visited_westerbork_memorial;
+        const facilityPending    = this.questManager?.hasQuest('infiltrate_facility') && !f.drove_to_facility;
+        return !!(kloosterPending || hackerspacePending || astronPending || westerborkPending || facilityPending);
     }
 
     /**
