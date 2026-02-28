@@ -1,0 +1,997 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1200">
+  <!-- CYBERQUEST: OPERATION ZERFALL — Alistair MacLean–style thriller novel cover -->
+  <!-- Author: Rein Velt (published under pen name Ryan Weylant) -->
+  <!-- License: CC BY 4.0 -->
+
+  <defs>
+    <!-- Pre-dawn Drenthe sky: dark navy top → cold lavender → warm orange at horizon -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#1a2040"/>
+      <stop offset="20%"  stop-color="#253060"/>
+      <stop offset="45%"  stop-color="#4a5a80"/>
+      <stop offset="65%"  stop-color="#8a7a9a"/>
+      <stop offset="82%"  stop-color="#d09060"/>
+      <stop offset="92%"  stop-color="#e8a868"/>
+      <stop offset="100%" stop-color="#f0b868"/>
+    </linearGradient>
+
+    <!-- Sunrise glow - radial near horizon -->
+    <radialGradient id="sunGlow" cx="30%" cy="95%" r="45%">
+      <stop offset="0%"  stop-color="#ffe088" stop-opacity="0.85"/>
+      <stop offset="40%" stop-color="#ff9040" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#ff6020" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Author name band gradient: dark dramatic -->
+    <linearGradient id="authorBand" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#141422"/>
+      <stop offset="40%"  stop-color="#1c1c2e"/>
+      <stop offset="100%" stop-color="#141830"/>
+    </linearGradient>
+
+    <!-- Gold metallic gradient for title -->
+    <linearGradient id="goldMetal" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#ffe080"/>
+      <stop offset="20%"  stop-color="#fff0a0"/>
+      <stop offset="45%"  stop-color="#d8b050"/>
+      <stop offset="60%"  stop-color="#fff0a0"/>
+      <stop offset="80%"  stop-color="#d0a040"/>
+      <stop offset="100%" stop-color="#ffe080"/>
+    </linearGradient>
+
+    <!-- Silver metallic for author name -->
+    <linearGradient id="silverMetal" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="25%"  stop-color="#d8dce8"/>
+      <stop offset="50%"  stop-color="#f0f0f8"/>
+      <stop offset="75%"  stop-color="#c0c8d8"/>
+      <stop offset="100%" stop-color="#e8ecf0"/>
+    </linearGradient>
+
+    <!-- Field gradients -->
+    <linearGradient id="farField" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  stop-color="#607a52"/>
+      <stop offset="100%" stop-color="#4e6440"/>
+    </linearGradient>
+    <linearGradient id="nearField" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  stop-color="#4e6440"/>
+      <stop offset="100%" stop-color="#3a5030"/>
+    </linearGradient>
+
+    <!-- Canal water -->
+    <linearGradient id="canalGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  stop-color="#88aabb"/>
+      <stop offset="100%" stop-color="#557888"/>
+    </linearGradient>
+    <linearGradient id="canalReflect" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#c07030" stop-opacity="0"/>
+      <stop offset="30%"  stop-color="#e09040" stop-opacity="0.45"/>
+      <stop offset="50%"  stop-color="#ffd060" stop-opacity="0.55"/>
+      <stop offset="70%"  stop-color="#e09040" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#c07030" stop-opacity="0"/>
+    </linearGradient>
+
+    <!-- Road -->
+    <linearGradient id="roadGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  stop-color="#484848"/>
+      <stop offset="100%" stop-color="#383838"/>
+    </linearGradient>
+
+    <!-- Title band gradient -->
+    <linearGradient id="titleBand" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#141830" stop-opacity="0.92"/>
+      <stop offset="100%" stop-color="#0c1018" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Skin tone (South Park style) -->
+    <linearGradient id="spSkin" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#f5e0c8"/>
+      <stop offset="100%" stop-color="#e8d0b0"/>
+    </linearGradient>
+
+    <!-- Mist/fog filter -->
+    <filter id="mistBlur">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+    <filter id="softBlur">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="titleGlow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="textShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.8"/>
+    </filter>
+    <filter id="heavyShadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000" flood-opacity="0.9"/>
+    </filter>
+    <filter id="greenGlow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="cyanGlow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Vignette -->
+    <radialGradient id="vignette" cx="50%" cy="45%" r="60%">
+      <stop offset="0%"  stop-color="transparent"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.4"/>
+    </radialGradient>
+
+    <!-- Scanline pattern -->
+    <pattern id="scanlines" patternUnits="userSpaceOnUse" width="4" height="4">
+      <rect width="4" height="2" fill="rgba(0,255,200,0.02)"/>
+    </pattern>
+
+    <!-- SDR Waterfall gradient (vertical: frequency heat map) -->
+    <linearGradient id="wfHot" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#ff2200" stop-opacity="0.9"/>
+      <stop offset="25%"  stop-color="#ffaa00" stop-opacity="0.7"/>
+      <stop offset="50%"  stop-color="#00ff88" stop-opacity="0.5"/>
+      <stop offset="75%"  stop-color="#0066ff" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#000033" stop-opacity="0.3"/>
+    </linearGradient>
+    <linearGradient id="wfCool" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#001122" stop-opacity="0.6"/>
+      <stop offset="50%"  stop-color="#003366" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#0088cc" stop-opacity="0.3"/>
+    </linearGradient>
+
+    <!-- Matrix rain pattern (denser) -->
+    <pattern id="matrixRain" patternUnits="userSpaceOnUse" width="16" height="160">
+      <text x="2" y="16" font-family="monospace" font-size="9" fill="#00ff88" opacity="0.12">0</text>
+      <text x="2" y="32" font-family="monospace" font-size="9" fill="#00ff88" opacity="0.09">1</text>
+      <text x="2" y="48" font-family="monospace" font-size="9" fill="#00ff88" opacity="0.07">Ф</text>
+      <text x="2" y="64" font-family="monospace" font-size="9" fill="#00ff88" opacity="0.05">0</text>
+      <text x="2" y="80" font-family="monospace" font-size="9" fill="#00ff88" opacity="0.04">Д</text>
+      <text x="2" y="96" font-family="monospace" font-size="9" fill="#00ff88" opacity="0.03">1</text>
+      <text x="2" y="112" font-family="monospace" font-size="9" fill="#00ff88" opacity="0.02">Ξ</text>
+      <text x="2" y="128" font-family="monospace" font-size="9" fill="#00ff88" opacity="0.015">0</text>
+    </pattern>
+
+    <!-- Glitch / data-corruption filter -->
+    <filter id="glitch">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02 0.8" numOctaves="1" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+
+    <!-- HUD corner bracket clip -->
+    <filter id="hudGlow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+
+  <!-- ============================================ -->
+  <!-- AUTHOR BAND (TOP — MacLean dominant style)   -->
+  <!-- ============================================ -->
+  <rect x="0" y="0" width="800" height="210" fill="url(#authorBand)"/>
+
+  <!-- Bestseller tagline -->
+  <text x="400" y="42" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="13"
+        fill="#e8c060" letter-spacing="6" font-variant="small-caps">
+    INTERNATIONAL BESTSELLER
+  </text>
+
+  <!-- Thin gold rule -->
+  <line x1="180" y1="52" x2="620" y2="52" stroke="#e8c060" stroke-width="0.8" opacity="0.85"/>
+
+  <!-- AUTHOR NAME — the brand, largest element -->
+  <text x="400" y="120" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="72"
+        fill="url(#silverMetal)" letter-spacing="6" font-weight="normal"
+        filter="url(#textShadow)">
+    RYAN WEYLANT
+  </text>
+
+  <!-- Subtitle line -->
+  <text x="400" y="155" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="14"
+        fill="#b0c0d0" letter-spacing="3" font-style="italic">
+    An Interactive CyberQuest Novel
+  </text>
+
+  <!-- Red accent bars (MacLean classic) -->
+  <rect x="60" y="175" width="680" height="3" fill="#ee3333" opacity="0.9"/>
+  <rect x="60" y="182" width="680" height="1" fill="#ee3333" opacity="0.5"/>
+
+
+  <!-- ============================================ -->
+  <!-- LANDSCAPE SCENE (Drenthe, pre-dawn)          -->
+  <!-- ============================================ -->
+
+  <!-- Sky -->
+  <rect x="0" y="190" width="800" height="540" fill="url(#skyGrad)"/>
+
+  <!-- Sunrise glow on horizon -->
+  <rect x="0" y="190" width="800" height="540" fill="url(#sunGlow)"/>
+
+  <!-- Distant mist layer -->
+  <ellipse cx="400" cy="530" rx="500" ry="80" fill="#a09888" opacity="0.15" filter="url(#mistBlur)"/>
+
+  <!-- ── WSRT Radio Telescope Array (left background) ── -->
+  <g opacity="0.45" fill="#2a3048" transform="translate(0,0)">
+    <!-- Dish 1 -->
+    <g transform="translate(40,420)">
+      <rect x="-2" y="0" width="4" height="100" fill="#2a3048"/>
+      <path d="M-28,-8 Q0,-30 28,-8 L20,0 Q0,-16 -20,0 Z" fill="#2a3048"/>
+    </g>
+    <!-- Dish 2 -->
+    <g transform="translate(100,410)">
+      <rect x="-2" y="0" width="4" height="110" fill="#2a3048"/>
+      <path d="M-24,-7 Q0,-26 24,-7 L18,0 Q0,-14 -18,0 Z" fill="#2a3048"/>
+    </g>
+    <!-- Dish 3 -->
+    <g transform="translate(155,415)">
+      <rect x="-1.5" y="0" width="3" height="105" fill="#2a3048"/>
+      <path d="M-20,-6 Q0,-22 20,-6 L14,0 Q0,-12 -14,0 Z" fill="#2a3048"/>
+    </g>
+    <!-- Dish 4 -->
+    <g transform="translate(202,418)">
+      <rect x="-1" y="0" width="2.5" height="102" fill="#2a3048"/>
+      <path d="M-16,-5 Q0,-18 16,-5 L11,0 Q0,-10 -11,0 Z" fill="#2a3048"/>
+    </g>
+  </g>
+
+  <!-- ── Dwingeloo Dish (right background, large) ── -->
+  <g transform="translate(660,380)" opacity="0.35" fill="#2a3048">
+    <rect x="-3" y="0" width="6" height="140" fill="#2a3048"/>
+    <!-- Support struts -->
+    <line x1="0" y1="0" x2="-35" y2="60" stroke="#2a3048" stroke-width="2.5"/>
+    <line x1="0" y1="0" x2="35" y2="60" stroke="#2a3048" stroke-width="2.5"/>
+    <!-- Large dish -->
+    <path d="M-65,-18 Q0,-65 65,-18 L48,0 Q0,-38 -48,0 Z" fill="#2a3048"/>
+    <!-- Feed horn in centre -->
+    <line x1="0" y1="-10" x2="0" y2="-40" stroke="#2a3048" stroke-width="2"/>
+    <circle cx="0" cy="-42" r="4" fill="#2a3048"/>
+  </g>
+
+  <!-- ── LOFAR dipole array (right mid-ground) ── -->
+  <g opacity="0.3" stroke="#2a3048" stroke-width="1.2" fill="none">
+    <g transform="translate(560,515)">
+      <line x1="0" y1="0" x2="0" y2="-14"/>
+      <line x1="-5" y1="-14" x2="5" y2="-14"/>
+    </g>
+    <g transform="translate(580,517)">
+      <line x1="0" y1="0" x2="0" y2="-12"/>
+      <line x1="-4" y1="-12" x2="4" y2="-12"/>
+    </g>
+    <g transform="translate(600,516)">
+      <line x1="0" y1="0" x2="0" y2="-13"/>
+      <line x1="-5" y1="-13" x2="5" y2="-13"/>
+    </g>
+    <g transform="translate(620,518)">
+      <line x1="0" y1="0" x2="0" y2="-11"/>
+      <line x1="-4" y1="-11" x2="4" y2="-11"/>
+    </g>
+    <g transform="translate(640,517)">
+      <line x1="0" y1="0" x2="0" y2="-12"/>
+      <line x1="-4" y1="-12" x2="4" y2="-12"/>
+    </g>
+  </g>
+
+  <!-- ── Distant Steckerdoser Heide facility silhouette ── -->
+  <g transform="translate(320,490)" opacity="0.3" fill="#2a3048">
+    <!-- Main building -->
+    <rect x="-40" y="0" width="80" height="30"/>
+    <!-- Smaller wing -->
+    <rect x="40" y="8" width="30" height="22"/>
+    <!-- Antenna tower -->
+    <rect x="-8" y="-35" width="4" height="35"/>
+    <line x1="-6" y1="-35" x2="-6" y2="-28" stroke="#2a3048" stroke-width="1"/>
+    <line x1="2" y1="-35" x2="2" y2="-28" stroke="#2a3048" stroke-width="1"/>
+    <!-- Red warning light -->
+    <circle cx="-6" cy="-37" r="2.5" fill="#ff2222" opacity="0.7"/>
+    <circle cx="-6" cy="-37" r="5" fill="#ff2222" opacity="0.15"/>
+    <!-- Fence hint -->
+    <line x1="-50" y1="30" x2="80" y2="30" stroke="#2a3048" stroke-width="0.8"/>
+  </g>
+
+  <!-- ── Bare winter tree line silhouettes (horizon) ── -->
+  <g fill="#1a2828" opacity="0.4">
+    <!-- Left cluster -->
+    <path d="M0,520 Q5,480 10,440 Q12,460 18,450 Q22,470 28,520 Z"/>
+    <path d="M22,520 Q30,475 35,445 Q38,455 42,440 Q47,460 55,520 Z"/>
+    <path d="M48,520 Q53,485 55,460 Q58,470 63,458 Q66,475 70,520 Z"/>
+    <!-- Sparse mid trees -->
+    <path d="M230,520 Q238,470 242,450 Q245,460 250,520 Z"/>
+    <path d="M260,520 Q265,480 270,455 Q273,465 278,520 Z"/>
+    <!-- Right cluster -->
+    <path d="M690,520 Q695,476 700,450 Q703,460 708,448 Q712,470 720,520 Z"/>
+    <path d="M715,520 Q722,480 728,458 Q732,468 740,520 Z"/>
+    <path d="M750,520 Q755,485 758,465 Q762,475 770,520 Z"/>
+    <path d="M775,520 Q779,490 782,475 Q786,490 800,520 Z"/>
+  </g>
+
+  <!-- ── Bare branch details on some trees ── -->
+  <g stroke="#2a3838" stroke-width="1" fill="none" opacity="0.35">
+    <path d="M10,455 Q-5,440 -10,430"/>
+    <path d="M10,460 Q20,445 30,438"/>
+    <path d="M35,450 Q25,435 20,425"/>
+    <path d="M42,445 Q50,430 58,425"/>
+    <path d="M700,454 Q690,440 685,432"/>
+    <path d="M728,462 Q738,448 745,440"/>
+  </g>
+
+  <!-- ── Far fields ── -->
+  <rect x="0" y="520" width="800" height="35" fill="url(#farField)"/>
+
+  <!-- ── Canal ── -->
+  <rect x="0" y="555" width="800" height="30" fill="url(#canalGrad)"/>
+  <!-- Sunrise reflection on canal -->
+  <rect x="0" y="555" width="800" height="30" fill="url(#canalReflect)"/>
+  <!-- Canal bank lines -->
+  <line x1="0" y1="555" x2="800" y2="555" stroke="#3a4a38" stroke-width="1.5"/>
+  <line x1="0" y1="585" x2="800" y2="585" stroke="#3a4a38" stroke-width="1.5"/>
+
+  <!-- ── Near field ── -->
+  <rect x="0" y="585" width="800" height="50" fill="url(#nearField)"/>
+
+  <!-- ── Road ── -->
+  <rect x="0" y="635" width="800" height="42" fill="url(#roadGrad)"/>
+  <!-- Centre line markings -->
+  <g stroke="#cccc88" stroke-width="1.5" stroke-dasharray="18,12" opacity="0.45">
+    <line x1="0" y1="656" x2="800" y2="656"/>
+  </g>
+
+  <!-- ── Foreground field/verge ── -->
+  <rect x="0" y="677" width="800" height="48" fill="#283820"/>
+
+  <!-- ── Farmhouse (right side — warm lights) ── -->
+  <g transform="translate(620,560)">
+    <!-- Main structure -->
+    <rect x="0" y="0" width="70" height="50" fill="#3a3028" stroke="#2a2820" stroke-width="1.5"/>
+    <!-- Roof -->
+    <path d="M-5,0 L35,-28 L75,0 Z" fill="#403028" stroke="#2a2820" stroke-width="1"/>
+    <!-- Chimney -->
+    <rect x="50" y="-22" width="8" height="18" fill="#403028" stroke="#2a2820" stroke-width="0.8"/>
+    <!-- Kitchen window (warm amber glow) -->
+    <rect x="8" y="12" width="18" height="22" fill="#dd9933" opacity="0.8"/>
+    <rect x="8" y="12" width="18" height="22" fill="none" stroke="#2a2820" stroke-width="1"/>
+    <!-- Window cross -->
+    <line x1="17" y1="12" x2="17" y2="34" stroke="#2a2820" stroke-width="0.8"/>
+    <line x1="8" y1="23" x2="26" y2="23" stroke="#2a2820" stroke-width="0.8"/>
+    <!-- Kitchen light spill -->
+    <ellipse cx="17" cy="40" rx="22" ry="12" fill="#dd9933" opacity="0.12"/>
+    <!-- Mancave window (GREEN SCREEN GLOW) -->
+    <rect x="38" y="14" width="22" height="18" fill="#1a3820" stroke="#2a2820" stroke-width="1"/>
+    <rect x="40" y="16" width="18" height="14" fill="#00ff88" opacity="0.25"/>
+    <!-- Green screen glow spill -->
+    <ellipse cx="49" cy="40" rx="18" ry="10" fill="#00ff88" opacity="0.1" filter="url(#greenGlow)"/>
+    <!-- Door -->
+    <rect x="29" y="22" width="12" height="28" fill="#302820" stroke="#2a2820" stroke-width="0.8"/>
+  </g>
+
+  <!-- ── Volvo on the road ── -->
+  <g transform="translate(180,640)">
+    <!-- Car body (old Volvo 240 estate silhouette) -->
+    <path d="M-55,0 L-50,-14 L-28,-22 L30,-22 L48,-14 L55,0 Z" fill="#2a3040" stroke="#111" stroke-width="1.5"/>
+    <rect x="-52" y="0" width="107" height="14" rx="2" fill="#2a3040" stroke="#111" stroke-width="1.5"/>
+    <!-- Windows -->
+    <path d="M-45,-11 L-25,-19 L25,-19 L42,-11 Z" fill="#0a1420" stroke="#182838" stroke-width="0.8"/>
+    <line x1="-4" y1="-19" x2="-4" y2="-11" stroke="#182838" stroke-width="1.2"/>
+    <!-- Headlights -->
+    <rect x="-54" y="2" width="6" height="5" rx="1" fill="#ffee88" opacity="0.8"/>
+    <!-- Headlight beam -->
+    <path d="M-54,4 L-110,-10 L-100,14 Z" fill="#ffee44" opacity="0.04"/>
+    <!-- Tail lights -->
+    <rect x="50" y="3" width="5" height="4" rx="1" fill="#ee2222" opacity="0.5"/>
+    <!-- Wheels -->
+    <circle cx="-30" cy="14" r="7" fill="#111" stroke="#000" stroke-width="1"/>
+    <circle cx="32" cy="14" r="7" fill="#111" stroke="#000" stroke-width="1"/>
+    <circle cx="-30" cy="14" r="3" fill="#2a2a2a"/>
+    <circle cx="32" cy="14" r="3" fill="#2a2a2a"/>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- SDR WATERFALL DISPLAY (centre overlay)        -->
+  <!-- ============================================ -->
+
+  <!-- Semi-transparent dark panel behind waterfall -->
+  <rect x="120" y="340" width="560" height="360" rx="4" fill="#000810" opacity="0.12"/>
+  <rect x="120" y="340" width="560" height="360" rx="4" fill="none" stroke="#00ff88" stroke-width="0.5" opacity="0.1"/>
+
+  <!-- Waterfall bands (frequency vs time — horizontal bands scrolling down) -->
+  <g opacity="0.6" clip-path="inset(0)">
+    <!-- Background noise floor -->
+    <rect x="125" y="345" width="550" height="350" fill="#000a18" opacity="0.15"/>
+
+    <!-- Waterfall rows — each row is a time-slice, colours = signal strength -->
+    <!-- Row cluster 1: mostly noise, one strong signal at ~406 MHz -->
+    <rect x="125" y="348" width="550" height="6" fill="#001428" opacity="0.7"/>
+    <rect x="340" y="348" width="18" height="6" fill="#ff4400" opacity="0.5"/>
+    <rect x="358" y="348" width="8" height="6" fill="#ffaa00" opacity="0.35"/>
+    <rect x="330" y="348" width="10" height="6" fill="#ffaa00" opacity="0.3"/>
+
+    <rect x="125" y="356" width="550" height="6" fill="#001020" opacity="0.65"/>
+    <rect x="338" y="356" width="22" height="6" fill="#ff2200" opacity="0.55"/>
+    <rect x="360" y="356" width="10" height="6" fill="#ff8800" opacity="0.3"/>
+    <rect x="328" y="356" width="10" height="6" fill="#ff8800" opacity="0.25"/>
+
+    <rect x="125" y="364" width="550" height="6" fill="#001428" opacity="0.6"/>
+    <rect x="336" y="364" width="26" height="6" fill="#ff4400" opacity="0.6"/>
+    <rect x="362" y="364" width="14" height="6" fill="#ffcc00" opacity="0.3"/>
+    <rect x="322" y="364" width="14" height="6" fill="#ffcc00" opacity="0.25"/>
+
+    <rect x="125" y="372" width="550" height="6" fill="#000e20" opacity="0.7"/>
+    <rect x="340" y="372" width="20" height="6" fill="#ff6600" opacity="0.5"/>
+    <rect x="360" y="372" width="8" height="6" fill="#ffaa00" opacity="0.2"/>
+
+    <rect x="125" y="380" width="550" height="6" fill="#001428" opacity="0.55"/>
+    <rect x="342" y="380" width="16" height="6" fill="#ff4400" opacity="0.45"/>
+
+    <!-- Row cluster 2: SSTV burst (wider signal) -->
+    <rect x="125" y="390" width="550" height="8" fill="#001020" opacity="0.7"/>
+    <rect x="260" y="390" width="120" height="8" fill="#00cc66" opacity="0.25"/>
+    <rect x="300" y="390" width="60" height="8" fill="#00ff88" opacity="0.3"/>
+    <rect x="338" y="390" width="22" height="8" fill="#ff4400" opacity="0.5"/>
+
+    <rect x="125" y="400" width="550" height="8" fill="#000e1a" opacity="0.65"/>
+    <rect x="255" y="400" width="130" height="8" fill="#00aa55" opacity="0.2"/>
+    <rect x="295" y="400" width="70" height="8" fill="#00ff88" opacity="0.25"/>
+    <rect x="336" y="400" width="26" height="8" fill="#ff2200" opacity="0.55"/>
+
+    <rect x="125" y="410" width="550" height="7" fill="#001428" opacity="0.6"/>
+    <rect x="270" y="410" width="100" height="7" fill="#006644" opacity="0.2"/>
+    <rect x="340" y="410" width="18" height="7" fill="#ff6600" opacity="0.4"/>
+
+    <!-- Row cluster 3: interference pattern -->
+    <rect x="125" y="420" width="550" height="6" fill="#001020" opacity="0.7"/>
+    <rect x="180" y="420" width="8" height="6" fill="#0066cc" opacity="0.3"/>
+    <rect x="340" y="420" width="20" height="6" fill="#ff4400" opacity="0.45"/>
+    <rect x="500" y="420" width="12" height="6" fill="#0088ff" opacity="0.25"/>
+    <rect x="580" y="420" width="6" height="6" fill="#0044aa" opacity="0.2"/>
+
+    <rect x="125" y="428" width="550" height="6" fill="#000e20" opacity="0.6"/>
+    <rect x="178" y="428" width="10" height="6" fill="#0088dd" opacity="0.25"/>
+    <rect x="338" y="428" width="24" height="6" fill="#ff3300" opacity="0.5"/>
+    <rect x="498" y="428" width="16" height="6" fill="#00aaff" opacity="0.2"/>
+
+    <rect x="125" y="436" width="550" height="7" fill="#001428" opacity="0.55"/>
+    <rect x="336" y="436" width="26" height="7" fill="#ff4400" opacity="0.55"/>
+    <rect x="362" y="436" width="10" height="7" fill="#ff8800" opacity="0.25"/>
+
+    <!-- Row cluster 4: heavy burst — 406.100 MHz signal detected -->
+    <rect x="125" y="446" width="550" height="8" fill="#001020" opacity="0.7"/>
+    <rect x="320" y="446" width="60" height="8" fill="#ff0000" opacity="0.6"/>
+    <rect x="380" y="446" width="20" height="8" fill="#ffaa00" opacity="0.4"/>
+    <rect x="300" y="446" width="20" height="8" fill="#ffaa00" opacity="0.35"/>
+    <rect x="200" y="446" width="40" height="8" fill="#003366" opacity="0.2"/>
+    <rect x="520" y="446" width="30" height="8" fill="#003366" opacity="0.15"/>
+
+    <rect x="125" y="456" width="550" height="8" fill="#000e1a" opacity="0.65"/>
+    <rect x="315" y="456" width="70" height="8" fill="#ff2200" opacity="0.65"/>
+    <rect x="385" y="456" width="25" height="8" fill="#ff8800" opacity="0.35"/>
+    <rect x="290" y="456" width="25" height="8" fill="#ff8800" opacity="0.3"/>
+
+    <rect x="125" y="466" width="550" height="7" fill="#001428" opacity="0.6"/>
+    <rect x="325" y="466" width="50" height="7" fill="#ff4400" opacity="0.5"/>
+    <rect x="375" y="466" width="15" height="7" fill="#ffcc00" opacity="0.25"/>
+
+    <!-- Row cluster 5: fading -->
+    <rect x="125" y="476" width="550" height="6" fill="#001020" opacity="0.55"/>
+    <rect x="335" y="476" width="28" height="6" fill="#ff6600" opacity="0.35"/>
+
+    <rect x="125" y="484" width="550" height="6" fill="#000e20" opacity="0.5"/>
+    <rect x="338" y="484" width="22" height="6" fill="#ff8800" opacity="0.25"/>
+
+    <rect x="125" y="492" width="550" height="6" fill="#001428" opacity="0.55"/>
+    <rect x="340" y="492" width="18" height="6" fill="#cc4400" opacity="0.2"/>
+
+    <!-- Row cluster 6: quiet, noise floor rising -->
+    <rect x="125" y="500" width="550" height="6" fill="#001020" opacity="0.5"/>
+    <rect x="125" y="508" width="550" height="6" fill="#000e1a" opacity="0.45"/>
+    <rect x="342" y="508" width="14" height="6" fill="#884400" opacity="0.15"/>
+    <rect x="125" y="516" width="550" height="6" fill="#001020" opacity="0.5"/>
+
+    <!-- Scattered noise speckles -->
+    <rect x="200" y="500" width="3" height="3" fill="#0066aa" opacity="0.12"/>
+    <rect x="450" y="505" width="4" height="2" fill="#008844" opacity="0.1"/>
+    <rect x="550" y="495" width="3" height="3" fill="#0066aa" opacity="0.1"/>
+    <rect x="160" y="480" width="2" height="4" fill="#004488" opacity="0.08"/>
+    <rect x="620" y="470" width="3" height="3" fill="#006644" opacity="0.08"/>
+    <rect x="400" y="515" width="4" height="2" fill="#004488" opacity="0.08"/>
+  </g>
+
+  <!-- Frequency axis labels (top of waterfall) -->
+  <g font-family="'Courier New', monospace" font-size="7" fill="#00ff88" opacity="0.7">
+    <text x="130" y="340">400.0</text>
+    <text x="230" y="340">402.0</text>
+    <text x="330" y="340">404.0</text>
+    <text x="420" y="340">406.1</text>
+    <text x="510" y="340">408.0</text>
+    <text x="600" y="340">410.0</text>
+    <text x="660" y="340">MHz</text>
+  </g>
+
+  <!-- Frequency marker — 406.100 MHz target highlighted -->
+  <line x1="350" y1="345" x2="350" y2="695" stroke="#ff2222" stroke-width="0.7" opacity="0.6" stroke-dasharray="4,4"/>
+  <text x="352" y="698" font-family="'Courier New', monospace" font-size="7" fill="#ff4444" opacity="0.85">406.100</text>
+
+  <!-- Time axis (right side) -->
+  <g font-family="'Courier New', monospace" font-size="6" fill="#00ccaa" opacity="0.6">
+    <text x="682" y="355">T+00</text>
+    <text x="682" y="395">T+12</text>
+    <text x="682" y="450">T+28</text>
+    <text x="682" y="500">T+42</text>
+  </g>
+
+  <!-- FFT Spectrum line (above waterfall, like SDR software) -->
+  <g transform="translate(125,260)" opacity="0.55">
+    <!-- Spectrum background -->
+    <rect x="0" y="0" width="550" height="70" fill="#000810" opacity="0.1" rx="2"/>
+    <rect x="0" y="0" width="550" height="70" fill="none" stroke="#00ff88" stroke-width="0.4" opacity="0.08" rx="2"/>
+    <!-- Grid lines -->
+    <g stroke="#00ff88" stroke-width="0.3" opacity="0.1">
+      <line x1="0" y1="17" x2="550" y2="17"/>
+      <line x1="0" y1="35" x2="550" y2="35"/>
+      <line x1="0" y1="52" x2="550" y2="52"/>
+      <line x1="110" y1="0" x2="110" y2="70"/>
+      <line x1="220" y1="0" x2="220" y2="70"/>
+      <line x1="330" y1="0" x2="330" y2="70"/>
+      <line x1="440" y1="0" x2="440" y2="70"/>
+    </g>
+    <!-- Spectrum trace (green line showing power vs frequency) -->
+    <polyline fill="none" stroke="#00ff88" stroke-width="1.2" filter="url(#hudGlow)"
+      points="0,62 10,60 20,58 30,61 40,59 50,60 60,58 70,62 80,60 90,59
+              100,61 110,58 120,60 130,56 140,55 150,52 160,48 170,42 180,35
+              190,22 200,12 210,8 215,4 220,8 225,12 230,18 240,28 250,38
+              260,45 270,50 280,54 290,56 300,58 310,60 320,59 330,61
+              340,60 350,59 360,62 370,60 380,61 390,59 400,60 410,62
+              420,60 430,61 440,59 450,62 460,60 470,61 480,60 490,62
+              500,60 510,61 520,59 530,60 540,61 550,60"/>
+    <!-- Peak fill under the signal spike -->
+    <path d="M160,48 L170,42 L180,35 L190,22 L200,12 L210,8 L215,4 L220,8 L225,12 L230,18 L240,28 L250,38 L260,45 L260,62 L160,62 Z"
+          fill="#00ff88" opacity="0.08"/>
+    <!-- dB labels -->
+    <text x="-2" y="20" font-family="'Courier New', monospace" font-size="5" fill="#00ff88" opacity="0.3" text-anchor="end">-40</text>
+    <text x="-2" y="38" font-family="'Courier New', monospace" font-size="5" fill="#00ff88" opacity="0.3" text-anchor="end">-60</text>
+    <text x="-2" y="55" font-family="'Courier New', monospace" font-size="5" fill="#00ff88" opacity="0.3" text-anchor="end">-80</text>
+    <!-- Peak label -->
+    <text x="215" y="-2" font-family="'Courier New', monospace" font-size="6" fill="#ff4444" opacity="0.6" text-anchor="middle">▼ -18 dB</text>
+  </g>
+
+  <!-- ── HUD overlay elements (hacker style) ── -->
+
+  <!-- Top-left HUD bracket -->
+  <g stroke="#00ff88" stroke-width="1" fill="none" opacity="0.3" filter="url(#hudGlow)">
+    <polyline points="130,220 130,210 145,210"/>
+    <polyline points="660,210 675,210 675,220"/>
+    <polyline points="130,700 130,710 145,710"/>
+    <polyline points="660,710 675,710 675,700"/>
+  </g>
+
+  <!-- HUD target crosshair on 406 MHz signal -->
+  <g transform="translate(350,455)" opacity="0.3" stroke="#ff2222" stroke-width="0.7" fill="none">
+    <circle cx="0" cy="0" r="20"/>
+    <circle cx="0" cy="0" r="10"/>
+    <line x1="-25" y1="0" x2="-12" y2="0"/>
+    <line x1="12" y1="0" x2="25" y2="0"/>
+    <line x1="0" y1="-25" x2="0" y2="-12"/>
+    <line x1="0" y1="12" x2="0" y2="25"/>
+  </g>
+
+  <!-- HUD text readouts -->
+  <g font-family="'Courier New', monospace" font-size="7" fill="#00ff88" opacity="0.65">
+    <text x="135" y="230">RX: HackRF One</text>
+    <text x="135" y="240">GAIN: 42 dB</text>
+    <text x="135" y="250">BW: 20 MHz</text>
+    <text x="580" y="230" text-anchor="end">LAT: 52.8374°N</text>
+    <text x="580" y="240" text-anchor="end">LON: 6.9247°E</text>
+    <text x="580" y="250" text-anchor="end">DRENTHE, NL</text>
+  </g>
+
+  <!-- Signal detection alert box -->
+  <g transform="translate(300,535)">
+    <rect x="0" y="0" width="200" height="20" rx="2" fill="#000" opacity="0.12"/>
+    <rect x="0" y="0" width="200" height="20" rx="2" fill="none" stroke="#ff4444" stroke-width="1" opacity="0.6"/>
+    <text x="100" y="14" text-anchor="middle" font-family="'Courier New', monospace" font-size="8"
+          fill="#ff4444" opacity="0.9" letter-spacing="2">⚠ SIGNAL DETECTED</text>
+  </g>
+
+  <!-- Hex data stream overlay (left side, very faint) -->
+  <g font-family="'Courier New', monospace" font-size="6" fill="#00ff88" opacity="0.12">
+    <text x="30" y="400">4F 50 45 52 41 54 49 4F</text>
+    <text x="30" y="410">4E 20 5A 45 52 46 41 4C</text>
+    <text x="30" y="420">4C 20 2D 2D 20 53 49 47</text>
+    <text x="30" y="430">49 4E 54 20 44 41 54 41</text>
+    <text x="30" y="440">FF D8 FF E0 00 10 4A 46</text>
+    <text x="30" y="450">49 46 00 01 01 00 00 48</text>
+    <text x="30" y="460">53 53 54 56 5F 44 45 43</text>
+    <text x="30" y="470">4F 44 45 44 2E 4A 50 47</text>
+  </g>
+
+  <!-- Matrix rain overlay across entire scene -->
+  <rect x="0" y="190" width="800" height="535" fill="url(#matrixRain)" opacity="0.5"/>
+
+  <!-- Glitch line artifacts -->
+  <g opacity="0.10">
+    <rect x="0" y="380" width="800" height="2" fill="#00ffcc"/>
+    <rect x="100" y="445" width="600" height="1" fill="#ff4444"/>
+    <rect x="0" y="510" width="800" height="1.5" fill="#00ff88"/>
+    <rect x="200" y="360" width="400" height="1" fill="#00ccff"/>
+  </g>
+
+  <!-- ── ADDITIONAL CYBER/HACKER LAYERS ── -->
+
+  <!-- Circuit board trace pattern (full width, very faint) -->
+  <g stroke="#00ff88" stroke-width="0.4" fill="none" opacity="0.07">
+    <!-- Horizontal traces -->
+    <line x1="0" y1="250" x2="120" y2="250"/>
+    <line x1="120" y1="250" x2="120" y2="290"/>
+    <line x1="120" y1="290" x2="200" y2="290"/>
+    <line x1="680" y1="250" x2="800" y2="250"/>
+    <line x1="680" y1="250" x2="680" y2="300"/>
+    <line x1="680" y1="300" x2="750" y2="300"/>
+    <line x1="0" y1="600" x2="80" y2="600"/>
+    <line x1="80" y1="600" x2="80" y2="640"/>
+    <line x1="80" y1="640" x2="120" y2="640"/>
+    <line x1="720" y1="580" x2="800" y2="580"/>
+    <line x1="720" y1="580" x2="720" y2="620"/>
+    <line x1="720" y1="620" x2="800" y2="620"/>
+    <!-- Vertical traces -->
+    <line x1="50" y1="200" x2="50" y2="350"/>
+    <line x1="750" y1="210" x2="750" y2="380"/>
+    <line x1="30" y1="500" x2="30" y2="700"/>
+    <line x1="770" y1="450" x2="770" y2="680"/>
+    <!-- Via pads -->
+    <circle cx="120" cy="250" r="3"/>
+    <circle cx="120" cy="290" r="3"/>
+    <circle cx="680" cy="250" r="3"/>
+    <circle cx="680" cy="300" r="3"/>
+    <circle cx="80" cy="600" r="3"/>
+    <circle cx="80" cy="640" r="3"/>
+    <circle cx="720" cy="580" r="3"/>
+    <circle cx="720" cy="620" r="3"/>
+    <circle cx="50" cy="350" r="2.5"/>
+    <circle cx="750" cy="380" r="2.5"/>
+  </g>
+
+  <!-- Network topology lines (connecting nodes) -->
+  <g stroke="#00ccff" stroke-width="0.3" fill="none" opacity="0.08">
+    <line x1="100" y1="320" x2="250" y2="380"/>
+    <line x1="250" y1="380" x2="400" y2="350"/>
+    <line x1="400" y1="350" x2="550" y2="400"/>
+    <line x1="550" y1="400" x2="700" y2="340"/>
+    <line x1="250" y1="380" x2="300" y2="500"/>
+    <line x1="400" y1="350" x2="350" y2="550"/>
+    <line x1="550" y1="400" x2="600" y2="520"/>
+    <!-- Nodes -->
+    <circle cx="100" cy="320" r="4" stroke-width="0.5"/>
+    <circle cx="250" cy="380" r="4" stroke-width="0.5"/>
+    <circle cx="400" cy="350" r="4" stroke-width="0.5"/>
+    <circle cx="550" cy="400" r="4" stroke-width="0.5"/>
+    <circle cx="700" cy="340" r="4" stroke-width="0.5"/>
+    <circle cx="300" cy="500" r="3" stroke-width="0.4"/>
+    <circle cx="350" cy="550" r="3" stroke-width="0.4"/>
+    <circle cx="600" cy="520" r="3" stroke-width="0.4"/>
+  </g>
+
+  <!-- Packet capture / terminal text overlay (right side) -->
+  <g font-family="'Courier New', monospace" font-size="5.5" fill="#00ccaa" opacity="0.10">
+    <text x="700" y="400">SYN 10.0.0.1:443</text>
+    <text x="700" y="408">ACK seq=0x4F2A</text>
+    <text x="700" y="416">PSH [ENCRYPTED]</text>
+    <text x="700" y="424">FIN RST timeout</text>
+    <text x="700" y="432">SYN 192.168.1.42</text>
+    <text x="700" y="440">DNS QUERY zerfall</text>
+    <text x="700" y="448">NXDOMAIN</text>
+    <text x="700" y="456">TCP &gt; 52.8374.nl</text>
+    <text x="700" y="464">SSH-2.0-OpenSSH</text>
+    <text x="700" y="472">AUTH publickey</text>
+  </g>
+
+  <!-- Port scan data overlay (left side, below hex) -->
+  <g font-family="'Courier New', monospace" font-size="5.5" fill="#00ff88" opacity="0.08">
+    <text x="20" y="490">PORT   STATE  SERVICE</text>
+    <text x="20" y="498">22/tcp open   ssh</text>
+    <text x="20" y="506">80/tcp closed http</text>
+    <text x="20" y="514">443/tcp open  https</text>
+    <text x="20" y="522">1337/tcp open  waste</text>
+    <text x="20" y="530">4444/tcp filtr msft</text>
+    <text x="20" y="538">8080/tcp open  proxy</text>
+    <text x="20" y="546">nmap -sS -O target</text>
+  </g>
+
+  <!-- Oscilloscope / waveform trace (bottom of scene area) -->
+  <g transform="translate(0,660)" opacity="0.10" stroke="#00ffcc" stroke-width="0.8" fill="none">
+    <polyline points="0,10 8,10 10,2 12,18 14,6 16,14 18,10 28,10 30,4 32,16 34,8 36,12 38,10 48,10 50,3 52,17 54,7 56,13 58,10 68,10 70,5 72,15 74,9 76,11 78,10 88,10 90,4 92,16 94,8 96,12 98,10 108,10 110,2 112,18 114,6 116,14 118,10 128,10 130,3 132,17 134,7 136,13 138,10 148,10 150,5 152,15 154,9 156,11 158,10 168,10 170,4 172,16 174,8 176,12 178,10 188,10 190,6 192,14 194,10 200,10 210,10 212,3 214,17 216,7 218,13 220,10 230,10 232,5 234,15 236,9 238,11 240,10 250,10 252,4 254,16 256,8 258,12 260,10 270,10 272,2 274,18 276,6 278,14 280,10 290,10 300,10 310,10 312,3 314,17 316,7 318,13 320,10 350,10 380,10 382,4 384,16 386,8 388,12 390,10 420,10 450,10 452,5 454,15 456,9 458,11 460,10 490,10 520,10 522,2 524,18 526,6 528,14 530,10 560,10 590,10 592,4 594,16 596,8 598,12 600,10 630,10 660,10 662,3 664,17 666,7 668,13 670,10 700,10 730,10 732,5 734,15 736,9 738,11 740,10 770,10 800,10"/>
+  </g>
+
+  <!-- Grid overlay (subtle, whole scene) -->
+  <g stroke="#00ff88" stroke-width="0.2" opacity="0.04">
+    <!-- Horizontal -->
+    <line x1="0" y1="240" x2="800" y2="240"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="360" x2="800" y2="360"/>
+    <line x1="0" y1="420" x2="800" y2="420"/>
+    <line x1="0" y1="480" x2="800" y2="480"/>
+    <line x1="0" y1="540" x2="800" y2="540"/>
+    <line x1="0" y1="600" x2="800" y2="600"/>
+    <line x1="0" y1="660" x2="800" y2="660"/>
+    <!-- Vertical -->
+    <line x1="100" y1="190" x2="100" y2="725"/>
+    <line x1="200" y1="190" x2="200" y2="725"/>
+    <line x1="300" y1="190" x2="300" y2="725"/>
+    <line x1="400" y1="190" x2="400" y2="725"/>
+    <line x1="500" y1="190" x2="500" y2="725"/>
+    <line x1="600" y1="190" x2="600" y2="725"/>
+    <line x1="700" y1="190" x2="700" y2="725"/>
+  </g>
+
+  <!-- Radar sweep arc (top left corner) -->
+  <g transform="translate(60,220)" opacity="0.07" stroke="#00ff88" fill="none">
+    <circle cx="0" cy="0" r="40" stroke-width="0.4"/>
+    <circle cx="0" cy="0" r="25" stroke-width="0.3"/>
+    <circle cx="0" cy="0" r="12" stroke-width="0.3"/>
+    <line x1="0" y1="0" x2="35" y2="-20" stroke-width="0.6"/>
+    <circle cx="28" cy="-16" r="2" fill="#00ff88" opacity="0.3"/>
+  </g>
+
+  <!-- Terminal prompt overlay (bottom of scene) -->
+  <g font-family="'Courier New', monospace" font-size="6" fill="#00ff88" opacity="0.08">
+    <text x="20" y="690">ryan@hackrf:~$ gqrx --freq=406100000 --gain=42</text>
+    <text x="20" y="700">ryan@hackrf:~$ rtl_433 -f 406.1M -s 2048k</text>
+    <text x="20" y="710">Tuner gain set to 42.0 dB.</text>
+    <text x="20" y="720">Found signal at 406.100 MHz (SSTV)</text>
+  </g>
+
+  <!-- Encryption key fragment (right bottom of scene) -->
+  <g font-family="'Courier New', monospace" font-size="5" fill="#ff4444" opacity="0.07">
+    <text x="620" y="690">-----BEGIN PGP MESSAGE-----</text>
+    <text x="620" y="698">hQEMA8a2xX7DkF2MAQf+N7Kc</text>
+    <text x="620" y="706">jA0EAwMCVWx2K8Q4x0Ng0j4B</text>
+    <text x="620" y="714">-----END PGP MESSAGE-----</text>
+  </g>
+
+  <!-- Data flow particles (dots moving along circuit traces) -->
+  <g fill="#00ff88" opacity="0.15">
+    <circle cx="70" cy="250" r="1.5"/>
+    <circle cx="120" cy="270" r="1.5"/>
+    <circle cx="700" cy="250" r="1.5"/>
+    <circle cx="680" cy="280" r="1.5"/>
+    <circle cx="50" cy="280" r="1.5"/>
+    <circle cx="750" cy="330" r="1.5"/>
+    <circle cx="30" cy="600" r="1.5"/>
+    <circle cx="770" cy="560" r="1.5"/>
+  </g>
+
+  <!-- Additional glitch displacement bars -->
+  <g opacity="0.05">
+    <rect x="50" y="290" width="300" height="1" fill="#ff00ff"/>
+    <rect x="400" y="550" width="350" height="1.5" fill="#00ffff"/>
+    <rect x="0" y="650" width="200" height="1" fill="#ff4444"/>
+    <rect x="500" y="320" width="300" height="1" fill="#ffff00"/>
+    <rect x="150" y="480" width="500" height="0.8" fill="#ff00ff"/>
+  </g>
+
+  <!-- Coordinates grid labels -->
+  <g font-family="'Courier New', monospace" font-size="4.5" fill="#00ccaa" opacity="0.06">
+    <text x="102" y="238">x100</text>
+    <text x="202" y="238">x200</text>
+    <text x="302" y="238">x300</text>
+    <text x="402" y="238">x400</text>
+    <text x="502" y="238">x500</text>
+    <text x="602" y="238">x600</text>
+    <text x="702" y="238">x700</text>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- MASSIVE SURVEILLANCE DRONE (cinematic layer)  -->
+  <!-- ============================================ -->
+
+  <!-- Searchlight cone from drone to ground -->
+  <path d="M400,300 L280,680 L520,680 Z" fill="#ffeecc" opacity="0.06"/>
+  <path d="M400,300 L310,680 L490,680 Z" fill="#ffeecc" opacity="0.08"/>
+  <path d="M400,300 L340,680 L460,680 Z" fill="#ffddaa" opacity="0.10"/>
+  <!-- Searchlight ground splash -->
+  <ellipse cx="400" cy="660" rx="80" ry="15" fill="#ffddaa" opacity="0.12" filter="url(#mistBlur)"/>
+
+  <!-- Drone — large, menacing, centre-top -->
+  <g transform="translate(400,280)" filter="url(#heavyShadow)">
+
+    <!-- Main body (angular, military-style) -->
+    <path d="M-30,-8 L-20,-18 L20,-18 L30,-8 L30,8 L20,18 L-20,18 L-30,8 Z"
+          fill="#2a2a40" stroke="#444" stroke-width="1.5"/>
+    <!-- Top hull plate -->
+    <path d="M-20,-18 L-16,-22 L16,-22 L20,-18 Z" fill="#3a3a50" stroke="#555" stroke-width="0.8"/>
+    <!-- Hull detail lines -->
+    <line x1="-18" y1="-10" x2="18" y2="-10" stroke="#444" stroke-width="0.5"/>
+    <line x1="-15" y1="0" x2="15" y2="0" stroke="#444" stroke-width="0.4"/>
+    <!-- Ventilation grilles -->
+    <g stroke="#555" stroke-width="0.4" opacity="0.6">
+      <line x1="-12" y1="4" x2="-12" y2="12"/>
+      <line x1="-8" y1="4" x2="-8" y2="12"/>
+      <line x1="-4" y1="4" x2="-4" y2="12"/>
+      <line x1="0" y1="4" x2="0" y2="12"/>
+      <line x1="4" y1="4" x2="4" y2="12"/>
+      <line x1="8" y1="4" x2="8" y2="12"/>
+      <line x1="12" y1="4" x2="12" y2="12"/>
+    </g>
+
+    <!-- Boom arms (thick, carbon-fibre look) -->
+    <!-- Front-left -->
+    <line x1="-28" y1="-5" x2="-75" y2="-30" stroke="#3a3a50" stroke-width="5"/>
+    <line x1="-28" y1="-5" x2="-75" y2="-30" stroke="#4a4a5a" stroke-width="3"/>
+    <!-- Front-right -->
+    <line x1="28" y1="-5" x2="75" y2="-30" stroke="#3a3a50" stroke-width="5"/>
+    <line x1="28" y1="-5" x2="75" y2="-30" stroke="#4a4a5a" stroke-width="3"/>
+    <!-- Rear-left -->
+    <line x1="-28" y1="5" x2="-70" y2="30" stroke="#3a3a50" stroke-width="5"/>
+    <line x1="-28" y1="5" x2="-70" y2="30" stroke="#4a4a5a" stroke-width="3"/>
+    <!-- Rear-right -->
+    <line x1="28" y1="5" x2="70" y2="30" stroke="#3a3a50" stroke-width="5"/>
+    <line x1="28" y1="5" x2="70" y2="30" stroke="#4a4a5a" stroke-width="3"/>
+
+    <!-- Motors (cylindrical) -->
+    <ellipse cx="-75" cy="-30" rx="10" ry="6" fill="#333" stroke="#555" stroke-width="1"/>
+    <ellipse cx="75" cy="-30" rx="10" ry="6" fill="#333" stroke="#555" stroke-width="1"/>
+    <ellipse cx="-70" cy="30" rx="10" ry="6" fill="#333" stroke="#555" stroke-width="1"/>
+    <ellipse cx="70" cy="30" rx="10" ry="6" fill="#333" stroke="#555" stroke-width="1"/>
+
+    <!-- Rotor discs (transparent, motion blur) -->
+    <ellipse cx="-75" cy="-30" rx="35" ry="10" fill="#889" opacity="0.18"/>
+    <ellipse cx="75" cy="-30" rx="35" ry="10" fill="#889" opacity="0.18"/>
+    <ellipse cx="-70" cy="30" rx="35" ry="10" fill="#889" opacity="0.18"/>
+    <ellipse cx="70" cy="30" rx="35" ry="10" fill="#889" opacity="0.18"/>
+    <!-- Rotor edges -->
+    <ellipse cx="-75" cy="-30" rx="35" ry="10" fill="none" stroke="#888" stroke-width="0.5" opacity="0.2"/>
+    <ellipse cx="75" cy="-30" rx="35" ry="10" fill="none" stroke="#888" stroke-width="0.5" opacity="0.2"/>
+    <ellipse cx="-70" cy="30" rx="35" ry="10" fill="none" stroke="#888" stroke-width="0.5" opacity="0.2"/>
+    <ellipse cx="70" cy="30" rx="35" ry="10" fill="none" stroke="#888" stroke-width="0.5" opacity="0.2"/>
+
+    <!-- Landing gear struts -->
+    <line x1="-22" y1="18" x2="-28" y2="32" stroke="#444" stroke-width="2"/>
+    <line x1="22" y1="18" x2="28" y2="32" stroke="#444" stroke-width="2"/>
+    <line x1="-32" y1="32" x2="-24" y2="32" stroke="#444" stroke-width="2.5"/>
+    <line x1="24" y1="32" x2="32" y2="32" stroke="#444" stroke-width="2.5"/>
+
+    <!-- FLIR/Camera gimbal (hanging below) -->
+    <rect x="-8" y="18" width="16" height="12" rx="3" fill="#222" stroke="#444" stroke-width="1"/>
+    <circle cx="0" cy="24" r="5" fill="#1a1a1a" stroke="#555" stroke-width="0.8"/>
+    <circle cx="0" cy="24" r="3" fill="#2a1010" stroke="#444" stroke-width="0.5"/>
+    <!-- FLIR red eye -->
+    <circle cx="0" cy="24" r="2" fill="#ff0000" opacity="0.7"/>
+    <circle cx="0" cy="24" r="5" fill="#ff0000" opacity="0.1"/>
+    <circle cx="0" cy="24" r="10" fill="#ff0000" opacity="0.04"/>
+
+    <!-- Status LEDs -->
+    <circle cx="-15" cy="-22" r="1.5" fill="#ff0000" opacity="0.8"/>
+    <circle cx="15" cy="-22" r="1.5" fill="#00ff00" opacity="0.6"/>
+    <circle cx="-15" cy="-22" r="4" fill="#ff0000" opacity="0.08"/>
+    <circle cx="15" cy="-22" r="4" fill="#00ff00" opacity="0.06"/>
+
+    <!-- Antenna array -->
+    <line x1="-5" y1="-22" x2="-5" y2="-34" stroke="#666" stroke-width="1"/>
+    <line x1="5" y1="-22" x2="5" y2="-30" stroke="#666" stroke-width="0.8"/>
+    <circle cx="-5" cy="-35" r="1.5" fill="#777"/>
+
+    <!-- "DRONE ID" stencil -->
+    <text x="0" y="-12" text-anchor="middle" font-family="'Courier New', monospace" font-size="4" fill="#777" letter-spacing="1" opacity="0.6">UAS-7734</text>
+  </g>
+
+  <!-- Drone downwash ripple on landscape -->
+  <ellipse cx="400" cy="520" rx="60" ry="6" fill="none" stroke="#bbccdd" stroke-width="0.4" opacity="0.1"/>
+  <ellipse cx="400" cy="520" rx="40" ry="4" fill="none" stroke="#bbccdd" stroke-width="0.3" opacity="0.07"/>
+
+  <!-- Low mist over fields -->
+  <ellipse cx="300" cy="575" rx="350" ry="18" fill="#a0aa90" opacity="0.1" filter="url(#mistBlur)"/>
+  <ellipse cx="600" cy="590" rx="200" ry="12" fill="#a0aa90" opacity="0.08" filter="url(#mistBlur)"/>
+
+
+  <!-- ============================================ -->
+  <!-- TITLE BAND (BOTTOM — Gold metallic)          -->
+  <!-- ============================================ -->
+  <rect x="0" y="725" width="800" height="475" fill="url(#titleBand)"/>
+
+  <!-- Thin red accent above title area -->
+  <rect x="60" y="730" width="680" height="3" fill="#ee3333" opacity="0.85"/>
+  <rect x="60" y="737" width="680" height="1" fill="#ee3333" opacity="0.5"/>
+
+  <!-- "CYBERQUEST" in monospace cyan (series identifier) -->
+  <text x="400" y="790" text-anchor="middle"
+        font-family="'Courier New', monospace" font-size="26"
+        fill="#00ffee" letter-spacing="12" filter="url(#cyanGlow)">
+    CYBERQUEST
+  </text>
+
+  <!-- "OPERATION" in smaller gold serif -->
+  <text x="400" y="830" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="24"
+        fill="#e8c060" letter-spacing="10" font-variant="small-caps">
+    OPERATION
+  </text>
+
+  <!-- "ZERFALL" — massive gold metallic title -->
+  <text x="400" y="920" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="108"
+        fill="url(#goldMetal)" letter-spacing="8"
+        filter="url(#titleGlow)">
+    ZERFALL
+  </text>
+
+  <!-- Gold shadow behind ZERFALL for depth -->
+  <text x="402" y="922" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="108"
+        fill="#604010" letter-spacing="8" opacity="0.4">
+    ZERFALL
+  </text>
+  <!-- Bring ZERFALL back on top -->
+  <text x="400" y="920" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="108"
+        fill="url(#goldMetal)" letter-spacing="8"
+        filter="url(#titleGlow)">
+    ZERFALL
+  </text>
+
+  <!-- Thin gold rule under title -->
+  <line x1="200" y1="945" x2="600" y2="945" stroke="#e8c060" stroke-width="0.8" opacity="0.75"/>
+
+  <!-- Tagline -->
+  <text x="400" y="980" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="16"
+        fill="#d8e0e8" font-style="italic" letter-spacing="1.5">
+    Every frequency has a secret. Every signal has a price.
+  </text>
+
+  <!-- Tech accent strip -->
+  <g font-family="'Courier New', monospace" font-size="8" fill="#00ff88" opacity="0.45" letter-spacing="3">
+    <text x="400" y="1020" text-anchor="middle">
+      406.100 MHz ◊ WSRT ◊ DWINGELOO ◊ SSTV ◊ SDR ◊ LOFAR ◊ SIGINT
+    </text>
+  </g>
+
+  <!-- Binary data strip -->
+  <g font-family="'Courier New', monospace" font-size="6" fill="#00ff88" opacity="0.3" letter-spacing="1">
+    <text x="400" y="1040" text-anchor="middle">01001111 01010000 01000101 01010010 01000001 01010100 01001001 01001111 01001110</text>
+    <text x="400" y="1050" text-anchor="middle">01011010 01000101 01010010 01000110 01000001 01001100 01001100 00100000 00101101</text>
+  </g>
+
+  <!-- Website URL -->
+  <text x="400" y="1092" text-anchor="middle"
+        font-family="'Courier New', monospace" font-size="22"
+        fill="#00ffee" letter-spacing="5" filter="url(#hudGlow)">
+    ryanweylant.tech
+  </text>
+
+  <!-- CC BY 4.0 -->
+  <text x="400" y="1130" text-anchor="middle"
+        font-family="'Courier New', monospace" font-size="8"
+        fill="#889" letter-spacing="1">
+    Creative Commons Attribution 4.0 International (CC BY 4.0)
+  </text>
+  <text x="400" y="1148" text-anchor="middle"
+        font-family="'Courier New', monospace" font-size="8"
+        fill="#00ff99" letter-spacing="1" opacity="0.7">
+    github.com/ReinVelt/CyberQuest
+  </text>
+
+  <!-- ── Thin decorative border (book cover frame) ── -->
+  <rect x="12" y="12" width="776" height="1176" rx="0" fill="none" stroke="#d8b060" stroke-width="0.5" opacity="0.4"/>
+  <rect x="16" y="16" width="768" height="1168" rx="0" fill="none" stroke="#d8b060" stroke-width="0.3" opacity="0.25"/>
+
+
+  <!-- ============================================ -->
+  <!-- OVERLAYS                                     -->
+  <!-- ============================================ -->
+
+  <!-- Vignette -->
+  <rect width="800" height="1200" fill="url(#vignette)"/>
+
+  <!-- Scanline overlay (subtle, ties to game aesthetic) -->
+  <rect width="800" height="1200" fill="url(#scanlines)"/>
+
+  <!-- Outer border -->
+  <rect x="3" y="3" width="794" height="1194" rx="2" fill="none" stroke="#2a3a4a" stroke-width="1" opacity="0.5"/>
+
+</svg>
