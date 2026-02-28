@@ -365,62 +365,74 @@ const DrivingDayScene = {
         }
     },
 
-    /** Speak RTV Drenthe radio news via TTS */
-    _speakRadioNews(destination) {
-        try {
-            const vm = window.voiceManager;
-            if (!vm) return;
+    /**
+     * Speak the RTV Drenthe news bulletin via TTS.
+     * Returns a Promise that resolves when the bulletin finishes speaking,
+     * or after a short settling delay if this destination has no bulletin.
+     * The dialogue is chained onto this Promise so the news always plays
+     * first and cannot be interrupted by the dialogue click handler
+     * (which only becomes active once dialogue actually starts).
+     */
+    _speakRadioNews: function(destination) {
+        // Build destination-specific bulletin
+        let bulletin = null;
 
-            // Short drives to/from wsrt parking don't need TTS news
-            // (the dialogue starts immediately and the 8.5s delay would interrupt it)
-            if (destination === 'wsrt_parking' || destination === 'home_from_wsrt_parking') return;
-
-            // Build news bulletin based on where the player is going
-            let bulletin;
-            if (destination === 'hackerspace' || destination === 'home_from_hackerspace') {
-                bulletin = 'RTV Drenthe, het nieuws. ' +
-                    'Good evening. This is RTV Drenthe news. ' +
-                    'The Hackerspace Drenthe community in Coevorden celebrated its second anniversary this month with a record number of visitors. ' +
-                    'The maker space now hosts weekly sessions on 3D printing, electronics and mesh networking. ' +
-                    'In related news, the municipality of Coevorden approved a grant for digital literacy workshops in rural communities. ' +
-                    'And the weather. ' +
-                    'Clear skies this evening, cooling to ten degrees. Light winds from the east. ' +
-                    'That was RTV Drenthe. Back to the music.';
-            } else if (destination === 'astron') {
-                bulletin = 'RTV Drenthe, het nieuws. ' +
-                    'Goedemiddag. ' +
-                    'Good afternoon, this is RTV Drenthe news. ' +
-                    'The Westerbork Synthesis Radio Telescope completed its annual maintenance cycle this week. ' +
-                    'ASTRON reports all fourteen dishes are back online and calibrated for the summer observation season. ' +
-                    'In other news, the province of Drenthe has approved new funding for the Radio Quiet Zone around the telescope array. ' +
-                    'And now the weather. ' +
-                    'Partly cloudy this afternoon with temperatures around sixteen degrees. ' +
-                    'Light winds from the south-west. Dry through the evening. ' +
-                    'That was RTV Drenthe. Music continues.';
-            } else {
-                bulletin = 'RTV Drenthe, het nieuws. ' +
-                    'Good evening, this is RTV Drenthe news. ' +
-                    'Local authorities in Emmen have announced roadworks on the N34 near Coevorden starting next week. ' +
-                    'Expect delays of up to fifteen minutes during peak hours. ' +
-                    'The Drenthe provincial council confirmed additional investment in fibre optic infrastructure for rural areas. ' +
-                    'And the weather outlook. ' +
-                    'Clear skies this evening, cooling to nine degrees overnight. ' +
-                    'Tomorrow, sunshine with occasional clouds. Highs of seventeen. ' +
-                    'That was RTV Drenthe. Back to the music.';
-            }
-
-            // Delay the TTS to start after the news jingle
-            // Tracked in _timeoutIds so it is cancelled if the scene exits early
-            const radioTtsId = setTimeout(() => {
-                if (vm.speak) {
-                    vm.speak(bulletin, 'Documentary');
-                }
-            }, 8500); // after jingle + pips + news stinger
-            this._timeoutIds.push(radioTtsId);
-
-        } catch (e) {
-            console.warn('[DrivingDay] Radio TTS failed:', e);
+        if (destination === 'hackerspace' || destination === 'home_from_hackerspace') {
+            bulletin = 'RTV Drenthe, het nieuws. ' +
+                'Good evening. This is RTV Drenthe news. ' +
+                'The Hackerspace Drenthe community in Coevorden celebrated its second anniversary this month with a record number of visitors. ' +
+                'The maker space now hosts weekly sessions on 3D printing, electronics and mesh networking. ' +
+                'In related news, the municipality of Coevorden approved a grant for digital literacy workshops in rural communities. ' +
+                'And the weather. ' +
+                'Clear skies this evening, cooling to ten degrees. Light winds from the east. ' +
+                'That was RTV Drenthe. Back to the music.';
+        } else if (destination === 'astron') {
+            bulletin = 'RTV Drenthe, het nieuws. ' +
+                'Goedemiddag. ' +
+                'Good afternoon, this is RTV Drenthe news. ' +
+                'The Westerbork Synthesis Radio Telescope completed its annual maintenance cycle this week. ' +
+                'ASTRON reports all fourteen dishes are back online and calibrated for the summer observation season. ' +
+                'In other news, the province of Drenthe has approved new funding for the Radio Quiet Zone around the telescope array. ' +
+                'And now the weather. ' +
+                'Partly cloudy this afternoon with temperatures around sixteen degrees. ' +
+                'Light winds from the south-west. Dry through the evening. ' +
+                'That was RTV Drenthe. Music continues.';
+        } else if (destination !== 'wsrt_parking' && destination !== 'home_from_wsrt_parking') {
+            // Generic bulletin for all other destinations
+            bulletin = 'RTV Drenthe, het nieuws. ' +
+                'Good evening, this is RTV Drenthe news. ' +
+                'Local authorities in Emmen have announced roadworks on the N34 near Coevorden starting next week. ' +
+                'Expect delays of up to fifteen minutes during peak hours. ' +
+                'The Drenthe provincial council confirmed additional investment in fibre optic infrastructure for rural areas. ' +
+                'And the weather outlook. ' +
+                'Clear skies this evening, cooling to nine degrees overnight. ' +
+                'Tomorrow, sunshine with occasional clouds. Highs of seventeen. ' +
+                'That was RTV Drenthe. Back to the music.';
         }
+
+        const vm = window.voiceManager;
+
+        // No bulletin (wsrt routes) or no TTS — just a brief engine-settle delay
+        if (!bulletin || !vm || typeof vm.speak !== 'function') {
+            return new Promise(resolve => {
+                const tid = setTimeout(resolve, 1000);
+                this._timeoutIds.push(tid);
+            });
+        }
+
+        // Wait for the Web Audio jingle + pips + news stinger (8.5 s),
+        // then speak the bulletin and resolve when speech ends.
+        return new Promise(resolve => {
+            const tid = setTimeout(async () => {
+                try {
+                    await vm.speak(bulletin, 'Documentary');
+                } catch (e) {
+                    console.warn('[DrivingDay] Radio TTS failed:', e);
+                }
+                resolve();
+            }, 8500);
+            this._timeoutIds.push(tid);
+        });
     },
 
     _stopRadio() {
@@ -457,13 +469,21 @@ const DrivingDayScene = {
         this._timeoutIds.forEach(id => clearTimeout(id));
         this._timeoutIds = [];
 
-        // Start RTV Drenthe autoradio
+        // Start RTV Drenthe Web Audio: engine hum, road noise, jingle, pips, news stinger, pop music.
+        // _speakRadioNews() speaks the TTS bulletin over the stinger and returns a Promise that
+        // resolves when the bulletin finishes. Each destination's dialogue is chained onto that
+        // Promise so the news always plays first, uninterrupted (no dialogue box is active while
+        // the news plays, so the dialogue click handler cannot cancel it).
         this._startRadio();
-        this._speakRadioNews(destination);
 
-        if (destination === 'wsrt_parking') {
-            // Compascuum → WSRT Parking (~40 min, casual day trip)
-            const t1 = setTimeout(() => {
+        // Clear destination flag before the async chain so it isn't read stale later
+        g.setFlag('driving_destination', null);
+
+        this._speakRadioNews(destination).then(() => {
+            // Guard: bail if the scene was exited while the news was playing
+            if (!window.game || window.game.currentScene !== 'driving_day') return;
+
+            if (destination === 'wsrt_parking') {
                 g.startDialogue([
                     { speaker: '',      text: '*Afternoon sun on the N34. The Volvo heads south-west toward Westerbork.*' },
                     { speaker: '',      text: '*The autoradio is tuned to RTV Drenthe. Music, then a weather forecast.*' },
@@ -480,12 +500,8 @@ const DrivingDayScene = {
                     g.advanceTime(40);
                     g.loadScene('wsrt_parking');
                 });
-            }, 1000);
-            this._timeoutIds.push(t1);
 
-        } else if (destination === 'astron') {
-            // Compascuum → Westerbork (~40 min, afternoon)
-            const t1 = setTimeout(() => {
+            } else if (destination === 'astron') {
                 g.startDialogue([
                     { speaker: '',      text: '*Afternoon sun on the N34. The Volvo heads south-west toward Westerbork.*' },
                     { speaker: '',      text: '*The autoradio is tuned to RTV Drenthe. A jingle plays, followed by the afternoon news.*' },
@@ -508,13 +524,8 @@ const DrivingDayScene = {
                     g.advanceTime(40);
                     g.loadScene('wsrt_parking');
                 });
-            }, 1000);
-            this._timeoutIds.push(t1);
 
-        } else if (destination === 'westerbork') {
-            // Compascuum → Westerbork Memorial (~40 min, afternoon)
-            // Memorial is 200 m from WSRT dishes
-            const t1 = setTimeout(() => {
+            } else if (destination === 'westerbork') {
                 g.startDialogue([
                     { speaker: '',      text: '*The Volvo turns south-west onto the N34. Afternoon light fills the cabin.*' },
                     { speaker: '',      text: '*RTV Drenthe plays softly on the autoradio.*' },
@@ -530,12 +541,8 @@ const DrivingDayScene = {
                     g.advanceTime(40);
                     g.loadScene('wsrt_parking');
                 });
-            }, 1000);
-            this._timeoutIds.push(t1);
 
-        } else if (destination === 'home_from_westerbork') {
-            // Westerbork Memorial → Compascuum (~40 min, afternoon/evening)
-            const t1 = setTimeout(() => {
+            } else if (destination === 'home_from_westerbork') {
                 g.startDialogue([
                     { speaker: '',      text: '*The memorial shrinks in the rear-view mirror. The WSRT dishes loom just 200 metres to the north.*' },
                     { speaker: '',      text: '*RTV Drenthe returns on the autoradio. Weather forecast, then music.*' },
@@ -551,12 +558,8 @@ const DrivingDayScene = {
                     g.loadScene('garden');
                     g.showNotification('Returned to garden');
                 });
-            }, 1000);
-            this._timeoutIds.push(t1);
 
-        } else if (destination === 'home_from_wsrt_parking') {
-            // WSRT Parking → Compascuum (~40 min)
-            const t1 = setTimeout(() => {
+            } else if (destination === 'home_from_wsrt_parking') {
                 g.startDialogue([
                     { speaker: '',      text: '*The Volvo pulls out of the gravel parking area. The WSRT dishes shrink in the rear mirror.*' },
                     { speaker: '',      text: '*RTV Drenthe plays on the autoradio. Afternoon news, then music.*' },
@@ -572,12 +575,8 @@ const DrivingDayScene = {
                     g.loadScene('garden');
                     g.showNotification('Returned to garden');
                 });
-            }, 1000);
-            this._timeoutIds.push(t1);
 
-        } else if (destination === 'home_from_astron') {
-            // Westerbork → Compascuum (~40 min, evening light)
-            const t1 = setTimeout(() => {
+            } else if (destination === 'home_from_astron') {
                 g.startDialogue([
                     { speaker: '',      text: '*The WSRT dishes shrink in the rear-view mirror. Golden evening light.*' },
                     { speaker: '',      text: '*RTV Drenthe plays softly on the autoradio. Evening news, then Dutch pop music.*' },
@@ -598,12 +597,8 @@ const DrivingDayScene = {
                     g.loadScene('mancave');
                     g.showNotification('Returned to mancave');
                 });
-            }, 1000);
-            this._timeoutIds.push(t1);
 
-        } else if (destination === 'hackerspace') {
-            // Compascuum → Coevorden (~25 min, evening)
-            const t1 = setTimeout(() => {
+            } else if (destination === 'hackerspace') {
                 g.startDialogue([
                     { speaker: '',      text: '*Evening. The Volvo heads south-east toward Coevorden.*' },
                     { speaker: '',      text: '*RTV Drenthe plays on the autoradio. The evening news, then music.*' },
@@ -621,12 +616,8 @@ const DrivingDayScene = {
                     g.advanceTime(25);
                     g.loadScene('hackerspace');
                 });
-            }, 1000);
-            this._timeoutIds.push(t1);
 
-        } else if (destination === 'home_from_hackerspace') {
-            // Coevorden → Compascuum (~25 min, night)
-            const t1 = setTimeout(() => {
+            } else if (destination === 'home_from_hackerspace') {
                 g.startDialogue([
                     { speaker: '',      text: '*Night. The Volvo pulls out of the hackerspace parking lot.*' },
                     { speaker: '',      text: '*RTV Drenthe plays quietly. Late-night music programme.*' },
@@ -642,12 +633,8 @@ const DrivingDayScene = {
                     g.loadScene('garden');
                     g.showNotification('Returned to garden');
                 });
-            }, 1000);
-            this._timeoutIds.push(t1);
 
-        } else if (destination === 'lofar') {
-            // Compascuum → LOFAR Superterp (~30 min, day)
-            const t1 = setTimeout(() => {
+            } else if (destination === 'lofar') {
                 g.startDialogue([
                     { speaker: '',      text: '*Afternoon sun. The Volvo heads south through Drenthe.*' },
                     { speaker: '',      text: '*RTV Drenthe news: "De LOFAR telescoop in Exloo heeft een nieuw signaal gedetecteerd..."*' },
@@ -663,12 +650,8 @@ const DrivingDayScene = {
                     g.advanceTime(30);
                     g.loadScene('lofar');
                 });
-            }, 1000);
-            this._timeoutIds.push(t1);
 
-        } else if (destination === 'home_from_lofar') {
-            // LOFAR → Compascuum (~30 min, day)
-            const t1 = setTimeout(() => {
+            } else if (destination === 'home_from_lofar') {
                 g.startDialogue([
                     { speaker: '',      text: '*The Volvo pulls away from the LOFAR site.*' },
                     { speaker: 'Ryan',  text: 'Incredible place. Thousands of antennas, all working in concert.' },
@@ -684,19 +667,12 @@ const DrivingDayScene = {
                     g.loadScene('garden');
                     g.showNotification('Returned to garden');
                 });
-            }, 1000);
-            this._timeoutIds.push(t1);
 
-        } else {
-            console.warn('[DrivingDay] No recognised destination set! Flag was:', destination);
-            const t = setTimeout(() => {
+            } else {
+                console.warn('[DrivingDay] No recognised destination set! Flag was:', destination);
                 g.loadScene('mancave');
-            }, 2000);
-            this._timeoutIds.push(t);
-        }
-
-        // Clear destination flag
-        g.setFlag('driving_destination', null);
+            }
+        });
     },
 
     onExit: function() {
