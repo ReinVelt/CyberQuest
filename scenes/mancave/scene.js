@@ -21,6 +21,51 @@ const MancaveScene = {
 
     playerStart: { x: 20, y: 85 },
 
+    // 🎬 Accessibility / Movie Mode — full mancave story path (all visits)
+    accessibilityPath: [
+        'laptop',        // check email; later: ally recruitment / Volkov investigation
+        'sstv-terminal', // receive SSTV transmission
+        async function(game) {
+            // Only visit SDR bench if message not yet decoded (avoids re-entry loop)
+            if (!game.getFlag('message_decoded')) {
+                game.loadScene('sdr_bench');
+            }
+        },
+        'hackrf',        // tune to 243 MHz, trigger second transmission
+        'sstv-terminal', // decode second message → klooster_unlocked
+        'airgapped-laptop', // forensic analysis + USB analysis (visit 2+)
+        'secure-phone',     // Kubecka → Zerfall → Eva identification (visit 2+)
+        'meshtastic',       // Eva contact + mission prep (visit 2+)
+        async function(game) {
+            // Launch videocall only once — after Eva contacted
+            if (game.getFlag('eva_contacted') && !game.getFlag('videocall_done')) {
+                game.loadScene('videocall');
+            }
+        },
+        async function(game) {
+            // Visit planboard once — after USB discovered or SSTV decoded
+            if ((game.getFlag('sstv_decoded') || game.getFlag('picked_up_usb'))
+                    && !game.getFlag('visited_planboard')) {
+                game.loadScene('planboard');
+            }
+        },
+        'flipper-zero',  // gear pickup: Flipper Zero
+        'wifi-pineapple',// gear pickup: WiFi Pineapple
+        'night-vision',  // gear pickup: night vision
+        async function(game) {
+            // Exit to garden only when there is a Volvo destination waiting.
+            // The engine loop will call this every pass, so guard carefully.
+            if (game._gardenHasPendingDestination()) {
+                game.loadScene('garden');
+            }
+        },
+    ],
+
+    // Loop the path on every mancave visit: keep cycling hotspots (retrying
+    // those that produce new flags) until nothing changes AND no new garden
+    // destination is pending.  The engine breaks automatically when stable.
+    accessibilityLooping: true,
+
     idleThoughts: [
         "Need more coffee...",
         "Check the signal analyzer.",

@@ -1069,65 +1069,110 @@ class CyberQuestEngine {
         await this.wait(50); // let old runner notice the flag
         this._accessibilityRunnerActive = true;
 
-        const path = scene.accessibilityPath || [];
-        console.log(`[🎬] Starting accessibility runner for ${this.currentScene}, path:`, path);
+        const path   = scene.accessibilityPath || [];
+        const looping = scene.accessibilityLooping === true;
+        console.log(`[🎬] Starting accessibility runner for ${this.currentScene}`, looping ? '(looping)' : '');
 
-        for (const entry of path) {
-            if (!this._accessibilityRunnerActive || !this.accessibilityMode) break;
-            // Stop if the scene changed under us
-            if (this.currentScene !== scene.id && scene.id !== undefined) break;
+        /**
+         * Run one full pass through the path.
+         * Returns true if the scene changed (caller should abort).
+         */
+        const runPass = async () => {
+            for (const entry of path) {
+                if (!this._accessibilityRunnerActive || !this.accessibilityMode) return true;
+                if (this.currentScene !== scene.id && scene.id !== undefined) return true;
 
-            // Wait until the engine is idle (no active dialogue/puzzle/loading)
-            await this._waitForIdle();
-            if (!this._accessibilityRunnerActive || !this.accessibilityMode) break;
+                await this._waitForIdle();
+                if (!this._accessibilityRunnerActive || !this.accessibilityMode) return true;
 
-            // Pacing pause so the player can follow along
-            await this.wait(600);
-            if (!this._accessibilityRunnerActive || !this.accessibilityMode) break;
+                await this.wait(600);
+                if (!this._accessibilityRunnerActive || !this.accessibilityMode) return true;
 
-            // ── Function entry: custom async action (e.g. conditional scene load) ──
-            if (typeof entry === 'function') {
-                console.log(`[🎬] Executing function entry in '${this.currentScene}'`);
-                await entry(this);
-                await this.wait(300);
-                await this._waitForIdle(30000); // wait for any triggered scene load
-                continue;
+                // ── Function entry ──────────────────────────────────────────────
+                if (typeof entry === 'function') {
+                    console.log(`[🎬] fn entry in '${this.currentScene}'`);
+                    await entry(this);
+                    await this.wait(300);
+                    await this._waitForIdle(30000);
+                    if (this.currentScene !== scene.id && scene.id !== undefined) return true;
+                    continue;
+                }
+
+                // ── String hotspot entry — retry while it produces new flags ────
+                const hotspotId = entry;
+                let retries = 5;
+                while (retries-- > 0) {
+                    if (!this._accessibilityRunnerActive || !this.accessibilityMode) return true;
+                    if (this.currentScene !== scene.id && scene.id !== undefined) return true;
+
+                    const hotspots = this.scenes?.[this.currentScene]?.hotspots || [];
+                    const hotspot  = hotspots.find(h => h.id === hotspotId);
+                    if (!hotspot) {
+                        console.warn(`[🎬] Hotspot '${hotspotId}' not found — skipping`);
+                        break;
+                    }
+
+                    if (hotspot.enabled !== undefined) {
+                        const en = typeof hotspot.enabled === 'function' ? hotspot.enabled(this) : hotspot.enabled;
+                        if (!en) { console.warn(`[🎬] Skip disabled '${hotspotId}'`); break; }
+                    }
+                    if (hotspot.condition && !this.checkCondition(hotspot.condition)) {
+                        console.warn(`[🎬] Skip '${hotspotId}': condition not met`); break;
+                    }
+
+                    if (this.player && !hotspot.skipWalk) {
+                        const tx = hotspot.x + (hotspot.width  || 0) / 2;
+                        const ty = Math.min(hotspot.y + (hotspot.height || 0), 90);
+                        await new Promise(resolve => this.player.walkTo(tx, ty, resolve));
+                    }
+                    if (!this._accessibilityRunnerActive || !this.accessibilityMode) return true;
+
+                    const flagsBefore = JSON.stringify(this.gameState.flags);
+                    console.log(`[🎬] Executing '${hotspotId}'`);
+                    this.executeHotspotAction(hotspot);
+                    await this.wait(300);
+                    await this._waitForIdle(30000);
+                    if (this.currentScene !== scene.id && scene.id !== undefined) return true;
+
+                    // If no flags changed → this action is done; move to next entry
+                    if (JSON.stringify(this.gameState.flags) === flagsBefore) break;
+
+                    // Flags changed (action had an effect) → try same hotspot again
+                    console.log(`[🎬] '${hotspotId}' changed flags — retrying (${retries} left)`);
+                    await this.wait(600);
+                }
             }
+            return false; // completed pass without scene change
+        };
 
-            const hotspotId = entry;
-            // Find hotspot by id in the current scene hotspots list
-            const hotspots = this.scenes?.[this.currentScene]?.hotspots || [];
-            const hotspot = hotspots.find(h => h.id === hotspotId);
-            if (!hotspot) {
-                console.warn(`[🎬] Hotspot '${hotspotId}' not found in scene '${this.currentScene}' — skipping`);
-                continue;
-            }
+        if (!looping) {
+            await runPass();
+        } else {
+            // Looping mode: repeat passes until stable AND no pending garden destination
+            let loopGuard = 0;
+            do {
+                if (!this._accessibilityRunnerActive || !this.accessibilityMode) break;
+                if (this.currentScene !== scene.id && scene.id !== undefined) break;
 
-            // Check enabled/condition guards (same as handleHotspotClick)
-            if (hotspot.enabled !== undefined) {
-                const en = typeof hotspot.enabled === 'function' ? hotspot.enabled(this) : hotspot.enabled;
-                if (!en) { console.warn(`[🎬] Skip disabled hotspot '${hotspotId}'`); continue; }
-            }
-            if (hotspot.condition && !this.checkCondition(hotspot.condition)) {
-                console.warn(`[🎬] Skip hotspot '${hotspotId}': condition not met`);
-                continue;
-            }
+                const flagsBefore = JSON.stringify(this.gameState.flags);
+                const sceneChanged = await runPass();
+                if (sceneChanged) break;
 
-            // Walk player to hotspot, then execute action
-            if (this.player && !hotspot.skipWalk) {
-                const tx = hotspot.x + (hotspot.width / 2);
-                const ty = Math.min(hotspot.y + hotspot.height, 90);
-                await new Promise(resolve => this.player.walkTo(tx, ty, resolve));
-            }
+                const flagsAfter = JSON.stringify(this.gameState.flags);
+                const changed = flagsBefore !== flagsAfter;
+                const pending = this._gardenHasPendingDestination();
 
-            if (!this._accessibilityRunnerActive || !this.accessibilityMode) break;
+                console.log(`[🎬] Loop pass done — flags changed: ${changed}, pending garden: ${pending}`);
 
-            console.log(`[🎬] Executing hotspot '${hotspotId}'`);
-            this.executeHotspotAction(hotspot);
+                if (!changed && !pending) break;          // stable → stop
+                if (++loopGuard > 20) {
+                    console.warn('[🎬] Loop guard hit (20) — stopping to avoid infinite loop');
+                    break;
+                }
 
-            // Wait for the action to settle (dialogue / puzzle that was triggered)
-            await this.wait(300);
-            await this._waitForIdle(30000);
+                await this.wait(800);
+            } while (this._accessibilityRunnerActive && this.accessibilityMode
+                     && this.currentScene === scene.id);
         }
 
         console.log(`[🎬] Accessibility runner finished for ${scene.id ?? this.currentScene}`);
@@ -1136,6 +1181,19 @@ class CyberQuestEngine {
     /** Signal the current accessibility runner to stop. */
     _stopAccessibilityRunner() {
         this._accessibilityRunnerActive = false;
+    }
+
+    /**
+     * Returns true when the garden Volvo picker has at least one unvisited
+     * destination that the story requires the player to drive to.
+     * Used by the looping mancave runner to decide when to exit to garden.
+     */
+    _gardenHasPendingDestination() {
+        const f = this.gameState.flags;
+        const kloosterPending = f.klooster_unlocked && !f.visited_klooster;
+        const astronPending   = f.astron_unlocked   && !f.visited_astron;
+        const facilityPending = this.questManager?.hasQuest('infiltrate_facility') && !f.drove_to_facility;
+        return !!(kloosterPending || astronPending || facilityPending);
     }
 
     /**
