@@ -799,6 +799,8 @@ const PlanetenpadScene = {
             width: 7,
             height: 15,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/pluto.svg',
+            label: 'Pluto',
             action: function(game) {
                 const p = PlanetenpadScene._planets.pluto;
                 game.startDialogue([
@@ -819,6 +821,8 @@ const PlanetenpadScene = {
             width: 7,
             height: 12,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/neptune.svg',
+            label: 'Neptune',
             action: function(game) {
                 const p = PlanetenpadScene._planets.neptune;
                 game.startDialogue([
@@ -839,6 +843,8 @@ const PlanetenpadScene = {
             width: 7,
             height: 12,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/uranus.svg',
+            label: 'Uranus',
             action: function(game) {
                 const p = PlanetenpadScene._planets.uranus;
                 game.startDialogue([
@@ -859,6 +865,8 @@ const PlanetenpadScene = {
             width: 8,
             height: 14,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/saturn.svg',
+            label: 'Saturn',
             action: function(game) {
                 const p = PlanetenpadScene._planets.saturn;
                 game.startDialogue([
@@ -879,6 +887,8 @@ const PlanetenpadScene = {
             width: 8,
             height: 14,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/jupiter.svg',
+            label: 'Jupiter',
             action: function(game) {
                 const p = PlanetenpadScene._planets.jupiter;
                 game.startDialogue([
@@ -899,6 +909,8 @@ const PlanetenpadScene = {
             width: 8,
             height: 12,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/experiment.svg',
+            label: 'Gravity',
             action: function(game) {
                 game.startDialogue([
                     { speaker: 'Narrator', text: '*An interactive panel between the gas giants and inner planets*' },
@@ -918,6 +930,8 @@ const PlanetenpadScene = {
             width: 7,
             height: 10,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/mars.svg',
+            label: 'Mars',
             action: function(game) {
                 const p = PlanetenpadScene._planets.mars;
                 game.startDialogue([
@@ -938,6 +952,8 @@ const PlanetenpadScene = {
             width: 8,
             height: 10,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/earth.svg',
+            label: 'Earth',
             action: function(game) {
                 const p = PlanetenpadScene._planets.earth;
                 game.startDialogue([
@@ -959,6 +975,8 @@ const PlanetenpadScene = {
             width: 7,
             height: 9,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/venus.svg',
+            label: 'Venus',
             action: function(game) {
                 const p = PlanetenpadScene._planets.venus;
                 game.startDialogue([
@@ -979,6 +997,8 @@ const PlanetenpadScene = {
             width: 7,
             height: 9,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/mercury.svg',
+            label: 'Mercury',
             action: function(game) {
                 const p = PlanetenpadScene._planets.mercury;
                 game.startDialogue([
@@ -999,6 +1019,8 @@ const PlanetenpadScene = {
             width: 8,
             height: 10,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/lightspeed.svg',
+            label: 'Light Speed',
             action: function(game) {
                 game.startDialogue([
                     { speaker: 'Narrator', text: '*An information panel with LED light strips*' },
@@ -1019,6 +1041,8 @@ const PlanetenpadScene = {
             width: 12,
             height: 16,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/sun.svg',
+            label: '☀ The Sun',
             action: function(game) {
                 game.startDialogue([
                     { speaker: 'Narrator', text: '*A bright golden sphere on a sturdy pedestal. About the size of a beach ball.*' },
@@ -1038,6 +1062,8 @@ const PlanetenpadScene = {
             width: 8,
             height: 10,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/sundial.svg',
+            label: 'Sundial',
             action: function(game) {
                 const hour = parseInt((game.gameState.time || '14:00').split(':')[0], 10);
                 const timeDesc = hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : 'evening';
@@ -1059,6 +1085,8 @@ const PlanetenpadScene = {
             width: 6,
             height: 8,
             cursor: 'pointer',
+            icon: 'assets/images/icons/planetenpad/bench.svg',
+            label: 'Bench',
             action: function(game) {
                 game.startDialogue([
                     { speaker: 'Narrator', text: '*A weathered wooden bench between the gas giants and inner planets. A view across the entire path.*' },

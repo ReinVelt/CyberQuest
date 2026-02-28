@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <radialGradient id="g" cx="0.35" cy="0.3" r="0.65">
+      <stop offset="0%" stop-color="#f8d8a8"/>
+      <stop offset="25%" stop-color="#e8b870"/>
+      <stop offset="55%" stop-color="#c87830"/>
+      <stop offset="100%" stop-color="#703010"/>
+    </radialGradient>
+    <radialGradient id="sh" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.5"/>
+    </radialGradient>
+  </defs>
+  <circle cx="40" cy="40" r="28" fill="url(#g)"/>
+  <!-- Cloud bands -->
+  <ellipse cx="40" cy="30" rx="26" ry="4" fill="#d89050" opacity="0.4"/>
+  <ellipse cx="40" cy="37" rx="28" ry="3" fill="#b86020" opacity="0.35"/>
+  <ellipse cx="40" cy="44" rx="27" ry="3.5" fill="#d89050" opacity="0.3"/>
+  <ellipse cx="40" cy="51" rx="25" ry="3" fill="#c07030" opacity="0.3"/>
+  <!-- Great Red Spot -->
+  <ellipse cx="34" cy="44" rx="6" ry="4" fill="#a03010" opacity="0.6" transform="rotate(-5,34,44)"/>
+  <circle cx="40" cy="40" r="28" fill="url(#sh)"/>
+  <text x="40" y="76" font-family="sans-serif" font-size="9" fill="#e0b870" text-anchor="middle" opacity="0.9">JUPITER</text>
+</svg>

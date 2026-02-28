@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <radialGradient id="g" cx="0.35" cy="0.3" r="0.65">
+      <stop offset="0%" stop-color="#fff8d0"/>
+      <stop offset="30%" stop-color="#e8d880"/>
+      <stop offset="65%" stop-color="#c8b840"/>
+      <stop offset="100%" stop-color="#807020"/>
+    </radialGradient>
+    <radialGradient id="sh" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.5"/>
+    </radialGradient>
+  </defs>
+  <circle cx="40" cy="40" r="28" fill="url(#g)"/>
+  <!-- Thick cloud cover swirls -->
+  <ellipse cx="40" cy="32" rx="25" ry="5" fill="#fff8d0" opacity="0.35" transform="rotate(-8,40,32)"/>
+  <ellipse cx="40" cy="40" rx="27" ry="4" fill="#f0e890" opacity="0.3" transform="rotate(5,40,40)"/>
+  <ellipse cx="40" cy="50" rx="24" ry="4.5" fill="#fff0c0" opacity="0.3" transform="rotate(-5,40,50)"/>
+  <circle cx="40" cy="40" r="28" fill="url(#sh)"/>
+  <text x="40" y="76" font-family="sans-serif" font-size="9" fill="#e8d870" text-anchor="middle" opacity="0.9">VENUS</text>
+</svg>

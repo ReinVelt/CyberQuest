@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <radialGradient id="g" cx="0.35" cy="0.3" r="0.65">
+      <stop offset="0%" stop-color="#d0eef8"/>
+      <stop offset="35%" stop-color="#90c8e8"/>
+      <stop offset="70%" stop-color="#50a0c8"/>
+      <stop offset="100%" stop-color="#205878"/>
+    </radialGradient>
+    <radialGradient id="sh" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.5"/>
+    </radialGradient>
+  </defs>
+  <!-- Rotation axis indicator (tilted 98°) -->
+  <line x1="24" y1="62" x2="56" y2="18" stroke="#80c0e0" stroke-width="1.5" opacity="0.5" stroke-dasharray="3,2"/>
+  <circle cx="40" cy="40" r="28" fill="url(#g)"/>
+  <!-- Faint banding perpendicular to tilted axis -->
+  <ellipse cx="40" cy="40" rx="28" ry="8" fill="none" stroke="#a0d0f0" stroke-width="1" opacity="0.2" transform="rotate(10,40,40)"/>
+  <ellipse cx="40" cy="40" rx="28" ry="6" fill="none" stroke="#a0d0f0" stroke-width="0.8" opacity="0.15" transform="rotate(10,40,40) translate(0,-12)"/>
+  <circle cx="40" cy="40" r="28" fill="url(#sh)"/>
+  <text x="40" y="76" font-family="sans-serif" font-size="9" fill="#a0d0e8" text-anchor="middle" opacity="0.9">URANUS</text>
+</svg>

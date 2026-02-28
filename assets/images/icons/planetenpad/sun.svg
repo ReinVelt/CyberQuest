@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#ffe060" stop-opacity="0.6"/>
+      <stop offset="50%" stop-color="#ffa800" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#ff8000" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g" cx="0.35" cy="0.3" r="0.65">
+      <stop offset="0%" stop-color="#fff8b0"/>
+      <stop offset="20%" stop-color="#ffe060"/>
+      <stop offset="50%" stop-color="#ffa800"/>
+      <stop offset="80%" stop-color="#e07000"/>
+      <stop offset="100%" stop-color="#904000"/>
+    </radialGradient>
+    <radialGradient id="sh" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.35"/>
+    </radialGradient>
+  </defs>
+  <!-- Outer glow rings -->
+  <circle cx="40" cy="40" r="38" fill="url(#glow)"/>
+  <circle cx="40" cy="40" r="33" fill="url(#glow)" opacity="0.6"/>
+  <!-- Surface -->
+  <circle cx="40" cy="40" r="26" fill="url(#g)"/>
+  <!-- Solar prominences -->
+  <path d="M 62 32 Q 70 24 66 18 Q 60 26 56 30 Z" fill="#ff8000" opacity="0.5"/>
+  <path d="M 54 66 Q 60 74 56 78 Q 50 70 48 64 Z" fill="#ff9000" opacity="0.4"/>
+  <circle cx="40" cy="40" r="26" fill="url(#sh)"/>
+  <text x="40" y="76" font-family="sans-serif" font-size="9" fill="#ffe060" text-anchor="middle" opacity="0.9">THE SUN ☀</text>
+</svg>

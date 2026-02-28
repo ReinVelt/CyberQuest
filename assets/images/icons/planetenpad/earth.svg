@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <radialGradient id="g" cx="0.35" cy="0.3" r="0.65">
+      <stop offset="0%" stop-color="#d0e8f8"/>
+      <stop offset="25%" stop-color="#5090d0"/>
+      <stop offset="55%" stop-color="#2060a0"/>
+      <stop offset="100%" stop-color="#082040"/>
+    </radialGradient>
+    <radialGradient id="sh" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.5"/>
+    </radialGradient>
+  </defs>
+  <circle cx="40" cy="40" r="28" fill="url(#g)"/>
+  <!-- Green land masses -->
+  <ellipse cx="36" cy="34" rx="10" ry="7" fill="#308040" opacity="0.55" transform="rotate(-20,36,34)"/>
+  <ellipse cx="48" cy="46" rx="6" ry="5" fill="#308040" opacity="0.45" transform="rotate(10,48,46)"/>
+  <ellipse cx="28" cy="50" rx="5" ry="4" fill="#308040" opacity="0.4" transform="rotate(-5,28,50)"/>
+  <!-- White polar caps -->
+  <ellipse cx="40" cy="14" rx="11" ry="4" fill="#f0f8ff" opacity="0.6"/>
+  <ellipse cx="40" cy="66" rx="8" ry="3" fill="#f0f8ff" opacity="0.4"/>
+  <!-- Cloud wisps -->
+  <ellipse cx="44" cy="36" rx="8" ry="2.5" fill="#ffffff" opacity="0.3" transform="rotate(-15,44,36)"/>
+  <circle cx="40" cy="40" r="28" fill="url(#sh)"/>
+  <!-- Moon -->
+  <circle cx="64" cy="22" r="5" fill="#c0b8a8"/>
+  <circle cx="64" cy="22" r="5" fill="#000" opacity="0.25"/>
+  <text x="40" y="76" font-family="sans-serif" font-size="8" fill="#90c8e8" text-anchor="middle" opacity="0.9">EARTH &amp; MOON</text>
+</svg>

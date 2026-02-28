@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <radialGradient id="g" cx="0.35" cy="0.3" r="0.65">
+      <stop offset="0%" stop-color="#fff0b8"/>
+      <stop offset="30%" stop-color="#e8d080"/>
+      <stop offset="65%" stop-color="#c0a040"/>
+      <stop offset="100%" stop-color="#806020"/>
+    </radialGradient>
+    <radialGradient id="sh" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.5"/>
+    </radialGradient>
+    <!-- Ring gradient -->
+    <linearGradient id="rg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d8c890" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#c0b070" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#a09050" stop-opacity="0.5"/>
+    </linearGradient>
+  </defs>
+  <!-- Rings (behind) -->
+  <ellipse cx="40" cy="44" rx="42" ry="9" fill="none" stroke="url(#rg)" stroke-width="6" opacity="0.6"/>
+  <!-- Planet -->
+  <circle cx="40" cy="40" r="22" fill="url(#g)"/>
+  <!-- Subtle bands -->
+  <ellipse cx="40" cy="36" rx="20" ry="3" fill="none" stroke="#d0c080" stroke-width="1.2" opacity="0.3"/>
+  <ellipse cx="40" cy="44" rx="22" ry="2.5" fill="none" stroke="#b8a060" stroke-width="1" opacity="0.25"/>
+  <circle cx="40" cy="40" r="22" fill="url(#sh)"/>
+  <!-- Rings (front arc — clip over lower planet) -->
+  <path d="M 6 50 Q 40 38 74 50" fill="none" stroke="url(#rg)" stroke-width="6" opacity="0.7"/>
+  <text x="40" y="76" font-family="sans-serif" font-size="9" fill="#d8c880" text-anchor="middle" opacity="0.9">SATURN</text>
+</svg>

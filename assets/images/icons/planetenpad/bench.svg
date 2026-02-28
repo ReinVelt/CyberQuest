@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <linearGradient id="wg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#a07840"/>
+      <stop offset="100%" stop-color="#705020"/>
+    </linearGradient>
+    <linearGradient id="lg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#806030"/>
+      <stop offset="100%" stop-color="#503e18"/>
+    </linearGradient>
+  </defs>
+  <!-- Bench planks -->
+  <rect x="8" y="36" width="64" height="9" rx="2" fill="url(#wg)" stroke="#604018" stroke-width="1"/>
+  <rect x="8" y="46" width="64" height="9" rx="2" fill="url(#wg)" stroke="#604018" stroke-width="1"/>
+  <!-- Seat surface grain lines -->
+  <line x1="12" y1="40" x2="68" y2="40" stroke="#906830" stroke-width="0.5" opacity="0.4"/>
+  <line x1="12" y1="43" x2="68" y2="43" stroke="#906830" stroke-width="0.5" opacity="0.3"/>
+  <line x1="12" y1="50" x2="68" y2="50" stroke="#906830" stroke-width="0.5" opacity="0.4"/>
+  <line x1="12" y1="53" x2="68" y2="53" stroke="#906830" stroke-width="0.5" opacity="0.3"/>
+  <!-- Left leg pair -->
+  <rect x="14" y="55" width="7" height="20" rx="2" fill="url(#lg)" transform="rotate(-5,17,55)" stroke="#4a3010" stroke-width="0.8"/>
+  <rect x="22" y="55" width="7" height="20" rx="2" fill="url(#lg)" transform="rotate(5,25,55)" stroke="#4a3010" stroke-width="0.8"/>
+  <!-- Right leg pair -->
+  <rect x="51" y="55" width="7" height="20" rx="2" fill="url(#lg)" transform="rotate(-5,54,55)" stroke="#4a3010" stroke-width="0.8"/>
+  <rect x="59" y="55" width="7" height="20" rx="2" fill="url(#lg)" transform="rotate(5,62,55)" stroke="#4a3010" stroke-width="0.8"/>
+  <!-- Weathering marks -->
+  <line x1="30" y1="36" x2="30" y2="55" stroke="#604018" stroke-width="0.7" opacity="0.3"/>
+  <line x1="50" y1="36" x2="50" y2="55" stroke="#604018" stroke-width="0.7" opacity="0.3"/>
+  <text x="40" y="14" font-family="sans-serif" font-size="9" fill="#a07840" text-anchor="middle" opacity="0.9">BENCH</text>
+</svg>

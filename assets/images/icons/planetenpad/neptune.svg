@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <radialGradient id="g" cx="0.35" cy="0.3" r="0.65">
+      <stop offset="0%" stop-color="#a0c8f0"/>
+      <stop offset="30%" stop-color="#4880c8"/>
+      <stop offset="65%" stop-color="#1040a0"/>
+      <stop offset="100%" stop-color="#081838"/>
+    </radialGradient>
+    <radialGradient id="sh" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.5"/>
+    </radialGradient>
+  </defs>
+  <circle cx="40" cy="40" r="28" fill="url(#g)"/>
+  <!-- Atmosphere bands -->
+  <ellipse cx="40" cy="32" rx="24" ry="4" fill="none" stroke="#80b0e8" stroke-width="1.2" opacity="0.25"/>
+  <ellipse cx="40" cy="42" rx="27" ry="3" fill="none" stroke="#6090d0" stroke-width="1" opacity="0.2"/>
+  <circle cx="40" cy="40" r="28" fill="url(#sh)"/>
+  <text x="40" y="76" font-family="sans-serif" font-size="9" fill="#a0c0e8" text-anchor="middle" opacity="0.9">NEPTUNE</text>
+</svg>

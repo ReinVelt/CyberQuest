@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <radialGradient id="g" cx="0.35" cy="0.3" r="0.65">
+      <stop offset="0%" stop-color="#f8c090"/>
+      <stop offset="30%" stop-color="#d86030"/>
+      <stop offset="65%" stop-color="#a03010"/>
+      <stop offset="100%" stop-color="#601800"/>
+    </radialGradient>
+    <radialGradient id="sh" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
+    </radialGradient>
+  </defs>
+  <circle cx="40" cy="40" r="28" fill="url(#g)"/>
+  <!-- Surface features -->
+  <ellipse cx="32" cy="36" rx="7" ry="5" fill="#c04020" opacity="0.4" transform="rotate(-10,32,36)"/>
+  <ellipse cx="48" cy="46" rx="9" ry="4" fill="#802010" opacity="0.3" transform="rotate(5,48,46)"/>
+  <!-- Polar cap hints -->
+  <ellipse cx="40" cy="13" rx="12" ry="5" fill="#f0e8e0" opacity="0.3"/>
+  <ellipse cx="40" cy="67" rx="10" ry="4" fill="#f0e8e0" opacity="0.2"/>
+  <circle cx="40" cy="40" r="28" fill="url(#sh)"/>
+  <!-- Olympus Mons dot -->
+  <circle cx="44" cy="34" r="3" fill="#802010" opacity="0.5"/>
+  <text x="40" y="76" font-family="sans-serif" font-size="9" fill="#e09060" text-anchor="middle" opacity="0.9">MARS</text>
+</svg>

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a5a6a"/>
+      <stop offset="100%" stop-color="#2a3a4a"/>
+    </linearGradient>
+    <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#505a40"/>
+      <stop offset="100%" stop-color="#303828"/>
+    </linearGradient>
+  </defs>
+  <!-- Panel body -->
+  <rect x="14" y="12" width="52" height="44" rx="4" fill="url(#pg)" stroke="#3a4a5a" stroke-width="1.5"/>
+  <!-- Screen -->
+  <rect x="18" y="16" width="44" height="30" rx="2" fill="#101820" opacity="0.9"/>
+  <!-- Graph/scale lines on screen -->
+  <line x1="22" y1="38" x2="22" y2="24" stroke="#00ccaa" stroke-width="1.5"/>
+  <line x1="29" y1="38" x2="29" y2="20" stroke="#00ccaa" stroke-width="1.5"/>
+  <line x1="36" y1="38" x2="36" y2="28" stroke="#00ccaa" stroke-width="1.5"/>
+  <line x1="43" y1="38" x2="43" y2="18" stroke="#00ccaa" stroke-width="1.5"/>
+  <line x1="50" y1="38" x2="50" y2="32" stroke="#00ccaa" stroke-width="1.5"/>
+  <line x1="57" y1="38" x2="57" y2="22" stroke="#00ccaa" stroke-width="1.5"/>
+  <line x1="20" y1="38" x2="60" y2="38" stroke="#6a8a9a" stroke-width="0.8"/>
+  <!-- Planet labels row -->
+  <text x="22" y="44" font-family="monospace" font-size="5" fill="#80c0a0" text-anchor="middle">Mo</text>
+  <text x="29" y="44" font-family="monospace" font-size="5" fill="#80c0a0" text-anchor="middle">Ma</text>
+  <text x="36" y="44" font-family="monospace" font-size="5" fill="#80c0a0" text-anchor="middle">Ju</text>
+  <text x="43" y="44" font-family="monospace" font-size="5" fill="#80c0a0" text-anchor="middle">Sa</text>
+  <text x="50" y="44" font-family="monospace" font-size="5" fill="#80c0a0" text-anchor="middle">Ur</text>
+  <text x="57" y="44" font-family="monospace" font-size="5" fill="#80c0a0" text-anchor="middle">Su</text>
+  <!-- Legs -->
+  <rect x="24" y="56" width="5" height="14" rx="1" fill="url(#sg)"/>
+  <rect x="51" y="56" width="5" height="14" rx="1" fill="url(#sg)"/>
+  <!-- Header text -->
+  <text x="40" y="76" font-family="sans-serif" font-size="8" fill="#80c0a0" text-anchor="middle" opacity="0.9">GRAVITY</text>
+</svg>

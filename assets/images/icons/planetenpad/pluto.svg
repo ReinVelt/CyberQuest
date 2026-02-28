@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <defs>
+    <radialGradient id="g" cx="0.38" cy="0.32" r="0.62">
+      <stop offset="0%" stop-color="#d8d0c8"/>
+      <stop offset="45%" stop-color="#a89890"/>
+      <stop offset="80%" stop-color="#786860"/>
+      <stop offset="100%" stop-color="#504840"/>
+    </radialGradient>
+    <radialGradient id="sh" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="60%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.45"/>
+    </radialGradient>
+  </defs>
+  <circle cx="40" cy="40" r="28" fill="url(#g)"/>
+  <!-- subtle heart-shaped lighter region (Tombaugh Regio hint) -->
+  <ellipse cx="36" cy="36" rx="10" ry="8" fill="#c8beb4" opacity="0.35" transform="rotate(-15,36,36)"/>
+  <circle cx="40" cy="40" r="28" fill="url(#sh)"/>
+  <!-- label -->
+  <text x="40" y="76" font-family="sans-serif" font-size="9" fill="#c8c0b8" text-anchor="middle" opacity="0.9">PLUTO</text>
+</svg>
