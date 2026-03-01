@@ -41,19 +41,17 @@ const SstvTerminalScene = {
                 if (game.getFlag('second_transmission_ready') && !game.getFlag('second_message_decoded')) {
                     game.setStoryPart(5);
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'Wait! New SSTV transmission!' },
-                        { speaker: '', text: '*An image slowly forms, line by line...*' },
-                        { speaker: 'Ryan', text: 'That\'s... MY HOUSE! Someone took a photo!' },
-                        { speaker: '', text: '*More encoded text appears*' },
-                        { speaker: 'Ryan', text: 'They know where I live. They\'ve been watching me.' },
-                        { speaker: 'Ryan', text: 'Another encoded message. Decode time!' }
+                        { speaker: 'Ryan', text: 'Wait! New SSTV transmission coming in!' },
+                        { speaker: '', text: '*The waterfall lights up — a burst of tones, then encoded text scrolls in*' },
+                        { speaker: 'Ryan', text: 'No image this time. Pure cipher text. ROT1 again by the look of it.' },
+                        { speaker: 'Ryan', text: 'Direct. Urgent. Decode it.' }
                     ]);
 
                     setTimeout(() => {
                         game.startPuzzle({
                             id: 'rot1_message_2',
                             type: 'rot1',
-                            questId: 'decode_meeting',
+                            questId: 'check_sstv_again',
                             encryptedText: 'XF LOPX ZPV BSF XBUDIJOH - XF OFFE ZPVS IFMQ - NFFU BU UFS BQFM LMPTUFS 23:00 - DPNF BMPOF - CSJOH ZPVS TLJMMT',
                             hint: 'Same cipher as before. ROT1 — shift each letter back by one position.',
                             solution: 'WE KNOW YOU ARE WATCHING - WE NEED YOUR HELP - MEET AT TER APEL KLOOSTER 23:00 - COME ALONE - BRING YOUR SKILLS',
@@ -78,7 +76,7 @@ const SstvTerminalScene = {
                                 g.startDialogue([
                                     { speaker: 'Ryan', text: 'WE KNOW YOU ARE WATCHING - WE NEED YOUR HELP - MEET AT TER APEL KLOOSTER 23:00 - COME ALONE - BRING YOUR SKILLS' },
                                     { speaker: 'Ryan', text: 'They want to meet. Tonight. Old monastery.' },
-                                    { speaker: 'Ryan', text: 'Someone\'s been watching me. Photographed my damn house.' },
+                                    { speaker: 'Ryan', text: 'They know I\'ve been monitoring their signals. They\'ve been watching me back.' },
                                     { speaker: 'Ryan', text: 'Could be a trap. Could be the answer.' },
                                     { speaker: 'Ryan', text: 'Flipper Zero, HackRF, laptop... and my wits.' },
                                     { speaker: 'Ryan', text: 'The garden leads to where I parked the Volvo.' }
