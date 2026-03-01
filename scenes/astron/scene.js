@@ -23,7 +23,7 @@ const AstronScene = {
     playerStart: { x: 50, y: 90 },
 
     // 🎬 Accessibility / Movie Mode
-    accessibilityPath: ['cees-bassa', 'wall-monitors', 'door-exit'],
+    accessibilityPath: ['cees-bassa', 'wall-monitors', 'equipment', 'door-exit'],
 
     idleThoughts: [
         "These dishes have been listening to the universe since the seventies.",
