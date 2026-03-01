@@ -1123,6 +1123,22 @@ const DroneHuntScene = {
                 return s.phase === 3 && s.hackrfReady && !s.frequencySet;
             },
             action: function(game) {
+                // 🎬 Movie mode: auto-solve without showing puzzle UI
+                if (game.accessibilityMode) {
+                    const s = DroneHuntScene.state;
+                    s.frequencySet = true;
+                    game.setFlag('gps_frequency_set', true);
+                    game.showNotification('Frequency locked: 1575.42 MHz');
+                    DroneHuntScene._playSuccessChime();
+                    DroneHuntScene._updateGPSOverlay();
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'GPS L1 C/A — 1575.42 MHz. I know this cold. Setting it now.' },
+                        { speaker: '', text: '*HackRF display: TX FREQ 1575.42 MHz — LOCKED*' },
+                        { speaker: 'Ryan', text: 'Now TX power. Just enough to overpower the real satellites.' }
+                    ]);
+                    DroneHuntScene._checkSpoofReady(game);
+                    return;
+                }
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'GPS L1 civilian frequency. I know this cold.' },
                     { speaker: 'Ryan', text: 'C/A code — Coarse/Acquisition. The one civilian receivers use.' },
@@ -1183,6 +1199,21 @@ const DroneHuntScene = {
             },
             action: function(game) {
                 const s = DroneHuntScene.state;
+                // 🎬 Movie mode: auto-solve without showing puzzle UI
+                if (game.accessibilityMode) {
+                    s.powerSet = true;
+                    game.setFlag('tx_power_set', true);
+                    game.showNotification('TX power calibrated: -5 dBm');
+                    DroneHuntScene._playSuccessChime();
+                    DroneHuntScene._updateGPSOverlay();
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: '-5 dBm. Just enough to outshout real GPS at 100 metres. Setting it now.' },
+                        { speaker: '', text: '*HackRF display: TX POWER -5 dBm — CALIBRATED*' },
+                        { speaker: 'Ryan', text: 'Now target coordinates. The swamp — 200 metres south.' }
+                    ]);
+                    DroneHuntScene._checkSpoofReady(game);
+                    return;
+                }
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'Transmit power. Critical parameter.' },
                     { speaker: 'Ryan', text: 'Real GPS satellites are 20,200 km up. Their signal is WEAK by the time it reaches ground.' },
@@ -1243,6 +1274,22 @@ const DroneHuntScene = {
             },
             action: function(game) {
                 const s = DroneHuntScene.state;
+                // 🎬 Movie mode: auto-solve without showing puzzle UI
+                if (game.accessibilityMode) {
+                    s.targetSet = true;
+                    game.setFlag('spoof_target_set', true);
+                    game.showNotification('Target coordinates locked: +200m North offset');
+                    DroneHuntScene._playSuccessChime();
+                    DroneHuntScene._updateGPSOverlay();
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'Spoof offset: +200 metres north. Their autopilot will "correct" straight into the swamp.' },
+                        { speaker: '', text: '*HackRF display: SPOOF OFFSET +200m NORTH — TARGET LOCKED*' },
+                        { speaker: '', text: '*The swamp pools glint coldly in the moonlight*' },
+                        { speaker: 'Ryan', text: 'All parameters set. Frequency, power, target. Time to fire.' }
+                    ]);
+                    DroneHuntScene._checkSpoofReady(game);
+                    return;
+                }
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'Where to send them... The swamp. 200 meters south.' },
                     { speaker: 'Ryan', text: 'Soft ground, standing water, reeds. Perfect drone graveyard.' },
