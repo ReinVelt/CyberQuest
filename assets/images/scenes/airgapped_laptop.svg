@@ -1,0 +1,461 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- Room tone: cold clinical green-tinted dark -->
+    <linearGradient id="roomBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#020806"/>
+      <stop offset="100%" stop-color="#060e08"/>
+    </linearGradient>
+    <!-- Metal shelf -->
+    <linearGradient id="shelfGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#111612"/>
+      <stop offset="100%" stop-color="#0a0e0b"/>
+    </linearGradient>
+    <!-- Desk -->
+    <linearGradient id="deskGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#0d1a0f"/>
+      <stop offset="100%" stop-color="#080d09"/>
+    </linearGradient>
+    <!-- ThinkPad lid -->
+    <linearGradient id="thinkpadLid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1a1e1b"/>
+      <stop offset="100%" stop-color="#121512"/>
+    </linearGradient>
+    <!-- ThinkPad screen -->
+    <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#030f05"/>
+      <stop offset="100%" stop-color="#020b03"/>
+    </linearGradient>
+    <!-- Screen glow -->
+    <radialGradient id="screenGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%"   stop-color="#00cc44" stop-opacity="0.18"/>
+      <stop offset="70%"  stop-color="#004a15" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Ambient green glow -->
+    <radialGradient id="ambientGlow" cx="55%" cy="55%" r="55%">
+      <stop offset="0%"   stop-color="#00aa33" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Write-blocker device -->
+    <linearGradient id="wbBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#1e2820"/>
+      <stop offset="100%" stop-color="#141c15"/>
+    </linearGradient>
+    <!-- USB stick -->
+    <linearGradient id="usbGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#282a2e"/>
+      <stop offset="100%" stop-color="#1e2022"/>
+    </linearGradient>
+    <!-- Note pad -->
+    <linearGradient id="noteGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#0f1a10"/>
+      <stop offset="100%" stop-color="#0b130c"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="glow3">
+      <feGaussianBlur stdDeviation="3" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow8">
+      <feGaussianBlur stdDeviation="8" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow16">
+      <feGaussianBlur stdDeviation="16" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="blur4">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <filter id="blur2">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="6" stdDeviation="16" flood-color="#000" flood-opacity="0.85"/>
+    </filter>
+
+    <!-- Clip paths -->
+    <clipPath id="screenClip">
+      <rect x="655" y="122" width="610" height="410" rx="4"/>
+    </clipPath>
+    <clipPath id="hexClip">
+      <rect x="60" y="100" width="280" height="480" rx="3"/>
+    </clipPath>
+
+    <!-- Scanlines -->
+    <pattern id="scanlines" width="2" height="3" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="2" y2="0" stroke="#000" stroke-width="1" opacity="0.15"/>
+    </pattern>
+  </defs>
+
+  <style>
+    @keyframes cursorBlink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+    @keyframes hashScroll {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-50%); }
+    }
+    @keyframes ledPulse {
+      0%, 100% { opacity: 0.9; }
+      50%       { opacity: 0.3; }
+    }
+    @keyframes usbLed {
+      0%, 100% { opacity: 1.0; }
+      50%       { opacity: 0.2; }
+    }
+    @keyframes screenFlicker {
+      0%, 96%, 100% { opacity: 1.0; }
+      97%            { opacity: 0.88; }
+      98%            { opacity: 1.0; }
+      99%            { opacity: 0.92; }
+    }
+    @keyframes progressBar {
+      0%   { width: 0; }
+      100% { width: 320px; }
+    }
+    @keyframes verifyGlow {
+      0%, 100% { opacity: 0.6; }
+      50%       { opacity: 1.0; }
+    }
+    .cursor       { animation: cursorBlink 1s step-end infinite; }
+    .hash-scroll  { animation: hashScroll 12s linear infinite; }
+    .led-power    { animation: ledPulse 4s ease-in-out infinite; }
+    .led-usb      { animation: usbLed 0.8s ease-in-out infinite; }
+    .screen-wrap  { animation: screenFlicker 8s ease-in-out infinite; }
+    .verify-label { animation: verifyGlow 2.5s ease-in-out infinite; }
+  </style>
+
+  <!-- ── ROOM ── -->
+  <rect width="1920" height="1080" fill="url(#roomBg)"/>
+  <rect width="1920" height="1080" fill="url(#ambientGlow)"/>
+
+  <!-- Back wall subtle panel seams -->
+  <line x1="0"    y1="260" x2="1920" y2="260" stroke="#080e09" stroke-width="1"/>
+  <line x1="0"    y1="400" x2="1920" y2="400" stroke="#060c07" stroke-width="0.5"/>
+  <line x1="480"  y1="0"   x2="480"  y2="620" stroke="#080e09" stroke-width="0.5"/>
+  <line x1="1440" y1="0"   x2="1440" y2="620" stroke="#080e09" stroke-width="0.5"/>
+
+  <!-- WARNING strip top right -->
+  <rect x="1600" y="0" width="320" height="36" fill="#0a1408" opacity="0.9"/>
+  <text x="1612" y="24" font-family="monospace" font-size="11" fill="#1a4a20" letter-spacing="2">⚠ NETWORK ISOLATED — NO WIFI — NO BT — NO LAN</text>
+
+  <!-- ── HEX DATA BACKGROUND (blurred forensic panel) ── -->
+  <g opacity="0.20" clip-path="url(#hexClip)">
+    <rect x="60" y="100" width="280" height="480" fill="#030d05" rx="3" stroke="#0a2010" stroke-width="1"/>
+    <rect x="60" y="100" width="280" height="16" fill="#050e06"/>
+    <text x="68" y="112" font-family="monospace" font-size="8" fill="#1a5a28">⬡ SHA-256 VERIFY — EVIDENCE.ZIP</text>
+    <g class="hash-scroll" font-family="monospace" font-size="8" fill="#0c3016">
+      <text x="68" y="136">3a f8 0c 12 e4 7b 90 1d 56 aa 2f c3</text>
+      <text x="68" y="150">c7 3e 6d 00 f1 88 45 2a 9c 51 b7 0f</text>
+      <text x="68" y="164" fill="#1a5a28">── PASS: SHA256 ──────────────────</text>
+      <text x="68" y="178">02 e9 7c 4f a3 18 60 dc 95 2b 5e f0</text>
+      <text x="68" y="192">8e 41 bc 26 73 0a cf 54 19 87 3c f5</text>
+      <text x="68" y="206" fill="#1a5a28">── WRITE-BLOCKED ─────────────────</text>
+      <text x="68" y="220">d0 5f 2c 93 e7 14 6a 38 b1 4c 80 27</text>
+      <text x="68" y="234">6b 1f 8d 40 c2 75 3b 9e 22 67 04 ae</text>
+      <text x="68" y="248">a9 32 5c 0b f4 6e 19 85 dc 43 7a 01</text>
+      <text x="68" y="262" fill="#1a5a28">── EVIDENCE INTEGRITY OK ─────────</text>
+      <text x="68" y="276">70 bc 8e 11 53 c9 2e 47 a0 6d f2 35</text>
+      <text x="68" y="290">3e 64 9f 28 b5 0c 51 a7 1c 83 40 f6</text>
+      <text x="68" y="304">c1 56 0a 3d 88 f3 2c 69 b4 1e 75 a2</text>
+      <text x="68" y="318" fill="#0e4a1a">── SANDBOX: FIREJAIL ─────────────</text>
+      <text x="68" y="332">48 d5 0e 83 2a 6f b1 3c 94 57 10 ec</text>
+      <text x="68" y="346">f7 2a 1b 60 9e 43 c8 05 72 3d a4 58</text>
+      <!-- duplicate for seamless loop -->
+      <text x="68" y="360">3a f8 0c 12 e4 7b 90 1d 56 aa 2f c3</text>
+      <text x="68" y="374">c7 3e 6d 00 f1 88 45 2a 9c 51 b7 0f</text>
+      <text x="68" y="388" fill="#1a5a28">── PASS: SHA256 ──────────────────</text>
+      <text x="68" y="402">02 e9 7c 4f a3 18 60 dc 95 2b 5e f0</text>
+      <text x="68" y="416">8e 41 bc 26 73 0a cf 54 19 87 3c f5</text>
+      <text x="68" y="430" fill="#1a5a28">── WRITE-BLOCKED ─────────────────</text>
+      <text x="68" y="444">d0 5f 2c 93 e7 14 6a 38 b1 4c 80 27</text>
+      <text x="68" y="458">6b 1f 8d 40 c2 75 3b 9e 22 67 04 ae</text>
+      <text x="68" y="472">a9 32 5c 0b f4 6e 19 85 dc 43 7a 01</text>
+      <text x="68" y="486" fill="#1a5a28">── EVIDENCE INTEGRITY OK ─────────</text>
+      <text x="68" y="500">70 bc 8e 11 53 c9 2e 47 a0 6d f2 35</text>
+      <text x="68" y="514">3e 64 9f 28 b5 0c 51 a7 1c 83 40 f6</text>
+      <text x="68" y="528">c1 56 0a 3d 88 f3 2c 69 b4 1e 75 a2</text>
+      <text x="68" y="542" fill="#0e4a1a">── SANDBOX: FIREJAIL ─────────────</text>
+      <text x="68" y="556">48 d5 0e 83 2a 6f b1 3c 94 57 10 ec</text>
+      <text x="68" y="570">f7 2a 1b 60 9e 43 c8 05 72 3d a4 58</text>
+    </g>
+    <!-- fade bottom -->
+    <rect x="60" y="520" width="280" height="60" fill="url(#roomBg)" opacity="0.9"/>
+  </g>
+
+  <!-- ── METAL SHELF (background, slightly out of focus) ── -->
+  <g opacity="0.35" filter="url(#blur2)">
+    <rect x="0" y="560" width="540" height="24" fill="#131a14"/>
+    <rect x="0" y="584" width="540" height="2" fill="#0a100b"/>
+    <!-- shelf brackets -->
+    <rect x="60"  y="560" width="8" height="60" fill="#0e1410"/>
+    <rect x="480" y="560" width="8" height="60" fill="#0e1410"/>
+    <!-- items on shelf background -->
+    <rect x="80" y="495" width="140" height="60" fill="#111a12" rx="3"/>
+    <rect x="240" y="505" width="90" height="50" fill="#0e1510" rx="2"/>
+    <text x="88" y="528" font-family="monospace" font-size="8" fill="#1a3a1e" opacity="0.7">FARADAY BAG</text>
+    <text x="248" y="534" font-family="monospace" font-size="8" fill="#1a3a1e" opacity="0.7">CABLES</text>
+  </g>
+
+  <!-- ── DESK ── -->
+  <rect x="0" y="650" width="1920" height="430" fill="url(#deskGrad)"/>
+  <rect x="0" y="650" width="1920" height="3"   fill="#141f15" opacity="0.8"/>
+  <rect x="0" y="653" width="1920" height="5"   fill="#000"    opacity="0.4"/>
+
+  <!-- ── THINKPAD X230 SHADOW ── -->
+  <ellipse cx="960" cy="1010" rx="280" ry="28" fill="#000" opacity="0.6" filter="url(#blur4)"/>
+
+  <!-- ──────────────────────────────── THINKPAD X230 ─────────────────────────────── -->
+  <g filter="url(#shadow)">
+
+    <!-- Lid back + hinge detail -->
+    <rect x="630" y="100" width="660" height="440" fill="url(#thinkpadLid)" rx="8"/>
+    <!-- ThinkPad logo red dot (iconic) -->
+    <text x="1240" y="148" font-family="serif" font-size="18" fill="#cc2222" opacity="0.4">■</text>
+    <text x="1245" y="148" font-family="sans-serif" font-size="9" fill="#3a3a3a" opacity="0.6">ThinkPad</text>
+
+    <!-- Screen bezel -->
+    <rect x="642" y="112" width="636" height="426" fill="#0e1410" rx="6"/>
+
+    <!-- Screen surface -->
+    <rect x="655" y="122" width="610" height="410" fill="url(#screenGrad)" rx="4" class="screen-wrap"/>
+    <rect x="655" y="122" width="610" height="410" fill="url(#screenGlow)" rx="4"/>
+
+    <!-- ── SCREEN CONTENT ── -->
+    <g clip-path="url(#screenClip)" class="screen-wrap">
+
+      <!-- Kali header bar -->
+      <rect x="655" y="122" width="610" height="20" fill="#0a1a0c"/>
+      <circle cx="668" cy="132" r="5" fill="#2a6a2e" opacity="0.8"/>
+      <circle cx="682" cy="132" r="5" fill="#4a8a4e" opacity="0.8"/>
+      <circle cx="696" cy="132" r="5" fill="#2a6a2e" opacity="0.8"/>
+      <text x="940" y="136" font-family="monospace" font-size="9" fill="#1a4a20" text-anchor="middle">root@airgapped: ~/forensic — bash</text>
+      <!-- battery (not networked → no wifi icon) -->
+      <rect x="1210" y="126" width="40" height="12" fill="none" stroke="#1a4a20" stroke-width="1" rx="2"/>
+      <rect x="1212" y="128" width="32" height="8" fill="#1a4a20" rx="1"/>
+      <rect x="1250" y="129" width="3" height="6" fill="#1a4a20" rx="1"/>
+      <text x="1204" y="136" font-family="monospace" font-size="8" fill="#1a4a20" text-anchor="end">87%</text>
+
+      <!-- Terminal content area -->
+      <rect x="655" y="142" width="610" height="390" fill="#020b03"/>
+
+      <!-- Terminal lines -->
+      <text x="664" y="162" font-family="monospace" font-size="10" fill="#00aa33">root@airgapped:~/forensic# </text>
+      <text x="800" y="162" font-family="monospace" font-size="10" fill="#00ff41">sha256sum /mnt/usb/evidence.zip</text>
+
+      <text x="664" y="178" font-family="monospace" font-size="9" fill="#00cc44" opacity="0.8">
+        c9f5d4e6a8b3c7d2e1f6...  /mnt/usb/evidence.zip
+      </text>
+      <text x="664" y="194" font-family="monospace" font-size="9" fill="#009933" opacity="0.7">
+        HASH: MATCH  ✓  0 bytes written to device  ✓
+      </text>
+
+      <text x="664" y="216" font-family="monospace" font-size="10" fill="#00aa33">root@airgapped:~/forensic# </text>
+      <text x="800" y="216" font-family="monospace" font-size="10" fill="#00ff41">file /mnt/usb/README.txt</text>
+      <text x="664" y="232" font-family="monospace" font-size="9" fill="#00cc44" opacity="0.8">
+        README.txt: ASCII text — 4.2 KB — UTF-8
+      </text>
+
+      <text x="664" y="252" font-family="monospace" font-size="10" fill="#00aa33">root@airgapped:~/forensic# </text>
+      <text x="800" y="252" font-family="monospace" font-size="10" fill="#00ff41">cat /mnt/usb/README.txt</text>
+
+      <!-- README excerpt with highlights -->
+      <text x="664" y="272" font-family="monospace" font-size="9" fill="#b0c8b4">Ryan,</text>
+      <text x="664" y="286" font-family="monospace" font-size="9" fill="#b0c8b4">If you are reading this, you received my signal.</text>
+      <text x="664" y="300" font-family="monospace" font-size="9" fill="#b0c8b4">What you have is evidence of</text>
+      <text x="870" y="300" font-family="monospace" font-size="9" fill="#ffdd44">Project Echo</text>
+      <text x="958" y="300" font-family="monospace" font-size="9" fill="#b0c8b4">—</text>
+      <text x="664" y="314" font-family="monospace" font-size="9" fill="#b0c8b4">an RF weapon at</text>
+      <text x="756" y="314" font-family="monospace" font-size="9" fill="#ffdd44">Steckerdoser Heide.</text>
+      <text x="664" y="328" font-family="monospace" font-size="9" fill="#b0c8b4">72 hours. Then it moves to</text>
+      <text x="858" y="328" font-family="monospace" font-size="9" fill="#ff6a6a">Phase 3 — urban deployment.</text>
+      <text x="664" y="344" font-family="monospace" font-size="9" fill="#b0c8b4">Trust no one. Air-gapped only. Destroy USB after.</text>
+      <text x="664" y="360" font-family="monospace" font-size="9" fill="#b0c8b4">Think mesh.</text>
+      <text x="740" y="360" font-family="monospace" font-size="9" fill="#ffdd44">906.875.</text>
+      <text x="796" y="360" font-family="monospace" font-size="9" fill="#b0c8b4">I'm listening.  — E</text>
+
+      <!-- Progress bar at bottom -->
+      <rect x="664" y="386" width="580" height="1" fill="#0a1f0c" opacity="0.8"/>
+      <text x="664" y="402" font-family="monospace" font-size="9" fill="#00aa33">root@airgapped:~/forensic# </text>
+      <rect x="800" y="393" width="2" height="12" fill="#00ff41" class="cursor"/>
+
+      <!-- Evidence summary overlay (bottom 3 lines) -->
+      <rect x="655" y="450" width="610" height="82" fill="#020a03" opacity="0.96"/>
+      <rect x="655" y="450" width="610" height="2" fill="#00aa33" opacity="0.3"/>
+      <text x="664" y="466" font-family="monospace" font-size="9" fill="#006622" class="verify-label">⬡ FORENSIC SUMMARY</text>
+      <text x="664" y="480" font-family="monospace" font-size="9" fill="#009922">Files: README.txt ✓  schematics.pdf ✓  evidence.zip [ENCRYPTED]</text>
+      <text x="664" y="494" font-family="monospace" font-size="9" fill="#009922">Write-blocked: YES   Network: ISOLATED   Sandbox: ACTIVE</text>
+      <text x="664" y="508" font-family="monospace" font-size="9" fill="#006622">Tableau T35u: READ ONLY ✓  HMAC verified ✓  Evidence chain intact ✓</text>
+      <rect x="655" y="528" width="610" height="4" fill="#00aa33" opacity="0.15"/>
+    </g>
+
+    <!-- Scanlines -->
+    <rect x="655" y="122" width="610" height="410" fill="url(#scanlines)" opacity="0.25"/>
+
+    <!-- Camera (ThinkPad has cheesy camera top-center) -->
+    <rect x="952" y="116" width="16" height="6" fill="#0a0e0b" rx="3"/>
+    <circle cx="960" cy="119" r="3" fill="#080c09"/>
+
+    <!-- Bezels: ThinkPad red indicator LED top-right of screen -->
+    <circle cx="1265" cy="119" r="3" fill="#cc2222" opacity="0.6" class="led-power" filter="url(#glow3)"/>
+
+    <!-- Keyboard base -->
+    <rect x="620" y="540" width="680" height="280" fill="#131a14" rx="6"/>
+    <rect x="624" y="544" width="672" height="4" fill="#0a100b" rx="2"/>
+
+    <!-- Keyboard surface -->
+    <rect x="635" y="560" width="650" height="180" fill="#0e1410" rx="4"/>
+
+    <!-- Key block representation (rows) -->
+    <g fill="#192a1c" opacity="0.8" font-family="monospace" font-size="7" text-anchor="middle">
+      <!-- Row 1 function keys -->
+      <rect x="644" y="568" width="640" height="18" rx="2" fill="#141e15"/>
+      <!-- Row 2 -->
+      <rect x="644" y="592" width="640" height="26" rx="2" fill="#141e15"/>
+      <!-- Row 3 -->
+      <rect x="644" y="624" width="640" height="26" rx="2" fill="#141e15"/>
+      <!-- Row 4 -->
+      <rect x="644" y="656" width="600" height="26" rx="2" fill="#141e15"/>
+      <!-- Row 5 (space bar row) -->
+      <rect x="644" y="688" width="640" height="26" rx="2" fill="#141e15"/>
+      <!-- Horizontal key lines -->
+      <line x1="644" y1="586" x2="1284" y2="586" stroke="#0a100b" stroke-width="0.5" opacity="0.6"/>
+      <line x1="644" y1="618" x2="1284" y2="618" stroke="#0a100b" stroke-width="0.5" opacity="0.6"/>
+      <line x1="644" y1="650" x2="1284" y2="650" stroke="#0a100b" stroke-width="0.5" opacity="0.6"/>
+      <line x1="644" y1="682" x2="1284" y2="682" stroke="#0a100b" stroke-width="0.5" opacity="0.6"/>
+    </g>
+
+    <!-- TrackPoint (red nipple) -->
+    <circle cx="960" cy="650" r="5" fill="#cc2222" opacity="0.7"/>
+    <circle cx="960" cy="650" r="3" fill="#991111" opacity="0.8"/>
+
+    <!-- Touchpad -->
+    <rect x="900" y="745" width="120" height="70" fill="#111a12" rx="4" stroke="#1a2c1c" stroke-width="1"/>
+
+    <!-- ThinkPad X230 label -->
+    <text x="648" y="798" font-family="sans-serif" font-size="9" fill="#1a2c1e" letter-spacing="1">ThinkPad X230 • Air-Gapped Forensic Workstation</text>
+
+  </g>
+
+  <!-- ── WRITE-BLOCKER DEVICE (Tableau T35u) on right side ── -->
+  <g transform="translate(1380, 600)">
+    <!-- Device body -->
+    <rect x="0" y="0" width="260" height="140" fill="url(#wbBody)" rx="6" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="260" height="3" fill="#243228" rx="1"/>
+
+    <!-- Label plate -->
+    <rect x="12" y="14" width="180" height="28" fill="#0a1010" rx="3" stroke="#1a2a1e" stroke-width="1"/>
+    <text x="22" y="27" font-family="monospace" font-size="10" fill="#2a6040" font-weight="bold">Tableau T35u</text>
+    <text x="22" y="38" font-family="monospace" font-size="8" fill="#1a3a28">USB 3.0 Forensic Bridge</text>
+
+    <!-- READ indicator -->
+    <rect x="12" y="52" width="72" height="28" fill="#0a180e" rx="3" stroke="#1a4a20" stroke-width="1"/>
+    <circle cx="24" cy="66" r="5" fill="#00aa33" opacity="0.9" class="led-power" filter="url(#glow3)"/>
+    <text x="34" y="62" font-family="monospace" font-size="8" fill="#2a6040">READ</text>
+    <text x="34" y="74" font-family="monospace" font-size="8" fill="#00aa33">ENABLED</text>
+
+    <!-- WRITE indicator -->
+    <rect x="92" y="52" width="72" height="28" fill="#1a0808" rx="3" stroke="#4a1a1a" stroke-width="1"/>
+    <circle cx="104" cy="66" r="5" fill="#883333" opacity="0.9"/>
+    <text x="114" y="62" font-family="monospace" font-size="8" fill="#4a2020">WRITE</text>
+    <text x="114" y="74" font-family="monospace" font-size="8" fill="#cc4444">BLOCKED</text>
+
+    <!-- USB-A port (device side) -->
+    <rect x="200" y="48" width="50" height="30" fill="#0a0e0a" rx="2" stroke="#1a2a1c" stroke-width="1"/>
+    <text x="202" y="68" font-family="monospace" font-size="7" fill="#1a3a20">USB 3.0</text>
+    <text x="202" y="77" font-family="monospace" font-size="7" fill="#1a3a20">HOST</text>
+
+    <!-- USB-B port (evidence side) -->
+    <rect x="200" y="86" width="50" height="30" fill="#0a0e0a" rx="2" stroke="#1a2a1c" stroke-width="1"/>
+    <text x="202" y="104" font-family="monospace" font-size="7" fill="#1a3a20">USB 3.0</text>
+    <text x="202" y="113" font-family="monospace" font-size="7" fill="#1a3a20">EVIDENCE</text>
+
+    <!-- USB activity LED -->
+    <circle cx="176" cy="66" r="4" fill="#00ff60" class="led-usb" filter="url(#glow3)"/>
+
+    <!-- Bottom label -->
+    <text x="12" y="128" font-family="monospace" font-size="7" fill="#1a3020" opacity="0.6">S/N: T35U-20241019-0047  FW: 4.2.1</text>
+  </g>
+
+  <!-- USB stick inserted into write-blocker evidence port -->
+  <g transform="translate(1628, 704)">
+    <rect x="0" y="0" width="70" height="24" fill="url(#usbGrad)" rx="3"/>
+    <rect x="0" y="4" width="12" height="16" fill="#1a1e20" rx="1"/>
+    <!-- USB contact -->
+    <rect x="2" y="6" width="8" height="12" fill="#888a80" rx="1" opacity="0.5"/>
+    <!-- USB label -->
+    <text x="18" y="16" font-family="monospace" font-size="8" fill="#2a3428">EVIDENCE_01</text>
+    <!-- Green activity light on USB -->
+    <circle cx="62" cy="12" r="3" fill="#00ff41" class="led-usb" opacity="0.8" filter="url(#glow3)"/>
+  </g>
+
+  <!-- USB cable from write-blocker to laptop (right side port) -->
+  <path d="M 1580,662 C 1500,665 1400,670 1280,675" 
+        stroke="#1a2a1c" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <path d="M 1580,662 C 1500,665 1400,670 1280,675" 
+        stroke="#243228" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- ── FORENSIC NOTES (right side) ── -->
+  <g transform="translate(1650, 780)">
+    <rect x="0" y="0" width="200" height="240" fill="url(#noteGrad)" rx="3" transform="rotate(-2)"/>
+    <!-- ruled lines -->
+    <g stroke="#0e1e10" stroke-width="0.7" opacity="0.7">
+      <line x1="20" y1="36" x2="180" y2="36"/>
+      <line x1="20" y1="54" x2="180" y2="54"/>
+      <line x1="20" y1="72" x2="180" y2="72"/>
+      <line x1="20" y1="90" x2="180" y2="90"/>
+      <line x1="20" y1="108" x2="180" y2="108"/>
+      <line x1="20" y1="126" x2="180" y2="126"/>
+      <line x1="20" y1="144" x2="180" y2="144"/>
+      <line x1="20" y1="162" x2="180" y2="162"/>
+      <line x1="20" y1="180" x2="180" y2="180"/>
+      <line x1="20" y1="198" x2="180" y2="198"/>
+      <!-- margin -->
+      <line x1="40" y1="18" x2="40" y2="222" stroke="#1a0a0a" stroke-width="1"/>
+    </g>
+    <text x="44" y="26" font-family="sans-serif" font-size="10" fill="#2a4a2c" font-style="italic">FORENSIC LOG</text>
+    <text x="44" y="46" font-family="monospace" font-size="8" fill="#1e3a20">USB label: EVIDENCE_01</text>
+    <text x="44" y="64" font-family="monospace" font-size="8" fill="#1e3a20">SHA256: c9f5d4e6...</text>
+    <text x="44" y="82" font-family="monospace" font-size="8" fill="#1e3a20">Write-blocker: T35u ✓</text>
+    <text x="44" y="100" font-family="monospace" font-size="8" fill="#1e3a20">Network: ISOLATED ✓</text>
+    <text x="44" y="120" font-family="sans-serif" font-size="8" fill="#3a3020" font-style="italic">Files found:</text>
+    <text x="44" y="138" font-family="monospace" font-size="8" fill="#1e3a20">README.txt ✓</text>
+    <text x="44" y="156" font-family="monospace" font-size="8" fill="#1e3a20">schematics.pdf ✓</text>
+    <text x="44" y="174" font-family="monospace" font-size="8" fill="#2a3a1e">evidence.zip [🔒]</text>
+    <text x="44" y="206" font-family="sans-serif" font-size="8" fill="#2a2a10" font-style="italic">⚠ destroy USB after</text>
+  </g>
+
+  <!-- ── FARADAY BAG (left, behind laptop, partially visible) ── -->
+  <g opacity="0.55" transform="translate(360, 680)">
+    <rect x="0" y="0" width="160" height="110" fill="#111c13" rx="5" stroke="#1a2c1c" stroke-width="1.5"/>
+    <rect x="0" y="0" width="160" height="18" fill="#0e1a0f" rx="3"/>
+    <text x="8" y="12" font-family="monospace" font-size="8" fill="#1a4a20">Mission Darkness TitanRF</text>
+    <text x="8" y="30" font-family="monospace" font-size="8" fill="#1a3a1e">FARADAY SHIELDING BAG</text>
+    <text x="8" y="46" font-family="monospace" font-size="7" fill="#1a2a1c">Attenuation: 80 dB</text>
+    <!-- zipper line -->
+    <rect x="8" y="58" width="144" height="6" fill="#1a2c1c" rx="3"/>
+    <text x="8" y="80" font-family="monospace" font-size="7" fill="#163218">Blocks: GSM • WiFi • BT • NFC</text>
+    <text x="8" y="96" font-family="monospace" font-size="7" fill="#163218">For: mobile phones / USB media</text>
+  </g>
+
+  <!-- ── DESK PROPS ── -->
+  <!-- Latex gloves pack (forensic) -->
+  <g opacity="0.6" transform="translate(490, 700)">
+    <rect x="0" y="0" width="90" height="130" fill="#0e1a10" rx="3" stroke="#162018" stroke-width="1"/>
+    <text x="5" y="25" font-family="sans-serif" font-size="9" fill="#1a3a1e">NITRILE</text>
+    <text x="5" y="40" font-family="sans-serif" font-size="9" fill="#1a3a1e">GLOVES</text>
+    <text x="5" y="58" font-family="monospace" font-size="7" fill="#163218">S — 100 pcs</text>
+    <text x="5" y="72" font-family="monospace" font-size="7" fill="#163218">Powder-free</text>
+  </g>
+
+  <!-- ── GREEN SCREEN GLOW SPILL ON DESK ── -->
+  <ellipse cx="960" cy="670" rx="380" ry="22" fill="#00aa33" opacity="0.07" filter="url(#glow16)"/>
+
+  <!-- ── FLOOR ── -->
+  <rect x="0" y="1042" width="1920" height="38" fill="#04080504"/>
+  <rect x="0" y="1040" width="1920" height="3" fill="#060e07" opacity="0.8"/>
+
+</svg>

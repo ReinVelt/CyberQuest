@@ -55,7 +55,12 @@ const MancaveScene = {
                 game.loadScene('sstv_terminal');
             }
         },
-        'airgapped-laptop', // forensic analysis + USB analysis (visit 2+)
+        // ── Airgapped laptop: only when USB in hand and evidence not yet unlocked ──
+        async function(game) {
+            if (game.hasItem('usb_stick') && !game.getFlag('evidence_unlocked')) {
+                game.loadScene('airgapped_laptop');
+            }
+        },
         // ── Secure Phone: Kubecka → Zerfall → Eva identification ──
         async function(game) {
             if (game.getFlag('volkov_investigated') && !game.getFlag('eva_contacted')) {
@@ -161,44 +166,7 @@ const MancaveScene = {
             cursor: 'pointer',
             lookMessage: "My air-gapped laptop. Never been online. Perfect for analyzing suspicious files.",
             action: function(game) {
-                if (!game.hasItem('usb_stick')) {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'My air-gapped laptop. Totally isolated from networks.' },
-                        { speaker: 'Ryan', text: 'Use it for analyzing suspicious files. Can\'t be too careful.' }
-                    ]);
-                    return;
-                }
-
-                // ── Forensic prep: First click with USB — boot forensic environment ──
-                if (!game.getFlag('forensic_prep_complete')) {
-                    window.MancaveForensicAnalysis.play(game);
-                    return;
-                }
-
-                // ── Phase 1+2: Second click — insert USB + README ──
-                if (!game.getFlag('usb_analyzed')) {
-                    window.MancaveUSBAnalysis.playInsertUSB(game);
-                    return;
-                }
-
-                // ── Phase 3: Second click — Schematics ──
-                if (game.getFlag('usb_analyzed') && !game.getFlag('viewed_schematics')) {
-                    window.MancaveUSBAnalysis.playSchematics(game);
-                    return;
-                }
-
-                // ── Phase 4+5: Third click — Password + Casualty report ──
-                if (game.getFlag('viewed_schematics') && !game.getFlag('evidence_unlocked')) {
-                    window.MancaveUSBAnalysis.playPassword(game);
-                    return;
-                }
-
-                // After everything is viewed
-                game.startDialogue([
-                    { speaker: 'Ryan', text: 'The USB evidence is clear: 8 dead, more planned.' },
-                    { speaker: 'Ryan', text: 'Project Echo is a weapon. And Volkov is using German resources to perfect it.' },
-                    { speaker: 'Ryan', text: 'I need allies. People with RF expertise who can help.' }
-                ]);
+                game.loadScene('airgapped_laptop');
             }
         },
 
