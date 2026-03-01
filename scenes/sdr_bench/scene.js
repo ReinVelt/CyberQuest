@@ -14,6 +14,9 @@ const SdrBenchScene = {
 
     playerStart: { x: 50, y: 88 },
 
+    // 🎬 Accessibility / Movie Mode
+    accessibilityPath: ['sstv_decoder', 'back_to_mancave'],
+
     hotspots: [
         // ── Spectrum Analyzer (left monitor) ──
         {
@@ -261,7 +264,9 @@ const SdrBenchScene = {
         }
     },
 
-    onExit: () => {}
+    onExit: () => {
+        document.getElementById('sstv-decode-overlay')?.remove();
+    }
 };
 
 if (typeof window !== 'undefined' && window.game) {

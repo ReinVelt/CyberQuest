@@ -9,9 +9,12 @@ const LivingroomScene = {
     background: 'assets/images/scenes/livingroom.svg',
     
     description: 'A cozy living room with a TV showing a documentary.',
-    
+
     playerStart: { x: 50, y: 70 },
-    
+
+    // 🎬 Accessibility / Movie Mode — watch documentary, then return home
+    accessibilityPath: ['tv', 'to_home'],
+
     hotspots: [
         {
             id: 'tv',
@@ -342,5 +345,7 @@ const LivingroomScene = {
             const npcCharacters = charactersContainer.querySelectorAll('.npc-character');
             npcCharacters.forEach(npc => npc.remove());
         }
+        // Remove channel picker if still open (e.g. player navigated away)
+        document.getElementById('channel-picker-overlay')?.remove();
     }
 };

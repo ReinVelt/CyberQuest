@@ -979,6 +979,8 @@ const GardenScene = {
 
     onExit: function(game) {
         this._stopAmbientAudio();
+        // Remove Volvo picker overlay if still open
+        document.getElementById('volvo-picker-overlay')?.remove();
     }
 };
 

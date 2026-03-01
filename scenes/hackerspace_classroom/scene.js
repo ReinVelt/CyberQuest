@@ -1313,6 +1313,8 @@ const HackerspaceClassroomScene = {
         this._stopAudio();
         this._stopVFX();
         this._stopFidgets();
+        // Remove talk picker if still open
+        document.getElementById('talk-picker-overlay')?.remove();
     }
 };
 

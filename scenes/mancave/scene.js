@@ -679,6 +679,12 @@ const MancaveScene = {
                 MC.playIncomingCall(game, 'Father-in-Law', questions[questionIndex]);
             }, 3000);
         }
+    },
+
+    onExit: function() {
+        // Destroy any lingering cinematic overlay if player exits mid-sequence
+        const MC = window.MancaveCinematic;
+        if (MC) MC.fullCleanup();
     }
 };
 

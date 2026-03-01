@@ -25,7 +25,7 @@ const RegionalMapScene = {
   },
   
   onExit: function() {
-    // Clean up if needed
+    document.getElementById('location-info-overlay')?.remove();
   },
   
   /**
