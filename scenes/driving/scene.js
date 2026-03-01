@@ -400,6 +400,7 @@ const DrivingScene = {
         
         if (destination === 'klooster') {
             // Drive TO klooster - anxious, uncertain
+            g.setTime(1, '22:27'); // clock starts ~22:27; dialogue says 22:47; advanceTime(20) → 22:47 → klooster pins at 22:55
             const timeoutId1 = setTimeout(() => {
                 g.startDialogue([
                     { speaker: '', text: '*The Volvo rumbles through the darkness*' },
