@@ -17,7 +17,18 @@ const KloosterScene = {
     playerStart: { x: 75, y: 85 },
 
     // 🎬 Accessibility / Movie Mode
-    accessibilityPath: ['bench', 'volvo'],
+    accessibilityPath: [
+        'tower',          // look up at the gothic tower first
+        'moon',           // atmospheric moon shot
+        'entrance',       // try the heavy oak doors
+        'left-wing',      // explore left wing
+        'right-wing',     // explore right wing
+        'well',           // investigate the ancient well
+        'garden',         // inspect the hedge garden
+        'bench',          // sit and wait on the stone bench
+        'courtyard',      // main story beat: 23:00, no one here → check the car
+        'volvo',          // approach car → USB discovery → drives home
+    ],
 
     // Random idle thoughts for this scene
     idleThoughts: [
