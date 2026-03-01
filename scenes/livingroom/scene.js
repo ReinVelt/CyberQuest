@@ -12,8 +12,8 @@ const LivingroomScene = {
 
     playerStart: { x: 50, y: 70 },
 
-    // 🎬 Accessibility / Movie Mode — watch documentary, then return home
-    accessibilityPath: ['tv', 'to_home'],
+    // 🎬 Accessibility / Movie Mode — meet Max, watch documentary, then return home
+    accessibilityPath: ['tv', 'max', 'to_home'],
 
     hotspots: [
         {
@@ -50,7 +50,7 @@ const LivingroomScene = {
             }
         },
         {
-            id: 'ies',
+            id: 'max',
             x: 21,
             y: 30,
             width: 12,

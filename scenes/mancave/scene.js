@@ -84,6 +84,19 @@ const MancaveScene = {
         'flipper-zero',  // gear pickup: Flipper Zero
         'wifi-pineapple',// gear pickup: WiFi Pineapple
         'night-vision',  // gear pickup: night vision
+        // ── Max Goodbye: ensure mission prep (incl. farewell) completes before we leave ──
+        async function(game) {
+            if (game.getFlag('eva_contacted') && !game.getFlag('mission_prep_complete')) {
+                if (window.MancaveMissionPrep) {
+                    window.MancaveMissionPrep.play(game);
+                }
+                // Poll until the cinematic overlay is gone (all phases incl. Max goodbye)
+                const deadline = Date.now() + 360000; // 6-min hard cap
+                while (document.getElementById('mc-overlay') && Date.now() < deadline) {
+                    await game.wait(1500);
+                }
+            }
+        },
         async function(game) {
             // Exit to garden only when there is a Volvo destination waiting.
             // The engine loop will call this every pass, so guard carefully.
