@@ -693,12 +693,14 @@ const HackerspaceClassroomScene = {
             width: 8,
             height: 14,
             cursor: 'pointer',
+            accessibilityRetries: 1,
             action: (game) => {
                 const idx = game.getFlag('classroom_presentation_index') || 0;
                 const pres = HackerspaceClassroomScene._presentations[idx];
                 const presName = pres.presenter;
                 const visits = game.getFlag('presenter_talks') || 0;
-                game.setFlag('presenter_talks', visits + 1);
+                game.setFlag('presenter_met', true);
+                if (!game.accessibilityMode) game.setFlag('presenter_talks', visits + 1);
                 const lines = [
                     [
                         { speaker: presName, text: `*notices Ryan watching* Ah, a new face! Welcome. I\'m ${presName}, tonight\'s presenter here at HSD.` },
@@ -733,9 +735,11 @@ const HackerspaceClassroomScene = {
             width: 6,
             height: 12,
             cursor: 'pointer',
+            accessibilityRetries: 1,
             action: (game) => {
                 const visits = game.getFlag('pieter_class_talks') || 0;
-                game.setFlag('pieter_class_talks', visits + 1);
+                game.setFlag('pieter_class_met', true);
+                if (!game.accessibilityMode) game.setFlag('pieter_class_talks', visits + 1);
                 const idx = game.getFlag('classroom_presentation_index') || 0;
                 const pres = HackerspaceClassroomScene._presentations[idx];
                 const lines = [
@@ -766,9 +770,11 @@ const HackerspaceClassroomScene = {
             width: 6,
             height: 12,
             cursor: 'pointer',
+            accessibilityRetries: 1,
             action: (game) => {
                 const visits = game.getFlag('aisha_class_talks') || 0;
-                game.setFlag('aisha_class_talks', visits + 1);
+                game.setFlag('aisha_class_met', true);
+                if (!game.accessibilityMode) game.setFlag('aisha_class_talks', visits + 1);
                 const idx = game.getFlag('classroom_presentation_index') || 0;
                 const pres = HackerspaceClassroomScene._presentations[idx];
                 const lines = [
@@ -801,9 +807,11 @@ const HackerspaceClassroomScene = {
             width: 6,
             height: 12,
             cursor: 'pointer',
+            accessibilityRetries: 1,
             action: (game) => {
                 const visits = game.getFlag('marco_class_talks') || 0;
-                game.setFlag('marco_class_talks', visits + 1);
+                game.setFlag('marco_class_met', true);
+                if (!game.accessibilityMode) game.setFlag('marco_class_talks', visits + 1);
                 const lines = [
                     [
                         { speaker: 'Marco', text: '*without ear protection for once* Yo, it\'s me. Even CNC guys need to learn new stuff, you know?' },
@@ -831,9 +839,11 @@ const HackerspaceClassroomScene = {
             width: 6,
             height: 12,
             cursor: 'pointer',
+            accessibilityRetries: 1,
             action: (game) => {
                 const visits = game.getFlag('kim_class_talks') || 0;
-                game.setFlag('kim_class_talks', visits + 1);
+                game.setFlag('kim_class_met', true);
+                if (!game.accessibilityMode) game.setFlag('kim_class_talks', visits + 1);
                 const lines = [
                     [
                         { speaker: 'Kim', text: '*leather jacket, no welding helmet* Different vibe without the sparks, right? I clean up nice.' },
@@ -862,9 +872,11 @@ const HackerspaceClassroomScene = {
             width: 6,
             height: 12,
             cursor: 'pointer',
+            accessibilityRetries: 1,
             action: (game) => {
                 const visits = game.getFlag('joris_class_talks') || 0;
-                game.setFlag('joris_class_talks', visits + 1);
+                game.setFlag('joris_class_met', true);
+                if (!game.accessibilityMode) game.setFlag('joris_class_talks', visits + 1);
                 const idx = game.getFlag('classroom_presentation_index') || 0;
                 const pres = HackerspaceClassroomScene._presentations[idx];
                 const lines = [
