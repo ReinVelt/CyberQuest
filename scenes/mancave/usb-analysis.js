@@ -140,20 +140,22 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
         function typeLine() {
             if (lineIdx >= mountLines.length) {
                 // Show file listing
-                MC.schedule(() => showFileCards(), 400);
+                MC.schedule(() => showFileCards(), 900);
                 return;
             }
             const line = mountLines[lineIdx];
             const div = document.createElement('div');
             div.style.opacity = '0';
-            div.style.animation = 'mc-fadeIn 0.3s ease forwards';
+            div.style.animation = 'mc-fadeIn 0.4s ease forwards';
             div.textContent = line;
             if (line.includes('WARNING')) div.style.color = '#ffcc00';
             if (line.includes('CLEAN')) div.style.color = '#00ff41';
             term.appendChild(div);
             MC.playBeep(600 + lineIdx * 100);
             lineIdx++;
-            MC.schedule(typeLine, 600);
+            // WARNING line gets an extra long pause so it sinks in
+            const lineDelay = line.includes('WARNING') ? 1600 : line.includes('CLEAN') ? 1400 : 950;
+            MC.schedule(typeLine, lineDelay);
         }
 
         function showFileCards() {
@@ -164,7 +166,7 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
             USB_FILES.forEach((f, i) => {
                 MC.schedule(() => {
                     const row = document.createElement('div');
-                    row.style.cssText = 'padding:8px 12px;border-bottom:1px solid rgba(0,255,65,0.1);display:flex;justify-content:space-between;opacity:0;animation:mc-fadeIn 0.4s ease forwards;';
+                    row.style.cssText = 'padding:8px 12px;border-bottom:1px solid rgba(0,255,65,0.1);display:flex;justify-content:space-between;opacity:0;animation:mc-fadeIn 0.6s ease forwards;';
                     const nameSpan = `<span style="color:#00ff41;font-weight:bold">${f.name}</span>`;
                     const meta = `<span style="color:rgba(255,255,255,0.4);font-size:12px">${f.size} | ${f.date}${f.encrypted ? ' 🔒' : ''}</span>`;
                     row.innerHTML = nameSpan + meta;
@@ -174,18 +176,18 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
                     if (i === USB_FILES.length - 1) {
                         MC.schedule(() => {
                             const hint = document.createElement('div');
-                            hint.style.cssText = 'margin-top:15px;color:rgba(255,255,255,0.5);font-size:12px;animation:mc-fadeIn 0.5s ease;';
+                            hint.style.cssText = 'margin-top:15px;color:rgba(255,255,255,0.5);font-size:12px;animation:mc-fadeIn 0.7s ease;';
                             hint.textContent = '> Opening README.txt...';
                             term.appendChild(hint);
 
-                            MC.schedule(() => onDone(), 1500);
-                        }, 1200);
+                            MC.schedule(() => onDone(), 3000);
+                        }, 2000);
                     }
-                }, i * 800);
+                }, i * 1400);
             });
         }
 
-        MC.schedule(typeLine, 800);
+        MC.schedule(typeLine, 1400);
     }
 
     /* ══════════════════════════════════════════════════════════
@@ -209,11 +211,11 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
 
         const body = card.querySelector('.mc-doc-body');
         MC.typewrite(body, README_TEXT, {
-            speed: 18,
+            speed: 28,
             highlights: README_HIGHLIGHTS,
             onDone: () => {
                 MC.schedule(() => {
-                    // Ryan's reaction
+                    // Ryan's reaction — long pause first so player can finish reading
                     const reaction = document.createElement('div');
                     reaction.style.cssText = 'margin-top:20px;padding-top:15px;border-top:1px solid rgba(0,255,65,0.15);';
                     content.appendChild(reaction);
@@ -222,8 +224,8 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
                         { speaker: 'Ryan', text: 'Radiofrequency weapon. Steckerdoser Heide — that\'s 30 minutes from here.' },
                         { speaker: 'Ryan', text: '72 hours. They\'re moving to real deployment.' },
                         { speaker: 'Ryan', text: 'Let me check the schematics...' }
-                    ], { pauseBetween: 2000, useTTS: true, onDone: () => MC.schedule(onDone, 1500) });
-                }, 1000);
+                    ], { pauseBetween: 3000, useTTS: true, ttsGap: 900, onDone: () => MC.schedule(onDone, 3000) });
+                }, 3500);
             }
         });
     }
@@ -278,9 +280,9 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
             stamp.textContent = 'STRENG GEHEIM';
             stamp.style.color = 'rgba(255,0,0,0.12)';
             card.appendChild(stamp);
-        }, 1200);
+        }, 2200);
 
-        // Ryan's reaction
+        // Ryan's reaction — give player time to study the schematic first
         MC.schedule(() => {
             const reaction = document.createElement('div');
             reaction.style.cssText = 'margin-top:20px;';
@@ -291,8 +293,8 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
                 { speaker: 'Ryan', text: 'Phase control. Signal modulation. They can target specific frequencies.' },
                 { speaker: 'Ryan', text: 'Cars, planes, medical devices... this is a weapon of mass disruption.' },
                 { speaker: 'Ryan', text: 'One more file: evidence.zip. Encrypted.' }
-            ], { pauseBetween: 2000, useTTS: true, onDone: () => MC.schedule(onDone, 1500) });
-        }, 3000);
+            ], { pauseBetween: 3000, useTTS: true, ttsGap: 900, onDone: () => MC.schedule(onDone, 3000) });
+        }, 5500);
     }
 
     /* ══════════════════════════════════════════════════════════
@@ -410,7 +412,7 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
 
                     MC.redPulse(3000);
 
-                    // Ryan's reaction
+                    // Ryan's reaction — long silence first, then each line breathes
                     MC.schedule(() => {
                         const reaction = document.createElement('div');
                         reaction.style.cssText = 'margin-top:15px;';
@@ -424,11 +426,12 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
                             { speaker: 'Ryan', text: 'I need help. Need allies who understand what this technology can do.' },
                             { speaker: 'Ryan', text: '"E" was right. This is beyond me now.' }
                         ], {
-                            pauseBetween: 2200,
+                            pauseBetween: 3500,
                             useTTS: true,
-                            onDone: () => MC.schedule(onDone, 2000)
+                            ttsGap: 1200,
+                            onDone: () => MC.schedule(onDone, 3500)
                         });
-                    }, 3000);
+                    }, 5000);
                 }, 1500);
                 return;
             }
@@ -473,7 +476,8 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
             }
 
             incIdx++;
-            MC.schedule(showNextIncident, 3000);
+            // longer gap between incidents — let the weight of each one land
+            MC.schedule(showNextIncident, hasDead ? 5000 : 3800);
         }
 
         MC.schedule(showNextIncident, 1500);
