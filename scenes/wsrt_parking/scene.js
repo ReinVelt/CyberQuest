@@ -24,20 +24,17 @@ const WsrtParkingScene = {
     playerStart: { x: 50, y: 85 },
 
     // 🎬 Accessibility / Movie Mode — visit destinations in story order:
-    //   1. Planetenpad (always first, if not yet complete)
-    //   2. WSRT / ASTRON (once astron_unlocked)
-    //   3. Westerbork Memorial (once astron visited)
-    //   4. Drive home (all done)
+    //   1. WSRT / ASTRON (once astron_unlocked)
+    //   2. Westerbork Memorial (once astron visited)
+    //   3. Drive home
+    //   Planetenpad is optional — not forced in movie mode.
     accessibilityPath: [
         async function(game) {
-            if (!game.getFlag('planetenpad_complete')) {
-                // First priority: walk the Planetenpad
-                game.loadScene('planetenpad');
-            } else if (game.getFlag('astron_unlocked') && !game.getFlag('visited_astron')) {
-                // Second: visit ASTRON / WSRT
+            if (game.getFlag('astron_unlocked') && !game.getFlag('visited_astron')) {
+                // First: visit ASTRON / WSRT
                 game.loadScene('astron');
             } else if (game.getFlag('visited_astron') && !game.getFlag('visited_westerbork_memorial')) {
-                // Third: visit the memorial
+                // Second: visit the memorial
                 game.loadScene('westerbork_memorial');
             } else {
                 // All done — drive home

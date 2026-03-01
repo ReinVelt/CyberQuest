@@ -532,6 +532,7 @@ const UsbDiscoveryScene = {
         // Set flags
         game.setFlag('found_usb_stick', true);
         game.setFlag('usb_cinematic_played', true);
+        game.setFlag('visited_klooster', true); // USB found inside klooster grounds
     },
 
     _endCinematic: function(game) {
