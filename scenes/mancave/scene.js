@@ -609,43 +609,142 @@ const MancaveScene = {
         this._audioNodes = [];
         if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
     },
-    _startAmbientAudio: function() {
+    _startAmbientAudio: function(game) {
         var self = this, ctx = this._getAudioCtx();
         if (!ctx) return;
         try {
+            // ── story stage detection ──────────────────────────────────────────
+            // 0: first visit / just arrived
+            // 1: email checked, SSTV terminal active
+            // 2: first transmission received, tuning HackRF / decoding SSTV
+            // 3: klooster unlocked — mystery deepens, tension rises
+            // 4: evidence unlocked, USB analysed — hard intel, high tension
+            // 5: Volkov investigated, Eva identified — full alert / pre-mission
+            // 6: mission prep complete — final quiet before departure
+            var g = game || {};
+            var stage = 0;
+            if (g.getFlag) {
+                if      (g.getFlag('mission_prep_complete'))   stage = 6;
+                else if (g.getFlag('identified_eva'))          stage = 5;
+                else if (g.getFlag('evidence_unlocked'))       stage = 4;
+                else if (g.getFlag('klooster_unlocked'))       stage = 3;
+                else if (g.getFlag('sstv_transmission_received')) stage = 2;
+                else if (g.getFlag('checked_email'))           stage = 1;
+            }
+
+            // ── master bus — volume escalates with tension ─────────────────────
+            var masterVols = [0.28, 0.30, 0.34, 0.40, 0.44, 0.48, 0.22];
             var master = ctx.createGain();
             master.gain.setValueAtTime(0, ctx.currentTime);
-            master.gain.linearRampToValueAtTime(0.35, ctx.currentTime + 6); // slow, subtle fade-in
+            master.gain.linearRampToValueAtTime(masterVols[stage], ctx.currentTime + 6);
             master.connect(ctx.destination);
             self._audioNodes.push(master);
-            // ── server fan drone (dark, low, almost inaudible) ──
-            var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
-            var d = buf.getChannelData(0);
-            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-            var fan = ctx.createBufferSource(); fan.buffer = buf; fan.loop = true;
-            var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 420;
-            var fanG = ctx.createGain(); fanG.gain.value = 0.022;
-            fan.connect(lp); lp.connect(fanG); fanG.connect(master); fan.start();
-            self._audioNodes.push(fan, lp, fanG);
-            // ── 60 Hz power hum (barely perceptible) ──
-            var hum = ctx.createOscillator(); hum.type = 'sine'; hum.frequency.value = 60;
-            var humG = ctx.createGain(); humG.gain.value = 0.006;
+
+            // ── LAYER 1: server fan drone (always present) ────────────────────
+            var fanBuf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var fd = fanBuf.getChannelData(0);
+            for (var i = 0; i < fd.length; i++) fd[i] = Math.random() * 2 - 1;
+            var fan = ctx.createBufferSource(); fan.buffer = fanBuf; fan.loop = true;
+            var fanLp = ctx.createBiquadFilter(); fanLp.type = 'lowpass'; fanLp.frequency.value = 380;
+            var fanG  = ctx.createGain(); fanG.gain.value = 0.018 + stage * 0.002;
+            fan.connect(fanLp); fanLp.connect(fanG); fanG.connect(master); fan.start();
+            self._audioNodes.push(fan, fanLp, fanG);
+
+            // ── LAYER 2: 60 Hz power hum (scales with stage) ─────────────────
+            var hum  = ctx.createOscillator(); hum.type = 'sine'; hum.frequency.value = 60;
+            var humG = ctx.createGain(); humG.gain.value = 0.004 + stage * 0.0015;
             hum.connect(humG); humG.connect(master); hum.start();
             self._audioNodes.push(hum, humG);
-            // ── distant radio static (very soft, narrow) ──
-            var buf2 = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
-            var d2 = buf2.getChannelData(0);
-            for (var j = 0; j < d2.length; j++) d2[j] = Math.random() * 2 - 1;
-            var stat = ctx.createBufferSource(); stat.buffer = buf2; stat.loop = true;
-            var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800; bp.Q.value = 0.5;
-            var sG = ctx.createGain(); sG.gain.value = 0.007;
-            stat.connect(bp); bp.connect(sG); sG.connect(master); stat.start();
-            self._audioNodes.push(stat, bp, sG);
+
+            // ── LAYER 3: radio static (unlocks at stage >= 1, pitch up with tension) ──
+            if (stage >= 1) {
+                var sBuf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+                var sd = sBuf.getChannelData(0);
+                for (var j = 0; j < sd.length; j++) sd[j] = Math.random() * 2 - 1;
+                var stat = ctx.createBufferSource(); stat.buffer = sBuf; stat.loop = true;
+                var sbp  = ctx.createBiquadFilter(); sbp.type = 'bandpass';
+                sbp.frequency.value = 1400 + stage * 200; // sweeps up with tension
+                sbp.Q.value = 0.4;
+                var sG = ctx.createGain(); sG.gain.value = 0.005 + stage * 0.002;
+                stat.connect(sbp); sbp.connect(sG); sG.connect(master); stat.start();
+                self._audioNodes.push(stat, sbp, sG);
+            }
+
+            // ── LAYER 4: SSTV data bursts (stage 2-4: SSTV terminal active) ──
+            if (stage >= 2 && stage <= 4) {
+                function burstTick() {
+                    if (!self._audioCtx) return;
+                    var t = ctx.currentTime;
+                    var notes = [1050, 1200, 1500, 2300]; // classic SSTV tones
+                    var note  = notes[Math.floor(Math.random() * notes.length)];
+                    var osc   = ctx.createOscillator(); osc.type = 'sine';
+                    osc.frequency.setValueAtTime(note, t);
+                    var env = ctx.createGain();
+                    env.gain.setValueAtTime(0.012, t);
+                    env.gain.linearRampToValueAtTime(0, t + 0.04);
+                    osc.connect(env); env.connect(master);
+                    osc.start(t); osc.stop(t + 0.045);
+                    self._audioNodes.push(osc, env);
+                    self._audioIntervals.push(setTimeout(burstTick, 400 + Math.random() * 900));
+                }
+                self._audioIntervals.push(setTimeout(burstTick, 2000 + Math.random() * 1500));
+            }
+
+            // ── LAYER 5: heartbeat-like sub pulse (stage 3-5: high tension) ──
+            if (stage >= 3 && stage <= 5) {
+                var pulse   = ctx.createOscillator(); pulse.type = 'sine';
+                pulse.frequency.value = 42 + (stage - 3) * 4; // gets slightly higher with tension
+                var pulseLFO  = ctx.createOscillator(); pulseLFO.type = 'sine';
+                pulseLFO.frequency.value = 0.9 + (stage - 3) * 0.2; // beats faster at higher stages
+                var pulseLFOG = ctx.createGain(); pulseLFOG.gain.value = 0.010;
+                pulseLFO.connect(pulseLFOG); pulseLFOG.connect(pulse.frequency);
+                var pulseG = ctx.createGain(); pulseG.gain.value = 0.014 + (stage - 3) * 0.005;
+                pulse.connect(pulseG); pulseG.connect(master);
+                pulse.start(); pulseLFO.start();
+                self._audioNodes.push(pulse, pulseLFO, pulseLFOG, pulseG);
+            }
+
+            // ── LAYER 6: urgent interference crackles (stage 4-5: Volkov/Eva) ──
+            if (stage >= 4) {
+                function crackle() {
+                    if (!self._audioCtx) return;
+                    var t  = ctx.currentTime;
+                    var nb = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 0.035), ctx.sampleRate);
+                    var nd = nb.getChannelData(0);
+                    for (var k = 0; k < nd.length; k++) nd[k] = Math.random() * 2 - 1;
+                    var ns  = ctx.createBufferSource(); ns.buffer = nb;
+                    var cbp = ctx.createBiquadFilter(); cbp.type = 'bandpass';
+                    cbp.frequency.value = 1800 + Math.random() * 2000; cbp.Q.value = 1.5;
+                    var cenv = ctx.createGain();
+                    cenv.gain.setValueAtTime(0.016 + Math.random() * 0.012, t);
+                    cenv.gain.linearRampToValueAtTime(0, t + 0.035);
+                    ns.connect(cbp); cbp.connect(cenv); cenv.connect(master);
+                    ns.start(t); ns.stop(t + 0.04);
+                    self._audioNodes.push(ns, cbp, cenv);
+                    self._audioIntervals.push(setTimeout(crackle, 2500 + Math.random() * 6000));
+                }
+                self._audioIntervals.push(setTimeout(crackle, 3000 + Math.random() * 2000));
+            }
+
+            // ── LAYER 7: stage 6 — very soft wind (calm before the storm) ────
+            if (stage === 6) {
+                var wBuf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+                var wd   = wBuf.getChannelData(0);
+                for (var w = 0; w < wd.length; w++) wd[w] = Math.random() * 2 - 1;
+                var wind  = ctx.createBufferSource(); wind.buffer = wBuf; wind.loop = true;
+                var wlp1  = ctx.createBiquadFilter(); wlp1.type = 'lowpass';  wlp1.frequency.value = 280;
+                var whp   = ctx.createBiquadFilter(); whp.type  = 'highpass'; whp.frequency.value  = 60;
+                var wG    = ctx.createGain(); wG.gain.value = 0.018;
+                wind.connect(wlp1); wlp1.connect(whp); whp.connect(wG); wG.connect(master);
+                wind.start();
+                self._audioNodes.push(wind, wlp1, whp, wG);
+            }
+
         } catch(e) {}
     },
 
     onEnter: function(game) {
-        MancaveScene._startAmbientAudio();
+        MancaveScene._startAmbientAudio(game);
         document.getElementById('scene-background').className = 'scene-mancave';
 
         if (!game.getFlag('visited_mancave')) {
