@@ -35,6 +35,14 @@ const LivingroomScene = {
                     game.sceneTimeout(() => {
                         game.loadScene('tvdocumentary');
                     }, 2000);
+                } else if (game.accessibilityMode) {
+                    // 🎬 Movie mode: auto-pick next unwatched channel
+                    if (!game.getFlag('tv_documentary_watched')) {
+                        game.loadScene('tvdocumentary');
+                    } else if (!game.getFlag('tv_news_watched')) {
+                        game.loadScene('tvnews');
+                    }
+                    // If both watched, do nothing (path continues to to_home)
                 } else {
                     // Show channel picker overlay
                     LivingroomScene._showChannelPicker(game);
