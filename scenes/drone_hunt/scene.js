@@ -23,6 +23,22 @@ const DroneHuntScene = {
 
     playerStart: { x: 20, y: 88 },
 
+    // 🎬 Accessibility / Movie Mode
+    // Phase-gated hotspots already have enabled() callbacks — engine skips them
+    // when their phase hasn't been reached yet, then retries on the next loop pass.
+    accessibilityPath: [
+        'fallen_tree',     // phase 1 → deploy Meshtastic decoy
+        'tree_cover',      // phase 2 → hide from thermal sweep
+        'drone_overhead',  // phase 2→3 → drone sighting triggers GPS setup
+        'backpack',        // phase 3 → pull out HackRF One
+        'gps_frequency',   // phase 3 → configure GPS L1 frequency
+        'power_level',     // phase 3 → set transmission power
+        'spoof_target',    // phase 3 → set spoof target coordinates
+        'execute_spoof',   // phase 3, all params set → fire! (enabled guard)
+        'forest_path',     // phase 5 → proceed to facility (enabled guard)
+    ],
+    accessibilityLooping: true,
+
     idleThoughts: [
         'Those rotors are getting closer...',
         'Stay low. Stay quiet.',

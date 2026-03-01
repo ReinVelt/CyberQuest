@@ -19,6 +19,9 @@ const LofarScene = {
 
     playerStart: { x: 15, y: 80 },
 
+    // 🎬 Accessibility / Movie Mode
+    accessibilityPath: ['lba-antennas', 'hba-tiles', 'cees-lofar', 'drive-home'],
+
     idleThoughts: [
         "Thousands of antennas. No moving parts. Just mathematics.",
         "Digital beamforming — pointing a telescope with software.",

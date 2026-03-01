@@ -179,6 +179,8 @@ const MancaveScene = {
             width: 7.81,
             height: 7.41,
             cursor: 'pointer',
+            // Skip in accessibility mode once already tuned
+            enabled: (game) => game.getFlag('message_decoded') && !game.getFlag('frequency_tuned'),
             action: function(game) {
                 if (game.getFlag('message_decoded') && !game.getFlag('frequency_tuned')) {
                     game.startDialogue([
@@ -243,6 +245,8 @@ const MancaveScene = {
             width: 5.21,
             height: 4.63,
             cursor: 'pointer',
+            // Skip in accessibility mode once already in inventory
+            enabled: (game) => !game.hasItem('flipper_zero'),
             action: function(game) {
                 if (!game.hasItem('flipper_zero')) {
                     game.addToInventory({
@@ -272,6 +276,8 @@ const MancaveScene = {
             width: 4.0,
             height: 5.5,
             cursor: 'pointer',
+            // Skip in accessibility mode once already in inventory
+            enabled: (game) => !game.hasItem('wifi_pineapple'),
             action: function(game) {
                 if (!game.hasItem('wifi_pineapple')) {
                     game.addToInventory({
@@ -301,6 +307,8 @@ const MancaveScene = {
             width: 3.5,
             height: 5.0,
             cursor: 'pointer',
+            // Skip in accessibility mode once already in inventory
+            enabled: (game) => !game.hasItem('night_vision'),
             action: function(game) {
                 if (!game.hasItem('night_vision')) {
                     game.addToInventory({
@@ -384,6 +392,8 @@ const MancaveScene = {
             width: 4.17,
             height: 11.11,
             cursor: 'pointer',
+            // Skip in accessibility mode after mission prep is complete
+            enabled: (game) => game.getFlag('identified_eva') && !game.getFlag('mission_prep_complete'),
             action: function(game) {
                 // ── Part 15b: Configure Meshtastic for Eva ──
                 if (game.getFlag('identified_eva') && !game.getFlag('meshtastic_configured')) {
