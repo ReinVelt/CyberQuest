@@ -20,8 +20,21 @@ const TvdocumentaryScene = {
 
     playerStart: { x: 50, y: 85 },
 
-    // 🎬 Movie Mode: skip the documentary
-    accessibilityPath: ['skip_docu'],
+    // 🎬 Movie Mode: let the documentary auto-play to the end.
+    // The documentary starts automatically on onEnter and self-advances through
+    // all steps via TTS timers + auto-click. We just wait for it to finish.
+    // The skip_docu hotspot remains available as an emergency bail-out.
+    accessibilityPath: [
+        async function(game) {
+            // Poll every 3 s until the documentary sets tv_documentary_watched
+            // (happens when the last step auto-advances and calls loadScene).
+            // Hard cap: 10 minutes (should be ample for any TTS speed).
+            const started = Date.now();
+            while (!game.getFlag('tv_documentary_watched') && (Date.now() - started) < 600000) {
+                await game.wait(3000);
+            }
+        }
+    ],
 
     hotspots: [
         {
