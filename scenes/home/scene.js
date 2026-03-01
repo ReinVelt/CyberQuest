@@ -12,7 +12,20 @@ const HomeScene = {
     
     // Player starting position
     playerStart: { x: 50, y: 85 },
-    
+
+    // 🎬 Accessibility / Movie Mode — optimal story path
+    accessibilityPath: [
+        'espresso-machine',
+        async function(game) {
+            // Go to livingroom first if documentary not yet watched, else mancave
+            if (!game.getFlag('tv_documentary_watched')) {
+                game.loadScene('livingroom');
+            } else {
+                game.loadScene('mancave');
+            }
+        }
+    ],
+
     // Random idle thoughts for this scene
     idleThoughts: [
         "Coffee. Now.",
@@ -553,7 +566,7 @@ const HomeScene = {
             setTimeout(() => {
                 game.startDialogue([
                     { speaker: '', text: 'Compascuum, Netherlands. Another morning.' },
-                    { speaker: '', text: 'Ryan Weylant, hacker. Age 55. Lives with Ies and three rescue dogs.' },
+                    { speaker: '', text: 'Ryan Weylant, hacker. Age 42. Lives with Ies and three rescue dogs.' },
                     { speaker: 'Ryan', text: 'Coffee. Need coffee.' }
                 ]);
             }, 1000);

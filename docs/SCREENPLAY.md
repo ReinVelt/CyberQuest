@@ -14,7 +14,7 @@
 *(gravelly Dutch accent)*
 Some people need meditation. Some need yoga. I need caffeine. Industrial-grade caffeine.
 
-*Camera pulls back to reveal RYAN WEYLANT (55), a large, chubby man with a gray beard and round glasses. He's wearing a hoodie that says "I void warranties" and cargo pants with too many pockets.*
+*Camera pulls back to reveal RYAN WEYLANT (42), a large, chubby man with a gray beard and round glasses. He's wearing a hoodie that says "I void warranties" and cargo pants with too many pockets.*
 
 **RYAN**
 *(to the espresso machine)*

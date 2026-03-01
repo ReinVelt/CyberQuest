@@ -25,7 +25,7 @@
 ### Panel 1.3
 **Shot Type:** MEDIUM - RYAN REVEAL
 **Duration:** 4 sec
-**Description:** Pull back to reveal RYAN (55, chubby, gray beard, round glasses)
+**Description:** Pull back to reveal RYAN (42, chubby, gray beard, round glasses)
 **Sound:** First words of V.O.
 **Character Animation:** Ryan inhales aroma with closed eyes
 **Notes:** "I void warranties" hoodie visible
