@@ -615,31 +615,31 @@ const MancaveScene = {
         try {
             var master = ctx.createGain();
             master.gain.setValueAtTime(0, ctx.currentTime);
-            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 3);
+            master.gain.linearRampToValueAtTime(0.35, ctx.currentTime + 6); // slow, subtle fade-in
             master.connect(ctx.destination);
             self._audioNodes.push(master);
-            // ── server fan drone ──
+            // ── server fan drone (dark, low, almost inaudible) ──
             var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
             var d = buf.getChannelData(0);
             for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
             var fan = ctx.createBufferSource(); fan.buffer = buf; fan.loop = true;
-            var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 750;
-            var fanG = ctx.createGain(); fanG.gain.value = 0.045;
-            fan.connect(lp).connect(fanG).connect(master); fan.start();
+            var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 420;
+            var fanG = ctx.createGain(); fanG.gain.value = 0.022;
+            fan.connect(lp); lp.connect(fanG); fanG.connect(master); fan.start();
             self._audioNodes.push(fan, lp, fanG);
-            // ── 60 Hz power hum ──
+            // ── 60 Hz power hum (barely perceptible) ──
             var hum = ctx.createOscillator(); hum.type = 'sine'; hum.frequency.value = 60;
-            var humG = ctx.createGain(); humG.gain.value = 0.014;
-            hum.connect(humG).connect(master); hum.start();
+            var humG = ctx.createGain(); humG.gain.value = 0.006;
+            hum.connect(humG); humG.connect(master); hum.start();
             self._audioNodes.push(hum, humG);
-            // ── radio static (bandpass noise) ──
+            // ── distant radio static (very soft, narrow) ──
             var buf2 = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
             var d2 = buf2.getChannelData(0);
             for (var j = 0; j < d2.length; j++) d2[j] = Math.random() * 2 - 1;
             var stat = ctx.createBufferSource(); stat.buffer = buf2; stat.loop = true;
-            var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 2200; bp.Q.value = 1;
-            var sG = ctx.createGain(); sG.gain.value = 0.016;
-            stat.connect(bp).connect(sG).connect(master); stat.start();
+            var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800; bp.Q.value = 0.5;
+            var sG = ctx.createGain(); sG.gain.value = 0.007;
+            stat.connect(bp); bp.connect(sG); sG.connect(master); stat.start();
             self._audioNodes.push(stat, bp, sG);
         } catch(e) {}
     },
