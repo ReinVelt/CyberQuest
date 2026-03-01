@@ -79,6 +79,10 @@
     <pattern id="scanlines" width="2" height="3" patternUnits="userSpaceOnUse">
       <line x1="0" y1="0" x2="2" y2="0" stroke="#000" stroke-width="1" opacity="0.1"/>
     </pattern>
+    <!-- Hex panel clip -->
+    <clipPath id="hexPanelClip">
+      <rect x="60" y="80" width="340" height="500" rx="4"/>
+    </clipPath>
   </defs>
 
   <style>
@@ -102,6 +106,22 @@
       0%   { transform: translateY(0) scaleX(1); opacity: 0.45; }
       100% { transform: translateY(-32px) scaleX(1.5); opacity: 0; }
     }
+    @keyframes hexScroll {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-50%); }
+    }
+    @keyframes newMsgPulse {
+      0%, 100% { opacity: 0.8; }
+      50%       { opacity: 0.2; }
+    }
+    @keyframes secureGlow {
+      0%, 100% { opacity: 0.7; }
+      50%       { opacity: 1.0; }
+    }
+    @keyframes attachPulse {
+      0%, 100% { stroke-opacity: 0.4; }
+      50%       { stroke-opacity: 1.0; }
+    }
     .status { animation: statusBlink 3s ease-in-out infinite; }
     .dot1 { animation: typingDot 1.2s ease-in-out 0s infinite; }
     .dot2 { animation: typingDot 1.2s ease-in-out 0.4s infinite; }
@@ -110,6 +130,10 @@
     .notif-led { animation: ledBeat 2s ease-in-out infinite; }
     .steam { animation: steamUp 2.8s ease-out infinite; }
     .steam2 { animation: steamUp 2.8s ease-out 1s infinite; }
+    .hex-panel { animation: hexScroll 14s linear infinite; }
+    .new-msg-dot { animation: newMsgPulse 1.4s ease-in-out infinite; }
+    .secure-label { animation: secureGlow 2.2s ease-in-out infinite; }
+    .attach-border { animation: attachPulse 1.8s ease-in-out infinite; }
   </style>
 
   <!-- ── ROOM BACKGROUND ── -->
@@ -122,13 +146,65 @@
   <line x1="0" y1="300" x2="1920" y2="300" stroke="#0c0e14" stroke-width="1"/>
   <line x1="0" y1="380" x2="1920" y2="380" stroke="#080a0f" stroke-width="0.5"/>
 
-  <!-- ── BACKGROUND OBJECTS (blurred) ── -->
+  <!-- ── BACKGROUND OBJECTS (blurred) -->
   <!-- Laptop on left shelf (out of focus) -->
   <g opacity="0.12" filter="url(#softBlur)">
     <rect x="80" y="500" width="420" height="180" fill="#1a1a1e" rx="8"/>
     <rect x="88" y="508" width="404" height="164" fill="#0a0a0e" rx="5"/>
     <rect x="98" y="515" width="384" height="144" fill="#060c14" rx="3"/>
     <text x="290" y="595" font-family="monospace" font-size="14" fill="#004488" text-anchor="middle" opacity="0.6">$ ■</text>
+  </g>
+
+  <!-- ── HEX DATA STREAM PANEL (Hollywood hacker bg) ── -->
+  <g opacity="0.22" clip-path="url(#hexPanelClip)">
+    <rect x="60" y="80" width="340" height="500" fill="#04080e" rx="4" stroke="#0a2040" stroke-width="1"/>
+    <rect x="60" y="80" width="340" height="18" fill="#060e1a"/>
+    <text x="68" y="93" font-family="monospace" font-size="9" fill="#1a5a8a">◉ SIGNAL_INTERCEPT — LIVE FEED</text>
+    <!-- scrolling hex rows -->
+    <g class="hex-panel" font-family="monospace" font-size="8" fill="#0e3a60">
+      <!-- 24 rows, doubled for seamless loop -->
+      <text x="68" y="120">3a f8 0c 12 e4 7b 90 1d 56 aa 2f c3 81 4e 07 b2</text>
+      <text x="68" y="132">c7 3e 6d 00 f1 88 45 2a 9c 51 b7 0f d4 63 1e 8b</text>
+      <text x="68" y="144">02 e9 7c 4f a3 18 60 dc 95 2b 5e f0 33 ba 77 09</text>
+      <text x="68" y="156">8e 41 bc 26 73 0a cf 54 19 87 3c f5 62 ae 1b 4d</text>
+      <text x="68" y="168" fill="#1a5a8a">── KEY EXCHANGE ──────────────────</text>
+      <text x="68" y="180">d0 5f 2c 93 e7 14 6a 38 b1 4c 80 27 f6 59 0e a4</text>
+      <text x="68" y="192">6b 1f 8d 40 c2 75 3b 9e 22 67 04 ae 51 c8 3f 76</text>
+      <text x="68" y="204">a9 32 5c 0b f4 6e 19 85 dc 43 7a 01 ce 58 92 2d</text>
+      <text x="68" y="216">15 e0 4b 88 2a 7d b3 06 fc 39 60 c5 1a 4f 97 23</text>
+      <text x="68" y="228" fill="#0e4a20">── AES-256-GCM ENCRYPTED ────────</text>
+      <text x="68" y="240">70 bc 8e 11 53 c9 2e 47 a0 6d f2 35 8c 4a 01 79</text>
+      <text x="68" y="252">3e 64 9f 28 b5 0c 51 a7 1c 83 40 f6 2b 7d ce 95</text>
+      <text x="68" y="264">c1 56 0a 3d 88 f3 2c 69 b4 1e 75 a2 4f 0b 92 37</text>
+      <text x="68" y="276">48 d5 0e 83 2a 6f b1 3c 94 57 10 ec 29 74 c0 5b</text>
+      <text x="68" y="288" fill="#1a5a8a">── HMAC-SHA256 VERIFIED ─────────</text>
+      <text x="68" y="300">f7 2a 1b 60 9e 43 c8 05 72 3d a4 58 0f 81 26 bd</text>
+      <text x="68" y="312">84 19 5c 0a d3 67 2e b5 3f 90 c6 1d 48 7b 02 e5</text>
+      <text x="68" y="324">20 6c 4e b8 15 79 3a 01 cf 86 42 5d f0 28 93 1e</text>
+      <text x="68" y="336">5a 0d 72 c4 39 8b 1f 64 a7 2c 50 b3 06 e9 45 7c</text>
+      <!-- duplicate for seamless loop -->
+      <text x="68" y="348">3a f8 0c 12 e4 7b 90 1d 56 aa 2f c3 81 4e 07 b2</text>
+      <text x="68" y="360">c7 3e 6d 00 f1 88 45 2a 9c 51 b7 0f d4 63 1e 8b</text>
+      <text x="68" y="372">02 e9 7c 4f a3 18 60 dc 95 2b 5e f0 33 ba 77 09</text>
+      <text x="68" y="384">8e 41 bc 26 73 0a cf 54 19 87 3c f5 62 ae 1b 4d</text>
+      <text x="68" y="396" fill="#1a5a8a">── KEY EXCHANGE ──────────────────</text>
+      <text x="68" y="408">d0 5f 2c 93 e7 14 6a 38 b1 4c 80 27 f6 59 0e a4</text>
+      <text x="68" y="420">6b 1f 8d 40 c2 75 3b 9e 22 67 04 ae 51 c8 3f 76</text>
+      <text x="68" y="432">a9 32 5c 0b f4 6e 19 85 dc 43 7a 01 ce 58 92 2d</text>
+      <text x="68" y="444">15 e0 4b 88 2a 7d b3 06 fc 39 60 c5 1a 4f 97 23</text>
+      <text x="68" y="456" fill="#0e4a20">── AES-256-GCM ENCRYPTED ────────</text>
+      <text x="68" y="468">70 bc 8e 11 53 c9 2e 47 a0 6d f2 35 8c 4a 01 79</text>
+      <text x="68" y="480">3e 64 9f 28 b5 0c 51 a7 1c 83 40 f6 2b 7d ce 95</text>
+      <text x="68" y="492">c1 56 0a 3d 88 f3 2c 69 b4 1e 75 a2 4f 0b 92 37</text>
+      <text x="68" y="504">48 d5 0e 83 2a 6f b1 3c 94 57 10 ec 29 74 c0 5b</text>
+      <text x="68" y="516" fill="#1a5a8a">── HMAC-SHA256 VERIFIED ─────────</text>
+      <text x="68" y="528">f7 2a 1b 60 9e 43 c8 05 72 3d a4 58 0f 81 26 bd</text>
+      <text x="68" y="540">84 19 5c 0a d3 67 2e b5 3f 90 c6 1d 48 7b 02 e5</text>
+      <text x="68" y="552">20 6c 4e b8 15 79 3a 01 cf 86 42 5d f0 28 93 1e</text>
+      <text x="68" y="564">5a 0d 72 c4 39 8b 1f 64 a7 2c 50 b3 06 e9 45 7c</text>
+    </g>
+    <!-- bottom fade -->  
+    <rect x="60" y="490" width="340" height="90" fill="url(#roomBg)" opacity="0.8"/>
   </g>
 
   <!-- Printed documents stacked (right side) -->
@@ -191,28 +267,38 @@
     <!-- Screen content -->
     <g clip-path="url(#phoneScreenClip)">
 
-      <!-- Signal app header bar -->
-      <rect x="758" y="143" width="404" height="54" fill="#1a1e28"/>
-      <!-- Back arrow -->
-      <text x="778" y="178" font-family="sans-serif" font-size="16" fill="#3a8bc8">‹</text>
-      <!-- Contact avatar -->
-      <circle cx="810" cy="170" r="18" fill="#1e3a5a"/>
-      <text x="810" y="175" font-family="sans-serif" font-size="14" text-anchor="middle" fill="#6aaad8">K</text>
-      <!-- Contact name and status -->
-      <text x="838" y="166" font-family="sans-serif" font-size="13" fill="#e0e8f0" font-weight="bold">Chris Kubecka</text>
-      <g class="status">
-        <circle cx="840" cy="180" r="4" fill="#3ab86a"/>
-        <text x="850" y="183" font-family="sans-serif" font-size="10" fill="#3ab86a">Online</text>
-      </g>
-      <!-- Signal lock icon -->
-      <text x="1120" y="178" font-family="sans-serif" font-size="14" fill="#3a8bc8">🔒</text>
+      <!-- Signal app — SECURE CHANNEL banner -->
+      <rect x="758" y="143" width="404" height="18" fill="#060e14"/>
+      <text x="960" y="155" font-family="monospace" font-size="8" text-anchor="middle" fill="#1a6a3a" class="secure-label">▣ SECURE CHANNEL ESTABLISHED — AES-256-GCM + FORWARD SECRECY</text>
+
+      <!-- Tab bar: KUBECKA (active) | EVA [locked] -->
+      <rect x="758" y="161" width="404" height="28" fill="#111520"/>
+      <!-- Kubecka tab active -->
+      <rect x="758" y="161" width="190" height="28" fill="#1a2030"/>
+      <rect x="758" y="187" width="190" height="2" fill="#3a8bc8"/>
+      <text x="767" y="180" font-family="sans-serif" font-size="11" fill="#e0e8f0" font-weight="bold">KUBECKA</text>
+      <circle cx="845" cy="176" r="4" fill="#3ab86a" class="status"/>
+      <!-- Eva tab locked -->
+      <rect x="952" y="161" width="210" height="28" fill="#0e1018"/>
+      <text x="962" y="180" font-family="sans-serif" font-size="11" fill="#2a3a50">EVA WEBER</text>
+      <text x="1112" y="180" font-family="sans-serif" font-size="10" fill="#1e3248">🔒</text>
+      <!-- new message dot on Kubecka tab -->
+      <circle cx="830" cy="168" r="4" fill="#e05a30" class="new-msg-dot"/>
+
+      <!-- Contact header line -->
+      <rect x="758" y="189" width="404" height="36" fill="#1a1e28"/>
+      <circle cx="778" cy="207" r="14" fill="#1e3a5a"/>
+      <text x="778" y="212" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#6aaad8">K</text>
+      <text x="800" y="204" font-family="sans-serif" font-size="12" fill="#e0e8f0" font-weight="bold">Chris Kubecka</text>
+      <text x="800" y="218" font-family="sans-serif" font-size="9" fill="#3ab86a">● Online — message timer: 7 days</text>
+      <text x="1120" y="212" font-family="sans-serif" font-size="13" fill="#3a8bc8">🔒</text>
 
       <!-- Chat area background -->
-      <rect x="758" y="197" width="404" height="600" fill="#0e1018"/>
+      <rect x="758" y="225" width="404" height="440" fill="#0e1018"/>
 
       <!-- Date separator -->
-      <rect x="858" y="208" width="204" height="18" fill="#161a24" rx="9"/>
-      <text x="960" y="221" font-family="sans-serif" font-size="9" fill="#4a5a70" text-anchor="middle">Today — Encrypted</text>
+      <rect x="858" y="232" width="204" height="18" fill="#161a24" rx="9"/>
+      <text x="960" y="245" font-family="sans-serif" font-size="9" fill="#4a5a70" text-anchor="middle">Today — Encrypted</text>
 
       <!-- Received message 1 -->
       <rect x="768" y="236" width="248" height="52" fill="url(#bubbleRecv)" rx="14"/>
@@ -258,15 +344,21 @@
       <circle cx="818" cy="638" r="5" fill="#3a4a60" class="dot3"/>
 
       <!-- Compose bar at bottom -->
-      <rect x="758" y="667" width="404" height="54" fill="#14181e"/>
-      <rect x="768" y="678" width="300" height="32" fill="#1c2030" rx="16" stroke="#2a3040" stroke-width="1"/>
-      <text x="790" y="698" font-family="sans-serif" font-size="11" fill="#3a4a60">Type a message...</text>
-      <circle cx="1130" cy="694" r="14" fill="#2060a0"/>
-      <text x="1130" y="699" font-family="sans-serif" font-size="14" text-anchor="middle" fill="#e0f0ff">➤</text>
+      <rect x="758" y="687" width="404" height="34" fill="#14181e"/>
+      <rect x="768" y="692" width="260" height="24" fill="#1c2030" rx="12" stroke="#2a3040" stroke-width="1"/>
+      <text x="785" y="708" font-family="sans-serif" font-size="10" fill="#3a4a60">Type a message...</text>
+      <circle cx="1110" cy="704" r="12" fill="#2060a0"/>
+      <text x="1110" y="709" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#e0f0ff">➤</text>
+      <!-- History scroll hint -->
+      <text x="1082" y="704" font-family="sans-serif" font-size="9" fill="#1e3a58">↑ scroll</text>
 
-      <!-- Screen bottom nav -->
-      <rect x="758" y="721" width="404" height="40" fill="#101418"/>
-      <rect x="930" y="734" width="60" height="4" fill="#2a3040" rx="2"/>
+      <!-- Encryption footer bar -->
+      <rect x="758" y="721" width="404" height="22" fill="#080c12"/>
+      <text x="960" y="735" font-family="monospace" font-size="8" text-anchor="middle" fill="#1a4a2a" class="secure-label">AES-256-GCM • Signal Protocol v3 • Perfect Forward Secrecy • Open Source</text>
+
+      <!-- Screen bottom home bar -->
+      <rect x="758" y="743" width="404" height="18" fill="#101418"/>
+      <rect x="870" y="749" width="80" height="4" fill="#2a3040" rx="2"/>
 
     </g>
 

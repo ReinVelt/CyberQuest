@@ -1,9 +1,17 @@
 /**
  * Secure Phone Scene — Ryan's Signal-encrypted phone in the mancave
- * Handles: Kubecka contact, ZERFALL discovery, Eva photo reveal, Meshtastic pointer.
+ * Handles: Kubecka contact, ZERFALL discovery, facility map decrypt,
+ *          Eva photo reveal, Meshtastic pointer, full message history.
  *
  * Reached from: mancave → secure-phone hotspot
  * Returns to:   mancave (via back_to_mancave)
+ *
+ * Hotspots:
+ *   kubecka_chat        — main story progression
+ *   encrypted_attachment — facility_map.enc decrypt
+ *   message_history     — replay all received messages
+ *   zerfall_notes       — read desk notes
+ *   back_to_mancave     — return
  */
 
 const SecurePhoneScene = {
@@ -17,45 +25,45 @@ const SecurePhoneScene = {
     playerStart: { x: 50, y: 80 },
 
     // 🎬 Accessibility / Movie Mode
-    accessibilityPath: ['phone_screen', 'back_to_mancave'],
+    accessibilityPath: ['kubecka_chat', 'back_to_mancave'],
 
     idleThoughts: [
         "Encrypted. End-to-end. Still not enough.",
         "Signal is gold. Don't call people on plain GSM.",
         "No SIM card. WiFi only. Harder to triangulate.",
         "Chris Kubecka picks up on the first ring. Always.",
+        "AES-256-GCM. Perfect forward secrecy. Every key is one-time.",
     ],
 
     hotspots: [
-        // ── Phone Screen ───────────────────────────────────────────────
+
+        // ── Signal Chat — Kubecka ──────────────────────────────────
         {
-            id: 'phone_screen',
-            name: 'Phone Screen',
-            x: 5,
-            y: 5,
-            width: 85,
-            height: 80,
+            id: 'kubecka_chat',
+            name: 'Signal — Kubecka',
+            x: 39, y: 14, width: 22, height: 56,
             cursor: 'pointer',
             action: function(game) {
-                // ── Part 12: Contact Chris Kubecka ──
+
+                // Part 12: Contact Kubecka
                 if (game.getFlag('volkov_investigated') && !game.getFlag('contacted_kubecka')) {
                     window.MancaveVolkovInvestigation.playKubecka(game);
                     return;
                 }
 
-                // ── Part 13+14: Dead ends & ZERFALL discovery ──
+                // Part 13+14: ZERFALL nodes
                 if (game.getFlag('contacted_kubecka') && !game.getFlag('discovered_zerfall')) {
                     window.MancaveVolkovInvestigation.playZerfall(game);
                     return;
                 }
 
-                // ── Part 15: Photo analysis — Eva identity reveal ──
+                // Part 15: Eva identity reveal
                 if (game.getFlag('discovered_zerfall') && !game.getFlag('identified_eva')) {
                     window.MancaveEvaReveal.play(game);
                     return;
                 }
 
-                // ── After Eva identified — point to Meshtastic ──
+                // After Eva — point to Meshtastic
                 if (game.getFlag('identified_eva') && !game.getFlag('eva_contacted')) {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Eva Weber. IT Security Analyst. Whistleblower.' },
@@ -66,21 +74,146 @@ const SecurePhoneScene = {
                     return;
                 }
 
-                // ── Idle ──
+                // Idle / revisit
                 game.startDialogue([
-                    { speaker: 'Ryan', text: 'My secure phone. Signal encrypted. For conversations that matter.' }
+                    { speaker: 'Ryan', text: 'My secure phone. Signal encrypted, WiFi only.' },
+                    { speaker: 'Ryan', text: 'Kubecka is quiet. No new messages. That\'s either good or very bad.' },
                 ]);
             }
         },
 
-        // ── Back to Mancave ────────────────────────────────────────────
+        // ── Encrypted Attachment ──────────────────────────────────
+        {
+            id: 'encrypted_attachment',
+            name: '📎 facility_map.enc',
+            x: 39, y: 49, width: 11, height: 13,
+            cursor: 'pointer',
+            action: function(game) {
+
+                if (!game.getFlag('discovered_zerfall')) {
+                    game.startDialogue([
+                        { speaker: 'System', text: '> ENCRYPTED — AES-256-GCM' },
+                        { speaker: 'System', text: '> Decryption key required.' },
+                        { speaker: 'System', text: '> Ask Kubecka.' },
+                    ]);
+                    return;
+                }
+
+                if (!game.getFlag('facility_map_decrypted')) {
+                    game.startDialogue([
+                        { speaker: 'System', text: '> Decrypting facility_map.enc...' },
+                        { speaker: 'System', text: '> Key: 0xA8F3C2-MATCH ✓  HMAC verified ✓' },
+                        { speaker: 'System', text: '> File decrypted. Rendering...' },
+                        { speaker: 'Ryan', text: 'A floor plan. Three levels below ground.' },
+                        { speaker: 'Ryan', text: 'Server room is on B-3. Emergency access shaft — outside entry, 4-digit code.' },
+                        { speaker: 'Ryan', text: 'Kubecka already mapped the whole thing. This woman is something else.' },
+                    ]);
+                    game.setFlag('facility_map_decrypted', true);
+                    return;
+                }
+
+                // Already decrypted — remind
+                game.startDialogue([
+                    { speaker: 'Ryan', text: '[facility_map.enc — already decrypted]' },
+                    { speaker: 'Ryan', text: 'B-3. Server room. Emergency shaft — 4-digit code from outside.' },
+                ]);
+            }
+        },
+
+        // ── Message History ───────────────────────────────────────
+        {
+            id: 'message_history',
+            name: '📋 Scroll History',
+            x: 39, y: 71, width: 22, height: 7,
+            cursor: 'pointer',
+            action: function(game) {
+
+                if (!game.getFlag('contacted_kubecka')) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'No messages yet. I haven\'t reached out to Kubecka.' },
+                    ]);
+                    return;
+                }
+
+                // Build full log from flags
+                const msgs = [
+                    { speaker: 'System', text: '━━━━ SIGNAL LOG — KUBECKA ━━━━' },
+                    { speaker: 'System', text: 'AES-256-GCM  |  Forward Secrecy  |  Timer: 7d' },
+                ];
+
+                if (game.getFlag('contacted_kubecka')) {
+                    msgs.push(
+                        { speaker: 'Kubecka', text: 'Signal only from now on. Delete this chain after reading.' },
+                        { speaker: 'Ryan', text: 'Understood. Volkov profile: GRU — 161st Specialist Centre.' },
+                    );
+                }
+
+                if (game.getFlag('discovered_zerfall')) {
+                    msgs.push(
+                        { speaker: 'Kubecka', text: 'I have ZERFALL intercepts. Bluetooth mesh — 3 active nodes in Drenthe.' },
+                        { speaker: 'Ryan', text: 'Westerbork dish area. Need a Flipper Zero to crack the BT node.' },
+                        { speaker: 'Kubecka', text: 'Sending facility_map.enc. AES key via dead drop. Act fast.' },
+                    );
+                }
+
+                if (game.getFlag('facility_map_decrypted')) {
+                    msgs.push(
+                        { speaker: 'Ryan', text: '[Decrypted] B-3 server room. Emergency shaft — 4-digit code.' },
+                    );
+                }
+
+                if (game.getFlag('identified_eva')) {
+                    msgs.push(
+                        { speaker: 'Kubecka', text: 'The photo — Eva Weber. She went dark 6 months ago. Left breadcrumbs.' },
+                        { speaker: 'Kubecka', text: 'Follow the LoRa signal. 906.875 MHz. She\'s waiting.' },
+                        { speaker: 'Ryan', text: 'She\'s on Meshtastic. She planned for someone to find her.' },
+                    );
+                }
+
+                if (game.getFlag('eva_contacted')) {
+                    msgs.push(
+                        { speaker: 'Ryan', text: 'Eva is in. She has inside access. We go to the facility together.' },
+                    );
+                }
+
+                // Count unlocked stages
+                const stages = [
+                    game.getFlag('contacted_kubecka'),
+                    game.getFlag('discovered_zerfall'),
+                    game.getFlag('facility_map_decrypted'),
+                    game.getFlag('identified_eva'),
+                ].filter(Boolean).length;
+
+                msgs.push(
+                    { speaker: 'System', text: `━━━━ END OF LOG — ${msgs.length - 2} messages ━━━━` },
+                    { speaker: 'System', text: `Intelligence level: ${stages}/4 — ${['Minimal', 'Limited', 'Moderate', 'Solid', 'Complete'][stages]}` },
+                );
+
+                game.startDialogue(msgs);
+            }
+        },
+
+        // ── ZERFALL Notes on Desk ─────────────────────────────────
+        {
+            id: 'zerfall_notes',
+            name: 'ZERFALL Notes',
+            x: 67, y: 61, width: 14, height: 29,
+            cursor: 'pointer',
+            action: function(game) {
+                game.startDialogue([
+                    { speaker: 'Ryan', text: 'My notes. Everything I know about ZERFALL.' },
+                    { speaker: 'Ryan', text: 'BT-node-A confirmed at Westerbork. Node-B suspected on the facility roof. Node-C is mobile.' },
+                    { speaker: 'Ryan', text: 'Kubecka says the Bluetooth mesh is the command-and-control backbone for ZERFALL.' },
+                    { speaker: 'Ryan', text: 'Take out all three nodes simultaneously — ZERFALL goes blind. That\'s the window.' },
+                ]);
+            }
+        },
+
+        // ── Back to Mancave ───────────────────────────────────────
         {
             id: 'back_to_mancave',
             name: '← Mancave',
-            x: 88,
-            y: 88,
-            width: 12,
-            height: 12,
+            x: 88, y: 88, width: 12, height: 12,
             cursor: 'pointer',
             cssClass: 'hotspot-nav',
             skipWalk: true,
