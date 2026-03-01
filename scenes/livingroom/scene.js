@@ -229,7 +229,7 @@ const LivingroomScene = {
 
         const channels = [
             { id: 'tvdocumentary', label: 'NPO DOC', desc: 'Drenthe: The Unexpected Tech Hub', icon: '🎬' },
-            { id: 'tvnews',        label: 'NOS Journaal', desc: 'Latest news',                  icon: '📺' }
+            { id: 'tvnews',        label: 'RTV Drenthe',  desc: 'Regionaal nieuws',             icon: '📺' }
         ];
 
         const card = document.createElement('div');

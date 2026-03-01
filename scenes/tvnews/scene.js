@@ -1,20 +1,20 @@
 /**
- * TV News Scene — NOS Journaal Live Broadcast
+ * TV News Scene — RTV Drenthe Regionaal Nieuws
  * Cinematic news overlay with story-aware content:
- *   - Early game (storyPart < 13): Normal Dutch/regional news
+ *   - Early game (storyPart < 13): Normal regional Drenthe news
  *   - Mid game  (storyPart 13–16): Cryptic hints of unrest
  *   - Late game (news_broken flag): Full ZERFALL breaking news
  *
  * Uses same cinematic engine pattern as tvdocumentary scene:
  *   - Web Audio API synthesised news jingles & FX
- *   - BBC/NOS-style lower thirds, tickers, breaking alerts
+ *   - RTV Drenthe-style lower thirds, tickers, breaking alerts
  *   - Film grain, scan lines, vignette overlays
  *   - Speech-driven auto-advance with minimum reading time
  */
 
 const TvnewsScene = {
     id: 'tvnews',
-    name: 'NOS Journaal',
+    name: 'RTV Drenthe',
     background: 'assets/images/scenes/livingroom.svg',
     hidePlayer: true,
     playerStart: { x: 50, y: 70 },
@@ -35,7 +35,7 @@ const TvnewsScene = {
         } catch (e) { /* audio not critical */ }
     },
 
-    /** NOS-style three-tone news jingle (E5 → G5 → C6) */
+    /** RTV Drenthe regional news jingle (E5 → G5 → C6) */
     _playJingle() {
         if (!this._audioCtx) return;
         const ctx = this._audioCtx;
@@ -201,7 +201,7 @@ const TvnewsScene = {
                 // 0: BREAKING ALERT
                 {
                     sound: 'breaking',
-                    voice: { text: 'This is N.O.S. Journaal with breaking news. A major international espionage scandal has been uncovered at a German military research facility near the Dutch border.', speaker: 'Documentary' },
+                    voice: { text: 'This is R.T.V. Drenthe with breaking news. A major international espionage scandal has been uncovered at a German military research facility near the Dutch border.', speaker: 'Documentary' },
                     isBreaking: true,
                     content: `
                         <div class="news-bg breaking"></div>
@@ -276,12 +276,12 @@ const TvnewsScene = {
                 // 4: WRAP-UP
                 {
                     sound: 'jingle',
-                    voice: { text: 'We will continue to follow this developing story throughout the day. This is N.O.S. Journaal.', speaker: 'Documentary' },
+                    voice: { text: 'We will continue to follow this developing story throughout the day. This is R.T.V. Drenthe.', speaker: 'Documentary' },
                     content: `
                         <div class="news-bg"></div>
                         <div class="news-title-card">
-                            <div class="nos-logo">NOS</div>
-                            <h1>JOURNAAL</h1>
+                            <div class="nos-logo">RTV</div>
+                            <h1>REGIONAAL</h1>
                             <p class="news-tagline">We continue to follow this developing story</p>
                         </div>
                     `
@@ -296,12 +296,12 @@ const TvnewsScene = {
             return [
                 {
                     sound: 'jingle',
-                    voice: { text: 'Good evening. This is N.O.S. Journaal. Tonight: heightened security activity reported near the German border, and questions in parliament about foreign interference in European research programs.', speaker: 'Documentary' },
+                    voice: { text: 'Good evening. This is R.T.V. Drenthe. Tonight: heightened security activity reported near the German border, and questions in parliament about foreign interference in European research programs.', speaker: 'Documentary' },
                     content: `
                         <div class="news-bg"></div>
                         <div class="news-title-card">
-                            <div class="nos-logo">NOS</div>
-                            <h1>JOURNAAL</h1>
+                            <div class="nos-logo">RTV</div>
+                            <h1>REGIONAAL</h1>
                             <p class="news-tagline">20:00 uur</p>
                         </div>
                     `
@@ -344,12 +344,12 @@ const TvnewsScene = {
                 },
                 {
                     sound: 'jingle',
-                    voice: { text: 'That was N.O.S. Journaal. More news at eleven.', speaker: 'Documentary' },
+                    voice: { text: 'That was R.T.V. Drenthe. More news at eleven.', speaker: 'Documentary' },
                     content: `
                         <div class="news-bg"></div>
                         <div class="news-title-card">
-                            <div class="nos-logo">NOS</div>
-                            <h1>JOURNAAL</h1>
+                            <div class="nos-logo">RTV</div>
+                            <h1>REGIONAAL</h1>
                             <p class="news-tagline">Meer nieuws om 23:00</p>
                         </div>
                     `
@@ -363,12 +363,12 @@ const TvnewsScene = {
         return [
             {
                 sound: 'jingle',
-                voice: { text: 'Good evening. This is N.O.S. Journaal. Tonight: the Drenthe province announces new funding for rural broadband, and ASTRON celebrates thirty years of the Westerbork telescope array.', speaker: 'Documentary' },
+                voice: { text: 'Good evening. This is R.T.V. Drenthe. Tonight: the Drenthe province announces new funding for rural broadband, and ASTRON celebrates thirty years of the Westerbork telescope array.', speaker: 'Documentary' },
                 content: `
                     <div class="news-bg"></div>
                     <div class="news-title-card">
-                        <div class="nos-logo">NOS</div>
-                        <h1>JOURNAAL</h1>
+                        <div class="nos-logo">RTV</div>
+                        <h1>REGIONAAL</h1>
                         <p class="news-tagline">20:00 uur</p>
                     </div>
                 `
@@ -431,12 +431,12 @@ const TvnewsScene = {
             },
             {
                 sound: 'jingle',
-                voice: { text: 'That was N.O.S. Journaal. More news at eleven. Good evening.', speaker: 'Documentary' },
+                voice: { text: 'That was R.T.V. Drenthe. More news at eleven. Good evening.', speaker: 'Documentary' },
                 content: `
                     <div class="news-bg"></div>
                     <div class="news-title-card">
-                        <div class="nos-logo">NOS</div>
-                        <h1>JOURNAAL</h1>
+                        <div class="nos-logo">RTV</div>
+                        <h1>REGIONAAL</h1>
                         <p class="news-tagline">Meer nieuws om 23:00</p>
                     </div>
                 `
@@ -504,8 +504,8 @@ const TvnewsScene = {
                 font-size: 4.5em;
                 font-weight: 800;
                 letter-spacing: 12px;
-                color: #f06000;
-                text-shadow: 0 0 40px rgba(240,96,0,0.4);
+                color: #00a650;
+                text-shadow: 0 0 40px rgba(0,166,80,0.4);
                 margin-bottom: 8px;
                 opacity: 0;
                 animation: logoReveal 1s ease-out 0.2s forwards;
@@ -922,7 +922,7 @@ const TvnewsScene = {
             // Brand watermark
             const brand = document.createElement('div');
             brand.className = 'news-brand';
-            brand.textContent = 'NOS';
+            brand.textContent = 'RTV';
             screen.appendChild(brand);
 
             // Step counter
@@ -944,7 +944,7 @@ const TvnewsScene = {
             const ticker = document.createElement('div');
             ticker.className = `news-ticker${isBreakingNews ? ' breaking' : ''}`;
             ticker.innerHTML = `
-                <div class="news-ticker-label">${isBreakingNews ? 'BREAKING' : 'NOS'}</div>
+                <div class="news-ticker-label">${isBreakingNews ? 'BREAKING' : 'RTV'}</div>
                 <div class="news-ticker-text">${tickerItems.join('  ●  ')}</div>
             `;
             screen.appendChild(ticker);
