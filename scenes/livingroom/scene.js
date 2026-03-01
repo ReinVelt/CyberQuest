@@ -326,50 +326,169 @@ const LivingroomScene = {
             master.gain.linearRampToValueAtTime(0.72, ctx.currentTime + 5);
             master.connect(ctx.destination);
             self._audioNodes.push(master);
-            // ── fireplace base hiss (warm filtered noise, continuous) ──
+
+            // ── 1. Fireplace base hiss (warm filtered noise, continuous) ──
             var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
             var d = buf.getChannelData(0);
             for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
             var hiss = ctx.createBufferSource(); hiss.buffer = buf; hiss.loop = true;
             var lp1 = ctx.createBiquadFilter(); lp1.type = 'lowpass'; lp1.frequency.value = 900;
             var hp1 = ctx.createBiquadFilter(); hp1.type = 'highpass'; hp1.frequency.value = 180;
-            var hG = ctx.createGain(); hG.gain.value = 0.032;
-            hiss.connect(lp1).connect(hp1).connect(hG).connect(master); hiss.start();
+            var hG = ctx.createGain(); hG.gain.value = 0.030;
+            hiss.connect(lp1); lp1.connect(hp1); hp1.connect(hG); hG.connect(master);
+            hiss.start();
             self._audioNodes.push(hiss, lp1, hp1, hG);
-            // ── occasional soft crackle pops (very sparse) ──
-            var buf2 = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
-            var d2 = buf2.getChannelData(0);
-            for (var i = 0; i < d2.length; i++) d2[i] = Math.random() > 0.9996 ? (Math.random() * 2 - 1) * 1.2 : (Math.random() * 2 - 1) * 0.04;
-            var crk = ctx.createBufferSource(); crk.buffer = buf2; crk.loop = true;
-            var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 700; bp.Q.value = 0.4;
-            var cG = ctx.createGain(); cG.gain.value = 0.045;
-            crk.connect(bp).connect(cG).connect(master); crk.start();
-            self._audioNodes.push(crk, bp, cG);
-            // ── deep warm fire rumble (sine, very soft) ──
+
+            // ── 2. Deep warm fire rumble (LFO breathing) ──
             var rumble = ctx.createOscillator(); rumble.type = 'sine'; rumble.frequency.value = 40;
             var rf = ctx.createBiquadFilter(); rf.type = 'lowpass'; rf.frequency.value = 90;
-            // slow LFO breathing on the rumble
             var lfo = ctx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.12;
             var lfoG = ctx.createGain(); lfoG.gain.value = 0.006;
             lfo.connect(lfoG);
             var rG = ctx.createGain(); rG.gain.value = 0.011;
-            lfoG.connect(rG.gain);
-            rumble.connect(rf).connect(rG).connect(master);
+            lfoG.connect(rG.gain); rumble.connect(rf); rf.connect(rG); rG.connect(master);
             rumble.start(); lfo.start();
             self._audioNodes.push(rumble, rf, rG, lfo, lfoG);
-            // ── distant soft clock tick (very quiet, subtle) ──
-            var ti = setInterval(function() {
+
+            // ── 3. Crispy fire crackle bursts (random, occasional) ──
+            function fireCrackle() {
                 if (!self._audioCtx) return;
                 var t = ctx.currentTime;
-                var osc = ctx.createOscillator(); osc.type = 'sine'; osc.frequency.value = 720;
+                var pops = 2 + Math.floor(Math.random() * 5); // 2–6 pops per burst
+                for (var p = 0; p < pops; p++) {
+                    (function(offset) {
+                        var noiseLen = 0.010 + Math.random() * 0.030;
+                        var nb = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * noiseLen), ctx.sampleRate);
+                        var nd = nb.getChannelData(0);
+                        for (var i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+                        var ns = ctx.createBufferSource(); ns.buffer = nb;
+                        var bpf = ctx.createBiquadFilter(); bpf.type = 'bandpass';
+                        bpf.frequency.value = 700 + Math.random() * 1600; bpf.Q.value = 0.4 + Math.random() * 2;
+                        var env = ctx.createGain();
+                        var st = t + offset;
+                        env.gain.setValueAtTime(0, st);
+                        env.gain.linearRampToValueAtTime(0.05 + Math.random() * 0.09, st + 0.003);
+                        env.gain.exponentialRampToValueAtTime(0.0001, st + noiseLen);
+                        ns.connect(bpf); bpf.connect(env); env.connect(master);
+                        ns.start(st); ns.stop(st + noiseLen + 0.01);
+                        self._audioNodes.push(ns, bpf, env);
+                    })(p * (0.035 + Math.random() * 0.11));
+                }
+                // next burst: 3–13 seconds
+                var id = setTimeout(fireCrackle, 3000 + Math.random() * 10000);
+                self._audioIntervals.push(id);
+            }
+            self._audioIntervals.push(setTimeout(fireCrackle, 1200 + Math.random() * 2000));
+
+            // ── 4. Dog snoring (two dogs: Tino + Kessy) ──
+            function dogSnore(basePitch, cycleMs, startDelay) {
+                var id = setTimeout(function snoreLoop() {
+                    if (!self._audioCtx) return;
+                    var t = ctx.currentTime;
+                    var dur = 0.45 + Math.random() * 0.5;
+                    // nasal sawtooth through tight low-pass = convincing snore
+                    var osc = ctx.createOscillator(); osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(basePitch * 0.75, t);
+                    osc.frequency.linearRampToValueAtTime(basePitch * 1.25, t + dur * 0.55); // inhale rises
+                    osc.frequency.linearRampToValueAtTime(basePitch * 0.55, t + dur);        // exhale falls
+                    var lp = ctx.createBiquadFilter(); lp.type = 'lowpass';
+                    lp.frequency.value = 260 + Math.random() * 60; lp.Q.value = 3.8;
+                    var env = ctx.createGain();
+                    env.gain.setValueAtTime(0, t);
+                    env.gain.linearRampToValueAtTime(0.038 + Math.random() * 0.018, t + 0.09);
+                    env.gain.setValueAtTime(0.034, t + dur * 0.65);
+                    env.gain.linearRampToValueAtTime(0, t + dur + 0.1);
+                    osc.connect(lp); lp.connect(env); env.connect(master);
+                    osc.start(t); osc.stop(t + dur + 0.12);
+                    self._audioNodes.push(osc, lp, env);
+                    // next breath after gap (+/- variance)
+                    var nextId = setTimeout(snoreLoop, cycleMs + (Math.random() * 1400 - 700));
+                    self._audioIntervals.push(nextId);
+                }, startDelay);
+                self._audioIntervals.push(id);
+            }
+            dogSnore(88,  2900,  900); // Tino  — deeper, slower (bigger white dog)
+            dogSnore(115, 2300, 2700); // Kessy — slightly higher, quicker breathing
+
+            // ── 5. Outside birds (nice sunny weather — occasional) ──
+            function birdChirp() {
+                if (!self._audioCtx) return;
+                var t = ctx.currentTime;
+                var chirps = 1 + Math.floor(Math.random() * 4);
+                for (var c = 0; c < chirps; c++) {
+                    (function(ci) {
+                        var freq = 2100 + Math.random() * 1900;
+                        var len  = 0.04 + Math.random() * 0.10;
+                        var st   = t + ci * (0.11 + Math.random() * 0.20);
+                        var osc  = ctx.createOscillator(); osc.type = 'sine';
+                        osc.frequency.setValueAtTime(freq, st);
+                        osc.frequency.linearRampToValueAtTime(freq * (1.15 + Math.random() * 0.35), st + len * 0.5);
+                        osc.frequency.linearRampToValueAtTime(freq * 0.88, st + len);
+                        // light vibrato
+                        var vib  = ctx.createOscillator(); vib.type = 'sine';
+                        vib.frequency.value = 16 + Math.random() * 10;
+                        var vibG = ctx.createGain(); vibG.gain.value = 28;
+                        vib.connect(vibG); vibG.connect(osc.frequency);
+                        var env  = ctx.createGain();
+                        env.gain.setValueAtTime(0, st);
+                        env.gain.linearRampToValueAtTime(0.016 + Math.random() * 0.014, st + 0.012);
+                        env.gain.linearRampToValueAtTime(0, st + len + 0.025);
+                        osc.connect(env); env.connect(master);
+                        osc.start(st); osc.stop(st + len + 0.04);
+                        vib.start(st); vib.stop(st + len + 0.04);
+                        self._audioNodes.push(osc, vib, vibG, env);
+                    })(c);
+                }
+                // next bird: 9–30 seconds
+                var id = setTimeout(birdChirp, 9000 + Math.random() * 21000);
+                self._audioIntervals.push(id);
+            }
+            self._audioIntervals.push(setTimeout(birdChirp, 3500 + Math.random() * 5000));
+
+            // ── 6. Dog fart variations (rare comedic events — thanks ET) ──
+            var fartTypes = [
+                { dur: 0.16, f0: 65,  f1: 48,  vol: 0.048, lpf: 210 }, // quick squeaky toot
+                { dur: 0.60, f0: 48,  f1: 28,  vol: 0.060, lpf: 155 }, // long slow rumbler
+                { dur: 0.07, f0: 85,  f1: 72,  vol: 0.038, lpf: 195 }, // tiny blip
+                { dur: 0.95, f0: 42,  f1: 22,  vol: 0.068, lpf: 138 }, // epic extended fluffer
+                { dur: 0.28, f0: 60,  f1: 50,  vol: 0.050, lpf: 182 }, // mid wavering
+                { dur: 0.40, f0: 55,  f1: 38,  vol: 0.055, lpf: 165 }, // polite but unmistakable
+            ];
+            function dogFart() {
+                if (!self._audioCtx) return;
+                var v = fartTypes[Math.floor(Math.random() * fartTypes.length)];
+                var t = ctx.currentTime;
+                // noise body
+                var nb = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * (v.dur + 0.06)), ctx.sampleRate);
+                var nd = nb.getChannelData(0);
+                for (var i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+                var ns = ctx.createBufferSource(); ns.buffer = nb;
+                var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = v.lpf; lp.Q.value = 4.2;
+                // sub-osc for the signature low rumble
+                var osc = ctx.createOscillator(); osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(v.f0, t);
+                osc.frequency.linearRampToValueAtTime(v.f1, t + v.dur * 0.75);
+                osc.frequency.setValueAtTime(v.f1 * 0.65, t + v.dur);
+                var lp2 = ctx.createBiquadFilter(); lp2.type = 'lowpass'; lp2.frequency.value = v.lpf * 0.78;
                 var env = ctx.createGain();
                 env.gain.setValueAtTime(0, t);
-                env.gain.linearRampToValueAtTime(0.010, t + 0.004);
-                env.gain.linearRampToValueAtTime(0, t + 0.035);
-                osc.connect(env).connect(master); osc.start(t); osc.stop(t + 0.04);
-                self._audioNodes.push(osc, env);
-            }, 1000);
-            self._audioIntervals.push(ti);
+                env.gain.linearRampToValueAtTime(v.vol, t + 0.013);
+                // slight wobble mid-fart (authentic dog experience)
+                env.gain.setValueAtTime(v.vol * 0.88, t + v.dur * 0.35);
+                env.gain.setValueAtTime(v.vol * 1.05, t + v.dur * 0.65);
+                env.gain.linearRampToValueAtTime(0, t + v.dur + 0.05);
+                ns.connect(lp); lp.connect(env);
+                osc.connect(lp2); lp2.connect(env);
+                env.connect(master);
+                ns.start(t); ns.stop(t + v.dur + 0.07);
+                osc.start(t); osc.stop(t + v.dur + 0.07);
+                self._audioNodes.push(ns, lp, osc, lp2, env);
+                // next fart: 28–95 seconds (they're dogs, not machines)
+                var id = setTimeout(dogFart, 28000 + Math.random() * 67000);
+                self._audioIntervals.push(id);
+            }
+            self._audioIntervals.push(setTimeout(dogFart, 22000 + Math.random() * 28000));
+
         } catch(e) {}
     },
 
