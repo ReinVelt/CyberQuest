@@ -323,33 +323,50 @@ const LivingroomScene = {
         try {
             var master = ctx.createGain();
             master.gain.setValueAtTime(0, ctx.currentTime);
-            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 3);
+            master.gain.linearRampToValueAtTime(0.72, ctx.currentTime + 5);
             master.connect(ctx.destination);
             self._audioNodes.push(master);
-            // ── fireplace crackle (sparse impulse noise) ──
+            // ── fireplace base hiss (warm filtered noise, continuous) ──
             var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
             var d = buf.getChannelData(0);
-            for (var i = 0; i < d.length; i++) d[i] = Math.random() > 0.998 ? (Math.random() * 2 - 1) * 3 : (Math.random() * 2 - 1) * 0.08;
-            var fire = ctx.createBufferSource(); fire.buffer = buf; fire.loop = true;
-            var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1200; bp.Q.value = 0.5;
-            var fG = ctx.createGain(); fG.gain.value = 0.08;
-            fire.connect(bp).connect(fG).connect(master); fire.start();
-            self._audioNodes.push(fire, bp, fG);
-            // ── low fire rumble ──
-            var rumble = ctx.createOscillator(); rumble.type = 'sawtooth'; rumble.frequency.value = 38;
-            var rf = ctx.createBiquadFilter(); rf.type = 'lowpass'; rf.frequency.value = 80;
-            var rG = ctx.createGain(); rG.gain.value = 0.018;
-            rumble.connect(rf).connect(rG).connect(master); rumble.start();
-            self._audioNodes.push(rumble, rf, rG);
-            // ── clock tick ──
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var hiss = ctx.createBufferSource(); hiss.buffer = buf; hiss.loop = true;
+            var lp1 = ctx.createBiquadFilter(); lp1.type = 'lowpass'; lp1.frequency.value = 900;
+            var hp1 = ctx.createBiquadFilter(); hp1.type = 'highpass'; hp1.frequency.value = 180;
+            var hG = ctx.createGain(); hG.gain.value = 0.032;
+            hiss.connect(lp1).connect(hp1).connect(hG).connect(master); hiss.start();
+            self._audioNodes.push(hiss, lp1, hp1, hG);
+            // ── occasional soft crackle pops (very sparse) ──
+            var buf2 = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d2 = buf2.getChannelData(0);
+            for (var i = 0; i < d2.length; i++) d2[i] = Math.random() > 0.9996 ? (Math.random() * 2 - 1) * 1.2 : (Math.random() * 2 - 1) * 0.04;
+            var crk = ctx.createBufferSource(); crk.buffer = buf2; crk.loop = true;
+            var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 700; bp.Q.value = 0.4;
+            var cG = ctx.createGain(); cG.gain.value = 0.045;
+            crk.connect(bp).connect(cG).connect(master); crk.start();
+            self._audioNodes.push(crk, bp, cG);
+            // ── deep warm fire rumble (sine, very soft) ──
+            var rumble = ctx.createOscillator(); rumble.type = 'sine'; rumble.frequency.value = 40;
+            var rf = ctx.createBiquadFilter(); rf.type = 'lowpass'; rf.frequency.value = 90;
+            // slow LFO breathing on the rumble
+            var lfo = ctx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.12;
+            var lfoG = ctx.createGain(); lfoG.gain.value = 0.006;
+            lfo.connect(lfoG);
+            var rG = ctx.createGain(); rG.gain.value = 0.011;
+            lfoG.connect(rG.gain);
+            rumble.connect(rf).connect(rG).connect(master);
+            rumble.start(); lfo.start();
+            self._audioNodes.push(rumble, rf, rG, lfo, lfoG);
+            // ── distant soft clock tick (very quiet, subtle) ──
             var ti = setInterval(function() {
                 if (!self._audioCtx) return;
                 var t = ctx.currentTime;
-                var osc = ctx.createOscillator(); osc.type = 'triangle'; osc.frequency.value = 1000;
+                var osc = ctx.createOscillator(); osc.type = 'sine'; osc.frequency.value = 720;
                 var env = ctx.createGain();
-                env.gain.setValueAtTime(0.04, t);
-                env.gain.linearRampToValueAtTime(0, t + 0.015);
-                osc.connect(env).connect(master); osc.start(t); osc.stop(t + 0.02);
+                env.gain.setValueAtTime(0, t);
+                env.gain.linearRampToValueAtTime(0.010, t + 0.004);
+                env.gain.linearRampToValueAtTime(0, t + 0.035);
+                osc.connect(env).connect(master); osc.start(t); osc.stop(t + 0.04);
                 self._audioNodes.push(osc, env);
             }, 1000);
             self._audioIntervals.push(ti);
