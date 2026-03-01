@@ -796,7 +796,8 @@ const HackerspaceScene = {
             cursor: 'pointer',
             action: (game) => {
                 const visits = game.getFlag('dennis_talks') || 0;
-                game.setFlag('dennis_talks', visits + 1);
+                game.setFlag('dennis_met', true); // one-shot gate for movie-mode runner
+                if (!game.accessibilityMode) game.setFlag('dennis_talks', visits + 1);
                 const lines = [
                     [
                         { speaker: 'Dennis', text: '*adjusts glasses and looks up from the PCB* Oh, hey. Dennis. I keep the soldering stations running around here.' },
@@ -834,7 +835,8 @@ const HackerspaceScene = {
             cursor: 'pointer',
             action: (game) => {
                 const visits = game.getFlag('sophie_talks') || 0;
-                game.setFlag('sophie_talks', visits + 1);
+                game.setFlag('sophie_met', true); // one-shot gate for movie-mode runner
+                if (!game.accessibilityMode) game.setFlag('sophie_talks', visits + 1);
                 const lines = [
                     [
                         { speaker: 'Sophie', text: '*looks up from a Prusa printer, screwdriver in hand* Hey! I\'m Sophie. I run the 3D print workshop here.' },
@@ -872,7 +874,8 @@ const HackerspaceScene = {
             cursor: 'pointer',
             action: (game) => {
                 const visits = game.getFlag('marco_talks') || 0;
-                game.setFlag('marco_talks', visits + 1);
+                game.setFlag('marco_met', true); // one-shot gate for movie-mode runner
+                if (!game.accessibilityMode) game.setFlag('marco_talks', visits + 1);
                 const lines = [
                     [
                         { speaker: 'Marco', text: '*pulls down ear protection* Yo! Marco. I\'m the CNC guy. Plasma, lathe, mill — if it cuts metal, I operate it.' },
@@ -910,7 +913,8 @@ const HackerspaceScene = {
             cursor: 'pointer',
             action: (game) => {
                 const visits = game.getFlag('kim_talks') || 0;
-                game.setFlag('kim_talks', visits + 1);
+                game.setFlag('kim_met', true);
+                if (!game.accessibilityMode) game.setFlag('kim_talks', visits + 1);
                 const lines = [
                     [
                         { speaker: 'Kim', text: '*flips up welding helmet* Kim. I do the welding and the heavy fabrication. Don\'t let the leather jacket fool you — I\'m certified MIG, TIG, and stick.' },
@@ -948,7 +952,8 @@ const HackerspaceScene = {
             cursor: 'pointer',
             action: (game) => {
                 const visits = game.getFlag('joris_talks') || 0;
-                game.setFlag('joris_talks', visits + 1);
+                game.setFlag('joris_met', true);
+                if (!game.accessibilityMode) game.setFlag('joris_talks', visits + 1);
                 const lines = [
                     [
                         { speaker: 'Joris', text: '*pushes glasses up, closes laptop* Hey there. Joris. I\'m the software guy in a hardware space.' },
@@ -987,7 +992,8 @@ const HackerspaceScene = {
             cursor: 'pointer',
             action: (game) => {
                 const visits = game.getFlag('linda_talks') || 0;
-                game.setFlag('linda_talks', visits + 1);
+                game.setFlag('linda_met', true);
+                if (!game.accessibilityMode) game.setFlag('linda_talks', visits + 1);
                 const lines = [
                     [
                         { speaker: 'Linda', text: '*sets down coffee mug and adjusts reading glasses* Oh, hello dear. I\'m Linda. I\'m the bookkeeper — and the unofficial den mother of this place.' },
