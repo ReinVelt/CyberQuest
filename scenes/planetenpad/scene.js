@@ -25,6 +25,18 @@ const PlanetenpadScene = {
 
     playerStart: { x: 8, y: 88 },
 
+    // 🎬 Accessibility / Movie Mode — skip the walking cinematic, then continue to WSRT
+    accessibilityPath: [
+        async function(game) {
+            // Fast-skip the cinematic walk in movie mode
+            if (window.PlanetenpadScene && window.PlanetenpadScene._cinematicActive) {
+                window.PlanetenpadScene._skipCinematic();
+                await game.wait(2000);
+            }
+        },
+        'continue_to_wsrt',
+    ],
+
     idleThoughts: [
         "A model of the solar system at walking scale. My inner nerd is happy.",
         "Hard to believe Neptune is a full 750 metres from the Sun model.",

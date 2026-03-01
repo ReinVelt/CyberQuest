@@ -53,7 +53,7 @@ const SCENE_TIME_MAP = Object.freeze({
     // ── Day 3 — Wednesday Feb 11 ──
     long_night:           { day: 3, time: '01:00' },
     debrief:              { day: 3, time: '11:00' },
-    return_to_ies:        { day: 3, time: '20:00' },
+    return_to_max:        { day: 3, time: '20:00' },
     morning_after:        { day: 4, time: '08:00' },
 
     // ── Epilogue — May 2026 ──
@@ -2612,7 +2612,7 @@ class CyberQuestEngine {
                     <div class="dbg-time">08:00</div>
                     <div class="dbg-body">
                         <div class="dbg-scene-row">${sb('livingroom','🛋️ Living Room')} — IES calls, dog greets Ryan</div>
-                        <div class="dbg-flags">${fb('visited_livingroom')}${fb('talked_to_ies')}${fb('dog_interactions')}${fb('pug_interactions')}${fb('fireplace_interactions')}</div>
+                        <div class="dbg-flags">${fb('visited_livingroom')}${fb('talked_to_max')}${fb('dog_interactions')}${fb('pug_interactions')}${fb('fireplace_interactions')}</div>
                     </div>
                 </div>
 
@@ -2875,8 +2875,8 @@ class CyberQuestEngine {
                 <div class="dbg-step">
                     <div class="dbg-time">20:00</div>
                     <div class="dbg-body">
-                        <div class="dbg-scene-row">${sb('return_to_ies','🎤 Return to IES')} — Hollywood ending</div>
-                        <div class="dbg-flags">${fb('visited_return_to_ies')}${fb('return_to_ies_complete')}</div>
+                        <div class="dbg-scene-row">${sb('return_to_max','🎤 Return to IES')} — Hollywood ending</div>
+                        <div class="dbg-flags">${fb('visited_return_to_max')}${fb('return_to_max_complete')}</div>
                     </div>
                 </div>
             </div>
@@ -3163,7 +3163,7 @@ class CyberQuestEngine {
 
     debugPreset(preset) {
         const ALL_FLAGS = [
-            'game_started','made_espresso','espresso_count','talked_to_ies','saw_tv_documentary',
+            'game_started','made_espresso','espresso_count','talked_to_max','saw_tv_documentary',
             'tv_documentary_watched','documentary_completed_once','post_documentary_reminder_shown',
             'visited_livingroom','visited_garden','visited_mancave','visited_sdr_bench',
             'visited_dwingeloo','visited_westerbork_memorial','visited_astron','visited_planboard','visited_hackerspace','visited_hackerspace_classroom','classroom_presentation_index',

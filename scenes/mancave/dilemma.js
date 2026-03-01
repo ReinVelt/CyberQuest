@@ -27,7 +27,7 @@ window.MancaveDilemma = (function () {
             num: 'OPTION 2',
             title: 'Go to the Press',
             desc: 'WikiLeaks, Der Spiegel. Blow this wide open.',
-            monologue: '72 hours isn\'t enough time. And I\'d become target number one. Blown whistle, blown life. Ies, the dogs — they\'d all be in the spotlight.',
+            monologue: '72 hours isn\'t enough time. And I\'d become target number one. Blown whistle, blown life. Max, the dogs — they\'d all be in the spotlight.',
             rejected: true,
             direction: 'mc-slideLeft'
         },

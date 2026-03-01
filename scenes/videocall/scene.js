@@ -67,7 +67,7 @@ const VideocallScene = {
                         { speaker: 'David Prinsloo', text: '*Chuckles* Ah yes, the Dutch wireless legacy piece. They made us look very serious.' },
                         { speaker: 'David Prinsloo', text: 'Did you know they filmed me in our antenna testing lab with prototype arrays behind me?' },
                         { speaker: 'David Prinsloo', text: 'The director wanted "dramatic scientific atmosphere" or something.' },
-                        { speaker: 'Ryan', text: 'It worked. Very impressive. Ies was fascinated.' },
+                        { speaker: 'Ryan', text: 'It worked. Very impressive. Max was fascinated.' },
                         { speaker: 'David Prinsloo', text: 'How are your own radio projects going? Still monitoring satellites?' },
                         { speaker: 'Ryan', text: 'Always. Actually, I should get back to it. Talk soon?' },
                         { speaker: 'David Prinsloo', text: 'Anytime, Ryan. You know where to find me - listening to the universe.' }

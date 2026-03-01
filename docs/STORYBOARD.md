@@ -73,12 +73,12 @@
 ### Panel 3.2
 **Shot Type:** TWO-SHOT - RYAN AND IES
 **Duration:** 8 sec
-**Description:** Ryan and Ies have conversation about documentary
+**Description:** Ryan and Max have conversation about documentary
 **Dialogue:**
-- Ies: "You should watch this documentary tonight"
+- Max: "You should watch this documentary tonight"
 - Ryan: "Tech pioneers? In Drenthe?"
-- Ies: "Dr. Prinsloo, Cees Bassa, Jaap Haartsen..."
-**Character Animation:** Ies gestures at TV, Ryan looks interested but distracted
+- Max: "Dr. Prinsloo, Cees Bassa, Jaap Haartsen..."
+**Character Animation:** Max gestures at TV, Ryan looks interested but distracted
 
 ### Panel 3.3
 **Shot Type:** MEDIUM - RYAN LEAVING
@@ -90,7 +90,7 @@
 ### Panel 3.4
 **Shot Type:** CLOSE-UP - IES
 **Duration:** 2 sec
-**Description:** Ies shakes head fondly at TV
+**Description:** Max shakes head fondly at TV
 **Dialogue:** "He'll watch it."
 **Notes:** Knowing smile
 
@@ -1102,14 +1102,14 @@
 ### Panel 20.2
 **Shot Type:** INTERIOR — IES ON THE COUCH
 **Duration:** 4 sec
-**Description:** Ies is curled up on the couch under a blanket, a book closed on her lap. She's been waiting. She doesn't say anything — she just opens her arms.
+**Description:** Max is curled up on the couch under a blanket, a book closed on her lap. She's been waiting. She doesn't say anything — she just opens her arms.
 **Sound:** Soft lamp hum, clock ticking
-**Camera Move:** Slow push-in toward Ies
+**Camera Move:** Slow push-in toward Max
 
 ### Panel 20.3
 **Shot Type:** CLOSE-UP — IES'S FACE
 **Duration:** 4 sec
-**Description:** Ies's expression is complicated — relief, exhaustion, quiet anger that he went, quiet pride that he came back.
+**Description:** Max's expression is complicated — relief, exhaustion, quiet anger that he went, quiet pride that he came back.
 **Dialogue:** "I know what you did. I've been watching the news since six this morning."
 
 ### Panel 20.4
@@ -1117,9 +1117,9 @@
 **Duration:** 6 sec
 **Description:** Ryan sits beside her. They don't speak for a moment. The dogs rearrange around them.
 **Dialogue:**
-- Ies: "Was it worth it?"
+- Max: "Was it worth it?"
 - Ryan: "Ask me in ten years."
-- Ies: "*quiet* You're impossible."
+- Max: "*quiet* You're impossible."
 **Character Animation:** She leans her head against his shoulder. He stares at the lamp.
 
 ---
@@ -1148,9 +1148,9 @@
 ### Panel 21.4
 **Shot Type:** MEDIUM — IES IN DOORWAY
 **Duration:** 4 sec
-**Description:** Ies stands in the doorway with two mugs of coffee. The dogs crowd around her feet. She watches Ryan for a moment before he notices her.
+**Description:** Max stands in the doorway with two mugs of coffee. The dogs crowd around her feet. She watches Ryan for a moment before he notices her.
 **Dialogue:**
-- Ies: "You did the right thing, lieverd."
+- Max: "You did the right thing, lieverd."
 - Ryan: "I know. That's the strange part."
 
 ---

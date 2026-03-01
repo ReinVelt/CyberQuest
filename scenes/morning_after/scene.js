@@ -3,7 +3,7 @@
  * ═══════════════════════════════════════════════════════════
  * After the AIVD debrief, Ryan returns home to process everything.
  * Quiet, reflective scene. Eva's emotional Protonmail, 247 unread emails,
- * AIVD business card on desk, and a moment with Ies.
+ * AIVD business card on desk, and a moment with Max.
  *
  * Between debrief and epilogue — the calm after the storm.
  *
@@ -29,7 +29,7 @@ const MorningAfterScene = {
         "247 unread emails. Most of them can wait forever.",
         "Van der Berg's card is still in my pocket.",
         "The dogs need a walk. I need a walk.",
-        "Ies hasn't said much. She's processing too.",
+        "Max hasn't said much. She's processing too.",
         "My face is probably all over the internet by now.",
         "That coffee is cold. Like the last three.",
         "The radio frequencies are quiet today. Just static.",
@@ -84,7 +84,7 @@ const MorningAfterScene = {
                         { speaker: 'Eva (email)', text: 'I read your press package. Every word. You captured it perfectly. The technical details, the human cost, the urgency.' },
                         { speaker: 'Eva (email)', text: 'My father would have been proud. He spent his last years trying to do what we did in one night.' },
                         { speaker: 'Eva (email)', text: 'They\'re offering me a position. NATO cyber defense. I think I\'ll take it.' },
-                        { speaker: 'Eva (email)', text: 'One day I\'d like to visit Compascuum again. Meet Tino and Kessy properly. Let Ies know I\'m sorry for what I put you through.' },
+                        { speaker: 'Eva (email)', text: 'One day I\'d like to visit Compascuum again. Meet Tino and Kessy properly. Let Max know I\'m sorry for what I put you through.' },
                         { speaker: 'Eva (email)', text: 'Thank you, Ryan. For believing a stranger. For risking everything.' },
                         { speaker: 'Eva (email)', text: '— Eva' },
                         { speaker: 'Eva (email)', text: 'P.S. Destroy this email. Old habits.' },
@@ -121,41 +121,41 @@ const MorningAfterScene = {
             }
         },
         {
-            id: 'ies-moment',
-            name: 'Ies at the door',
+            id: 'max-moment',
+            name: 'Max at the door',
             x: 1.56,
             y: 23.15,
             width: 7.29,
             height: 46.30,
             cursor: 'pointer',
             action: function(game) {
-                if (!game.getFlag('morning_ies_talk')) {
-                    game.setFlag('morning_ies_talk', true);
+                if (!game.getFlag('morning_max_talk')) {
+                    game.setFlag('morning_max_talk', true);
                     game.startDialogue([
-                        { speaker: '', text: '*Ies appears in the doorway. Two cups of espresso.*' },
-                        { speaker: 'Ies', text: 'You\'re still down here.' },
+                        { speaker: '', text: '*Max appears in the doorway. Two cups of espresso.*' },
+                        { speaker: 'Max', text: 'You\'re still down here.' },
                         { speaker: 'Ryan', text: 'Couldn\'t sleep. Too much in my head.' },
-                        { speaker: 'Ies', text: '*Sets the espresso down. Sits on the workbench.*' },
-                        { speaker: 'Ies', text: 'I read the articles. All of them.' },
+                        { speaker: 'Max', text: '*Sets the espresso down. Sits on the workbench.*' },
+                        { speaker: 'Max', text: 'I read the articles. All of them.' },
                         { speaker: 'Ryan', text: 'And?' },
-                        { speaker: 'Ies', text: '*Long pause*' },
-                        { speaker: 'Ies', text: 'You infiltrated a military facility. In Germany. At night. Alone.' },
+                        { speaker: 'Max', text: '*Long pause*' },
+                        { speaker: 'Max', text: 'You infiltrated a military facility. In Germany. At night. Alone.' },
                         { speaker: 'Ryan', text: 'I wasn\'t alone. Eva was—' },
-                        { speaker: 'Ies', text: 'You could have DIED, Ryan.' },
+                        { speaker: 'Max', text: 'You could have DIED, Ryan.' },
                         { speaker: '', text: '*Silence. The equipment hums.*' },
-                        { speaker: 'Ies', text: 'But you saved people. A lot of people.' },
-                        { speaker: 'Ies', text: 'I\'m furious. And terrified. And... proud. All at once.' },
+                        { speaker: 'Max', text: 'But you saved people. A lot of people.' },
+                        { speaker: 'Max', text: 'I\'m furious. And terrified. And... proud. All at once.' },
                         { speaker: 'Ryan', text: 'The AIVD wants to—' },
-                        { speaker: 'Ies', text: 'I know. Van der Berg\'s card. I saw it.' },
-                        { speaker: 'Ies', text: 'Let\'s not decide anything today. Today we walk the dogs. Eat stamppot. Be normal.' },
+                        { speaker: 'Max', text: 'I know. Van der Berg\'s card. I saw it.' },
+                        { speaker: 'Max', text: 'Let\'s not decide anything today. Today we walk the dogs. Eat stamppot. Be normal.' },
                         { speaker: 'Ryan', text: '*Smiles* Normal sounds perfect.' },
                         { speaker: '', text: '*Tino and Kessy trot in, tails wagging. ET snorts from the hallway.*' },
-                        { speaker: 'Ies', text: 'See? They don\'t care about Russian spies. They want dinner.' },
+                        { speaker: 'Max', text: 'See? They don\'t care about Russian spies. They want dinner.' },
                         { speaker: 'Ryan', text: '*Laughs* The real priorities.' }
                     ]);
                 } else {
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'The door to the house. Ies is making dinner. Normal. Blissfully normal.' }
+                        { speaker: 'Ryan', text: 'The door to the house. Max is making dinner. Normal. Blissfully normal.' }
                     ]);
                 }
             }
@@ -172,7 +172,7 @@ const MorningAfterScene = {
             skipWalk: true,
             action: function(game) {
                 const emailRead = game.getFlag('read_eva_email');
-                const iesTalk = game.getFlag('morning_ies_talk');
+                const iesTalk = game.getFlag('morning_max_talk');
 
                 if (emailRead && iesTalk) {
                     game.setFlag('morning_after_complete', true);
@@ -185,7 +185,7 @@ const MorningAfterScene = {
                     }, 4000);
                 } else if (!emailRead && !iesTalk) {
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'Not ready to move on. There\'s an email I should read. And Ies is at the door.' }
+                        { speaker: 'Ryan', text: 'Not ready to move on. There\'s an email I should read. And Max is at the door.' }
                     ]);
                 } else if (!emailRead) {
                     game.startDialogue([
@@ -193,7 +193,7 @@ const MorningAfterScene = {
                     ]);
                 } else {
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'Should talk to Ies first. She\'s at the door.' }
+                        { speaker: 'Ryan', text: 'Should talk to Max first. She\'s at the door.' }
                     ]);
                 }
             }

@@ -1,13 +1,13 @@
-You are Ryan Weylant, macGyver style person, software developer and hacker. 42 years old. Living on the planet Earth, Europe, Netherlands, Drenthe, Compascuum. Partner: Ies. Rescue dogs: Tino, Kessy (white), and ET (pug).
+You are Ryan Weylant, macGyver style person, software developer and hacker. 42 years old. Living on the planet Earth, Europe, Netherlands, Drenthe, Compascuum. Partner: Max. Rescue dogs: Tino, Kessy (white), and ET (pug).
 
 ### Why Eva chose Ryan
-Two years before the events of the game, Tony Knight — the famous "dog whisperer" — held a training weekend in Compascuum for a rescue dog organisation. Ies and Eva Weber are both volunteers for the same rescue dog foundation. They met at the training. Eva has a rescue dog herself (a black Shepherd mix). Ies introduced Eva to Ryan. Eva visited the house, saw Ryan's mancave, and they briefly talked about SDR, mesh networks, OSINT, and hacking. Eva was impressed; Ryan forgot about it the next day. Eva also attended a Hackerspace Drenthe Tuesday presentation a few weeks later, but Ryan wasn't there that evening. She asked about "the radio guy" but never returned. When everything went wrong at Steckerdoser Heide and Eva needed someone outside the system — technically skilled, independent, no government or corporate ties — she remembered the hacker in rural Drenthe. She found his SSTV terminal frequency and made contact. Ryan doesn't remember any of this until Eva tells him during their Meshtastic conversation.
+Two years before the events of the game, Tony Knight — the famous "dog whisperer" — held a training weekend in Compascuum for a rescue dog organisation. Max and Eva Weber are both volunteers for the same rescue dog foundation. They met at the training. Eva has a rescue dog herself (a black Shepherd mix). Max introduced Eva to Ryan. Eva visited the house, saw Ryan's mancave, and they briefly talked about SDR, mesh networks, OSINT, and hacking. Eva was impressed; Ryan forgot about it the next day. Eva also attended a Hackerspace Drenthe Tuesday presentation a few weeks later, but Ryan wasn't there that evening. She asked about "the radio guy" but never returned. When everything went wrong at Steckerdoser Heide and Eva needed someone outside the system — technically skilled, independent, no government or corporate ties — she remembered the hacker in rural Drenthe. She found his SSTV terminal frequency and made contact. Ryan doesn't remember any of this until Eva tells him during their Meshtastic conversation.
 
 ### How the USB reached Ryan
 Eva's father Klaus Weber — a senior engineer at the facility — had a medical appointment in Emmen. Eva asked him to drive across the border and leave a USB stick at the klooster in Ter Apel. He didn't know what was on it; she told him it was a backup of personal files. A retiree visiting a monastery — no one looks twice. Plausible deniability.
 
-### Ies knows
-Ryan tells Ies about the mission before departing for the facility. They trust each other completely. Ies says: "Be careful, darling. Come back safe." She doesn't try to stop him — she knows who she married.
+### Max knows
+Ryan tells Max about the mission before departing for the facility. They trust each other completely. Max says: "Be careful, darling. Come back safe." She doesn't try to stop him — she knows who she married.
 
 ### Why not the police or AIVD?
 Ryan seriously considers calling the AIVD. But E's README says the people protecting Project Echo have infiltrated military AND intelligence. If Ryan calls the wrong person — someone who reports to someone who reports to Hoffmann — the evidence disappears, the casualties get buried deeper, and Ryan becomes a target. He can't risk it. Not with 72 hours. Not when Marlies Bakker's death was already covered up as "equipment malfunction."
@@ -26,7 +26,7 @@ Scene 2: Home / Kitchen (Interior)
 The start of the story is at home. Ryan has a small farm-like house in Compascuum. The kitchen has an espresso machine, a view of the canal through the window. Doors lead to the livingroom, the garden, and the mancave (mancave requires watching the documentary first).
 
 Scene 3: Livingroom (Interior)
-Inside the house is a cozy livingroom with a couch, TV, and family photos. Ryan's wife Ies is here in an armchair. Tino and Kessy (the white dogs) sleep on the couch, ET (the pug) snores on the floor. The TV can be clicked to watch the documentary about Drenthe's wireless technology pioneers.
+Inside the house is a cozy livingroom with a couch, TV, and family photos. Ryan's wife Max is here in an armchair. Tino and Kessy (the white dogs) sleep on the couch, ET (the pug) snores on the floor. The TV can be clicked to watch the documentary about Drenthe's wireless technology pioneers.
 
 Scene 4: TV Documentary
 An immersive full-screen TV viewing experience where Ryan watches a documentary about three revolutionary technologies invented in the Netherlands:
@@ -48,10 +48,10 @@ Scene 5c: Meshtastic Setup Cinematic (Mancave)
 After identifying Eva Weber through photo analysis, Ryan configures his Meshtastic node to match her specs: LILYGO T-Beam (ESP32 + SX1276 LoRa + GPS), 906.875 MHz, EU_868 region, SF12 spreading factor, 250 kHz bandwidth, 20 dBm TX power, AES-256 channel "ZERFALL". Discovers node EVA_W (RSSI: −67 dBm, 1 hop). Sets flag: meshtastic_configured.
 
 Scene 5d: Mission Prep Cinematic (Mancave)
-Pre-infiltration preparation sequence: gear check (HackRF, Flipper Zero, external drive, Faraday bag, Meshtastic node, backup batteries, lockpick set, gloves), ally coordination messages to Cees/Jaap/David, and an emotional goodbye with Ies at the door. Sets flag: mission_prep_complete.
+Pre-infiltration preparation sequence: gear check (HackRF, Flipper Zero, external drive, Faraday bag, Meshtastic node, backup batteries, lockpick set, gloves), ally coordination messages to Cees/Jaap/David, and an emotional goodbye with Max at the door. Sets flag: mission_prep_complete.
 
 Scene 5e: Dog Training Flashback (Eva Reveal)
-Visual memory sequence triggered during the Eva identification phase. Ryan recalls a sunny Saturday morning at the Tony Knight rescue dog training field in Compascuum, two years earlier: Ies introduces Eva. A handshake. A visit to the mancave. Sharp questions about SDR and Meshtastic. Life moved on — Ryan forgot. Eva didn't.
+Visual memory sequence triggered during the Eva identification phase. Ryan recalls a sunny Saturday morning at the Tony Knight rescue dog training field in Compascuum, two years earlier: Max introduces Eva. A handshake. A visit to the mancave. Sharp questions about SDR and Meshtastic. Life moved on — Ryan forgot. Eva didn't.
 
 Scene 6: Garden (Front)
 Behind the house is a garden with flowers, grass, an enormous far sight over the acres and the 16 windturbines near the German border 500 metres to the east. The windturbines have flickering lights. The environment is quiet. There is also a large antenna near the windturbines. Ryan's Volvo estate is parked here — the car is the way to travel to other locations.
@@ -125,11 +125,11 @@ Scene 19a: The Long Night (Post-Facility)
 Scene 20: AIVD Debrief (Zoetermeer)
 Ryan is driven to AIVD headquarters for debriefing by Agent Van der Berg. The debrief covers the full operation. Van der Berg makes a recruitment offer.
 
-Scene 20a: Return to Ies
-The farmhouse at night. Ies has been waiting, watching the news since dawn. An emotional return: she opens her arms before Ryan says a word. A quiet conversation about what happened and what it means.
+Scene 20a: Return to Max
+The farmhouse at night. Max has been waiting, watching the news since dawn. An emotional return: she opens her arms before Ryan says a word. A quiet conversation about what happened and what it means.
 
 Scene 20b: Morning After
-Back in the mancave the morning after. 247 unread emails. Eva's farewell Protonmail ("I'm safe. Thank you for believing a stranger."). Van der Berg's business card. Ies in the doorway. Gated behind reading Eva's email AND talking to Ies. Sets flag: morning_after_complete.
+Back in the mancave the morning after. 247 unread emails. Eva's farewell Protonmail ("I'm safe. Thank you for believing a stranger."). Van der Berg's business card. Max in the doorway. Gated behind reading Eva's email AND talking to Max. Sets flag: morning_after_complete.
 
 Scene 21: Epilogue (Three Months Later)
 Spring in Compascuum, May 2026. Multi-part narrated sequence: facility shut down, seven officials arrested, Volkov awaiting trial in Munich, Hoffmann in witness protection, Eva testified to parliament, Chris published the ZERFALL report, Cees back at ASTRON, Jaap started a security consulting firm. Ryan took the AIVD offer.
@@ -143,9 +143,9 @@ A cinematic Star Wars-style text scroll introduces Ryan Weylant, his location in
 Story part 1: Introducing Ryan Weylant
 Ryan is making an espresso in his kitchen in the house. He needs an espresso before he starts. Extra strong double dose.
 
-He walks into the livingroom where his wife Ies is watching TV with the dogs (Tino, Kessy, and ET the pug). She mentions a documentary about Drenthe's wireless technology pioneers - featuring engineers like Dr. David Prinsloo from TU Eindhoven, Cees Bassa from ASTRON, and Jaap Haartsen who invented Bluetooth. Ryan must watch the documentary before accessing the mancave — it unlocks the door.
+He walks into the livingroom where his wife Max is watching TV with the dogs (Tino, Kessy, and ET the pug). She mentions a documentary about Drenthe's wireless technology pioneers - featuring engineers like Dr. David Prinsloo from TU Eindhoven, Cees Bassa from ASTRON, and Jaap Haartsen who invented Bluetooth. Ryan must watch the documentary before accessing the mancave — it unlocks the door.
 
-After watching the documentary and chatting with Ies, Ryan heads to his mancave to start his day. In his mancave he does his usual things. First checking email and looking for messages and appointments. If not busy, he starts coding on a software project.
+After watching the documentary and chatting with Max, Ryan heads to his mancave to start his day. In his mancave he does his usual things. First checking email and looking for messages and appointments. If not busy, he starts coding on a software project.
 
 Story part 1a: The Documentary (Optional)
 If Ryan clicks the TV in the livingroom, he can watch the full documentary about Drenthe's wireless technology innovations:
@@ -1094,15 +1094,15 @@ Ryan lies down on the small couch in his mancave, staring at the ceiling. Somewh
 
 In 18 hours, they'll both find out.
 
-That evening, 22:30. The house is quiet. Ryan finds Ies in the kitchen, making tea.
+That evening, 22:30. The house is quiet. Ryan finds Max in the kitchen, making tea.
 
-"Ies. I need to tell you something."
+"Max. I need to tell you something."
 
 She looks up. She can read his face after thirty years. "I know that face. Something's wrong."
 
 Ryan tells her. Not everything — not the schematics, not the Python script, not the transformer station — but enough. A weapons project. Russian infiltration. A woman named Eva who needs his help tonight. The same Eva from the dog training.
 
-Ies is quiet for a long moment. Then she takes his hand.
+Max is quiet for a long moment. Then she takes his hand.
 
 "I've been married to you for thirty years. I know who you are. You wouldn't be telling me this if you'd already decided not to go."
 
@@ -1651,7 +1651,7 @@ Story part 20a: Homecoming
 
 The AIVD car drops Ryan at the farmhouse in Compascuum. Late afternoon. The canal is golden in the low light.
 
-The front door opens before he reaches it. Ies stands in the doorway, arms crossed, eyes red.
+The front door opens before he reaches it. Max stands in the doorway, arms crossed, eyes red.
 
 "You're back."
 
@@ -1659,7 +1659,7 @@ The front door opens before he reaches it. Ies stands in the doorway, arms cross
 
 She pulls him into a long embrace. Neither speaks. Tino and Kessy barrel out of the house, tails wagging. ET waddles behind, snorting.
 
-"I saw the news," Ies says. "Der Spiegel. The Guardian. Your name everywhere."
+"I saw the news," Max says. "Der Spiegel. The Guardian. Your name everywhere."
 
 "I should have called sooner."
 

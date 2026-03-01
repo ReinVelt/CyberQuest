@@ -176,7 +176,7 @@ Ryan's farmhouse kitchen in Compascuum. White walls, wooden furniture, espresso 
 - "Another day, another hack."
 - "Check my email... or not."
 - "Canal view never gets old."
-- "Need to call Ies later."
+- "Need to call Max later."
 - "That chair looks comfortable."
 - "Dutch countryside, best countryside."
 - "Morning light hits just right here."
@@ -202,16 +202,16 @@ Ryan's farmhouse kitchen in Compascuum. White walls, wooden furniture, espresso 
 **Player Visible:** Yes
 
 ### Description
-Cozy living room with couch, TV, family photos on walls. Ies (wife) here watching TV. ET the pug lounging nearby.
+Cozy living room with couch, TV, family photos on walls. Max (wife) here watching TV. ET the pug lounging nearby.
 
 ### Story Purpose
-- Character interaction (talk to Ies)
+- Character interaction (talk to Max)
 - Optional lore (watch documentary)
 - Pet the dog (because why not)
 - World-building (normal life before chaos)
 
 ### Characters
-- **Ies** - Ryan's wife, pragmatic, supportive
+- **Max** - Ryan's wife, pragmatic, supportive
 - **ET** - Pug, adorable, snack-motivated
 
 ### Hotspots
@@ -220,14 +220,14 @@ Cozy living room with couch, TV, family photos on walls. Ies (wife) here watchin
 - **Position:** (40, 30) 25x20
 - **Cursor:** look
 - **Action:** Watch documentary (launches tvdocumentary scene)
-- **Dialogue:** "Maybe I should watch that documentary Ies mentioned."
+- **Dialogue:** "Maybe I should watch that documentary Max mentioned."
 - **Target:** `tvdocumentary`
 - **Sets:** `watched_documentary` flag
 
-#### 2. Ies (Wife)
+#### 2. Max (Wife)
 - **Position:** (20, 50) 15x25
 - **Cursor:** talk
-- **Action:** Conversation with Ies
+- **Action:** Conversation with Max
 - **Dialogue:** Multiple conversation options
   - General chat about day
   - Ask about documentary
@@ -252,13 +252,13 @@ Cozy living room with couch, TV, family photos on walls. Ies (wife) here watchin
 - **Target:** `home`
 
 ### Idle Thoughts
-- "Ies knows something's up."
+- "Max knows something's up."
 - "ET needs a walk later."
 - "TV remote is... somewhere."
 - "This couch is too comfortable."
 
 ### State Management
-- **onEnter:** Spawn Ies and ET characters if not present
+- **onEnter:** Spawn Max and ET characters if not present
 - **onExit:** Keep characters (they live here)
 
 ---
@@ -846,7 +846,7 @@ Ryan's backyard garden. Flowers, grass, view over acres to German border. 16 win
 - "Germany is right there."
 - "Those turbines never stop."
 - "Need to check the car oil."
-- "Wonder what Ies is doing."
+- "Wonder what Max is doing."
 - "Could use some fresh air walks."
 
 ### State Management
@@ -1814,16 +1814,16 @@ morning debriefing.
 
 ---
 
-## Scene 33: RETURN_TO_IES - Return to Ies
+## Scene 33: RETURN_TO_IES - Return to Max
 
-**ID:** `return_to_ies`  
-**File:** `scenes/return_to_ies/scene.js` (813 lines)  
+**ID:** `return_to_max`  
+**File:** `scenes/return_to_max/scene.js` (813 lines)  
 **Type:** Story  
 **Player Visible:** Yes  
 **Clock:** Day 3 · 20:00
 
 ### Description
-Ryan returns home and tells Ies everything. Emotional resolution scene;
+Ryan returns home and tells Max everything. Emotional resolution scene;
 longest of the aftermath scenes. Sets final relationship flags before epilogue.
 
 ---
@@ -1837,7 +1837,7 @@ longest of the aftermath scenes. Sets final relationship flags before epilogue.
 **Clock:** Day 4 · 08:00
 
 ### Description
-The morning after the confrontation. Ryan, Ies, and possibly some allies at
+The morning after the confrontation. Ryan, Max, and possibly some allies at
 the kitchen table. News coverage in background. Short quiet scene that
 transitions to the epilogue timeline jump.
 
@@ -1852,7 +1852,7 @@ transitions to the epilogue timeline jump.
 | **Interface** | 5 | Planboard, map, videocall, sdr_bench, debrief |
 | **Cinematic** | 6 | Intro, documentary, driving ×2, epilogue, credits |
 | **Stealth / Puzzle** | 5 | Facility exterior, interior, laser corridor, server, drone hunt |
-| **Story / Aftermath** | 7 | USB/car discovery, long night, return to Ies, morning after, etc. |
+| **Story / Aftermath** | 7 | USB/car discovery, long night, return to Max, morning after, etc. |
 | **Average Playtime** | 3-6 hrs | Depends on reading speed, exploration |
 | **Total Dialogue Lines** | ~2,000+ | Estimated across all scenes |
 | **Unique Hotspots** | ~250+ | Interactive elements |

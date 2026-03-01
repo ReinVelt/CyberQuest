@@ -20,7 +20,7 @@ You are **Ryan Weylant**, a 55-year-old Dutch hacker living in Compascuum, a qui
 - **Ryan Weylant** - Protagonist, hacker, RF enthusiast (you!)
 - **Eva Weber ("E")** - Whistleblower inside the facility
 - **Dr. Dmitri Volkov** - Soviet weapons researcher, infiltrator
-- **Ies Weylant** - Ryan's wife, pragmatic support
+- **Max Weylant** - Ryan's wife, pragmatic support
 - **Chris Kubecka** - OSINT expert and security researcher
 - **Dr. David Prinsloo** - Antenna expert (TU Eindhoven)
 - **Cees Bassa** - LOFAR specialist (ASTRON)
@@ -161,7 +161,7 @@ CyberQuest/
 │   ├── facility_server/   # Climax scene 🎯
 │   ├── long_night/        # Post-infiltration night
 │   ├── debrief/           # Aftermath
-│   ├── return_to_ies/     # Coming home
+│   ├── return_to_max/     # Coming home
 │   ├── morning_after/     # Next morning
 │   ├── epilogue/          # Three months later
 │   └── credits/           # End credits
@@ -367,7 +367,7 @@ Version: 1.1
 - Expanded to 33 scenes (15 new scenes)
 - Pause system, scene-based clock, save format v2
 - Hackerspace, ASTRON, LOFAR, Westerbork scenes
-- Laser corridor, drone hunt, long night, return to Ies, morning after
+- Laser corridor, drone hunt, long night, return to Max, morning after
 - Engine line count: 1490 → 2704
 
 **v1.0 (February 15, 2026)** - Production Release

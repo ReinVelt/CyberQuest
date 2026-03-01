@@ -46,9 +46,9 @@ class VoiceManager {
             'Eva Weber':           { pitch: 1.25, rate: 0.88, lang: 'en-GB',
                 voicePreference: ['Google UK English Female', 'Kate', 'Microsoft Zira', 'female'] },
             
-            // ── Ies (Ryan's wife): Dutch female, warm and gentle ──
+            // ── Max (Ryan's wife): Dutch female, warm and gentle ──
             // Different voice from Eva: US English, softer, warmer pitch
-            'Ies':                 { pitch: 1.1,  rate: 0.85, lang: 'en-US',
+            'Max':                 { pitch: 1.1,  rate: 0.85, lang: 'en-US',
                 voicePreference: ['Google US English', 'Samantha', 'Victoria', 'female'] },
             
             // ── Chris Kubecka: Puerto Rican American female, confident, low pitch ──

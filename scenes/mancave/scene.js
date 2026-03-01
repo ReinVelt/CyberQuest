@@ -666,7 +666,7 @@ const MancaveScene = {
                     { speaker: 'Mother', text: 'I made erwtensoep. Froze some for you.' },
                     { speaker: 'Ryan', text: 'You\'re the best. I really will come visit.' },
                     { speaker: 'Mother', text: 'You look tired, schat. Are you eating properly?' },
-                    { speaker: 'Ryan', text: 'Yes, Mom. Ies takes good care of me.' },
+                    { speaker: 'Ryan', text: 'Yes, Mom. Max takes good care of me.' },
                     { speaker: 'Mother', text: 'Good. Don\'t forget your old mother! Love you, lieverd.' },
                     { speaker: 'Ryan', text: 'Love you too, Mom.' }
                 ]);

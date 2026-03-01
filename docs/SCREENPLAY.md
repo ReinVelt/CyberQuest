@@ -49,7 +49,7 @@ Coffee done already? That was fast.
 *(holding up espresso cup)*
 Double shot. Efficiency.
 
-*He starts to head out but Ies calls after him.*
+*He starts to head out but Max calls after him.*
 
 **IES**
 Wait - you should watch this documentary tonight. It's about those local tech pioneers.
@@ -79,7 +79,7 @@ It's about radio telescopes and signal processing. Your kind of thing!
 *(over his shoulder)*
 I'll watch it if I get bored!
 
-*Ryan exits toward the mancave. Ies shakes her head fondly.*
+*Ryan exits toward the mancave. Max shakes her head fondly.*
 
 **IES**
 *(to herself)*
@@ -112,9 +112,9 @@ Let's see who wants what today...
 
 ### INT. LIVINGROOM - EVENING (IF PLAYER CHOOSES)
 
-*If Ryan decides to take Ies's advice and watch the documentary...*
+*If Ryan decides to take Max's advice and watch the documentary...*
 
-*Ryan sits on the couch with Ies. The TV shows the NTR logo.*
+*Ryan sits on the couch with Max. The TV shows the NTR logo.*
 
 **NARRATOR (V.O.)**
 *(dramatic Dutch documentary voice)*

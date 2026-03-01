@@ -1,5 +1,5 @@
 /**
- * Living Room Scene - Ryan's home, where Ies watches TV
+ * Living Room Scene - Ryan's home, where Max watches TV
  */
 
 const LivingroomScene = {
@@ -57,35 +57,35 @@ const LivingroomScene = {
             height: 35,
             cursor: 'pointer',
             action: (game) => {
-                if (!game.getFlag('talked_to_ies')) {
-                    game.setFlag('talked_to_ies', true);
+                if (!game.getFlag('talked_to_max')) {
+                    game.setFlag('talked_to_max', true);
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'Hey Ies, watching documentaries again?' },
-                        { speaker: 'Ies', text: 'Ryan! This one is fascinating - it\'s about Drenthe\'s wireless technology pioneers.' },
-                        { speaker: 'Ies', text: 'They\'re featuring WSRT, LOFAR, and the Ericsson Bluetooth engineers.' },
+                        { speaker: 'Ryan', text: 'Hey Max, watching documentaries again?' },
+                        { speaker: 'Max', text: 'Ryan! This one is fascinating - it\'s about Drenthe\'s wireless technology pioneers.' },
+                        { speaker: 'Max', text: 'They\'re featuring WSRT, LOFAR, and the Ericsson Bluetooth engineers.' },
                         { speaker: 'Ryan', text: 'Wait, LOFAR and WSRT? Those are serious radio astronomy projects.' },
-                        { speaker: 'Ies', text: 'They interviewed actual engineers! A Dr. David Prinsloo from TU Eindhoven...' },
-                        { speaker: 'Ies', text: 'A man named Cees Bassa who works with LOFAR and satellite tracking...' },
-                        { speaker: 'Ies', text: 'And Jaap Haartsen who invented Bluetooth at Ericsson!' },
+                        { speaker: 'Max', text: 'They interviewed actual engineers! A Dr. David Prinsloo from TU Eindhoven...' },
+                        { speaker: 'Max', text: 'A man named Cees Bassa who works with LOFAR and satellite tracking...' },
+                        { speaker: 'Max', text: 'And Jaap Haartsen who invented Bluetooth at Ericsson!' },
                         { speaker: 'Ryan', text: '...Those are my contacts. David, Cees, and Jaap.' },
-                        { speaker: 'Ies', text: 'Really? Your hacker friends are famous engineers? That\'s amazing!' },
+                        { speaker: 'Max', text: 'Really? Your hacker friends are famous engineers? That\'s amazing!' },
                         { speaker: 'Ryan', text: 'They\'re more than friends. They\'re the best signal processing minds in the Netherlands.' },
-                        { speaker: 'Ies', text: 'You should watch it! The dogs are keeping me company if you want to go to your mancave.' },
+                        { speaker: 'Max', text: 'You should watch it! The dogs are keeping me company if you want to go to your mancave.' },
                         { speaker: 'Ryan', text: 'I might watch it later. Got some radio work to check first.' }
                     ]);
                 } else {
                     const watchedDoc = game.getFlag('tv_documentary_watched');
                     if (watchedDoc) {
                         game.startDialogue([
-                            { speaker: 'Ies', text: 'So, did you watch the whole documentary?' },
+                            { speaker: 'Max', text: 'So, did you watch the whole documentary?' },
                             { speaker: 'Ryan', text: 'Yeah, it was incredible. David Prinsloo, Cees Bassa, and Jaap Haartsen are true pioneers.' },
-                            { speaker: 'Ies', text: 'I told you it was good! They made Drenthe famous for wireless tech.' },
+                            { speaker: 'Max', text: 'I told you it was good! They made Drenthe famous for wireless tech.' },
                             { speaker: 'Ryan', text: 'It definitely gave me a new appreciation for their work.' }
                         ]);
                     } else {
                         game.startDialogue([
-                            { speaker: 'Ies', text: 'The documentary is really well done! You should watch the whole thing.' },
-                            { speaker: 'Ies', text: 'I had no idea wireless technology from Drenthe was so important globally!' },
+                            { speaker: 'Max', text: 'The documentary is really well done! You should watch the whole thing.' },
+                            { speaker: 'Max', text: 'I had no idea wireless technology from Drenthe was so important globally!' },
                             { speaker: 'Ryan', text: 'Yeah, we\'ve got some brilliant people here. Maybe I should watch it.' }
                         ]);
                     }
@@ -114,18 +114,18 @@ const LivingroomScene = {
                     [
                         { speaker: 'Ryan', text: 'Sound asleep by the fire, both of them.' },
                         { speaker: '', text: '*Tino\'s ear twitches at Ryan\'s voice but he stays asleep*' },
-                        { speaker: 'Ies', text: 'They love that spot! Been there all afternoon.' }
+                        { speaker: 'Max', text: 'They love that spot! Been there all afternoon.' }
                     ],
                     [
                         { speaker: 'Ryan', text: 'Rescue dogs. Both of them. Hard to imagine anyone giving them up.' },
-                        { speaker: 'Ies', text: 'Remember Tony Knight? The dog whisperer? When he came to Compascuum for the training weekend?' },
+                        { speaker: 'Max', text: 'Remember Tony Knight? The dog whisperer? When he came to Compascuum for the training weekend?' },
                         { speaker: 'Ryan', text: 'Vaguely. That was... two years ago?' },
-                        { speaker: 'Ies', text: 'Tino was still nervous around strangers back then. Tony worked with him for twenty minutes and he was a different dog.' },
-                        { speaker: 'Ies', text: 'I met so many lovely people that weekend. Other rescue dog volunteers from all over. Even a German woman... what was her name... Eva, I think.' },
+                        { speaker: 'Max', text: 'Tino was still nervous around strangers back then. Tony worked with him for twenty minutes and he was a different dog.' },
+                        { speaker: 'Max', text: 'I met so many lovely people that weekend. Other rescue dog volunteers from all over. Even a German woman... what was her name... Eva, I think.' },
                         { speaker: 'Ryan', text: 'I don\'t remember her.' },
-                        { speaker: 'Ies', text: 'You talked to her! I introduced you. She was interested in your tech stuff. You showed her the mancave.' },
+                        { speaker: 'Max', text: 'You talked to her! I introduced you. She was interested in your tech stuff. You showed her the mancave.' },
                         { speaker: 'Ryan', text: '...Really? I have no memory of that at all.' },
-                        { speaker: 'Ies', text: '*shrugs* You get so absorbed in your projects. A person could walk through your mancave and you\'d forget the next day.' },
+                        { speaker: 'Max', text: '*shrugs* You get so absorbed in your projects. A person could walk through your mancave and you\'d forget the next day.' },
                     ]
                 ];
                 
@@ -154,7 +154,7 @@ const LivingroomScene = {
                     ],
                     [
                         { speaker: 'Ryan', text: 'Nothing beats a real fire on a Drenthe evening.' },
-                        { speaker: 'Ies', text: 'The dogs agree with you!' }
+                        { speaker: 'Max', text: 'The dogs agree with you!' }
                     ]
                 ];
                 const idx = (game.getFlag('fireplace_interactions') || 0) % responses.length;
@@ -179,7 +179,7 @@ const LivingroomScene = {
                     [
                         { speaker: 'Ryan', text: 'Still walking around, ET?' },
                         { speaker: '', text: '*Snort snort* The pug is on patrol!' },
-                        { speaker: 'Ies', text: 'He never stops exploring!' }
+                        { speaker: 'Max', text: 'He never stops exploring!' }
                     ],
                     [
                         { speaker: 'Ryan', text: 'Why don\'t you join Tino and Kessy on the couch?' },
@@ -382,7 +382,7 @@ const LivingroomScene = {
             npcCharacters.forEach(npc => npc.remove());
         }
         
-        // Ies is drawn directly in the livingroom SVG (sitting on armchair)
+        // Max is drawn directly in the livingroom SVG (sitting on armchair)
         
         // Add two white dogs on the rug by the fireplace
         setTimeout(() => {
@@ -400,7 +400,7 @@ const LivingroomScene = {
             game.setFlag('visited_livingroom', true);
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: 'Ryan', text: 'The living room. Ies is watching TV.' },
+                    { speaker: 'Ryan', text: 'The living room. Max is watching TV.' },
                     { speaker: '', text: '*On screen: "Drenthe: The Unexpected Tech Hub" - Documentary*' },
                     { speaker: '', text: '*Tino and Kessy are sleeping peacefully on the rug by the fireplace*' },
                     { speaker: '', text: '*ET the pug waddles around exploring*' },
@@ -413,7 +413,7 @@ const LivingroomScene = {
             setTimeout(() => {
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'Okay, documentary watched. Time to get to work in the mancave.' },
-                    { speaker: 'Ies', text: 'Told you it was good! Your friends are amazing.' },
+                    { speaker: 'Max', text: 'Told you it was good! Your friends are amazing.' },
                     { speaker: 'Ryan', text: 'Yeah... it gives me new perspective on the signals I work with.' }
                 ]);
             }, 500);

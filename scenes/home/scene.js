@@ -34,7 +34,7 @@ const HomeScene = {
         "Another day, another hack.",
         "Check my email... or not.",
         "Canal view never gets old.",
-        "Need to call Ies later.",
+        "Need to call Max later.",
         "That chair looks comfortable.",
         "Dutch countryside, best countryside.",
         "Morning light hits just right here.",
@@ -75,7 +75,7 @@ const HomeScene = {
                         { speaker: 'Ryan', text: 'Okay, espresso time. Extra strong, double dose.' },
                         { speaker: '', text: '*The machine whirrs to life, grinding beans... hissing steam... rich aroma fills the kitchen*' },
                         { speaker: 'Ryan', text: 'Perfect. Now I can actually think.' },
-                        { speaker: 'Ryan', text: 'I should check what Ies is watching in the living room before heading to my mancave.' }
+                        { speaker: 'Ryan', text: 'I should check what Max is watching in the living room before heading to my mancave.' }
                     ]);
                     game.advanceTime(15);
                 }
@@ -122,7 +122,7 @@ const HomeScene = {
             condition: function(game) {
                 return game.getFlag('tv_documentary_watched');
             },
-            failMessage: 'I should check out that documentary Ies is watching in the living room first. Might learn something useful.',
+            failMessage: 'I should check out that documentary Max is watching in the living room first. Might learn something useful.',
             targetScene: 'mancave'
         },
         {
@@ -566,7 +566,7 @@ const HomeScene = {
             setTimeout(() => {
                 game.startDialogue([
                     { speaker: '', text: 'Compascuum, Netherlands. Another morning.' },
-                    { speaker: '', text: 'Ryan Weylant, hacker. Age 42. Lives with Ies and three rescue dogs.' },
+                    { speaker: '', text: 'Ryan Weylant, hacker. Age 42. Lives with Max and three rescue dogs.' },
                     { speaker: 'Ryan', text: 'Coffee. Need coffee.' }
                 ]);
             }, 1000);

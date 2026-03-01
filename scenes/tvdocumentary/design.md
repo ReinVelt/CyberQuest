@@ -129,7 +129,7 @@ An immersive full-screen TV viewing experience where Ryan watches a documentary 
 ## Story Integration
 
 ### Before Documentary
-- Ies mentions the documentary in livingroom
+- Max mentions the documentary in livingroom
 - References David Prinsloo, Cees Bassa, and Jaap Haartsen by name
 - Ryan doesn't realize they're his contacts initially
 
@@ -137,7 +137,7 @@ An immersive full-screen TV viewing experience where Ryan watches a documentary 
 - Ryan gains new appreciation for his contacts' work
 - Understands their expertise in signal processing
 - Contextualizes their involvement in Operation Zerfall investigation
-- Ies dialogue changes to reflect Ryan watched it
+- Max dialogue changes to reflect Ryan watched it
 
 ### Game Impact
 - Deepens understanding of supporting characters
@@ -163,7 +163,7 @@ An immersive full-screen TV viewing experience where Ryan watches a documentary 
 ### Flags Used
 - `saw_tv_documentary` - First time approaching TV
 - `tv_documentary_watched` - Completed full documentary
-- Affects Ies dialogue in livingroom
+- Affects Max dialogue in livingroom
 
 ---
 

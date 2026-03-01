@@ -17,6 +17,7 @@
 10. [Save/Load System](#save-load-system)
 11. [Player Character](#player-character)
 12. [Flag System](#flag-system)
+13. [Accessibility / Movie Mode](#accessibility--movie-mode)
 
 ---
 
@@ -185,7 +186,7 @@ game.startDialogue([
     text: 'What is this?',     // Dialogue text
     portrait: 'path/to.jpg'    // Optional portrait override
   },
-  { speaker: 'Ies', text: 'It looks dangerous.' },
+  { speaker: 'Max', text: 'It looks dangerous.' },
   { speaker: '', text: '*alarm blares*' }  // Narration/sound effect
 ], function(game) {
   // Called when all lines are done
@@ -691,7 +692,7 @@ The VoiceManager has built-in profiles for all named characters:
 "Ryan's Thoughts": { pitch: 0.85, rate: 0.90, … }
 
 // Contacts / allies
-'Ies':           { pitch: 1.15, rate: 0.95, … }   // Dutch female
+'Max':           { pitch: 1.15, rate: 0.95, … }   // Dutch female
 'Eva':           { pitch: 1.15, rate: 0.90, … }   // German female
 'Chris Kubecka': { pitch: 1.10, rate: 1.00, lang: 'en-US', … }
 'David Prinsloo':{ pitch: 0.95, rate: 1.00, … }
@@ -950,7 +951,7 @@ if (game.getFlag('sstv_decoded')) {
 - `game_complete`
 
 **Character Interactions:**
-- `talked_to_ies`
+- `talked_to_max`
 - `called_david`
 - `called_cees`
 - `called_jaap`
@@ -1156,7 +1157,7 @@ game.removeFromInventory('item_id');
 - [ ] Statistics (time played, scenes visited, choices made)
 - [x] Multiple save slots (3-5 slots) ✅
 - [ ] Cloud save sync
-- [ ] Accessibility mode (skip puzzles, auto-solve)
+- [x] Accessibility mode (movie mode — full auto-play) ✅
 - [ ] Hint system (progressive hints on timers)
 
 ### Under Consideration
@@ -1165,6 +1166,104 @@ game.removeFromInventory('item_id');
 - [ ] Character relationship tracking
 - [ ] Skill system (hacking, social engineering, etc.)
 - [ ] Time pressure mechanics (optional hard mode)
+
+---
+
+## Accessibility / Movie Mode
+
+**Location:** `engine/game.js`  
+**Toggle:** `🎬 Movie` button in bottom bar, or `game.toggleAccessibilityMode()`  
+**Indicator:** Persistent `🎬 Movie Mode` badge (bottom-right)
+
+A special game state in which CyberQuest plays itself as a movie. The entire story — all scenes, dialogues, animations, and puzzles — executes automatically in the optimal story order without skipping any content.
+
+### Behaviour
+
+| Feature | Normal Mode | Movie Mode |
+|---------|------------|------------|
+| Dialogue advance | Click / Space | Auto after TTS finishes |
+| Password puzzles | Player types answer | UI shown → answer typed automatically |
+| Scene traversal | Click hotspots | Runner executes hotspot path |
+| All scenes visited | Player chooses | Yes — optimal story path |
+
+### Scene Path Definition
+
+Each story-critical scene defines an `accessibilityPath` array on its scene object. Entries are either **hotspot ID strings** or **async functions** for conditional / custom navigation.
+
+```javascript
+const MyScene = {
+    id: 'my_scene',
+    accessibilityPath: [
+        'hotspot_id_1',          // string: runner finds + executes this hotspot
+        'hotspot_id_2',
+        async function(game) {   // function: custom logic (e.g. conditional drive)
+            if (game.getFlag('some_flag')) {
+                game.loadScene('next_scene');
+            }
+        }
+    ],
+    hotspots: [ ... ]
+};
+```
+
+**Runner behaviour per entry:**
+- **String**: waits for idle → 600 ms pause → walks player to hotspot → executes action
+- **Function**: waits for idle → 600 ms pause → awaits the function → waits for any triggered scene load to settle
+- Scene change detected mid-run → runner stops (new scene runner takes over)
+- Hotspot `enabled` / `condition` guards respected (disabled hotspots are skipped)
+
+### Engine Methods
+
+```javascript
+game.toggleAccessibilityMode()        // Toggle movie mode on/off
+game.accessibilityMode                // Current state (boolean)
+game._startAccessibilityRunner(scene) // Start runner for loaded scene
+game._stopAccessibilityRunner()       // Interrupt runner
+game._waitForIdle(timeout)            // Wait: no dialogue / puzzle / scene load
+```
+
+### Optimal Story Path
+
+All story scenes in order:
+
+| Scene | Key accessibilityPath entries |
+|-------|-------------------------------|
+| `intro` | Auto-cinematic (no path) |
+| `home` | `espresso-machine` → conditional nav to `livingroom` or `mancave` |
+| `livingroom` | `tv` → `to_home` |
+| `tvdocumentary` | Auto-cinematic (no path) |
+| `mancave` | Full multi-visit path: `laptop`, `sstv-terminal`, conditional `sdr_bench`, `hackrf`, USB analysis, allies, Eva contact, videocall, planboard, gear, exit |
+| `sdr_bench` | `sstv_decoder` → `back_to_mancave` |
+| `garden` | Function: drive to `klooster` → `astron` → `facility` based on flags |
+| `driving` / `driving_day` | Auto-cinematic (no path) |
+| `klooster` | `bench` → `volvo` |
+| `usb_discovery` | Auto-cinematic (no path) |
+| `car_discovery` | `usb_stick` → `car` |
+| `videocall` | `call_david` → `call_cees` → `call_jaap` → `exit_videocall` |
+| `planboard` | `back-button` |
+| `wsrt_parking` | `walk_planetenpad` |
+| `planetenpad` | Skip cinematic → `continue_to_wsrt` |
+| `astron` | `cees-bassa` → `wall-monitors` → `door-exit` |
+| `facility` | `trash_bin` → `camera` → `control_panel` |
+| `facility_interior` | `eva_mesh` → `basement_stairs` |
+| `facility_server` | Auto-cinematic → loads `driving(home_from_facility)` → `long_night` |
+| `long_night` | Auto-cinematic (no path) |
+| `debrief` | `continue-to-epilogue` |
+| `return_to_max` | `continue-morning` |
+| `morning_after` | `continue-epilogue` |
+| `epilogue` | Auto-cinematic (no path) |
+| `credits` | Auto-cinematic (no path) |
+
+### Key Flags Used by Runner
+
+| Flag | Set by | Checked by |
+|------|--------|------------|
+| `tv_documentary_watched` | `tvdocumentary` scene | `home` path function |
+| `message_decoded` | `sdr_bench` (SSTV decode) | `mancave` path function (skip sdr_bench re-entry) |
+| `videocall_done` | `exit_videocall` hotspot | `mancave` path function (skip re-launch) |
+| `visited_planboard` | `planboard` back-button | `mancave` path function (skip re-entry) |
+| `astron_unlocked` | `mancave/ally-recruitment.js` | `garden` path function (drive to WSRT) |
+| `drove_to_facility` | `garden` path function | `garden` path function (drive to facility) |
 
 ---
 

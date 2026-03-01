@@ -4,7 +4,7 @@
  * Pre-infiltration preparation sequence:
  *   Phase 1 — Gear Check (interactive equipment verification)
  *   Phase 2 — Ally Coordination (Cees monitoring, Jaap dead-man-switch, David standby)
- *   Phase 3 — Ies Goodbye (emotional farewell without full truth)
+ *   Phase 3 — Max Goodbye (emotional farewell without full truth)
  *
  * Triggered from mancave when all allies are ready and Eva has been contacted.
  * Uses MancaveCinematic shared utilities.
@@ -219,22 +219,22 @@ window.MancaveMissionPrep = (function () {
             content.appendChild(goodbyeDiv);
 
             MC.revealDialogue(goodbyeDiv, [
-                { speaker: '', text: '*Ryan walks to the kitchen. Ies is reading on the couch. The dogs are asleep.*' },
-                { speaker: 'Ies', text: 'You\'re going somewhere.' },
+                { speaker: '', text: '*Ryan walks to the kitchen. Max is reading on the couch. The dogs are asleep.*' },
+                { speaker: 'Max', text: 'You\'re going somewhere.' },
                 { speaker: 'Ryan', text: 'Just... a late-night drive. Testing some equipment.' },
-                { speaker: 'Ies', text: '*Puts down her book. Looks at him carefully.*' },
-                { speaker: 'Ies', text: 'You\'re wearing your black jacket. You packed a bag. And you have that look.' },
+                { speaker: 'Max', text: '*Puts down her book. Looks at him carefully.*' },
+                { speaker: 'Max', text: 'You\'re wearing your black jacket. You packed a bag. And you have that look.' },
                 { speaker: 'Ryan', text: 'What look?' },
-                { speaker: 'Ies', text: 'The one where you\'re about to do something stupid and brave.' },
+                { speaker: 'Max', text: 'The one where you\'re about to do something stupid and brave.' },
                 { speaker: '', text: '*Long pause. The dog clock ticks on the wall.*' },
-                { speaker: 'Ies', text: 'I won\'t ask. Just... come home.' },
+                { speaker: 'Max', text: 'I won\'t ask. Just... come home.' },
                 { speaker: 'Ryan', text: 'I will. I promise.' },
-                { speaker: 'Ies', text: '*Stands up. Hugs him. Holds on tight.*' },
-                { speaker: 'Ies', text: 'The dogs will be waiting. I\'ll be waiting.' },
+                { speaker: 'Max', text: '*Stands up. Hugs him. Holds on tight.*' },
+                { speaker: 'Max', text: 'The dogs will be waiting. I\'ll be waiting.' },
                 { speaker: '', text: '*Tino lifts his head, watches Ryan pick up the bag.*' },
                 { speaker: '', text: '*ET opens one eye, decides it\'s not food-related, and goes back to sleep.*' },
                 { speaker: 'Ryan', text: '*At the door* I love you.' },
-                { speaker: 'Ies', text: 'I know. Now go.' }
+                { speaker: 'Max', text: 'I know. Now go.' }
             ], {
                 pauseBetween: 2200,
                 onDone: resolve

@@ -81,7 +81,7 @@
     <rect x="300" y="65" width="310" height="10" rx="5" fill="#654321" stroke="#3D2817" stroke-width="2"/>
   </g>
 
-  <!-- ==================== ARMCHAIR (where Ies sits) ==================== -->
+  <!-- ==================== ARMCHAIR (where Max sits) ==================== -->
   <g id="armchair">
     <ellipse cx="440" cy="720" rx="130" ry="18" fill="#000" opacity="0.2"/>
     <rect x="340" y="400" width="240" height="70" rx="14" fill="url(#chairGradient)" stroke="#3D2817" stroke-width="4"/>

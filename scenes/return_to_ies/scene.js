@@ -1,8 +1,8 @@
 /**
- * Scene: Return to Ies — The Homecoming  ★ HOLLYWOOD EDITION ★
+ * Scene: Return to Max — The Homecoming  ★ HOLLYWOOD EDITION ★
  * ═══════════════════════════════════════════════════════════
  * After the AIVD debrief in Den Haag, Ryan returns home
- * late at night. Ies is waiting up. He tells her everything.
+ * late at night. Max is waiting up. He tells her everything.
  *
  * Cinematic layer-cake:
  *  ▸ Letterbox bars + fade-in
@@ -14,19 +14,22 @@
  *  ▸ Section-transition cinematic wipes
  *  ▸ Vignette intensity shifts with dramatic beats
  *
- * Flow: debrief → return_to_ies → morning_after
- * Background: livingroom.svg (Ies baked into SVG)
- * Flags set: return_to_ies_complete
+ * Flow: debrief → return_to_max → morning_after
+ * Background: livingroom.svg (Max baked into SVG)
+ * Flags set: return_to_max_complete
  * ═══════════════════════════════════════════════════════════
  */
 
-const ReturnToIesScene = {
-    id: 'return_to_ies',
-    name: 'Return to Ies',
+const ReturnToMaxScene = {
+    id: 'return_to_max',
+    name: 'Return to Max',
 
     background: 'assets/images/scenes/livingroom.svg',
-    description: 'The living room at night. A single lamp glows. Ies is curled up on the couch, waiting.',
+    description: 'The living room at night. A single lamp glows. Max is curled up on the couch, waiting.',
     playerStart: { x: 80, y: 85 },
+
+    // 🎬 Accessibility / Movie Mode — continue to next morning
+    accessibilityPath: ['continue-morning'],
 
     _timeoutIds: [],
     _intervalIds: [],
@@ -44,15 +47,15 @@ const ReturnToIesScene = {
             cssClass: 'hotspot-nav',
             skipWalk: true,
             action(game) {
-                if (game.getFlag('return_to_ies_complete')) {
+                if (game.getFlag('return_to_max_complete')) {
                     game.startDialogue([
-                        { speaker: '', text: '*Hours later. The fire has burned to embers. The dogs are asleep. Ies rests her head on Ryan\'s shoulder.*' },
+                        { speaker: '', text: '*Hours later. The fire has burned to embers. The dogs are asleep. Max rests her head on Ryan\'s shoulder.*' },
                         { speaker: '', text: '*Outside, the first grey light of dawn touches the flat Drenthe horizon.*' }
                     ]);
                     game.sceneTimeout(() => game.loadScene('morning_after'), 5000);
                 } else {
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'I need to finish telling Ies everything first.' }
+                        { speaker: 'Ryan', text: 'I need to finish telling Max everything first.' }
                     ]);
                 }
             }
@@ -76,7 +79,7 @@ const ReturnToIesScene = {
         // ── Audio ──
         this._startAmbientAudio();
 
-        // ── Dogs (Ies is already in SVG bg) ──
+        // ── Dogs (Max is already in SVG bg) ──
         game.sceneTimeout(() => {
             game.showCharacter('dog_white', 35, 77, 0.12);
             game.showCharacter('dog_white', 40, 78, 0.12);
@@ -451,7 +454,7 @@ const ReturnToIesScene = {
             this._timeoutIds.push(tid3);
 
         } catch (e) {
-            console.warn('ReturnToIes: audio init failed', e);
+            console.warn('ReturnToMax: audio init failed', e);
         }
     },
 
@@ -578,12 +581,12 @@ const ReturnToIesScene = {
                 vfx: () => { this._pulseVignette(0.3, 6000); },
                 lines: [
                     { speaker: '', text: '*The door opens before he can reach the handle.*' },
-                    { speaker: 'Ies', text: 'Ryan.' },
+                    { speaker: 'Max', text: 'Ryan.' },
                     { speaker: '', text: '*She\'s been crying. She tries to hide it. Can\'t.*' },
-                    { speaker: 'Ies', text: 'I\'ve been watching the news. All day. Every channel.' },
-                    { speaker: 'Ies', text: '"Major intelligence operation in Lower Saxony." "Russian cell dismantled." "Dutch civilian involvement."' },
-                    { speaker: 'Ryan', text: 'Ies, I—' },
-                    { speaker: 'Ies', text: '*Pulls him into a tight hug. Doesn\'t let go for a long time.*' },
+                    { speaker: 'Max', text: 'I\'ve been watching the news. All day. Every channel.' },
+                    { speaker: 'Max', text: '"Major intelligence operation in Lower Saxony." "Russian cell dismantled." "Dutch civilian involvement."' },
+                    { speaker: 'Ryan', text: 'Max, I—' },
+                    { speaker: 'Max', text: '*Pulls him into a tight hug. Doesn\'t let go for a long time.*' },
                     { speaker: '', text: '*Tino and Kessy scramble over, tails going wild. ET snorts from between their legs.*' }
                 ]
             },
@@ -594,10 +597,10 @@ const ReturnToIesScene = {
                 vfx: () => {},
                 lines: [
                     { speaker: '', text: '*They sit on the couch. Two cups of tea. The fire is down to embers but still warm.*' },
-                    { speaker: 'Ies', text: 'Where do I even start?' },
+                    { speaker: 'Max', text: 'Where do I even start?' },
                     { speaker: 'Ryan', text: 'I owe you the whole story. From the beginning.' },
-                    { speaker: 'Ies', text: '...I think I need to hear it.' },
-                    { speaker: '', text: '*Tino rests his head on Ryan\'s foot. Kessy curls up next to Ies.*' }
+                    { speaker: 'Max', text: '...I think I need to hear it.' },
+                    { speaker: '', text: '*Tino rests his head on Ryan\'s foot. Kessy curls up next to Max.*' }
                 ]
             },
 
@@ -609,9 +612,9 @@ const ReturnToIesScene = {
                     { speaker: 'Ryan', text: 'It started with a signal. On the SDR. A pattern in the noise that shouldn\'t have been there.' },
                     { speaker: 'Ryan', text: 'I thought it was amateur radio interference at first. Then I decoded it.' },
                     { speaker: 'Ryan', text: 'Military-grade encryption. Coming from somewhere near the German border.' },
-                    { speaker: 'Ies', text: '...From your mancave? You picked this up from our house?' },
+                    { speaker: 'Max', text: '...From your mancave? You picked this up from our house?' },
                     { speaker: 'Ryan', text: 'The LOFAR array helped. Cees and David confirmed the coordinates.' },
-                    { speaker: 'Ies', text: 'Cees Bassa. The satellite man.' },
+                    { speaker: 'Max', text: 'Cees Bassa. The satellite man.' },
                     { speaker: 'Ryan', text: 'Yes. He tracked the signal source. A former military facility. Steckerdoser Heide.' }
                 ]
             },
@@ -621,16 +624,16 @@ const ReturnToIesScene = {
                 chord: chords.eva,
                 vfx: () => { this._pulseVignette(0.5, 5000); },
                 lines: [
-                    { speaker: 'Ies', text: 'And the woman? Eva?' },
+                    { speaker: 'Max', text: 'And the woman? Eva?' },
                     { speaker: '', text: '*Ryan pauses. This is the hard part.*' },
                     { speaker: 'Ryan', text: 'Eva Weber. German intelligence. Her father was involved years ago — died trying to expose the same operation.' },
                     { speaker: 'Ryan', text: 'She contacted me because of my radio work. She needed someone who could read the signals.' },
-                    { speaker: 'Ies', text: '*Quietly* That woman at the dog training weekend. Tony Knight\'s workshop. I introduced you.' },
+                    { speaker: 'Max', text: '*Quietly* That woman at the dog training weekend. Tony Knight\'s workshop. I introduced you.' },
                     { speaker: 'Ryan', text: 'Wait. You knew her?' },
-                    { speaker: 'Ies', text: 'I didn\'t *know* her. She was there with a rescue dog. Seemed lovely. I introduced her to you because she asked about antennas.' },
+                    { speaker: 'Max', text: 'I didn\'t *know* her. She was there with a rescue dog. Seemed lovely. I introduced her to you because she asked about antennas.' },
                     { speaker: 'Ryan', text: 'I have zero memory of that.' },
-                    { speaker: 'Ies', text: 'Of course you don\'t. You were elbow-deep in a circuit board.' },
-                    { speaker: 'Ies', text: '*Small laugh through tears* She was watching you. I thought she was just curious.' }
+                    { speaker: 'Max', text: 'Of course you don\'t. You were elbow-deep in a circuit board.' },
+                    { speaker: 'Max', text: '*Small laugh through tears* She was watching you. I thought she was just curious.' }
                 ]
             },
 
@@ -639,17 +642,17 @@ const ReturnToIesScene = {
                 chord: chords.danger,
                 vfx: () => { this._pulseVignette(0.8, 8000); },
                 lines: [
-                    { speaker: 'Ies', text: 'The news said someone broke into the facility. A *civilian*.' },
+                    { speaker: 'Max', text: 'The news said someone broke into the facility. A *civilian*.' },
                     { speaker: '', text: '*Long silence. The fire pops.*' },
                     { speaker: 'Ryan', text: '...That was me.' },
-                    { speaker: 'Ies', text: '*Her hands tighten around the tea cup*' },
+                    { speaker: 'Max', text: '*Her hands tighten around the tea cup*' },
                     { speaker: 'Ryan', text: 'Volkov — the Russian commander — had weaponized the satellite infrastructure. The whole array.' },
                     { speaker: 'Ryan', text: 'He could disrupt communications across northern Europe. Aviation, emergency services, military.' },
-                    { speaker: 'Ryan', text: 'The countdown was already running, Ies. Hours. Not days.' },
-                    { speaker: 'Ies', text: 'And you went IN there? Into a military compound? With armed guards?' },
+                    { speaker: 'Ryan', text: 'The countdown was already running, Max. Hours. Not days.' },
+                    { speaker: 'Max', text: 'And you went IN there? Into a military compound? With armed guards?' },
                     { speaker: 'Ryan', text: 'There was no other option. Not in time.' },
-                    { speaker: 'Ies', text: '*Sets the cup down. Her hands are shaking.*' },
-                    { speaker: 'Ies', text: 'You could have died. You could be dead right now, and I\'d be reading about it on the NOS.' }
+                    { speaker: 'Max', text: '*Sets the cup down. Her hands are shaking.*' },
+                    { speaker: 'Max', text: 'You could have died. You could be dead right now, and I\'d be reading about it on the NOS.' }
                 ]
             },
 
@@ -660,9 +663,9 @@ const ReturnToIesScene = {
                 lines: [
                     { speaker: 'Ryan', text: 'I transmitted everything. Jaap helped with the dead man\'s switch. David triangulated the signals. Cees confirmed via satellite.' },
                     { speaker: 'Ryan', text: 'The evidence went to every major news outlet simultaneously. They couldn\'t suppress it.' },
-                    { speaker: 'Ies', text: 'That\'s why every phone in the country was going off this morning.' },
+                    { speaker: 'Max', text: 'That\'s why every phone in the country was going off this morning.' },
                     { speaker: 'Ryan', text: 'The BND arrested Volkov. NATO secured the facility. It\'s over.' },
-                    { speaker: 'Ies', text: '*Wipes her eyes* Is it? Is it really over?' },
+                    { speaker: 'Max', text: '*Wipes her eyes* Is it? Is it really over?' },
                     { speaker: 'Ryan', text: 'The operation is. What comes next... I don\'t know yet.' }
                 ]
             },
@@ -672,36 +675,36 @@ const ReturnToIesScene = {
                 chord: chords.aivd,
                 vfx: () => {},
                 lines: [
-                    { speaker: 'Ies', text: 'Where were you today? After the news broke?' },
+                    { speaker: 'Max', text: 'Where were you today? After the news broke?' },
                     { speaker: 'Ryan', text: 'Den Haag. The AIVD.' },
-                    { speaker: 'Ies', text: '*Stares at him* Dutch intelligence.' },
+                    { speaker: 'Max', text: '*Stares at him* Dutch intelligence.' },
                     { speaker: 'Ryan', text: 'Agent Van der Berg. He debriefed me for hours. Official statement, timeline, evidence chain.' },
-                    { speaker: 'Ies', text: 'Are you in trouble?' },
+                    { speaker: 'Max', text: 'Are you in trouble?' },
                     { speaker: 'Ryan', text: 'No. The opposite, actually.' },
                     { speaker: '', text: '*Ryan reaches into his pocket and places a plain white business card on the coffee table.*' },
                     { speaker: 'Ryan', text: 'They want to recruit me. "Institutional support," Van der Berg called it.' },
-                    { speaker: 'Ies', text: '*Picks up the card. Turns it over. Plain white. AIVD crest.*' },
-                    { speaker: 'Ies', text: 'Ryan Weylant. Government agent.' },
+                    { speaker: 'Max', text: '*Picks up the card. Turns it over. Plain white. AIVD crest.*' },
+                    { speaker: 'Max', text: 'Ryan Weylant. Government agent.' },
                     { speaker: 'Ryan', text: 'I didn\'t say yes.' }
                 ]
             },
 
-            // ── 9. Ies processes ──
+            // ── 9. Max processes ──
             {
                 chord: chords.processing,
                 vfx: () => { this._pulseVignette(0.6, 6000); },
                 lines: [
                     { speaker: '', text: '*Silence. The clock ticks. ET snores softly on the rug.*' },
-                    { speaker: 'Ies', text: 'I\'m trying to decide if I\'m furious or proud.' },
+                    { speaker: 'Max', text: 'I\'m trying to decide if I\'m furious or proud.' },
                     { speaker: 'Ryan', text: 'Both is fine.' },
-                    { speaker: 'Ies', text: '*Almost laughs* Both. Yes. Both.' },
-                    { speaker: 'Ies', text: 'You lied to me. For days. "Just radio stuff, Ies." "Nothing interesting, Ies."' },
+                    { speaker: 'Max', text: '*Almost laughs* Both. Yes. Both.' },
+                    { speaker: 'Max', text: 'You lied to me. For days. "Just radio stuff, Max." "Nothing interesting, Max."' },
                     { speaker: 'Ryan', text: 'I was trying to protect—' },
-                    { speaker: 'Ies', text: 'Don\'t. Don\'t say you were protecting me. I\'m not a child.' },
+                    { speaker: 'Max', text: 'Don\'t. Don\'t say you were protecting me. I\'m not a child.' },
                     { speaker: '', text: '*More silence. Tino whimpers softly in his sleep.*' },
-                    { speaker: 'Ies', text: 'You saved thousands of lives. That\'s what the news said. Thousands.' },
+                    { speaker: 'Max', text: 'You saved thousands of lives. That\'s what the news said. Thousands.' },
                     { speaker: 'Ryan', text: 'I had help. David. Cees. Jaap. Eva. Even the Meshtastic community.' },
-                    { speaker: 'Ies', text: 'But you\'re the one who went in. You.' }
+                    { speaker: 'Max', text: 'But you\'re the one who went in. You.' }
                 ]
             },
 
@@ -717,12 +720,12 @@ const ReturnToIesScene = {
                     if (fg) fg.style.opacity = '1.0';
                 },
                 lines: [
-                    { speaker: 'Ies', text: '*Takes his hand*' },
-                    { speaker: 'Ies', text: 'Promise me something.' },
+                    { speaker: 'Max', text: '*Takes his hand*' },
+                    { speaker: 'Max', text: 'Promise me something.' },
                     { speaker: 'Ryan', text: 'Anything.' },
-                    { speaker: 'Ies', text: 'Next time the world needs saving, you tell me first. Before you go.' },
+                    { speaker: 'Max', text: 'Next time the world needs saving, you tell me first. Before you go.' },
                     { speaker: 'Ryan', text: '*Squeezes her hand* I promise.' },
-                    { speaker: 'Ies', text: 'And the AIVD thing... we decide together. Not just you in your mancave at 3 AM.' },
+                    { speaker: 'Max', text: 'And the AIVD thing... we decide together. Not just you in your mancave at 3 AM.' },
                     { speaker: 'Ryan', text: 'Together. Always.' },
                     { speaker: '', text: '*She leans against him. The fire glows. The dogs breathe softly.*' },
                     { speaker: '', text: '*Outside, the Drenthe night is vast and quiet. Stars over the peat bogs.*' },
@@ -738,7 +741,7 @@ const ReturnToIesScene = {
             if (idx >= sections.length) {
                 // ── Finale: remove letterbox, set flag, auto-advance ──
                 this._removeLetterbox();
-                game.setFlag('return_to_ies_complete', true);
+                game.setFlag('return_to_max_complete', true);
                 game.showNotification('Click "Continue" to proceed…');
                 const tid = setTimeout(() => game.loadScene('morning_after'), 15000);
                 this._timeoutIds.push(tid);

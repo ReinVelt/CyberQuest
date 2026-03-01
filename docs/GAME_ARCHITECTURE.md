@@ -277,7 +277,7 @@ Handles all text-based conversations and narration.
 ```javascript
 game.startDialogue([
   { speaker: 'Ryan', text: 'What is this?' },
-  { speaker: 'Ies', text: 'It looks like trouble.' },
+  { speaker: 'Max', text: 'It looks like trouble.' },
   { speaker: '', text: '*sound effect*' }
 ]);
 ```
@@ -424,7 +424,7 @@ Text-to-speech narration for dialogue.
 ```javascript
 {
   Ryan: { rate: 0.9, pitch: 0.8, voice: 'male' },
-  Ies: { rate: 1.0, pitch: 1.2, voice: 'female' }
+  Max: { rate: 1.0, pitch: 1.2, voice: 'female' }
 }
 ```
 
@@ -507,7 +507,7 @@ CyberQuest/
 | 27 | **facility_server** | Server Room | Climax | Act 3: Confrontation |
 | 28 | **long_night** | Long Night | Story | Act 3: Aftermath |
 | 29 | **debrief** | Aftermath | Interface | Act 3: Resolution |
-| 30 | **return_to_ies** | Return to Ies | Story | Act 3: Resolution |
+| 30 | **return_to_max** | Return to Max | Story | Act 3: Resolution |
 | 31 | **morning_after** | Morning After | Story | Act 3: Resolution |
 | 32 | **epilogue** | Three Months Later | Cinematic | Epilogue |
 | 33 | **credits** | End Credits | Cinematic | Epilogue |
@@ -550,12 +550,12 @@ CyberQuest/
 #### 3. LIVINGROOM - Living Room
 **Background:** `assets/images/scenes/livingroom.svg`  
 **Type:** Interactive exploration  
-**Hotspots:** 4 (TV, Ies, ET the pug, door to kitchen)
+**Hotspots:** 4 (TV, Max, ET the pug, door to kitchen)
 
-**Purpose:** Meet Ies (wife) and learn about the documentary. Optional lore.
+**Purpose:** Meet Max (wife) and learn about the documentary. Optional lore.
 
 **Key Interactions:**
-- Chat with Ies about daily life
+- Chat with Max about daily life
 - Watch documentary (transitions to tvdocumentary scene)
 - Pet ET the pug (randomized responses)
 - Return to kitchen

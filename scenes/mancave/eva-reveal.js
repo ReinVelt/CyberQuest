@@ -291,10 +291,10 @@ Has raised concerns about network anomalies (see incident log 2024-07-22)`,
 
             const moments = [
                 { text: 'A sunny Saturday morning. The Tony Knight rescue dog training field.', delay: 0 },
-                { text: 'Ies is there with the dogs — volunteering like she does every month.', delay: 2000 },
+                { text: 'Max is there with the dogs — volunteering like she does every month.', delay: 2000 },
                 { text: '"Ryan, this is Eva. She\'s from Germany. Also rescue dogs."', delay: 2000 },
                 { text: 'A handshake. Warm smile. She seemed genuinely interested in the dogs.', delay: 2200 },
-                { text: 'Later that afternoon — she came to the house. Ies gave her the tour.', delay: 2200 },
+                { text: 'Later that afternoon — she came to the house. Max gave her the tour.', delay: 2200 },
                 { text: 'Then the mancave. Her eyes went wide at the radio equipment.', delay: 2000 },
                 { text: '"You built all this yourself? The SDR setup, the Meshtastic mesh?"', delay: 2200 },
                 { text: 'Sharp questions. Very sharp. About frequencies, encryption, off-grid comms.', delay: 2200 },

@@ -141,8 +141,8 @@ intro → home → livingroom → tvdocumentary → livingroom → home → manc
 | **Transitions OUT** | `home` (hotspot `to_home`), `tvdocumentary` (hotspot `tv`, via `game.loadScene` after dialogue) |
 | **Transitions IN** | `home`, `tvdocumentary` |
 | **setStoryPart** | — |
-| **Flags set** | `visited_livingroom`, `saw_tv_documentary`, `talked_to_ies`, `dog_interactions`, `post_documentary_reminder_shown`, `fireplace_interactions`, `pug_interactions` |
-| **Flags checked** | `saw_tv_documentary`, `talked_to_ies`, `tv_documentary_watched`, `documentary_completed_once`, `post_documentary_reminder_shown`, `visited_livingroom` |
+| **Flags set** | `visited_livingroom`, `saw_tv_documentary`, `talked_to_max`, `dog_interactions`, `post_documentary_reminder_shown`, `fireplace_interactions`, `pug_interactions` |
+| **Flags checked** | `saw_tv_documentary`, `talked_to_max`, `tv_documentary_watched`, `documentary_completed_once`, `post_documentary_reminder_shown`, `visited_livingroom` |
 
 ### tvdocumentary
 | Property | Value |
@@ -448,7 +448,7 @@ intro → home → livingroom → tvdocumentary → livingroom → home → manc
 
 ### Informational Flags (set/read but don't gate progression)
 
-`visited_livingroom`, `saw_tv_documentary`, `talked_to_ies`, `dog_interactions`, `post_documentary_reminder_shown`, `fireplace_interactions`, `pug_interactions`, `visited_mancave`, `visited_sdr_bench`, `visited_garden`, `checked_email`, `message_decoded`, `frequency_tuned`, `military_frequency`, `second_transmission_ready`, `second_message_decoded`, `sstv_transmission_received`, `saw_usb_first_time`, `visited_facility`, `facility_interior_entered`, `entered_facility`, `badge_cloned`, `data_extracted`, `collected_evidence`, `kubecka_arrived`, `eva_arrived`, `visited_debrief`, `visited_epilogue`, `visited_dwingeloo`, `visited_westerbork_memorial`, `visited_videocall`, `checked_courtyard`, `found_usb_stick`, `schematics_verified`, `signal_triangulated`, `sstv_coordinates_known`, `henk_contacted`, `cees_contacted`, `jaap_contacted`, `contacted_kubecka`, `discovered_zerfall`, `espresso_count`, `mother_call_count`, `father_call_count`, `dwingeloo_broadcast_found`, `zerfall_duration_known`, `dwingeloo_transmitter_found`, `westerbork_camera_inspected`, `westerbork_bt_cracked`, `zerfall_network_mapped`, `bt_camera_quest_started`
+`visited_livingroom`, `saw_tv_documentary`, `talked_to_max`, `dog_interactions`, `post_documentary_reminder_shown`, `fireplace_interactions`, `pug_interactions`, `visited_mancave`, `visited_sdr_bench`, `visited_garden`, `checked_email`, `message_decoded`, `frequency_tuned`, `military_frequency`, `second_transmission_ready`, `second_message_decoded`, `sstv_transmission_received`, `saw_usb_first_time`, `visited_facility`, `facility_interior_entered`, `entered_facility`, `badge_cloned`, `data_extracted`, `collected_evidence`, `kubecka_arrived`, `eva_arrived`, `visited_debrief`, `visited_epilogue`, `visited_dwingeloo`, `visited_westerbork_memorial`, `visited_videocall`, `checked_courtyard`, `found_usb_stick`, `schematics_verified`, `signal_triangulated`, `sstv_coordinates_known`, `henk_contacted`, `cees_contacted`, `jaap_contacted`, `contacted_kubecka`, `discovered_zerfall`, `espresso_count`, `mother_call_count`, `father_call_count`, `dwingeloo_broadcast_found`, `zerfall_duration_known`, `dwingeloo_transmitter_found`, `westerbork_camera_inspected`, `westerbork_bt_cracked`, `zerfall_network_mapped`, `bt_camera_quest_started`
 
 ---
 
@@ -520,8 +520,8 @@ with their known incoming transitions; full breakdown pending.
 | **laser_corridor** *(v1.1)* | facility_interior (basement corridor) |
 | **lofar** *(v1.1)* | astron (after schematics verified) |
 | **long_night** *(v1.1)* | facility_server (post-server-room) |
-| **return_to_ies** *(v1.1)* | long_night / debrief |
-| **morning_after** *(v1.1)* | return_to_ies |
+| **return_to_max** *(v1.1)* | long_night / debrief |
+| **morning_after** *(v1.1)* | return_to_max |
 
 ---
 

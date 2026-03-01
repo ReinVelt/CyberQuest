@@ -33,7 +33,7 @@ const GardenBackScene = {
         'Dogs, fire, fruit trees. Simple life.',
         'The best ideas come on the mower.',
         'Peaceful here. Almost too peaceful.',
-        'Kruisbessen jam. Ies makes the best.',
+        'Kruisbessen jam. Max makes the best.',
         'That pug has zero shame.',
         'Fresh air and engine noise. Perfect combination.',
         'A developer\'s garden. Half wild, half maintained.',
@@ -120,7 +120,7 @@ const GardenBackScene = {
                     ],
                     [
                         { speaker: 'Ryan', text: 'Green machine. Twelve horsepower of creative inspiration.' },
-                        { speaker: 'Ryan', text: 'Ies says I mow too often. I say I\'m working.' },
+                        { speaker: 'Ryan', text: 'Max says I mow too often. I say I\'m working.' },
                         { speaker: 'Ryan', text: 'She doesn\'t buy it. But the lawn looks great.' }
                     ]
                 ];
@@ -161,7 +161,7 @@ const GardenBackScene = {
             action: function(game) {
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'Peer tree. Conference pears.' },
-                    { speaker: 'Ryan', text: 'Ies makes stoofpeertjes in red wine with cinnamon.' },
+                    { speaker: 'Ryan', text: 'Max makes stoofpeertjes in red wine with cinnamon.' },
                     { speaker: 'Ryan', text: 'Best autumn dessert in existence.' },
                     { speaker: 'Ryan', text: 'The tree is older than the house I think. Still produces every year.' }
                 ]);
@@ -200,7 +200,7 @@ const GardenBackScene = {
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'The berry collection. My pride and joy.' },
                     { speaker: 'Ryan', text: 'Stekelbessen — gooseberries. Sour but perfect for jam.' },
-                    { speaker: 'Ryan', text: 'Kruisbessen — more gooseberries, the red variety. Ies uses them for taart.' },
+                    { speaker: 'Ryan', text: 'Kruisbessen — more gooseberries, the red variety. Max uses them for taart.' },
                     { speaker: 'Ryan', text: 'Frambozen — raspberries. Never make it inside. I eat them straight off the bush.' },
                     { speaker: 'Ryan', text: 'And the Japanse wijnbes. Japanese wineberry.' },
                     { speaker: 'Ryan', text: 'Orange-red berries with a sweet-tart flavour. Like raspberries but more complex.' },
@@ -316,7 +316,7 @@ const GardenBackScene = {
             cursor: 'look',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: 'Ryan', text: 'Two camp chairs by the fire. One for me, one for Ies.' },
+                    { speaker: 'Ryan', text: 'Two camp chairs by the fire. One for me, one for Max.' },
                     { speaker: 'Ryan', text: 'Evening ritual. Fire, coffee, dogs running around.' },
                     { speaker: 'Ryan', text: 'Sometimes we talk. Sometimes just the fire talks.' },
                     { speaker: 'Ryan', text: 'Best part of the day.' }
@@ -367,7 +367,7 @@ const GardenBackScene = {
                     { speaker: 'Ryan', text: 'De notenboom. The walnut tree.' },
                     { speaker: 'Ryan', text: 'Massive thing. Must be sixty, seventy years old.' },
                     { speaker: 'Ryan', text: 'In autumn the walnuts fall by the hundreds. We crack them by the fire.' },
-                    { speaker: 'Ryan', text: 'Ies makes walnotentaart. Absolute killer recipe.' },
+                    { speaker: 'Ryan', text: 'Max makes walnotentaart. Absolute killer recipe.' },
                     { speaker: 'Ryan', text: 'The canopy is so wide it shades half the back garden. Perfect on hot days.' },
                     { speaker: 'Ryan', text: 'One of the reasons we bought this place.' }
                 ]);
@@ -395,7 +395,7 @@ const GardenBackScene = {
                     ],
                     [
                         { speaker: 'Ryan', text: 'Tuinhuis. Our little cabin in the back.' },
-                        { speaker: 'Ryan', text: 'Ies uses it for potting plants. I use it for escaping phone calls.' },
+                        { speaker: 'Ryan', text: 'Max uses it for potting plants. I use it for escaping phone calls.' },
                         { speaker: 'Ryan', text: 'Works for both of us.' }
                     ]
                 ];

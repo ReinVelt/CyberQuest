@@ -86,7 +86,7 @@ const DebriefScene = {
             skipWalk: true,
             action: function(game) {
                 if (game.getFlag('debrief_complete')) {
-                    game.loadScene('return_to_ies');
+                    game.loadScene('return_to_max');
                 } else {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Not yet. Still processing all this.' }
@@ -287,7 +287,7 @@ const DebriefScene = {
                 { speaker: 'Ryan', text: 'From freelance hacker to… what? Government agent?' },
                 { speaker: 'Ryan', text: 'Is that who I am now?' },
                 { speaker: 'Ryan', text: '*Watches the flat Dutch landscape scroll past*' },
-                { speaker: 'Ryan', text: 'First things first. I need to talk to Ies. Tell her everything.' }
+                { speaker: 'Ryan', text: 'First things first. I need to talk to Max. Tell her everything.' }
             ]
         ];
 
@@ -298,7 +298,7 @@ const DebriefScene = {
                 game.setFlag('debrief_complete', true);
                 game.showNotification('Click to continue…');
                 const tid = setTimeout(() => {
-                    game.loadScene('return_to_ies');
+                    game.loadScene('return_to_max');
                 }, 10000);
                 this._timeoutIds.push(tid);
                 return;

@@ -204,7 +204,7 @@ This project contains comprehensive documentation across multiple files:
 
 ### Allies
 
-**Ies Weylant**
+**Max Weylant**
 - Role: Ryan's wife
 - Personality: Pragmatic, supportive, grounded
 - Function: Domestic anchor, normal life representation
@@ -550,7 +550,7 @@ A: Quest log provides hints. Future versions will have progressive hint system.
 - ✅ Debug panel overhauled
 - ✅ Hackerspace / Dwingeloo / ASTRON / LOFAR / Westerbork scenes
 - ✅ Laser corridor stealth scene
-- ✅ Long night / morning after / return to Ies scenes
+- ✅ Long night / morning after / return to Max scenes
 - ✅ Drone hunt scene
 
 **v1.0 (February 15, 2026)**
