@@ -10,7 +10,7 @@ const LaptopScene = {
     id: 'laptop',
     name: 'Laptop — Kali Linux',
 
-    background: 'assets/images/scenes/mancave.svg',
+    background: 'assets/images/scenes/laptop.svg',
 
     description: 'Ryan\'s laptop running Kali Linux. Browser tabs, terminal windows, and a dead man\'s switch script running in the background.',
 

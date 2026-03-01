@@ -1,0 +1,363 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <!-- Room background -->
+    <linearGradient id="roomBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#050608"/>
+      <stop offset="100%" stop-color="#0a0c10"/>
+    </linearGradient>
+    <!-- Desk surface -->
+    <linearGradient id="deskGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#18140a"/>
+      <stop offset="100%" stop-color="#0e0c06"/>
+    </linearGradient>
+    <!-- Phone body -->
+    <linearGradient id="phoneBody" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1a1e"/>
+      <stop offset="100%" stop-color="#101012"/>
+    </linearGradient>
+    <!-- Screen background (Signal dark mode) -->
+    <linearGradient id="screenBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#121318"/>
+      <stop offset="100%" stop-color="#0e0f14"/>
+    </linearGradient>
+    <!-- Signal blue glow -->
+    <radialGradient id="phoneGlow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#3a8bc8" stop-opacity="0.18"/>
+      <stop offset="70%" stop-color="#2060a0" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Ambient room glow from phone -->
+    <radialGradient id="ambientGlow" cx="50%" cy="60%" r="55%">
+      <stop offset="0%" stop-color="#204878" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Sent message bubble -->
+    <linearGradient id="bubbleSent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2c5f8a"/>
+      <stop offset="100%" stop-color="#1e4a72"/>
+    </linearGradient>
+    <!-- Received message bubble -->
+    <linearGradient id="bubbleRecv" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e2530"/>
+      <stop offset="100%" stop-color="#171e28"/>
+    </linearGradient>
+    <!-- Note paper -->
+    <linearGradient id="noteGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#181610"/>
+      <stop offset="100%" stop-color="#121008"/>
+    </linearGradient>
+
+    <!-- Filters -->
+    <filter id="glow4">
+      <feGaussianBlur stdDeviation="4" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow10">
+      <feGaussianBlur stdDeviation="10" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow20">
+      <feGaussianBlur stdDeviation="20" result="g"/>
+      <feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softBlur">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <filter id="dropShadow">
+      <feDropShadow dx="0" dy="8" stdDeviation="20" flood-color="#000" flood-opacity="0.8"/>
+    </filter>
+
+    <!-- Clip paths -->
+    <clipPath id="phoneScreenClip">
+      <rect x="760" y="145" width="400" height="760" rx="12"/>
+    </clipPath>
+    <clipPath id="phoneBorderClip">
+      <rect x="740" y="95" width="440" height="870" rx="40"/>
+    </clipPath>
+
+    <!-- Scanlines -->
+    <pattern id="scanlines" width="2" height="3" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="2" y2="0" stroke="#000" stroke-width="1" opacity="0.1"/>
+    </pattern>
+  </defs>
+
+  <style>
+    @keyframes statusBlink {
+      0%, 60%, 100% { opacity: 1; }
+      70%, 90% { opacity: 0.3; }
+    }
+    @keyframes typingDot {
+      0%, 60%, 100% { opacity: 0.2; }
+      30% { opacity: 1; }
+    }
+    @keyframes screenGlimmer {
+      0%, 100% { opacity: 0.05; }
+      50% { opacity: 0.12; }
+    }
+    @keyframes ledBeat {
+      0%, 100% { opacity: 0.6; r: 4; }
+      50% { opacity: 1.0; r: 6; }
+    }
+    @keyframes steamUp {
+      0%   { transform: translateY(0) scaleX(1); opacity: 0.45; }
+      100% { transform: translateY(-32px) scaleX(1.5); opacity: 0; }
+    }
+    .status { animation: statusBlink 3s ease-in-out infinite; }
+    .dot1 { animation: typingDot 1.2s ease-in-out 0s infinite; }
+    .dot2 { animation: typingDot 1.2s ease-in-out 0.4s infinite; }
+    .dot3 { animation: typingDot 1.2s ease-in-out 0.8s infinite; }
+    .glimmer { animation: screenGlimmer 4s ease-in-out infinite; }
+    .notif-led { animation: ledBeat 2s ease-in-out infinite; }
+    .steam { animation: steamUp 2.8s ease-out infinite; }
+    .steam2 { animation: steamUp 2.8s ease-out 1s infinite; }
+  </style>
+
+  <!-- ── ROOM BACKGROUND ── -->
+  <rect width="1920" height="1080" fill="url(#roomBg)"/>
+  <rect width="1920" height="1080" fill="url(#ambientGlow)"/>
+
+  <!-- Back wall -->
+  <rect x="0" y="0" width="1920" height="620" fill="url(#roomBg)"/>
+  <!-- Subtle wall panel lines -->
+  <line x1="0" y1="300" x2="1920" y2="300" stroke="#0c0e14" stroke-width="1"/>
+  <line x1="0" y1="380" x2="1920" y2="380" stroke="#080a0f" stroke-width="0.5"/>
+
+  <!-- ── BACKGROUND OBJECTS (blurred) ── -->
+  <!-- Laptop on left shelf (out of focus) -->
+  <g opacity="0.12" filter="url(#softBlur)">
+    <rect x="80" y="500" width="420" height="180" fill="#1a1a1e" rx="8"/>
+    <rect x="88" y="508" width="404" height="164" fill="#0a0a0e" rx="5"/>
+    <rect x="98" y="515" width="384" height="144" fill="#060c14" rx="3"/>
+    <text x="290" y="595" font-family="monospace" font-size="14" fill="#004488" text-anchor="middle" opacity="0.6">$ ■</text>
+  </g>
+
+  <!-- Printed documents stacked (right side) -->
+  <g opacity="0.22" filter="url(#softBlur)" transform="translate(1500, 580)">
+    <rect x="0" y="40" width="220" height="280" fill="#1a1810" rx="2" transform="rotate(-4)"/>
+    <rect x="5" y="35" width="220" height="280" fill="#1e1c12" rx="2" transform="rotate(-1)"/>
+    <rect x="10" y="30" width="220" height="280" fill="#201e14" rx="2"/>
+    <line x1="30" y1="65" x2="190" y2="65" stroke="#2a2818" stroke-width="1.5"/>
+    <line x1="30" y1="80" x2="190" y2="80" stroke="#2a2818" stroke-width="1"/>
+    <line x1="30" y1="94" x2="160" y2="94" stroke="#2a2818" stroke-width="1"/>
+    <text x="110" y="55" font-family="monospace" font-size="9" fill="#3a3822" text-anchor="middle">ZERFALL NETWORK MAP</text>
+  </g>
+
+  <!-- Hackerspace sticker sheet background props -->
+  <g opacity="0.1" filter="url(#softBlur)">
+    <rect x="1680" y="400" width="120" height="160" fill="#1a1818" rx="4" transform="rotate(5)"/>
+    <circle cx="1710" cy="440" r="20" fill="#001a40" stroke="#0040a0" stroke-width="2"/>
+    <text x="1710" y="445" font-family="monospace" font-size="9" fill="#0040a0" text-anchor="middle">BT</text>
+    <circle cx="1760" cy="460" r="16" fill="#001800" stroke="#004400" stroke-width="2"/>
+    <text x="1760" y="465" font-family="monospace" font-size="7" fill="#004400" text-anchor="middle">LORA</text>
+  </g>
+
+  <!-- ── DESK ── -->
+  <rect x="0" y="620" width="1920" height="460" fill="url(#deskGrad)"/>
+  <rect x="0" y="620" width="1920" height="3" fill="#2a1e0a" opacity="0.9"/>
+  <rect x="0" y="623" width="1920" height="6" fill="#000" opacity="0.35"/>
+  <!-- Desk grain lines -->
+  <line x1="0" y1="650" x2="1920" y2="650" stroke="#141008" stroke-width="0.5" opacity="0.7"/>
+  <line x1="0" y1="700" x2="1920" y2="700" stroke="#141008" stroke-width="0.5" opacity="0.4"/>
+  <line x1="0" y1="760" x2="1920" y2="760" stroke="#141008" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- ── PHONE SHADOW ON DESK ── -->
+  <ellipse cx="960" cy="980" rx="180" ry="30" fill="#000" opacity="0.7" filter="url(#softBlur)"/>
+
+  <!-- ── PHONE BODY ── -->
+  <g filter="url(#dropShadow)">
+    <!-- Phone chassis -->
+    <rect x="740" y="95" width="440" height="875" fill="url(#phoneBody)" rx="40" clip-path="url(#phoneBorderClip)"/>
+    <!-- Phone edge highlight top -->
+    <rect x="740" y="95" width="440" height="2" fill="#2a2a2e" rx="2"/>
+    <!-- Phone side edges -->
+    <rect x="740" y="95" width="2" height="875" fill="#222226"/>
+    <rect x="1178" y="95" width="2" height="875" fill="#1a1a1e"/>
+
+    <!-- Camera module top -->
+    <rect x="880" y="108" width="160" height="28" fill="#0e0e12" rx="14"/>
+    <circle cx="940" cy="122" r="9" fill="#080808"/>
+    <circle cx="940" cy="122" r="6" fill="#060606"/>
+    <circle cx="940" cy="122" r="3.5" fill="#0a0a0c"/>
+    <circle cx="938" cy="120" r="1" fill="#1a1a20" opacity="0.5"/>
+    <!-- Face ID area -->
+    <rect x="975" y="114" width="60" height="16" fill="#0a0a0e" rx="8"/>
+    <circle cx="990" cy="122" r="3" fill="#111114"/>
+    <!-- Notification LED -->
+    <circle cx="1052" cy="122" r="4" fill="#3a8bc8" opacity="0.7" class="notif-led" filter="url(#glow4)"/>
+
+    <!-- ── SCREEN AREA ── -->
+    <rect x="758" y="143" width="404" height="768" fill="url(#screenBg)" rx="12"/>
+
+    <!-- Screen content -->
+    <g clip-path="url(#phoneScreenClip)">
+
+      <!-- Signal app header bar -->
+      <rect x="758" y="143" width="404" height="54" fill="#1a1e28"/>
+      <!-- Back arrow -->
+      <text x="778" y="178" font-family="sans-serif" font-size="16" fill="#3a8bc8">‹</text>
+      <!-- Contact avatar -->
+      <circle cx="810" cy="170" r="18" fill="#1e3a5a"/>
+      <text x="810" y="175" font-family="sans-serif" font-size="14" text-anchor="middle" fill="#6aaad8">K</text>
+      <!-- Contact name and status -->
+      <text x="838" y="166" font-family="sans-serif" font-size="13" fill="#e0e8f0" font-weight="bold">Chris Kubecka</text>
+      <g class="status">
+        <circle cx="840" cy="180" r="4" fill="#3ab86a"/>
+        <text x="850" y="183" font-family="sans-serif" font-size="10" fill="#3ab86a">Online</text>
+      </g>
+      <!-- Signal lock icon -->
+      <text x="1120" y="178" font-family="sans-serif" font-size="14" fill="#3a8bc8">🔒</text>
+
+      <!-- Chat area background -->
+      <rect x="758" y="197" width="404" height="600" fill="#0e1018"/>
+
+      <!-- Date separator -->
+      <rect x="858" y="208" width="204" height="18" fill="#161a24" rx="9"/>
+      <text x="960" y="221" font-family="sans-serif" font-size="9" fill="#4a5a70" text-anchor="middle">Today — Encrypted</text>
+
+      <!-- Received message 1 -->
+      <rect x="768" y="236" width="248" height="52" fill="url(#bubbleRecv)" rx="14" rx="4 14 14 4"/>
+      <text x="780" y="254" font-family="sans-serif" font-size="11" fill="#c0ccd8">Signal only from now on.</text>
+      <text x="780" y="270" font-family="sans-serif" font-size="11" fill="#c0ccd8">Delete this chain after reading.</text>
+      <text x="900" y="284" font-family="sans-serif" font-size="9" fill="#3a5068">14:32 ✓✓</text>
+
+      <!-- Sent message 1 -->
+      <rect x="904" y="298" width="248" height="40" fill="url(#bubbleSent)" rx="14 4 4 14"/>
+      <text x="916" y="314" font-family="sans-serif" font-size="11" fill="#e0ecf8">Understood. Volkov profile:</text>
+      <text x="916" y="330" font-family="sans-serif" font-size="11" fill="#e0ecf8">GRU — 161st Specialist Centre</text>
+      <text x="1035" y="334" font-family="sans-serif" font-size="9" fill="#6aaad8">14:33 ✓✓</text>
+
+      <!-- Received message 2 -->
+      <rect x="768" y="350" width="264" height="64" fill="url(#bubbleRecv)" rx="4 14 14 4"/>
+      <text x="780" y="368" font-family="sans-serif" font-size="11" fill="#c0ccd8">I have ZERFALL intercepts.</text>
+      <text x="780" y="384" font-family="sans-serif" font-size="11" fill="#c0ccd8">Bluetooth mesh — 3 active nodes</text>
+      <text x="780" y="400" font-family="sans-serif" font-size="11" fill="#c0ccd8">in the Drenthe region.</text>
+      <text x="900" y="410" font-family="sans-serif" font-size="9" fill="#3a5068">14:35 ✓✓</text>
+
+      <!-- Sent message 2 -->
+      <rect x="904" y="424" width="248" height="52" fill="url(#bubbleSent)" rx="14 4 4 14"/>
+      <text x="916" y="442" font-family="sans-serif" font-size="11" fill="#e0ecf8">Westerbork dish area.</text>
+      <text x="916" y="458" font-family="sans-serif" font-size="11" fill="#e0ecf8">I need a Flipper Zero to</text>
+      <text x="916" y="474" font-family="sans-serif" font-size="11" fill="#e0ecf8">crack the BT node.</text>
+      <text x="1035" y="474" font-family="sans-serif" font-size="9" fill="#6aaad8">14:36 ✓</text>
+
+      <!-- Received — photo placeholder -->
+      <rect x="768" y="488" width="200" height="120" fill="#141824" rx="8" stroke="#1e2a38" stroke-width="1"/>
+      <text x="868" y="548" font-family="monospace" font-size="9" fill="#2a4060" text-anchor="middle">📎 facility_map.enc</text>
+      <text x="868" y="564" font-family="monospace" font-size="8" fill="#1e3050" text-anchor="middle">Tap to decrypt</text>
+      <rect x="800" y="604" width="120" height="4" fill="#1e2a38" rx="2"/>
+      <!-- File icon lines -->
+      <line x1="828" y1="512" x2="908" y2="512" stroke="#1e3050" stroke-width="1"/>
+      <line x1="828" y1="522" x2="908" y2="522" stroke="#1e3050" stroke-width="1"/>
+      <line x1="828" y1="532" x2="888" y2="532" stroke="#1e3050" stroke-width="1"/>
+      <text x="900" y="608" font-family="sans-serif" font-size="9" fill="#3a5068">14:37 ✓✓</text>
+
+      <!-- Typing indicator -->
+      <rect x="768" y="624" width="72" height="28" fill="#161c28" rx="14"/>
+      <circle cx="790" cy="638" r="5" fill="#3a4a60" class="dot1"/>
+      <circle cx="804" cy="638" r="5" fill="#3a4a60" class="dot2"/>
+      <circle cx="818" cy="638" r="5" fill="#3a4a60" class="dot3"/>
+
+      <!-- Compose bar at bottom -->
+      <rect x="758" y="667" width="404" height="54" fill="#14181e"/>
+      <rect x="768" y="678" width="300" height="32" fill="#1c2030" rx="16" stroke="#2a3040" stroke-width="1"/>
+      <text x="790" y="698" font-family="sans-serif" font-size="11" fill="#3a4a60">Type a message...</text>
+      <circle cx="1130" cy="694" r="14" fill="#2060a0"/>
+      <text x="1130" y="699" font-family="sans-serif" font-size="14" text-anchor="middle" fill="#e0f0ff">➤</text>
+
+      <!-- Screen bottom nav -->
+      <rect x="758" y="721" width="404" height="40" fill="#101418"/>
+      <rect x="930" y="734" width="60" height="4" fill="#2a3040" rx="2"/>
+
+    </g>
+
+    <!-- Scanlines on screen -->
+    <rect x="758" y="143" width="404" height="768" fill="url(#scanlines)" opacity="0.3"/>
+
+    <!-- Screen glow highlight -->
+    <rect x="758" y="143" width="404" height="768" fill="url(#phoneGlow)" rx="12"/>
+
+    <!-- ── PHONE BOTTOM DETAIL ── -->
+    <!-- Speaker grille -->
+    <rect x="880" y="940" width="160" height="18" fill="#0e0e12" rx="9"/>
+    <g fill="#1a1a20">
+      <circle cx="900" cy="949" r="2"/>
+      <circle cx="910" cy="949" r="2"/>
+      <circle cx="920" cy="949" r="2"/>
+      <circle cx="930" cy="949" r="2"/>
+      <circle cx="940" cy="949" r="2"/>
+      <circle cx="950" cy="949" r="2"/>
+      <circle cx="960" cy="949" r="2"/>
+      <circle cx="970" cy="949" r="2"/>
+      <circle cx="980" cy="949" r="2"/>
+      <circle cx="990" cy="949" r="2"/>
+      <circle cx="1000" cy="949" r="2"/>
+      <circle cx="1010" cy="949" r="2"/>
+      <circle cx="1020" cy="949" r="2"/>
+    </g>
+    <!-- USB-C port -->
+    <rect x="930" y="960" width="60" height="10" fill="#0a0a0c" rx="5" stroke="#1a1a1e" stroke-width="1"/>
+
+    <!-- Side buttons -->
+    <rect x="740" y="290" width="6" height="48" fill="#1c1c20" rx="3"/> <!-- vol up -->
+    <rect x="740" y="348" width="6" height="48" fill="#1c1c20" rx="3"/> <!-- vol down -->
+    <rect x="1174" y="310" width="6" height="72" fill="#1c1c20" rx="3"/> <!-- power -->
+
+  </g>
+
+  <!-- ── PHONE SCREEN GLOW ON DESK ── -->
+  <ellipse cx="960" cy="980" rx="260" ry="20" fill="#204878" opacity="0.15" filter="url(#glow10)"/>
+
+  <!-- ── NOTES PAPER NEXT TO PHONE ── -->
+  <g transform="translate(1280, 650)">
+    <rect x="0" y="0" width="260" height="320" fill="url(#noteGrad)" rx="3" transform="rotate(3)"/>
+    <!-- Ruled lines -->
+    <g stroke="#201a0a" stroke-width="0.8" opacity="0.6">
+      <line x1="20" y1="48" x2="240" y2="48"/>
+      <line x1="20" y1="68" x2="240" y2="68"/>
+      <line x1="20" y1="88" x2="240" y2="88"/>
+      <line x1="20" y1="108" x2="240" y2="108"/>
+      <line x1="20" y1="128" x2="240" y2="128"/>
+      <line x1="20" y1="148" x2="240" y2="148"/>
+      <line x1="20" y1="168" x2="240" y2="168"/>
+      <line x1="20" y1="188" x2="240" y2="188"/>
+      <line x1="20" y1="208" x2="240" y2="208"/>
+      <line x1="20" y1="228" x2="240" y2="228"/>
+      <line x1="20" y1="248" x2="240" y2="248"/>
+      <line x1="20" y1="268" x2="240" y2="268"/>
+      <!-- Red margin -->
+      <line x1="50" y1="20" x2="50" y2="300" stroke="#3a1010" stroke-width="1"/>
+    </g>
+    <!-- Handwritten-style notes -->
+    <text x="58" y="38" font-family="sans-serif" font-size="11" fill="#5a5030" transform="rotate(3)" font-style="italic">ZERFALL nodes:</text>
+    <text x="58" y="58" font-family="monospace" font-size="9" fill="#4a4020" transform="rotate(3)">BT-node-A: Westerbork ✓</text>
+    <text x="58" y="78" font-family="monospace" font-size="9" fill="#4a4020" transform="rotate(3)">BT-node-B: Facility roof ?</text>
+    <text x="58" y="98" font-family="monospace" font-size="9" fill="#3a3018" transform="rotate(3)">BT-node-C: mobile ?</text>
+    <text x="58" y="128" font-family="sans-serif" font-size="11" fill="#5a5030" transform="rotate(3)" font-style="italic">contacts:</text>
+    <text x="58" y="148" font-family="monospace" font-size="9" fill="#4a4020" transform="rotate(3)">Kubecka — Signal verified</text>
+    <text x="58" y="168" font-family="monospace" font-size="9" fill="#4a4020" transform="rotate(3)">Cees Bassa — WSRT ✓</text>
+    <text x="58" y="188" font-family="monospace" font-size="9" fill="#4a4020" transform="rotate(3)">Jaap Haartsen — BT spec</text>
+    <text x="58" y="208" font-family="monospace" font-size="9" fill="#4a4020" transform="rotate(3)">David — journalism cover</text>
+    <text x="58" y="238" font-family="sans-serif" font-size="10" fill="#4a3a10" transform="rotate(3)" font-style="italic">⚠ destroy USB after copy</text>
+    <text x="58" y="258" font-family="sans-serif" font-size="10" fill="#4a3a10" transform="rotate(3)" font-style="italic">⚠ 72h window — act fast</text>
+  </g>
+
+  <!-- ── SMALL OBJECTS ON DESK ── -->
+  <!-- Pen next to notes -->
+  <rect x="1548" y="660" width="8" height="220" fill="#1e1e22" rx="4" transform="rotate(-8 1548 660)"/>
+  <rect x="1548" y="660" width="8" height="18" fill="#c8a020" rx="4" transform="rotate(-8 1548 660)"/>
+  <rect x="1548" y="870" width="8" height="8" fill="#888" rx="2" transform="rotate(-8 1548 660)"/>
+
+  <!-- Small Signal logo sticker on desk surface -->
+  <g transform="translate(560, 680)">
+    <circle cx="0" cy="0" r="28" fill="#1a2030" stroke="#2a3a50" stroke-width="1"/>
+    <circle cx="0" cy="0" r="18" fill="#3a70c0" opacity="0.8"/>
+    <circle cx="0" cy="0" r="12" fill="#4a88e0"/>
+    <!-- Signal icon simplified -->
+    <path d="M -6 -4 Q 0 -8 6 -4 Q 8 0 6 4 L 0 8 L -6 4 Q -8 0 -6 -4Z" fill="#fff" opacity="0.9"/>
+  </g>
+
+  <!-- ── FLOOR ── -->
+  <rect x="0" y="1020" width="1920" height="60" fill="#060608"/>
+  <rect x="0" y="1018" width="1920" height="3" fill="#0a0c10" opacity="0.8"/>
+
+</svg>

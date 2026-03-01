@@ -10,7 +10,7 @@ const SecurePhoneScene = {
     id: 'secure_phone',
     name: 'Secure Phone',
 
-    background: 'assets/images/scenes/mancave.svg',
+    background: 'assets/images/scenes/secure_phone.svg',
 
     description: 'Ryan\'s Signal-encrypted phone. Dark screen, no SIM, runs over WiFi only.',
 
