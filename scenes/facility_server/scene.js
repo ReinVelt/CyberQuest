@@ -24,6 +24,18 @@ const FacilityServerScene = {
     description: 'Air-conditioned server room. Racks of equipment humming. This is where the secrets are kept.',
     playerStart: { x: 20, y: 85 },
 
+    // 🎬 Movie Mode: visit server racks then wait — the scene auto-advances through
+    // cinematic phases (confrontation, evidence download, escape) and eventually
+    // calls game.loadScene('driving') itself. NPC hotspots are looped in case
+    // the confrontation fires while the runner is idle.
+    accessibilityPath: [
+        'server_racks',
+        'volkov_npc',
+        'kubecka_npc',
+        'eva_npc',
+    ],
+    accessibilityLooping: true,
+
     idleThoughts: [
         "Rows of servers. So much data.",
         "Air conditioning is loud. Good cover.",

@@ -23,8 +23,19 @@ const MancaveScene = {
 
     // 🎬 Accessibility / Movie Mode — full mancave story path (all visits)
     accessibilityPath: [
-        'laptop',        // check email; later: ally recruitment / Volkov investigation
-        'sstv-terminal', // receive SSTV transmission
+        // ── Laptop (email → ally recruitment → Volkov investigation) ──
+        async function(game) {
+            // Only enter laptop sub-scene while it still has story content
+            if (!game.getFlag('volkov_investigated')) {
+                game.loadScene('laptop');
+            }
+        },
+        // ── SSTV Terminal pass 1: receive first transmission ──
+        async function(game) {
+            if (!game.getFlag('sstv_transmission_received')) {
+                game.loadScene('sstv_terminal');
+            }
+        },
         async function(game) {
             // Only visit SDR bench if message not yet decoded (avoids re-entry loop)
             if (!game.getFlag('message_decoded')) {
@@ -32,9 +43,19 @@ const MancaveScene = {
             }
         },
         'hackrf',        // tune to 243 MHz, trigger second transmission
-        'sstv-terminal', // decode second message → klooster_unlocked
+        // ── SSTV Terminal pass 2: decode second message → klooster_unlocked ──
+        async function(game) {
+            if (game.getFlag('second_transmission_ready') && !game.getFlag('klooster_unlocked')) {
+                game.loadScene('sstv_terminal');
+            }
+        },
         'airgapped-laptop', // forensic analysis + USB analysis (visit 2+)
-        'secure-phone',     // Kubecka → Zerfall → Eva identification (visit 2+)
+        // ── Secure Phone: Kubecka → Zerfall → Eva identification ──
+        async function(game) {
+            if (game.getFlag('volkov_investigated') && !game.getFlag('eva_contacted')) {
+                game.loadScene('secure_phone');
+            }
+        },
         'meshtastic',       // Eva contact + mission prep (visit 2+)
         async function(game) {
             // Launch videocall only once — after Eva contacted

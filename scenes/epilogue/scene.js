@@ -27,6 +27,9 @@ const EpilogueScene = {
         "This farmhouse has seen some things."
     ],
 
+    // 🎬 Movie Mode
+    accessibilityPath: ['continue-to-credits'],
+
     hotspots: [
         {
             id: 'continue-to-credits',

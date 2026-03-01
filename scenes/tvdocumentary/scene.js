@@ -20,6 +20,9 @@ const TvdocumentaryScene = {
 
     playerStart: { x: 50, y: 85 },
 
+    // 🎬 Movie Mode: skip the documentary
+    accessibilityPath: ['skip_docu'],
+
     hotspots: [
         {
             id: 'skip_docu',

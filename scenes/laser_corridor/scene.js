@@ -23,6 +23,17 @@ const LaserCorridorScene = {
 
     playerStart: { x: 8, y: 88 },
 
+    // 🎬 Movie Mode: step through each obstacle phase in order, then enter server room
+    // The runner retries hotspots that change flags, naturally advancing phases 1→2→3→4.
+    accessibilityPath: [
+        'laser_grid',
+        'flipper_zero_scan',
+        'hackrf_jam',
+        'motion_sensors',
+        'biometric_panel',
+        'server_door',
+    ],
+
     idleThoughts: [
         'Laser grid. Motion sensors. Biometric lock. Three layers.',
         'Classic defence-in-depth. But every system has a weakness.',
