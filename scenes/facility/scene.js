@@ -15,7 +15,10 @@ const FacilityScene = {
     
     // Player starting position
     playerStart: { x: 85, y: 85 },
-    
+
+    // 🎬 Accessibility / Movie Mode — disable camera, clone badge, enter facility
+    accessibilityPath: ['trash_bin', 'camera', 'control_panel'],
+
     // Random idle thoughts for this scene
     idleThoughts: [
         "Stay calm. Focus.",
@@ -379,8 +382,66 @@ const FacilityScene = {
         }
     ],
     
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 4);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── distant generator hum ──
+            var gen = ctx.createOscillator(); gen.type = 'sawtooth'; gen.frequency.value = 50;
+            var genF = ctx.createBiquadFilter(); genF.type = 'lowpass'; genF.frequency.value = 200;
+            var genG = ctx.createGain(); genG.gain.value = 0.020;
+            gen.connect(genF).connect(genG).connect(master); gen.start();
+            self._audioNodes.push(gen, genF, genG);
+            // ── night wind ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var wind = ctx.createBufferSource(); wind.buffer = buf; wind.loop = true;
+            var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 300;
+            var wG = ctx.createGain(); wG.gain.value = 0.025;
+            wind.connect(lp).connect(wG).connect(master); wind.start();
+            self._audioNodes.push(wind, lp, wG);
+            // ── cricket chirps ──
+            var ci = setInterval(function() {
+                if (!self._audioCtx) return;
+                var t = ctx.currentTime;
+                var osc = ctx.createOscillator(); osc.type = 'sine'; osc.frequency.value = 4200;
+                var env = ctx.createGain();
+                env.gain.setValueAtTime(0, t);
+                env.gain.linearRampToValueAtTime(0.016, t + 0.01);
+                env.gain.linearRampToValueAtTime(0, t + 0.04);
+                osc.connect(env).connect(master); osc.start(t); osc.stop(t + 0.05);
+                self._audioNodes.push(osc, env);
+            }, 300 + Math.random() * 400);
+            self._audioIntervals.push(ci);
+        } catch(e) {}
+    },
+
     // Scene entry
     onEnter: (game) => {
+        FacilityScene._startAmbientAudio();
         const storyPart = game.gameState.storyPart;
         game.setFlag('visited_facility', true);
 
@@ -420,6 +481,7 @@ const FacilityScene = {
     
     // Scene exit
     onExit: () => {
+        FacilityScene._stopAmbientAudio();
         if (window.AllyOverlay) window.AllyOverlay.hide();
     }
 };

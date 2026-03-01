@@ -252,7 +252,56 @@ const WsrtParkingScene = {
         },
     ],
 
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 4);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── wind across heather ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var wind = ctx.createBufferSource(); wind.buffer = buf; wind.loop = true;
+            var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 380;
+            var wG = ctx.createGain(); wG.gain.value = 0.032;
+            wind.connect(lp).connect(wG).connect(master); wind.start();
+            self._audioNodes.push(wind, lp, wG);
+            // ── gust modulation ──
+            var lfo = ctx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.08;
+            var lfoG = ctx.createGain(); lfoG.gain.value = 0.012;
+            lfo.connect(lfoG).connect(wG.gain); lfo.start();
+            self._audioNodes.push(lfo, lfoG);
+            // ── distant WSRT dish motor hum ──
+            var mot = ctx.createOscillator(); mot.type = 'sine'; mot.frequency.value = 58;
+            var motG = ctx.createGain(); motG.gain.value = 0.015;
+            mot.connect(motG).connect(master); mot.start();
+            self._audioNodes.push(mot, motG);
+        } catch(e) {}
+    },
+
     onEnter: function(game) {
+        WsrtParkingScene._startAmbientAudio();
         // Clear any leftover timeouts
         this._timeoutIds.forEach(id => clearTimeout(id));
         this._timeoutIds = [];
@@ -281,6 +330,7 @@ const WsrtParkingScene = {
     },
 
     onExit: function() {
+        WsrtParkingScene._stopAmbientAudio();
         this._timeoutIds.forEach(id => clearTimeout(id));
         this._timeoutIds = [];
 

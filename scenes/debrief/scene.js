@@ -14,6 +14,9 @@ const DebriefScene = {
 
     playerStart: { x: 30, y: 75 },
 
+    // 🎬 Accessibility / Movie Mode — continue to homecoming
+    accessibilityPath: ['continue-to-epilogue'],
+
     idleThoughts: [
         "This is surreal. I'm inside AIVD headquarters.",
         "Security cameras everywhere. Card readers on every door.",
@@ -96,7 +99,63 @@ const DebriefScene = {
     // Track timeouts/intervals for cleanup
     _timeoutIds: [],
 
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 3);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── air-conditioning hiss ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var ac = ctx.createBufferSource(); ac.buffer = buf; ac.loop = true;
+            var hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 1800;
+            var acG = ctx.createGain(); acG.gain.value = 0.022;
+            ac.connect(hp).connect(acG).connect(master); ac.start();
+            self._audioNodes.push(ac, hp, acG);
+            // ── low room hum ──
+            var hum = ctx.createOscillator(); hum.type = 'sine'; hum.frequency.value = 50;
+            var humG = ctx.createGain(); humG.gain.value = 0.012;
+            hum.connect(humG).connect(master); hum.start();
+            self._audioNodes.push(hum, humG);
+            // ── clock tick ──
+            var ti = setInterval(function() {
+                if (!self._audioCtx) return;
+                var t = ctx.currentTime;
+                var osc = ctx.createOscillator(); osc.type = 'triangle'; osc.frequency.value = 1100;
+                var env = ctx.createGain();
+                env.gain.setValueAtTime(0.05, t);
+                env.gain.linearRampToValueAtTime(0, t + 0.015);
+                osc.connect(env).connect(master); osc.start(t); osc.stop(t + 0.02);
+                self._audioNodes.push(osc, env);
+            }, 1000);
+            self._audioIntervals.push(ti);
+        } catch(e) {}
+    },
+
     onEnter: function(game) {
+        DebriefScene._startAmbientAudio();
         // Clear stale timeouts
         this._timeoutIds.forEach(id => clearTimeout(id));
         this._timeoutIds = [];
@@ -119,6 +178,7 @@ const DebriefScene = {
     },
 
     onExit: function() {
+        DebriefScene._stopAmbientAudio();
         // Clear all pending timeouts
         this._timeoutIds.forEach(id => clearTimeout(id));
         this._timeoutIds = [];

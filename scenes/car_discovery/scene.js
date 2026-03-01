@@ -15,7 +15,10 @@ const CarDiscoveryScene = {
     
     // Player starting position (off-screen, this is a static discovery scene)
     playerStart: { x: 50, y: 90 },
-    
+
+    // 🎬 Accessibility / Movie Mode
+    accessibilityPath: ['usb_stick', 'car'],
+
     // Scene hotspots
     hotspots: [
         {
@@ -127,8 +130,62 @@ const CarDiscoveryScene = {
         }
     ],
     
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 3);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── night wind ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var wind = ctx.createBufferSource(); wind.buffer = buf; wind.loop = true;
+            var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 280;
+            var wG = ctx.createGain(); wG.gain.value = 0.030;
+            wind.connect(lp).connect(wG).connect(master); wind.start();
+            self._audioNodes.push(wind, lp, wG);
+            // ── crickets ──
+            var ci = setInterval(function() {
+                if (!self._audioCtx) return;
+                var t = ctx.currentTime;
+                for (var c = 0; c < 3; c++) {
+                    var osc = ctx.createOscillator(); osc.type = 'sine'; osc.frequency.value = 3800 + c * 200;
+                    var env = ctx.createGain();
+                    env.gain.setValueAtTime(0, t + c * 0.08);
+                    env.gain.linearRampToValueAtTime(0.014, t + c * 0.08 + 0.01);
+                    env.gain.linearRampToValueAtTime(0, t + c * 0.08 + 0.04);
+                    osc.connect(env).connect(master); osc.start(t); osc.stop(t + c * 0.08 + 0.06);
+                    self._audioNodes.push(osc, env);
+                }
+            }, 600 + Math.random() * 1500);
+            self._audioIntervals.push(ci);
+        } catch(e) {}
+    },
+
     // Scene entry
     onEnter: function(game) {
+        CarDiscoveryScene._startAmbientAudio();
         console.log('[Car Discovery] Scene entered');
         console.log('[Car Discovery] Flags:', {
             saw_usb_first_time: game.getFlag('saw_usb_first_time'),
@@ -162,6 +219,7 @@ const CarDiscoveryScene = {
     
     // Scene exit
     onExit: function(game) {
+        CarDiscoveryScene._stopAmbientAudio();
         console.log('[Car Discovery] Scene exited');
     }
 };

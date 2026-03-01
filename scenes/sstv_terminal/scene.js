@@ -190,8 +190,61 @@ const SstvTerminalScene = {
         }
     ],
 
-    onEnter: function(game) {},
-    onExit: function(game) {}
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 2);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── broadband radio hiss ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var stat = ctx.createBufferSource(); stat.buffer = buf; stat.loop = true;
+            var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800; bp.Q.value = 0.9;
+            var sG = ctx.createGain(); sG.gain.value = 0.022;
+            stat.connect(bp).connect(sG).connect(master); stat.start();
+            self._audioNodes.push(stat, bp, sG);
+            // ── SSTV-style scan line chirp (1200→2400 Hz sweep per line) ──
+            var si = setInterval(function() {
+                if (!self._audioCtx) return;
+                var t = ctx.currentTime;
+                var osc = ctx.createOscillator(); osc.type = 'sine';
+                osc.frequency.setValueAtTime(1200, t);
+                osc.frequency.linearRampToValueAtTime(2400, t + 0.114);
+                var env = ctx.createGain();
+                env.gain.setValueAtTime(0.022, t);
+                env.gain.setValueAtTime(0.022, t + 0.114);
+                env.gain.linearRampToValueAtTime(0, t + 0.12);
+                osc.connect(env).connect(master); osc.start(t); osc.stop(t + 0.13);
+                self._audioNodes.push(osc, env);
+            }, 800);
+            self._audioIntervals.push(si);
+        } catch(e) {}
+    },
+
+    onEnter: function(game) { SstvTerminalScene._startAmbientAudio(); },
+    onExit: function(game) { SstvTerminalScene._stopAmbientAudio(); }
 };
 
 if (typeof module !== 'undefined') {

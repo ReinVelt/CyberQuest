@@ -13,8 +13,47 @@ const RegionalMapScene = {
   
   // Track distance display state
   showDistances: false,
-  
+
+  // ── Ambient Audio ───────────────────────────────────────────
+  _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+  _getAudioCtx: function() {
+    if (!this._audioCtx) {
+      try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+      catch(e) { return null; }
+    }
+    if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+    return this._audioCtx;
+  },
+  _stopAmbientAudio: function() {
+    this._audioIntervals.forEach(function(id) { clearInterval(id); });
+    this._audioIntervals = [];
+    this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+    this._audioNodes = [];
+    if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+  },
+  _startAmbientAudio: function() {
+    var self = this, ctx = this._getAudioCtx();
+    if (!ctx) return;
+    try {
+      var master = ctx.createGain();
+      master.gain.setValueAtTime(0, ctx.currentTime);
+      master.gain.linearRampToValueAtTime(1, ctx.currentTime + 3);
+      master.connect(ctx.destination);
+      self._audioNodes.push(master);
+      // ── light Drenthe wind (map overview) ──
+      var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      var wind = ctx.createBufferSource(); wind.buffer = buf; wind.loop = true;
+      var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 350;
+      var wG = ctx.createGain(); wG.gain.value = 0.020;
+      wind.connect(lp).connect(wG).connect(master); wind.start();
+      self._audioNodes.push(wind, lp, wG);
+    } catch(e) {}
+  },
+
   onEnter: function(game) {
+    RegionalMapScene._startAmbientAudio();
     console.log('Entering regional map scene');
     
     // Update status indicators based on game progress
@@ -25,6 +64,7 @@ const RegionalMapScene = {
   },
   
   onExit: function() {
+    RegionalMapScene._stopAmbientAudio();
     document.getElementById('location-info-overlay')?.remove();
   },
   

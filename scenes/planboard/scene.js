@@ -15,8 +15,60 @@ const PlanboardScene = {
   
   // Dossier popup state
   activeDossier: null,
-  
+
+  // 🎬 Accessibility / Movie Mode — just exit back to mancave
+  accessibilityPath: ['back-button'],
+
+  // ── Ambient Audio ───────────────────────────────────────────
+  _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+  _getAudioCtx: function() {
+    if (!this._audioCtx) {
+      try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+      catch(e) { return null; }
+    }
+    if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+    return this._audioCtx;
+  },
+  _stopAmbientAudio: function() {
+    this._audioIntervals.forEach(function(id) { clearInterval(id); });
+    this._audioIntervals = [];
+    this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+    this._audioNodes = [];
+    if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+  },
+  _startAmbientAudio: function() {
+    var self = this, ctx = this._getAudioCtx();
+    if (!ctx) return;
+    try {
+      var master = ctx.createGain();
+      master.gain.setValueAtTime(0, ctx.currentTime);
+      master.gain.linearRampToValueAtTime(1, ctx.currentTime + 3);
+      master.connect(ctx.destination);
+      self._audioNodes.push(master);
+      // ── tense sub-bass drone ──
+      var dr = ctx.createOscillator(); dr.type = 'sine'; dr.frequency.value = 42;
+      var drG = ctx.createGain(); drG.gain.value = 0.022;
+      dr.connect(drG).connect(master); dr.start();
+      self._audioNodes.push(dr, drG);
+      // ── slow pulse LFO on drone ──
+      var lfo = ctx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.06;
+      var lfoG = ctx.createGain(); lfoG.gain.value = 0.010;
+      lfo.connect(lfoG).connect(drG.gain); lfo.start();
+      self._audioNodes.push(lfo, lfoG);
+      // ── air conditioning hiss ──
+      var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      var ac = ctx.createBufferSource(); ac.buffer = buf; ac.loop = true;
+      var hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 2000;
+      var acG = ctx.createGain(); acG.gain.value = 0.016;
+      ac.connect(hp).connect(acG).connect(master); ac.start();
+      self._audioNodes.push(ac, hp, acG);
+    } catch(e) {}
+  },
+
   onEnter: function(game) {
+    PlanboardScene._startAmbientAudio();
     console.log('Entering planboard scene');
     
     // Create evidence slot overlays
@@ -30,6 +82,7 @@ const PlanboardScene = {
   },
   
   onExit: function(game) {
+    PlanboardScene._stopAmbientAudio();
     // Clean up any open dossiers
     if (PlanboardScene.activeDossier) {
       PlanboardScene.closeDossier();
@@ -1169,6 +1222,7 @@ const PlanboardScene = {
       cursor: 'pointer',
       skipWalk: true,
       action: function(game) {
+        game.setFlag('visited_planboard', true); // prevent re-entry in movie mode
         game.loadScene('mancave');
       }
     },

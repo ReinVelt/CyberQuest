@@ -56,7 +56,63 @@ const EpilogueScene = {
     // Track timeouts for cleanup
     _timeoutIds: [],
 
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 4);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── gentle outdoor breeze ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var wind = ctx.createBufferSource(); wind.buffer = buf; wind.loop = true;
+            var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 400;
+            var wG = ctx.createGain(); wG.gain.value = 0.022;
+            wind.connect(lp).connect(wG).connect(master); wind.start();
+            self._audioNodes.push(wind, lp, wG);
+            // ── resolution birdsong ──
+            [2800, 4200].forEach(function(baseF, idx) {
+                var bi = setInterval(function() {
+                    if (!self._audioCtx) return;
+                    var t = ctx.currentTime;
+                    var osc = ctx.createOscillator(); osc.type = 'sine';
+                    osc.frequency.setValueAtTime(baseF, t);
+                    osc.frequency.linearRampToValueAtTime(baseF + 400, t + 0.1);
+                    var env = ctx.createGain();
+                    env.gain.setValueAtTime(0, t);
+                    env.gain.linearRampToValueAtTime(0.025, t + 0.02);
+                    env.gain.linearRampToValueAtTime(0, t + 0.18);
+                    osc.connect(env).connect(master); osc.start(t); osc.stop(t + 0.2);
+                    self._audioNodes.push(osc, env);
+                }, 3000 + idx * 1700 + Math.random() * 4000);
+                self._audioIntervals.push(bi);
+            });
+        } catch(e) {}
+    },
+
     onEnter: function(game) {
+        EpilogueScene._startAmbientAudio();
         // Clear stale timeouts
         this._timeoutIds.forEach(id => clearTimeout(id));
         this._timeoutIds = [];
@@ -68,6 +124,7 @@ const EpilogueScene = {
     },
 
     onExit: function() {
+        EpilogueScene._stopAmbientAudio();
         this._timeoutIds.forEach(id => clearTimeout(id));
         this._timeoutIds = [];
 

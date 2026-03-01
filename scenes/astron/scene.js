@@ -22,6 +22,9 @@ const AstronScene = {
 
     playerStart: { x: 50, y: 90 },
 
+    // 🎬 Accessibility / Movie Mode
+    accessibilityPath: ['cees-bassa', 'wall-monitors', 'door-exit'],
+
     idleThoughts: [
         "These dishes have been listening to the universe since the seventies.",
         "Fourteen 25-metre parabolic antennas, visible right through that window.",
@@ -225,7 +228,61 @@ const AstronScene = {
     //  Scene lifecycle
     // ═══════════════════════════════════════════════
 
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 4);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── outdoor wind across heather ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var wind = ctx.createBufferSource(); wind.buffer = buf; wind.loop = true;
+            var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 350;
+            var wG = ctx.createGain(); wG.gain.value = 0.028;
+            wind.connect(lp).connect(wG).connect(master); wind.start();
+            self._audioNodes.push(wind, lp, wG);
+            // ── dish tracking motor hum ──
+            var mot = ctx.createOscillator(); mot.type = 'sine'; mot.frequency.value = 55;
+            var motG = ctx.createGain(); motG.gain.value = 0.018;
+            mot.connect(motG).connect(master); mot.start();
+            self._audioNodes.push(mot, motG);
+            // ── control-room electronics hum ──
+            var elec = ctx.createOscillator(); elec.type = 'sine'; elec.frequency.value = 120;
+            var elecG = ctx.createGain(); elecG.gain.value = 0.010;
+            elec.connect(elecG).connect(master); elec.start();
+            self._audioNodes.push(elec, elecG);
+            // ── gust LFO on wind ──
+            var lfo = ctx.createOscillator(); lfo.type = 'sine'; lfo.frequency.value = 0.1;
+            var lfoG = ctx.createGain(); lfoG.gain.value = 0.010;
+            lfo.connect(lfoG).connect(wG.gain); lfo.start();
+            self._audioNodes.push(lfo, lfoG);
+        } catch(e) {}
+    },
+
     onEnter: function(game) {
+        AstronScene._startAmbientAudio();
         // Apply CSS fallback class
         const bg = document.getElementById('scene-background');
         if (bg) bg.className = 'scene-astron';
@@ -269,6 +326,7 @@ const AstronScene = {
     },
 
     onExit: function() {
+        AstronScene._stopAmbientAudio();
         this._timeoutIds.forEach(id => clearTimeout(id));
         this._timeoutIds = [];
 

@@ -302,8 +302,68 @@ const AirgappedLaptopScene = {
         }
     ],
 
-    onEnter: function(game) {},
-    onExit: function(game) {}
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 3);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── computer fan drone ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var fan = ctx.createBufferSource(); fan.buffer = buf; fan.loop = true;
+            var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 650;
+            var fanG = ctx.createGain(); fanG.gain.value = 0.04;
+            fan.connect(lp).connect(fanG).connect(master); fan.start();
+            self._audioNodes.push(fan, lp, fanG);
+            // ── 60 Hz power hum ──
+            var hum = ctx.createOscillator(); hum.type = 'sine'; hum.frequency.value = 60;
+            var humG = ctx.createGain(); humG.gain.value = 0.015;
+            hum.connect(humG).connect(master); hum.start();
+            self._audioNodes.push(hum, humG);
+            // ── 120 Hz fluorescent flicker ──
+            var fl = ctx.createOscillator(); fl.type = 'sine'; fl.frequency.value = 120;
+            var flG = ctx.createGain(); flG.gain.value = 0.008;
+            fl.connect(flG).connect(master); fl.start();
+            self._audioNodes.push(fl, flG);
+            // ── periodic HDD seek click ──
+            var ci = setInterval(function() {
+                if (!self._audioCtx) return;
+                var t = ctx.currentTime;
+                var osc = ctx.createOscillator(); osc.type = 'square'; osc.frequency.value = 900;
+                var env = ctx.createGain();
+                env.gain.setValueAtTime(0.04, t);
+                env.gain.linearRampToValueAtTime(0, t + 0.012);
+                osc.connect(env).connect(master); osc.start(t); osc.stop(t + 0.015);
+                self._audioNodes.push(osc, env);
+            }, 3500 + Math.random() * 6000);
+            self._audioIntervals.push(ci);
+        } catch(e) {}
+    },
+
+    onEnter: function(game) { AirgappedLaptopScene._startAmbientAudio(); },
+    onExit: function(game) { AirgappedLaptopScene._stopAmbientAudio(); }
 };
 
 if (typeof module !== 'undefined') {

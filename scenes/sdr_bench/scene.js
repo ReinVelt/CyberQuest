@@ -238,7 +238,71 @@ const SdrBenchScene = {
         }
     ],
 
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 3);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── broadband radio hiss (SDR receiver noise floor) ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var stat = ctx.createBufferSource(); stat.buffer = buf; stat.loop = true;
+            var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800; bp.Q.value = 0.8;
+            var sG = ctx.createGain(); sG.gain.value = 0.032;
+            stat.connect(bp).connect(sG).connect(master); stat.start();
+            self._audioNodes.push(stat, bp, sG);
+            // ── dongle fan hum ──
+            var buf2 = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d2 = buf2.getChannelData(0);
+            for (var j = 0; j < d2.length; j++) d2[j] = Math.random() * 2 - 1;
+            var fan = ctx.createBufferSource(); fan.buffer = buf2; fan.loop = true;
+            var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 600;
+            var fanG = ctx.createGain(); fanG.gain.value = 0.025;
+            fan.connect(lp).connect(fanG).connect(master); fan.start();
+            self._audioNodes.push(fan, lp, fanG);
+            // ── occasional frequency sweep blip ──
+            var si = setInterval(function() {
+                if (!self._audioCtx) return;
+                var t = ctx.currentTime;
+                var osc = ctx.createOscillator(); osc.type = 'sine';
+                osc.frequency.setValueAtTime(400, t);
+                osc.frequency.linearRampToValueAtTime(4000, t + 0.6);
+                var env = ctx.createGain();
+                env.gain.setValueAtTime(0, t);
+                env.gain.linearRampToValueAtTime(0.028, t + 0.05);
+                env.gain.setValueAtTime(0.028, t + 0.55);
+                env.gain.linearRampToValueAtTime(0, t + 0.6);
+                osc.connect(env).connect(master); osc.start(t); osc.stop(t + 0.65);
+                self._audioNodes.push(osc, env);
+            }, 8000 + Math.random() * 15000);
+            self._audioIntervals.push(si);
+        } catch(e) {}
+    },
+
     onEnter: (game) => {
+        SdrBenchScene._startAmbientAudio();
         if (!game.getFlag('visited_sdr_bench')) {
             game.setFlag('visited_sdr_bench', true);
             setTimeout(() => {
@@ -265,6 +329,7 @@ const SdrBenchScene = {
     },
 
     onExit: () => {
+        SdrBenchScene._stopAmbientAudio();
         document.getElementById('sstv-decode-overlay')?.remove();
     }
 };

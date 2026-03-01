@@ -12,7 +12,10 @@ const VideocallScene = {
     description: 'Secure video conference terminal in the mancave.',
     
     playerStart: { x: 50, y: 85 },
-    
+
+    // 🎬 Accessibility / Movie Mode — call all three allies, then exit
+    accessibilityPath: ['call_david', 'call_cees', 'call_jaap', 'exit_videocall'],
+
     hotspots: [
         {
             id: 'call_david',
@@ -207,11 +210,59 @@ const VideocallScene = {
             cursor: 'pointer',
             cssClass: 'hotspot-nav',
             skipWalk: true,
-            targetScene: 'mancave'
+            action: function(game) {
+                // Mark videocall done so the mancave runner doesn't re-trigger it
+                game.setFlag('videocall_done', true);
+                game.loadScene('mancave');
+            }
         }
     ],
     
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 2);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── room tone (quiet indoor) ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var room = ctx.createBufferSource(); room.buffer = buf; room.loop = true;
+            var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 700;
+            var rG = ctx.createGain(); rG.gain.value = 0.016;
+            room.connect(lp).connect(rG).connect(master); room.start();
+            self._audioNodes.push(room, lp, rG);
+            // ── video call connection hum (440 Hz soft) ──
+            var tone = ctx.createOscillator(); tone.type = 'sine'; tone.frequency.value = 440;
+            var tG = ctx.createGain(); tG.gain.value = 0.008;
+            tone.connect(tG).connect(master); tone.start();
+            self._audioNodes.push(tone, tG);
+        } catch(e) {}
+    },
+
     onEnter: (game) => {
+        VideocallScene._startAmbientAudio();
         // Welcome message
         if (!game.getFlag('visited_videocall')) {
             game.setFlag('visited_videocall', true);
@@ -227,6 +278,7 @@ const VideocallScene = {
     },
     
     onExit: () => {
+        VideocallScene._stopAmbientAudio();
         // Nothing to clean up
     }
 };

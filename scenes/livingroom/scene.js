@@ -300,7 +300,64 @@ const LivingroomScene = {
         document.body.appendChild(overlay);
     },
 
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 3);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── fireplace crackle (sparse impulse noise) ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() > 0.998 ? (Math.random() * 2 - 1) * 3 : (Math.random() * 2 - 1) * 0.08;
+            var fire = ctx.createBufferSource(); fire.buffer = buf; fire.loop = true;
+            var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1200; bp.Q.value = 0.5;
+            var fG = ctx.createGain(); fG.gain.value = 0.08;
+            fire.connect(bp).connect(fG).connect(master); fire.start();
+            self._audioNodes.push(fire, bp, fG);
+            // ── low fire rumble ──
+            var rumble = ctx.createOscillator(); rumble.type = 'sawtooth'; rumble.frequency.value = 38;
+            var rf = ctx.createBiquadFilter(); rf.type = 'lowpass'; rf.frequency.value = 80;
+            var rG = ctx.createGain(); rG.gain.value = 0.018;
+            rumble.connect(rf).connect(rG).connect(master); rumble.start();
+            self._audioNodes.push(rumble, rf, rG);
+            // ── clock tick ──
+            var ti = setInterval(function() {
+                if (!self._audioCtx) return;
+                var t = ctx.currentTime;
+                var osc = ctx.createOscillator(); osc.type = 'triangle'; osc.frequency.value = 1000;
+                var env = ctx.createGain();
+                env.gain.setValueAtTime(0.04, t);
+                env.gain.linearRampToValueAtTime(0, t + 0.015);
+                osc.connect(env).connect(master); osc.start(t); osc.stop(t + 0.02);
+                self._audioNodes.push(osc, env);
+            }, 1000);
+            self._audioIntervals.push(ti);
+        } catch(e) {}
+    },
+
     onEnter: (game) => {
+        LivingroomScene._startAmbientAudio();
         // Remove any existing NPC characters from previous visits (preserve player character)
         const charactersContainer = document.getElementById('scene-characters');
         if (charactersContainer) {
@@ -347,6 +404,7 @@ const LivingroomScene = {
     },
     
     onExit: () => {
+        LivingroomScene._stopAmbientAudio();
         // Remove NPC character elements (preserve player character)
         const charactersContainer = document.getElementById('scene-characters');
         if (charactersContainer) {

@@ -12,7 +12,10 @@ const FacilityInteriorScene = {
     description: 'Inside the compound. Sterile corridors. Fluorescent lights. The hum of ventilation systems.',
     
     playerStart: { x: 15, y: 85 },
-    
+
+    // 🎬 Accessibility / Movie Mode — contact Eva mesh, descend to server room
+    accessibilityPath: ['eva_mesh', 'basement_stairs'],
+
     idleThoughts: [
         "Stay quiet. Move fast.",
         "Someone could turn that corner any second.",
@@ -150,7 +153,56 @@ const FacilityInteriorScene = {
         }
     ],
     
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 3);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── fluorescent light hum (120 Hz) ──
+            var fl = ctx.createOscillator(); fl.type = 'sine'; fl.frequency.value = 120;
+            var flG = ctx.createGain(); flG.gain.value = 0.018;
+            fl.connect(flG).connect(master); fl.start();
+            self._audioNodes.push(fl, flG);
+            // ── HVAC hiss ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var hvac = ctx.createBufferSource(); hvac.buffer = buf; hvac.loop = true;
+            var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 2500; bp.Q.value = 2;
+            var hG = ctx.createGain(); hG.gain.value = 0.020;
+            hvac.connect(bp).connect(hG).connect(master); hvac.start();
+            self._audioNodes.push(hvac, bp, hG);
+            // ── subtle tension drone ──
+            var dr = ctx.createOscillator(); dr.type = 'sine'; dr.frequency.value = 43;
+            var drG = ctx.createGain(); drG.gain.value = 0.015;
+            dr.connect(drG).connect(master); dr.start();
+            self._audioNodes.push(dr, drG);
+        } catch(e) {}
+    },
+
     onEnter: (game) => {
+        FacilityInteriorScene._startAmbientAudio();
         // Show ally coordination overlay
         if (window.AllyOverlay) window.AllyOverlay.show(game);
         game.showNotification('Inside the compound - Find the server room');
@@ -171,6 +223,7 @@ const FacilityInteriorScene = {
     },
     
     onExit: () => {
+        FacilityInteriorScene._stopAmbientAudio();
         if (window.AllyOverlay) window.AllyOverlay.hide();
     }
 };

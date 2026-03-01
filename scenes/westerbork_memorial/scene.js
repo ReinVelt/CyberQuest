@@ -309,7 +309,66 @@ const WesterborkMemorialScene = {
         }
     ],
 
+    // ── Ambient Audio ───────────────────────────────────────────
+    _audioCtx: null, _audioNodes: [], _audioIntervals: [],
+    _getAudioCtx: function() {
+        if (!this._audioCtx) {
+            try { this._audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+            catch(e) { return null; }
+        }
+        if (this._audioCtx.state === 'suspended') this._audioCtx.resume();
+        return this._audioCtx;
+    },
+    _stopAmbientAudio: function() {
+        this._audioIntervals.forEach(function(id) { clearInterval(id); });
+        this._audioIntervals = [];
+        this._audioNodes.forEach(function(n) { try { if (n.stop) n.stop(); n.disconnect(); } catch(e) {} });
+        this._audioNodes = [];
+        if (this._audioCtx) { try { this._audioCtx.close(); } catch(e) {} this._audioCtx = null; }
+    },
+    _startAmbientAudio: function() {
+        var self = this, ctx = this._getAudioCtx();
+        if (!ctx) return;
+        try {
+            var master = ctx.createGain();
+            master.gain.setValueAtTime(0, ctx.currentTime);
+            master.gain.linearRampToValueAtTime(1, ctx.currentTime + 5);
+            master.connect(ctx.destination);
+            self._audioNodes.push(master);
+            // ── very gentle breeze through grass ──
+            var buf = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+            var d = buf.getChannelData(0);
+            for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+            var wind = ctx.createBufferSource(); wind.buffer = buf; wind.loop = true;
+            var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 260;
+            var wG = ctx.createGain(); wG.gain.value = 0.018;
+            wind.connect(lp).connect(wG).connect(master); wind.start();
+            self._audioNodes.push(wind, lp, wG);
+            // ── solemn low hum ──
+            var hum = ctx.createOscillator(); hum.type = 'sine'; hum.frequency.value = 48;
+            var humG = ctx.createGain(); humG.gain.value = 0.010;
+            hum.connect(humG).connect(master); hum.start();
+            self._audioNodes.push(hum, humG);
+            // ── occasional distant bird (sparse, solemn) ──
+            var bi = setInterval(function() {
+                if (!self._audioCtx) return;
+                var t = ctx.currentTime;
+                var osc = ctx.createOscillator(); osc.type = 'sine';
+                osc.frequency.setValueAtTime(2200, t);
+                osc.frequency.linearRampToValueAtTime(2600, t + 0.15);
+                var env = ctx.createGain();
+                env.gain.setValueAtTime(0, t);
+                env.gain.linearRampToValueAtTime(0.016, t + 0.03);
+                env.gain.linearRampToValueAtTime(0, t + 0.20);
+                osc.connect(env).connect(master); osc.start(t); osc.stop(t + 0.22);
+                self._audioNodes.push(osc, env);
+            }, 8000 + Math.random() * 12000);
+            self._audioIntervals.push(bi);
+        } catch(e) {}
+    },
+
     onEnter: (game) => {
+        WesterborkMemorialScene._startAmbientAudio();
         if (!game.getFlag('visited_westerbork_memorial')) {
             game.setFlag('visited_westerbork_memorial', true);
             const knowsSurveillance = game.getFlag('visited_klooster');
@@ -338,7 +397,7 @@ const WesterborkMemorialScene = {
         }
     },
 
-    onExit: () => {}
+    onExit: () => { WesterborkMemorialScene._stopAmbientAudio(); }
 };
 
 if (typeof window !== 'undefined' && window.game) {
