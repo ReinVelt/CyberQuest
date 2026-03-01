@@ -245,64 +245,7 @@ const MancaveScene = {
             height: 13.89,
             cursor: 'pointer',
             action: function(game) {
-                // ── Part 9: The Dilemma ──
-                if (game.getFlag('evidence_unlocked') && !game.getFlag('started_ally_search')) {
-                    window.MancaveDilemma.play(game);
-                    return;
-                }
-
-                // ── Part 10: Contact allies ──
-                if (game.getFlag('started_ally_search') && !game.getFlag('all_allies_contacted')) {
-                    if (!game.getFlag('contacted_allies')) {
-                        window.MancaveAllyRecruitment.play(game);
-                    } else {
-                        // Remind player
-                        game.startDialogue([
-                            { speaker: 'Ryan', text: 'Allies are reviewing the evidence. Need to investigate Volkov next.' }
-                        ]);
-                    }
-                    return;
-                }
-
-                // ── Part 11: Investigate Volkov ──
-                if (game.getFlag('all_allies_contacted') && !game.getFlag('volkov_investigated')) {
-                    window.MancaveVolkovInvestigation.playVolkovDive(game);
-                    return;
-                }
-
-                // After all main laptop parts completed
-                if (game.getFlag('volkov_investigated')) {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'Volkov: Russian agent. 8 dead. Infiltrated German military R&D.' },
-                        { speaker: 'Ryan', text: 'Need Chris Kubecka to dig deeper. OSINT is her specialty.' },
-                        { speaker: 'Ryan', text: 'The secure phone. That\'s how I reach her.' }
-                    ]);
-                    setTimeout(() => {
-                        game.showNotification('Use the secure phone to contact Chris Kubecka');
-                    }, 1500);
-                    return;
-                }
-
-                // ── Early game: Check email ──
-                if (!game.getFlag('checked_email')) {
-                    game.setFlag('checked_email', true);
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'Let\'s see what\'s in my inbox...' },
-                        { speaker: '', text: '*Ryan scrolls through emails*' },
-                        { speaker: 'Ryan', text: 'Newsletter, spam, another newsletter... nothing urgent.' },
-                        { speaker: 'Ryan', text: 'No freelance work either. Back to my project.' },
-                        { speaker: '', text: '*Ryan starts coding*' },
-                        { speaker: 'Ryan', text: 'Now, where was I with this auth module...' }
-                    ]);
-                    game.advanceTime(60);
-                    setTimeout(() => {
-                        game.showNotification('Something strange is happening with the SSTV terminal...');
-                    }, 3000);
-                } else {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'My trusty laptop running Kali Linux. Everything I need for... research.' }
-                    ]);
-                }
+                game.loadScene('laptop');
             }
         },
 
