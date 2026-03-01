@@ -57,38 +57,58 @@ const LivingroomScene = {
             height: 35,
             cursor: 'pointer',
             action: (game) => {
+                const docWatched = game.getFlag('tv_documentary_watched');
+
                 if (!game.getFlag('talked_to_max')) {
                     game.setFlag('talked_to_max', true);
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'Hey Max, watching documentaries again?' },
-                        { speaker: 'Max', text: 'Ryan! This one is fascinating - it\'s about Drenthe\'s wireless technology pioneers.' },
-                        { speaker: 'Max', text: 'They\'re featuring WSRT, LOFAR, and the Ericsson Bluetooth engineers.' },
-                        { speaker: 'Ryan', text: 'Wait, LOFAR and WSRT? Those are serious radio astronomy projects.' },
-                        { speaker: 'Max', text: 'They interviewed actual engineers! A Dr. David Prinsloo from TU Eindhoven...' },
-                        { speaker: 'Max', text: 'A man named Cees Bassa who works with LOFAR and satellite tracking...' },
-                        { speaker: 'Max', text: 'And Jaap Haartsen who invented Bluetooth at Ericsson!' },
-                        { speaker: 'Ryan', text: '...Those are my contacts. David, Cees, and Jaap.' },
-                        { speaker: 'Max', text: 'Really? Your hacker friends are famous engineers? That\'s amazing!' },
-                        { speaker: 'Ryan', text: 'They\'re more than friends. They\'re the best signal processing minds in the Netherlands.' },
-                        { speaker: 'Max', text: 'You should watch it! The dogs are keeping me company if you want to go to your mancave.' },
-                        { speaker: 'Ryan', text: 'I might watch it later. Got some radio work to check first.' }
-                    ]);
-                } else {
-                    const watchedDoc = game.getFlag('tv_documentary_watched');
-                    if (watchedDoc) {
+
+                    if (!docWatched) {
+                        // First meeting — doc not watched yet: Max pitches the documentary
                         game.startDialogue([
-                            { speaker: 'Max', text: 'So, did you watch the whole documentary?' },
-                            { speaker: 'Ryan', text: 'Yeah, it was incredible. David Prinsloo, Cees Bassa, and Jaap Haartsen are true pioneers.' },
-                            { speaker: 'Max', text: 'I told you it was good! They made Drenthe famous for wireless tech.' },
-                            { speaker: 'Ryan', text: 'It definitely gave me a new appreciation for their work.' }
+                            { speaker: 'Ryan', text: 'Hey Max, watching documentaries again?' },
+                            { speaker: 'Max', text: 'Ryan! This one is fascinating — it\'s about Drenthe\'s wireless technology pioneers.' },
+                            { speaker: 'Max', text: 'They\'re featuring WSRT, LOFAR, and the Ericsson Bluetooth engineers.' },
+                            { speaker: 'Ryan', text: 'Wait, LOFAR and WSRT? Those are serious radio astronomy projects.' },
+                            { speaker: 'Max', text: 'They interviewed actual engineers! A Dr. David Prinsloo from TU Eindhoven...' },
+                            { speaker: 'Max', text: 'A man named Cees Bassa who works with LOFAR and satellite tracking...' },
+                            { speaker: 'Max', text: 'And Jaap Haartsen who invented Bluetooth at Ericsson!' },
+                            { speaker: 'Ryan', text: '...Those are my contacts. David, Cees, and Jaap.' },
+                            { speaker: 'Max', text: 'Really? Your hacker friends are famous engineers? That\'s amazing!' },
+                            { speaker: 'Ryan', text: 'They\'re more than friends. They\'re the best signal processing minds in the Netherlands.' },
+                            { speaker: 'Max', text: 'You should watch it! The dogs are keeping me company if you want to go to your mancave.' },
+                            { speaker: 'Ryan', text: 'I might watch it later. Got some radio work to check first.' }
                         ]);
                     } else {
+                        // First meeting but doc already watched — skip to news
                         game.startDialogue([
-                            { speaker: 'Max', text: 'The documentary is really well done! You should watch the whole thing.' },
-                            { speaker: 'Max', text: 'I had no idea wireless technology from Drenthe was so important globally!' },
-                            { speaker: 'Ryan', text: 'Yeah, we\'ve got some brilliant people here. Maybe I should watch it.' }
+                            { speaker: 'Ryan', text: 'Hey Max, anything interesting on?' },
+                            { speaker: 'Max', text: 'Just switched to the news. RTV Drenthe is covering those strange signal outages across the province.' },
+                            { speaker: 'Max', text: 'Mobile networks, GPS, even some weather stations. Nobody knows what\'s causing it.' },
+                            { speaker: 'Ryan', text: 'That\'s... not random interference. That\'s directed jamming.' },
+                            { speaker: 'Max', text: 'They said the Antennebureau is investigating but have no comment yet.' },
+                            { speaker: 'Ryan', text: 'Of course they don\'t. This has someone\'s fingerprints all over it.' }
                         ]);
                     }
+
+                } else if (!docWatched) {
+                    // Talked before, doc still not watched — nudge again
+                    game.startDialogue([
+                        { speaker: 'Max', text: 'The documentary is still on! You really should watch the whole thing.' },
+                        { speaker: 'Max', text: 'I had no idea wireless technology from Drenthe was so important globally!' },
+                        { speaker: 'Ryan', text: 'Yeah, we\'ve got some brilliant people here. I\'ll sit down and watch it properly.' }
+                    ]);
+
+                } else {
+                    // Doc watched — talk about the latest news
+                    game.startDialogue([
+                        { speaker: 'Max', text: 'Did you see the RTV Drenthe news?' },
+                        { speaker: 'Ryan', text: 'Not yet. What\'s going on?' },
+                        { speaker: 'Max', text: 'More unexplained signal outages. GPS, mobile, even some industrial sensors near Emmen.' },
+                        { speaker: 'Max', text: 'The reporter called it "unprecedented interference" but the authorities just say they\'re looking into it.' },
+                        { speaker: 'Ryan', text: 'That\'s the same pattern I\'ve been tracking from the mancave. Not natural.' },
+                        { speaker: 'Max', text: 'Should I be worried?' },
+                        { speaker: 'Ryan', text: 'Not here. But someone out there is making a lot of noise on purpose.' }
+                    ]);
                 }
             }
         },
