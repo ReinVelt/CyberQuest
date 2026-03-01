@@ -62,8 +62,12 @@ const MancaveScene = {
             }
         },
         // ── Secure Phone: Kubecka → Zerfall → Eva identification ──
+        // Guard ends at identified_eva (set inside secure_phone's Eva Reveal cinematic).
+        // Once identified_eva is set, the meshtastic hotspot below takes over.
+        // Using !eva_contacted here would cause a loop: eva_contacted is only set
+        // by the Meshtastic cinematic, so secure_phone would keep re-loading.
         async function(game) {
-            if (game.getFlag('volkov_investigated') && !game.getFlag('eva_contacted')) {
+            if (game.getFlag('volkov_investigated') && !game.getFlag('identified_eva')) {
                 game.loadScene('secure_phone');
             }
         },
