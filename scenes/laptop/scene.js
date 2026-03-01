@@ -84,15 +84,18 @@ const LaptopScene = {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Let\'s see what\'s in my inbox...' },
                         { speaker: '', text: '*Ryan scrolls through emails*' },
-                        { speaker: 'Ryan', text: 'Newsletter, spam, another newsletter... nothing urgent.' },
-                        { speaker: 'Ryan', text: 'No freelance work either. Back to my project.' },
-                        { speaker: '', text: '*Ryan starts coding*' },
-                        { speaker: 'Ryan', text: 'Now, where was I with this auth module...' }
+                        { speaker: 'Ryan', text: 'Newsletter, spam, another newsletter...' },
+                        { speaker: 'Ryan', text: 'Nothing urgent. Nothing interesting.' },
+                        { speaker: 'Ryan', text: 'No freelance work either.' },
+                        { speaker: '', text: '*Ryan opens a code editor*' },
+                        { speaker: 'Ryan', text: 'Alright. Back to this auth module.' },
+                        { speaker: '', text: '*Typing. Coffee getting cold.*' },
+                        { speaker: 'Ryan', text: 'Where was I...' }
                     ]);
                     game.advanceTime(60);
                     setTimeout(() => {
                         game.showNotification('Something strange is happening with the SSTV terminal...');
-                    }, 3000);
+                    }, 6000);
                     return;
                 }
 

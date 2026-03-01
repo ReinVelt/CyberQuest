@@ -67,7 +67,7 @@ window.MancaveDilemma = (function () {
 
         MC.revealDialogue(openingDiv, [
             { speaker: 'Ryan', text: 'Eight people dead. More planned. What do I do with this?' }
-        ], { pauseBetween: 1500 });
+        ], { pauseBetween: 2500, useTTS: true, ttsGap: 1000 });
 
         // After opening, reveal cards one by one
         MC.schedule(() => {
@@ -92,7 +92,7 @@ window.MancaveDilemma = (function () {
                 cardsContainer.appendChild(card);
                 MC.playPaperShuffle();
 
-                // Show monologue after card appears
+                // Show monologue after card appears — give time to read first
                 MC.schedule(() => {
                     const mono = document.createElement('div');
                     mono.className = 'mc-dialogue-line';
@@ -100,39 +100,47 @@ window.MancaveDilemma = (function () {
                     mono.innerHTML = `<span class="mc-speaker">Ryan:</span> ${opt.monologue}`;
                     cardsContainer.appendChild(mono);
 
-                    // If rejected, gray out after monologue
-                    if (opt.rejected) {
-                        MC.schedule(() => {
-                            card.classList.add('mc-option-rejected');
-                            MC.playBeep(300, 0.08);
+                    // Speak the monologue and wait for TTS before greying out
+                    const vm = window.voiceManager;
+                    const speakDone = (vm && vm.enabled)
+                        ? vm.speak(opt.monologue, 'Ryan')
+                        : Promise.resolve();
 
-                            optIdx++;
-                            MC.schedule(showOption, 1200);
-                        }, 1500);
-                    } else {
-                        // Selected! Glow green
-                        MC.schedule(() => {
-                            card.classList.add('mc-option-selected');
-                            card.querySelector('.mc-option-title').style.color = '#00ff41';
-                            MC.playImpact();
-                            MC.flash();
-
-                            // Final dialogue
+                    speakDone.then(() => {
+                        // If rejected, gray out after monologue
+                        if (opt.rejected) {
                             MC.schedule(() => {
-                                MC.stopDrone(2);
+                                card.classList.add('mc-option-rejected');
+                                MC.playBeep(300, 0.08);
+
+                                optIdx++;
+                                MC.schedule(showOption, 2500);
+                            }, 2000);
+                        } else {
+                            // Selected! Glow green
+                            MC.schedule(() => {
+                                card.classList.add('mc-option-selected');
+                                card.querySelector('.mc-option-title').style.color = '#00ff41';
+                                MC.playImpact();
+                                MC.flash();
+
+                                // Final dialogue
                                 MC.schedule(() => {
-                                    MC.destroyOverlay(1);
-                                    MC.schedule(() => MC.destroyAudio(), 1200);
-                                    game.showNotification('Click the laptop again to contact allies');
-                                }, 2000);
-                            }, 1500);
-                        }, 1500);
-                    }
-                }, 1000);
+                                    MC.stopDrone(2);
+                                    MC.schedule(() => {
+                                        MC.destroyOverlay(1);
+                                        MC.schedule(() => MC.destroyAudio(), 1200);
+                                        game.showNotification('Click the laptop again to contact allies');
+                                    }, 3500);
+                                }, 2500);
+                            }, 2500);
+                        }
+                    });
+                }, 2000);
             }
 
             showOption();
-        }, 3000);
+        }, 6000);
 
         // Skip handler
         MC.onSkip(() => {

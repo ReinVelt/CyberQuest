@@ -109,7 +109,7 @@ window.MancaveAllyRecruitment = (function () {
             container.innerHTML = '';
             container.appendChild(dossier);
             MC.playPaperShuffle();
-            MC.schedule(resolve, 2500);
+            MC.schedule(resolve, 4500);
         });
     }
 
@@ -139,9 +139,9 @@ window.MancaveAllyRecruitment = (function () {
             container.appendChild(chatArea);
 
             MC.revealChat(chatArea, ally.messages, 'Ryan', {
-                typingDelay: 1000,
-                msgDelay: 1200,
-                onDone: () => MC.schedule(resolve, 800)
+                typingDelay: 1800,
+                msgDelay: 2200,
+                onDone: () => MC.schedule(resolve, 2000)
             });
         });
     }
@@ -157,7 +157,7 @@ window.MancaveAllyRecruitment = (function () {
             container.appendChild(stamp);
             MC.playImpact();
             MC.flash();
-            MC.schedule(resolve, 2000);
+            MC.schedule(resolve, 3500);
         });
     }
 
@@ -195,13 +195,13 @@ window.MancaveAllyRecruitment = (function () {
                     `;
                     team.appendChild(mini);
                     MC.playBeep(800 + i * 200);
-                }, i * 600);
+                }, i * 1100);
             });
 
             MC.schedule(() => {
                 MC.playImpact();
                 resolve();
-            }, ALLIES.length * 600 + 2000);
+            }, ALLIES.length * 1100 + 3500);
         });
     }
 
@@ -227,7 +227,7 @@ window.MancaveAllyRecruitment = (function () {
         MC.revealDialogue(intro, [
             { speaker: 'Ryan', text: 'Living in Drenthe has perks. Radio astronomy capital of the world.' },
             { speaker: 'Ryan', text: 'Three experts. Three different channels. Let\'s make contact.' }
-        ], { pauseBetween: 2000 });
+        ], { pauseBetween: 3000, useTTS: true, ttsGap: 900 });
 
         // Sequentially show each ally
         let allyIdx = 0;
@@ -251,11 +251,11 @@ window.MancaveAllyRecruitment = (function () {
                         game.showNotification('All three allies recruited!');
                         MC.schedule(() => {
                             game.showNotification('Cees wants you at the WSRT — head to the garden when ready');
-                        }, 2500);
+                        }, 4500);
                         MC.schedule(() => {
                             game.showNotification('Click laptop again to investigate Volkov');
-                        }, 5000);
-                    }, 1500);
+                        }, 9000);
+                    }, 3000);
                 });
                 return;
             }
@@ -280,7 +280,7 @@ window.MancaveAllyRecruitment = (function () {
             });
         }
 
-        MC.schedule(() => processNextAlly(), 5500);
+        MC.schedule(() => processNextAlly(), 9000);
 
         // Skip handler sets all flags at once
         MC.onSkip(() => {
