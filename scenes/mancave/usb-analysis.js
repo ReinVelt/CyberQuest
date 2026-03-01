@@ -222,7 +222,7 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
                         { speaker: 'Ryan', text: 'Radiofrequency weapon. Steckerdoser Heide — that\'s 30 minutes from here.' },
                         { speaker: 'Ryan', text: '72 hours. They\'re moving to real deployment.' },
                         { speaker: 'Ryan', text: 'Let me check the schematics...' }
-                    ], { pauseBetween: 2000, onDone: () => MC.schedule(onDone, 1500) });
+                    ], { pauseBetween: 2000, useTTS: true, onDone: () => MC.schedule(onDone, 1500) });
                 }, 1000);
             }
         });
@@ -291,7 +291,7 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
                 { speaker: 'Ryan', text: 'Phase control. Signal modulation. They can target specific frequencies.' },
                 { speaker: 'Ryan', text: 'Cars, planes, medical devices... this is a weapon of mass disruption.' },
                 { speaker: 'Ryan', text: 'One more file: evidence.zip. Encrypted.' }
-            ], { pauseBetween: 2000, onDone: () => MC.schedule(onDone, 1500) });
+            ], { pauseBetween: 2000, useTTS: true, onDone: () => MC.schedule(onDone, 1500) });
         }, 3000);
     }
 
@@ -425,6 +425,7 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
                             { speaker: 'Ryan', text: '"E" was right. This is beyond me now.' }
                         ], {
                             pauseBetween: 2200,
+                            useTTS: true,
                             onDone: () => MC.schedule(onDone, 2000)
                         });
                     }, 3000);

@@ -89,7 +89,7 @@ window.MancaveVolkovInvestigation = (function () {
             { speaker: 'Ryan', text: 'Three allies on board. Now... who is Volkov, really?' },
             { speaker: '', text: '*Opens evidence files, searching for clues*' },
             { speaker: 'Ryan', text: 'Scanning email metadata... here! Internal email flagged:' }
-        ], { pauseBetween: 2000 });
+        ], { pauseBetween: 2000, useTTS: true });
 
         // Show email after dialogue
         MC.schedule(() => {
@@ -129,7 +129,7 @@ window.MancaveVolkovInvestigation = (function () {
                             { speaker: 'Ryan', text: 'Background check STILL pending. Gaps in work history.' },
                             { speaker: 'Ryan', text: '"Personally vouched for at the highest levels"' },
                             { speaker: 'Ryan', text: 'Someone powerful is protecting him. This goes deep.' }
-                        ], { pauseBetween: 2000 });
+                        ], { pauseBetween: 2000, useTTS: true });
                     }, 1000);
 
                     // Phase 2: Test signatures
@@ -182,6 +182,7 @@ window.MancaveVolkovInvestigation = (function () {
                                 { speaker: 'Ryan', text: 'Time to call Chris Kubecka.' }
                             ], {
                                 pauseBetween: 2200,
+                                useTTS: true,
                                 onDone: () => {
                                     game.addQuest({
                                         id: 'contact_kubecka',
@@ -403,7 +404,7 @@ window.MancaveVolkovInvestigation = (function () {
                     { speaker: 'Ryan', text: 'Disable communications. Crash emergency vehicles. Create chaos.' },
                     { speaker: 'Ryan', text: 'The coup failed in 2022. But the weapon didn\'t stop.' },
                     { speaker: 'Ryan', text: 'I need to message Chris again.' }
-                ], { pauseBetween: 2200 });
+                ], { pauseBetween: 2200, useTTS: true });
             }, clippings.length * 1500 + 4000);
 
             // Phase 6: Chris follow-up chat

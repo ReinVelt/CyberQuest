@@ -815,10 +815,19 @@ window.MancaveCinematic = (function () {
      * @param {Array} lines - [{speaker, text}]
      * @param {Object} opts - { delay, pauseBetween, onDone }
      */
+    /**
+     * Show dialogue lines one at a time.
+     * opts.useTTS — speak each line via voiceManager and wait for completion
+     *               before advancing. Falls back to pauseBetween timing when
+     *               TTS is unavailable or disabled.
+     * opts.ttsGap  — ms gap after speech ends before next line (default 450)
+     */
     function revealDialogue(container, lines, opts) {
         opts = opts || {};
-        const delay = opts.delay || 0;
-        const pause = opts.pauseBetween || 1800;
+        const delay   = opts.delay        || 0;
+        const pause   = opts.pauseBetween || 1800;
+        const useTTS  = !!opts.useTTS;
+        const ttsGap  = opts.ttsGap != null ? opts.ttsGap : 450;
 
         return new Promise(resolve => {
             let i = 0;
@@ -833,7 +842,8 @@ window.MancaveCinematic = (function () {
                 div.className = 'mc-dialogue-line';
                 div.style.animationDelay = '0s';
 
-                if (line.text && line.text.startsWith('*') && line.text.endsWith('*')) {
+                const isStagedir = !!(line.text && line.text.startsWith('*') && line.text.endsWith('*'));
+                if (isStagedir) {
                     div.innerHTML = `<span class="mc-action">${line.text}</span>`;
                 } else if (line.speaker) {
                     div.innerHTML = `<span class="mc-speaker">${line.speaker}:</span> ${line.text}`;
@@ -850,7 +860,20 @@ window.MancaveCinematic = (function () {
                 }
 
                 i++;
-                schedule(showNext, pause);
+
+                // TTS path: speak the line, wait for completion, then advance
+                const vm = window.voiceManager;
+                const plainText = (line.text || '')
+                    .replace(/\*([^*]+)\*/g, '$1')
+                    .replace(/<[^>]+>/g, '')
+                    .trim();
+                if (useTTS && vm && vm.enabled && plainText && !isStagedir) {
+                    vm.speak(plainText, line.speaker || 'Ryan').then(() => {
+                        schedule(showNext, ttsGap);
+                    });
+                } else {
+                    schedule(showNext, isStagedir ? Math.round(pause * 0.5) : pause);
+                }
             }
             schedule(showNext, delay);
         });
