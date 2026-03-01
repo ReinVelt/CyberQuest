@@ -23,10 +23,16 @@ const MancaveScene = {
 
     // 🎬 Accessibility / Movie Mode — full mancave story path (all visits)
     accessibilityPath: [
-        // ── Laptop (email → ally recruitment → Volkov investigation) ──
+        // ── Laptop (email → dilemma → ally recruitment → Volkov investigation) ──
+        // Only enter when there is real work:
+        //   - first visit: check email (!checked_email)
+        //   - after USB/evidence found: dilemma → ally recruit → Volkov dive
+        // Skip entirely while waiting for SSTV chain (checked_email set, evidence not yet unlocked)
+        // and skip once Volkov is fully investigated (nothing left on the laptop).
         async function(game) {
-            // Only enter laptop sub-scene while it still has story content
-            if (!game.getFlag('volkov_investigated')) {
+            const hasWork = !game.getFlag('checked_email')
+                || (game.getFlag('evidence_unlocked') && !game.getFlag('volkov_investigated'));
+            if (hasWork) {
                 game.loadScene('laptop');
             }
         },
