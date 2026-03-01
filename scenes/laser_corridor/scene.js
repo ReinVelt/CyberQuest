@@ -28,8 +28,8 @@ const LaserCorridorScene = {
     accessibilityPath: [
         'laser_grid',
         'flipper_zero_scan',
-        'hackrf_jam',
         'motion_sensors',
+        'hackrf_jam',
         'biometric_panel',
         'server_door',
     ],
@@ -716,6 +716,13 @@ const LaserCorridorScene = {
                 }
 
                 if (!s.sensorsAnalysed) {
+                    // In accessibility mode, skip straight to jamming
+                    if (game.accessibilityMode) {
+                        s.sensorsAnalysed = true;
+                        game.setFlag('motion_sensors_analysed', true);
+                        LaserCorridorScene._showSensorPuzzle(game);
+                        return;
+                    }
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'HackRF One. But I need to know what I\'m jamming first.' },
                         { speaker: 'Ryan', text: 'Check the sensors — identify the frequency.' }
@@ -1027,6 +1034,19 @@ const LaserCorridorScene = {
 
     /** Phase 1 puzzle: IR modulation frequency */
     _showLaserPuzzle: (game) => {
+        // Auto-solve in movie/accessibility mode
+        if (game.accessibilityMode) {
+            if (LaserCorridorScene.state.laserFrequencySet) return; // idempotent
+            LaserCorridorScene.state.laserFrequencySet = true;
+            game.setFlag('ir_frequency_set', true);
+            game.showNotification('IR frequency locked: 38 kHz');
+            game.startDialogue([
+                { speaker: '', text: '*Flipper Zero display: IR DEMOD 38 kHz — SIGNAL CAPTURED*' },
+                { speaker: 'Ryan', text: '38 kHz. Standard consumer IR. Flipper captured the emitter handshake.' },
+                { speaker: 'Ryan', text: 'Replaying shutdown sequence now.' }
+            ], () => LaserCorridorScene._disableLasers(game));
+            return;
+        }
         if (game.passwordPuzzle) {
             game.passwordPuzzle.show({
                 id: 'ir_modulation_freq',
@@ -1097,6 +1117,18 @@ const LaserCorridorScene = {
 
     /** Phase 2 puzzle: ultrasonic jamming frequency */
     _showSensorPuzzle: (game) => {
+        // Auto-solve in movie/accessibility mode
+        if (game.accessibilityMode) {
+            if (LaserCorridorScene.state.jamFrequencySet) return; // idempotent
+            LaserCorridorScene.state.jamFrequencySet = true;
+            game.setFlag('jam_frequency_set', true);
+            game.showNotification('Jamming frequency set: 40 kHz');
+            game.startDialogue([
+                { speaker: '', text: '*HackRF display: ULTRASONIC JAM 40 kHz — READY*' },
+                { speaker: 'Ryan', text: '40 kHz. Sensors flooded. They cannot hear their own echoes.' }
+            ], () => LaserCorridorScene._disableSensors(game));
+            return;
+        }
         if (game.passwordPuzzle) {
             game.passwordPuzzle.show({
                 id: 'ultrasonic_jam_freq',
@@ -1165,6 +1197,15 @@ const LaserCorridorScene = {
 
     /** Phase 3 puzzle: biometric override code */
     _showBiometricPuzzle: (game) => {
+        // Auto-solve in movie/accessibility mode
+        if (game.accessibilityMode) {
+            if (LaserCorridorScene.state.codeEntered) return; // idempotent
+            LaserCorridorScene.state.codeEntered = true;
+            game.setFlag('biometric_code_entered', true);
+            game.showNotification('Override code accepted: 2847');
+            LaserCorridorScene._unlockDoor(game);
+            return;
+        }
         if (game.passwordPuzzle) {
             game.passwordPuzzle.show({
                 id: 'biometric_override',
