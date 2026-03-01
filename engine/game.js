@@ -1100,7 +1100,10 @@ class CyberQuestEngine {
 
                 // ── String hotspot entry — retry while it produces new flags ────
                 const hotspotId = entry;
-                let retries = 5;
+                // Allow hotspots to declare their own max retries (e.g. NPCs that set a
+                // one-shot _met flag need only 1 retry — the second try sees no change).
+                const _preHotspot = (this.scenes?.[this.currentScene]?.hotspots || []).find(h => h.id === hotspotId);
+                let retries = _preHotspot?.accessibilityRetries ?? 5;
                 while (retries-- > 0) {
                     if (!this._accessibilityRunnerActive || !this.accessibilityMode) return true;
                     if (this.currentScene !== scene.id && scene.id !== undefined) return true;

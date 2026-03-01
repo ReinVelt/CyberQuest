@@ -794,6 +794,7 @@ const HackerspaceScene = {
             width: 7,
             height: 14,
             cursor: 'pointer',
+            accessibilityRetries: 1,
             action: (game) => {
                 const visits = game.getFlag('dennis_talks') || 0;
                 game.setFlag('dennis_met', true); // one-shot gate for movie-mode runner
@@ -833,6 +834,7 @@ const HackerspaceScene = {
             width: 7,
             height: 14,
             cursor: 'pointer',
+            accessibilityRetries: 1,
             action: (game) => {
                 const visits = game.getFlag('sophie_talks') || 0;
                 game.setFlag('sophie_met', true); // one-shot gate for movie-mode runner
@@ -872,6 +874,7 @@ const HackerspaceScene = {
             width: 7,
             height: 14,
             cursor: 'pointer',
+            accessibilityRetries: 1,
             action: (game) => {
                 const visits = game.getFlag('marco_talks') || 0;
                 game.setFlag('marco_met', true); // one-shot gate for movie-mode runner
@@ -911,6 +914,7 @@ const HackerspaceScene = {
             width: 7,
             height: 14,
             cursor: 'pointer',
+            accessibilityRetries: 1,
             action: (game) => {
                 const visits = game.getFlag('kim_talks') || 0;
                 game.setFlag('kim_met', true);
@@ -950,6 +954,7 @@ const HackerspaceScene = {
             width: 7,
             height: 14,
             cursor: 'pointer',
+            accessibilityRetries: 1,
             action: (game) => {
                 const visits = game.getFlag('joris_talks') || 0;
                 game.setFlag('joris_met', true);
@@ -990,6 +995,7 @@ const HackerspaceScene = {
             width: 7,
             height: 14,
             cursor: 'pointer',
+            accessibilityRetries: 1,
             action: (game) => {
                 const visits = game.getFlag('linda_talks') || 0;
                 game.setFlag('linda_met', true);
