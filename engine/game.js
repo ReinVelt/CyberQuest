@@ -1205,7 +1205,8 @@ class CyberQuestEngine {
      */
     async _waitForIdle(timeout = 20000) {
         const start = Date.now();
-        while (this.isDialogueActive || this.isPuzzleActive || this._sceneLoading) {
+        while (this.isDialogueActive || this.isPuzzleActive || this._sceneLoading
+               || document.querySelector('.mc-overlay')) {
             if (Date.now() - start > timeout) {
                 console.warn('[🎬] _waitForIdle timed out');
                 break;
