@@ -1247,47 +1247,64 @@ const HackerspaceClassroomScene = {
         }
     },
 
+    /** Shared callback once a presentation is chosen (from picker or auto-select in movie mode) */
+    _onTalkPicked: function(game, idx) {
+        var self = this;
+        var pres = self._presentations[idx];
+
+        // Spawn random audience + named characters + presenter
+        self._spawnPeople(game);
+
+        // Start ambient audio
+        setTimeout(function() { self._initAudio(); }, 300);
+
+        // Start VFX (projector flicker, laser dot, audience reactions)
+        setTimeout(function() { self._startVFX(); }, 1500);
+
+        // Start audience fidget animations
+        setTimeout(function() { self._startFidgets(); }, 2000);
+
+        if (!game.getFlag('visited_hackerspace_classroom')) {
+            game.setFlag('visited_hackerspace_classroom', true);
+            setTimeout(function() {
+                game.startDialogue([
+                    { speaker: '', text: '*Ryan slips through the classroom door. The projector casts a blue glow across rows of faces. A low murmur of conversation.*' },
+                    { speaker: '', text: '*The slide reads: "' + pres.title + '" — presented by ' + pres.presenter + '. ' + self._currentPeopleCount + ' people fill the old school chairs.*' },
+                    { speaker: 'Ryan', text: 'The old classroom. Projector, whiteboard, rows of chairs. Every week a different member gives a presentation.' },
+                    { speaker: '', text: '*Someone\'s laptop keyboard clicks softly. A coffee cup clinks against a desk. The projector fan hums.*' },
+                    { speaker: 'Ryan', text: 'I recognise some faces from the workshop — Pieter has a Pi on his lap, Aisha\'s sketching notes, Marco somehow looks out of place without ear protection.' },
+                    { speaker: 'Ryan', text: 'This is where hackerspace members learn from each other. No professors, no grades — just people sharing what they know.' },
+                ]);
+            }, 600);
+        } else {
+            setTimeout(function() {
+                game.startDialogue([
+                    { speaker: '', text: '*The projector shows: "' + pres.title + '" by ' + pres.presenter + '. The low hum of conversation and clicking laptops fills the room.*' },
+                    { speaker: 'Ryan', text: self._currentPeopleCount + ' people tonight. Good turnout for "' + pres.title + '".' },
+                ]);
+            }, 500);
+        }
+    },
+
     onEnter: function(game) {
         var self = this;
 
+        // In movie / accessibility mode: skip the picker and auto-select next unseen talk
+        if (game.accessibilityMode) {
+            var autoIdx = 0;
+            // Find first unseen presentation; fall back to 0 if all seen
+            for (var i = 0; i < self._presentations.length; i++) {
+                if (!game.getFlag('talk_seen_' + i)) { autoIdx = i; break; }
+            }
+            game.setFlag('classroom_presentation_index', autoIdx);
+            game.setFlag('talk_seen_' + autoIdx, true);
+            self._onTalkPicked(game, autoIdx);
+            return;
+        }
+
         // Show talk picker so the player chooses which presentation to attend
         this._showTalkPicker(game, function(idx) {
-            var pres = self._presentations[idx];
-
-            // Spawn random audience + named characters + presenter
-            self._spawnPeople(game);
-
-            // Start ambient audio
-            setTimeout(function() { self._initAudio(); }, 300);
-
-            // Start VFX (projector flicker, laser dot, audience reactions)
-            setTimeout(function() { self._startVFX(); }, 1500);
-
-            // Start audience fidget animations
-            setTimeout(function() { self._startFidgets(); }, 2000);
-
-            if (!game.getFlag('visited_hackerspace_classroom')) {
-                game.setFlag('visited_hackerspace_classroom', true);
-                setTimeout(function() {
-                    var isWouter = (idx % 2 === 0);
-                    var presName = isWouter ? 'Wouter' : 'Marieke';
-                    game.startDialogue([
-                        { speaker: '', text: '*Ryan slips through the classroom door. The projector casts a blue glow across rows of faces. A low murmur of conversation.*' },
-                        { speaker: '', text: '*The slide reads: "' + pres.title + '" — presented by ' + pres.presenter + '. ' + self._currentPeopleCount + ' people fill the old school chairs.*' },
-                        { speaker: 'Ryan', text: 'The old classroom. Projector, whiteboard, rows of chairs. Every week a different member gives a presentation.' },
-                        { speaker: '', text: '*Someone\'s laptop keyboard clicks softly. A coffee cup clinks against a desk. The projector fan hums.*' },
-                        { speaker: 'Ryan', text: 'I recognise some faces from the workshop — Pieter has a Pi on his lap, Aisha\'s sketching notes, Marco somehow looks out of place without ear protection.' },
-                        { speaker: 'Ryan', text: 'This is where hackerspace members learn from each other. No professors, no grades — just people sharing what they know.' },
-                    ]);
-                }, 600);
-            } else {
-                setTimeout(function() {
-                    game.startDialogue([
-                        { speaker: '', text: '*The projector shows: "' + pres.title + '" by ' + pres.presenter + '. The low hum of conversation and clicking laptops fills the room.*' },
-                        { speaker: 'Ryan', text: self._currentPeopleCount + ' people tonight. Good turnout for "' + pres.title + '".' },
-                    ]);
-                }, 500);
-            }
+            self._onTalkPicked(game, idx);
         });
     },
 
