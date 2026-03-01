@@ -23,7 +23,7 @@ const AstronScene = {
     playerStart: { x: 50, y: 90 },
 
     // 🎬 Accessibility / Movie Mode
-    accessibilityPath: ['cees-bassa', 'wall-monitors', 'equipment', 'door-exit'],
+    accessibilityPath: ['cees-bassa', 'wall-monitors', 'equipment', 'cees-bassa', 'door-exit'],
 
     idleThoughts: [
         "These dishes have been listening to the universe since the seventies.",
@@ -482,6 +482,19 @@ const AstronScene = {
             { speaker: 'Ryan', text: 'There\'s a lot of interference. LOFAR stations, satellite downlinks, commercial radio…' },
             { speaker: 'Ryan', text: 'Need to isolate the right frequency. Cees said the beacon would be in the military band.' }
         ]);
+
+        // In movie/accessibility mode, auto-solve the puzzle immediately
+        if (game.accessibilityMode) {
+            game.setFlag('signal_triangulated', true);
+            if (game.questManager) game.completeQuest('triangulate_signal');
+            game.startDialogue([
+                { speaker: '', text: '*The HackRF locks onto 243 MHz — a faint but steady pulse appears*' },
+                { speaker: 'Ryan', text: 'Triangulation complete. 53.28°N, 7.42°E. Steckerdoser Heide facility.' },
+                { speaker: 'Ryan', text: 'The beacon is real. The weapon is real. The location is confirmed.' }
+            ]);
+            game.showNotification('Signal triangulated! Target: Steckerdoser Heide confirmed');
+            return;
+        }
 
         // Launch the frequency-tuning puzzle
         const tid = setTimeout(() => {
