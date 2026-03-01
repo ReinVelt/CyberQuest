@@ -28,16 +28,26 @@ const WsrtParkingScene = {
     //   2. Westerbork Memorial (once astron visited)
     //   3. Drive home
     //   Planetenpad is optional — not forced in movie mode.
+    // 🎬 Accessibility / Movie Mode — visit destinations in story order:
+    //   1. WSRT / ASTRON (once astron_unlocked)
+    //   2. LOFAR Superterp (after astron visit — day drive to Exloo)
+    //   3. Westerbork Memorial (after LOFAR)
+    //   4. Drive home
+    //   Planetenpad is optional — not forced in movie mode.
     accessibilityPath: [
         async function(game) {
             if (game.getFlag('astron_unlocked') && !game.getFlag('visited_astron')) {
-                // First: visit ASTRON / WSRT
+                // 1. Visit ASTRON / WSRT
                 game.loadScene('astron');
+            } else if (game.getFlag('visited_astron') && !game.getFlag('visited_lofar')) {
+                // 2. Drive to LOFAR Superterp
+                game.setFlag('driving_destination', 'lofar');
+                game.loadScene('driving_day');
             } else if (game.getFlag('visited_astron') && !game.getFlag('visited_westerbork_memorial')) {
-                // Second: visit the memorial
+                // 3. Visit Westerbork Memorial
                 game.loadScene('westerbork_memorial');
             } else {
-                // All done — drive home
+                // 4. All done — drive home
                 game.setFlag('driving_destination', 'home_from_wsrt_parking');
                 const hour = parseInt((game.gameState.time || '14:00').split(':')[0], 10);
                 if (hour >= 20 || hour < 7) {

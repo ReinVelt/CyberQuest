@@ -31,8 +31,15 @@ const GardenScene = {
             } else if (game.getFlag('visited_astron') && !game.getFlag('visited_westerbork_memorial')) {
                 game.setFlag('driving_destination', 'westerbork');
                 game.loadScene('driving_day');
-            // 5. Facility infiltration (mission_prep_complete + quest active)
+            // 5. Mission prep in mancave (Max farewell + gear) before Steckerdoser
+            //    The infiltrate_facility quest is unlocked in astron, but the player
+            //    must return home and complete the Max farewell cinematic first.
             } else if (game.questManager?.hasQuest('infiltrate_facility')
+                       && !game.getFlag('mission_prep_complete')) {
+                game.loadScene('mancave');
+            // 6. Facility infiltration — only after mission prep is complete
+            } else if (game.questManager?.hasQuest('infiltrate_facility')
+                       && game.getFlag('mission_prep_complete')
                        && !game.getFlag('drove_to_facility')) {
                 game.setFlag('drove_to_facility', true);
                 game.setFlag('driving_destination', 'facility');
