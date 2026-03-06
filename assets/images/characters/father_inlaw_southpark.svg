@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- FATHER-IN-LAW - South Park Style Character -->
+  <!-- ~70 years old, retired, friendly curmudgeon, cardigan, reading glasses -->
+
+  <defs>
+    <linearGradient id="fil-skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0c8a0"/>
+      <stop offset="100%" style="stop-color:#ddb080"/>
+    </linearGradient>
+    <linearGradient id="fil-cardiganGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7a6a5a"/>
+      <stop offset="100%" style="stop-color:#5a4a3a"/>
+    </linearGradient>
+    <linearGradient id="fil-trousersGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8a8a7a"/>
+      <stop offset="100%" style="stop-color:#6a6a5a"/>
+    </linearGradient>
+    <filter id="fil-shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.35"/>
+    </filter>
+    <filter id="fil-lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- SHOES (sensible black slip-ons) -->
+  <ellipse cx="83" cy="296" rx="15" ry="5" fill="#000" opacity="0.25"/>
+  <ellipse cx="117" cy="296" rx="15" ry="5" fill="#000" opacity="0.25"/>
+  <rect x="70" y="286" width="26" height="12" rx="4" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+  <rect x="104" y="286" width="26" height="12" rx="4" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+  <!-- shoe crease highlights -->
+  <line x1="73" y1="290" x2="90" y2="290" stroke="#3a3a3a" stroke-width="1.5" opacity="0.6"/>
+  <line x1="107" y1="290" x2="124" y2="290" stroke="#3a3a3a" stroke-width="1.5" opacity="0.6"/>
+
+  <!-- TROUSER LEGS -->
+  <rect x="73" y="240" width="24" height="48" rx="2" fill="url(#fil-trousersGrad)" stroke="#000" stroke-width="2.5"/>
+  <rect x="103" y="240" width="24" height="48" rx="2" fill="url(#fil-trousersGrad)" stroke="#000" stroke-width="2.5"/>
+  <!-- trouser crease -->
+  <line x1="85" y1="243" x2="85" y2="286" stroke="#5a5a4a" stroke-width="1" opacity="0.5"/>
+  <line x1="115" y1="243" x2="115" y2="286" stroke="#5a5a4a" stroke-width="1" opacity="0.5"/>
+
+  <!-- BODY (slightly stooped — cardigan over shirt) -->
+  <!-- Main cardigan body — slightly narrower at top (stooped posture) -->
+  <path d="M63,138 L57,242 L143,242 L137,138 Q100,126 63,138 Z"
+        fill="url(#fil-cardiganGrad)" stroke="#000" stroke-width="3" filter="url(#fil-shadow)"/>
+
+  <!-- Shirt showing under cardigan -->
+  <path d="M85,138 L88,242 L112,242 L115,138 Z" fill="#e8dcc8" stroke="#000" stroke-width="1.5"/>
+
+  <!-- Cardigan v-neck + collar -->
+  <path d="M63,138 Q85,158 100,148 Q115,158 137,138" fill="#6a5a4a" stroke="#000" stroke-width="2"/>
+  <!-- Shirt collar tabs -->
+  <path d="M93,138 L100,152 L107,138" fill="#e8dcc8" stroke="#000" stroke-width="1.5"/>
+
+  <!-- Cardigan buttons -->
+  <circle cx="100" cy="170" r="4" fill="#3a2a1a" stroke="#000" stroke-width="1.5"/>
+  <circle cx="100" cy="190" r="4" fill="#3a2a1a" stroke="#000" stroke-width="1.5"/>
+  <circle cx="100" cy="210" r="4" fill="#3a2a1a" stroke="#000" stroke-width="1.5"/>
+  <circle cx="100" cy="230" r="4" fill="#3a2a1a" stroke="#000" stroke-width="1.5"/>
+
+  <!-- Cardigan front pockets -->
+  <rect x="66" y="195" width="20" height="22" rx="3" fill="#6a5a4a" stroke="#000" stroke-width="1.5"/>
+  <rect x="114" y="195" width="20" height="22" rx="3" fill="#6a5a4a" stroke="#000" stroke-width="1.5"/>
+
+  <!-- ARMS (slightly shorter / bent at elbows — age) -->
+  <path d="M64,148 Q42,178 46,216 L62,218 Q62,180 72,156"
+        fill="url(#fil-cardiganGrad)" stroke="#000" stroke-width="3" filter="url(#fil-lightShadow)"/>
+  <path d="M136,148 Q158,178 154,216 L138,218 Q138,180 128,156"
+        fill="url(#fil-cardiganGrad)" stroke="#000" stroke-width="3" filter="url(#fil-lightShadow)"/>
+
+  <!-- HANDS (aged, slightly gnarled) -->
+  <ellipse cx="50" cy="222" rx="10" ry="12" fill="url(#fil-skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="150" cy="222" rx="10" ry="12" fill="url(#fil-skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <!-- Age spots on hands -->
+  <circle cx="47" cy="220" r="1.5" fill="#c09060" opacity="0.6"/>
+  <circle cx="52" cy="226" r="1.2" fill="#c09060" opacity="0.5"/>
+  <circle cx="147" cy="218" r="1.5" fill="#c09060" opacity="0.6"/>
+  <circle cx="153" cy="224" r="1.2" fill="#c09060" opacity="0.5"/>
+
+  <!-- HEAD (large, South Park round, slightly jowly) -->
+  <ellipse cx="100" cy="80" rx="44" ry="52" fill="url(#fil-skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#fil-shadow)"/>
+
+  <!-- Jowls / slightly sagging cheeks -->
+  <ellipse cx="68" cy="99" rx="12" ry="10" fill="#e8b888" opacity="0.5"/>
+  <ellipse cx="132" cy="99" rx="12" ry="10" fill="#e8b888" opacity="0.5"/>
+
+  <!-- EARS -->
+  <ellipse cx="53" cy="82" rx="9" ry="13" fill="url(#fil-skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="56" cy="82" rx="5" ry="8" fill="#d8a878"/>
+  <!-- Ear lobes (larger when old) -->
+  <ellipse cx="55" cy="93" rx="5" ry="5" fill="#d8a878" stroke="#000" stroke-width="1"/>
+  <ellipse cx="147" cy="82" rx="9" ry="13" fill="url(#fil-skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="144" cy="82" rx="5" ry="8" fill="#d8a878"/>
+  <ellipse cx="145" cy="93" rx="5" ry="5" fill="#d8a878" stroke="#000" stroke-width="1"/>
+
+  <!-- HAIR (sparse white/gray wispy comb-over, bald on top) -->
+  <!-- Bald top with skin tone -->
+  <ellipse cx="100" cy="46" rx="42" ry="24" fill="#e8b880" stroke="#000" stroke-width="2.5"/>
+  <!-- Remaining gray fringe around sides -->
+  <path d="M58,46 Q56,62 58,80 Q60,95 62,110"
+        fill="#c8c8c8" stroke="#000" stroke-width="2"/>
+  <path d="M142,46 Q144,62 142,80 Q140,95 138,110"
+        fill="#c8c8c8" stroke="#000" stroke-width="2"/>
+  <!-- Wispy comb-over strands -->
+  <path d="M62,50 Q72,42 85,46 Q95,48 105,44 Q115,40 128,46"
+        stroke="#d0d0d0" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.9"/>
+  <path d="M64,54 Q76,46 90,50 Q100,52 110,48 Q120,44 130,50"
+        stroke="#c8c8c8" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <path d="M66,58 Q80,52 95,54 Q105,56 115,52"
+        stroke="#e0e0e0" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <!-- White side hair tufts -->
+  <ellipse cx="63" cy="64" rx="12" ry="20" fill="#d0d0d0" stroke="#000" stroke-width="2"/>
+  <ellipse cx="137" cy="64" rx="12" ry="20" fill="#d0d0d0" stroke="#000" stroke-width="2"/>
+  <!-- Ear-level hair -->
+  <path d="M56,82 Q60,96 62,108" stroke="#c8c8c8" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.8"/>
+  <path d="M144,82 Q140,96 138,108" stroke="#c8c8c8" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- FOREHEAD WRINKLES -->
+  <path d="M72,56 Q100,52 128,56" stroke="#c09060" stroke-width="1.5" fill="none" opacity="0.4" stroke-linecap="round"/>
+  <path d="M76,64 Q100,60 124,64" stroke="#c09060" stroke-width="1" fill="none" opacity="0.3" stroke-linecap="round"/>
+  <!-- Frown lines between brows -->
+  <line x1="94" y1="70" x2="96" y2="76" stroke="#c09060" stroke-width="1.5" opacity="0.5" stroke-linecap="round"/>
+  <line x1="106" y1="70" x2="104" y2="76" stroke="#c09060" stroke-width="1.5" opacity="0.5" stroke-linecap="round"/>
+
+  <!-- EYEBROWS (white/gray, bushy + slightly wild — old man brows) -->
+  <path d="M68,70 Q80,64 92,68" stroke="#b8b8b8" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M108,68 Q120,64 132,70" stroke="#b8b8b8" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <!-- Stray brow hairs -->
+  <line x1="70" y1="69" x2="67" y2="65" stroke="#d0d0d0" stroke-width="1.5" opacity="0.7"/>
+  <line x1="90" y1="66" x2="93" y2="62" stroke="#d0d0d0" stroke-width="1.5" opacity="0.7"/>
+  <line x1="110" y1="66" x2="107" y2="62" stroke="#d0d0d0" stroke-width="1.5" opacity="0.7"/>
+  <line x1="130" y1="69" x2="133" y2="65" stroke="#d0d0d0" stroke-width="1.5" opacity="0.7"/>
+
+  <!-- READING GLASSES -->
+  <!-- Frame bridge -->
+  <line x1="91" y1="80" x2="109" y2="80" stroke="#4a4a4a" stroke-width="2.5"/>
+  <!-- Left lens -->
+  <rect x="68" y="73" width="22" height="16" rx="5" fill="none" stroke="#4a4a4a" stroke-width="2.5"/>
+  <rect x="68" y="73" width="22" height="16" rx="5" fill="#d8eeff" opacity="0.25"/>
+  <!-- Right lens -->
+  <rect x="110" y="73" width="22" height="16" rx="5" fill="none" stroke="#4a4a4a" stroke-width="2.5"/>
+  <rect x="110" y="73" width="22" height="16" rx="5" fill="#d8eeff" opacity="0.25"/>
+  <!-- Temples (arms to ears) -->
+  <line x1="68" y1="80" x2="54" y2="82" stroke="#4a4a4a" stroke-width="2.5"/>
+  <line x1="132" y1="80" x2="146" y2="82" stroke="#4a4a4a" stroke-width="2.5"/>
+
+  <!-- EYES (behind glasses, kind, slightly droopy) -->
+  <ellipse cx="79" cy="81" rx="8" ry="7" fill="white" stroke="#000" stroke-width="1.5"/>
+  <ellipse cx="121" cy="81" rx="8" ry="7" fill="white" stroke="#000" stroke-width="1.5"/>
+  <!-- Irises (blue-gray, faded with age) -->
+  <circle cx="80" cy="81" r="4.5" fill="#8aa0b0"/>
+  <circle cx="122" cy="81" r="4.5" fill="#8aa0b0"/>
+  <!-- Pupils -->
+  <circle cx="80" cy="81" r="2.5" fill="#2a3a4a"/>
+  <circle cx="122" cy="81" r="2.5" fill="#2a3a4a"/>
+  <!-- Eye highlights -->
+  <circle cx="79" cy="79" r="1.5" fill="#fff" opacity="0.85"/>
+  <circle cx="121" cy="79" r="1.5" fill="#fff" opacity="0.85"/>
+  <!-- Droopy eyelids (age) -->
+  <path d="M71,78 Q79,74 87,78" stroke="#c09060" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <path d="M113,78 Q121,74 129,78" stroke="#c09060" stroke-width="1.5" fill="none" opacity="0.6"/>
+  <!-- Crow's feet wrinkles -->
+  <line x1="89" y1="80" x2="94" y2="78" stroke="#c09060" stroke-width="1" opacity="0.5"/>
+  <line x1="89" y1="83" x2="94" y2="84" stroke="#c09060" stroke-width="1" opacity="0.5"/>
+  <line x1="111" y1="80" x2="106" y2="78" stroke="#c09060" stroke-width="1" opacity="0.5"/>
+  <line x1="111" y1="83" x2="106" y2="84" stroke="#c09060" stroke-width="1" opacity="0.5"/>
+
+  <!-- NOSE (bulb-shaped, more prominent with age) -->
+  <path d="M100,84 L100,95" stroke="#c09060" stroke-width="2.5" stroke-linecap="round"/>
+  <ellipse cx="100" cy="97" rx="7" ry="8" fill="#d8a878" stroke="#000" stroke-width="1.5"/>
+  <ellipse cx="96" cy="97" rx="3.5" ry="4" fill="#c89868"/>
+  <ellipse cx="104" cy="97" rx="3.5" ry="4" fill="#c89868"/>
+
+  <!-- NASOLABIAL FOLDS (cheek-to-mouth lines) -->
+  <path d="M85,100 Q80,110 82,118" stroke="#c09060" stroke-width="1.5" fill="none" opacity="0.5" stroke-linecap="round"/>
+  <path d="M115,100 Q120,110 118,118" stroke="#c09060" stroke-width="1.5" fill="none" opacity="0.5" stroke-linecap="round"/>
+
+  <!-- MOUTH (gentle smile with thin lips) -->
+  <path d="M84,116 Q100,124 116,116" fill="#c87858" stroke="#000" stroke-width="2"/>
+  <path d="M84,116 Q100,112 116,116" fill="#e8a888" stroke="#000" stroke-width="1.5"/>
+  <!-- Slight smile lines at corners -->
+  <line x1="84" y1="116" x2="80" y2="112" stroke="#c09060" stroke-width="1" opacity="0.5"/>
+  <line x1="116" y1="116" x2="120" y2="112" stroke="#c09060" stroke-width="1" opacity="0.5"/>
+
+  <!-- CHIN WRINKLE -->
+  <path d="M92,126 Q100,130 108,126" stroke="#c09060" stroke-width="1" fill="none" opacity="0.4"/>
+
+  <!-- NECK (with neck wattle hint) -->
+  <path d="M82,126 Q86,138 100,136 Q114,138 118,126" fill="#e0b080" stroke="#000" stroke-width="2"/>
+  <path d="M88,132 Q100,138 112,132" stroke="#c09060" stroke-width="1" fill="none" opacity="0.35"/>
+
+</svg>
