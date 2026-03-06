@@ -896,6 +896,9 @@ window.MancaveCinematic = (function () {
         // readDelay: extra ms per character of a received message so long
         // messages are given proportional reading time before the next appears.
         const readDelay   = opts.readDelay   || 0;
+        // useTTS: speak each message via voiceManager as it appears
+        const useTTS      = !!opts.useTTS;
+        const ttsGap      = opts.ttsGap != null ? opts.ttsGap : 600;
 
         return new Promise(resolve => {
             let i = 0;
@@ -925,12 +928,34 @@ window.MancaveCinematic = (function () {
                         typing.remove();
                         appendMsg(msg, isSelf);
                         i++;
-                        schedule(showNext, readDwell);
+                        // If TTS enabled: speak and wait, then advance
+                        const vm = window.voiceManager;
+                        if (useTTS && vm && vm.enabled) {
+                            const plainText = (msg.text || '').replace(/\n/g, ' ').trim();
+                            vm.speak(plainText, msg.from || '').then(() => {
+                                schedule(showNext, ttsGap);
+                            }).catch(() => {
+                                schedule(showNext, readDwell);
+                            });
+                        } else {
+                            schedule(showNext, readDwell);
+                        }
                     }, typingDelay);
                 } else {
                     appendMsg(msg, isSelf);
                     i++;
-                    schedule(showNext, msgDelay);
+                    // If TTS enabled: speak self message and wait
+                    const vm = window.voiceManager;
+                    if (useTTS && vm && vm.enabled) {
+                        const plainText = (msg.text || '').replace(/\n/g, ' ').trim();
+                        vm.speak(plainText, msg.from || selfName || 'Ryan').then(() => {
+                            schedule(showNext, ttsGap);
+                        }).catch(() => {
+                            schedule(showNext, msgDelay);
+                        });
+                    } else {
+                        schedule(showNext, msgDelay);
+                    }
                 }
             }
 

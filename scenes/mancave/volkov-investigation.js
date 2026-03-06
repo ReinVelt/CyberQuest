@@ -250,6 +250,7 @@ window.MancaveVolkovInvestigation = (function () {
                 typingDelay: 4500,   // how long 'typing...' shows before message appears
                 msgDelay:    5500,   // minimum dwell after message shown
                 readDelay:   48,     // extra ms per character — long messages get more time
+                useTTS:      true,   // speak each message via voiceManager
                 onDone: () => {
                     // SPEKTR reveal
                     MC.schedule(() => {
@@ -422,6 +423,7 @@ window.MancaveVolkovInvestigation = (function () {
                     typingDelay: 4500,
                     msgDelay:    5500,
                     readDelay:   48,
+                    useTTS:      true,   // speak each message via voiceManager
                     onDone: () => {
                         MC.schedule(() => {
                             game.addQuest({
