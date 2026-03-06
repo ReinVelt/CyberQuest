@@ -454,10 +454,10 @@ const DrivingScene = {
     _removeRadioOverlay: function() {
         const el = document.getElementById('driving-radio-overlay');
         if (el) el.remove();
+        const s = document.getElementById('driving-radio-style');
+        if (s) s.remove();
         if (this._wordRevealInterval) { clearInterval(this._wordRevealInterval); this._wordRevealInterval = null; }
     },
-
-    // ── Returns time-appropriate Dutch greeting + programme label based on game hour ──
     _getGreeting: function(hour) {
         // hour: 0-23 from game time HH:MM
         if (hour >= 5  && hour < 12) return { greeting: 'Goedemorgen', label: 'OCHTEND-NIEUWS' };

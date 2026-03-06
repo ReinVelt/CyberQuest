@@ -476,6 +476,10 @@ class CyberQuestEngine {
                 console.error(`Error in onExit for scene ${this.currentScene}:`, err);
             }
         }
+
+        // Safety-net: remove any scene-SVG overlays that onExit may have missed
+        // (fetch-loaded SVGs carry class="scene-overlay-svg" and must not bleed into next scene)
+        document.querySelectorAll('.scene-overlay-svg').forEach(el => el.remove());
         
         const sceneContainer = document.getElementById('scene-container');
         if (!sceneContainer) {

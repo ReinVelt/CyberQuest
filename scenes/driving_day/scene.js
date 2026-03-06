@@ -435,6 +435,8 @@ const DrivingDayScene = {
     _removeRadioOverlay: function() {
         const el = document.getElementById('driving-radio-overlay');
         if (el) el.remove();
+        const s = document.getElementById('driving-radio-style');
+        if (s) s.remove();
         if (this._wordRevealInterval) { clearInterval(this._wordRevealInterval); this._wordRevealInterval = null; }
     },
 

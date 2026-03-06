@@ -603,7 +603,11 @@ const WesterborkMemorialScene = {
         }
     },
 
-    onExit: () => { WesterborkMemorialScene._stopAmbientAudio(); }
+    onExit: () => {
+        WesterborkMemorialScene._stopAmbientAudio();
+        // Remove Flipper Zero BLE puzzle modal if player exits mid-puzzle
+        document.getElementById('flipper-puzzle-overlay')?.remove();
+    }
 };
 
 if (typeof window !== 'undefined' && window.game) {

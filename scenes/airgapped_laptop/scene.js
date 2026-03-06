@@ -447,7 +447,11 @@ const AirgappedLaptopScene = {
     },
 
     onEnter: function(game) { AirgappedLaptopScene._startAmbientAudio(); },
-    onExit: function(game) { AirgappedLaptopScene._stopAmbientAudio(); }
+    onExit: function(game) {
+        AirgappedLaptopScene._stopAmbientAudio();
+        // Remove terminal overlay if player exits while the modal is open
+        document.getElementById('airgapped-terminal-overlay')?.remove();
+    }
 };
 
 if (typeof module !== 'undefined') {

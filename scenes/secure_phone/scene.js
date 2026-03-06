@@ -366,7 +366,11 @@ const SecurePhoneScene = {
     },
 
     onEnter: function(game) { SecurePhoneScene._startAmbientAudio(); },
-    onExit: function(game) { SecurePhoneScene._stopAmbientAudio(); }
+    onExit: function(game) {
+        SecurePhoneScene._stopAmbientAudio();
+        // Remove phone screen modal if player exits while it is open
+        document.getElementById('phone-screen-overlay')?.remove();
+    }
 };
 
 if (typeof module !== 'undefined') {
