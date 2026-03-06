@@ -343,6 +343,25 @@ const TvnewsScene = {
                     `
                 },
                 {
+                    sound: 'transition',
+                    voice: { text: 'And an update on the signal disruptions we first reported last week. The Agentschap Telecom has now confirmed that GPS interference across Drenthe and Groningen is affecting emergency services. Ambulance dispatchers in Emmen have reverted to manual coordination. Meanwhile, radio astronomers at ASTRON report anomalous interference on frequencies normally reserved for scientific observation.', speaker: 'Documentary' },
+                    content: `
+                        <div class="news-bg"></div>
+                        <div class="news-lower-third">
+                            <div class="lt-accent"></div>
+                            <div class="lt-content">
+                                <h3>Signal Crisis Escalates</h3>
+                                <p>Emergency services disrupted — ASTRON reports interference on research frequencies</p>
+                            </div>
+                        </div>
+                        <div class="news-text-panel">
+                            <p>GPS interference now <strong>affecting emergency services</strong> in Drenthe and Groningen.</p>
+                            <p>Ambulance dispatch in Emmen reverted to manual coordination.</p>
+                            <p>ASTRON reports anomalous interference on protected radio astronomy frequencies.</p>
+                        </div>
+                    `
+                },
+                {
                     sound: 'jingle',
                     voice: { text: 'That was R.T.V. Drenthe. More news at eleven.', speaker: 'Documentary' },
                     content: `
@@ -394,20 +413,39 @@ const TvnewsScene = {
             },
             {
                 sound: 'transition',
-                voice: { text: 'ASTRON, the Netherlands Institute for Radio Astronomy, is celebrating the thirtieth anniversary of the Westerbork Synthesis Radio Telescope. The fourteen-dish array near Hooghalen has contributed to over three thousand scientific publications and remains a cornerstone of European radio astronomy.', speaker: 'Documentary' },
+                voice: { text: 'ASTRON, the Netherlands Institute for Radio Astronomy, is celebrating the seventy anniversary of the Westerbork Synthesis Radio Telescope. The fourteen-dish array near Hooghalen has contributed to over three thousand scientific publications and remains a cornerstone of European radio astronomy.', speaker: 'Documentary' },
                 content: `
                     <div class="news-bg"></div>
                     <div class="news-lower-third">
                         <div class="lt-accent"></div>
                         <div class="lt-content">
-                            <h3>ASTRON Celebrates 30 Years of WSRT</h3>
+                            <h3>ASTRON Celebrates 70 Years of WSRT</h3>
                             <p>Westerbork telescope array marks three decades of discovery</p>
                         </div>
                     </div>
                     <div class="news-text-panel">
-                        <p>Westerbork Synthesis Radio Telescope turns 30.</p>
+                        <p>Westerbork Synthesis Radio Telescope turns 70.</p>
                         <p>14-dish array near Hooghalen: over 3,000 scientific publications.</p>
                         <p>A cornerstone of European radio astronomy.</p>
+                    </div>
+                `
+            },
+            {
+                sound: 'transition',
+                voice: { text: 'We turn now to a developing story. Telecom providers across eastern Drenthe are reporting a series of unexplained signal outages. Mobile networks, GPS navigation, and several weather monitoring stations have experienced intermittent failures over the past week. The Agentschap Telecom says it is investigating but has offered no explanation so far.', speaker: 'Documentary' },
+                content: `
+                    <div class="news-bg"></div>
+                    <div class="news-lower-third">
+                        <div class="lt-accent"></div>
+                        <div class="lt-content">
+                            <h3>Signal Disruptions Across Drenthe</h3>
+                            <p>Mobile, GPS, and weather stations affected — cause unknown</p>
+                        </div>
+                    </div>
+                    <div class="news-text-panel">
+                        <p>Unexplained <strong>signal outages</strong> reported across eastern Drenthe.</p>
+                        <p>Mobile networks, GPS, and weather stations experiencing intermittent failures.</p>
+                        <p>Agentschap Telecom: "Investigating — no comment at this time."</p>
                     </div>
                 `
             },

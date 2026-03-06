@@ -98,8 +98,19 @@ const LivingroomScene = {
                         { speaker: 'Ryan', text: 'Yeah, we\'ve got some brilliant people here. I\'ll sit down and watch it properly.' }
                     ]);
 
+                } else if (game.getFlag('tv_news_watched')) {
+                    // Doc watched AND news watched — Ryan has seen the signal disruptions
+                    game.startDialogue([
+                        { speaker: 'Max', text: 'Those signal outages on the news... should I be worried?' },
+                        { speaker: 'Ryan', text: 'I saw it. GPS, mobile, weather stations — all across eastern Drenthe.' },
+                        { speaker: 'Ryan', text: 'That\'s not random interference. That\'s the same pattern I\'ve been tracking from the mancave.' },
+                        { speaker: 'Max', text: 'The reporter called it "unprecedented" but the authorities just say they\'re looking into it.' },
+                        { speaker: 'Ryan', text: 'Of course they do. Someone out there is making a lot of noise on purpose.' },
+                        { speaker: 'Max', text: 'Should I be worried?' },
+                        { speaker: 'Ryan', text: 'Not here. But I need to dig deeper into this.' }
+                    ]);
                 } else {
-                    // Doc watched — talk about the latest news
+                    // Doc watched but news NOT watched yet
                     game.startDialogue([
                         { speaker: 'Max', text: 'Did you see the RTV Drenthe news?' },
                         { speaker: 'Ryan', text: 'Not yet. What\'s going on?' },

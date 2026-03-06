@@ -29,10 +29,21 @@ const SdrBenchScene = {
             cursor: 'pointer',
             action: (game) => {
                 const decoded = game.getFlag('sstv_decoded');
+                const messageDecoded = game.getFlag('message_decoded');
+                const frequencyTuned = game.getFlag('frequency_tuned');
                 if (decoded) {
+                    let hint;
+                    if (!messageDecoded) {
+                        hint = { speaker: 'Ryan', text: 'I still need to decode that ROT1 message on the SSTV terminal in the mancave.' };
+                    } else if (!frequencyTuned) {
+                        hint = { speaker: 'Ryan', text: 'The coordinates said near Westerbork. I need to tune the HackRF to the military frequency — back in the mancave.' };
+                    } else {
+                        hint = { speaker: 'Ryan', text: 'HackRF tuned. Now I wait for the second transmission on the SSTV terminal.' };
+                    }
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'The spectrum is still showing that 14.230 MHz signal. Someone is still transmitting.' },
-                        { speaker: 'Ryan', text: 'The spike pattern is characteristic of SSTV — Slow Scan Television. Each line of image data produces that narrow peak.' }
+                        { speaker: 'Ryan', text: 'The spike pattern is characteristic of SSTV — Slow Scan Television. Each line of image data produces that narrow peak.' },
+                        hint
                     ]);
                 } else {
                     game.startDialogue([
@@ -43,6 +54,9 @@ const SdrBenchScene = {
                         { speaker: 'Ryan', text: 'The shape of it — narrow band, persistent — that\'s a data transmission. Not voice, not noise.' },
                         { speaker: 'Ryan', text: 'The 14 MHz band is amateur radio territory. HF — high frequency, long range, bounces off the ionosphere.' },
                         { speaker: 'Ryan', text: 'This signal could be coming from hundreds of kilometres away. Or right next door.' },
+                        { speaker: 'Ryan', text: game.getFlag('sstv_transmission_received')
+                            ? 'A transmission came in. The SSTV decoder on the right can extract the image.'
+                            : 'I need to trigger a transmission first. Should check the SSTV terminal in the mancave.' },
                     ]);
                 }
             }
@@ -101,9 +115,20 @@ const SdrBenchScene = {
             cursor: 'pointer',
             action: (game) => {
                 const decoded = game.getFlag('sstv_decoded');
+                const messageDecoded = game.getFlag('message_decoded');
+                const frequencyTuned = game.getFlag('frequency_tuned');
                 if (decoded) {
+                    let hint;
+                    if (!messageDecoded) {
+                        hint = { speaker: 'Ryan', text: 'Next: decode the ROT1 cipher on the SSTV terminal in the mancave.' };
+                    } else if (!frequencyTuned) {
+                        hint = { speaker: 'Ryan', text: 'Next: tune the HackRF to the military frequency. The device is in the mancave.' };
+                    } else {
+                        hint = { speaker: 'Ryan', text: 'Everything is set. The SSTV terminal should pick up the second transmission now.' };
+                    }
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Tuned to 14.230 MHz, USB mode, 3 kHz bandwidth. Locked on the signal.' },
+                        hint
                     ]);
                 } else {
                     game.startDialogue([
@@ -111,7 +136,9 @@ const SdrBenchScene = {
                         { speaker: 'Ryan', text: 'I\'m tuned to 14.230 MHz — that\'s where the spike is. USB mode — Upper Sideband — correct for SSTV on HF.' },
                         { speaker: 'Ryan', text: 'Bandwidth at 3 kHz. SSTV uses about 2.7 kHz. Any narrower and I clip the signal. Any wider and I let in more noise.' },
                         { speaker: 'Ryan', text: 'The gain is set to 74% — high enough to copy the signal, not so high the receiver overloads.' },
-                        { speaker: 'Ryan', text: 'Everything is set right. The SSTV decoder should be able to work with this.' },
+                        { speaker: 'Ryan', text: game.getFlag('sstv_transmission_received')
+                            ? 'Everything is set right. Hit the SSTV decoder to extract that image.'
+                            : 'Everything is set right. The SSTV decoder should be able to work with this — but I need an active transmission first.' },
                     ]);
                 }
             }
@@ -129,13 +156,31 @@ const SdrBenchScene = {
             action: (game) => {
                 const decoded = game.getFlag('sstv_decoded');
                 const receivedTransmission = game.getFlag('sstv_transmission_received');
+                const messageDecoded = game.getFlag('message_decoded');
+                const frequencyTuned = game.getFlag('frequency_tuned');
 
                 if (decoded) {
+                    // Already decoded — give a recap and a context-aware next-step hint
+                    let nextStep;
+                    if (!messageDecoded) {
+                        nextStep = { speaker: 'Ryan', text: 'The SSTV terminal is still showing that encoded pattern. I need to go decode the ROT1 cipher — it\'s in the mancave.' };
+                    } else if (!frequencyTuned) {
+                        nextStep = { speaker: 'Ryan', text: 'First message decoded: Project Echo is compromised, move to backup channel. The HackRF in the mancave needs tuning to that military frequency.' };
+                    } else {
+                        nextStep = { speaker: 'Ryan', text: 'HackRF is tuned to the military frequency. The SSTV terminal should pick up the second transmission any time now.' };
+                    }
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Already decoded the transmission. A surveillance photo of my house — from across the canal. With me in it.' },
-                        { speaker: 'Ryan', text: 'The hidden coordinates point near Westerbork. Someone is watching me — and they want me to know it.' },
+                        { speaker: 'Ryan', text: 'Steganographic coordinates hidden in the pixels: "52°27\'N 6°36\'E — OPERATION ZERFALL — NODE ACTIVE". Near Westerbork, right next to WSRT.' },
+                        nextStep
                     ]);
-                } else if (receivedTransmission) {
+                    return;
+                }
+
+                if (receivedTransmission) {
+                    // ── First-time decode — set flag immediately to prevent replay on revisit ──
+                    game.setFlag('sstv_decoded', true);
+
                     // Show the decoded SSTV image as overlay during the decode sequence
                     const sstvOverlay = document.createElement('div');
                     sstvOverlay.id = 'sstv-decode-overlay';
@@ -173,6 +218,7 @@ const SdrBenchScene = {
                         { speaker: 'Ryan', text: 'GPS coordinates near Westerbork. Right next to WSRT. And a timestamp — tonight.' },
                         { speaker: 'Narrator', text: '📚 EDUCATIONAL: SSTV steganography — hiding data in the grey values of image pixels — is a real technique used by intelligence services. Operators monitoring amateur bands often miss it entirely.' },
                         { speaker: 'Ryan', text: 'Someone has been watching me. They know where I live. And they just told me exactly where to look.' },
+                        { speaker: 'Ryan', text: 'That encoded message on the SSTV terminal — I still need to decode that cipher. Back to the mancave.' },
                     ], () => {
                         // Fade out the SSTV overlay
                         const overlay = document.getElementById('sstv-decode-overlay');
@@ -181,7 +227,6 @@ const SdrBenchScene = {
                             overlay.style.opacity = '0';
                             setTimeout(() => overlay.remove(), 1200);
                         }
-                        game.setFlag('sstv_decoded', true);
                         game.setFlag('sstv_coordinates_known', true);
                         game.addEvidence({
                             id: 'sstv_decoded_image',
@@ -193,11 +238,19 @@ const SdrBenchScene = {
                         game.completeQuest('decode_sstv_signal');
                     });
                 } else {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'The decoder is ready but there\'s nothing to decode yet. I need to wait for an incoming transmission on 14.230 MHz.' },
-                        { speaker: 'Ryan', text: 'The spectrum shows some noise but no active SSTV signal right now.' },
-                        { speaker: 'Ryan', text: 'I should check back here after I\'ve done more investigating. Something might come in.' },
-                    ]);
+                    // No transmission received yet — hint depends on where the player is
+                    if (!game.getFlag('checked_email')) {
+                        game.startDialogue([
+                            { speaker: 'Ryan', text: 'The decoder is ready but there\'s nothing coming in yet.' },
+                            { speaker: 'Ryan', text: 'I haven\'t checked my email yet. An alert came in earlier — that\'s what flagged this frequency.' },
+                            { speaker: 'Ryan', text: 'The laptop in the mancave has the email client open.' },
+                        ]);
+                    } else {
+                        game.startDialogue([
+                            { speaker: 'Ryan', text: 'The decoder is ready but there\'s nothing to decode yet. I need to wait for an incoming transmission on 14.230 MHz.' },
+                            { speaker: 'Ryan', text: 'The SSTV terminal in the mancave monitors this frequency live. I should check there — something may have already come in.' },
+                        ]);
+                    }
                 }
             }
         },

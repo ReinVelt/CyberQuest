@@ -143,6 +143,7 @@ const SstvTerminalScene = {
                 // ── Trigger first transmission after email has been checked ──
                 if (game.getFlag('checked_email')) {
                     game.setFlag('sstv_transmission_received', true);
+                    SstvTerminalScene._updateImageCover(game); // reveal the house image
                     game.setStoryPart(2);
 
                     game.addQuest({
@@ -241,8 +242,39 @@ const SstvTerminalScene = {
         } catch(e) {}
     },
 
-    onEnter: function(game) { SstvTerminalScene._startAmbientAudio(); },
-    onExit: function(game) { SstvTerminalScene._stopAmbientAudio(); }
+    /** Cover the decoded-image panel with a dark overlay until a transmission has been received */
+    _updateImageCover: function(game) {
+        const existingCover = document.getElementById('sstv-image-cover');
+        if (game.getFlag('sstv_transmission_received')) {
+            // Transmission received — remove cover so the house image is visible
+            if (existingCover) existingCover.remove();
+            return;
+        }
+        // No transmission yet — place an opaque cover over the image panel area
+        if (existingCover) return; // already covered
+        const cover = document.createElement('div');
+        cover.id = 'sstv-image-cover';
+        cover.style.cssText = `
+            position: absolute;
+            left: 14.875%; top: 14.11%;
+            width: 21.25%; height: 28.89%;
+            background: #000e04;
+            z-index: 5;
+            pointer-events: none;
+        `;
+        const container = document.getElementById('scene-container');
+        if (container) container.appendChild(cover);
+    },
+
+    onEnter: function(game) {
+        SstvTerminalScene._startAmbientAudio();
+        SstvTerminalScene._updateImageCover(game);
+    },
+    onExit: function(game) {
+        SstvTerminalScene._stopAmbientAudio();
+        const cover = document.getElementById('sstv-image-cover');
+        if (cover) cover.remove();
+    }
 };
 
 if (typeof module !== 'undefined') {
