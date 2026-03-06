@@ -88,7 +88,7 @@ const KloosterScene = {
                     game.startDialogue([
                         { speaker: 'Ryan', text: '23:00. Exactly when they said.' },
                         { speaker: 'Ryan', text: 'Nobody here. Surprise, surprise.' },
-                        { speaker: '', text: '*He waits in the shadows for fifteen minutes*' },
+                        { speaker: 'Narrator', text: '*He waits in the shadows for fifteen minutes*' },
                         { speaker: 'Ryan', text: 'Screw this. Maybe it was all a joke.' },
                         { speaker: 'Ryan', text: 'Better check my car.' }
                     ]);
@@ -188,7 +188,7 @@ const KloosterScene = {
                     // Already picked up USB, allow driving home
                     game.startDialogue([
                         { speaker: 'Ryan', text: '*Gets in the car*' },
-                        { speaker: '', text: '*Engine starts. Time to head home.*' }
+                        { speaker: 'Narrator', text: '*Engine starts. Time to head home.*' }
                     ]);
                     
                     game.sceneTimeout(() => {
@@ -686,7 +686,7 @@ const KloosterScene = {
             
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: '', text: '22:55. Five minutes early.' },
+                    { speaker: 'Narrator', text: '22:55. Five minutes early.' },
                     { speaker: 'Ryan', text: 'The monastery looks abandoned.' },
                     { speaker: 'Ryan', text: 'Dark windows. Locked doors. No signs of life.' },
                     { speaker: 'Ryan', text: 'But E said 23:00. Check the courtyard.' }

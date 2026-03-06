@@ -49,8 +49,8 @@ const ReturnToMaxScene = {
             action(game) {
                 if (game.getFlag('return_to_max_complete')) {
                     game.startDialogue([
-                        { speaker: '', text: '*Hours later. The fire has burned to embers. The dogs are asleep. Max rests her head on Ryan\'s shoulder.*' },
-                        { speaker: '', text: '*Outside, the first grey light of dawn touches the flat Drenthe horizon.*' }
+                        { speaker: 'Narrator', text: '*Hours later. The fire has burned to embers. The dogs are asleep. Max rests her head on Ryan\'s shoulder.*' },
+                        { speaker: 'Narrator', text: '*Outside, the first grey light of dawn touches the flat Drenthe horizon.*' }
                     ]);
                     game.sceneTimeout(() => game.loadScene('morning_after'), 5000);
                 } else {
@@ -567,9 +567,9 @@ const ReturnToMaxScene = {
                 chord: chords.arrival,
                 vfx: () => { /* headlight already played */ },
                 lines: [
-                    { speaker: '', text: '*A black government car pulls into the gravel driveway. Engine cuts. Silence.*' },
-                    { speaker: '', text: '*Ryan climbs out. The air smells like peat and cut grass. Home.*' },
-                    { speaker: '', text: '*Through the window he can see a single lamp. She\'s still up.*' },
+                    { speaker: 'Narrator', text: '*A black government car pulls into the gravel driveway. Engine cuts. Silence.*' },
+                    { speaker: 'Narrator', text: '*Ryan climbs out. The air smells like peat and cut grass. Home.*' },
+                    { speaker: 'Narrator', text: '*Through the window he can see a single lamp. She\'s still up.*' },
                     { speaker: 'Ryan', text: '*Hesitates at the front door. Takes a breath.*' },
                     { speaker: 'Ryan', text: 'How do you even begin to explain something like this?' }
                 ]
@@ -580,14 +580,14 @@ const ReturnToMaxScene = {
                 chord: chords.embrace,
                 vfx: () => { this._pulseVignette(0.3, 6000); },
                 lines: [
-                    { speaker: '', text: '*The door opens before he can reach the handle.*' },
+                    { speaker: 'Narrator', text: '*The door opens before he can reach the handle.*' },
                     { speaker: 'Max', text: 'Ryan.' },
-                    { speaker: '', text: '*She\'s been crying. She tries to hide it. Can\'t.*' },
+                    { speaker: 'Narrator', text: '*She\'s been crying. She tries to hide it. Can\'t.*' },
                     { speaker: 'Max', text: 'I\'ve been watching the news. All day. Every channel.' },
                     { speaker: 'Max', text: '"Major intelligence operation in Lower Saxony." "Russian cell dismantled." "Dutch civilian involvement."' },
                     { speaker: 'Ryan', text: 'Max, I—' },
                     { speaker: 'Max', text: '*Pulls him into a tight hug. Doesn\'t let go for a long time.*' },
-                    { speaker: '', text: '*Tino and Kessy scramble over, tails going wild. ET snorts from between their legs.*' }
+                    { speaker: 'Narrator', text: '*Tino and Kessy scramble over, tails going wild. ET snorts from between their legs.*' }
                 ]
             },
 
@@ -596,11 +596,11 @@ const ReturnToMaxScene = {
                 chord: chords.settling,
                 vfx: () => {},
                 lines: [
-                    { speaker: '', text: '*They sit on the couch. Two cups of tea. The fire is down to embers but still warm.*' },
+                    { speaker: 'Narrator', text: '*They sit on the couch. Two cups of tea. The fire is down to embers but still warm.*' },
                     { speaker: 'Max', text: 'Where do I even start?' },
                     { speaker: 'Ryan', text: 'I owe you the whole story. From the beginning.' },
                     { speaker: 'Max', text: '...I think I need to hear it.' },
-                    { speaker: '', text: '*Tino rests his head on Ryan\'s foot. Kessy curls up next to Max.*' }
+                    { speaker: 'Narrator', text: '*Tino rests his head on Ryan\'s foot. Kessy curls up next to Max.*' }
                 ]
             },
 
@@ -613,7 +613,7 @@ const ReturnToMaxScene = {
                     { speaker: 'Ryan', text: 'I thought it was amateur radio interference at first. Then I decoded it.' },
                     { speaker: 'Ryan', text: 'Military-grade encryption. Coming from somewhere near the German border.' },
                     { speaker: 'Max', text: '...From your mancave? You picked this up from our house?' },
-                    { speaker: 'Ryan', text: 'The LOFAR array helped. Cees and David confirmed the coordinates.' },
+                    { speaker: 'Ryan', text: 'The Lofar array helped. Cees and David confirmed the coordinates.' },
                     { speaker: 'Max', text: 'Cees Bassa. The satellite man.' },
                     { speaker: 'Ryan', text: 'Yes. He tracked the signal source. A former military facility. Steckerdoser Heide.' }
                 ]
@@ -625,7 +625,7 @@ const ReturnToMaxScene = {
                 vfx: () => { this._pulseVignette(0.5, 5000); },
                 lines: [
                     { speaker: 'Max', text: 'And the woman? Eva?' },
-                    { speaker: '', text: '*Ryan pauses. This is the hard part.*' },
+                    { speaker: 'Narrator', text: '*Ryan pauses. This is the hard part.*' },
                     { speaker: 'Ryan', text: 'Eva Weber. German intelligence. Her father was involved years ago — died trying to expose the same operation.' },
                     { speaker: 'Ryan', text: 'She contacted me because of my radio work. She needed someone who could read the signals.' },
                     { speaker: 'Max', text: '*Quietly* That woman at the dog training weekend. Tony Knight\'s workshop. I introduced you.' },
@@ -643,7 +643,7 @@ const ReturnToMaxScene = {
                 vfx: () => { this._pulseVignette(0.8, 8000); },
                 lines: [
                     { speaker: 'Max', text: 'The news said someone broke into the facility. A *civilian*.' },
-                    { speaker: '', text: '*Long silence. The fire pops.*' },
+                    { speaker: 'Narrator', text: '*Long silence. The fire pops.*' },
                     { speaker: 'Ryan', text: '...That was me.' },
                     { speaker: 'Max', text: '*Her hands tighten around the tea cup*' },
                     { speaker: 'Ryan', text: 'Volkov — the Russian commander — had weaponized the satellite infrastructure. The whole array.' },
@@ -681,7 +681,7 @@ const ReturnToMaxScene = {
                     { speaker: 'Ryan', text: 'Agent Van der Berg. He debriefed me for hours. Official statement, timeline, evidence chain.' },
                     { speaker: 'Max', text: 'Are you in trouble?' },
                     { speaker: 'Ryan', text: 'No. The opposite, actually.' },
-                    { speaker: '', text: '*Ryan reaches into his pocket and places a plain white business card on the coffee table.*' },
+                    { speaker: 'Narrator', text: '*Ryan reaches into his pocket and places a plain white business card on the coffee table.*' },
                     { speaker: 'Ryan', text: 'They want to recruit me. "Institutional support," Van der Berg called it.' },
                     { speaker: 'Max', text: '*Picks up the card. Turns it over. Plain white. AIVD crest.*' },
                     { speaker: 'Max', text: 'Ryan Weylant. Government agent.' },
@@ -694,14 +694,14 @@ const ReturnToMaxScene = {
                 chord: chords.processing,
                 vfx: () => { this._pulseVignette(0.6, 6000); },
                 lines: [
-                    { speaker: '', text: '*Silence. The clock ticks. ET snores softly on the rug.*' },
+                    { speaker: 'Narrator', text: '*Silence. The clock ticks. ET snores softly on the rug.*' },
                     { speaker: 'Max', text: 'I\'m trying to decide if I\'m furious or proud.' },
                     { speaker: 'Ryan', text: 'Both is fine.' },
                     { speaker: 'Max', text: '*Almost laughs* Both. Yes. Both.' },
                     { speaker: 'Max', text: 'You lied to me. For days. "Just radio stuff, Max." "Nothing interesting, Max."' },
                     { speaker: 'Ryan', text: 'I was trying to protect—' },
                     { speaker: 'Max', text: 'Don\'t. Don\'t say you were protecting me. I\'m not a child.' },
-                    { speaker: '', text: '*More silence. Tino whimpers softly in his sleep.*' },
+                    { speaker: 'Narrator', text: '*More silence. Tino whimpers softly in his sleep.*' },
                     { speaker: 'Max', text: 'You saved thousands of lives. That\'s what the news said. Thousands.' },
                     { speaker: 'Ryan', text: 'I had help. David. Cees. Jaap. Eva. Even the Meshtastic community.' },
                     { speaker: 'Max', text: 'But you\'re the one who went in. You.' }
@@ -727,10 +727,10 @@ const ReturnToMaxScene = {
                     { speaker: 'Ryan', text: '*Squeezes her hand* I promise.' },
                     { speaker: 'Max', text: 'And the AIVD thing... we decide together. Not just you in your mancave at 3 AM.' },
                     { speaker: 'Ryan', text: 'Together. Always.' },
-                    { speaker: '', text: '*She leans against him. The fire glows. The dogs breathe softly.*' },
-                    { speaker: '', text: '*Outside, the Drenthe night is vast and quiet. Stars over the peat bogs.*' },
-                    { speaker: '', text: '*For the first time in weeks, Ryan feels something he\'d almost forgotten.*' },
-                    { speaker: '', text: '*Home.*' }
+                    { speaker: 'Narrator', text: '*She leans against him. The fire glows. The dogs breathe softly.*' },
+                    { speaker: 'Narrator', text: '*Outside, the Drenthe night is vast and quiet. Stars over the peat bogs.*' },
+                    { speaker: 'Narrator', text: '*For the first time in weeks, Ryan feels something he\'d almost forgotten.*' },
+                    { speaker: 'Narrator', text: '*Home.*' }
                 ]
             }
         ];

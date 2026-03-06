@@ -874,7 +874,7 @@ const IntroScene = {
                     '<div class="term-line">root@sigint-den-haag:~$ <span class="bunker-cursor"></span></div>' +
                     '<div class="term-line">&gt; INITIALIZING ZERFALL MONITORING GRID...</div>' +
                     '<div class="term-line">&gt; SCANNING FREQ RANGE: 0.1 MHz &mdash; 24.000 GHz</div>' +
-                    '<div class="term-line">&gt; LOFAR ARRAY: <span class="term-highlight">ONLINE</span> &nbsp;[50,412 ANTENNAS]</div>' +
+                    '<div class="term-line">&gt; Lofar ARRAY: <span class="term-highlight">ONLINE</span> &nbsp;[50,412 ANTENNAS]</div>' +
                     '<div class="term-line">&gt; WSRT ARRAY:  <span class="term-highlight">ONLINE</span> &nbsp;[14 DISHES]</div>' +
                     '<div class="term-line">&gt; AI ANOMALY ENGINE: <span class="term-highlight">ACTIVE</span></div>' +
                     '<div class="term-line">&nbsp;</div>' +
@@ -924,7 +924,7 @@ const IntroScene = {
                     '<p>The province everyone forgets.</p>' +
                     '<p>Quiet heathlands to the horizon. Ancient dolmens. Narrow canals reflecting the first light of dawn.</p>' +
                     '<p class="emphasis">But beneath this surface lies something extraordinary.</p>' +
-                    '<p>Hidden in these fields: the Westerbork Telescope. LOFAR\'s 50,000 antennas. Listening posts that pierce the cosmos itself.</p>' +
+                    '<p>Hidden in these fields: the Westerbork Telescope. Lofar\'s 50,000 antennas. Listening posts that pierce the cosmos itself.</p>' +
                 '</div>' +
             '</div>' +
 
@@ -960,10 +960,10 @@ const IntroScene = {
                     '<div class="mc-item">FLIPPER ZERO</div>' +
                     '<div class="mc-item">WIFI PINEAPPLE</div>' +
                     '<div class="mc-item">MESHTASTIC</div>' +
-                    '<div class="mc-item">SSTV TERMINAL</div>' +
-                    '<div class="mc-item">3D PRINTERS</div>' +
+                    '<div class="mc-item">SDR</div>' +
+                    '<div class="mc-item">EVILCROW</div>' +
                     '<div class="mc-item">OSCILLOSCOPE</div>' +
-                    '<div class="mc-item">LORA NODES</div>' +
+                    '<div class="mc-item">MESHCORE</div>' +
                 '</div>' +
                 '<div class="mc-subtitle" id="mc-subtitle">' +
                     'His network: the nation\'s sharpest minds &mdash;<br>' +

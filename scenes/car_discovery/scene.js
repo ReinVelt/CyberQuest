@@ -36,9 +36,9 @@ const CarDiscoveryScene = {
                     game.setFlag('picked_up_usb', true);
                     
                     game.startDialogue([
-                        { speaker: '', text: '*Ryan carefully removes the USB stick from under the door handle*' },
+                        { speaker: 'Narrator', text: '*Ryan carefully removes the USB stick from under the door handle*' },
                         { speaker: 'Ryan', text: 'A piece of tape wrapped around it with handwritten text...' },
-                        { speaker: '', text: '"TRUST THE PROCESS - AIR-GAPPED ONLY"' },
+                        { speaker: 'Narrator', text: '"TRUST THE PROCESS - AIR-GAPPED ONLY"' },
                         { speaker: 'Ryan', text: 'They watched me walk in. Watched me look around.' },
                         { speaker: 'Ryan', text: 'Never meant to meet face-to-face.' },
                         { speaker: 'Ryan', text: 'This IS the meeting.' },
@@ -89,7 +89,7 @@ const CarDiscoveryScene = {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Wait. What the hell?' },
                         { speaker: 'Ryan', text: 'There\'s something under the door handle...' },
-                        { speaker: '', text: '*A USB stick. Someone WAS here.*' }
+                        { speaker: 'Narrator', text: '*A USB stick. Someone WAS here.*' }
                     ]);
                 } else {
                     game.startDialogue([
@@ -112,7 +112,7 @@ const CarDiscoveryScene = {
                 if (game.getFlag('picked_up_usb')) {
                     game.startDialogue([
                         { speaker: 'Ryan', text: '*Gets in the car*' },
-                        { speaker: '', text: '*Engine starts. Time to head home.*' }
+                        { speaker: 'Narrator', text: '*Engine starts. Time to head home.*' }
                     ]);
                     
                     game.sceneTimeout(() => {
@@ -165,21 +165,6 @@ const CarDiscoveryScene = {
             var wG = ctx.createGain(); wG.gain.value = 0.030;
             wind.connect(lp).connect(wG).connect(master); wind.start();
             self._audioNodes.push(wind, lp, wG);
-            // ── crickets ──
-            var ci = setInterval(function() {
-                if (!self._audioCtx) return;
-                var t = ctx.currentTime;
-                for (var c = 0; c < 3; c++) {
-                    var osc = ctx.createOscillator(); osc.type = 'sine'; osc.frequency.value = 3800 + c * 200;
-                    var env = ctx.createGain();
-                    env.gain.setValueAtTime(0, t + c * 0.08);
-                    env.gain.linearRampToValueAtTime(0.014, t + c * 0.08 + 0.01);
-                    env.gain.linearRampToValueAtTime(0, t + c * 0.08 + 0.04);
-                    osc.connect(env).connect(master); osc.start(t); osc.stop(t + c * 0.08 + 0.06);
-                    self._audioNodes.push(osc, env);
-                }
-            }, 600 + Math.random() * 1500);
-            self._audioIntervals.push(ci);
         } catch(e) {}
     },
 
@@ -197,7 +182,7 @@ const CarDiscoveryScene = {
             
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: '', text: '*Ryan approaches the Volvo*' },
+                    { speaker: 'Narrator', text: '*Ryan approaches the Volvo*' },
                     { speaker: 'Ryan', text: 'Time to go home. What a waste of—' },
                     { speaker: 'Ryan', text: 'Wait. What the hell?' },
                     { speaker: 'Ryan', text: 'There\'s something taped under the door handle...' }

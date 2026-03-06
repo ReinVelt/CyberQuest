@@ -10,7 +10,7 @@ const SstvTerminalScene = {
     id: 'sstv_terminal',
     name: 'SSTV Terminal',
 
-    background: 'assets/images/scenes/mancave.svg',
+    background: 'assets/images/scenes/sstv_terminal.svg',
 
     description: 'A green-phosphor monitor running SSTV software. Waterfall display shows incoming signals on 14.230 MHz.',
 
@@ -42,7 +42,7 @@ const SstvTerminalScene = {
                     game.setStoryPart(5);
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Wait! New SSTV transmission coming in!' },
-                        { speaker: '', text: '*The waterfall lights up — a burst of tones, then encoded text scrolls in*' },
+                        { speaker: 'Narrator', text: '*The waterfall lights up — a burst of tones, then encoded text scrolls in*' },
                         { speaker: 'Ryan', text: 'No image this time. Pure cipher text. ROT1 again by the look of it.' },
                         { speaker: 'Ryan', text: 'Direct. Urgent. Decode it.' }
                     ]);
@@ -154,7 +154,7 @@ const SstvTerminalScene = {
 
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Wait... the SSTV terminal! Something\'s showing!' },
-                        { speaker: '', text: '*Static shifts into a pattern*' },
+                        { speaker: 'Narrator', text: '*Static shifts into a pattern*' },
                         { speaker: 'Ryan', text: 'Not just noise. That looks like... visual morse?' },
                         { speaker: 'Ryan', text: 'And encoded text. Can\'t be a coincidence.' },
                         { speaker: 'Ryan', text: 'Let me analyze this...' }

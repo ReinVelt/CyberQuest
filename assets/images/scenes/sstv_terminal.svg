@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  SSTV Terminal scene  –  1600×900
+  A green-phosphor monitor running SSTV decoding software in the mancave.
+  Main display: waterfall + incoming scan lines. Side panel: signal stats.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
+  <defs>
+    <!-- Room background gradient -->
+    <linearGradient id="roomBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#050708"/>
+      <stop offset="100%" stop-color="#0a0d10"/>
+    </linearGradient>
+
+    <!-- Green phosphor glow for main monitor -->
+    <radialGradient id="monitorGlow" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#00ff88" stop-opacity="0.18"/>
+      <stop offset="60%" stop-color="#00cc55" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#003311" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Desk surface gradient -->
+    <linearGradient id="deskGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a1410"/>
+      <stop offset="100%" stop-color="#0e0c09"/>
+    </linearGradient>
+
+    <!-- Monitor bezel gradient -->
+    <linearGradient id="bezelGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1c1c1c"/>
+      <stop offset="100%" stop-color="#111111"/>
+    </linearGradient>
+
+    <!-- Waterfall colour stops (frequency vs time) -->
+    <linearGradient id="wfRow1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#001a08"/>
+      <stop offset="18%"  stop-color="#003810"/>
+      <stop offset="30%"  stop-color="#00ff55" stop-opacity="0.9"/>
+      <stop offset="34%"  stop-color="#88ffcc"/>
+      <stop offset="38%"  stop-color="#00ee44"/>
+      <stop offset="55%"  stop-color="#003010"/>
+      <stop offset="70%"  stop-color="#002208"/>
+      <stop offset="85%"  stop-color="#001808"/>
+      <stop offset="100%" stop-color="#000e04"/>
+    </linearGradient>
+    <linearGradient id="wfRow2" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#001205"/>
+      <stop offset="22%"  stop-color="#004418"/>
+      <stop offset="31%"  stop-color="#00cc44"/>
+      <stop offset="36%"  stop-color="#00ff77"/>
+      <stop offset="41%"  stop-color="#22ff66"/>
+      <stop offset="48%"  stop-color="#006622"/>
+      <stop offset="65%"  stop-color="#002810"/>
+      <stop offset="100%" stop-color="#000e04"/>
+    </linearGradient>
+    <linearGradient id="wfRow3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#000a03"/>
+      <stop offset="10%"  stop-color="#003010"/>
+      <stop offset="28%"  stop-color="#00aa33"/>
+      <stop offset="33%"  stop-color="#00ff66"/>
+      <stop offset="38%"  stop-color="#aaffcc"/>
+      <stop offset="42%"  stop-color="#00dd55"/>
+      <stop offset="52%"  stop-color="#005520"/>
+      <stop offset="75%"  stop-color="#002008"/>
+      <stop offset="100%" stop-color="#000e04"/>
+    </linearGradient>
+    <linearGradient id="wfRow4" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#000e04"/>
+      <stop offset="15%"  stop-color="#004418"/>
+      <stop offset="29%"  stop-color="#00bb44"/>
+      <stop offset="34%"  stop-color="#eeffcc"/>
+      <stop offset="39%"  stop-color="#00ee55"/>
+      <stop offset="45%"  stop-color="#004418"/>
+      <stop offset="80%"  stop-color="#001808"/>
+      <stop offset="100%" stop-color="#000a03"/>
+    </linearGradient>
+    <linearGradient id="wfDim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#000a03"/>
+      <stop offset="25%"  stop-color="#002208"/>
+      <stop offset="32%"  stop-color="#005518"/>
+      <stop offset="38%"  stop-color="#009933"/>
+      <stop offset="42%"  stop-color="#007722"/>
+      <stop offset="55%"  stop-color="#003010"/>
+      <stop offset="100%" stop-color="#000a03"/>
+    </linearGradient>
+
+    <!-- Scan-line overlay filter -->
+    <filter id="scanlines" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0 0.5" numOctaves="1" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="grey"/>
+      <feBlend in="SourceGraphic" in2="grey" mode="multiply" result="blend"/>
+      <feComponentTransfer in="blend">
+        <feFuncA type="linear" slope="1"/>
+      </feComponentTransfer>
+    </filter>
+
+    <!-- CRT phosphor glow -->
+    <filter id="phosphorGlow" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur stdDeviation="1.8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Subtle vignette on the whole screen face -->
+    <radialGradient id="screenVignette" cx="50%" cy="50%" r="70%">
+      <stop offset="0%"   stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.55"/>
+    </radialGradient>
+
+    <!-- Wall texture -->
+    <pattern id="wallBrick" x="0" y="0" width="120" height="60" patternUnits="userSpaceOnUse">
+      <rect width="120" height="60" fill="#0d0f11"/>
+      <rect x="1" y="1" width="118" height="27" fill="#111318" rx="1"/>
+      <rect x="1" y="32" width="118" height="27" fill="#0f1215" rx="1"/>
+    </pattern>
+
+    <!-- Desk wood grain -->
+    <pattern id="woodGrain" x="0" y="0" width="200" height="8" patternUnits="userSpaceOnUse">
+      <rect width="200" height="8" fill="#1a1410"/>
+      <rect x="0" y="2" width="200" height="1" fill="#1e1812" opacity="0.6"/>
+      <rect x="0" y="5" width="200" height="1" fill="#160e0a" opacity="0.4"/>
+    </pattern>
+
+    <!-- Amber LED gradient -->
+    <radialGradient id="amberLed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ffcc00"/>
+      <stop offset="100%" stop-color="#cc7700" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Green LED -->
+    <radialGradient id="greenLed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#00ff66"/>
+      <stop offset="100%" stop-color="#00aa33" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Red LED -->
+    <radialGradient id="redLed" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ff2200"/>
+      <stop offset="100%" stop-color="#880000" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Ceiling light spread -->
+    <radialGradient id="ceilingLight" cx="50%" cy="0%" r="70%">
+      <stop offset="0%"   stop-color="#1a2215" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#050708" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- ── Room background ─────────────────────────────────────── -->
+  <rect width="1600" height="900" fill="url(#roomBg)"/>
+
+  <!-- Back wall (brick texture) -->
+  <rect x="0" y="0" width="1600" height="700" fill="url(#wallBrick)"/>
+
+  <!-- Ceiling ambient from monitor glow -->
+  <rect x="0" y="0" width="1600" height="500" fill="url(#ceilingLight)"/>
+
+  <!-- Floor -->
+  <rect x="0" y="700" width="1600" height="200" fill="#0c0b09"/>
+  <rect x="0" y="700" width="1600" height="4" fill="#1a1612"/>
+
+  <!-- ── Desk ──────────────────────────────────────────────────── -->
+  <!-- Main desk surface -->
+  <rect x="80" y="620" width="1440" height="100" fill="url(#woodGrain)" rx="3"/>
+  <rect x="80" y="620" width="1440" height="4" fill="#2a2018"/>
+  <!-- Desk front face -->
+  <rect x="80" y="720" width="1440" height="30" fill="#111008" rx="2"/>
+  <!-- Desk legs -->
+  <rect x="110" y="750" width="30" height="140" fill="#0e0c09" rx="2"/>
+  <rect x="1460" y="750" width="30" height="140" fill="#0e0c09" rx="2"/>
+  <!-- Cable management rail under desk -->
+  <rect x="120" y="715" width="1360" height="8" fill="#181510" rx="4"/>
+
+  <!-- ── Main SSTV Monitor (centre-left) ─────────────────────── -->
+  <!-- Monitor stand -->
+  <rect x="455" y="595" width="40" height="30" fill="#181818" rx="2"/>
+  <rect x="420" y="618" width="110" height="10" fill="#141414" rx="3"/>
+
+  <!-- Monitor outer bezel -->
+  <rect x="215" y="80" width="780" height="540" fill="url(#bezelGrad)" rx="12"/>
+  <!-- Bezel highlight top -->
+  <rect x="215" y="80" width="780" height="3" fill="#2a2a2a" rx="2"/>
+  <!-- Monitor inner shadow -->
+  <rect x="225" y="90" width="760" height="520" fill="#080808" rx="8"/>
+
+  <!-- ── SCREEN FACE ─────────────────────────────────────────── -->
+  <!-- Screen background: deep phosphor green -->
+  <rect x="232" y="97" width="746" height="506" fill="#010a03" rx="5"/>
+
+  <!-- ── SSTV SOFTWARE LAYOUT ────────────────────────────────── -->
+  <!-- Title bar -->
+  <rect x="232" y="97" width="746" height="24" fill="#001a08" rx="5"/>
+  <rect x="232" y="109" width="746" height="12" fill="#001a08"/>
+  <text x="350" y="114" font-family="monospace" font-size="11" fill="#00cc55" letter-spacing="1">MMSSTV 1.13  ●  14.230 MHz  ●  MODE: RX  ●  SCOTTIE-DX</text>
+  <!-- Minimize/close buttons (dim) -->
+  <circle cx="728" cy="109" r="5" fill="#003310"/>
+  <circle cx="744" cy="109" r="5" fill="#003310"/>
+  <circle cx="760" cy="109" r="5" fill="#003310"/>
+
+  <!-- Left panel: received image (decoded SSTV scan) -->
+  <rect x="238" y="127" width="340" height="260" fill="#000e04" stroke="#004418" stroke-width="1"/>
+  <!-- Scan lines building up — simulating partial image decode -->
+  <!-- Top portion fully decoded (shows a dark house outline) -->
+  <rect x="238" y="127" width="340" height="180" fill="#000e04"/>
+  <!-- House silhouette lines -->
+  <rect x="290" y="180" width="220" height="4"  fill="#00aa33" opacity="0.85"/>
+  <rect x="310" y="170" width="180" height="4"  fill="#009922" opacity="0.8"/>
+  <rect x="330" y="158" width="140" height="4"  fill="#008820" opacity="0.75"/>
+  <rect x="345" y="148" width="110" height="4"  fill="#007718" opacity="0.7"/>
+  <rect x="360" y="138" width="80"  height="3"  fill="#006618" opacity="0.65"/>
+  <rect x="370" y="133" width="60"  height="3"  fill="#005510" opacity="0.6"/>
+  <!-- Walls -->
+  <rect x="280" y="180" width="10"  height="80" fill="#009933" opacity="0.8"/>
+  <rect x="500" y="180" width="10"  height="80" fill="#009933" opacity="0.8"/>
+  <!-- Windows -->
+  <rect x="305" y="195" width="35" height="28" fill="#001a08" stroke="#00bb44" stroke-width="1.5" opacity="0.9"/>
+  <rect x="452" y="195" width="35" height="28" fill="#001a08" stroke="#00bb44" stroke-width="1.5" opacity="0.9"/>
+  <!-- Door -->
+  <rect x="377" y="218" width="40" height="42" fill="#001a08" stroke="#00aa33" stroke-width="1.5" opacity="0.9"/>
+  <!-- Ground line -->
+  <rect x="280" y="260" width="230" height="3" fill="#007722" opacity="0.7"/>
+  <!-- Partially decoded scan lines (bottom third of image still incoming) -->
+  <rect x="238" y="307" width="340" height="8"  fill="#001a08"/>
+  <rect x="238" y="307" width="215" height="2"  fill="#00cc44" opacity="0.6"/>
+  <rect x="238" y="311" width="187" height="2"  fill="#00bb33" opacity="0.55"/>
+  <rect x="238" y="315" width="260" height="2"  fill="#00aa22" opacity="0.5"/>
+  <rect x="238" y="319" width="120" height="2"  fill="#009922" opacity="0.4"/>
+  <rect x="238" y="323" width="340" height="64" fill="#000a03"/>
+  <!-- Active scan line cursor (bright) -->
+  <rect x="238" y="321" width="340" height="2" fill="#00ff55" opacity="0.9"/>
+  <rect x="238" y="321" width="340" height="1" fill="#aaffcc" opacity="0.5"/>
+
+  <!-- Image label -->
+  <rect x="238" y="387" width="340" height="16" fill="#000e04" stroke="#003310" stroke-width="1"/>
+  <text x="244" y="399" font-family="monospace" font-size="10" fill="#00aa33">SCOTTIE-DX  │  320×256  │  RX: 14.230.00 MHz  │  SNR: 18.4 dB</text>
+
+  <!-- Right panel: waterfall display -->
+  <rect x="586" y="127" width="386" height="276" fill="#000903" stroke="#003310" stroke-width="1"/>
+  <text x="590" y="140" font-family="monospace" font-size="10" fill="#006622">WATERFALL  14.200–14.260 MHz</text>
+
+  <!-- Waterfall rows — colourful signal strips -->
+  <rect x="586" y="145" width="386" height="18" fill="url(#wfRow1)"/>
+  <rect x="586" y="163" width="386" height="18" fill="url(#wfRow2)"/>
+  <rect x="586" y="181" width="386" height="18" fill="url(#wfRow3)"/>
+  <rect x="586" y="199" width="386" height="18" fill="url(#wfRow4)"/>
+  <rect x="586" y="217" width="386" height="18" fill="url(#wfRow1)"/>
+  <rect x="586" y="235" width="386" height="18" fill="url(#wfDim)"/>
+  <rect x="586" y="253" width="386" height="18" fill="url(#wfDim)"/>
+  <rect x="586" y="271" width="386" height="18" fill="url(#wfDim)"/>
+  <rect x="586" y="289" width="386" height="18" fill="url(#wfDim)"/>
+  <rect x="586" y="307" width="386" height="14" fill="#000a03"/>
+  <rect x="586" y="321" width="386" height="14" fill="#000903"/>
+  <rect x="586" y="335" width="386" height="12" fill="#000802"/>
+  <rect x="586" y="347" width="386" height="12" fill="#000701"/>
+  <rect x="586" y="359" width="386" height="12" fill="#000600"/>
+  <rect x="586" y="371" width="386" height="12" fill="#000500"/>
+  <rect x="586" y="383" width="386" height="20" fill="#000400"/>
+
+  <!-- Frequency ruler on waterfall -->
+  <rect x="586" y="145" width="386" height="8" fill="#000e04" opacity="0.7"/>
+  <text x="590"  y="152" font-family="monospace" font-size="8" fill="#005518">14.210</text>
+  <text x="668"  y="152" font-family="monospace" font-size="8" fill="#005518">14.220</text>
+  <text x="748"  y="152" font-family="monospace" font-size="8" fill="#00cc44">14.230</text>
+  <text x="828"  y="152" font-family="monospace" font-size="8" fill="#005518">14.240</text>
+  <text x="908"  y="152" font-family="monospace" font-size="8" fill="#005518">14.250</text>
+  <!-- Tuned-frequency marker -->
+  <line x1="756" y1="145" x2="756" y2="403" stroke="#00ff55" stroke-width="1" opacity="0.7" stroke-dasharray="3,3"/>
+
+  <!-- Bottom stats row -->
+  <rect x="238" y="407" width="734" height="60" fill="#000a03" stroke="#002a0e" stroke-width="1"/>
+
+  <!-- Signal meter (left) -->
+  <text x="244" y="421" font-family="monospace" font-size="10" fill="#007722">SIGNAL LEVEL</text>
+  <rect x="244" y="424" width="160" height="10" fill="#000a03" stroke="#004418" stroke-width="1"/>
+  <rect x="244" y="424" width="122" height="10" fill="#00aa33"/>
+  <rect x="366" y="424" width="10"  height="10" fill="#00ff55"/>
+  <rect x="376" y="424" width="28"  height="10" fill="#002208"/>
+  <text x="244" y="446" font-family="monospace" font-size="9" fill="#009922">S7  -73 dBm  BW: 3.1kHz</text>
+
+  <!-- Frequency display (centre) -->
+  <text x="440" y="421" font-family="monospace" font-size="10" fill="#007722">FREQUENCY</text>
+  <text x="440" y="436" font-family="monospace" font-size="16" fill="#00ff66" letter-spacing="2">14.230.00</text>
+  <text x="440" y="454" font-family="monospace" font-size="9" fill="#009922">MHz  ●  LSB  ●  3100 Hz</text>
+
+  <!-- Mode / status (right) -->
+  <text x="660" y="421" font-family="monospace" font-size="10" fill="#007722">STATUS</text>
+  <text x="660" y="434" font-family="monospace" font-size="10" fill="#00ff55">● RECEIVING</text>
+  <text x="660" y="446" font-family="monospace" font-size="9" fill="#009922">MODE  SCOTTIE-DX</text>
+  <text x="660" y="458" font-family="monospace" font-size="9" fill="#009922">SYNC  OK  ●  AFC ON</text>
+
+  <!-- Log console at bottom of screen -->
+  <rect x="238" y="471" width="734" height="126" fill="#000802" stroke="#002208" stroke-width="1"/>
+  <text x="244" y="483" font-family="monospace" font-size="9" fill="#005518">── MMSSTV LOG ─────────────────────────────────────────────────────────</text>
+  <text x="244" y="496" font-family="monospace" font-size="9" fill="#007722">09:02:14  SIGNAL DETECTED  14.230.00 MHz  SCOTTIE-DX  SNR: 12.1 dB</text>
+  <text x="244" y="509" font-family="monospace" font-size="9" fill="#007722">09:02:15  SYNC ACQUIRED. BEGINNING SCAN LINE DECODE.</text>
+  <text x="244" y="522" font-family="monospace" font-size="9" fill="#009933">09:02:18  LINE   1 /  88  OK</text>
+  <text x="244" y="535" font-family="monospace" font-size="9" fill="#009933">09:02:44  LINE  38 /  88  OK  ─  SNR CLIMBING: 18.4 dB</text>
+  <text x="244" y="548" font-family="monospace" font-size="9" fill="#009933">09:03:12  LINE  64 /  88  OK</text>
+  <text x="244" y="561" font-family="monospace" font-size="9" fill="#00ff55">09:03:47  LINE  88 /  88  OK  ─  DECODE COMPLETE.</text>
+  <text x="244" y="574" font-family="monospace" font-size="9" fill="#00cc44">09:03:48  IMAGE SAVED:  RX_20260209_090348.png  ─  EMBEDDED TEXT DETECTED</text>
+  <text x="244" y="587" font-family="monospace" font-size="9" fill="#aaffcc">09:03:48  ▶  ENCODED PAYLOAD FOUND. OPEN IMAGE VIEWER TO DECODE.</text>
+
+  <!-- Cursor blink line -->
+  <text x="244" y="598" font-family="monospace" font-size="9" fill="#00ff55">09:03:49  _</text>
+
+  <!-- CRT scan-line overlay (subtle horizontal banding) -->
+  <rect x="232" y="97" width="746" height="506" fill="none" opacity="0.18"
+        style="background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)"/>
+  <!-- Simulated scan lines via thin rects every 4px -->
+  <rect x="232" y="97"  width="746" height="1" fill="#000000" opacity="0.25"/>
+  <rect x="232" y="101" width="746" height="1" fill="#000000" opacity="0.22"/>
+  <rect x="232" y="105" width="746" height="1" fill="#000000" opacity="0.22"/>
+  <rect x="232" y="109" width="746" height="1" fill="#000000" opacity="0.22"/>
+  <rect x="232" y="201" width="746" height="1" fill="#000000" opacity="0.20"/>
+  <rect x="232" y="301" width="746" height="1" fill="#000000" opacity="0.20"/>
+  <rect x="232" y="401" width="746" height="1" fill="#000000" opacity="0.20"/>
+  <rect x="232" y="501" width="746" height="1" fill="#000000" opacity="0.20"/>
+
+  <!-- Phosphor glow spread over screen -->
+  <rect x="232" y="97" width="746" height="506" fill="url(#monitorGlow)" rx="5" opacity="0.6"/>
+
+  <!-- Vignette on screen edges -->
+  <rect x="232" y="97" width="746" height="506" fill="url(#screenVignette)" rx="5"/>
+
+  <!-- Bezel LED indicators -->
+  <circle cx="944" cy="600" r="5"  fill="url(#greenLed)" opacity="0.95"/>
+  <circle cx="958" cy="600" r="3"  fill="url(#amberLed)" opacity="0.7"/>
+  <!-- Monitor brand text -->
+  <text x="580" y="608" font-family="sans-serif" font-size="9" fill="#222222" letter-spacing="3">EIZO  FLEXSCAN</text>
+
+  <!-- ── Right secondary monitor (SDR spectrum) ─────────────── -->
+  <!-- Stand -->
+  <rect x="1245" y="595" width="35" height="28" fill="#181818" rx="2"/>
+  <rect x="1218" y="618" width="88"  height="8" fill="#141414" rx="3"/>
+
+  <!-- Bezel -->
+  <rect x="1050" y="140" width="510" height="460" fill="url(#bezelGrad)" rx="10"/>
+  <rect x="1050" y="140" width="510" height="3"   fill="#252525" rx="2"/>
+
+  <!-- Screen -->
+  <rect x="1060" y="150" width="490" height="440" fill="#010507" rx="5"/>
+
+  <!-- SDR software layout (dark, blue-tinted) -->
+  <!-- Title bar -->
+  <rect x="1060" y="150" width="490" height="20" fill="#02080f" rx="5"/>
+  <rect x="1060" y="160" width="490" height="10" fill="#02080f"/>
+  <text x="1068" y="164" font-family="monospace" font-size="9" fill="#0088cc" letter-spacing="1">SDR#  v1.0.0.1732  ●  RTL-SDR  ●  14.230 MHz</text>
+
+  <!-- Spectrum display (FFT) -->
+  <rect x="1060" y="171" width="490" height="120" fill="#010710" stroke="#002244" stroke-width="1"/>
+  <!-- Spectrum baseline -->
+  <polyline points="
+    1060,280  1080,270  1095,272  1110,265  1125,275  1145,268
+    1165,262  1190,258  1210,255  1220,248  1230,244
+    1240,228  1245,222  1250,215  1255,210
+    1260,195  1262,188  1264,178  1266,171  1268,165
+    1270,158  1272,152  1274,148  1276,152  1278,158
+    1280,165  1282,172  1284,180  1286,188  1288,196
+    1290,208  1295,215  1300,222  1310,235
+    1320,244  1340,252  1360,258  1380,265  1400,268
+    1420,272  1440,270  1460,274  1480,270  1500,272
+    1520,268  1540,274  1550,280"
+    fill="none" stroke="#0055aa" stroke-width="1.5"/>
+  <!-- Signal spike at tuned frequency -->
+  <polyline points="
+    1258,280  1262,275  1265,268  1267,255  1268,242
+    1269,228  1270,210  1271,192  1272,175  1273,160
+    1274,148  1275,138  1276,131  1277,126  1278,122
+    1279,126  1280,131  1281,138  1282,148  1283,162
+    1284,175  1285,192  1286,210  1288,228  1290,248
+    1293,262  1296,270  1300,276  1305,280"
+    fill="#003388" stroke="#0077ff" stroke-width="1.5"/>
+  <!-- Peak fill -->
+  <polygon points="
+    1258,280  1262,275  1265,268  1267,255  1268,242
+    1269,228  1270,210  1271,192  1272,175  1273,160
+    1274,148  1275,138  1276,131  1277,126  1278,122
+    1279,126  1280,131  1281,138  1282,148  1283,162
+    1284,175  1285,192  1286,210  1288,228  1290,248
+    1293,262  1296,270  1300,276  1305,280"
+    fill="#0044aa" opacity="0.4"/>
+  <!-- Peak marker -->
+  <line x1="1277" y1="171" x2="1277" y2="280" stroke="#00aaff" stroke-width="1" stroke-dasharray="2,2" opacity="0.6"/>
+  <text x="1282" y="181" font-family="monospace" font-size="8" fill="#00aaff">14.230</text>
+
+  <!-- Waterfall below spectrum -->
+  <rect x="1060" y="291" width="490" height="180" fill="#010507"/>
+  <!-- Waterfall rows in blue/cyan for SDR view -->
+  <rect x="1060" y="291" width="490" height="15" fill="#001833" opacity="0.9"/>
+  <rect x="1060" y="306" width="490" height="15" fill="#001a38" opacity="0.8"/>
+  <rect x="1060" y="321" width="490" height="15" fill="#002040" opacity="0.9"/>
+  <rect x="1060" y="336" width="490" height="15" fill="#001833"/>
+  <!-- Signal band across waterfall -->
+  <rect x="1255" y="291" width="44" height="180" fill="#0033aa" opacity="0.3"/>
+  <rect x="1265" y="291" width="24" height="180" fill="#0055cc" opacity="0.35"/>
+  <rect x="1270" y="291" width="14" height="180" fill="#0077ff" opacity="0.25"/>
+  <rect x="1274" y="291" width="6"  height="180" fill="#44aaff" opacity="0.3"/>
+  <rect x="1060" y="351" width="490" height="14" fill="#001528" opacity="0.85"/>
+  <rect x="1060" y="365" width="490" height="14" fill="#001020" opacity="0.8"/>
+  <rect x="1060" y="379" width="490" height="14" fill="#000c18"/>
+  <rect x="1060" y="393" width="490" height="14" fill="#000810"/>
+  <rect x="1060" y="407" width="490" height="14" fill="#000608"/>
+  <rect x="1060" y="421" width="490" height="14" fill="#000406"/>
+  <rect x="1060" y="435" width="490" height="14" fill="#000304"/>
+  <rect x="1060" y="449" width="490" height="22" fill="#000202"/>
+
+  <!-- SDR controls strip -->
+  <rect x="1060" y="471" width="490" height="60" fill="#01070e" stroke="#002244" stroke-width="1"/>
+  <text x="1068" y="484" font-family="monospace" font-size="9" fill="#006688">GAIN  </text>
+  <rect x="1100" y="477" width="80" height="7" fill="#002244" rx="3"/>
+  <rect x="1100" y="477" width="58" height="7" fill="#0055aa" rx="3"/>
+  <text x="1068" y="498" font-family="monospace" font-size="9" fill="#006688">SQUELCH  </text>
+  <rect x="1120" y="491" width="60" height="7" fill="#002244" rx="3"/>
+  <rect x="1120" y="491" width="20" height="7" fill="#003388" rx="3"/>
+  <text x="1068" y="514" font-family="monospace" font-size="9" fill="#0088aa">● RX  14,230,000 Hz  SNR 18.4 dB  AFC ●</text>
+
+  <!-- SDR metadata -->
+  <rect x="1060" y="531" width="490" height="59" fill="#010608" stroke="#001a2a" stroke-width="1"/>
+  <text x="1068" y="544" font-family="monospace" font-size="8" fill="#005566">RTL-SDR BLOG V3  ●  GAIN: 38.6 dB  ●  USB 3.0</text>
+  <text x="1068" y="557" font-family="monospace" font-size="8" fill="#005566">SAMPLE RATE: 2.048 MSPS  ●  PPM: -3</text>
+  <text x="1068" y="570" font-family="monospace" font-size="8" fill="#0077aa">SIGNAL PRESENT: TRUE  ●  SSTV TONE DETECTED</text>
+  <text x="1068" y="583" font-family="monospace" font-size="8" fill="#00aacc">▶  FORWARDING TO MMSSTV ON PORT 12000</text>
+
+  <!-- Bezel LED -->
+  <circle cx="1536" cy="595" r="4" fill="url(#amberLed)" opacity="0.9"/>
+  <text x="1280" y="606" font-family="sans-serif" font-size="8" fill="#1a1a1a" letter-spacing="2">DELL  U2422H</text>
+
+  <!-- ── Keyboard ──────────────────────────────────────────── -->
+  <rect x="250" y="630" width="380" height="18" fill="#151515" rx="3"/>
+  <rect x="252" y="632" width="376" height="14" fill="#1a1a1a" rx="2"/>
+  <!-- Key rows -->
+  <rect x="256" y="633" width="368" height="3"  fill="#222222" rx="1" opacity="0.5"/>
+  <rect x="256" y="637" width="368" height="3"  fill="#222222" rx="1" opacity="0.4"/>
+  <rect x="256" y="641" width="368" height="3"  fill="#222222" rx="1" opacity="0.4"/>
+  <rect x="256" y="645" width="368" height="3"  fill="#1e1e1e" rx="1" opacity="0.35"/>
+
+  <!-- ── Mouse ──────────────────────────────────────────────── -->
+  <ellipse cx="685" cy="646" rx="28" ry="19" fill="#181818"/>
+  <line x1="685" y1="628" x2="685" y2="638" stroke="#222" stroke-width="1.5"/>
+  <circle cx="685" cy="636" r="3" fill="#333"/>
+
+  <!-- ── USB Hub / cables ──────────────────────────────────── -->
+  <rect x="930" y="625" width="90" height="22" fill="#111111" rx="4"/>
+  <rect x="934" y="628" width="14" height="10" fill="#0a0a0a" rx="2"/>
+  <rect x="950" y="628" width="14" height="10" fill="#0a0a0a" rx="2"/>
+  <rect x="966" y="628" width="14" height="10" fill="#0a0a0a" rx="2"/>
+  <circle cx="940" cy="645" r="3" fill="url(#greenLed)" opacity="0.7"/>
+  <!-- Cables -->
+  <path d="M 605 620 Q 620 610 660 608 Q 700 606 720 615 Q 740 624 746 630 Q 752 636 750 640" fill="none" stroke="#1a1a1a" stroke-width="3"/>
+  <path d="M 978 635 Q 1000 630 1020 625 Q 1040 620 1060 618" fill="none" stroke="#111" stroke-width="3"/>
+
+  <!-- ── Notebook / printed signal logs on desk ────────────── -->
+  <rect x="1320" y="622" width="140" height="100" fill="#f0e8d8" rx="2" transform="rotate(-3,1390,672)"/>
+  <rect x="1322" y="625" width="136" height="3"  fill="#d4c8a8" transform="rotate(-3,1390,672)"/>
+  <!-- Handwritten lines -->
+  <line x1="1328" y1="636" x2="1452" y2="634" stroke="#8a7655" stroke-width="1.2" opacity="0.7" transform="rotate(-3,1390,672)"/>
+  <line x1="1328" y1="647" x2="1452" y2="645" stroke="#8a7655" stroke-width="1.2" opacity="0.6" transform="rotate(-3,1390,672)"/>
+  <line x1="1328" y1="658" x2="1452" y2="656" stroke="#8a7655" stroke-width="1.2" opacity="0.6" transform="rotate(-3,1390,672)"/>
+  <line x1="1328" y1="669" x2="1430" y2="667" stroke="#8a7655" stroke-width="1"   opacity="0.5" transform="rotate(-3,1390,672)"/>
+  <text x="1332" y="638" font-family="serif" font-size="8" fill="#4a3820" transform="rotate(-3,1390,672)" opacity="0.8">14.230.00 MHz — SSTV</text>
+  <text x="1332" y="650" font-family="serif" font-size="7" fill="#4a3820" transform="rotate(-3,1390,672)" opacity="0.7">SCOTTIE-DX  88 lines</text>
+  <text x="1332" y="662" font-family="serif" font-size="7" fill="#4a3820" transform="rotate(-3,1390,672)" opacity="0.7">ROT1 decode → ?</text>
+  <!-- Pencil -->
+  <rect x="1460" y="630" width="6" height="80" fill="#f4d020" rx="2" transform="rotate(8,1463,670)"/>
+  <rect x="1460" y="630" width="6" height="8"  fill="#cc9933" rx="1" transform="rotate(8,1463,670)"/>
+  <rect x="1460" y="704" width="6" height="6"  fill="#f8c8b0" rx="1" transform="rotate(8,1463,670)"/>
+
+  <!-- ── Coffee mug ──────────────────────────────────────────── -->
+  <ellipse cx="152" cy="633" rx="24" ry="10" fill="#1a1a1a"/>
+  <rect x="128" y="633" width="48" height="50" fill="#1a1a1a" rx="3"/>
+  <ellipse cx="152" cy="633" rx="24" ry="10" fill="#222222"/>
+  <!-- Coffee surface -->
+  <ellipse cx="152" cy="636" rx="18" ry="7" fill="#2a1a0a"/>
+  <!-- Mug handle -->
+  <path d="M 176 645 Q 192 645 192 658 Q 192 671 176 671" fill="none" stroke="#1a1a1a" stroke-width="5"/>
+  <!-- Steam -->
+  <path d="M 148 625 Q 142 615 148 608" fill="none" stroke="#3a3830" stroke-width="1.5" opacity="0.5"/>
+  <path d="M 156 625 Q 162 615 156 608" fill="none" stroke="#3a3830" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- ── Small SDR dongle on desk ────────────────────────────── -->
+  <rect x="860" y="627" width="52" height="18" fill="#cc2200" rx="4"/>
+  <rect x="862" y="628" width="48" height="16" fill="#dd3300" rx="3"/>
+  <text x="866" y="639" font-family="monospace" font-size="7" fill="#ffddcc">RTL-SDR</text>
+  <rect x="910" y="631" width="8" height="8" fill="#111" rx="1"/>
+
+  <!-- ── ANT connector / coax ──────────────────────────────────── -->
+  <circle cx="855" cy="636" r="5"  fill="#888888"/>
+  <circle cx="855" cy="636" r="3"  fill="#444444"/>
+  <path d="M 855 636 Q 840 630 810 625 Q 780 620 760 618 Q 720 614 700 612" fill="none" stroke="#555" stroke-width="2.5"/>
+
+  <!-- ── Ambient green glow from monitor onto desk/ceiling ─── -->
+  <ellipse cx="600" cy="620" rx="360" ry="60" fill="#001a08" opacity="0.35"/>
+  <ellipse cx="605" cy="200" rx="280" ry="90" fill="#001a08" opacity="0.12"/>
+  <!-- Blue glow from right monitor -->
+  <ellipse cx="1300" cy="620" rx="240" ry="50" fill="#000d1a" opacity="0.25"/>
+  <ellipse cx="1310" cy="200" rx="200" ry="70" fill="#000d1a" opacity="0.08"/>
+
+  <!-- ── Back wall cable chase / conduit ────────────────────── -->
+  <rect x="0"    y="580" width="12" height="120" fill="#0d0f11"/>
+  <rect x="1588" y="580" width="12" height="120" fill="#0d0f11"/>
+  <!-- Ethernet patch panel on wall (left) -->
+  <rect x="20" y="380" width="110" height="70" fill="#111418" rx="3"/>
+  <rect x="22" y="382" width="106" height="66" fill="#0e1115" rx="2"/>
+  <text x="28" y="395" font-family="monospace" font-size="8" fill="#334" letter-spacing="1">PATCH PANEL</text>
+  <rect x="25" y="398" width="14" height="8" fill="#0a0c0e" rx="1"/> <circle cx="32" cy="402" r="3" fill="#001a44"/>
+  <rect x="42" y="398" width="14" height="8" fill="#0a0c0e" rx="1"/> <circle cx="49" cy="402" r="3" fill="#001a44"/>
+  <rect x="59" y="398" width="14" height="8" fill="#0a0c0e" rx="1"/> <circle cx="66" cy="402" r="3" fill="#00441a"/>
+  <rect x="76" y="398" width="14" height="8" fill="#0a0c0e" rx="1"/> <circle cx="83" cy="402" r="3" fill="#001a44"/>
+  <rect x="93" y="398" width="14" height="8" fill="#0a0c0e" rx="1"/> <circle cx="100" cy="402" r="3" fill="#001a44"/>
+  <rect x="25" y="412" width="14" height="8" fill="#0a0c0e" rx="1"/> <circle cx="32" cy="416" r="3" fill="#001a44"/>
+  <rect x="42" y="412" width="14" height="8" fill="#0a0c0e" rx="1"/> <circle cx="49" cy="416" r="3" fill="#001a44"/>
+  <rect x="59" y="412" width="14" height="8" fill="#0a0c0e" rx="1"/> <circle cx="66" cy="416" r="3" fill="#441a00"/>
+  <rect x="76" y="412" width="14" height="8" fill="#0a0c0e" rx="1"/> <circle cx="83" cy="416" r="3" fill="#001a44"/>
+  <rect x="93" y="412" width="14" height="8" fill="#0a0c0e" rx="1"/> <circle cx="100" cy="416" r="3" fill="#001a44"/>
+  <rect x="25" y="428" width="98" height="14" fill="#090b0d" rx="1"/>
+  <text x="30" y="438" font-family="monospace" font-size="7" fill="#2a3040">eth0 ● antenna ● uplink</text>
+
+  <!-- ── Floor skirting + cable trunking ───────────────────── -->
+  <rect x="0"   y="690" width="1600" height="12" fill="#0e0c09"/>
+  <rect x="0"   y="694" width="1600" height="4"  fill="#151210" opacity="0.5"/>
+
+  <!-- ── Navigation arrow hint area (back to mancave hotspot region) ── -->
+  <!-- Subtle door outline on right edge -->
+  <rect x="1540" y="440" width="55" height="260" fill="#0f1115" rx="4" opacity="0.7"/>
+  <rect x="1543" y="443" width="49" height="254" fill="#0c0e11" rx="3"/>
+  <text x="1548" y="570" font-family="monospace" font-size="9" fill="#223" writing-mode="tb" letter-spacing="2" opacity="0.6">MANCAVE</text>
+  <!-- Door handle -->
+  <circle cx="1548" cy="572" r="5" fill="#2a2218" stroke="#3a3020" stroke-width="1"/>
+
+</svg>

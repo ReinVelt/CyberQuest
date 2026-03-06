@@ -267,7 +267,7 @@ window.MancaveMeshtasticSetup = (function () {
             { speaker: 'Ryan', text: '"Think mesh. 906.875." That\'s what Eva\'s README said.' },
             { speaker: 'Ryan', text: 'Meshtastic. Off-grid mesh networking. No internet, no cell towers.' },
             { speaker: 'Ryan', text: 'If she\'s listening on 906.875, I need to configure my node to match.' },
-            { speaker: '', text: '*Ryan picks up the LILYGO T-Beam from the shelf*' }
+            { speaker: 'Narrator', text: '*Ryan picks up the LILYGO T-Beam from the shelf*' }
         ], { pauseBetween: 1500 });
 
         MC.schedule(() => {

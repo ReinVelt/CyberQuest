@@ -127,7 +127,7 @@ window.MancaveMissionPrep = (function () {
                         { speaker: 'Cees', text: 'Already on it. I\'ve aimed two dishes toward the facility. Any anomalous RF burst and I\'ll see it.' },
                         { speaker: 'Cees', text: 'If Echo activates, even for a test, I\'ll know within seconds. I\'ll warn you over Meshtastic.' },
                         { speaker: 'Ryan', text: 'You\'re the early warning system.' },
-                        { speaker: 'Cees', text: 'LOFAR stations are listening too. Go get them, Ryan.' }
+                        { speaker: 'Cees', text: 'Lofar stations are listening too. Go get them, Ryan.' }
                     ]
                 },
                 {
@@ -219,20 +219,20 @@ window.MancaveMissionPrep = (function () {
             content.appendChild(goodbyeDiv);
 
             MC.revealDialogue(goodbyeDiv, [
-                { speaker: '', text: '*Ryan walks to the kitchen. Max is reading on the couch. The dogs are asleep.*' },
+                { speaker: 'Narrator', text: '*Ryan walks to the kitchen. Max is reading on the couch. The dogs are asleep.*' },
                 { speaker: 'Max', text: 'You\'re going somewhere.' },
                 { speaker: 'Ryan', text: 'Just... a late-night drive. Testing some equipment.' },
                 { speaker: 'Max', text: '*Puts down her book. Looks at him carefully.*' },
                 { speaker: 'Max', text: 'You\'re wearing your black jacket. You packed a bag. And you have that look.' },
                 { speaker: 'Ryan', text: 'What look?' },
                 { speaker: 'Max', text: 'The one where you\'re about to do something stupid and brave.' },
-                { speaker: '', text: '*Long pause. The dog clock ticks on the wall.*' },
+                { speaker: 'Narrator', text: '*Long pause. The dog clock ticks on the wall.*' },
                 { speaker: 'Max', text: 'I won\'t ask. Just... come home.' },
                 { speaker: 'Ryan', text: 'I will. I promise.' },
                 { speaker: 'Max', text: '*Stands up. Hugs him. Holds on tight.*' },
                 { speaker: 'Max', text: 'The dogs will be waiting. I\'ll be waiting.' },
-                { speaker: '', text: '*Tino lifts his head, watches Ryan pick up the bag.*' },
-                { speaker: '', text: '*ET opens one eye, decides it\'s not food-related, and goes back to sleep.*' },
+                { speaker: 'Narrator', text: '*Tino lifts his head, watches Ryan pick up the bag.*' },
+                { speaker: 'Narrator', text: '*ET opens one eye, decides it\'s not food-related, and goes back to sleep.*' },
                 { speaker: 'Ryan', text: '*At the door* I love you.' },
                 { speaker: 'Max', text: 'I know. Now go.' }
             ], {
@@ -263,7 +263,7 @@ window.MancaveMissionPrep = (function () {
         MC.revealDialogue(openDiv, [
             { speaker: 'Ryan', text: 'Tonight\'s the night. Eva said 23:00. North entrance.' },
             { speaker: 'Ryan', text: 'Two hours. Time to make sure everything\'s ready.' },
-            { speaker: '', text: '*Ryan begins methodically checking each piece of equipment*' }
+            { speaker: 'Narrator', text: '*Ryan begins methodically checking each piece of equipment*' }
         ], { pauseBetween: 1500 });
 
         MC.schedule(() => {

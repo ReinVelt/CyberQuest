@@ -87,12 +87,12 @@ const HackerspaceClassroomScene = {
             title: 'LoRa & LoRaWAN',
             presenter: 'Jan-Willem',
             dialogue: [
-                { speaker: '', text: '*A presentation is underway. The projector shows a slide about long-range radio.*' },
+                { speaker: 'Narrator', text: '*A presentation is underway. The projector shows a slide about long-range radio.*' },
                 { speaker: 'Presenter', text: '"LoRa stands for Long Range. It\'s a radio modulation technique using chirp spread spectrum — the frequency sweeps up or down over time."' },
                 { speaker: 'Presenter', text: '"A single LoRa gateway can cover 10-15 kilometres in rural areas like Drenthe. In cities it\'s more like 2-5 km, but out here? Perfect conditions."' },
                 { speaker: 'Presenter', text: '"LoRaWAN adds the network layer on top. Your sensor node sends data to a gateway, the gateway forwards it to a network server via the internet, and your application receives it."' },
                 { speaker: 'Presenter', text: '"In Europe we use the 868 MHz ISM band. You get 14 dBm transmit power, duty cycle limited to 1%. That sounds restrictive, but for sensor data — temperature, humidity, soil moisture — it\'s more than enough."' },
-                { speaker: '', text: '📚 LoRa uses Semtech\'s SX1276/SX1262 chips. The spreading factor (SF7-SF12) trades data rate for range. SF12 gives maximum range (~15km line-of-sight) but only 250 bits per second. SF7 gives ~11 kbps but shorter range.' },
+                { speaker: 'Narrator', text: '📚 LoRa uses Semtech\'s SX1276/SX1262 chips. The spreading factor (SF7-SF12) trades data rate for range. SF12 gives maximum range (~15km line-of-sight) but only 250 bits per second. SF7 gives ~11 kbps but shorter range.' },
                 { speaker: 'Presenter', text: '"The Things Network provides free LoRaWAN infrastructure. Anyone can deploy a gateway. We have three in the Coevorden area alone."' },
                 { speaker: 'Ryan', text: 'Interesting. Long-range, low-power radio. You could monitor an entire farm with a handful of battery-powered sensors and one gateway.' },
             ]
@@ -101,11 +101,11 @@ const HackerspaceClassroomScene = {
             title: 'Meshtastic',
             presenter: 'Daan',
             dialogue: [
-                { speaker: '', text: '*The projector shows a map with interconnected nodes forming a mesh network.*' },
+                { speaker: 'Narrator', text: '*The projector shows a map with interconnected nodes forming a mesh network.*' },
                 { speaker: 'Presenter', text: '"Meshtastic is an open-source mesh networking project. It runs on cheap ESP32 boards with LoRa radios — devices like the Heltec V3 or LilyGO T-Beam."' },
                 { speaker: 'Presenter', text: '"No internet required. No cell towers. No infrastructure at all. Each node relays messages to every other node within range, and those nodes relay further. A true peer-to-peer mesh."' },
                 { speaker: 'Presenter', text: '"You can send text messages, GPS positions, telemetry data. The range between two nodes? Easily 5-10 km with a simple antenna. With a good antenna on a high point, we\'ve hit 80 km."' },
-                { speaker: '', text: '📚 Meshtastic uses 868 MHz (EU) or 915 MHz (US) LoRa radio. Each node has a unique ID. Messages are encrypted with AES-256. The mesh can have up to 80+ nodes. Battery life on a single 18650 cell can be days to weeks depending on settings.' },
+                { speaker: 'Narrator', text: '📚 Meshtastic uses 868 MHz (EU) or 915 MHz (US) LoRa radio. Each node has a unique ID. Messages are encrypted with AES-256. The mesh can have up to 80+ nodes. Battery life on a single 18650 cell can be days to weeks depending on settings.' },
                 { speaker: 'Presenter', text: '"The killer feature: it works when everything else fails. Power outage? Cell towers down? Meshtastic still works. It\'s the ultimate off-grid communication tool."' },
                 { speaker: 'Ryan', text: 'Off-grid, encrypted mesh networking. No infrastructure needed. That\'s exactly the kind of resilient communication you\'d want if someone took down the regular networks...' },
             ]
@@ -114,11 +114,11 @@ const HackerspaceClassroomScene = {
             title: 'MeshCore',
             presenter: 'Femke',
             dialogue: [
-                { speaker: '', text: '*The slide shows a network topology diagram with "store and forward" highlighted.*' },
+                { speaker: 'Narrator', text: '*The slide shows a network topology diagram with "store and forward" highlighted.*' },
                 { speaker: 'Presenter', text: '"MeshCore is a next-generation mesh firmware, inspired by Meshtastic but built from scratch. The big difference? Store-and-forward repeaters."' },
                 { speaker: 'Presenter', text: '"In Meshtastic, if two nodes can\'t reach each other and no relay is online, the message is lost. MeshCore repeaters store messages and forward them when the recipient comes within range."' },
                 { speaker: 'Presenter', text: '"Think of it like post offices. Your message hops between repeaters, waiting at each one until the next hop is available. Delay-tolerant networking."' },
-                { speaker: '', text: '📚 MeshCore supports multiple radio bands and can use different LoRa parameters per link. It implements a managed mesh topology rather than flooding, which reduces airtime and improves scalability compared to Meshtastic\'s approach.' },
+                { speaker: 'Narrator', text: '📚 MeshCore supports multiple radio bands and can use different LoRa parameters per link. It implements a managed mesh topology rather than flooding, which reduces airtime and improves scalability compared to Meshtastic\'s approach.' },
                 { speaker: 'Presenter', text: '"We\'re deploying solar-powered MeshCore repeaters on church towers across Drenthe. Even without internet, messages can cross the entire province."' },
                 { speaker: 'Ryan', text: 'Store-and-forward across church towers. A mesh network that covers rural Drenthe with zero internet dependency. Clever engineering.' },
             ]
@@ -127,11 +127,11 @@ const HackerspaceClassroomScene = {
             title: 'Home Automation',
             presenter: 'Erik',
             dialogue: [
-                { speaker: '', text: '*The screen shows a Home Assistant dashboard with temperature graphs, light controls, and energy monitoring.*' },
+                { speaker: 'Narrator', text: '*The screen shows a Home Assistant dashboard with temperature graphs, light controls, and energy monitoring.*' },
                 { speaker: 'Presenter', text: '"Home Assistant is an open-source home automation platform. It runs on a Raspberry Pi or any small server. It integrates with over 2000 different devices and services."' },
                 { speaker: 'Presenter', text: '"The key protocols: Zigbee for sensors and lights — it\'s low-power mesh networking at 2.4 GHz. Z-Wave for more reliable, less crowded communication. And MQTT as the universal message broker."' },
                 { speaker: 'Presenter', text: '"My house has 47 sensors. Temperature, humidity, motion, door/window contacts, energy meters, water flow. Everything feeds into Home Assistant via a Zigbee coordinator."' },
-                { speaker: '', text: '📚 MQTT (Message Queuing Telemetry Transport) is a lightweight publish/subscribe protocol. Devices publish messages to topics (e.g., "home/livingroom/temperature") and subscribers receive them. It\'s the backbone of most IoT systems.' },
+                { speaker: 'Narrator', text: '📚 MQTT (Message Queuing Telemetry Transport) is a lightweight publish/subscribe protocol. Devices publish messages to topics (e.g., "home/livingroom/temperature") and subscribers receive them. It\'s the backbone of most IoT systems.' },
                 { speaker: 'Presenter', text: '"Automation example: when CO₂ exceeds 800 ppm, open the ventilation. When nobody\'s home, drop heating to 15°C. When electricity price goes negative — yes, that happens — charge the battery and turn on the boiler."' },
                 { speaker: 'Ryan', text: 'MQTT, Zigbee, local processing. No cloud dependency. That\'s how you build a smart home that\'s actually under your control.' },
             ]
@@ -140,11 +140,11 @@ const HackerspaceClassroomScene = {
             title: 'Cybersecurity Fundamentals',
             presenter: 'Sophie',
             dialogue: [
-                { speaker: '', text: '*The projector displays terminal output showing a network scan. The room is silent with attention.*' },
+                { speaker: 'Narrator', text: '*The projector displays terminal output showing a network scan. The room is silent with attention.*' },
                 { speaker: 'Presenter', text: '"Let\'s start with the basics. Every device on your network has an IP address and open ports. Each open port is a potential attack surface. Step one: know what\'s running."' },
                 { speaker: 'Presenter', text: '"nmap -sV 192.168.1.0/24 — that scans your entire local network. You\'d be surprised what you find. Smart TVs running telnet, printers with open admin panels, IoT devices with default passwords."' },
                 { speaker: 'Presenter', text: '"Defence in depth: network segmentation. Put your IoT devices on a separate VLAN. Your smart lightbulb should never be able to reach your file server."' },
-                { speaker: '', text: '📚 DEFENCE IN DEPTH: A cybersecurity strategy using multiple layers of security controls. If one layer fails, others still protect the system. Layers include: network segmentation, firewalls, intrusion detection, encryption, authentication, and physical security.' },
+                { speaker: 'Narrator', text: '📚 DEFENCE IN DEPTH: A cybersecurity strategy using multiple layers of security controls. If one layer fails, others still protect the system. Layers include: network segmentation, firewalls, intrusion detection, encryption, authentication, and physical security.' },
                 { speaker: 'Presenter', text: '"Encryption everywhere. HTTPS, WPA3, VPN tunnels, SSH keys instead of passwords. If it\'s not encrypted, assume someone is reading it."' },
                 { speaker: 'Presenter', text: '"And social engineering — the human layer. The strongest encryption in the world won\'t help if someone clicks a phishing link. Training people is as important as configuring firewalls."' },
                 { speaker: 'Ryan', text: 'Network segmentation, encryption, human awareness. The three pillars. She\'s right about IoT devices — they\'re often the weakest link in a home network.' },
@@ -154,11 +154,11 @@ const HackerspaceClassroomScene = {
             title: 'Blockchain & Decentralisation',
             presenter: 'Thomas',
             dialogue: [
-                { speaker: '', text: '*A diagram of linked blocks appears on screen, each containing a hash of the previous block.*' },
+                { speaker: 'Narrator', text: '*A diagram of linked blocks appears on screen, each containing a hash of the previous block.*' },
                 { speaker: 'Presenter', text: '"A blockchain is a distributed ledger. Every participant holds a complete copy. To add a new block, the network must reach consensus — no single authority decides what\'s true."' },
                 { speaker: 'Presenter', text: '"The key insight: cryptographic hashing. Each block contains the hash of the previous block. Change one byte in any historical block, and every subsequent hash breaks. Tampering is immediately visible."' },
                 { speaker: 'Presenter', text: '"Bitcoin uses proof-of-work — mining. Ethereum moved to proof-of-stake. But the real innovation isn\'t cryptocurrency. It\'s smart contracts: programs that execute automatically when conditions are met."' },
-                { speaker: '', text: '📚 HASH FUNCTIONS: A cryptographic hash (e.g., SHA-256) takes any input and produces a fixed-size output. It\'s one-way (can\'t reverse it), deterministic (same input = same output), and collision-resistant (nearly impossible to find two inputs with the same hash).' },
+                { speaker: 'Narrator', text: '📚 HASH FUNCTIONS: A cryptographic hash (e.g., SHA-256) takes any input and produces a fixed-size output. It\'s one-way (can\'t reverse it), deterministic (same input = same output), and collision-resistant (nearly impossible to find two inputs with the same hash).' },
                 { speaker: 'Presenter', text: '"Use cases beyond crypto: supply chain verification, digital identity, voting systems, decentralised storage. Anywhere you need trustless verification between parties who don\'t know each other."' },
                 { speaker: 'Ryan', text: 'Distributed consensus, cryptographic verification, trustless systems. The mathematics are solid. The applications beyond cryptocurrency are where it gets interesting.' },
             ]
@@ -167,11 +167,11 @@ const HackerspaceClassroomScene = {
             title: 'AI & Machine Learning',
             presenter: 'Lisa',
             dialogue: [
-                { speaker: '', text: '*The projector shows a neural network diagram with interconnected nodes across multiple layers.*' },
+                { speaker: 'Narrator', text: '*The projector shows a neural network diagram with interconnected nodes across multiple layers.*' },
                 { speaker: 'Presenter', text: '"Machine learning is pattern recognition at scale. You feed a neural network millions of examples, and it learns to recognise patterns no human could explicitly program."' },
                 { speaker: 'Presenter', text: '"A neural network is layers of mathematical functions. Input layer, hidden layers, output layer. Each connection has a weight. Training adjusts those weights using backpropagation — working backwards from the error."' },
                 { speaker: 'Presenter', text: '"Large Language Models like GPT are transformer architectures trained on billions of text tokens. The key innovation: attention mechanisms. The model learns which words in a sentence are most relevant to each other."' },
-                { speaker: '', text: '📚 TRANSFORMER ARCHITECTURE: Introduced in the 2017 paper "Attention Is All You Need". Uses self-attention to process all positions in a sequence simultaneously rather than sequentially. This parallelism enabled training on massive datasets, leading to GPT, BERT, and other foundation models.' },
+                { speaker: 'Narrator', text: '📚 TRANSFORMER ARCHITECTURE: Introduced in the 2017 paper "Attention Is All You Need". Uses self-attention to process all positions in a sequence simultaneously rather than sequentially. This parallelism enabled training on massive datasets, leading to GPT, BERT, and other foundation models.' },
                 { speaker: 'Presenter', text: '"Running AI locally: you can run open-source models on your own hardware. Llama, Mistral, Phi — models that fit on a laptop with 16GB RAM. No cloud, no data sharing. Private AI."' },
                 { speaker: 'Presenter', text: '"But remember: AI is a tool, not magic. It hallucinates. It reflects biases in training data. Always verify. Always think critically about outputs."' },
                 { speaker: 'Ryan', text: 'Transformer attention, local inference, critical evaluation of outputs. Good overview. Running models locally means your data stays yours — important for anything security-related.' },
@@ -181,11 +181,11 @@ const HackerspaceClassroomScene = {
             title: 'Software Defined Radio',
             presenter: 'Martijn',
             dialogue: [
-                { speaker: '', text: '*The screen shows a waterfall display with colourful signal traces across the RF spectrum.*' },
+                { speaker: 'Narrator', text: '*The screen shows a waterfall display with colourful signal traces across the RF spectrum.*' },
                 { speaker: 'Presenter', text: '"Software Defined Radio — SDR — replaces hardware radio components with software. Instead of a fixed-frequency receiver, you get a programmable window into the entire radio spectrum."' },
                 { speaker: 'Presenter', text: '"An RTL-SDR dongle costs €25. It covers 25 MHz to 1.7 GHz. That\'s FM radio, aircraft transponders, weather satellites, ISM band devices, pagers, and much more."' },
                 { speaker: 'Presenter', text: '"With GNU Radio or SDR++ you can demodulate almost any signal. FM, AM, SSB, digital modes like DMR, P25, TETRA. You can even decode weather satellite images — NOAA APT and Meteor LRPT."' },
-                { speaker: '', text: '📚 SDR BASICS: A traditional radio has fixed hardware for each frequency and modulation type. SDR digitises the raw radio signal and processes it in software. This means one device can receive anything within its frequency range. Higher-end SDRs like the HackRF can also transmit.' },
+                { speaker: 'Narrator', text: '📚 SDR BASICS: A traditional radio has fixed hardware for each frequency and modulation type. SDR digitises the raw radio signal and processes it in software. This means one device can receive anything within its frequency range. Higher-end SDRs like the HackRF can also transmit.' },
                 { speaker: 'Presenter', text: '"For LoRa analysis, SDR is invaluable. You can see the chirp spread spectrum signals on a waterfall display. You can monitor your own LoRaWAN traffic, debug range issues, detect interference."' },
                 { speaker: 'Ryan', text: 'SDR for €25. I use mine constantly. Being able to see the entire radio spectrum is like having X-ray vision for electromagnetic waves.' },
             ]
@@ -194,11 +194,11 @@ const HackerspaceClassroomScene = {
             title: 'MQTT & Node-RED',
             presenter: 'Pieter',
             dialogue: [
-                { speaker: '', text: '*Node-RED flow diagrams fill the screen — colourful blocks connected by wires.*' },
+                { speaker: 'Narrator', text: '*Node-RED flow diagrams fill the screen — colourful blocks connected by wires.*' },
                 { speaker: 'Presenter', text: '"MQTT is the glue of IoT. A lightweight message broker. Devices publish to topics, other devices subscribe. The broker — usually Mosquitto — handles all the routing."' },
                 { speaker: 'Presenter', text: '"Topic structure matters. Use hierarchy: home/floor1/bedroom/temperature. Then you can subscribe to home/# for everything, or home/floor1/+ /temperature for all floor 1 temperatures."' },
                 { speaker: 'Presenter', text: '"Node-RED is visual programming for IoT. Built on Node.js. You wire together input nodes, processing nodes, and output nodes. No coding required for simple flows — but you can add JavaScript when needed."' },
-                { speaker: '', text: '📚 MQTT QoS LEVELS: QoS 0 = fire and forget (no guarantee). QoS 1 = at least once (may duplicate). QoS 2 = exactly once (most reliable, most overhead). For sensor data, QoS 0 is usually fine. For commands, use QoS 1 or 2.' },
+                { speaker: 'Narrator', text: '📚 MQTT QoS LEVELS: QoS 0 = fire and forget (no guarantee). QoS 1 = at least once (may duplicate). QoS 2 = exactly once (most reliable, most overhead). For sensor data, QoS 0 is usually fine. For commands, use QoS 1 or 2.' },
                 { speaker: 'Presenter', text: '"Example flow: MQTT temperature sensor → threshold check → if above 25°C → send Telegram notification AND turn on fan via MQTT. Five nodes, zero lines of code."' },
                 { speaker: 'Ryan', text: 'MQTT for message routing, Node-RED for visual logic. Together they can automate almost anything. And it all runs on a Raspberry Pi.' },
             ]
@@ -207,11 +207,11 @@ const HackerspaceClassroomScene = {
             title: 'Zigbee & Matter',
             presenter: 'Anke',
             dialogue: [
-                { speaker: '', text: '*A slide comparing wireless protocols: Zigbee, Z-Wave, Thread, Matter, Wi-Fi, Bluetooth.*' },
+                { speaker: 'Narrator', text: '*A slide comparing wireless protocols: Zigbee, Z-Wave, Thread, Matter, Wi-Fi, Bluetooth.*' },
                 { speaker: 'Presenter', text: '"Zigbee is a mesh networking protocol at 2.4 GHz. Low power, low data rate — perfect for sensors and actuators. A Zigbee network can have hundreds of devices routing through each other."' },
                 { speaker: 'Presenter', text: '"The problem was fragmentation. Philips Hue Zigbee, IKEA TRÅDFRI Zigbee, Aqara Zigbee — all slightly different profiles. Devices from different vendors didn\'t always play nice."' },
                 { speaker: 'Presenter', text: '"Matter is the industry\'s answer. It\'s an application layer that works over Thread, Wi-Fi, and Ethernet. Apple, Google, Amazon, Samsung — everyone agreed on one standard."' },
-                { speaker: '', text: '📚 THREAD: An IPv6-based mesh networking protocol for IoT. Uses the same 802.15.4 radio as Zigbee but with standard IP networking. Thread Border Routers bridge the mesh to your home IP network. Matter runs on top of Thread for low-power mesh devices.' },
+                { speaker: 'Narrator', text: '📚 THREAD: An IPv6-based mesh networking protocol for IoT. Uses the same 802.15.4 radio as Zigbee but with standard IP networking. Thread Border Routers bridge the mesh to your home IP network. Matter runs on top of Thread for low-power mesh devices.' },
                 { speaker: 'Presenter', text: '"My recommendation: Zigbee2MQTT. It works with a €10 CC2652 coordinator and supports over 3000 devices. Local only, no cloud. Pair it with Home Assistant and you\'re set."' },
                 { speaker: 'Ryan', text: 'Zigbee mesh, Thread for IP connectivity, Matter for interoperability. The IoT protocol stack is maturing. Local processing keeps everything under your control.' },
             ]
@@ -220,11 +220,11 @@ const HackerspaceClassroomScene = {
             title: 'Raspberry Pi & Embedded Linux',
             presenter: 'Wouter',
             dialogue: [
-                { speaker: '', text: '*A Raspberry Pi 5 sits on the presenter\'s desk, connected to an HDMI display showing a terminal.*' },
+                { speaker: 'Narrator', text: '*A Raspberry Pi 5 sits on the presenter\'s desk, connected to an HDMI display showing a terminal.*' },
                 { speaker: 'Presenter', text: '"The Raspberry Pi changed everything. A full Linux computer for €40. GPIO pins for hardware interfacing. A massive community, endless tutorials, and software for every use case."' },
                 { speaker: 'Presenter', text: '"The Pi 5 has a quad-core Cortex-A76 at 2.4 GHz, up to 8 GB RAM, PCIe, dual HDMI. It can run Home Assistant, Pi-hole, a media server, a Node-RED instance — all simultaneously."' },
                 { speaker: 'Presenter', text: '"For headless deployment: flash an SD card with Raspberry Pi OS Lite. Enable SSH. Set a static IP. Done. You can manage it entirely remotely."' },
-                { speaker: '', text: '📚 GPIO (General Purpose Input/Output): The Pi\'s 40-pin header provides digital I/O, I2C, SPI, UART, and PWM. You can read sensors, drive relays, communicate with LoRa modules, control servos — bridging the digital and physical worlds.' },
+                { speaker: 'Narrator', text: '📚 GPIO (General Purpose Input/Output): The Pi\'s 40-pin header provides digital I/O, I2C, SPI, UART, and PWM. You can read sensors, drive relays, communicate with LoRa modules, control servos — bridging the digital and physical worlds.' },
                 { speaker: 'Presenter', text: '"Docker on the Pi is a game changer. Run each service in its own container: Mosquitto, Grafana, InfluxDB, Zigbee2MQTT. Isolated, reproducible, easy to update."' },
                 { speaker: 'Ryan', text: 'A €40 computer running Docker containers for home automation, ad blocking, and mesh gateway duties. The Pi is the Swiss army knife of the maker world.' },
             ]
@@ -233,11 +233,11 @@ const HackerspaceClassroomScene = {
             title: 'Antenna Design for LoRa',
             presenter: 'Henk',
             dialogue: [
-                { speaker: '', text: '*The whiteboard is covered in antenna radiation patterns and impedance calculations.*' },
+                { speaker: 'Narrator', text: '*The whiteboard is covered in antenna radiation patterns and impedance calculations.*' },
                 { speaker: 'Presenter', text: '"Your LoRa node\'s antenna matters more than its transmit power. A good antenna can give you 6-9 dBi gain. That\'s like multiplying your power by 4-8x — for free."' },
                 { speaker: 'Presenter', text: '"For 868 MHz, a quarter-wave monopole is 82mm long. Simple, cheap, omnidirectional. But for a gateway on a rooftop, you want a colinear — a vertical stack of half-wave elements."' },
                 { speaker: 'Presenter', text: '"Antenna placement is critical. Height is king. A mediocre antenna at 10 metres beats a perfect antenna at 2 metres every time. Get it above the roofline."' },
-                { speaker: '', text: '📚 ANTENNA GAIN: Measured in dBi (decibels relative to isotropic). An isotropic antenna radiates equally in all directions (0 dBi). A dipole is 2.15 dBi. A colinear can be 6-9 dBi. Gain concentrates energy in the horizontal plane at the expense of vertical coverage — ideal for ground-level communication.' },
+                { speaker: 'Narrator', text: '📚 ANTENNA GAIN: Measured in dBi (decibels relative to isotropic). An isotropic antenna radiates equally in all directions (0 dBi). A dipole is 2.15 dBi. A colinear can be 6-9 dBi. Gain concentrates energy in the horizontal plane at the expense of vertical coverage — ideal for ground-level communication.' },
                 { speaker: 'Presenter', text: '"We built a 6-element colinear from coax cable for €3. It outperforms the €50 commercial antennas. I\'ll put the build instructions on the wiki."' },
                 { speaker: 'Ryan', text: 'Physics doesn\'t care about your budget. A home-built colinear antenna outperforming commercial ones — that\'s the hackerspace spirit right there.' },
             ]
@@ -638,7 +638,7 @@ const HackerspaceClassroomScene = {
             action: (game) => {
                 game.startDialogue([
                     { speaker: 'Ryan', text: '"Open Source — Sharing is Caring." With a Tux the penguin logo. The philosophy that built Linux, Firefox, Arduino, Meshtastic, Home Assistant — most of the tools we rely on.' },
-                    { speaker: '', text: '📚 OPEN SOURCE: Software whose source code is freely available. Anyone can inspect, modify, and distribute it. The GNU General Public License (GPL), MIT License, and Apache License are common open-source licenses with different terms.' },
+                    { speaker: 'Narrator', text: '📚 OPEN SOURCE: Software whose source code is freely available. Anyone can inspect, modify, and distribute it. The GNU General Public License (GPL), MIT License, and Apache License are common open-source licenses with different terms.' },
                 ]);
             }
         },
@@ -748,7 +748,7 @@ const HackerspaceClassroomScene = {
                         { speaker: 'Pieter', text: 'I\'m setting up a Pi 5 as a Meshtastic gateway. It bridges the LoRa mesh to the internet via MQTT. The whole hackerspace network will be accessible from anywhere.' },
                         { speaker: 'Ryan', text: 'A Pi as a mesh-to-internet bridge? Elegant.' },
                         { speaker: 'Pieter', text: 'The Pi handles the heavy lifting — message routing, web dashboard, API. The LoRa radio just does the wireless part. Best of both worlds.' },
-                        { speaker: '', text: '📚 MQTT BRIDGE: A device that translates between two different communication protocols. In this case, LoRa mesh messages are republished as MQTT topics, making them accessible to any internet-connected MQTT client.' },
+                        { speaker: 'Narrator', text: '📚 MQTT BRIDGE: A device that translates between two different communication protocols. In this case, LoRa mesh messages are republished as MQTT topics, making them accessible to any internet-connected MQTT client.' },
                     ],
                     [
                         { speaker: 'Pieter', text: `*whispers* This presentation on "${pres.title}" is actually really good. I\'m learning stuff I didn\'t know.` },
@@ -791,7 +791,7 @@ const HackerspaceClassroomScene = {
                         { speaker: 'Ryan', text: 'Insecure agricultural IoT? What kind of vulnerabilities?' },
                         { speaker: 'Aisha', text: 'Default passwords, unencrypted LoRaWAN sessions, firmware that hasn\'t been updated since 2019. I found a soil moisture network near Emmen where I could inject false readings from 2km away.' },
                         { speaker: 'Aisha', text: 'I reported it to the farmer, of course. He had no idea his data was even transmitted wirelessly. Now he uses our hackerspace setup — properly encrypted.' },
-                        { speaker: '', text: '📚 IoT SECURITY: Many IoT devices ship with default credentials, unencrypted communications, and no update mechanism. The OWASP IoT Top 10 lists common vulnerabilities. Best practices: change defaults, encrypt everything, segment your network, update firmware.' },
+                        { speaker: 'Narrator', text: '📚 IoT SECURITY: Many IoT devices ship with default credentials, unencrypted communications, and no update mechanism. The OWASP IoT Top 10 lists common vulnerabilities. Best practices: change defaults, encrypt everything, segment your network, update firmware.' },
                     ],
                 ];
                 game.startDialogue(lines[visits % lines.length]);
@@ -1280,10 +1280,10 @@ const HackerspaceClassroomScene = {
             game.setFlag('visited_hackerspace_classroom', true);
             setTimeout(function() {
                 game.startDialogue([
-                    { speaker: '', text: '*Ryan slips through the classroom door. The projector casts a blue glow across rows of faces. A low murmur of conversation.*' },
-                    { speaker: '', text: '*The slide reads: "' + pres.title + '" — presented by ' + pres.presenter + '. ' + self._currentPeopleCount + ' people fill the old school chairs.*' },
+                    { speaker: 'Narrator', text: '*Ryan slips through the classroom door. The projector casts a blue glow across rows of faces. A low murmur of conversation.*' },
+                    { speaker: 'Narrator', text: '*The slide reads: "' + pres.title + '" — presented by ' + pres.presenter + '. ' + self._currentPeopleCount + ' people fill the old school chairs.*' },
                     { speaker: 'Ryan', text: 'The old classroom. Projector, whiteboard, rows of chairs. Every week a different member gives a presentation.' },
-                    { speaker: '', text: '*Someone\'s laptop keyboard clicks softly. A coffee cup clinks against a desk. The projector fan hums.*' },
+                    { speaker: 'Narrator', text: '*Someone\'s laptop keyboard clicks softly. A coffee cup clinks against a desk. The projector fan hums.*' },
                     { speaker: 'Ryan', text: 'I recognise some faces from the workshop — Pieter has a Pi on his lap, Aisha\'s sketching notes, Marco somehow looks out of place without ear protection.' },
                     { speaker: 'Ryan', text: 'This is where hackerspace members learn from each other. No professors, no grades — just people sharing what they know.' },
                 ]);
@@ -1291,7 +1291,7 @@ const HackerspaceClassroomScene = {
         } else {
             setTimeout(function() {
                 game.startDialogue([
-                    { speaker: '', text: '*The projector shows: "' + pres.title + '" by ' + pres.presenter + '. The low hum of conversation and clicking laptops fills the room.*' },
+                    { speaker: 'Narrator', text: '*The projector shows: "' + pres.title + '" by ' + pres.presenter + '. The low hum of conversation and clicking laptops fills the room.*' },
                     { speaker: 'Ryan', text: self._currentPeopleCount + ' people tonight. Good turnout for "' + pres.title + '".' },
                 ]);
             }, 500);

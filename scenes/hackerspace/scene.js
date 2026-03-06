@@ -576,7 +576,7 @@ const HackerspaceScene = {
                     { speaker: 'Ryan', text: 'A CNC plasma cutter. Cuts through steel plate like butter using an ionised gas jet at 20,000°C.' },
                     { speaker: 'Ryan', text: 'You feed it a DXF file, clamp down the plate, and it traces whatever shape you want. Incredible precision for something that runs on compressed air and electricity.' },
                     { speaker: 'Ryan', text: 'The cutting bed is about 1200 by 800 mm. Not industrial scale, but more than enough for brackets, enclosures, artistic metalwork.' },
-                    { speaker: '', text: '📚 PLASMA CUTTING: An electrically conductive gas channel ionises the air between the torch and the workpiece. The plasma arc reaches temperatures up to 22,000°C — hot enough to melt and blow away the metal.' },
+                    { speaker: 'Narrator', text: '📚 PLASMA CUTTING: An electrically conductive gas channel ionises the air between the torch and the workpiece. The plasma arc reaches temperatures up to 22,000°C — hot enough to melt and blow away the metal.' },
                 ]);
             }
         },
@@ -613,7 +613,7 @@ const HackerspaceScene = {
                     { speaker: 'Ryan', text: 'A CNC lathe — computer-controlled. The workpiece spins while a cutting tool shapes it with sub-millimetre precision.' },
                     { speaker: 'Ryan', text: 'Perfect for making shafts, bushings, connectors, anything cylindrically symmetric. The chuck rotates at 1200 RPM.' },
                     { speaker: 'Ryan', text: 'Look at those metal shavings curling off — each one is a perfect spiral. There\'s something satisfying about watching a lathe work.' },
-                    { speaker: '', text: '📚 CNC LATHE: Computer Numerical Control lathes can produce parts accurate to ±0.01mm. The G-code programs control tool position, feed rate, and spindle speed simultaneously.' },
+                    { speaker: 'Narrator', text: '📚 CNC LATHE: Computer Numerical Control lathes can produce parts accurate to ±0.01mm. The G-code programs control tool position, feed rate, and spindle speed simultaneously.' },
                 ]);
             }
         },
@@ -632,7 +632,7 @@ const HackerspaceScene = {
                     { speaker: 'Ryan', text: 'A CNC milling machine. Three-axis control, reading G-code. The endmill is chewing through aluminium right now.' },
                     { speaker: 'Ryan', text: 'Milling removes material from a stationary workpiece using a rotating cutter. It can create flat surfaces, slots, pockets, complex 3D contours.' },
                     { speaker: 'Ryan', text: 'The DRO reads out position on all three axes. Someone\'s machining what looks like a custom enclosure.' },
-                    { speaker: '', text: '📚 CNC MILLING: Modern CNC mills can run unattended, executing hundreds of programmed tool paths. CAM software translates 3D models directly into machining instructions.' },
+                    { speaker: 'Narrator', text: '📚 CNC MILLING: Modern CNC mills can run unattended, executing hundreds of programmed tool paths. CAM software translates 3D models directly into machining instructions.' },
                 ]);
             }
         },
@@ -651,7 +651,7 @@ const HackerspaceScene = {
                     { speaker: 'Ryan', text: 'A MIG/MAG welding station. 180 amps, argon/CO₂ shielding gas, wire feed spool. Red welding curtains on both sides to protect bystanders.' },
                     { speaker: 'Ryan', text: 'Someone\'s been busy — look at that bead. Clean, consistent penetration. A skilled welder works here.' },
                     { speaker: 'Ryan', text: 'They\'ve even got a gas bottle set up. Proper workshop this, not just hobby stuff.' },
-                    { speaker: '', text: '📚 MIG/MAG WELDING: Metal Inert/Active Gas welding feeds a continuous wire electrode through a gun. The arc melts both wire and base metal. Shielding gas protects the weld pool from atmospheric contamination.' },
+                    { speaker: 'Narrator', text: '📚 MIG/MAG WELDING: Metal Inert/Active Gas welding feeds a continuous wire electrode through a gun. The arc melts both wire and base metal. Shielding gas protects the weld pool from atmospheric contamination.' },
                 ]);
             }
         },
@@ -671,7 +671,7 @@ const HackerspaceScene = {
                     { speaker: 'Ryan', text: 'Filament spools in every colour. PLA, PETG, maybe some ABS. The Bambu has an enclosed chamber, probably printing something that needs heat retention.' },
                     { speaker: 'Ryan', text: 'Bottom shelf is full of finished prints. A Benchy — the classic test boat — a gear, a vase, a phone stand, and... is that a skull?' },
                     { speaker: 'Ryan', text: 'Anyone can come here and use these machines. Upload your STL, slice it, print it. That\'s the maker spirit — making together.' },
-                    { speaker: '', text: '📚 FDM 3D PRINTING: Fused Deposition Modelling melts thermoplastic filament and deposits it layer by layer. A typical layer height is 0.2mm — meaning a 10cm tall object requires 500 layers. Modern slicers like PrusaSlicer and OrcaSlicer handle the toolpath generation automatically.' },
+                    { speaker: 'Narrator', text: '📚 FDM 3D PRINTING: Fused Deposition Modelling melts thermoplastic filament and deposits it layer by layer. A typical layer height is 0.2mm — meaning a 10cm tall object requires 500 layers. Modern slicers like PrusaSlicer and OrcaSlicer handle the toolpath generation automatically.' },
                 ]);
             }
         },
@@ -690,7 +690,7 @@ const HackerspaceScene = {
                     { speaker: 'Ryan', text: 'The soldering bench. Hakko FX-951, Weller WE1010 — professional-grade stations, both running at 350°C and up.' },
                     { speaker: 'Ryan', text: 'PCBs, components, solder wire. Looks like someone\'s been assembling an ESP32 project. Nice.' },
                     { speaker: 'Ryan', text: 'And that\'s a Rigol DS1054Z oscilloscope. Four channels, 50 MHz bandwidth. The hackerspace\'s best friend for debugging electronics.' },
-                    { speaker: '', text: '📚 SOLDERING: Joining electronic components by melting a tin-lead or lead-free alloy (solder) to form a conductive bond. Modern lead-free solder melts at ~217°C. A good soldering iron heats to 350°C for quick, clean joints.' },
+                    { speaker: 'Narrator', text: '📚 SOLDERING: Joining electronic components by melting a tin-lead or lead-free alloy (solder) to form a conductive bond. Modern lead-free solder melts at ~217°C. A good soldering iron heats to 350°C for quick, clean joints.' },
                 ]);
             }
         },
@@ -727,7 +727,7 @@ const HackerspaceScene = {
                     { speaker: 'Ryan', text: '"Hackerspace Drenthe — Coevorden — Est. 2019 — Open for all makers." That\'s the spirit.' },
                     { speaker: 'Ryan', text: 'A hackerspace is a community workshop where anyone can come and build things. You pay a small membership fee and get access to tools worth tens of thousands of euros.' },
                     { speaker: 'Ryan', text: 'The hacker ethic: access to tools, sharing knowledge, learning by making. These places keep craftsmanship alive.' },
-                    { speaker: '', text: '📚 HACKERSPACES: Community-operated workspaces where people share tools, knowledge, and ideas. The movement started in Germany (Chaos Computer Club, 1981) and spread worldwide. The Netherlands has dozens, from Frack in Leeuwarden to Hack42 in Arnhem.' },
+                    { speaker: 'Narrator', text: '📚 HACKERSPACES: Community-operated workspaces where people share tools, knowledge, and ideas. The movement started in Germany (Chaos Computer Club, 1981) and spread worldwide. The Netherlands has dozens, from Frack in Leeuwarden to Hack42 in Arnhem.' },
                 ]);
             }
         },
@@ -812,7 +812,7 @@ const HackerspaceScene = {
                         { speaker: 'Dennis', text: 'Everyone cranks it to 400°C and wonders why their joints are cold. Use 330°C with good flux and a proper tip. Let the thermal mass do the work.' },
                         { speaker: 'Ryan', text: 'Cold joints at high temperature? That sounds counterintuitive.' },
                         { speaker: 'Dennis', text: 'Too hot burns off the flux before it can clean the surfaces. Then the solder just balls up instead of wetting the pad. Physics, man.' },
-                        { speaker: '', text: '📚 SOLDERING TIP: A "cold solder joint" looks dull and grainy instead of shiny. It happens when the pad or component lead wasn\'t heated enough for the solder to flow properly. Ironically, excessive iron temperature makes this worse by destroying the flux.' },
+                        { speaker: 'Narrator', text: '📚 SOLDERING TIP: A "cold solder joint" looks dull and grainy instead of shiny. It happens when the pad or component lead wasn\'t heated enough for the solder to flow properly. Ironically, excessive iron temperature makes this worse by destroying the flux.' },
                     ],
                     [
                         { speaker: 'Dennis', text: 'Hey, check this out. Built a spectrum analyser from a Raspberry Pi and an RTL-SDR dongle. Total cost: €35.' },
@@ -852,7 +852,7 @@ const HackerspaceScene = {
                         { speaker: 'Sophie', text: 'Dennis gave me the waterfall data, I wrote a Python script to convert it to an STL, and this is the result. You can literally hold radio signals in your hand.' },
                         { speaker: 'Ryan', text: 'That\'s... actually beautiful. Art meets engineering.' },
                         { speaker: 'Sophie', text: 'Exactly! The maker movement isn\'t just about function. We make things beautiful, tactile, personal. Every print tells a story.' },
-                        { speaker: '', text: '📚 STL (Standard Tessellation Language): A 3D file format using triangular facets to describe surfaces. Nearly all 3D printers accept STL files. Modern alternatives like 3MF include colour, material, and metadata information.' },
+                        { speaker: 'Narrator', text: '📚 STL (Standard Tessellation Language): A 3D file format using triangular facets to describe surfaces. Nearly all 3D printers accept STL files. Modern alternatives like 3MF include colour, material, and metadata information.' },
                     ],
                     [
                         { speaker: 'Sophie', text: 'Want to hear something cool? The Bambu X1C can do automatic filament changes. Four colours in one print, no manual intervention.' },
@@ -892,7 +892,7 @@ const HackerspaceScene = {
                         { speaker: 'Marco', text: 'The pastor said we could mount a LoRa gateway on the tower, but we needed a bracket that fits the 200-year-old stonework without drilling. So I designed a clamp system.' },
                         { speaker: 'Ryan', text: 'Mounting modern mesh networking equipment on a medieval church tower. That\'s quite the combination.' },
                         { speaker: 'Marco', text: '*laughs* Welcome to Drenthe. We make it work with what we have. The tower gives us 30 metres of height — the range is incredible from up there.' },
-                        { speaker: '', text: '📚 DXF (Drawing Exchange Format): An Autodesk format for 2D CAD drawings. CNC machines read DXF files to trace cutting paths. The format stores vectors as lines, arcs, and polylines — perfect for plasma and laser cutters.' },
+                        { speaker: 'Narrator', text: '📚 DXF (Drawing Exchange Format): An Autodesk format for 2D CAD drawings. CNC machines read DXF files to trace cutting paths. The format stores vectors as lines, arcs, and polylines — perfect for plasma and laser cutters.' },
                     ],
                     [
                         { speaker: 'Marco', text: 'Fun fact: this CNC plasma cutter was built by hackerspace members. We bought the stepper motors online, welded the frame ourselves, and Dennis wrote the GRBL firmware.' },
@@ -931,7 +931,7 @@ const HackerspaceScene = {
                         { speaker: 'Kim', text: 'A good weld bead is smooth, consistent, with even ripples. Bad weld? Porosity, undercut, spatter. The metal doesn\'t lie.' },
                         { speaker: 'Ryan', text: 'You sound like you take this seriously.' },
                         { speaker: 'Kim', text: 'Dead serious. A bad weld on a LoRa mast at 30 metres? That\'s a safety issue. I X-ray my structural welds. Marco thinks I\'m crazy, but I sleep well.' },
-                        { speaker: '', text: '📚 WELD INSPECTION: Non-destructive testing (NDT) methods include visual inspection, dye penetrant testing, ultrasonic testing, and radiographic (X-ray) examination. Each reveals different defect types — surface cracks, porosity, lack of fusion, or inclusions.' },
+                        { speaker: 'Narrator', text: '📚 WELD INSPECTION: Non-destructive testing (NDT) methods include visual inspection, dye penetrant testing, ultrasonic testing, and radiographic (X-ray) examination. Each reveals different defect types — surface cracks, porosity, lack of fusion, or inclusions.' },
                     ],
                     [
                         { speaker: 'Kim', text: 'I also teach the safety courses here. Workshop safety is non-negotiable.' },
@@ -973,7 +973,7 @@ const HackerspaceScene = {
                         { speaker: 'Joris', text: 'Signal strength, packet loss, battery voltage, temperature. Every five minutes, each node phones home. I store it in InfluxDB and visualise it here.' },
                         { speaker: 'Ryan', text: 'You\'re monitoring the entire mesh network from here?' },
                         { speaker: 'Joris', text: 'Not just monitoring — alerting. If a node drops offline for more than 30 minutes, I get a Telegram notification. Usually it\'s a solar panel covered in bird poop. Yes, that happens.' },
-                        { speaker: '', text: '📚 GRAFANA + INFLUXDB: A common monitoring stack. InfluxDB is a time-series database optimised for sensor data. Grafana provides beautiful dashboards with real-time graphs, alerts, and annotations. Together they power most IoT monitoring setups.' },
+                        { speaker: 'Narrator', text: '📚 GRAFANA + INFLUXDB: A common monitoring stack. InfluxDB is a time-series database optimised for sensor data. Grafana provides beautiful dashboards with real-time graphs, alerts, and annotations. Together they power most IoT monitoring setups.' },
                     ],
                     [
                         { speaker: 'Joris', text: 'I\'m also working on a MeshCore repeater firmware fork. Added over-the-air updates so we don\'t have to climb church towers every time we push a bug fix.' },
@@ -1098,11 +1098,11 @@ const HackerspaceScene = {
             // ── Cinematic entrance sequence ──
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: '', text: '*The heavy steel door swings open. A wall of sound hits Ryan — machine hum, stepper motors, the crackle of a welding arc.*' },
+                    { speaker: 'Narrator', text: '*The heavy steel door swings open. A wall of sound hits Ryan — machine hum, stepper motors, the crackle of a welding arc.*' },
                     { speaker: 'Ryan', text: 'Hackerspace Drenthe in Coevorden. Housed in an old school building — high ceilings, big windows, concrete floor.' },
-                    { speaker: '', text: '*The CNC plasma cutter throws blue sparks across the far wall. A row of 3D printers click in rhythm. The air smells of machine oil, solder flux, and fresh coffee.*' },
+                    { speaker: 'Narrator', text: '*The CNC plasma cutter throws blue sparks across the far wall. A row of 3D printers click in rhythm. The air smells of machine oil, solder flux, and fresh coffee.*' },
                     { speaker: 'Ryan', text: 'People everywhere. Makers, hackers, builders — each at their workstation, deep in their projects.' },
-                    { speaker: '', text: '*Kim flips her welding helmet down — CRACK — an arc strikes. Marco feeds steel into the plasma cutter. Sophie swaps a filament spool. Dennis hunches over a PCB.*' },
+                    { speaker: 'Narrator', text: '*Kim flips her welding helmet down — CRACK — an arc strikes. Marco feeds steel into the plasma cutter. Sophie swaps a filament spool. Dennis hunches over a PCB.*' },
                     { speaker: 'Ryan', text: 'This is where things get made. This is where people build things. Real things, with real tools.' },
                     { speaker: 'Ryan', text: 'I love it.' },
                 ]);
@@ -1111,15 +1111,15 @@ const HackerspaceScene = {
             setTimeout(() => {
                 const greetings = [
                     [
-                        { speaker: '', text: '*The familiar symphony of machines greets Ryan. Stepper motors, plasma hiss, the distant ring of a hammer on steel.*' },
+                        { speaker: 'Narrator', text: '*The familiar symphony of machines greets Ryan. Stepper motors, plasma hiss, the distant ring of a hammer on steel.*' },
                         { speaker: 'Ryan', text: 'Back at the hackerspace. The crew\'s all here tonight.' },
                     ],
                     [
-                        { speaker: '', text: '*A welding arc flashes blue in the corner. The 3D printers click away like mechanical crickets.*' },
+                        { speaker: 'Narrator', text: '*A welding arc flashes blue in the corner. The 3D printers click away like mechanical crickets.*' },
                         { speaker: 'Ryan', text: 'Hackerspace Drenthe. The machines are running, the coffee is flowing.' },
                     ],
                     [
-                        { speaker: '', text: '*The angle grinder screams briefly, then quiets. Someone laughs near the soldering bench.*' },
+                        { speaker: 'Narrator', text: '*The angle grinder screams briefly, then quiets. Someone laughs near the soldering bench.*' },
                         { speaker: 'Ryan', text: 'The familiar hum of stepper motors and the smell of solder flux. Good to be back.' },
                     ],
                 ];

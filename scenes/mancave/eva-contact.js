@@ -171,7 +171,7 @@ window.MancaveEvaContact = (function () {
                                 { speaker: 'Ryan', text: '*Drives home as the sun rises*' },
                                 { speaker: 'Ryan', text: 'Tomorrow night. Everything changes.' },
                                 { speaker: 'Ryan', text: 'Time to prepare. And... time to talk to Max.' },
-                                { speaker: '', text: '*That evening, 10:30 PM — Kitchen*' },
+                                { speaker: 'Narrator', text: '*That evening, 10:30 PM — Kitchen*' },
                                 { speaker: 'Ryan', text: 'Max. I need to tell you something.' },
                                 { speaker: 'Max', text: 'I know that face. Something\'s wrong.' },
                                 { speaker: 'Ryan', text: 'Remember that strange radio signal I picked up? It goes deeper than I thought. Much deeper. People have died.' },
@@ -183,7 +183,7 @@ window.MancaveEvaContact = (function () {
                                 { speaker: 'Max', text: 'I\'ve been married to you for thirty years. I know who you are. You wouldn\'t be telling me this if you\'d already decided not to go.' },
                                 { speaker: 'Ryan', text: 'I should be back by midnight. If I\'m not...' },
                                 { speaker: 'Max', text: 'You\'ll be back. Be careful, darling. Come back safe.' },
-                                { speaker: '', text: '*10:45 PM — Mancave*' },
+                                { speaker: 'Narrator', text: '*10:45 PM — Mancave*' },
                                 { speaker: 'Ryan', text: 'Equipment ready. Flipper Zero, tools, Meshtastic.' },
                                 { speaker: 'Ryan', text: 'Time to go. Volvo is in the garden.' }
                             ], {

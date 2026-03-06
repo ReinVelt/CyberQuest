@@ -61,7 +61,7 @@ const GardenBackScene = {
             cursor: 'pointer',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*The fire crackles and pops. Sparks spiral upward into the evening air.*' },
+                    { speaker: 'Narrator', text: '*The fire crackles and pops. Sparks spiral upward into the evening air.*' },
                     { speaker: 'Ryan', text: 'Nothing beats a vuurkorf. Steel drum, holes punched in, pallets on top.' },
                     { speaker: 'Ryan', text: 'Simple engineering. Maximum atmosphere.' },
                     { speaker: 'Ryan', text: 'Stare at the flames long enough and your brain starts solving problems on its own.' },
@@ -103,7 +103,7 @@ const GardenBackScene = {
             action: function(game) {
                 const thoughts = [
                     [
-                        { speaker: '', text: '*Ryan looks at the sit-on mower. The grass IS getting long.*' },
+                        { speaker: 'Narrator', text: '*Ryan looks at the sit-on mower. The grass IS getting long.*' },
                         { speaker: 'Ryan', text: 'The zitmaaier. Best thinking machine ever built.' },
                         { speaker: 'Ryan', text: 'Something about the rhythm. Engine humming, blades spinning, rows appearing.' },
                         { speaker: 'Ryan', text: 'Your hands steer but your brain wanders. Free-association mode.' },
@@ -223,13 +223,13 @@ const GardenBackScene = {
             action: function(game) {
                 const lines = [
                     [
-                        { speaker: '', text: '*Tino races across the lawn, tongue flapping, pure joy*' },
+                        { speaker: 'Narrator', text: '*Tino races across the lawn, tongue flapping, pure joy*' },
                         { speaker: 'Ryan', text: 'Tino! Good boy!' },
                         { speaker: 'Ryan', text: 'This dog runs laps for no reason. Just... happy to be alive.' },
                         { speaker: 'Ryan', text: 'Can\'t argue with that philosophy.' }
                     ],
                     [
-                        { speaker: '', text: '*Tino stops briefly, looks at Ryan, then sprints off again*' },
+                        { speaker: 'Narrator', text: '*Tino stops briefly, looks at Ryan, then sprints off again*' },
                         { speaker: 'Ryan', text: 'Crazy hond. Where does the energy come from?' },
                         { speaker: 'Ryan', text: 'Wish I could bottle that.' }
                     ]
@@ -249,7 +249,7 @@ const GardenBackScene = {
             cursor: 'pointer',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*Kessy lies stretched out in a warm sunbeam. Eyes half-closed.*' },
+                    { speaker: 'Narrator', text: '*Kessy lies stretched out in a warm sunbeam. Eyes half-closed.*' },
                     { speaker: 'Ryan', text: 'Kessy found her spot. Smart girl.' },
                     { speaker: 'Ryan', text: 'White fur absorbs the sun. She\'ll lie there for hours.' },
                     { speaker: 'Ryan', text: 'Zen master in dog form. We should all be more like Kessy.' }
@@ -269,15 +269,15 @@ const GardenBackScene = {
             action: function(game) {
                 const lines = [
                     [
-                        { speaker: '', text: '*ET snuffles along the grass, nose glued to the ground*' },
+                        { speaker: 'Narrator', text: '*ET snuffles along the grass, nose glued to the ground*' },
                         { speaker: 'Ryan', text: 'ET. The pug. Named after the movie, not the alien.' },
                         { speaker: 'Ryan', text: '...Actually, maybe the alien. Look at that face.' },
                         { speaker: 'Ryan', text: 'Sniff, sniff, sniff. His whole universe is one centimetre above ground level.' }
                     ],
                     [
-                        { speaker: '', text: '*ET looks up with those enormous pug eyes*' },
+                        { speaker: 'Narrator', text: '*ET looks up with those enormous pug eyes*' },
                         { speaker: 'Ryan', text: 'Hey buddy. Whatcha smelling?' },
-                        { speaker: '', text: '*ET snorts, then goes back to sniffing*' },
+                        { speaker: 'Narrator', text: '*ET snorts, then goes back to sniffing*' },
                         { speaker: 'Ryan', text: 'Cool. Carry on.' }
                     ]
                 ];
@@ -296,7 +296,7 @@ const GardenBackScene = {
             cursor: 'look',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*Ryan nearly steps in something*' },
+                    { speaker: 'Narrator', text: '*Ryan nearly steps in something*' },
                     { speaker: 'Ryan', text: '...Ah. The joys of dog ownership.' },
                     { speaker: 'Ryan', text: 'Three dogs, one garden. You do the math.' },
                     { speaker: 'Ryan', text: 'I\'ll get the shovel. Later.' }
@@ -594,7 +594,7 @@ const GardenBackScene = {
         if (!game.getFlag('visited_garden_back')) {
             game.setFlag('visited_garden_back', true);
             game.startDialogue([
-                { speaker: '', text: '*The back garden. Warm afternoon sun. Dogs on the lawn. Fire drum crackling.*' },
+                { speaker: 'Narrator', text: '*The back garden. Warm afternoon sun. Dogs on the lawn. Fire drum crackling.*' },
                 { speaker: 'Ryan', text: 'Achtertuin. My favourite spot.' },
                 { speaker: 'Ryan', text: 'Fruit trees, berry bushes, the fire drum, the mower...' },
                 { speaker: 'Ryan', text: 'Everything a man needs.' }

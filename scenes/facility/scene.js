@@ -56,7 +56,7 @@ const FacilityScene = {
                     game.startDialogue([
                         { speaker: 'Ryan', text: '*Reaches under the plastic bin liner*' },
                         { speaker: 'Ryan', text: 'There. Something taped underneath.' },
-                        { speaker: '', text: '*Pulls free a security badge with keycard*' },
+                        { speaker: 'Narrator', text: '*Pulls free a security badge with keycard*' },
                         { speaker: 'Ryan', text: "Eva Weber's own ID. She's risking everything." },
                         { speaker: 'Ryan', text: 'Photo shows a woman about my age. Dark hair, determined eyes.' },
                         { speaker: 'Ryan', text: 'This badge gets me through the front gate. After that...' },
@@ -144,9 +144,9 @@ const FacilityScene = {
                         game.startDialogue([
                             { speaker: 'Ryan', text: '*Pulls out Flipper Zero from jacket*' },
                             { speaker: 'Ryan', text: 'Scanning for the camera\'s wireless frequency...' },
-                            { speaker: '', text: '*Device screen shows: 2.4 GHz - CCTV-CAM-N3*' },
+                            { speaker: 'Narrator', text: '*Device screen shows: 2.4 GHz - CCTV-CAM-N3*' },
                             { speaker: 'Ryan', text: 'Got it. Sending jamming signal...' },
-                            { speaker: '', text: '*Camera LED flickers... then goes dark*' },
+                            { speaker: 'Narrator', text: '*Camera LED flickers... then goes dark*' },
                             { speaker: 'Ryan', text: 'Camera disabled. 10 minutes before they notice. Move fast.' }
                         ]);
                         
@@ -259,12 +259,12 @@ const FacilityScene = {
                         game.startDialogue([
                             { speaker: 'Ryan', text: 'This is it. Camera is down. Time to get through that gate.' },
                             { speaker: 'Ryan', text: '*Holds Eva\'s badge to the reader*' },
-                            { speaker: '', text: '*BEEP* ACCESS DENIED - BADGE SUSPENDED' },
+                            { speaker: 'Narrator', text: '*BEEP* ACCESS DENIED - BADGE SUSPENDED' },
                             { speaker: 'Ryan', text: 'Shit. They suspended her credentials. Expected.' },
                             { speaker: 'Ryan', text: 'But the Flipper Zero recorded valid badge signals earlier...' },
-                            { speaker: '', text: '*Replays captured RFID signal from guard\'s badge*' },
-                            { speaker: '', text: '*BEEP* AUTHORIZED - LEVEL 2 ACCESS' },
-                            { speaker: '', text: '*Gate mechanism clicks. Barrier slowly rises.*' },
+                            { speaker: 'Narrator', text: '*Replays captured RFID signal from guard\'s badge*' },
+                            { speaker: 'Narrator', text: '*BEEP* AUTHORIZED - LEVEL 2 ACCESS' },
+                            { speaker: 'Narrator', text: '*Gate mechanism clicks. Barrier slowly rises.*' },
                             { speaker: 'Ryan', text: 'We\'re in. Move fast before they check the camera logs.' }
                         ]);
                         
@@ -454,7 +454,7 @@ const FacilityScene = {
             
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: '', text: '*The facility looms in the darkness*' },
+                    { speaker: 'Narrator', text: '*The facility looms in the darkness*' },
                     { speaker: 'Ryan', text: 'This is real. Military research facility.' },
                     { speaker: 'Ryan', text: 'No turning back now.' },
                     { speaker: 'Ryan', text: 'First: find that badge. Trash bin, north entrance.' },

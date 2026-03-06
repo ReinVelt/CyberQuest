@@ -959,14 +959,14 @@ const DroneHuntScene = {
             action: function(game) {
                 const s = DroneHuntScene.state;
                 game.startDialogue([
-                    { speaker: '', text: '*Ryan crouches beside a moss-covered pine*' },
+                    { speaker: 'Narrator', text: '*Ryan crouches beside a moss-covered pine*' },
                     { speaker: 'Ryan', text: 'Perfect spot. Hidden from aerial view.' },
-                    { speaker: '', text: '*Pulls a Raspberry Pi and cellular modem from the backpack*' },
+                    { speaker: 'Narrator', text: '*Pulls a Raspberry Pi and cellular modem from the backpack*' },
                     { speaker: 'Ryan', text: 'Meshtastic node — LoRa mesh network. No infrastructure needed.' },
                     { speaker: 'Ryan', text: 'Messages hop node-to-node. Range: several kilometres per hop.' },
                     { speaker: 'Ryan', text: 'This little decoy will broadcast dummy traffic on 868 MHz.' },
                     { speaker: 'Ryan', text: 'If they\'re scanning for signals, they\'ll investigate THIS spot.' },
-                    { speaker: '', text: '*Secures the Pi under bark. Green LED pulses.*' },
+                    { speaker: 'Narrator', text: '*Secures the Pi under bark. Green LED pulses.*' },
                     { speaker: 'Ryan', text: 'Decoy is live. Now I move — quiet and fast.' }
                 ], () => {
                     s.decoyPlaced = true;
@@ -998,12 +998,12 @@ const DroneHuntScene = {
                 if (s.phase >= 3 && !s.hackrfReady) {
                     // Phase 3: pull out HackRF
                     game.startDialogue([
-                        { speaker: '', text: '*Ryan kneels beside the backpack*' },
+                        { speaker: 'Narrator', text: '*Ryan kneels beside the backpack*' },
                         { speaker: 'Ryan', text: 'HackRF One. Open-source SDR. 1 MHz to 6 GHz.' },
                         { speaker: 'Ryan', text: 'Can transmit AND receive. That\'s the key.' },
                         { speaker: 'Ryan', text: 'Those DJI drones use civilian GPS — L1 C/A signal.' },
                         { speaker: 'Ryan', text: 'No authentication. No encryption. Wide open.' },
-                        { speaker: '', text: '*Connects the antenna. Green LED illuminates.*' },
+                        { speaker: 'Narrator', text: '*Connects the antenna. Green LED illuminates.*' },
                         { speaker: 'Ryan', text: 'All I need is the right frequency, power level, and target coordinates.' },
                         { speaker: 'Ryan', text: 'Let\'s bring these things down.' }
                     ], () => {
@@ -1044,13 +1044,13 @@ const DroneHuntScene = {
             action: function(game) {
                 const s = DroneHuntScene.state;
                 game.startDialogue([
-                    { speaker: '', text: '*A searchlight sweeps across the heide*' },
+                    { speaker: 'Narrator', text: '*A searchlight sweeps across the heide*' },
                     { speaker: 'Ryan', text: 'MOVE!' },
-                    { speaker: '', text: '*Dives behind thick pine trunks*' },
-                    { speaker: '', text: '*The drone hovers — FLIR camera rotating*' },
+                    { speaker: 'Narrator', text: '*Dives behind thick pine trunks*' },
+                    { speaker: 'Narrator', text: '*The drone hovers — FLIR camera rotating*' },
                     { speaker: 'Ryan', text: 'Thermal imaging. Body heat shows up like a beacon at 37°C.' },
                     { speaker: 'Ryan', text: 'But pine needles scatter infrared. Dense canopy helps.' },
-                    { speaker: '', text: '*Holding breath. Drone passes overhead. Searchlight moves on.*' },
+                    { speaker: 'Narrator', text: '*Holding breath. Drone passes overhead. Searchlight moves on.*' },
                     { speaker: 'Ryan', text: '...It\'s moving toward the decoy. The Meshtastic signal worked.' },
                     { speaker: 'Ryan', text: 'But it\'ll come back. More are coming.' },
                     { speaker: 'Ryan', text: 'I need to deal with these drones. Permanently.' }
@@ -1085,7 +1085,7 @@ const DroneHuntScene = {
                     ]);
                 } else if (s.phase === 2 && !s.hiddenFromScan) {
                     game.startDialogue([
-                        { speaker: '', text: '*Drone searchlight sweeps dangerously close*' },
+                        { speaker: 'Narrator', text: '*Drone searchlight sweeps dangerously close*' },
                         { speaker: 'Ryan', text: 'DJI Matrice series. Commercial quadcopter.' },
                         { speaker: 'Ryan', text: 'FLIR thermal camera. Probably Zenmuse XT2.' },
                         { speaker: 'Ryan', text: 'Human body at 37°C against cold moorland...' },
@@ -1133,7 +1133,7 @@ const DroneHuntScene = {
                     DroneHuntScene._updateGPSOverlay();
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'GPS L1 C/A — 1575.42 MHz. I know this cold. Setting it now.' },
-                        { speaker: '', text: '*HackRF display: TX FREQ 1575.42 MHz — LOCKED*' },
+                        { speaker: 'Narrator', text: '*HackRF display: TX FREQ 1575.42 MHz — LOCKED*' },
                         { speaker: 'Ryan', text: 'Now TX power. Just enough to overpower the real satellites.' }
                     ]);
                     DroneHuntScene._checkSpoofReady(game);
@@ -1163,7 +1163,7 @@ const DroneHuntScene = {
                                 DroneHuntScene._playSuccessChime();
                                 DroneHuntScene._updateGPSOverlay();
                                 game.startDialogue([
-                                    { speaker: '', text: '*HackRF display: TX FREQ 1575.42 MHz — LOCKED*' },
+                                    { speaker: 'Narrator', text: '*HackRF display: TX FREQ 1575.42 MHz — LOCKED*' },
                                     { speaker: 'Ryan', text: '1575.42 MHz. GPS L1 C/A. Locked and loaded.' },
                                     { speaker: 'Ryan', text: 'Now: transmit power. Too high and every receiver for miles knows. Too low and the drones ignore it.' }
                                 ]);
@@ -1208,7 +1208,7 @@ const DroneHuntScene = {
                     DroneHuntScene._updateGPSOverlay();
                     game.startDialogue([
                         { speaker: 'Ryan', text: '-5 dBm. Just enough to outshout real GPS at 100 metres. Setting it now.' },
-                        { speaker: '', text: '*HackRF display: TX POWER -5 dBm — CALIBRATED*' },
+                        { speaker: 'Narrator', text: '*HackRF display: TX POWER -5 dBm — CALIBRATED*' },
                         { speaker: 'Ryan', text: 'Now target coordinates. The swamp — 200 metres south.' }
                     ]);
                     DroneHuntScene._checkSpoofReady(game);
@@ -1238,7 +1238,7 @@ const DroneHuntScene = {
                                 DroneHuntScene._playSuccessChime();
                                 DroneHuntScene._updateGPSOverlay();
                                 game.startDialogue([
-                                    { speaker: '', text: '*HackRF display: TX POWER -5 dBm — CALIBRATED*' },
+                                    { speaker: 'Narrator', text: '*HackRF display: TX POWER -5 dBm — CALIBRATED*' },
                                     { speaker: 'Ryan', text: 'Subtle. The drones\' receivers will accept this as a legitimate satellite.' },
                                     { speaker: 'Ryan', text: 'Now: WHERE to send them. Target coordinates.' }
                                 ]);
@@ -1283,8 +1283,8 @@ const DroneHuntScene = {
                     DroneHuntScene._updateGPSOverlay();
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Spoof offset: +200 metres north. Their autopilot will "correct" straight into the swamp.' },
-                        { speaker: '', text: '*HackRF display: SPOOF OFFSET +200m NORTH — TARGET LOCKED*' },
-                        { speaker: '', text: '*The swamp pools glint coldly in the moonlight*' },
+                        { speaker: 'Narrator', text: '*HackRF display: SPOOF OFFSET +200m NORTH — TARGET LOCKED*' },
+                        { speaker: 'Narrator', text: '*The swamp pools glint coldly in the moonlight*' },
                         { speaker: 'Ryan', text: 'All parameters set. Frequency, power, target. Time to fire.' }
                     ]);
                     DroneHuntScene._checkSpoofReady(game);
@@ -1313,8 +1313,8 @@ const DroneHuntScene = {
                                 DroneHuntScene._playSuccessChime();
                                 DroneHuntScene._updateGPSOverlay();
                                 game.startDialogue([
-                                    { speaker: '', text: '*HackRF display: SPOOF OFFSET +200m NORTH — TARGET LOCKED*' },
-                                    { speaker: '', text: '*The swamp pools glint coldly in the moonlight*' },
+                                    { speaker: 'Narrator', text: '*HackRF display: SPOOF OFFSET +200m NORTH — TARGET LOCKED*' },
+                                    { speaker: 'Narrator', text: '*The swamp pools glint coldly in the moonlight*' },
                                     { speaker: 'Ryan', text: '200 meters. Into the bog. Let\'s see them fly out of that.' }
                                 ]);
                                 DroneHuntScene._checkSpoofReady(game);
@@ -1367,7 +1367,7 @@ const DroneHuntScene = {
             },
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*Distant rotor sounds have gone silent. The path is clear.*' },
+                    { speaker: 'Narrator', text: '*Distant rotor sounds have gone silent. The path is clear.*' },
                     { speaker: 'Ryan', text: 'Drones are down. The way through is open.' },
                     { speaker: 'Ryan', text: 'Two kilometres through the forest. Then the fence.' },
                     { speaker: 'Ryan', text: 'Eva said north entrance. Badge under the trash bin.' },
@@ -1421,7 +1421,7 @@ const DroneHuntScene = {
                 const s = DroneHuntScene.state;
                 if (s.dronesDown) {
                     game.startDialogue([
-                        { speaker: '', text: '*Broken drone rotors protrude from the dark water*' },
+                        { speaker: 'Narrator', text: '*Broken drone rotors protrude from the dark water*' },
                         { speaker: 'Ryan', text: 'GPS spoofing. Civilian drones never stood a chance.' },
                         { speaker: 'Ryan', text: '1575.42 MHz. No authentication. Game over.' }
                     ]);
@@ -1484,11 +1484,11 @@ const DroneHuntScene = {
 
         setTimeout(() => {
             game.startDialogue([
-                { speaker: '', text: '*2 km from the facility. The Volvo is hidden behind a berm.*' },
-                { speaker: '', text: '*Cold October wind sweeps across dark moorland. Heather crunches underfoot.*' },
+                { speaker: 'Narrator', text: '*2 km from the facility. The Volvo is hidden behind a berm.*' },
+                { speaker: 'Narrator', text: '*Cold October wind sweeps across dark moorland. Heather crunches underfoot.*' },
                 { speaker: 'Ryan', text: 'This is as close as I can drive. Rest of the way is on foot.' },
                 { speaker: 'Ryan', text: 'First thing: set up the Meshtastic decoy. Draw attention to the wrong spot.' },
-                { speaker: '', text: '*Distant hum of rotors. Drone patrol. They\'re already flying.*' },
+                { speaker: 'Narrator', text: '*Distant hum of rotors. Drone patrol. They\'re already flying.*' },
                 { speaker: 'Ryan', text: 'They\'ve got drones up. Thermal cameras. Searchlights.' },
                 { speaker: 'Ryan', text: 'Good thing I brought the HackRF.' },
                 { speaker: 'Ryan', text: 'Find the fallen tree. Set the decoy. Then deal with those drones.' }
@@ -1526,10 +1526,10 @@ const DroneHuntScene = {
         DroneHuntScene._playWarningPulse();
 
         game.startDialogue([
-            { speaker: '', text: '*BUZZZZZZ — rotor noise swells overhead*' },
-            { speaker: '', text: '*A searchlight beam slashes across the moorland*' },
+            { speaker: 'Narrator', text: '*BUZZZZZZ — rotor noise swells overhead*' },
+            { speaker: 'Narrator', text: '*A searchlight beam slashes across the moorland*' },
             { speaker: 'Ryan', text: 'Drone! They found the decoy signal — but they\'re sweeping wide!' },
-            { speaker: '', text: '*Thermal camera rotates. White-hot beam scanning.*' },
+            { speaker: 'Narrator', text: '*Thermal camera rotates. White-hot beam scanning.*' },
             { speaker: 'Ryan', text: 'FLIR thermal imaging. My body heat is 37°C against cold heather.' },
             { speaker: 'Ryan', text: 'I\'m a glowing target. Need to get behind those pine trees — NOW!' }
         ]);
@@ -1543,11 +1543,11 @@ const DroneHuntScene = {
         DroneHuntScene._showGPSParamOverlay();
 
         game.startDialogue([
-            { speaker: '', text: '*Three more drones converge. The sky buzzes with rotors.*' },
+            { speaker: 'Narrator', text: '*Three more drones converge. The sky buzzes with rotors.*' },
             { speaker: 'Ryan', text: 'Multiple contacts. They\'re running a search grid.' },
             { speaker: 'Ryan', text: 'The decoy bought time but they\'re methodical. They\'ll find me.' },
             { speaker: 'Ryan', text: 'Unless...' },
-            { speaker: '', text: '*Glances at the backpack near the cabin*' },
+            { speaker: 'Narrator', text: '*Glances at the backpack near the cabin*' },
             { speaker: 'Ryan', text: 'HackRF One. GPS spoofing. These are commercial DJI drones.' },
             { speaker: 'Ryan', text: 'Civilian GPS — L1 C/A signal at 1575.42 MHz. Zero authentication.' },
             { speaker: 'Ryan', text: 'If I broadcast a stronger GPS signal than the real satellites...' },
@@ -1574,8 +1574,8 @@ const DroneHuntScene = {
         if (s.frequencySet && s.powerSet && s.targetSet) {
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: '', text: '*HackRF display: ALL PARAMETERS SET*' },
-                    { speaker: '', text: '*FREQ: 1575.42 MHz | PWR: -5 dBm | OFFSET: +200m N*' },
+                    { speaker: 'Narrator', text: '*HackRF display: ALL PARAMETERS SET*' },
+                    { speaker: 'Narrator', text: '*FREQ: 1575.42 MHz | PWR: -5 dBm | OFFSET: +200m N*' },
                     { speaker: 'Ryan', text: 'Frequency. Power. Target. Everything\'s locked.' },
                     { speaker: 'Ryan', text: 'One button. One press. These drones go into the swamp.' },
                     { speaker: 'Ryan', text: 'Execute the spoof.' }
@@ -1697,24 +1697,24 @@ const DroneHuntScene = {
         }, 2000);
 
         game.startDialogue([
-            { speaker: '', text: '*Ryan\'s finger hovers over the TRANSMIT key*' },
+            { speaker: 'Narrator', text: '*Ryan\'s finger hovers over the TRANSMIT key*' },
             { speaker: 'Ryan', text: '1575.42 MHz. Minus five dBm. Two hundred metres north offset.' },
             { speaker: 'Ryan', text: 'Here goes everything.' },
-            { speaker: '', text: '*PRESS*' },
-            { speaker: '', text: '* * *' },
-            { speaker: '', text: '*The HackRF\'s green LED blazes. Fake GPS signals flood the frequency.*' },
-            { speaker: '', text: '*For one heartbeat — nothing happens.*' },
-            { speaker: '', text: '*Then — the lead drone STUTTERS. Its searchlight swings wild.*' },
+            { speaker: 'Narrator', text: '*PRESS*' },
+            { speaker: 'Narrator', text: '* * *' },
+            { speaker: 'Narrator', text: '*The HackRF\'s green LED blazes. Fake GPS signals flood the frequency.*' },
+            { speaker: 'Narrator', text: '*For one heartbeat — nothing happens.*' },
+            { speaker: 'Narrator', text: '*Then — the lead drone STUTTERS. Its searchlight swings wild.*' },
             { speaker: 'Ryan', text: 'It\'s working. The nav system is accepting the spoofed coordinates.' },
-            { speaker: '', text: '*One by one, the drones\' flight paths warp. South. Toward the swamp.*' },
-            { speaker: '', text: '*Their autopilots "correct" for a position error that doesn\'t exist.*' },
-            { speaker: '', text: '*SPLASH — the first drone clips the reeds and tumbles into brackish water*' },
-            { speaker: '', text: '*CRACK — a second hits a dead pine, rotors shattering, spiralling down*' },
-            { speaker: '', text: '*The third banks hard, fighting its own navigation — THUD — into the bog*' },
+            { speaker: 'Narrator', text: '*One by one, the drones\' flight paths warp. South. Toward the swamp.*' },
+            { speaker: 'Narrator', text: '*Their autopilots "correct" for a position error that doesn\'t exist.*' },
+            { speaker: 'Narrator', text: '*SPLASH — the first drone clips the reeds and tumbles into brackish water*' },
+            { speaker: 'Narrator', text: '*CRACK — a second hits a dead pine, rotors shattering, spiralling down*' },
+            { speaker: 'Narrator', text: '*The third banks hard, fighting its own navigation — THUD — into the bog*' },
             { speaker: 'Ryan', text: 'Yes! YES!' },
-            { speaker: '', text: '*The fourth drone — high altitude spotter — wobbles, then drifts south*' },
-            { speaker: '', text: '*Its red navigational light fades into the darkness over the swamp*' },
-            { speaker: '', text: '*Silence. For the first time in minutes, true silence.*' },
+            { speaker: 'Narrator', text: '*The fourth drone — high altitude spotter — wobbles, then drifts south*' },
+            { speaker: 'Narrator', text: '*Its red navigational light fades into the darkness over the swamp*' },
+            { speaker: 'Narrator', text: '*Silence. For the first time in minutes, true silence.*' },
             { speaker: 'Ryan', text: '...' },
             { speaker: 'Ryan', text: 'GPS spoofing. No encryption, no authentication, no chance.' },
             { speaker: 'Ryan', text: 'That\'s why military uses P(Y) code and SAASM. Civilians don\'t.' },

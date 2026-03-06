@@ -48,7 +48,7 @@ const WesterborkMemorialScene = {
                         { speaker: 'Ryan', text: 'The track ends here. Right here.' },
                         { speaker: 'Ryan', text: 'Between 1942 and 1945, 102,000 people were put on trains from this spot. To Auschwitz. To Sobibor. To Bergen-Belsen.' },
                         { speaker: 'Ryan', text: 'Anne Frank was on one of those trains.' },
-                        { speaker: '', text: '*Silence*' },
+                        { speaker: 'Narrator', text: '*Silence*' },
                         { speaker: 'Ryan', text: 'The Nazis built this camp specifically as a holding and sorting facility. They monitored everyone here. Catalogued them. Assigned them numbers.' },
                         { speaker: 'Ryan', text: 'And now, less than two kilometres from here, someone is running a mass surveillance operation. Using the same ground. The same infrastructure.' },
                         { speaker: 'Ryan', text: 'I don\'t think that\'s a coincidence. I think someone chose this location deliberately.' },
@@ -60,7 +60,7 @@ const WesterborkMemorialScene = {
                         { speaker: 'Ryan', text: 'The track ends here. Right here.' },
                         { speaker: 'Ryan', text: 'Between 1942 and 1945, 102,000 people were put on trains from this spot. To Auschwitz. To Sobibor. To Bergen-Belsen.' },
                         { speaker: 'Ryan', text: 'Anne Frank was on one of those trains.' },
-                        { speaker: '', text: '*Silence*' },
+                        { speaker: 'Narrator', text: '*Silence*' },
                         { speaker: 'Ryan', text: 'The Nazis built this camp specifically as a holding and sorting facility. They monitored everyone here. Catalogued them. Assigned them numbers.' },
                         { speaker: 'Ryan', text: 'Bureaucratic efficiency applied to genocide. The worst part is how ordinary it all was.' },
                         { speaker: 'Ryan', text: 'And just 200 metres away, the WSRT dishes listen to the cosmos. The contrast is almost unbearable.' },
@@ -80,11 +80,11 @@ const WesterborkMemorialScene = {
             cursor: 'pointer',
             action: (game) => {
                 game.startDialogue([
-                    { speaker: '', text: '*The stone columns stand on either side of the track. Carved into the left column: a Star of David.*' },
+                    { speaker: 'Narrator', text: '*The stone columns stand on either side of the track. Carved into the left column: a Star of David.*' },
                     { speaker: 'Ryan', text: '"Kamp Westerbork 1942–1945." Simple. The dates say everything.' },
                     { speaker: 'Ryan', text: 'More than sixty percent of the deportees were Dutch Jews. The Netherlands had one of the highest deportation rates in Western Europe.' },
                     { speaker: 'Ryan', text: 'The historian Presser called it the "Night of the Girondins" — ordinary bureaucratic efficiency applied to a genocide.' },
-                    { speaker: '', text: '📚 EDUCATIONAL: Westerbork was originally built in 1939 as a refugee camp for German Jewish refugees. In 1942 the Nazis requisitioned it as a transit camp (Durchgangslager). Today it is a national memorial and documentation centre.' },
+                    { speaker: 'Narrator', text: '📚 EDUCATIONAL: Westerbork was originally built in 1939 as a refugee camp for German Jewish refugees. In 1942 the Nazis requisitioned it as a transit camp (Durchgangslager). Today it is a national memorial and documentation centre.' },
                 ]);
             }
         },
@@ -108,8 +108,8 @@ const WesterborkMemorialScene = {
                     if (hasFlipperZero) {
                         game.startDialogue([
                             { speaker: 'Ryan', text: 'The camera. Let me try the Flipper Zero on it now.' },
-                            { speaker: '', text: '*Ryan holds the Flipper Zero near the camera and runs a Bluetooth scan*' },
-                            { speaker: '', text: '*The device lights up — multiple devices detected*' },
+                            { speaker: 'Narrator', text: '*Ryan holds the Flipper Zero near the camera and runs a Bluetooth scan*' },
+                            { speaker: 'Narrator', text: '*The device lights up — multiple devices detected*' },
                             { speaker: 'Ryan', text: '"ZERFALL-NODE-WB01" — there it is. Advertising on Bluetooth Low Energy.' },
                             { speaker: 'Ryan', text: 'Manufacturer ID: 0x004C... spoofed Apple identifier. Whoever built this disguised it as consumer hardware.' },
                             { speaker: 'Ryan', text: 'I can read the beacon data. It\'s broadcasting HCI packets with encrypted payload. Frequency of transmission: every 90 seconds.' },
@@ -139,14 +139,14 @@ const WesterborkMemorialScene = {
                     // Ryan knows about the surveillance network from the USB — immediately suspicious
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'That\'s... not a standard memorial camera.' },
-                        { speaker: '', text: '*Ryan looks more closely*' },
+                        { speaker: 'Narrator', text: '*Ryan looks more closely*' },
                         { speaker: 'Ryan', text: 'The housing is a Hikvision body but the internals have been modified. I can see a secondary PCB through the ventilation slot.' },
                         { speaker: 'Ryan', text: 'That\'s a Bluetooth module. A surveillance camera with a Bluetooth transmitter bolted in.' },
                         { speaker: 'Ryan', text: 'No legitimate security system needs that. Bluetooth range is at best 100 metres. This isn\'t for camera control.' },
                         { speaker: 'Ryan', text: 'It\'s a beacon. It\'s broadcasting something. And the LED is pulsing in a pattern — not random.' },
                         { speaker: 'Ryan', text: 'The USB data mentioned sensor nodes across the region. This must be one of them. Right here at the memorial.' },
                         { speaker: 'Ryan', text: 'If I had the Flipper Zero, I could read what it\'s transmitting. I need to come back with it.' },
-                        { speaker: '', text: '💡 HINT: Get the Flipper Zero from the mancave, then return here.' },
+                        { speaker: 'Narrator', text: '💡 HINT: Get the Flipper Zero from the mancave, then return here.' },
                     ], () => {
                         game.setFlag('westerbork_camera_inspected', true);
                         game.addEvidence({
@@ -169,14 +169,14 @@ const WesterborkMemorialScene = {
                     // Ryan has only been to ASTRON — no prior knowledge of surveillance network
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'A security camera. Nothing unusual about that at a memorial site...' },
-                        { speaker: '', text: '*Ryan looks more closely*' },
+                        { speaker: 'Narrator', text: '*Ryan looks more closely*' },
                         { speaker: 'Ryan', text: 'Wait. The housing is a Hikvision body, but something\'s been added. I can see a secondary circuit board through the ventilation slot.' },
                         { speaker: 'Ryan', text: 'That\'s... a Bluetooth module? On a heritage site security camera?' },
                         { speaker: 'Ryan', text: 'The LED is pulsing in a pattern. Not random. Not standard status blinking either.' },
                         { speaker: 'Ryan', text: 'Strange. Why would a memorial camera need Bluetooth? The signal range is only about 100 metres.' },
                         { speaker: 'Ryan', text: 'Probably nothing. But my SDR instincts are tingling. I should note this down.' },
                         { speaker: 'Ryan', text: 'If I had my Flipper Zero, I could scan what it\'s broadcasting. Something to keep in mind.' },
-                        { speaker: '', text: '💡 HINT: Get the Flipper Zero from the mancave, then return here.' },
+                        { speaker: 'Narrator', text: '💡 HINT: Get the Flipper Zero from the mancave, then return here.' },
                     ], () => {
                         game.setFlag('westerbork_camera_inspected', true);
                         game.addEvidence({
@@ -239,12 +239,12 @@ const WesterborkMemorialScene = {
             cursor: 'pointer',
             action: (game) => {
                 game.startDialogue([
-                    { speaker: '', text: '📚 HERINNERINGSCENTRUM KAMP WESTERBORK' },
-                    { speaker: '', text: 'From 1942 to 1945, Westerbork served as the main transit camp for Jewish, Sinti, and Roma deportees in the Netherlands.' },
-                    { speaker: '', text: '102,000 people were deported in 93 transports. Most to Auschwitz-Birkenau and Sobibor. Survival rate: under 5%.' },
-                    { speaker: '', text: 'Notable deportees include Anne Frank and her family (August 1944), Etty Hillesum, and Philip Mechanicus.' },
-                    { speaker: '', text: 'The camp was run with meticulous record-keeping — lists, numbers, categories. The bureaucracy of the Holocaust was arguably its most disturbing feature.' },
-                    { speaker: '', text: 'Today the site is a national monument. The original barrack footprints, the railway track, and the command post building remain as markers.' },
+                    { speaker: 'Narrator', text: '📚 HERINNERINGSCENTRUM KAMP WESTERBORK' },
+                    { speaker: 'Narrator', text: 'From 1942 to 1945, Westerbork served as the main transit camp for Jewish, Sinti, and Roma deportees in the Netherlands.' },
+                    { speaker: 'Narrator', text: '102,000 people were deported in 93 transports. Most to Auschwitz-Birkenau and Sobibor. Survival rate: under 5%.' },
+                    { speaker: 'Narrator', text: 'Notable deportees include Anne Frank and her family (August 1944), Etty Hillesum, and Philip Mechanicus.' },
+                    { speaker: 'Narrator', text: 'The camp was run with meticulous record-keeping — lists, numbers, categories. The bureaucracy of the Holocaust was arguably its most disturbing feature.' },
+                    { speaker: 'Narrator', text: 'Today the site is a national monument. The original barrack footprints, the railway track, and the command post building remain as markers.' },
                 ]);
             }
         },
@@ -280,7 +280,7 @@ const WesterborkMemorialScene = {
             action: (game) => {
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'Back to the parking area. The WSRT and the Planetenpad are from there too.' },
-                    { speaker: '', text: '*Ryan walks across the field toward the parking area*' }
+                    { speaker: 'Narrator', text: '*Ryan walks across the field toward the parking area*' }
                 ], () => {
                     game.loadScene('wsrt_parking');
                 });
@@ -301,7 +301,7 @@ const WesterborkMemorialScene = {
             action: (game) => {
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'Time to head home. I need to process all of this.' },
-                    { speaker: '', text: '*Ryan walks back to the parking area*' }
+                    { speaker: 'Narrator', text: '*Ryan walks back to the parking area*' }
                 ], () => {
                     game.loadScene('wsrt_parking');
                 });
@@ -378,7 +378,7 @@ const WesterborkMemorialScene = {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'The memorial. I\'ve been here before but it never gets easier.' },
                         { speaker: 'Ryan', text: 'The railway track. The stones. The flat Drenthe sky.' },
-                        { speaker: '', text: '*Ryan is quiet for a moment*' },
+                        { speaker: 'Narrator', text: '*Ryan is quiet for a moment*' },
                         { speaker: 'Ryan', text: 'The USB data mentioned sensor nodes across the region. And the WSRT signal logs pointed toward this area.' },
                         { speaker: 'Ryan', text: 'If they\'ve placed surveillance equipment on a Holocaust memorial site...' },
                         { speaker: 'Ryan', text: 'That camera on the pole. It doesn\'t look right.' },
@@ -388,7 +388,7 @@ const WesterborkMemorialScene = {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'The memorial. I\'ve been here before but it never gets easier.' },
                         { speaker: 'Ryan', text: 'The railway track. The stones. The flat Drenthe sky.' },
-                        { speaker: '', text: '*Ryan is quiet for a moment*' },
+                        { speaker: 'Narrator', text: '*Ryan is quiet for a moment*' },
                         { speaker: 'Ryan', text: 'Cees mentioned the WSRT dishes are just 200 metres away. The same ground, but worlds apart.' },
                         { speaker: 'Ryan', text: 'Hmm. That camera on the pole — is that new? Something about it looks off.' },
                     ]);

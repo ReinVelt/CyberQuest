@@ -1,565 +1,389 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Home (Kitchen) scene  –  1920×1080
+  Layout: [BEDROOM|MANCAVE] ... kitchen+window ... [GARDEN|LIVINGROOM]
+  All doors sit exactly on the floor line (y=780).
+  One continuous room — wall, floor, ceiling all uniform.
+-->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
-  <defs>
-    <!-- === GRADIENTS === -->
-    <linearGradient id="skyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#87CEEB"/>
-      <stop offset="100%" style="stop-color:#B0E0E6"/>
-    </linearGradient>
-    <linearGradient id="wallGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#F5F5DC"/>
-      <stop offset="100%" style="stop-color:#E8E4D4"/>
-    </linearGradient>
-    <linearGradient id="floorGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#8B4513"/>
-      <stop offset="100%" style="stop-color:#654321"/>
-    </linearGradient>
-    <linearGradient id="counterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#2F2F2F"/>
-      <stop offset="100%" style="stop-color:#1A1A1A"/>
-    </linearGradient>
-    <linearGradient id="cabinetGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#DEB887"/>
-      <stop offset="100%" style="stop-color:#CD853F"/>
-    </linearGradient>
-    <linearGradient id="coffeeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#C0C0C0"/>
-      <stop offset="100%" style="stop-color:#808080"/>
-    </linearGradient>
-    <linearGradient id="waterGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#4682B4"/>
-      <stop offset="50%" style="stop-color:#5F9EA0"/>
-      <stop offset="100%" style="stop-color:#4682B4"/>
-    </linearGradient>
-    <linearGradient id="doorGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#654321"/>
-      <stop offset="50%" style="stop-color:#8B4513"/>
-      <stop offset="100%" style="stop-color:#654321"/>
-    </linearGradient>
-    <!-- Morning sunbeam gradient -->
-    <linearGradient id="sunbeamGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FFE082;stop-opacity:0.15"/>
-      <stop offset="100%" style="stop-color:#FFE082;stop-opacity:0"/>
-    </linearGradient>
-    <!-- Warm light radial from window -->
-    <radialGradient id="windowWarmGlow" cx="37%" cy="25%" r="45%">
-      <stop offset="0%" style="stop-color:#FFE082;stop-opacity:0.12"/>
-      <stop offset="100%" style="stop-color:#FFE082;stop-opacity:0"/>
-    </radialGradient>
-    <!-- Vignette -->
-    <radialGradient id="vignetteRadial" cx="50%" cy="50%" r="55%">
-      <stop offset="0%" style="stop-color:#000;stop-opacity:0"/>
-      <stop offset="75%" style="stop-color:#000;stop-opacity:0"/>
-      <stop offset="100%" style="stop-color:#000;stop-opacity:0.35"/>
-    </radialGradient>
+<defs>
+  <!-- ── WALL ── -->
+  <linearGradient id="hWall" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#d8d2be"/>
+    <stop offset="100%" stop-color="#c8c2ae"/>
+  </linearGradient>
+  <!-- ── CEILING ── -->
+  <linearGradient id="hCeil" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#c2bea8"/>
+    <stop offset="100%" stop-color="#d2ceba"/>
+  </linearGradient>
+  <!-- ── FLOOR TILES ── -->
+  <pattern id="hTile" patternUnits="userSpaceOnUse" width="120" height="120">
+    <rect width="60"  height="60"  fill="#7a4018"/>
+    <rect x="60"      height="60"  fill="#904c20"/>
+    <rect y="60"      width="60"   height="60" fill="#904c20"/>
+    <rect x="60" y="60" width="60" height="60" fill="#7a4018"/>
+    <!-- grout lines -->
+    <line x1="60" y1="0"  x2="60" y2="120" stroke="#5a2c0a" stroke-width="2" opacity="0.5"/>
+    <line x1="0"  y1="60" x2="120" y2="60" stroke="#5a2c0a" stroke-width="2" opacity="0.5"/>
+  </pattern>
+  <!-- ── DOOR WOOD ── -->
+  <linearGradient id="hDoorWood" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%"   stop-color="#5a2e0c"/>
+    <stop offset="40%"  stop-color="#8b4513"/>
+    <stop offset="100%" stop-color="#5a2e0c"/>
+  </linearGradient>
+  <linearGradient id="hDoorDark" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%"   stop-color="#3a1c08"/>
+    <stop offset="50%"  stop-color="#5e2e0c"/>
+    <stop offset="100%" stop-color="#3a1c08"/>
+  </linearGradient>
+  <!-- ── COUNTER TOP ── -->
+  <linearGradient id="hCounterTop" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#303030"/>
+    <stop offset="100%" stop-color="#181818"/>
+  </linearGradient>
+  <!-- ── CABINET BODY ── -->
+  <linearGradient id="hCabBody" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#cea864"/>
+    <stop offset="100%" stop-color="#a07828"/>
+  </linearGradient>
+  <!-- ── UPPER CABINET ── -->
+  <linearGradient id="hUpperCab" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#c89850"/>
+    <stop offset="100%" stop-color="#9a6820"/>
+  </linearGradient>
+  <!-- ── CHROME (espresso / faucet) ── -->
+  <linearGradient id="hChrome" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#d8d8d8"/>
+    <stop offset="50%"  stop-color="#a8a8a8"/>
+    <stop offset="100%" stop-color="#606060"/>
+  </linearGradient>
+  <!-- ── WINDOW: outside sky + grass ── -->
+  <linearGradient id="hOutside" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#4eb8f0"/>
+    <stop offset="50%"  stop-color="#a8dcf8"/>
+    <stop offset="65%"  stop-color="#c8ecf8"/>
+    <stop offset="66%"  stop-color="#58a830"/>
+    <stop offset="85%"  stop-color="#3a8020"/>
+    <stop offset="100%" stop-color="#286010"/>
+  </linearGradient>
+  <!-- ── DOOR FLOOR GLOWS ── -->
+  <radialGradient id="gBedroom"   cx="50%" cy="100%" r="70%">
+    <stop offset="0%"   stop-color="#8090d8" stop-opacity="0.40"/>
+    <stop offset="100%" stop-color="#8090d8" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="gMancave"   cx="50%" cy="100%" r="70%">
+    <stop offset="0%"   stop-color="#50c878" stop-opacity="0.38"/>
+    <stop offset="100%" stop-color="#50c878" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="gGarden"    cx="50%" cy="100%" r="70%">
+    <stop offset="0%"   stop-color="#80d050" stop-opacity="0.35"/>
+    <stop offset="100%" stop-color="#80d050" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="gLivingroom" cx="50%" cy="100%" r="70%">
+    <stop offset="0%"   stop-color="#e0a040" stop-opacity="0.38"/>
+    <stop offset="100%" stop-color="#e0a040" stop-opacity="0"/>
+  </radialGradient>
+  <!-- ── WINDOW LIGHT SPILL ON FLOOR ── -->
+  <radialGradient id="hWinSpill" cx="50%" cy="0%" r="80%">
+    <stop offset="0%"   stop-color="#ffe898" stop-opacity="0.20"/>
+    <stop offset="100%" stop-color="#ffe898" stop-opacity="0"/>
+  </radialGradient>
+  <!-- ── CEILING LAMP ── -->
+  <radialGradient id="hLampWarm" cx="50%" cy="0%" r="70%">
+    <stop offset="0%"   stop-color="#ffe8a0" stop-opacity="0.28"/>
+    <stop offset="100%" stop-color="#ffe8a0" stop-opacity="0"/>
+  </radialGradient>
+  <!-- ── VIGNETTE ── -->
+  <radialGradient id="hVig" cx="50%" cy="50%" r="72%">
+    <stop offset="0%"   stop-color="#000" stop-opacity="0"/>
+    <stop offset="65%"  stop-color="#000" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
+  </radialGradient>
+  <!-- ── FILTERS ── -->
+  <filter id="hShadow" x="-15%" y="-10%" width="130%" height="130%">
+    <feDropShadow dx="3" dy="6" stdDeviation="6" flood-opacity="0.45"/>
+  </filter>
+  <filter id="hShadowSm" x="-10%" y="-10%" width="120%" height="120%">
+    <feDropShadow dx="2" dy="3" stdDeviation="3" flood-opacity="0.28"/>
+  </filter>
+  <filter id="hGlowGreen">
+    <feGaussianBlur stdDeviation="5" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
 
-    <!-- === PATTERNS === -->
-    <pattern id="floorTiles" patternUnits="userSpaceOnUse" width="120" height="120">
-      <rect width="60" height="60" fill="#8B4513"/>
-      <rect x="60" width="60" height="60" fill="#A0522D"/>
-      <rect y="60" width="60" height="60" fill="#A0522D"/>
-      <rect x="60" y="60" width="60" height="60" fill="#8B4513"/>
-    </pattern>
+<!-- ═══════════════════════════════════════════════════════
+     BACKGROUND: ONE CONTINUOUS ROOM
+     Ceiling  y=0–80   Wall  y=80–780   Floor  y=780–1080
+     ═══════════════════════════════════════════════════════ -->
 
-    <!-- === FILTERS === -->
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="4" dy="4" stdDeviation="4" flood-opacity="0.3"/>
-    </filter>
-    <filter id="innerGlow">
-      <feGaussianBlur stdDeviation="3" result="blur"/>
-      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-    </filter>
-    <filter id="softGlow">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-    <filter id="steamBlur">
-      <feGaussianBlur stdDeviation="3"/>
-    </filter>
-  </defs>
+<!-- Ceiling -->
+<rect x="0" y="0"   width="1920" height="220" fill="url(#hCeil)"/>
+<!-- Wall -->
+<rect x="0" y="220" width="1920" height="528" fill="url(#hWall)"/>
+<!-- Floor -->
+<rect x="0" y="780" width="1920" height="300" fill="url(#hTile)"/>
 
-  <!-- ============ BACKGROUND WALL ============ -->
-  <rect width="1920" height="1080" fill="url(#wallGradient)"/>
+<!-- Ceiling–wall cornice line -->
+<rect x="0" y="217" width="1920" height="8"   fill="#b0aa92" rx="1"/>
+<!-- Floor skirting -->
+<rect x="0" y="777" width="1920" height="10"  fill="#5a2e0a" rx="1"/>
+<!-- Baseboard -->
+<rect x="0" y="748" width="1920" height="32"  fill="#c4b07a" rx="2"/>
+<rect x="0" y="748" width="1920" height="4"   fill="#a89060" opacity="0.6"/>
 
-  <!-- Wall texture lines -->
-  <g opacity="0.1">
-    <line x1="0" y1="200" x2="1920" y2="200" stroke="#000" stroke-width="1"/>
-    <line x1="0" y1="400" x2="1920" y2="400" stroke="#000" stroke-width="1"/>
-  </g>
+<!-- Ceiling warm lamp wash -->
+<rect x="0" y="0" width="1920" height="780" fill="url(#hLampWarm)"/>
+<!-- Window spill on floor (centre) -->
+<rect x="480" y="780" width="960" height="300" fill="url(#hWinSpill)"/>
 
-  <!-- Warm morning light wash on wall (from window) -->
-  <rect width="1920" height="1080" fill="url(#windowWarmGlow)"/>
+<!-- ═══════════════════════════════════════════════════════
+     CEILING PENDANT
+     ═══════════════════════════════════════════════════════ -->
+<line x1="960" y1="0" x2="960" y2="218" stroke="#888" stroke-width="3"/>
+<rect x="944" y="0"   width="32" height="14" fill="#c0b888"/>
+<ellipse cx="960" cy="232" rx="58" ry="12" fill="#e8e0c0" stroke="#b0a868" stroke-width="2"/>
+<ellipse cx="960" cy="242" rx="76" ry="16" fill="#f5f0d8" opacity="0.88" filter="url(#hShadowSm)"/>
 
-  <!-- ============ FLOOR ============ -->
-  <rect y="750" width="1920" height="330" fill="url(#floorTiles)"/>
-  <rect y="750" width="1920" height="10" fill="#5D4037" opacity="0.5"/>
+<!-- Wall clock (centre above window) -->
+<circle cx="960" cy="310" r="46" fill="#f2eed8" stroke="#5a3010" stroke-width="3.5"/>
+<circle cx="960" cy="310" r="40" fill="#faf8f0" stroke="#8a6028" stroke-width="1.5"/>
+<line x1="960" y1="272" x2="960" y2="280" stroke="#333" stroke-width="2.5"/>
+<line x1="960" y1="339" x2="960" y2="347" stroke="#333" stroke-width="2.5"/>
+<line x1="920" y1="310" x2="928" y2="310" stroke="#333" stroke-width="2.5"/>
+<line x1="991" y1="310" x2="999" y2="310" stroke="#333" stroke-width="2.5"/>
+<line x1="960" y1="310" x2="945" y2="292" stroke="#222" stroke-width="3.5" stroke-linecap="round"/>
+<line x1="960" y1="310" x2="978" y2="310" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="960" cy="310" r="4" fill="#333"/>
 
-  <!-- Floor light patch from window -->
-  <polygon points="500,750 920,750 1050,1080 300,1080" fill="#FFE082" opacity="0.04"/>
+<!-- ═══════════════════════════════════════════════════════
+     LEFT DOORS  —  BEDROOM (x=60)  &  MANCAVE (x=290)
+     Door: w=170 h=370  top=y=410  bottom=y=780
+     ═══════════════════════════════════════════════════════ -->
 
-  <!-- ============ WINDOW with Canal View ============ -->
-  <g transform="translate(500, 120)">
-    <!-- Window frame outer -->
-    <rect x="-15" y="-15" width="430" height="380" fill="#5D4037" rx="5"/>
-    <!-- Window frame inner -->
-    <rect width="400" height="350" fill="#654321" rx="3"/>
+<!-- ── BEDROOM DOOR ── -->
+<!-- Door recess shadow -->
+<rect x="52"  y="404" width="186" height="380" rx="6" fill="#a8a490" filter="url(#hShadow)"/>
+<!-- Door frame -->
+<rect x="55"  y="407" width="180" height="374" rx="5" fill="none" stroke="#7a4820" stroke-width="8"/>
+<!-- Door panel -->
+<rect x="63"  y="414" width="164" height="360" rx="3" fill="url(#hDoorWood)"/>
+<!-- Panel insets -->
+<rect x="74"  y="425" width="142" height="140" rx="3" fill="none" stroke="#4a2408" stroke-width="2" opacity="0.55"/>
+<rect x="74"  y="578" width="142" height="184" rx="3" fill="none" stroke="#4a2408" stroke-width="2" opacity="0.55"/>
+<rect x="82"  y="433" width="126" height="124" rx="2" fill="#6a3410" opacity="0.18"/>
+<rect x="82"  y="586" width="126" height="168" rx="2" fill="#6a3410" opacity="0.16"/>
+<!-- Door knob -->
+<circle cx="208" cy="610" r="11" fill="#c0a030" stroke="#a08020" stroke-width="2"/>
+<circle cx="208" cy="610" r="5.5" fill="#e0c040" opacity="0.75"/>
+<!-- Floor glow footprint -->
+<ellipse cx="145" cy="782" rx="90" ry="18" fill="url(#gBedroom)"/>
+<!-- Label -->
+<text x="145" y="738" text-anchor="middle" font-family="Georgia,serif" font-size="16" fill="#3a1e08" opacity="0.65" letter-spacing="1.5">SLAAPKAMER</text>
+<text x="145" y="716" text-anchor="middle" font-size="24" opacity="0.72">🌙</text>
 
-    <!-- Window glass / View outside -->
-    <rect x="10" y="10" width="180" height="330" fill="url(#skyGradient)"/>
-    <rect x="210" y="10" width="180" height="330" fill="url(#skyGradient)"/>
+<!-- ── MANCAVE DOOR ── -->
+<rect x="282" y="404" width="186" height="380" rx="6" fill="#9e9e8c" filter="url(#hShadow)"/>
+<rect x="285" y="407" width="180" height="374" rx="5" fill="none" stroke="#622e0a" stroke-width="8"/>
+<rect x="293" y="414" width="164" height="360" rx="3" fill="url(#hDoorDark)"/>
+<rect x="304" y="425" width="142" height="140" rx="3" fill="none" stroke="#3a1808" stroke-width="2" opacity="0.55"/>
+<rect x="304" y="578" width="142" height="184" rx="3" fill="none" stroke="#3a1808" stroke-width="2" opacity="0.55"/>
+<!-- Green LED stripe hint -->
+<rect x="304" y="578" width="142" height="4"   rx="2" fill="#40ff80" opacity="0.40"/>
+<text x="375" y="510" text-anchor="middle" font-size="48" opacity="0.18">💀</text>
+<rect x="312" y="586" width="126" height="168" rx="2" fill="#1c3822" opacity="0.22"/>
+<!-- Door knob (dark metal) -->
+<circle cx="293" cy="610" r="11" fill="#585858" stroke="#383838" stroke-width="2"/>
+<circle cx="293" cy="610" r="5.5" fill="#909090" opacity="0.70"/>
+<ellipse cx="375" cy="782" rx="90" ry="18" fill="url(#gMancave)"/>
+<text x="375" y="738" text-anchor="middle" font-family="Georgia,serif" font-size="16" fill="#253828" opacity="0.65" letter-spacing="1.5">MANCAVE</text>
+<text x="375" y="716" text-anchor="middle" font-size="24" opacity="0.72">🖥</text>
 
-    <!-- Canal water with animated shimmer -->
-    <rect x="10" y="220" width="180" height="120" fill="url(#waterGradient)" opacity="0.8"/>
-    <rect x="210" y="220" width="180" height="120" fill="url(#waterGradient)" opacity="0.8"/>
+<!-- ── LEFT WALL between doors and kitchen ── -->
+<!-- (just the bare wall – already rendered by background) -->
 
-    <!-- Water reflections (animated sparkle) -->
-    <g opacity="0.3">
-      <ellipse cx="100" cy="280" rx="60" ry="8" fill="#fff">
-        <animate attributeName="opacity" values="0.3;0.15;0.3;0.25;0.3" dur="3s" repeatCount="indefinite"/>
-      </ellipse>
-      <ellipse cx="300" cy="290" rx="50" ry="6" fill="#fff">
-        <animate attributeName="opacity" values="0.2;0.35;0.2;0.3;0.2" dur="4s" repeatCount="indefinite"/>
-      </ellipse>
-      <!-- Extra sparkle points -->
-      <circle cx="60" cy="270" r="3" fill="#fff" opacity="0">
-        <animate attributeName="opacity" values="0;0.5;0;0;0" dur="5s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="350" cy="300" r="2" fill="#fff" opacity="0">
-        <animate attributeName="opacity" values="0;0;0.4;0;0" dur="4.5s" repeatCount="indefinite"/>
-      </circle>
-      <circle cx="150" cy="295" r="2.5" fill="#fff" opacity="0">
-        <animate attributeName="opacity" values="0;0;0;0.45;0" dur="6s" repeatCount="indefinite"/>
-      </circle>
-    </g>
+<!-- ═══════════════════════════════════════════════════════
+     KITCHEN  x=480–1440
+     Window: x=640 y=100 w=640 h=460  (bottom y=560)
+     Counter: x=480 y=640 w=960 h=140 (top y=640, bottom sits on baseboard)
+     ═══════════════════════════════════════════════════════ -->
 
-    <!-- Grass/bank -->
-    <rect x="10" y="200" width="180" height="25" fill="#228B22"/>
-    <rect x="210" y="200" width="180" height="25" fill="#228B22"/>
+<!-- ── UPPER CABINETS (flanking window) ── -->
+<!-- Left upper cabinet -->
+<rect x="484" y="230" width="148" height="180" rx="3" fill="url(#hUpperCab)" stroke="#9a7028" stroke-width="2" filter="url(#hShadowSm)"/>
+<rect x="490" y="236" width="136" height="82" rx="2" fill="none" stroke="#8a5a18" stroke-width="1.5" opacity="0.60"/>
+<rect x="490" y="326" width="136" height="76" rx="2" fill="none" stroke="#8a5a18" stroke-width="1.5" opacity="0.60"/>
+<circle cx="550" cy="278" r="5" fill="#b07828" stroke="#8a5a18" stroke-width="1"/>
+<circle cx="550" cy="366" r="5" fill="#b07828" stroke="#8a5a18" stroke-width="1"/>
+<!-- Under-cabinet light left -->
+<rect x="484" y="408" width="148" height="5" rx="2" fill="#ffe090" opacity="0.60"/>
 
-    <!-- Distant farmhouse -->
-    <g transform="translate(50, 100)">
-      <rect x="0" y="30" width="60" height="50" fill="#F5F5F5"/>
-      <polygon points="0,30 30,0 60,30" fill="#8B0000"/>
-      <rect x="20" y="50" width="15" height="25" fill="#654321"/>
-    </g>
+<!-- Right upper cabinet -->
+<rect x="1288" y="230" width="148" height="180" rx="3" fill="url(#hUpperCab)" stroke="#9a7028" stroke-width="2" filter="url(#hShadowSm)"/>
+<rect x="1294" y="236" width="136" height="82" rx="2" fill="none" stroke="#8a5a18" stroke-width="1.5" opacity="0.60"/>
+<rect x="1294" y="326" width="136" height="76" rx="2" fill="none" stroke="#8a5a18" stroke-width="1.5" opacity="0.60"/>
+<circle cx="1374" cy="278" r="5" fill="#b07828" stroke="#8a5a18" stroke-width="1"/>
+<circle cx="1374" cy="366" r="5" fill="#b07828" stroke="#8a5a18" stroke-width="1"/>
+<!-- Under-cabinet light right -->
+<rect x="1288" y="408" width="148" height="5" rx="2" fill="#ffe090" opacity="0.60"/>
 
-    <!-- Trees with gentle sway -->
-    <ellipse cx="320" cy="160" rx="40" ry="50" fill="#2E8B57">
-      <animateTransform attributeName="transform" type="translate" values="0,0;2,-1;0,0;-1,0;0,0" dur="5s" repeatCount="indefinite"/>
-    </ellipse>
-    <ellipse cx="350" cy="170" rx="35" ry="40" fill="#228B22">
-      <animateTransform attributeName="transform" type="translate" values="0,0;-1,0;0,0;2,-1;0,0" dur="6s" repeatCount="indefinite"/>
-    </ellipse>
+<!-- ── WINDOW ── -->
+<!-- Outer recess / reveal -->
+<rect x="632" y="232" width="656" height="300" rx="8" fill="#9ab8c8" filter="url(#hShadow)"/>
+<!-- Window sill top -->
+<rect x="620" y="225" width="680" height="22"  rx="5" fill="#7a4820" stroke="#5a3010" stroke-width="2"/>
+<!-- Frame -->
+<rect x="640" y="240" width="640" height="286" rx="5" fill="none" stroke="#8b5a28" stroke-width="12"/>
+<!-- Left pane outside -->
+<rect x="652" y="248" width="292" height="270" rx="4" fill="url(#hOutside)"/>
+<!-- Right pane outside -->
+<rect x="966" y="248" width="292" height="270" rx="4" fill="url(#hOutside)"/>
+<!-- Centre muntin vertical -->
+<rect x="944" y="240" width="22" height="286" fill="#8b5a28"/>
+<!-- Horizontal cross bar -->
+<rect x="640" y="376" width="640" height="18"  fill="#8b5a28"/>
+<!-- Glass glare streaks -->
+<rect x="656" y="252" width="70" height="110" rx="3" fill="#ffffff" opacity="0.10"/>
+<rect x="970" y="252" width="70" height="110" rx="3" fill="#ffffff" opacity="0.10"/>
+<!-- Window sill bottom ledge -->
+<rect x="620" y="520" width="680" height="24"  rx="5" fill="#9a6030" stroke="#7a4820" stroke-width="2"/>
+<!-- Plants on sill -->
+<text x="680"  y="532" text-anchor="middle" font-size="28" opacity="0.85">🌱</text>
+<text x="1240" y="532" text-anchor="middle" font-size="28" opacity="0.85">🌿</text>
+<!-- Morning sunbeam through window left pane -->
+<polygon points="652,248 944,248 860,780 560,780" fill="#ffe890" opacity="0.04"/>
+<!-- Sunbeam right pane -->
+<polygon points="966,248 1258,248 1400,780 1060,780" fill="#ffe890" opacity="0.04"/>
 
-    <!-- Birds (gently gliding) -->
-    <g fill="none" stroke="#333" stroke-width="2">
-      <path d="M80,80 Q85,75 90,80 Q95,75 100,80">
-        <animateMotion path="M0,0 C10,-5 20,3 30,-2 C40,-7 50,0 60,-4" dur="8s" repeatCount="indefinite"/>
-      </path>
-      <path d="M280,60 Q285,55 290,60 Q295,55 300,60">
-        <animateMotion path="M0,0 C-8,-3 -18,4 -25,-1 C-35,-5 -45,2 -55,-3" dur="10s" repeatCount="indefinite"/>
-      </path>
-      <!-- Extra bird far away -->
-      <path d="M0,0 Q3,-3 6,0 Q9,-3 12,0" opacity="0.5">
-        <animateMotion path="M180,90 C200,85 220,95 240,88" dur="12s" repeatCount="indefinite"/>
-      </path>
-    </g>
+<!-- ── BASE CABINETS + COUNTERTOP (x=484 to x=1436) ── -->
+<!-- Cabinet body -->
+<rect x="484" y="648" width="952" height="132" fill="url(#hCabBody)" filter="url(#hShadowSm)"/>
+<!-- Cabinet door verticals -->
+<line x1="643"  y1="648" x2="643"  y2="775" stroke="#9a6018" stroke-width="2.5" opacity="0.55"/>
+<line x1="802"  y1="648" x2="802"  y2="775" stroke="#9a6018" stroke-width="2.5" opacity="0.55"/>
+<line x1="961"  y1="648" x2="961"  y2="775" stroke="#9a6018" stroke-width="2.5" opacity="0.55"/>
+<line x1="1120" y1="648" x2="1120" y2="775" stroke="#9a6018" stroke-width="2.5" opacity="0.55"/>
+<line x1="1279" y1="648" x2="1279" y2="775" stroke="#9a6018" stroke-width="2.5" opacity="0.55"/>
+<!-- Cabinet handles -->
+<rect x="544"  y="706" width="38" height="7" rx="3.5" fill="#9a7828" opacity="0.75"/>
+<rect x="703"  y="706" width="38" height="7" rx="3.5" fill="#9a7828" opacity="0.75"/>
+<rect x="862"  y="706" width="38" height="7" rx="3.5" fill="#9a7828" opacity="0.75"/>
+<rect x="1021" y="706" width="38" height="7" rx="3.5" fill="#9a7828" opacity="0.75"/>
+<rect x="1180" y="706" width="38" height="7" rx="3.5" fill="#9a7828" opacity="0.75"/>
+<rect x="1339" y="706" width="38" height="7" rx="3.5" fill="#9a7828" opacity="0.75"/>
+<!-- Countertop -->
+<rect x="480" y="638" width="960" height="30"  rx="3" fill="url(#hCounterTop)"/>
+<rect x="480" y="638" width="960" height="5"   fill="#484848" opacity="0.55"/>
+<!-- Counter edge front -->
+<rect x="480" y="665" width="960" height="6"   fill="#222" opacity="0.35"/>
 
-    <!-- Drifting cloud through window -->
-    <ellipse cx="-80" cy="40" rx="50" ry="15" fill="#fff" opacity="0.5">
-      <animateMotion path="M0,0 L500,0" dur="45s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0;0.5;0.5;0.5;0" dur="45s" repeatCount="indefinite"/>
-    </ellipse>
+<!-- ── SINK (centred under window, x=880) ── -->
+<rect x="842" y="638" width="236" height="24" rx="2" fill="#686868"/>
+<rect x="852" y="642" width="98"  height="16" rx="2" fill="#484848"/>
+<rect x="962" y="642" width="98"  height="16" rx="2" fill="#484848"/>
+<!-- Faucet -->
+<rect  x="946" y="610" width="16" height="32" rx="5"  fill="url(#hChrome)"/>
+<ellipse cx="954" cy="610" rx="24" ry="8"    fill="url(#hChrome)"/>
+<!-- Water glint -->
+<ellipse cx="896" cy="640" rx="6" ry="2.5"   fill="#b8d8ec" opacity="0.50"/>
+<ellipse cx="1012" cy="640" rx="6" ry="2.5"  fill="#b8d8ec" opacity="0.50"/>
 
-    <!-- Window dividers -->
-    <rect x="190" y="10" width="20" height="330" fill="#654321"/>
-    <rect x="10" y="165" width="380" height="10" fill="#654321"/>
+<!-- ── ESPRESSO MACHINE (right end of counter) ── -->
+<!-- Body -->
+<rect x="1298" y="528" width="162" height="114" rx="8" fill="url(#hChrome)" filter="url(#hShadow)"/>
+<rect x="1306" y="536" width="146" height="98"  rx="6" fill="#b4b4b4"/>
+<!-- Water tank top -->
+<rect x="1326" y="500" width="82"  height="36"  rx="4" fill="#ccd4dc" stroke="#909090" stroke-width="2" opacity="0.90"/>
+<!-- Portafilter spout -->
+<rect x="1348" y="638" width="40"  height="22"  rx="4" fill="#686868"/>
+<ellipse cx="1368" cy="660" rx="28" ry="8" fill="#505050"/>
+<!-- Drip tray -->
+<rect x="1308" y="636" width="142" height="10"  rx="2" fill="#888"/>
+<!-- LED green -->
+<circle cx="1430" cy="558" r="6"   fill="#00e060" opacity="0.90" filter="url(#hGlowGreen)"/>
+<!-- Buttons row -->
+<circle cx="1325" cy="565" r="8" fill="#3a3a3a" stroke="#5a5a5a" stroke-width="1.5"/>
+<circle cx="1350" cy="565" r="8" fill="#3a3a3a" stroke="#5a5a5a" stroke-width="1.5"/>
+<circle cx="1375" cy="565" r="8" fill="#3a3a3a" stroke="#5a5a5a" stroke-width="1.5"/>
+<!-- Steam wisps -->
+<path d="M 1348,500 Q 1344,480 1348,460 Q 1352,440 1348,420" stroke="#d0d0d0" stroke-width="2" fill="none" opacity="0.20" stroke-linecap="round"/>
+<path d="M 1365,497 Q 1361,478 1365,458 Q 1369,438 1365,418" stroke="#d0d0d0" stroke-width="2" fill="none" opacity="0.16" stroke-linecap="round"/>
 
-    <!-- Window sill -->
-    <rect x="-20" y="350" width="440" height="25" fill="#5D4037"/>
+<!-- ── COFFEE MUG ── -->
+<rect   x="1476" y="608" width="54"  height="38" rx="5" fill="#e8e0d0" stroke="#c0b090" stroke-width="2"/>
+<path   d="M 1530,620 Q 1554,620 1554,630 Q 1554,640 1530,640" stroke="#c0b090" stroke-width="2.5" fill="none"/>
+<rect   x="1480" y="614" width="46"  height="30" rx="3" fill="#3a1e08" opacity="0.82"/>
 
-    <!-- Plant on windowsill with gentle leaf sway -->
-    <g transform="translate(50, 320)">
-      <rect x="0" y="15" width="40" height="35" fill="#8B4513" rx="3"/>
-      <ellipse cx="20" cy="15" rx="25" ry="20" fill="#228B22">
-        <animateTransform attributeName="transform" type="rotate" values="-1,20,15;1,20,15;-1,20,15" dur="4s" repeatCount="indefinite"/>
-      </ellipse>
-      <ellipse cx="15" cy="10" rx="15" ry="15" fill="#2E8B57">
-        <animateTransform attributeName="transform" type="rotate" values="1,15,10;-1,15,10;1,15,10" dur="5s" repeatCount="indefinite"/>
-      </ellipse>
-      <ellipse cx="28" cy="8" rx="12" ry="12" fill="#32CD32">
-        <animateTransform attributeName="transform" type="rotate" values="-0.5,28,8;0.5,28,8;-0.5,28,8" dur="3.5s" repeatCount="indefinite"/>
-      </ellipse>
-    </g>
-  </g>
+<!-- Fruit bowl left of counter -->
+<ellipse cx="566" cy="640" rx="44" ry="12" fill="#7a4c18" opacity="0.80"/>
+<text x="564" y="638" text-anchor="middle" font-size="30">🍎</text>
+<!-- Small cookbook -->
+<rect x="700" y="610" width="58" height="34" rx="2" fill="#8a3020"/>
+<rect x="703" y="613" width="52" height="28" rx="1" fill="#a04030" opacity="0.75"/>
+<line x1="729" y1="613" x2="729" y2="641" stroke="#7a2818" stroke-width="2" opacity="0.5"/>
 
-  <!-- ============ SUNBEAMS through window ============ -->
-  <g opacity="0.08">
-    <!-- Ray 1 -->
-    <polygon points="510,130 700,130 1000,1080 350,1080" fill="#FFE082">
-      <animate attributeName="opacity" values="1;0.6;0.9;0.7;1" dur="8s" repeatCount="indefinite"/>
-    </polygon>
-    <!-- Ray 2 -->
-    <polygon points="720,130 900,130 1150,1080 850,1080" fill="#FFE082">
-      <animate attributeName="opacity" values="0.7;1;0.6;0.8;0.7" dur="10s" repeatCount="indefinite"/>
-    </polygon>
-  </g>
+<!-- ═══════════════════════════════════════════════════════
+     RIGHT DOORS  —  GARDEN (x=1470)  &  LIVINGROOM (x=1700)
+     ═══════════════════════════════════════════════════════ -->
 
-  <!-- Floating dust motes in sunbeam -->
-  <g>
-    <circle cx="650" cy="300" r="1.5" fill="#FFE082" opacity="0.3">
-      <animateMotion path="M0,0 C20,50 -10,120 15,200 C30,280 -5,350 10,450" dur="15s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.3;0.1;0.35;0.15;0.3" dur="15s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="700" cy="250" r="1" fill="#FFE082" opacity="0.25">
-      <animateMotion path="M0,0 C-15,60 10,140 -10,220 C-20,300 15,380 -5,470" dur="18s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.25;0.05;0.3;0.1;0.25" dur="18s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="750" cy="200" r="1.2" fill="#FFE082" opacity="0.2">
-      <animateMotion path="M0,0 C10,40 -20,100 5,180 C25,260 -15,340 10,420" dur="20s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.2;0.35;0.1;0.25;0.2" dur="20s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="600" cy="350" r="0.8" fill="#FFE082" opacity="0.15">
-      <animateMotion path="M0,0 C-8,55 18,130 -5,210 C-18,290 8,360 -2,430" dur="22s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.15;0.3;0.08;0.2;0.15" dur="22s" repeatCount="indefinite"/>
-    </circle>
-    <circle cx="680" cy="400" r="1.3" fill="#FFE082" opacity="0.18">
-      <animateMotion path="M0,0 C15,35 -12,80 8,140 C22,200 -8,270 12,350" dur="16s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0.18;0.06;0.22;0.1;0.18" dur="16s" repeatCount="indefinite"/>
-    </circle>
-  </g>
+<!-- ── GARDEN DOOR (glass panels) ── -->
+<rect x="1462" y="404" width="186" height="380" rx="6" fill="#a8a490" filter="url(#hShadow)"/>
+<rect x="1465" y="407" width="180" height="374" rx="5" fill="none" stroke="#7a4820" stroke-width="8"/>
+<rect x="1473" y="414" width="164" height="360" rx="3" fill="url(#hDoorWood)"/>
+<!-- Glass panes top half -->
+<rect x="1477" y="418" width="70"  height="192" rx="3" fill="#90cce8" opacity="0.45"/>
+<rect x="1563" y="418" width="70"  height="192" rx="3" fill="#90cce8" opacity="0.45"/>
+<!-- Outside glimpse -->
+<rect x="1479" y="420" width="66"  height="188" rx="2" fill="url(#hOutside)" opacity="0.65"/>
+<rect x="1565" y="420" width="66"  height="188" rx="2" fill="url(#hOutside)" opacity="0.65"/>
+<!-- Muntins -->
+<line x1="1513" y1="418" x2="1513" y2="610" stroke="#7a4820" stroke-width="4"/>
+<line x1="1599" y1="418" x2="1599" y2="610" stroke="#7a4820" stroke-width="4"/>
+<line x1="1477" y1="514" x2="1547" y2="514" stroke="#7a4820" stroke-width="4"/>
+<line x1="1563" y1="514" x2="1633" y2="514" stroke="#7a4820" stroke-width="4"/>
+<!-- Lower panel -->
+<rect x="1481" y="618" width="148" height="148" rx="2" fill="#70380c" opacity="0.20"/>
+<rect x="1473" y="614" width="164" height="152" rx="3" fill="none" stroke="#4a2408" stroke-width="2" opacity="0.45"/>
+<!-- Door knob -->
+<circle cx="1473" cy="610" r="11" fill="#c0a030" stroke="#a08020" stroke-width="2"/>
+<circle cx="1473" cy="610" r="5.5" fill="#e0c040" opacity="0.75"/>
+<ellipse cx="1555" cy="782" rx="90" ry="18" fill="url(#gGarden)"/>
+<text x="1555" y="738" text-anchor="middle" font-family="Georgia,serif" font-size="16" fill="#2a5018" opacity="0.65" letter-spacing="1.5">TUIN</text>
+<text x="1555" y="716" text-anchor="middle" font-size="24" opacity="0.72">🌿</text>
 
-  <!-- ============ UPPER CABINETS ============ -->
-  <g transform="translate(1100, 100)">
-    <!-- Cabinet 1 -->
-    <rect width="200" height="280" fill="url(#cabinetGradient)" rx="5" filter="url(#shadow)"/>
-    <rect x="10" y="10" width="85" height="260" fill="#C4A35A" rx="3"/>
-    <rect x="105" y="10" width="85" height="260" fill="#C4A35A" rx="3"/>
-    <circle cx="85" cy="140" r="8" fill="#B8860B"/>
-    <circle cx="115" cy="140" r="8" fill="#B8860B"/>
+<!-- ── LIVINGROOM DOOR ── -->
+<rect x="1692" y="404" width="186" height="380" rx="6" fill="#a8a490" filter="url(#hShadow)"/>
+<rect x="1695" y="407" width="180" height="374" rx="5" fill="none" stroke="#7a4820" stroke-width="8"/>
+<rect x="1703" y="414" width="164" height="360" rx="3" fill="url(#hDoorWood)"/>
+<rect x="1714" y="425" width="142" height="140" rx="3" fill="none" stroke="#4a2408" stroke-width="2" opacity="0.55"/>
+<rect x="1714" y="578" width="142" height="184" rx="3" fill="none" stroke="#4a2408" stroke-width="2" opacity="0.55"/>
+<!-- TV screen hint in upper panel -->
+<rect x="1724" y="434" width="122" height="84"  rx="5" fill="#111" opacity="0.28"/>
+<rect x="1728" y="438" width="114" height="76"  rx="3" fill="#181828" opacity="0.32"/>
+<rect x="1722" y="586" width="126" height="168" rx="2" fill="#a07828" opacity="0.15"/>
+<!-- Door knob -->
+<circle cx="1703" cy="610" r="11" fill="#c0a030" stroke="#a08020" stroke-width="2"/>
+<circle cx="1703" cy="610" r="5.5" fill="#e0c040" opacity="0.75"/>
+<ellipse cx="1785" cy="782" rx="90" ry="18" fill="url(#gLivingroom)"/>
+<text x="1785" y="738" text-anchor="middle" font-family="Georgia,serif" font-size="16" fill="#3a1e08" opacity="0.65" letter-spacing="1.5">WOONKAMER</text>
+<text x="1785" y="716" text-anchor="middle" font-size="24" opacity="0.72">📺</text>
 
-    <!-- Cabinet 2 -->
-    <g transform="translate(220, 0)">
-      <rect width="200" height="280" fill="url(#cabinetGradient)" rx="5" filter="url(#shadow)"/>
-      <rect x="10" y="10" width="85" height="260" fill="#C4A35A" rx="3"/>
-      <rect x="105" y="10" width="85" height="260" fill="#C4A35A" rx="3"/>
-      <circle cx="85" cy="140" r="8" fill="#B8860B"/>
-      <circle cx="115" cy="140" r="8" fill="#B8860B"/>
-    </g>
-  </g>
+<!-- ═══════════════════════════════════════════════════════
+     FINISHING TOUCHES
+     ═══════════════════════════════════════════════════════ -->
 
-  <!-- ============ KITCHEN COUNTER ============ -->
-  <rect x="1050" y="500" width="520" height="250" fill="url(#counterGradient)" filter="url(#shadow)"/>
-  <rect x="1050" y="500" width="520" height="15" fill="#404040"/>
-  <!-- Counter surface reflection -->
-  <rect x="1055" y="501" width="510" height="8" fill="#555" opacity="0.3"/>
+<!-- Small framed photo on left wall strip -->
+<rect x="480" y="260" width="56" height="74" rx="3" fill="#5a3010" stroke="#4a2008" stroke-width="3"/>
+<rect x="485" y="205" width="46" height="64" rx="2" fill="#88b0c0" opacity="0.75"/>
 
-  <!-- Counter backsplash tiles -->
-  <g transform="translate(1050, 400)">
-    <rect width="520" height="100" fill="#E0E0E0"/>
-    <g stroke="#CCC" stroke-width="1" fill="none">
-      <rect x="10" y="10" width="40" height="40"/>
-      <rect x="60" y="10" width="40" height="40"/>
-      <rect x="110" y="10" width="40" height="40"/>
-      <rect x="160" y="10" width="40" height="40"/>
-      <rect x="210" y="10" width="40" height="40"/>
-      <rect x="260" y="10" width="40" height="40"/>
-      <rect x="310" y="10" width="40" height="40"/>
-      <rect x="360" y="10" width="40" height="40"/>
-      <rect x="410" y="10" width="40" height="40"/>
-      <rect x="460" y="10" width="40" height="40"/>
-      <rect x="10" y="55" width="40" height="40"/>
-      <rect x="60" y="55" width="40" height="40"/>
-      <rect x="110" y="55" width="40" height="40"/>
-      <rect x="160" y="55" width="40" height="40"/>
-      <rect x="210" y="55" width="40" height="40"/>
-      <rect x="260" y="55" width="40" height="40"/>
-      <rect x="310" y="55" width="40" height="40"/>
-      <rect x="360" y="55" width="40" height="40"/>
-      <rect x="410" y="55" width="40" height="40"/>
-      <rect x="460" y="55" width="40" height="40"/>
-    </g>
-  </g>
+<!-- Calendar on right wall strip between doors -->
+<rect x="1440" y="260" width="72" height="88" rx="3" fill="#f0f0e8" stroke="#9a8058" stroke-width="2"/>
+<rect x="1441" y="260" width="70" height="22" rx="2" fill="#b03020"/>
+<text x="1476" y="277" text-anchor="middle" font-family="sans-serif" font-size="13" fill="#fff">MAR</text>
+<text x="1476" y="322" text-anchor="middle" font-family="sans-serif" font-size="30" font-weight="bold" fill="#333">4</text>
 
-  <!-- ============ ESPRESSO MACHINE (enhanced) ============ -->
-  <g transform="translate(1200, 380)">
-    <!-- Machine body -->
-    <rect width="140" height="120" fill="url(#coffeeGradient)" rx="8" filter="url(#shadow)"/>
-    <!-- Chrome highlight -->
-    <rect x="3" y="3" width="134" height="4" fill="#E0E0E0" opacity="0.5" rx="2"/>
-    <rect x="10" y="10" width="120" height="60" fill="#333" rx="5"/>
-
-    <!-- Display with blinking cursor -->
-    <rect x="20" y="20" width="60" height="30" fill="#001a00" rx="3"/>
-    <text x="30" y="42" fill="#00ff00" font-family="monospace" font-size="14">READY</text>
-    <!-- Blinking LED -->
-    <circle cx="72" cy="45" r="3" fill="#00ff00">
-      <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
-    </circle>
-
-    <!-- Buttons -->
-    <circle cx="100" cy="35" r="10" fill="#222"/>
-    <circle cx="100" cy="35" r="8" fill="#4a4a4a"/>
-    <!-- Power indicator LED -->
-    <circle cx="115" cy="20" r="2" fill="#FF4444">
-      <animate attributeName="fill" values="#FF4444;#FF6666;#FF4444" dur="2s" repeatCount="indefinite"/>
-    </circle>
-
-    <!-- Drip tray with coffee drip stain -->
-    <rect x="30" y="80" width="80" height="30" fill="#222" rx="3"/>
-    <ellipse cx="70" cy="90" rx="8" ry="3" fill="#3a2010" opacity="0.4"/>
-
-    <!-- Cup -->
-    <g transform="translate(50, 75)">
-      <path d="M0,35 L5,0 L35,0 L40,35 Z" fill="#F5F5F5"/>
-      <ellipse cx="20" cy="5" rx="15" ry="5" fill="#E8E8E8"/>
-      <path d="M40,10 Q55,15 40,25" fill="none" stroke="#F5F5F5" stroke-width="4"/>
-      <!-- Coffee level in cup -->
-      <ellipse cx="20" cy="8" rx="12" ry="4" fill="#3C1A00" opacity="0.6"/>
-    </g>
-
-    <!-- Steam wisps (multiple, varying) -->
-    <g opacity="0.4" fill="none" stroke="#FFF" stroke-width="2" filter="url(#steamBlur)">
-      <path d="M65,60 Q60,50 65,40 Q70,30 65,20">
-        <animate attributeName="d" dur="2.5s" repeatCount="indefinite"
-          values="M65,60 Q60,50 65,40 Q70,30 65,20;
-                  M65,60 Q70,50 65,40 Q60,30 65,20;
-                  M65,60 Q60,50 65,40 Q70,30 65,20"/>
-        <animate attributeName="opacity" values="0.4;0.15;0.35;0.2;0.4" dur="2.5s" repeatCount="indefinite"/>
-      </path>
-      <path d="M75,58 Q80,48 75,38 Q70,28 75,18">
-        <animate attributeName="d" dur="3s" repeatCount="indefinite"
-          values="M75,58 Q80,48 75,38 Q70,28 75,18;
-                  M75,58 Q70,48 75,38 Q80,28 75,18;
-                  M75,58 Q80,48 75,38 Q70,28 75,18"/>
-        <animate attributeName="opacity" values="0.3;0.1;0.3;0.2;0.3" dur="3s" repeatCount="indefinite"/>
-      </path>
-      <path d="M58,55 Q53,45 58,35 Q63,25 58,15" opacity="0.2">
-        <animate attributeName="d" dur="3.5s" repeatCount="indefinite"
-          values="M58,55 Q53,45 58,35 Q63,25 58,15;
-                  M58,55 Q63,45 58,35 Q53,25 58,15;
-                  M58,55 Q53,45 58,35 Q63,25 58,15"/>
-        <animate attributeName="opacity" values="0.2;0.05;0.15;0.1;0.2" dur="3.5s" repeatCount="indefinite"/>
-      </path>
-    </g>
-    <!-- Rising steam that fades up -->
-    <g opacity="0" fill="#fff" filter="url(#steamBlur)">
-      <ellipse cx="70" cy="5" rx="20" ry="8">
-        <animate attributeName="opacity" values="0;0.08;0.05;0;0" dur="6s" repeatCount="indefinite"/>
-        <animateTransform attributeName="transform" type="translate" values="0,0;5,-20;-3,-40" dur="6s" repeatCount="indefinite"/>
-      </ellipse>
-    </g>
-  </g>
-
-  <!-- ============ SINK ============ -->
-  <g transform="translate(1400, 480)">
-    <rect width="150" height="80" fill="#A0A0A0" rx="5"/>
-    <rect x="10" y="10" width="130" height="60" fill="#707070" rx="3"/>
-    <!-- Faucet -->
-    <rect x="60" y="-40" width="30" height="50" fill="#C0C0C0" rx="3"/>
-    <path d="M75,-40 L75,-60 Q75,-70 95,-70 L95,-60" fill="none" stroke="#C0C0C0" stroke-width="10" stroke-linecap="round"/>
-    <!-- Chrome reflection on faucet -->
-    <rect x="62" y="-38" width="4" height="45" fill="#E8E8E8" opacity="0.4" rx="1"/>
-    <!-- Dripping faucet -->
-    <circle cx="95" cy="-52" r="2.5" fill="#5F9EA0" opacity="0">
-      <animate attributeName="cy" values="-52;-52;-52;10" dur="4s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values="0;0;0.5;0" dur="4s" repeatCount="indefinite"/>
-      <animate attributeName="r" values="2.5;2.5;2.5;0.5" dur="4s" repeatCount="indefinite"/>
-    </circle>
-  </g>
-
-  <!-- ============ DOOR TO MANCAVE (Right) ============ -->
-  <g transform="translate(1700, 200)">
-    <rect x="-10" y="-10" width="180" height="570" fill="#3D2817"/>
-    <rect width="160" height="550" fill="url(#doorGradient)" rx="3"/>
-
-    <!-- Door panels -->
-    <rect x="15" y="20" width="130" height="200" fill="#5D4037" rx="2"/>
-    <rect x="20" y="25" width="120" height="190" fill="#4E342E"/>
-
-    <rect x="15" y="250" width="130" height="200" fill="#5D4037" rx="2"/>
-    <rect x="20" y="255" width="120" height="190" fill="#4E342E"/>
-
-    <!-- Door handle -->
-    <ellipse cx="140" cy="300" rx="12" ry="8" fill="#B8860B"/>
-    <circle cx="140" cy="300" r="5" fill="#8B6914"/>
-    <!-- Handle highlight -->
-    <ellipse cx="138" cy="298" rx="3" ry="2" fill="#DAA520" opacity="0.5"/>
-
-    <!-- Small sign with glow -->
-    <rect x="50" y="470" width="60" height="30" fill="#2F2F2F" rx="2"/>
-    <text x="58" y="492" fill="#00FF00" font-family="monospace" font-size="12">MANCAVE</text>
-    <rect x="52" y="472" width="56" height="26" fill="#00FF00" opacity="0.03" rx="1">
-      <animate attributeName="opacity" values="0.03;0.06;0.03" dur="3s" repeatCount="indefinite"/>
-    </rect>
-  </g>
-
-  <!-- ============ DOOR TO GARDEN (Left) ============ -->
-  <g transform="translate(50, 200)">
-    <rect x="-10" y="-10" width="180" height="570" fill="#3D2817"/>
-    <rect width="160" height="550" fill="url(#doorGradient)" rx="3"/>
-
-    <!-- Glass panels with light shimmer -->
-    <rect x="15" y="20" width="130" height="250" fill="#87CEEB" opacity="0.6" rx="2"/>
-    <rect x="15" y="20" width="130" height="250" fill="none" stroke="#5D4037" stroke-width="8"/>
-    <!-- Sun reflection glint on glass -->
-    <rect x="20" y="25" width="20" height="60" fill="#fff" opacity="0" rx="2">
-      <animate attributeName="opacity" values="0;0;0.15;0;0;0;0;0" dur="10s" repeatCount="indefinite"/>
-    </rect>
-
-    <!-- Grid pattern on glass -->
-    <line x1="80" y1="20" x2="80" y2="270" stroke="#5D4037" stroke-width="5"/>
-    <line x1="15" y1="100" x2="145" y2="100" stroke="#5D4037" stroke-width="5"/>
-    <line x1="15" y1="180" x2="145" y2="180" stroke="#5D4037" stroke-width="5"/>
-
-    <!-- View through glass - garden hint -->
-    <rect x="20" y="180" width="55" height="85" fill="#228B22" opacity="0.5"/>
-    <rect x="85" y="180" width="55" height="85" fill="#228B22" opacity="0.5"/>
-
-    <!-- Lower panel -->
-    <rect x="15" y="290" width="130" height="240" fill="#5D4037" rx="2"/>
-    <rect x="20" y="295" width="120" height="230" fill="#4E342E"/>
-
-    <!-- Door handle -->
-    <ellipse cx="140" cy="320" rx="12" ry="8" fill="#B8860B"/>
-    <circle cx="140" cy="320" r="5" fill="#8B6914"/>
-  </g>
-
-  <!-- ============ DOOR TO LIVING ROOM (Left-Center) ============ -->
-  <g transform="translate(250, 200)">
-    <rect x="-10" y="-10" width="180" height="570" fill="#3D2817"/>
-    <rect width="160" height="550" fill="url(#doorGradient)" rx="3"/>
-
-    <!-- Door panels -->
-    <rect x="15" y="20" width="130" height="200" fill="#5D4037" rx="2"/>
-    <rect x="20" y="25" width="120" height="190" fill="#4E342E"/>
-
-    <rect x="15" y="250" width="130" height="200" fill="#5D4037" rx="2"/>
-    <rect x="20" y="255" width="120" height="190" fill="#4E342E"/>
-
-    <!-- Door handle -->
-    <ellipse cx="20" cy="300" rx="12" ry="8" fill="#B8860B"/>
-    <circle cx="20" cy="300" r="5" fill="#8B6914"/>
-
-    <!-- Small sign -->
-    <rect x="40" y="470" width="80" height="30" fill="#2F2F2F" rx="2"/>
-    <text x="48" y="492" fill="#FFD700" font-family="monospace" font-size="11">LIVING ROOM</text>
-  </g>
-
-  <!-- ============ KITCHEN TABLE ============ -->
-  <g transform="translate(600, 550)">
-    <!-- Table top -->
-    <ellipse cx="150" cy="20" rx="180" ry="40" fill="#8B4513" filter="url(#shadow)"/>
-    <ellipse cx="150" cy="15" rx="170" ry="35" fill="#A0522D"/>
-    <!-- Table surface gloss -->
-    <ellipse cx="130" cy="10" rx="80" ry="15" fill="#B8742D" opacity="0.2"/>
-
-    <!-- Table leg -->
-    <rect x="130" y="50" width="40" height="150" fill="#654321"/>
-    <ellipse cx="150" cy="200" rx="60" ry="15" fill="#4E342E"/>
-
-    <!-- Items on table -->
-    <!-- Newspaper -->
-    <g transform="translate(50, -20) rotate(-10)">
-      <rect width="100" height="70" fill="#F5F5F5"/>
-      <rect x="5" y="5" width="90" height="15" fill="#333"/>
-      <line x1="5" y1="25" x2="95" y2="25" stroke="#CCC" stroke-width="2"/>
-      <line x1="5" y1="35" x2="60" y2="35" stroke="#CCC" stroke-width="2"/>
-      <line x1="5" y1="45" x2="80" y2="45" stroke="#CCC" stroke-width="2"/>
-      <line x1="5" y1="55" x2="70" y2="55" stroke="#CCC" stroke-width="2"/>
-    </g>
-
-    <!-- Apple with highlight -->
-    <ellipse cx="220" cy="-5" rx="20" ry="18" fill="#DC143C"/>
-    <ellipse cx="215" cy="-12" rx="5" ry="4" fill="#FF4040" opacity="0.4"/>
-    <path d="M220,-23 Q225,-30 220,-25" stroke="#228B22" stroke-width="3" fill="none"/>
-
-    <!-- Coffee ring stain on table (lived-in feel) -->
-    <ellipse cx="280" cy="0" rx="18" ry="16" fill="none" stroke="#7B5B3A" stroke-width="2" opacity="0.15"/>
-  </g>
-
-  <!-- ============ CHAIR ============ -->
-  <g transform="translate(700, 680)">
-    <rect x="20" y="0" width="80" height="10" fill="#8B4513" rx="2"/>
-    <rect x="0" y="10" width="15" height="80" fill="#654321"/>
-    <rect x="105" y="10" width="15" height="80" fill="#654321"/>
-    <rect x="20" y="-80" width="80" height="80" fill="#A0522D" rx="3"/>
-  </g>
-
-  <!-- ============ CLOCK ON WALL (now with ticking second hand) ============ -->
-  <g transform="translate(350, 150)">
-    <circle r="50" fill="#F5F5F5" stroke="#5D4037" stroke-width="8"/>
-    <circle r="5" fill="#333"/>
-    <!-- Hour marks -->
-    <g stroke="#333" stroke-width="3">
-      <line x1="0" y1="-40" x2="0" y2="-35"/>
-      <line x1="0" y1="40" x2="0" y2="35"/>
-      <line x1="-40" y1="0" x2="-35" y2="0"/>
-      <line x1="40" y1="0" x2="35" y2="0"/>
-      <!-- Minor marks -->
-      <line x1="20" y1="-35" x2="18" y2="-31" stroke-width="1.5"/>
-      <line x1="-20" y1="-35" x2="-18" y2="-31" stroke-width="1.5"/>
-      <line x1="35" y1="-20" x2="31" y2="-18" stroke-width="1.5"/>
-      <line x1="35" y1="20" x2="31" y2="18" stroke-width="1.5"/>
-      <line x1="-35" y1="20" x2="-31" y2="18" stroke-width="1.5"/>
-      <line x1="-35" y1="-20" x2="-31" y2="-18" stroke-width="1.5"/>
-      <line x1="20" y1="35" x2="18" y2="31" stroke-width="1.5"/>
-      <line x1="-20" y1="35" x2="-18" y2="31" stroke-width="1.5"/>
-    </g>
-    <!-- Hour hand - 8:15 -->
-    <line x1="0" y1="0" x2="0" y2="-25" stroke="#333" stroke-width="4" stroke-linecap="round"/>
-    <!-- Minute hand -->
-    <line x1="0" y1="0" x2="20" y2="0" stroke="#333" stroke-width="2" stroke-linecap="round"/>
-    <!-- Second hand (ticking) -->
-    <line x1="0" y1="5" x2="0" y2="-35" stroke="#CC0000" stroke-width="1" stroke-linecap="round">
-      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="60s" repeatCount="indefinite"/>
-    </line>
-    <circle r="3" fill="#CC0000"/>
-  </g>
-
-  <!-- ============ FRUIT BOWL on counter ============ -->
-  <g transform="translate(1100, 470)">
-    <!-- Bowl -->
-    <ellipse cx="40" cy="30" rx="45" ry="15" fill="#DEB887"/>
-    <path d="M-5,30 Q0,0 40,-5 Q80,0 85,30" fill="#CD853F"/>
-    <!-- Orange -->
-    <circle cx="25" cy="15" r="14" fill="#FF8C00"/>
-    <circle cx="22" cy="12" r="3" fill="#FFA040" opacity="0.4"/>
-    <!-- Banana -->
-    <path d="M45,10 Q65,-5 75,15" fill="#FFD700" stroke="#DAA520" stroke-width="2"/>
-    <!-- Apple -->
-    <circle cx="55" cy="18" r="12" fill="#DC143C"/>
-  </g>
-
-  <!-- ============ KITCHEN TOWEL hanging ============ -->
-  <g transform="translate(1560, 420)">
-    <rect x="0" y="-5" width="30" height="5" fill="#666"/>
-    <rect x="5" y="0" width="20" height="60" fill="#E8E8E8" rx="2">
-      <animateTransform attributeName="transform" type="rotate" values="-0.5,15,0;0.5,15,0;-0.5,15,0" dur="5s" repeatCount="indefinite"/>
-    </rect>
-    <line x1="8" y1="15" x2="22" y2="15" stroke="#CC4444" stroke-width="2"/>
-    <line x1="8" y1="20" x2="22" y2="20" stroke="#CC4444" stroke-width="2"/>
-  </g>
-
-  <!-- ============ DOG BOWL near table ============ -->
-  <g transform="translate(480, 870)">
-    <ellipse cx="30" cy="10" rx="35" ry="12" fill="#A0A0A0"/>
-    <ellipse cx="30" cy="5" rx="30" ry="10" fill="#B0B0B0"/>
-    <ellipse cx="30" cy="5" rx="22" ry="7" fill="#5F9EA0" opacity="0.4"/>
-    <text x="12" y="20" fill="#666" font-family="sans-serif" font-size="8" font-weight="bold">DOG</text>
-  </g>
-
-  <!-- ============ ATMOSPHERIC OVERLAYS ============ -->
-  <!-- Subtle warm colour wash -->
-  <rect width="1920" height="1080" fill="#FFE082" opacity="0.02"/>
-
-  <!-- Ambient light effect -->
-  <rect width="1920" height="1080" fill="url(#skyGradient)" opacity="0.03"/>
-
-  <!-- Vignette -->
-  <rect width="1920" height="1080" fill="url(#vignetteRadial)"/>
-
+<!-- Vignette -->
+<rect x="0" y="0" width="1920" height="1080" fill="url(#hVig)"/>
 </svg>

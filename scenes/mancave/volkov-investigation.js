@@ -87,7 +87,7 @@ window.MancaveVolkovInvestigation = (function () {
 
         MC.revealDialogue(openDiv, [
             { speaker: 'Ryan', text: 'Three allies on board. Now... who is Volkov, really?' },
-            { speaker: '', text: '*Opens evidence files, searching for clues*' },
+            { speaker: 'Narrator', text: '*Opens evidence files, searching for clues*' },
             { speaker: 'Ryan', text: 'Scanning email metadata... here! Internal email flagged:' }
         ], { pauseBetween: 2000, useTTS: true });
 
