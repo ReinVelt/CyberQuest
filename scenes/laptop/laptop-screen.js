@@ -121,7 +121,10 @@ window.LaptopScreen = (function () {
         @keyframes ls-up      { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
 
         .ls-wrap {
-            position:fixed; inset:0; z-index:9600;
+            position:absolute;
+            left:8.8%; top:8.36%; width:82.4%; height:79.4%;
+            border-radius:4px;
+            z-index:9600;
             background:#07090f;
             display:flex; flex-direction:column;
             font-family:'Courier New',monospace;
@@ -812,7 +815,7 @@ window.LaptopScreen = (function () {
 
         _css();
         _el = _build(game, opts);
-        document.body.appendChild(_el);
+        (document.getElementById('scene-container') || document.body).appendChild(_el);
         _startAudio();
 
         // Auto-close in accessibility/movie mode after narrative + 8s reading time
