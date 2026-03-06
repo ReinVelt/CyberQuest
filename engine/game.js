@@ -505,12 +505,6 @@ class CyberQuestEngine {
         // Advance the game clock to match this scene's timeline
         this._applySceneClock(sceneId);
         
-        // Auto-save on every scene transition (silent — no notification)
-        // Skip during loadGame() to avoid redundant write
-        if (!skipAutoSave) {
-            this.saveGame(true);
-        }
-        
         // Load background
         const bgElement = document.getElementById('scene-background');
         
@@ -564,6 +558,11 @@ class CyberQuestEngine {
             } catch (err) {
                 console.error(`Error in onEnter for scene ${sceneId}:`, err);
             }
+        }
+
+        // Auto-save AFTER onEnter so flags set during entry are captured
+        if (!skipAutoSave) {
+            this._autoSave();
         }
         
         // ── Cinematic transition in ──
@@ -2239,6 +2238,33 @@ class CyberQuestEngine {
     }
     
     // Save/Load
+    /**
+     * Silent autosave to the dedicated autosave slot ('cyberquest_autosave').
+     * Called after every scene transition, post-onEnter, so all entry flags are captured.
+     */
+    _autoSave() {
+        try {
+            if (!this._storage) return;
+            if (this.evidenceViewer && Array.isArray(this.evidenceViewer.documentHistory)) {
+                this.gameState.evidenceViewed = [...this.evidenceViewer.documentHistory];
+            }
+            const saveData = {
+                version: this._saveVersion,
+                slot: 0,
+                slotLabel: 'Autosave',
+                currentScene: this.currentScene,
+                inventory: this.inventory,
+                gameState: this.gameState,
+                voiceEnabled: this.voiceEnabled,
+                timestamp: new Date().toISOString()
+            };
+            this._storage.setItem('cyberquest_autosave', JSON.stringify(saveData));
+            console.log(`[Autosave] scene=${this.currentScene}, flags=${Object.keys(this.gameState.flags).length}, quests=${this.gameState.activeQuests.length}`);
+        } catch (err) {
+            console.error('[Autosave] Failed:', err);
+        }
+    }
+
     saveGame(silent = false, slot = 0) {
         try {
             if (!this._storage) {
@@ -2279,11 +2305,18 @@ class CyberQuestEngine {
     
     loadGame(slot = 0) {
         try {
-            // Try the requested slot; for slot 1 fall back to the legacy key for migration
-            const key = this._getSaveKey(slot);
-            let raw = this._storage ? this._storage.getItem(key) : null;
-            if (!raw && slot === 1) {
-                raw = this._storage ? this._storage.getItem('cyberquest_save') : null;
+            // Slot 0 = autosave; slots 1-3 = named slots
+            let raw;
+            if (!slot || slot < 1) {
+                // Load from dedicated autosave key; fall back to legacy key
+                raw = this._storage ? this._storage.getItem('cyberquest_autosave') : null;
+                if (!raw) raw = this._storage ? this._storage.getItem('cyberquest_save') : null;
+            } else {
+                const key = this._getSaveKey(slot);
+                raw = this._storage ? this._storage.getItem(key) : null;
+                if (!raw && slot === 1) {
+                    raw = this._storage ? this._storage.getItem('cyberquest_save') : null;
+                }
             }
             if (!raw) {
                 this.showNotification('No save file found.');
@@ -2412,7 +2445,38 @@ class CyberQuestEngine {
 
         const NUM_SLOTS = 3;
 
-        // Read existing slot data for display
+        // ── Autosave slot (slot 0) ──────────────────────────────────────────────
+        let autoSaveCard;
+        const autoRaw = this._storage
+            ? (this._storage.getItem('cyberquest_autosave') || this._storage.getItem('cyberquest_save'))
+            : null;
+        if (autoRaw) {
+            try {
+                const d = JSON.parse(autoRaw);
+                const sceneName = (d.currentScene || '—').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                const ts = d.timestamp ? new Date(d.timestamp).toLocaleString() : '—';
+                const loadBtn = `<button class="slot-action-btn" data-slot="0" data-action="load">Load</button>`;
+                const saveNote = `<div class="slot-card__info slot-card__info--empty" style="font-size:0.8em;">Auto-managed</div>`;
+                autoSaveCard = `
+                    <div class="slot-card slot-card--autosave" data-slot="0" style="border-color:rgba(0,200,120,0.4)">
+                        <div class="slot-card__header">
+                            <span class="slot-card__number" style="color:#00c878;">⟳ Autosave</span>
+                        </div>
+                        <div class="slot-card__scene">${sceneName}</div>
+                        <div class="slot-card__meta">Part ${d.gameState?.storyPart ?? '?'}</div>
+                        <div class="slot-card__timestamp">${ts}</div>
+                        ${mode === 'load' ? loadBtn : saveNote}
+                    </div>`;
+            } catch { autoSaveCard = ''; }
+        } else {
+            autoSaveCard = `
+                <div class="slot-card slot-card--empty slot-card--autosave" data-slot="0" style="border-color:rgba(0,200,120,0.2)">
+                    <span class="slot-card__number" style="color:#00c878;">⟳ Autosave</span>
+                    <div class="slot-card__info slot-card__info--empty">— No autosave yet —</div>
+                </div>`;
+        }
+
+        // ── Named slots 1-3 ────────────────────────────────────────────────────
         const slots = [];
         for (let i = 1; i <= NUM_SLOTS; i++) {
             const key = this._getSaveKey(i);
@@ -2456,7 +2520,7 @@ class CyberQuestEngine {
 
         const title = mode === 'save' ? '💾 Save Game' : '📂 Load Game';
 
-        const cardsHtml = slots.map(s => {
+        const namedCardsHtml = slots.map(s => {
             if (s.empty) {
                 return `
                     <div class="slot-card slot-card--empty" data-slot="${s.slot}">
@@ -2480,6 +2544,8 @@ class CyberQuestEngine {
                         : `<button class="slot-action-btn" data-slot="${s.slot}" data-action="load">Load</button>`}
                 </div>`;
         }).join('');
+
+        const cardsHtml = autoSaveCard + namedCardsHtml;
 
         const modal = document.createElement('div');
         modal.id = 'save-slot-modal';

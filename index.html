@@ -376,8 +376,8 @@
             loadingScreen.classList.add('hidden');
             titleScreen.classList.add('visible');
             
-            // Check for saved game
-            const savedGame = localStorage.getItem('cyberquest_save');
+            // Check for saved game (autosave slot takes priority over legacy slot)
+            const savedGame = localStorage.getItem('cyberquest_autosave') || localStorage.getItem('cyberquest_save');
             if (savedGame) {
                 document.getElementById('btn-continue').disabled = false;
             }
@@ -441,6 +441,7 @@
             titleScreen.classList.remove('visible');
             
             // Clear any existing save
+            localStorage.removeItem('cyberquest_autosave');
             localStorage.removeItem('cyberquest_save');
             
             // Clear URL hash so loadGameState() inside init() does not
