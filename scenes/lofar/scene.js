@@ -1,5 +1,5 @@
 /**
- * Scene: LOFAR Superterp — Low Frequency Array Core
+ * Scene: Lofar Superterp — Low Frequency Array Core
  * ═══════════════════════════════════════════════════════════
  * Accessible by day drive after visiting ASTRON.
  * Educational scene about digital beamforming and signal processing.
@@ -11,11 +11,11 @@
 
 const LofarScene = {
     id: 'lofar',
-    name: 'LOFAR Superterp',
+    name: 'Lofar Superterp',
 
     background: 'assets/images/scenes/lofar.svg',
 
-    description: 'The LOFAR Superterp: six stations of low-frequency antennas clustered in a Dutch field. No dishes — just thousands of small antennas, listening to the universe in radio.',
+    description: 'The Lofar Superterp: six stations of low-frequency antennas clustered in a Dutch field. No dishes — just thousands of small antennas, listening to the universe in radio.',
 
     playerStart: { x: 15, y: 80 },
 
@@ -26,13 +26,13 @@ const LofarScene = {
         "Thousands of antennas. No moving parts. Just mathematics.",
         "Digital beamforming — pointing a telescope with software.",
         "The radio-quiet zone protects these sensitive receivers.",
-        "LOFAR can see the entire sky at once. Incredible.",
+        "Lofar can see the entire sky at once. Incredible.",
         "These antennas listen to frequencies most people ignore.",
         "Cees knows this system inside out.",
         "The computing power here rivals a small supercomputer.",
         "Nature and technology side by side. Very Dutch.",
         "Same principles as radar. Same principles as Project Echo.",
-        "If Echo operates in the RF spectrum, LOFAR could detect it."
+        "If Echo operates in the RF spectrum, Lofar could detect it."
     ],
 
     hotspots: [
@@ -86,7 +86,7 @@ const LofarScene = {
                     { speaker: 'Cees', text: 'Each station digitizes all antennas simultaneously. 200 MHz bandwidth. 16-bit ADC.' },
                     { speaker: 'Cees', text: 'The data streams to our central processor in Groningen via dedicated fibre.' },
                     { speaker: 'Ryan', text: 'How much data?' },
-                    { speaker: 'Cees', text: 'At full rate? About 13 terabits per second. The entire LOFAR array generates more data per day than the Large Hadron Collider.' },
+                    { speaker: 'Cees', text: 'At full rate? About 13 terabits per second. The entire Lofar array generates more data per day than the Large Hadron Collider.' },
                     { speaker: 'Ryan', text: 'And you can point this at anything. Retroactively.' },
                     { speaker: 'Cees', text: 'That\'s the beauty of digital beamforming. The data is everything, everywhere, all at once. We decide WHERE to look after the fact.' }
                 ]);
@@ -105,13 +105,13 @@ const LofarScene = {
                     game.setFlag('lofar_briefing_complete', true);
                     game.startDialogue([
                         { speaker: 'Cees', text: 'Ryan, I wanted to show you this in person.' },
-                        { speaker: 'Cees', text: 'LOFAR has 52 stations across Europe. 38 in the Netherlands, 14 international.' },
+                        { speaker: 'Cees', text: 'Lofar has 52 stations across Europe. 38 in the Netherlands, 14 international.' },
                         { speaker: 'Cees', text: 'Each station is an array of antennas that work together through software.' },
                         { speaker: 'Ryan', text: 'Digital beamforming. Like a giant interferometer.' },
                         { speaker: 'Cees', text: 'Exactly. And here\'s what matters for our situation:' },
                         { speaker: 'Cees', text: 'The same mathematics that let us image distant galaxies can detect artificial RF patterns.' },
-                        { speaker: 'Cees', text: 'Project Echo operates in frequencies that LOFAR was built to observe.' },
-                        { speaker: 'Ryan', text: 'You\'re saying LOFAR could detect Echo if it activates?' },
+                        { speaker: 'Cees', text: 'Project Echo operates in frequencies that Lofar was built to observe.' },
+                        { speaker: 'Ryan', text: 'You\'re saying Lofar could detect Echo if it activates?' },
                         { speaker: 'Cees', text: 'Not just detect. Characterize. Map the beam pattern. Measure the power output.' },
                         { speaker: 'Cees', text: 'I\'ve already set up a monitoring pipeline. If Echo transmits, we\'ll have scientific proof in minutes.' },
                         { speaker: 'Ryan', text: 'That\'s... incredibly useful. Hard evidence that even intelligence agencies can\'t dispute.' },
@@ -168,7 +168,7 @@ const LofarScene = {
         }
     ],
 
-    // ── Audio: LOFAR field ambience ── 
+    // ── Audio: Lofar field ambience ── 
     _audioCtx: null,
     _audioNodes: [],
     _audioIntervals: [],
@@ -248,7 +248,7 @@ const LofarScene = {
             }, 3500));
 
         } catch (e) {
-            console.warn('[LOFAR] Audio failed:', e);
+            console.warn('[Lofar] Audio failed:', e);
         }
     },
 
@@ -273,9 +273,9 @@ const LofarScene = {
             game.setFlag('first_lofar_visit', true);
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: '', text: 'LOFAR Superterp — Exloo, Drenthe' },
-                    { speaker: '', text: '*A vast field of antennas stretches to the horizon. No dishes — just rows of delicate metal structures and black tiles.*' },
-                    { speaker: 'Cees', text: 'Welcome to LOFAR, Ryan. The world\'s largest low-frequency radio telescope.' },
+                    { speaker: 'Narrator', text: 'Lofar Superterp — Exloo, Drenthe' },
+                    { speaker: 'Narrator', text: '*A vast field of antennas stretches to the horizon. No dishes — just rows of delicate metal structures and black tiles.*' },
+                    { speaker: 'Cees', text: 'Welcome to Lofar, Ryan. The world\'s largest low-frequency radio telescope.' },
                     { speaker: 'Cees', text: 'What you see here is the Superterp — the dense core. Six stations, thousands of antennas.' },
                     { speaker: 'Ryan', text: 'It doesn\'t look like a telescope at all.' },
                     { speaker: 'Cees', text: 'That\'s because it isn\'t one — it\'s thousands. Combined by math. Click around, I\'ll explain.' }

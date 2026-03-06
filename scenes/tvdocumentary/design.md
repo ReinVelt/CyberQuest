@@ -13,7 +13,7 @@
 An immersive full-screen TV viewing experience where Ryan watches a documentary about Drenthe's wireless technology pioneers. The documentary tells the story of three revolutionary technologies invented and developed in the Netherlands:
 
 1. **Modern Antenna Technology and Radio Astronomy** - Featuring Dr. David Prinsloo (TU Eindhoven)
-2. **LOFAR (Low-Frequency Array)** - Digital telescope array featuring Cees Bassa (ASTRON)
+2. **Lofar (Low-Frequency Array)** - Digital telescope array featuring Cees Bassa (ASTRON)
 3. **Bluetooth Protocol** - Wireless communication standard featuring Jaap Haartsen
 
 ---
@@ -32,9 +32,9 @@ An immersive full-screen TV viewing experience where Ryan watches a documentary 
 - **Profile:** https://research.tue.nl/nl/persons/david-prinsloo/
 
 ### Cees Bassa
-- **Role:** ASTRON Scientist, LOFAR Specialist
+- **Role:** ASTRON Scientist, Lofar Specialist
 - **Appearance:** Bald, white Dutch scientist, tiny round glasses, casual jacket
-- **Background:** 15+ years working with the LOFAR telescope system at ASTRON
+- **Background:** 15+ years working with the Lofar telescope system at ASTRON
 - **Specialty:** Digital beam-forming, phased array technology, signal processing, satellite tracking
 - **Major Discovery:** Discovered that SpaceX Starlink satellites leak unintended radio signals that interfere with radio astronomy observations
 - **Innovation:** Converted satellite radio interference into sound and video to demonstrate the problem
@@ -71,7 +71,7 @@ An immersive full-screen TV viewing experience where Ryan watches a documentary 
 - **Interview:** Dr. David Prinsloo (TU Eindhoven) explains antenna engineering, how radio astronomy principles led to modern wireless tech
 - **Legacy:** Techniques from radio astronomy now used in 5G, WiFi, and satellite communications
 
-### Chapter 2: LOFAR - Digital Telescope
+### Chapter 2: Lofar - Digital Telescope
 - **Location:** Core in Drenthe, array across Europe
 - **Built:** Early 2000s
 - **Technology:** 50,000+ simple antennas instead of giant dishes
@@ -201,7 +201,7 @@ The documentary provides real information about:
 - Making the invisible visible (or invisible work visible)
 
 ### Cross-pollination of Ideas
-- LOFAR techniques influenced Bluetooth
+- Lofar techniques influenced Bluetooth
 - WSRT algorithms influenced commercial tech
 - Astronomy research benefits everyday devices
 

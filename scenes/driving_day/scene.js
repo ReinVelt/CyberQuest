@@ -29,6 +29,7 @@ const DrivingDayScene = {
 
     // Store timeout IDs for cleanup
     _timeoutIds: [],
+    _wordRevealInterval: null,
 
     // ======= WEB AUDIO: RTV DRENTHE CAR RADIO =======
     _audioCtx: null,
@@ -365,68 +366,306 @@ const DrivingDayScene = {
         }
     },
 
+    // ── Radio display overlay ─────────────────────────────────────────────
+    _showRadioOverlay: function(bulletin, stationLabel, onSkip) {
+        const existing = document.getElementById('driving-radio-overlay');
+        if (existing) existing.remove();
+        if (this._wordRevealInterval) { clearInterval(this._wordRevealInterval); this._wordRevealInterval = null; }
+
+        const wrap = document.createElement('div');
+        wrap.id = 'driving-radio-overlay';
+        wrap.style.cssText = [
+            'position:absolute', 'top:16px', 'right:20px', 'width:360px',
+            'background:rgba(8,10,16,0.92)',
+            'border:1px solid rgba(80,160,255,0.28)',
+            'border-radius:10px', 'padding:14px 18px 12px',
+            'z-index:50', 'font-family:\'Courier New\',monospace', 'color:#c8e6ff',
+            'box-shadow:0 4px 28px rgba(0,60,160,0.45)',
+        ].join(';');
+
+        const hdr = document.createElement('div');
+        hdr.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:10px;border-bottom:1px solid rgba(80,160,255,0.18);padding-bottom:8px;';
+        const dot = document.createElement('span');
+        dot.style.cssText = 'width:8px;height:8px;border-radius:50%;background:#ff4444;flex-shrink:0;animation:radioPulse 1.2s ease-in-out infinite;';
+        const lbl = document.createElement('span');
+        lbl.style.cssText = 'font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:#7ab8e8;font-weight:bold;';
+        lbl.textContent = stationLabel || 'RTV DRENTHE — MIDDAG-NIEUWS';
+        const live = document.createElement('span');
+        live.style.cssText = 'margin-left:auto;font-size:11px;opacity:0.55;';
+        live.textContent = '▶ LIVE';
+        hdr.append(dot, lbl, live);
+
+        const txt = document.createElement('div');
+        txt.id = 'driving-radio-text';
+        txt.style.cssText = 'font-size:12.5px;line-height:1.75;color:#ddeeff;max-height:220px;overflow-y:auto;white-space:pre-wrap;word-break:break-word;';
+
+        const btn = document.createElement('button');
+        btn.textContent = 'Doorgaan »';
+        btn.style.cssText = [
+            'margin-top:10px', 'width:100%',
+            'background:rgba(30,60,130,0.55)',
+            'border:1px solid rgba(80,140,255,0.35)',
+            'border-radius:5px', 'color:#a8d0ff',
+            'font-family:\'Courier New\',monospace', 'font-size:11px',
+            'padding:5px 10px', 'cursor:pointer', 'letter-spacing:0.08em',
+        ].join(';');
+        btn.onclick = onSkip;
+
+        wrap.append(hdr, txt, btn);
+
+        if (!document.getElementById('driving-radio-style')) {
+            const s = document.createElement('style');
+            s.id = 'driving-radio-style';
+            s.textContent = '@keyframes radioPulse{0%,100%{opacity:1}50%{opacity:0.15}}';
+            document.head.appendChild(s);
+        }
+        (document.getElementById('scene-container') || document.body).appendChild(wrap);
+
+        // Word-by-word reveal
+        const words = bulletin.split(' ');
+        let i = 0;
+        this._wordRevealInterval = setInterval(() => {
+            const el = document.getElementById('driving-radio-text');
+            if (!el) { clearInterval(this._wordRevealInterval); return; }
+            if (i < words.length) { el.textContent += (i > 0 ? ' ' : '') + words[i++]; el.scrollTop = el.scrollHeight; }
+            else clearInterval(this._wordRevealInterval);
+        }, 110);
+    },
+
+    _removeRadioOverlay: function() {
+        const el = document.getElementById('driving-radio-overlay');
+        if (el) el.remove();
+        if (this._wordRevealInterval) { clearInterval(this._wordRevealInterval); this._wordRevealInterval = null; }
+    },
+
     /**
      * Speak the RTV Drenthe news bulletin via TTS.
-     * Returns a Promise that resolves when the bulletin finishes speaking,
-     * or after a short settling delay if this destination has no bulletin.
-     * The dialogue is chained onto this Promise so the news always plays
-     * first and cannot be interrupted by the dialogue click handler
-     * (which only becomes active once dialogue actually starts).
+     * Shows a radio display overlay and returns a Promise that resolves when
+     * the bulletin finishes speaking. The scene transition chains onto this Promise
+     * so the news always plays in full before the destination loads.
+     * A 'Doorgaan' skip button lets the player advance early.
      */
     _speakRadioNews: function(destination) {
-        // Build destination-specific bulletin
-        let bulletin = null;
-
-        if (destination === 'hackerspace' || destination === 'home_from_hackerspace') {
-            bulletin = 'RTV Drenthe, het nieuws. ' +
-                'Good evening. This is RTV Drenthe news. ' +
-                'The Hackerspace Drenthe community in Coevorden celebrated its second anniversary this month with a record number of visitors. ' +
-                'The maker space now hosts weekly sessions on 3D printing, electronics and mesh networking. ' +
-                'In related news, the municipality of Coevorden approved a grant for digital literacy workshops in rural communities. ' +
-                'And the weather. ' +
-                'Clear skies this evening, cooling to ten degrees. Light winds from the east. ' +
-                'That was RTV Drenthe. Back to the music.';
-        } else if (destination === 'astron') {
-            bulletin = 'RTV Drenthe, het nieuws. ' +
-                'Goedemiddag. ' +
-                'Good afternoon, this is RTV Drenthe news. ' +
-                'The Westerbork Synthesis Radio Telescope completed its annual maintenance cycle this week. ' +
-                'ASTRON reports all fourteen dishes are back online and calibrated for the summer observation season. ' +
-                'In other news, the province of Drenthe has approved new funding for the Radio Quiet Zone around the telescope array. ' +
-                'And now the weather. ' +
-                'Partly cloudy this afternoon with temperatures around sixteen degrees. ' +
-                'Light winds from the south-west. Dry through the evening. ' +
-                'That was RTV Drenthe. Music continues.';
-        } else if (destination !== 'wsrt_parking' && destination !== 'home_from_wsrt_parking') {
-            // Generic bulletin for all other destinations
-            bulletin = 'RTV Drenthe, het nieuws. ' +
-                'Good evening, this is RTV Drenthe news. ' +
-                'Local authorities in Emmen have announced roadworks on the N34 near Coevorden starting next week. ' +
-                'Expect delays of up to fifteen minutes during peak hours. ' +
-                'The Drenthe provincial council confirmed additional investment in fibre optic infrastructure for rural areas. ' +
-                'And the weather outlook. ' +
-                'Clear skies this evening, cooling to nine degrees overnight. ' +
-                'Tomorrow, sunshine with occasional clouds. Highs of seventeen. ' +
-                'That was RTV Drenthe. Back to the music.';
-        }
-
         const vm = window.voiceManager;
 
-        // Fire the bulletin TTS as a background side-effect after the jingle
-        // (8.5 s), but resolve the Promise immediately after a 1 s settle so
-        // dialogue starts quickly on every route. The news TTS will be
-        // cancelled by the first dialogue speak() call — that is fine; the
-        // player still hears the jingle + pips atmosphere from Web Audio.
-        if (bulletin && vm && typeof vm.speak === 'function') {
-            const tid = setTimeout(() => {
-                try { vm.speak(bulletin, 'Documentary'); } catch (e) {}
-            }, 8500);
-            this._timeoutIds.push(tid);
-        }
+        // Multiple bulletin variants per destination — a different one plays each drive.
+        const BULLETINS = {
+            wsrt_parking: [
+                'RTV Drenthe, het nieuws. Goedemiddag. ' +
+                'All fourteen dishes of the Westerbork Synthesis Radio Telescope are back online following this week\'s calibration. ' +
+                'ASTRON says a new all-sky survey begins Tuesday. The survey will focus on mapping low-frequency emissions from distant galaxies. ' +
+                'The Herinneringscentrum Kamp Westerbork received a record number of school groups this month. ' +
+                'The car park at the Westerbork Memorial is free for visitors. ' +
+                'Weather: partly cloudy, fifteen degrees. Light south-westerly wind. Dry afternoon. ' +
+                'RTV Drenthe. Fijne middag.',
 
-        // Always resolve after 1 s so dialogue starts promptly.
+                'RTV Drenthe, het nieuws. Goedemiddag. ' +
+                'Astronomers at ASTRON are investigating an anomalous low-frequency signal logged by the Westerbork array. The Dutch Radiocommunications Agency has been notified. ' +
+                'The Westerbork Memorial hosts a new exhibition on surveillance and digital rights this month. Entrance is free on Saturdays. ' +
+                'The N371 between Westerbork and Beilen is clear of roadworks. ' +
+                'Weather: sunny afternoon, sixteen degrees. ' +
+                'RTV Drenthe.',
+            ],
+            dwingeloo: [
+                'RTV Drenthe, het nieuws. Goedemiddag. ' +
+                'The Dwingeloo radio telescope, a historical twenty-five-metre dish managed by the CAMRAS foundation, marks its seventieth anniversary this year. ' +
+                'The instrument made headlines in the nineteen fifties as the first to map the spiral arms of our galaxy. Today it is operated largely by volunteers. ' +
+                'ASTRON in Dwingeloo says the Westerbork array has logged a second anomalous signal event at the frequency under investigation. The Radiocommunications Agency has been informed. ' +
+                'Weather: mild afternoon, fourteen degrees. Some cloud. ' +
+                'RTV Drenthe.',
+
+                'RTV Drenthe, middag-nieuws. ' +
+                'The Dwingeloo radio telescope will be open to amateur astronomers this weekend, weather permitting. ' +
+                'The surrounding nature reserve Dwingelderveld is popular for hiking and cycling. Overnight temperatures expected to drop below five degrees later this week. ' +
+                'ASTRON researchers monitoring the anomalous frequency band near the German border say the signal pattern is consistent with a relay transmitter operating in short bursts to avoid detection. ' +
+                'Weather: partly cloudy, thirteen degrees. Light southerly breeze. ' +
+                'RTV Drenthe. Fijne middag.',
+            ],
+            home_from_dwingeloo: [
+                'RTV Drenthe, middag-nieuws. Goedemiddag. ' +
+                'Volunteers at the Dwingeloo radio telescope have reported unusual interference patterns in the dish\'s recent observation logs. CAMRAS has forwarded the data to ASTRON. ' +
+                'The Dutch Radiocommunications Agency says field investigators have been deployed to the Drenthe-Germany border area to search for unlicensed transmitters. ' +
+                'Weather: fourteen degrees. Largely dry with some cloud. ' +
+                'RTV Drenthe.',
+
+                'RTV Drenthe, middag-nieuws. ' +
+                'ASTRON has confirmed that interference logged by the Dwingeloo telescope matches the profile of a relay transmitter, designed to boost a signal originating further east across the German border. ' +
+                'The Dutch and German Radiocommunications authorities are in contact. The investigation is ongoing. ' +
+                'Weather: cloudy, twelve degrees. Dry. ' +
+                'RTV Drenthe.',
+            ],
+            astron: [
+                'RTV Drenthe, het nieuws. Goedemiddag. ' + +
+                'The Dutch Radiocommunications Agency has opened a formal inquiry into a possible illegal transmission on restricted frequencies near the German border. ASTRON declined to comment on the nature of the signal. ' +
+                'The ASTRON visitor centre in Dwingeloo is open until five p.m. today. ' +
+                'Weather: clear afternoon, seventeen degrees. ' +
+                'RTV Drenthe.',
+
+                'RTV Drenthe, middag-nieuws. Goedemiddag. ' +
+                'ASTRON in Dwingeloo has confirmed it is working with the Dutch Radiocommunications Agency on an ongoing signal investigation. Scientists say the source of the anomalous transmission has been narrowed to within a few kilometres near the German border. ' +
+                'The low-frequency data has been shared with European partners in the Lofar network. ' +
+                'Weather: partly cloudy, fifteen degrees. Light breeze from the south. ' +
+                'RTV Drenthe. Fijne middag.',
+            ],
+            westerbork: [
+                'RTV Drenthe, het nieuws. Goedemiddag. ' +
+                'The Herinneringscentrum Kamp Westerbork marks eighty years since the final deportation transport this year. ' +
+                'The memorial currently hosts an exhibition on surveillance and digital rights. The WSRT dishes behind the memorial continue monitoring an anomalous frequency band flagged by ASTRON researchers. ' +
+                'An educational programme for secondary schools on the history of Westerbork is fully booked through the autumn. ' +
+                'Weather: sunny afternoon, fifteen degrees. Light breeze. ' +
+                'RTV Drenthe.',
+
+                'RTV Drenthe, middag-nieuws. ' +
+                'The Westerbork Memorial this week marks a solemn anniversary. ' +
+                'Historians and scientists gathered here to reflect on how surveillance shaped the fate of over one hundred thousand people deported from this site between nineteen forty-two and nineteen forty-four. ' +
+                'The co-location of the modern Westerbork Synthesis Radio Telescope nearby serves as a reminder of how science can be used for both knowledge and harm. ' +
+                'Weather: cloud and sunshine, fourteen degrees. ' +
+                'RTV Drenthe.',
+            ],
+            home_from_westerbork: [
+                'RTV Drenthe, het nieuws. Goedemiddag. ' +
+                'ASTRON researchers confirm an unusual signal logged by the Westerbork array has been triangulated to the German side of the border near Steckerdoser Heide. ' +
+                'The Dutch Radiocommunications Agency is coordinating with its German counterpart, the Bundesnetzagentur. No further details have been released. ' +
+                'The Westerbork Memorial was visited by over five hundred people today. ' +
+                'Weather: clear, eleven degrees. Dry through the evening. ' +
+                'RTV Drenthe.',
+
+                'RTV Drenthe, avond-nieuws. Goedenavond. ' +
+                'German federal police have confirmed they are aware of the Dutch Radiocommunications Agency investigation but declined to elaborate. ' +
+                'ASTRON says a second anomalous signal was detected briefly on the same frequency band this afternoon, before disappearing. ' +
+                'The situation is being monitored. Amateur radio operators are asked to remain vigilant. ' +
+                'Weather: ten degrees. Clear evening ahead. ' +
+                'RTV Drenthe.',
+            ],
+            home_from_wsrt_parking: [
+                'RTV Drenthe, het nieuws. Goedemiddag. ' +
+                'All WSRT dishes are online. The ASTRON science team reports clear skies for tonight\'s observation window. ' +
+                'The Herinneringscentrum Kamp Westerbork has extended its digital-rights exhibition through the end of the month. Entrance is free. ' +
+                'The Drenthe cycle route network near Hoogeveen has been extended by twelve kilometres this autumn. ' +
+                'Weather: clear evening, twelve degrees. ' +
+                'RTV Drenthe.',
+
+                'RTV Drenthe, avond-nieuws. ' +
+                'ASTRON scientists say tonight\'s observation window is ideal. The Westerbork array will scan a broad southern sky sector after nightfall. ' +
+                'The signal investigation remains ongoing. ASTRON and the Radiocommunications Agency will issue a joint statement when analysis is complete. ' +
+                'Weather: clear, eleven degrees. Light northerly wind. ' +
+                'RTV Drenthe.',
+            ],
+            home_from_astron: [
+                'RTV Drenthe, het nieuws. Goedenavond. ' +
+                'ASTRON scientists have confirmed the anomalous signal detected by the Westerbork array originates from coordinates in Lower Saxony, Germany. ' +
+                'The Dutch and German Radiocommunications authorities say the signal used encoding techniques not associated with any licensed operator. ' +
+                'German federal police have launched an investigation near the Steckerdoser Heide area, a protected nature reserve in Lower Saxony adjacent to the Dutch border. ' +
+                'Weather: clear evening, nine degrees. ' +
+                'RTV Drenthe.',
+
+                'RTV Drenthe, avond-nieuws. Goedenavond. ' +
+                'Breaking this hour: ASTRON has shared signal analysis data with the Dutch military intelligence service, the MIVD, following a request by the Ministry of Defence. ' +
+                'The anomalous transmission used frequency-hopping spread-spectrum techniques normally associated with military or intelligence communications hardware. ' +
+                'ASTRON director says the science community has a duty to report such findings. ' +
+                'Weather: nine degrees and clear. Frost possible overnight in open areas. ' +
+                'RTV Drenthe.',
+            ],
+            hackerspace: [
+                'RTV Drenthe, avond-nieuws. Goedenavond. ' +
+                'Hackerspace Drenthe in Coevorden celebrates its second anniversary this month. ' +
+                'The maker space hosts eighty active members with weekly sessions in 3D printing, electronics and mesh networking. The municipality of Coevorden confirmed a digital infrastructure grant for rural communities in south Drenthe. ' +
+                'Tonight the hackerspace hosts an open evening from seven p.m. Visitors are welcome. ' +
+                'Weather: clear evening, twelve degrees. ' +
+                'RTV Drenthe. Prettige avond.',
+
+                'RTV Drenthe, avond-nieuws. ' +
+                'The Dutch amateur radio society VERON reports growing interest in low-power LoRa mesh networks following coverage of the Drenthe signal investigation. ' +
+                'Hackerspace Drenthe has seen a sharp rise in membership enquiries this month. ' +
+                'A presentation on open hardware and SDR, software defined radio, is on the programme for tonight\'s open session in Coevorden. ' +
+                'Weather: eleven degrees. Dry. Light southerly wind. ' +
+                'RTV Drenthe.',
+            ],
+            home_from_hackerspace: [
+                'RTV Drenthe, laat avond-nieuws. Goedenavond. ' +
+                'The Hackerspace Drenthe session concluded with a presentation on LoRa mesh networking. ' +
+                'Attendees heard how low-power sensor networks can provide resilient communications in rural areas with limited infrastructure, a topic of increasing interest given recent events near Westerbork. ' +
+                'The N34 near Coevorden is clear following earlier maintenance works. ' +
+                'Weather: clear, eight degrees. ' +
+                'RTV Drenthe. Goedenacht.',
+
+                'RTV Drenthe, avond-nieuws. ' +
+                'A joint presentation by Hackerspace Drenthe and VERON members tonight drew the largest audience of the year. ' +
+                'Speakers demonstrated a working LoRa mesh node network spanning twenty kilometres across rural Drenthe, using open-hardware radios. ' +
+                'Several attendees expressed interest in linking nodes to the amateur radio community around Westerbork. ' +
+                'Weather: eight degrees. Clear night ahead. Good visibility. ' +
+                'RTV Drenthe.',
+            ],
+            lofar: [
+                'RTV Drenthe, het nieuws. Goedemiddag. ' +
+                'The Lofar low-frequency radio telescope in Exloo is expanding its international baseline. New partner stations in Poland and Sweden are expected online next quarter. ' +
+                'ASTRON researchers say Lofar will join the investigation into an anomalous signal near the German border, providing complementary baseline data to the Westerbork array. ' +
+                'The Lofar core site near Exloo is not open to public visitors. ' +
+                'Weather: overcast afternoon, thirteen degrees. ' +
+                'RTV Drenthe.',
+
+                'RTV Drenthe, middag-nieuws. ' +
+                'Lofar is the world\'s largest low-frequency radio telescope, with stations spread across Europe. The core array in Exloo, Drenthe, contains the highest density of antennas. ' +
+                'Scientists say Lofar\'s sensitivity in the frequency band used by the anomalous signal near Westerbork makes it an ideal tool to characterise the source. ' +
+                'Results are expected to be shared with the Radiocommunications Agency within days. ' +
+                'Weather: light cloud, fourteen degrees. Dry afternoon. ' +
+                'RTV Drenthe.',
+            ],
+            home_from_lofar: [
+                'RTV Drenthe, avond-nieuws. Goedenavond. ' +
+                'ASTRON confirms Lofar has recorded a previously unlogged signal in the frequency band under investigation near the German border. ' +
+                'The data has been shared with the Dutch Radiocommunications Agency and, at the agency\'s request, with the Bundesnetzagentur in Germany. ' +
+                'Scientists say this is now a cross-border investigation involving at least three national authorities. ' +
+                'Weather: partly cloudy, ten degrees. ' +
+                'RTV Drenthe. Goedenacht.',
+
+                'RTV Drenthe, avond-nieuws. ' +
+                'The Lofar data released today matches the profile of a signal previously detected only in classified military spectra, according to anonymous sources close to the investigation. ' +
+                'ASTRON and the Radiocommunications Agency declined to confirm or deny this characterisation. ' +
+                'The Dutch parliament\'s defence committee has requested a briefing from the Minister of Defence on the matter. ' +
+                'Weather: ten degrees. Cloud increasing overnight. ' +
+                'RTV Drenthe. Goedenacht.',
+            ],
+        };
+
+        const pool    = BULLETINS[destination] || ['RTV Drenthe, het nieuws. Goedemiddag. Rustige dag in Drenthe. Weer: aangenaam. RTV Drenthe.'];
+        const bulletin = pool[Math.floor(Math.random() * pool.length)];
+
+        const isEvening = destination && (destination.includes('hackerspace') || destination.includes('lofar') || destination.includes('from_'));
+        const stationLabel = isEvening ? 'RTV DRENTHE — AVOND-NIEUWS' : 'RTV DRENTHE — MIDDAG-NIEUWS';
+
         return new Promise(resolve => {
-            const tid = setTimeout(resolve, 1000);
+            // Show overlay — skip button resolves the promise immediately
+            const skipAndResolve = () => {
+                this._removeRadioOverlay();
+                resolve();
+            };
+            this._showRadioOverlay(bulletin, stationLabel, skipAndResolve);
+
+            // Speak after jingle + pips settle (6 s); resolve when TTS finishes
+            const tid = setTimeout(() => {
+                if (!window.game || window.game.currentScene !== 'driving_day') {
+                    resolve();
+                    return;
+                }
+                if (vm && typeof vm.speak === 'function') {
+                    vm.speak(bulletin, 'Documentary').then(() => {
+                        const t2 = setTimeout(() => {
+                            this._removeRadioOverlay();
+                            resolve();
+                        }, 2500);
+                        this._timeoutIds.push(t2);
+                    });
+                } else {
+                    // No TTS fallback: estimate reading time
+                    const readMs = Math.max(20000, bulletin.split(' ').length * 450);
+                    const t2 = setTimeout(() => {
+                        this._removeRadioOverlay();
+                        resolve();
+                    }, readMs);
+                    this._timeoutIds.push(t2);
+                }
+            }, 6000);
             this._timeoutIds.push(tid);
         });
     },
@@ -476,203 +715,26 @@ const DrivingDayScene = {
         g.setFlag('driving_destination', null);
 
         this._speakRadioNews(destination).then(() => {
-            // Guard: bail if the scene was exited while the news was playing
             if (!window.game || window.game.currentScene !== 'driving_day') return;
 
-            // Enable auto-advance for this cinematic so the player doesn't
-            // have to click through every line. Restore their setting after.
-            this._prevAutoAdvance = g.settings.autoAdvanceDelay;
-            g.settings.autoAdvanceDelay = 4000;
-
-            if (destination === 'wsrt_parking') {
-                g.startDialogue([
-                    { speaker: '',      text: '*Afternoon sun on the N34. The Volvo heads south-west toward Westerbork.*' },
-                    { speaker: '',      text: '*The autoradio is tuned to RTV Drenthe. Music, then a weather forecast.*' },
-                    { speaker: 'Ryan',  text: 'Forty minutes to the WSRT area. Nice day for a drive.' },
-                    { speaker: '',      text: '*The flat Drenthe fields stretch to every horizon. Wind turbines turning slowly.*' },
-                    { speaker: 'Ryan',  text: 'The memorial, the radio telescopes, and a scale model of the solar system.' },
-                    { speaker: 'Ryan',  text: 'Three completely different worlds from one parking lot. Classic Drenthe.' },
-                    { speaker: '',      text: '*Road sign flashes past: Westerbork 12 km*' },
-                    { speaker: 'Ryan',  text: 'Almost there. Let\'s see what the day brings.' },
-                    { speaker: '',      text: '*White parabolic dishes appear above the treeline, glinting in the sun.*' },
-                    { speaker: '',      text: '*The Volvo rolls into a gravel parking area. A wooden direction board stands at the edge of the heath.*' },
-                    { speaker: 'Ryan',  text: 'And here we are. Three paths from one parking spot.' }
-                ], () => {
-                    g.advanceTime(40);
-                    g.loadScene('wsrt_parking');
-                });
-
-            } else if (destination === 'astron') {
-                g.startDialogue([
-                    { speaker: '',      text: '*Afternoon sun on the N34. The Volvo heads south-west toward Westerbork.*' },
-                    { speaker: '',      text: '*The autoradio is tuned to RTV Drenthe. A jingle plays, followed by the afternoon news.*' },
-                    { speaker: 'Ryan',  text: 'Forty minutes. Maybe less — no tractors on a Thursday afternoon.' },
-                    { speaker: 'Ryan',  text: 'Cees Bassa. Satellite tracker, ASTRON researcher, amateur radio wizard.' },
-                    { speaker: 'Ryan',  text: 'If anyone can verify those schematics, it\'s him.' },
-                    { speaker: '',      text: '*The flat Drenthe fields stretch to every horizon. Wind turbines turning slowly.*' },
-                    { speaker: 'Ryan',  text: 'He was sceptical on the Meshtastic chat.' },
-                    { speaker: 'Ryan',  text: '"Send me the data. I\'ll run it through the pipeline."' },
-                    { speaker: 'Ryan',  text: 'Then silence for six hours. Then: "Get over here. Now."' },
-                    { speaker: '',      text: '*Road sign flashes past: Westerbork 12 km*' },
-                    { speaker: 'Ryan',  text: 'Whatever he found in that data was enough to pull me out of the mancave.' },
-                    { speaker: 'Ryan',  text: 'ASTRON. Fourteen WSRT dishes listening to the cosmos.' },
-                    { speaker: 'Ryan',  text: 'Today they listen for something man-made.' },
-                    { speaker: '',      text: '*White parabolic dishes appear above the treeline, glinting in the sun.*' },
-                    { speaker: 'Ryan',  text: 'There they are. Fourteen ears, all pointing the same way.' },
-                    { speaker: '',      text: '*The Volvo rolls into a gravel parking area. A wooden direction board stands at the edge of the heath.*' },
-                    { speaker: 'Ryan',  text: 'Parking. The control room is 400 metres from here.' }
-                ], () => {
-                    g.advanceTime(40);
-                    g.loadScene('wsrt_parking');
-                });
-
-            } else if (destination === 'westerbork') {
-                g.startDialogue([
-                    { speaker: '',      text: '*The Volvo turns south-west onto the N34. Afternoon light fills the cabin.*' },
-                    { speaker: '',      text: '*RTV Drenthe plays softly on the autoradio.*' },
-                    { speaker: 'Ryan',  text: 'Westerbork. The memorial. I\'ve been meaning to go back.' },
-                    { speaker: 'Ryan',  text: 'The WSRT signal logs pointed toward that area. Something doesn\'t add up.' },
-                    { speaker: '',      text: '*Flat fields stretch to every horizon. Wind turbines turning slowly.*' },
-                    { speaker: 'Ryan',  text: 'Camp Westerbork. Transit camp during the war. 102,000 people deported from there.' },
-                    { speaker: 'Ryan',  text: 'The WSRT dishes are literally 200 metres away. History and science, side by side.' },
-                    { speaker: '',      text: '*Road sign: Hooghalen 5 km — Herinneringscentrum Kamp Westerbork*' },
-                    { speaker: 'Ryan',  text: 'Almost there. Let\'s see what\'s really going on.' },
-                    { speaker: '',      text: '*The Volvo turns into a gravel parking area. A direction board points to three paths.*' }
-                ], () => {
-                    g.advanceTime(40);
-                    g.loadScene('wsrt_parking');
-                });
-
-            } else if (destination === 'home_from_westerbork') {
-                g.startDialogue([
-                    { speaker: '',      text: '*The memorial shrinks in the rear-view mirror. The WSRT dishes loom just 200 metres to the north.*' },
-                    { speaker: '',      text: '*RTV Drenthe returns on the autoradio. Weather forecast, then music.*' },
-                    { speaker: 'Ryan',  text: 'That place. Every time I visit, it hits differently.' },
-                    { speaker: 'Ryan',  text: 'The railway track. The stones. The silence.' },
-                    { speaker: '',      text: '*N34 heading home. Fields turning golden in the late light.*' },
-                    { speaker: 'Ryan',  text: 'Surveillance then. Surveillance now. Different technology, same instinct to control.' },
-                    { speaker: 'Ryan',  text: 'I need to think about what I found there.' },
-                    { speaker: '',      text: '*Approaching Compascuum. The farmhouse appears on the horizon.*' },
-                    { speaker: 'Ryan',  text: 'Home. Time to regroup.' }
-                ], () => {
-                    g.advanceTime(40);
-                    g.loadScene('garden');
-                    g.showNotification('Returned to garden');
-                });
-
-            } else if (destination === 'home_from_wsrt_parking') {
-                g.startDialogue([
-                    { speaker: '',      text: '*The Volvo pulls out of the gravel parking area. The WSRT dishes shrink in the rear mirror.*' },
-                    { speaker: '',      text: '*RTV Drenthe plays on the autoradio. Afternoon news, then music.*' },
-                    { speaker: 'Ryan',  text: 'Heading home. Forty minutes through Drenthe.' },
-                    { speaker: '',      text: '*N34 heading north-east. Flat fields to every horizon.*' },
-                    { speaker: 'Ryan',  text: 'That parking lot has three completely different worlds radiating from it.' },
-                    { speaker: 'Ryan',  text: 'A Holocaust memorial. A radio telescope. A model of the solar system.' },
-                    { speaker: 'Ryan',  text: 'Only in Drenthe.' },
-                    { speaker: '',      text: '*Approaching Compascuum. The farmhouse appears on the horizon.*' },
-                    { speaker: 'Ryan',  text: 'Home.' }
-                ], () => {
-                    g.advanceTime(40);
-                    g.loadScene('garden');
-                    g.showNotification('Returned to garden');
-                });
-
-            } else if (destination === 'home_from_astron') {
-                g.startDialogue([
-                    { speaker: '',      text: '*The WSRT dishes shrink in the rear-view mirror. Golden evening light.*' },
-                    { speaker: '',      text: '*RTV Drenthe plays softly on the autoradio. Evening news, then Dutch pop music.*' },
-                    { speaker: 'Ryan',  text: 'Confirmed. All of it. The weapon, the signal, the coordinates.' },
-                    { speaker: 'Ryan',  text: '53.28 north, 7.42 east. Steckerdoser Heide. Right across the German border.' },
-                    { speaker: '',      text: '*N34 heading north-east. Sky turning orange over the fields.*' },
-                    { speaker: 'Ryan',  text: 'Cees was shaken. A man who tracks spy satellites for fun — shaken.' },
-                    { speaker: 'Ryan',  text: 'Weaponised radio. Russian-school signal processing algorithms. Built on German soil.' },
-                    { speaker: 'Ryan',  text: 'And he gave me a Meshtastic node. "Come back in one piece."' },
-                    { speaker: '',      text: '*A canal barge passes below a bridge. The engine hum fills the cabin.*' },
-                    { speaker: 'Ryan',  text: 'Now I have proof. The schematics. Cees\'s spectral analysis. The triangulated coordinates.' },
-                    { speaker: 'Ryan',  text: 'But proof means nothing without action.' },
-                    { speaker: 'Ryan',  text: 'Eva is counting on me. Time to plan the infiltration.' },
-                    { speaker: '',      text: '*Approaching Compascuum. The outline of the farmhouse against the darkening sky.*' },
-                    { speaker: 'Ryan',  text: 'One step closer. Try not to get killed on the next step.' }
-                ], () => {
-                    g.advanceTime(40);
-                    g.loadScene('mancave');
-                    g.showNotification('Returned to mancave');
-                });
-
-            } else if (destination === 'hackerspace') {
-                g.startDialogue([
-                    { speaker: '',      text: '*Evening. The Volvo heads south-east toward Coevorden.*' },
-                    { speaker: '',      text: '*RTV Drenthe plays on the autoradio. The evening news, then music.*' },
-                    { speaker: 'Ryan',  text: 'Hackerspace night. Twenty-five minutes to Coevorden.' },
-                    { speaker: 'Ryan',  text: 'Good to get out of the mancave for a bit. Meet some like-minded people.' },
-                    { speaker: '',      text: '*Flat countryside. Farms and wind turbines in the fading light.*' },
-                    { speaker: 'Ryan',  text: 'CNC machines, 3D printers, welding rigs. Paradise for a tinkerer.' },
-                    { speaker: 'Ryan',  text: 'And the presentations. Always something new to learn.' },
-                    { speaker: '',      text: '*Road sign: Coevorden 5 km*' },
-                    { speaker: 'Ryan',  text: 'Wonder what tonight\'s topic is. LoRa? Meshtastic? Something new?' },
-                    { speaker: 'Ryan',  text: 'Doesn\'t matter. The community is what counts.' },
-                    { speaker: '',      text: '*The old school building appears. Cars parked outside. Lights on.*' },
-                    { speaker: 'Ryan',  text: 'There it is. Hackerspace Drenthe. Let\'s see who\'s here tonight.' }
-                ], () => {
-                    g.advanceTime(25);
-                    g.loadScene('hackerspace');
-                });
-
-            } else if (destination === 'home_from_hackerspace') {
-                g.startDialogue([
-                    { speaker: '',      text: '*Night. The Volvo pulls out of the hackerspace parking lot.*' },
-                    { speaker: '',      text: '*RTV Drenthe plays quietly. Late-night music programme.*' },
-                    { speaker: 'Ryan',  text: 'Good evening. Always is, at the hackerspace.' },
-                    { speaker: 'Ryan',  text: 'Good people. Smart people. People who build things instead of just talking.' },
-                    { speaker: '',      text: '*Dark countryside. Stars visible through the windscreen.*' },
-                    { speaker: 'Ryan',  text: 'Picked up a few ideas tonight. And some useful contacts.' },
-                    { speaker: 'Ryan',  text: 'The mesh networking crowd knows their stuff. Could be useful.' },
-                    { speaker: '',      text: '*Approaching Compascuum. Familiar roads.*' },
-                    { speaker: 'Ryan',  text: 'Home. Time for some late-night tinkering.' }
-                ], () => {
-                    g.advanceTime(25);
-                    g.loadScene('garden');
-                    g.showNotification('Returned to garden');
-                });
-
-            } else if (destination === 'lofar') {
-                g.startDialogue([
-                    { speaker: '',      text: '*Afternoon sun. The Volvo heads south through Drenthe.*' },
-                    { speaker: '',      text: '*RTV Drenthe news: "De LOFAR telescoop in Exloo heeft een nieuw signaal gedetecteerd..."*' },
-                    { speaker: 'Ryan',  text: 'LOFAR. Cees invited me to see the Superterp.' },
-                    { speaker: 'Ryan',  text: 'Thousands of antennas in a field. No dishes. Just math.' },
-                    { speaker: '',      text: '*Passes Borger. Then Exloo. Signs for ASTRON everywhere.*' },
-                    { speaker: 'Ryan',  text: 'Same area as WSRT, but a different concept entirely.' },
-                    { speaker: 'Ryan',  text: 'Low-frequency. Digital beamforming. Software-defined astronomy.' },
-                    { speaker: '',      text: '*A field appears, dotted with strange metal structures.*' },
-                    { speaker: 'Ryan',  text: 'There it is. Doesn\'t look like much from the road.' },
-                    { speaker: 'Ryan',  text: 'But Cees says it\'s the most powerful low-frequency telescope on Earth.' }
-                ], () => {
-                    g.advanceTime(30);
-                    g.loadScene('lofar');
-                });
-
-            } else if (destination === 'home_from_lofar') {
-                g.startDialogue([
-                    { speaker: '',      text: '*The Volvo pulls away from the LOFAR site.*' },
-                    { speaker: 'Ryan',  text: 'Incredible place. Thousands of antennas, all working in concert.' },
-                    { speaker: 'Ryan',  text: 'Digital beamforming. Retroactive pointing. No moving parts.' },
-                    { speaker: 'Ryan',  text: 'And some of those frequencies overlap with Echo\'s operating range.' },
-                    { speaker: '',      text: '*Country roads. Grazing sheep. A tractor waves.*' },
-                    { speaker: 'Ryan',  text: 'Cees set up a detection pipeline. If Echo transmits, LOFAR will record it.' },
-                    { speaker: 'Ryan',  text: 'Scientific proof from a peer-reviewed instrument. That\'s hard to deny.' },
-                    { speaker: '',      text: '*Compascuum ahead. The garden gate visible through the trees.*' },
-                    { speaker: 'Ryan',  text: 'Good to have another weapon in our arsenal. Even if it\'s made of math.' }
-                ], () => {
-                    g.advanceTime(30);
-                    g.loadScene('garden');
-                    g.showNotification('Returned to garden');
-                });
-
-            } else {
-                console.warn('[DrivingDay] No recognised destination set! Flag was:', destination);
-                g.loadScene('mancave');
-            }
+            const TR = {
+                wsrt_parking:           { advance: 40, scene: 'wsrt_parking',  notify: null },
+                astron:                 { advance: 40, scene: 'wsrt_parking',  notify: null },
+                dwingeloo:              { advance: 30, scene: 'dwingeloo',      notify: null },
+                home_from_dwingeloo:    { advance: 30, scene: 'garden',         notify: 'Returned to garden' },
+                westerbork:             { advance: 40, scene: 'wsrt_parking',  notify: null },
+                home_from_westerbork:   { advance: 40, scene: 'garden',        notify: 'Returned to garden' },
+                home_from_wsrt_parking: { advance: 40, scene: 'garden',        notify: 'Returned to garden' },
+                home_from_astron:       { advance: 40, scene: 'mancave',       notify: 'Returned to mancave' },
+                hackerspace:            { advance: 25, scene: 'hackerspace',   notify: null },
+                home_from_hackerspace:  { advance: 25, scene: 'garden',        notify: 'Returned to garden' },
+                lofar:                  { advance: 30, scene: 'lofar',         notify: null },
+                home_from_lofar:        { advance: 30, scene: 'garden',        notify: 'Returned to garden' },
+            };
+            const tr = TR[destination] || { advance: 30, scene: 'mancave', notify: null };
+            g.advanceTime(tr.advance);
+            if (tr.notify) g.showNotification(tr.notify);
+            g.loadScene(tr.scene);
         });
     },
 
@@ -680,12 +742,8 @@ const DrivingDayScene = {
         this._timeoutIds.forEach(id => clearTimeout(id));
         this._timeoutIds = [];
 
-        // Restore the player's auto-advance setting (was temporarily set to
-        // 4000 ms for the driving cinematic).
-        if (this._prevAutoAdvance !== undefined && window.game) {
-            window.game.settings.autoAdvanceDelay = this._prevAutoAdvance;
-            delete this._prevAutoAdvance;
-        }
+        // Remove radio overlay and word-reveal interval
+        this._removeRadioOverlay();
 
         // Stop RTV Drenthe radio
         this._stopRadio();

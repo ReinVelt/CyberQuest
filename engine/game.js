@@ -31,6 +31,7 @@ const SCENE_TIME_MAP = Object.freeze({
     livingroom:           { day: 1, time: '08:00' },
     tvdocumentary:        { day: 1, time: '08:15' },
     mancave:              { day: 1, time: '09:00' },
+    sstv_terminal:        { day: 1, time: '11:00' },
     sdr_bench:            { day: 1, time: '16:15' },
     garden:               { day: 1, time: '17:00' },
     garden_back:          { day: 1, time: '17:00' },
@@ -258,6 +259,7 @@ class CyberQuestEngine {
                     <button id="menu-pause" title="Pause / Resume (P)">⏸️ Pause</button>
                     <button id="menu-voice" title="Toggle Voice">🔊 Voice</button>
                     <button id="menu-movie" title="Toggle Movie / Accessibility Mode">🎬 Movie</button>
+                    <button id="menu-hint" title="What to do next (H)" style="background:rgba(255,200,0,0.12);border-color:#ffcc00;color:#ffcc00;">💡 Hint</button>
                     <button id="menu-save">💾 Save</button>
                     <button id="menu-load">📂 Load</button>
                     <button id="menu-settings">⚙️ Settings</button>
@@ -365,6 +367,7 @@ class CyberQuestEngine {
         addButtonHandler('menu-load',     () => this.openSaveSlotModal('load'));
         addButtonHandler('menu-voice',    () => this.toggleVoice());
         addButtonHandler('menu-movie',    () => this.toggleAccessibilityMode());
+        addButtonHandler('menu-hint',     () => this.showHint());
         addButtonHandler('menu-settings', () => this.openSettingsModal());
         
         // Pause overlay — click to resume
@@ -414,6 +417,10 @@ class CyberQuestEngine {
                 if (!this.isDialogueActive && !this.isPuzzleActive) {
                     this.toggleDebugPanel();
                 }
+            }
+            // Hint (H key)
+            if (e.key === 'h' || e.key === 'H') {
+                if (!this.isPuzzleActive) this.showHint();
             }
         };
         this._addTrackedListener(document, 'keydown', keyHandler);
@@ -895,9 +902,25 @@ class CyberQuestEngine {
         }
         
         // Typewriter effect + speech in parallel; auto-advance waits for both
+        // Sync the HUD clock if this line mentions a specific time
+        this._syncClockToText(current.text || '');
+
+        // ── *italic* narrator convention ──────────────────────────────────
+        // If the entire text (or any segment) is wrapped in *…* it is spoken
+        // by the Narrator voice. Strip the asterisks for display and override
+        // the speaker label so the UI and TTS both reflect the narrator.
+        let displayText = current.text || '';
+        let effectiveSpeaker = speaker;
+        const _isNarratorLine = /^\s*\*[^*]+\*\s*$/.test(displayText);
+        if (_isNarratorLine) {
+            displayText = displayText.replace(/^\s*\*|\*\s*$/g, '').trim();
+            effectiveSpeaker = 'Narrator';
+            speakerEl.textContent = 'Narrator';
+        }
+
         const _twSignal = this.typewriterAbortController.signal;
-        const typePromise = this.typeText(textEl, current.text || '', this.settings.textSpeed, _twSignal);
-        const speechPromise = this.speakText(current.text, speaker);
+        const typePromise = this.typeText(textEl, displayText, this.settings.textSpeed, _twSignal);
+        const speechPromise = this.speakText(displayText, effectiveSpeaker);
 
         Promise.all([typePromise, speechPromise]).then(() => {
             if (_twSignal.aborted || !this.isDialogueActive) return;
@@ -999,6 +1022,165 @@ class CyberQuestEngine {
         if (this.voiceManager) {
             this.voiceManager.stop();
         }
+    }
+
+    // ── Hint system ──────────────────────────────────────────────────────────
+
+    /**
+     * Show the next contextual hint spoken by the Narrator voice.
+     * Called via the 💡 Hint button or H key.
+     */
+    showHint() {
+        const hint = this.getNextHint();
+        if (!hint) return;
+        this.startDialogue([{ speaker: 'Narrator', text: '*' + hint + '*' }]);
+    }
+
+    /**
+     * Returns a story-aware hint string based on current game state.
+     * Ordered so the most immediately relevant hint fires first.
+     */
+    getNextHint() {
+        const sp  = this.gameState.storyPart;
+        const f   = (k) => !!this.getFlag(k);
+        const hour = this.gameState.time ? parseInt(this.gameState.time.split(':')[0], 10) : 8;
+        const day  = this.gameState.day || 1;
+
+        // ── Night-time sleep reminder (highest priority) ──────────────────
+        const dayKey = 'slept_day_' + day;
+        if ((hour >= 22 || hour === 0 || hour === 1) && !f(dayKey) && this.currentScene !== 'bedroom') {
+            return 'It is getting late and Ryan is exhausted. Head to the bedroom and get some sleep. Tomorrow will be a long day.';
+        }
+
+        // ── Day 1: Morning ────────────────────────────────────────────────
+        if (sp === 0 || !f('game_started')) {
+            return 'Good morning. Start by making espresso — Ryan never skips coffee. Click on the espresso machine in the kitchen.';
+        }
+        if (!f('made_espresso')) {
+            return 'Click on the espresso machine in the kitchen to brew Ryan\'s morning coffee.';
+        }
+        if (!f('visited_livingroom')) {
+            return 'Coffee made. Go to the living room through the door on the right. Something might be on TV this morning.';
+        }
+        if (!f('tv_documentary_watched')) {
+            return 'Turn on the television in the living room. There is a documentary about Drenthe and the radio telescopes worth watching.';
+        }
+        if (!f('visited_mancave') || sp < 2) {
+            return 'Go to the mancave — the door in the kitchen with the skull sticker. Ryan\'s SDR radio and computer are in there.';
+        }
+        if (!f('frequency_tuned') || !f('military_frequency')) {
+            return 'Open the SDR radio receiver in the mancave and scan the frequencies. There is unusual activity on a restricted military band.';
+        }
+        if (!f('sstv_transmission_received')) {
+            return 'Keep monitoring the military frequency. An SSTV transmission is incoming — a slow-scan TV image encoded in radio.';
+        }
+        if (!f('first_message_decoded')) {
+            return 'An SSTV image was received. Open the SSTV decoder and decode the image. There is a hidden message inside.';
+        }
+        if (!f('second_message_decoded')) {
+            return 'A second transmission is expected on the same frequency. Keep monitoring. Someone is making contact via shortwave radio.';
+        }
+        if (!f('sstv_decoded') || !f('sstv_coordinates_known')) {
+            return 'Analyse the decoded SSTV images at the SDR bench. GPS coordinates are embedded in the transmission.';
+        }
+        if (!f('klooster_unlocked') && !f('visited_planboard')) {
+            return 'Check the planboard in the mancave to review what you know. The coordinates point somewhere specific.';
+        }
+        if (!f('klooster_unlocked')) {
+            return 'The coordinates lead to Klooster Ter Apel, a medieval monastery in south Drenthe. The message says 23:00 tonight. Be there.';
+        }
+
+        // ── Day 1: Night drive ────────────────────────────────────────────
+        if (!f('visited_garden')) {
+            return 'It is time to go. Walk through the garden to the car. The Klooster is about an hour\'s drive south.';
+        }
+        if (!f('found_usb_stick') || !f('picked_up_usb')) {
+            return 'You are at the Klooster. Look carefully around your Volvo in the car park. Someone may have left something on the car.';
+        }
+        if (!f('usb_analyzed')) {
+            return 'You found a USB stick taped to your car. Do NOT plug it into any networked machine. Use the air-gapped laptop in the mancave for safety.';
+        }
+
+        // ── Day 2: Morning investigation ──────────────────────────────────
+        if (!f('evidence_unlocked') || !f('viewed_schematics')) {
+            return 'The USB stick is full of files. Open the evidence viewer in the mancave and study the schematics carefully. What is this device?';
+        }
+        if (!f('started_ally_search')) {
+            return 'The schematics show a weapons-grade signal jammer. This is serious. Ryan needs allies. Start reaching out through the mancave comms.';
+        }
+        if (!f('cees_contacted')) {
+            return 'Contact Cees Bassa at ASTRON in Dwingeloo. He works with the Westerbork radio telescope and will recognise the frequencies.';
+        }
+        if (!f('jaap_contacted')) {
+            return 'Contact Jaap Haartsen — the inventor of Bluetooth. His expertise in wireless protocols may be key to understanding the device.';
+        }
+        if (!f('all_allies_contacted') || !f('contacted_allies')) {
+            return 'Keep reaching out to your network. Each contact has a piece of the puzzle. Check the mancave communications panel.';
+        }
+        if (!f('volkov_investigated')) {
+            return 'Investigate Volkov using the darkweb search tools in the mancave. His background connects to the Steckerdoser Heide research history.';
+        }
+        if (!f('contacted_kubecka')) {
+            return 'Jan Kubecka at ASTRON has access to the signal interference logs. Contact him — he may know where these transmissions originate.';
+        }
+        if (!f('identified_eva')) {
+            return 'Analyse the photographs in the USB evidence. One face keeps appearing. Use the facial recognition tool to identify this person.';
+        }
+        if (!f('eva_contacted')) {
+            return 'You identified Eva Weber — a signals engineer placed inside the German facility. Make secure contact with her via the encrypted channel.';
+        }
+
+        // ── Day 2: Field operations ───────────────────────────────────────
+        if (!f('visited_dwingeloo')) {
+            return 'Drive to the Dwingeloo radio telescope. Someone placed a relay transmitter near the dish to hijack its frequency band.';
+        }
+        if (!f('dwingeloo_transmitter_found')) {
+            return 'Search around the base of the Dwingeloo telescope carefully. The relay transmitter will be small and well camouflaged.';
+        }
+        if (!f('visited_westerbork_memorial')) {
+            return 'Head to the Westerbork Memorial. The Zerfall network has a hidden Bluetooth surveillance node somewhere on the grounds.';
+        }
+        if (!f('westerbork_bt_cracked') || !f('zerfall_network_mapped')) {
+            return 'Inspect the camera installation at Westerbork. Use your Flipper Zero to crack its Bluetooth encryption and map the Zerfall network nodes.';
+        }
+        if (!f('visited_hackerspace')) {
+            return 'Visit Hackerspace Drenthe in Coevorden. The local hacker community may have observed the strange frequency activity.';
+        }
+        if (!f('astron_unlocked') || !f('visited_astron')) {
+            return 'Drive to ASTRON. Cees Bassa is ready to help use the Westerbork Synthesis Radio Telescope to triangulate the signal source.';
+        }
+        if (!f('schematics_verified') || !f('signal_triangulated')) {
+            return 'Work with Cees at ASTRON. Feed the device schematics into the telescope analysis software to pinpoint the transmitter location.';
+        }
+
+        // ── Day 2: Infiltration ───────────────────────────────────────────
+        if (!f('facility_unlocked') || !f('drove_to_facility')) {
+            return 'The signal is coming from a research compound at Steckerdoser Heide just across the German border. Drive there tonight. Go dark.';
+        }
+        if (!f('badge_cloned')) {
+            return 'At the facility perimeter, use your Flipper Zero to scan and clone the RFID security badge from a guard. You need it to pass the gate.';
+        }
+        if (!f('entered_facility')) {
+            return 'Badge cloned. Approach the gate carefully and use the cloned credential to enter the facility grounds.';
+        }
+        if (!f('facility_password_solved')) {
+            return 'Inside the facility, find the locked terminal room. Solve the password challenge to gain access to the inner corridors.';
+        }
+        if (!f('laser_corridor_complete')) {
+            return 'Navigate the laser corridor. Analyse the grid frequency first, then use the HackRF to jam the motion sensors. Finally bypass the biometric panel.';
+        }
+        if (!f('data_extracted')) {
+            return 'You are in the server room. Find the Operation Zerfall data partition and extract it. Use the Meshtastic radio to transmit proof to your allies.';
+        }
+
+        // ── Day 3: Aftermath ──────────────────────────────────────────────
+        if (!f('debrief_complete')) {
+            return 'It is over. Get home. Sleep. Tomorrow you debrief with IES and face the consequences of what you found.';
+        }
+        if (!f('epilogue_complete')) {
+            return 'Head to the epilogue scene. Three months have passed. Find out what happened to everyone.';
+        }
+        return 'The story is complete. Explore freely, or start a new game from the menu.';
     }
     
     toggleVoice() {
@@ -1193,12 +1375,13 @@ class CyberQuestEngine {
      */
     _gardenHasPendingDestination() {
         const f = this.gameState.flags;
-        const kloosterPending    = f.klooster_unlocked && !f.visited_klooster;
-        const hackerspacePending = !f.visited_hackerspace;
-        const astronPending      = f.astron_unlocked   && !f.visited_astron;
-        const westerborkPending  = f.visited_astron    && !f.visited_westerbork_memorial;
+        const kloosterPending    = f.klooster_unlocked      && !f.visited_klooster;
+        const dwingelooPending   = f.eva_contacted          && !f.visited_dwingeloo;
+        const westerborkPending  = f.visited_dwingeloo      && !f.visited_westerbork_memorial;
+        const hackerspacePending = f.visited_westerbork_memorial && !f.visited_hackerspace;
+        const astronPending      = f.astron_unlocked        && !f.visited_astron;
         const facilityPending    = this.questManager?.hasQuest('infiltrate_facility') && !f.drove_to_facility;
-        return !!(kloosterPending || hackerspacePending || astronPending || westerborkPending || facilityPending);
+        return !!(kloosterPending || dwingelooPending || westerborkPending || hackerspacePending || astronPending || facilityPending);
     }
 
     /**
@@ -1209,7 +1392,8 @@ class CyberQuestEngine {
     async _waitForIdle(timeout = 20000) {
         const start = Date.now();
         while (this.isDialogueActive || this.isPuzzleActive || this._sceneLoading
-               || document.querySelector('.mc-overlay')) {
+               || document.querySelector('.mc-overlay')
+               || document.querySelector('.ls-overlay')) {
             if (Date.now() - start > timeout) {
                 console.warn('[🎬] _waitForIdle timed out');
                 break;
@@ -1672,6 +1856,81 @@ class CyberQuestEngine {
         return true;
     }
     
+    /**
+     * Parse a time mention from spoken/typed dialogue text and advance the
+     * HUD clock if a recognisable time was found.  Never goes backwards.
+     * Handles:
+     *   • HH:MM (24-h)          "het is 22:47", "at 09:00"
+     *   • H:MM AM/PM             "8:15 AM", "11:30 pm"
+     *   • N o'clock              "8 o'clock", "acht uur"
+     *   • "half past N"          → N:30
+     *   • "quarter past/to N"    → N:15 / (N-1):45
+     *   • Dutch digital (same HH:MM regex covers it)
+     */
+    _syncClockToText(text) {
+        if (!text) return;
+        let h = null, m = 0;
+
+        // ── 1. HH:MM with optional AM/PM ─────────────────────────────────
+        const digitalRe = /\b(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)?\b/;
+        const d = text.match(digitalRe);
+        if (d) {
+            h = parseInt(d[1], 10);
+            m = parseInt(d[2], 10);
+            const meridiem = (d[3] || '').toLowerCase();
+            if (meridiem === 'pm' && h < 12) h += 12;
+            if (meridiem === 'am' && h === 12) h = 0;
+        }
+
+        // ── 2. "N o'clock" / "N uur" (Dutch) ─────────────────────────────
+        if (h === null) {
+            const oRe = /\b(\d{1,2})\s+(?:o'clock|uur)\b/i;
+            const o = text.match(oRe);
+            if (o) { h = parseInt(o[1], 10); m = 0; }
+        }
+
+        // ── 3. "half past N" ──────────────────────────────────────────────
+        if (h === null) {
+            const halfRe = /\bhalf\s+past\s+(\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b/i;
+            const hp = text.match(halfRe);
+            if (hp) {
+                h = this._wordToNum(hp[1]);
+                m = 30;
+            }
+        }
+
+        // ── 4. "quarter past N" / "quarter to N" ─────────────────────────
+        if (h === null) {
+            const qpRe = /\bquarter\s+past\s+(\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b/i;
+            const qp = text.match(qpRe);
+            if (qp) { h = this._wordToNum(qp[1]); m = 15; }
+        }
+        if (h === null) {
+            const qtRe = /\bquarter\s+to\s+(\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)\b/i;
+            const qt = text.match(qtRe);
+            if (qt) { h = this._wordToNum(qt[1]) - 1; m = 45; if (h < 0) h = 23; }
+        }
+
+        if (h === null || isNaN(h) || h < 0 || h > 23 || m < 0 || m > 59) return;
+
+        const timeStr = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+        // Try on the current day first; setTime guards against going backwards.
+        // If still on current day it won't advance, try next day for AM times
+        // that clearly come after a late-night scene (e.g. 22:00 → "8:15 AM").
+        const [curH] = this.gameState.time.split(':').map(Number);
+        const day = (h < curH && h < 12) ? this.gameState.day + 1 : this.gameState.day;
+        this.setTime(day, timeStr);
+    }
+
+    /** Map English number words to integers, or parse numeric strings. */
+    _wordToNum(w) {
+        const MAP = {
+            one:1, two:2, three:3, four:4, five:5, six:6,
+            seven:7, eight:8, nine:9, ten:10, eleven:11, twelve:12
+        };
+        return MAP[w.toLowerCase()] ?? parseInt(w, 10);
+    }
+
     advanceTime(minutes) {
         if (typeof minutes !== 'number' || isNaN(minutes) || minutes < 0) {
             console.warn('advanceTime: invalid minutes value', minutes);
@@ -2588,6 +2847,9 @@ class CyberQuestEngine {
                 &nbsp;|&nbsp; Scene: <b>${cur.currentScene || 'none'}</b>
                 &nbsp;|&nbsp; Story Part: <b>${cur.storyPart}</b>
                 &nbsp;|&nbsp; Day ${cur.day} ${cur.time || ''}
+                &nbsp;|&nbsp;
+                <button onclick="game.debugAutoplay()" id="dbg-autoplay-btn" style="background:#00cc66;color:#000;font-weight:bold;padding:2px 8px;border:none;border-radius:3px;cursor:pointer;">▶ Autoplay</button>
+                <button onclick="game.debugStopAutoplay()" style="background:#cc3300;color:#fff;font-weight:bold;padding:2px 8px;border:none;border-radius:3px;cursor:pointer;">■ Stop</button>
             </div>
             <div class="debug-content">
 
@@ -2630,11 +2892,21 @@ class CyberQuestEngine {
                 <div class="dbg-step">
                     <div class="dbg-time">09:00</div>
                     <div class="dbg-body">
-                        <div class="dbg-scene-row">${sb('mancave','🖥️ Mancave')} ${sp(2)}${sp(3)}${sp(4)}${sp(5)}${sp(6)} — SSTV sequence, decode messages, tune frequency</div>
+                        <div class="dbg-scene-row">${sb('mancave','🖥️ Mancave')} ${sp(2)} — Explore mancave, find SDR radio, tune military frequency</div>
                         <div class="dbg-flags">
-                            ${fb('visited_mancave')}${fb('frequency_tuned')}${fb('military_frequency')}${fb('sstv_transmission_received')}
-                            ${fb('first_message_decoded')}${fb('second_transmission_ready')}${fb('second_message_decoded')}${fb('message_decoded')}
+                            ${fb('visited_mancave')}${fb('frequency_tuned')}${fb('military_frequency')}
                             ${fb('father_call_count')}${fb('mother_call_count')}${fb('checked_email')}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">11:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('sstv_terminal','📺 SSTV Terminal')} ${sp(3)}${sp(4)}${sp(5)}${sp(6)} — Receive SSTV transmissions, decode two messages, unlock Klooster</div>
+                        <div class="dbg-flags">
+                            ${fb('sstv_transmission_received')}${fb('first_message_decoded')}${fb('second_transmission_ready')}
+                            ${fb('second_message_decoded')}${fb('message_decoded')}${fb('klooster_unlocked')}
                         </div>
                     </div>
                 </div>
@@ -2706,6 +2978,14 @@ class CyberQuestEngine {
                     <div class="dbg-time">23:30</div>
                     <div class="dbg-body">
                         <div class="dbg-scene-row">${drv('home','driving','🚗 Drive → Home')} — Return to Compascuum</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">00:15</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('bedroom','🛏️ Sleep — Bedroom')} — Ryan sleeps until 07:00 Day 2</div>
+                        <div class="dbg-flags">${fb('slept_day_1')}</div>
                     </div>
                 </div>
             </div>
@@ -2861,11 +3141,42 @@ class CyberQuestEngine {
                         <div class="dbg-flags">${fb('data_extracted')}${fb('eva_arrived')}${fb('kubecka_arrived')}${fb('discovered_zerfall')}</div>
                     </div>
                 </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">23:30</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${drv('home','driving','🚗 Drive → Home')} — Escape across the border, return to Compascuum</div>
+                        <div style="font-size:0.75em;color:#aaa;margin-top:2px;">Day rolls into Day 3 past midnight → sleep is slept_day_3 after long_night</div>
+                    </div>
+                </div>
             </div>
 
             <!-- ═══════════ DAY 3 — WEDNESDAY FEB 11 ═══════════ -->
             <div class="dbg-day">
-                <div class="dbg-day-header">📅 DAY 3 — Wednesday Feb 11 — Aftermath</div>
+                <div class="dbg-day-header">📅 DAY 3 — Wednesday Feb 11 — Long Night &amp; Sleep</div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">01:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('long_night','🌙 Long Night')} — Process the mission, secure the data</div>
+                        <div class="dbg-flags">${fb('visited_long_night')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">03:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('bedroom','🛏️ Sleep — Bedroom')} — Ryan sleeps until 07:00 Day 4</div>
+                        <div class="dbg-flags">${fb('slept_day_3')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">08:00</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${sb('morning_after','☀️ Morning After')} — Day 4, after sleeping</div>
+                    </div>
+                </div>
 
                 <div class="dbg-step">
                     <div class="dbg-time">11:00</div>
@@ -3154,6 +3465,48 @@ class CyberQuestEngine {
         const old = document.getElementById('debug-panel');
         if (old) old.remove();
         this.createDebugPanel();
+    }
+
+    /**
+     * Walk through every dbg-step scene button in order,
+     * triggering each with a random 8-12 s delay between steps.
+     * Skips bedroom/driving steps that would steal control from autoplay.
+     */
+    debugAutoplay() {
+        this.debugStopAutoplay(); // clear any previous run
+        const SKIP_SCENES = new Set(['bedroom', 'driving', 'driving_day']);
+        const panel = document.getElementById('debug-panel');
+        if (!panel) return;
+        // Collect the first <button> inside each dbg-scene-row (the scene jump button)
+        const steps = Array.from(panel.querySelectorAll('.dbg-step .dbg-scene-row button:first-child'))
+            .filter(btn => {
+                // Skip buttons whose onclick contains a skipped scene name
+                const oc = btn.getAttribute('onclick') || '';
+                return !Array.from(SKIP_SCENES).some(s => oc.includes(`'${s}'`));
+            });
+        if (!steps.length) { this.showNotification('Autoplay: no steps found'); return; }
+        this._apIndex = 0;
+        this.showNotification(`▶ Autoplay — ${steps.length} steps`);
+        const next = () => {
+            if (this._apIndex >= steps.length) {
+                this.showNotification('Autoplay complete');
+                this._apTimer = null;
+                return;
+            }
+            const btn = steps[this._apIndex++];
+            btn.click();
+            const delay = 8000 + Math.random() * 4000; // 8-12 s
+            this._apTimer = setTimeout(next, delay);
+        };
+        next();
+    }
+
+    debugStopAutoplay() {
+        if (this._apTimer) {
+            clearTimeout(this._apTimer);
+            this._apTimer = null;
+            this.showNotification('■ Autoplay stopped');
+        }
     }
 
     debugSetStoryPart(n) {

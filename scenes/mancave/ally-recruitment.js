@@ -47,7 +47,7 @@ window.MancaveAllyRecruitment = (function () {
         {
             id: 'cees',
             name: 'Cees Bassa',
-            title: 'ASTRON / LOFAR — Signal Processing',
+            title: 'ASTRON / Lofar — Signal Processing',
             specialty: 'Radio signal analysis, satellite tracking, interference detection',
             avatar: '🔭',
             chatType: 'MESHTASTIC',

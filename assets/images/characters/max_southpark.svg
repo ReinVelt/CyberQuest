@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- IES - Modern South Park Style Character -->
+  <!-- Ryan's wife - Friendly, chubby, short, warm grandmother-like woman -->
+  
+  <defs>
+    <!-- Gradients for depth -->
+    <linearGradient id="hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7a5c4a"/>
+      <stop offset="50%" style="stop-color:#6b4d3a"/>
+      <stop offset="100%" style="stop-color:#8a8a8a"/>
+    </linearGradient>
+    
+    <linearGradient id="sweaterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c97a5a"/>
+      <stop offset="100%" style="stop-color:#a85a3a"/>
+    </linearGradient>
+    
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffd9c4"/>
+      <stop offset="100%" style="stop-color:#f5c4aa"/>
+    </linearGradient>
+    
+    <!-- Shadow filters -->
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+    
+    <filter id="lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  
+  <!-- SHOES (comfortable flats) -->
+  <ellipse cx="80" cy="294" rx="16" ry="6" fill="#0a0a0a" opacity="0.3"/>
+  <ellipse cx="120" cy="294" rx="16" ry="6" fill="#0a0a0a" opacity="0.3"/>
+  <ellipse cx="80" cy="291" rx="14" ry="6" fill="#5a3a2a" stroke="#000" stroke-width="2"/>
+  <ellipse cx="120" cy="291" rx="14" ry="6" fill="#5a3a2a" stroke="#000" stroke-width="2"/>
+  
+  <!-- LEGS (short, comfortable pants) -->
+  <rect x="68" y="265" width="24" height="28" fill="#4a5a6a" stroke="#000" stroke-width="2.5" rx="3"/>
+  <rect x="108" y="265" width="24" height="28" fill="#4a5a6a" stroke="#000" stroke-width="2.5" rx="3"/>
+  
+  <!-- BODY (chubby, round, grandmotherly) -->
+  <ellipse cx="100" cy="215" rx="58" ry="68" fill="url(#sweaterGrad)" stroke="#000" stroke-width="3" filter="url(#shadow)"/>
+  
+  <!-- Cardigan/sweater detail -->
+  <ellipse cx="100" cy="215" rx="54" ry="64" fill="#b86a4a" stroke="#000" stroke-width="2"/>
+  
+  <!-- Sweater buttons -->
+  <circle cx="100" cy="175" r="4" fill="#8b5a3a" stroke="#000" stroke-width="1.5"/>
+  <circle cx="100" cy="195" r="4" fill="#8b5a3a" stroke="#000" stroke-width="1.5"/>
+  <circle cx="100" cy="215" r="4" fill="#8b5a3a" stroke="#000" stroke-width="1.5"/>
+  <circle cx="100" cy="235" r="4" fill="#8b5a3a" stroke="#000" stroke-width="1.5"/>
+  
+  <!-- Collar -->
+  <path d="M82,160 L90,170 L82,180" fill="#9a6a4a" stroke="#000" stroke-width="2"/>
+  <path d="M118,160 L110,170 L118,180" fill="#9a6a4a" stroke="#000" stroke-width="2"/>
+  
+  <!-- ARMS (short, rounded) -->
+  <ellipse cx="48" cy="200" rx="20" ry="32" fill="url(#sweaterGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  <ellipse cx="152" cy="200" rx="20" ry="32" fill="url(#sweaterGrad)" stroke="#000" stroke-width="3" filter="url(#lightShadow)"/>
+  
+  <!-- Hands (warm, welcoming) -->
+  <ellipse cx="48" cy="232" rx="12" ry="14" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="152" cy="232" rx="12" ry="14" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  
+  <!-- HEAD (round, friendly) -->
+  <circle cx="100" cy="95" r="60" fill="url(#skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#shadow)"/>
+  
+  <!-- LONG HAIR (brown/gray mixed, wavy) -->
+  <!-- Top of head -->
+  <ellipse cx="100" cy="52" rx="58" ry="32" fill="url(#hairGrad)" stroke="#000" stroke-width="3"/>
+  
+  <!-- Wavy side sections -->
+  <path d="M48,60 Q42,75 45,90 Q44,105 48,120 Q50,135 55,150 Q58,160 62,165" 
+        fill="url(#hairGrad)" stroke="#000" stroke-width="2.5"/>
+  <path d="M152,60 Q158,75 155,90 Q156,105 152,120 Q150,135 145,150 Q142,160 138,165" 
+        fill="url(#hairGrad)" stroke="#000" stroke-width="2.5"/>
+  
+  <!-- Front hair layers -->
+  <ellipse cx="65" cy="65" rx="18" ry="24" fill="#6b4d3a" stroke="#000" stroke-width="2"/>
+  <ellipse cx="135" cy="65" rx="18" ry="24" fill="#6b4d3a" stroke="#000" stroke-width="2"/>
+  
+  <!-- Gray streaks (aging) -->
+  <path d="M75,50 Q73,70 75,90" stroke="#989898" stroke-width="3" fill="none" opacity="0.6"/>
+  <path d="M125,50 Q127,70 125,90" stroke="#989898" stroke-width="3" fill="none" opacity="0.6"/>
+  <path d="M55,80 Q53,100 55,120" stroke="#a8a8a8" stroke-width="2.5" fill="none" opacity="0.5"/>
+  <path d="M145,80 Q147,100 145,120" stroke="#a8a8a8" stroke-width="2.5" fill="none" opacity="0.5"/>
+  
+  <!-- EARS -->
+  <ellipse cx="42" cy="95" rx="10" ry="16" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="45" cy="95" rx="5" ry="10" fill="#f5c0aa"/>
+  <ellipse cx="158" cy="95" rx="10" ry="16" fill="url(#skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="155" cy="95" rx="5" ry="10" fill="#f5c0aa"/>
+  
+  <!-- Earrings (small pearls) -->
+  <circle cx="42" cy="102" r="4" fill="#e8e8ff" stroke="#c0c0d0" stroke-width="1.5"/>
+  <circle cx="158" cy="102" r="4" fill="#e8e8ff" stroke="#c0c0d0" stroke-width="1.5"/>
+  
+  <!-- ROUND GLASSES (like Ryan's style) -->
+  <!-- Frame shadows for depth -->
+  <circle cx="78" cy="88" r="20" fill="none" stroke="#1a1a1a" stroke-width="2" opacity="0.2" transform="translate(1,1)"/>
+  <circle cx="122" cy="88" r="20" fill="none" stroke="#1a1a1a" stroke-width="2" opacity="0.2" transform="translate(1,1)"/>
+  
+  <!-- Main frames -->
+  <circle cx="78" cy="88" r="20" fill="rgba(248,248,255,0.15)" stroke="#5a3a2a" stroke-width="4"/>
+  <circle cx="122" cy="88" r="20" fill="rgba(248,248,255,0.15)" stroke="#5a3a2a" stroke-width="4"/>
+  
+  <!-- Bridge -->
+  <line x1="98" y1="88" x2="102" y2="88" stroke="#5a3a2a" stroke-width="4"/>
+  
+  <!-- Temples -->
+  <line x1="58" y1="88" x2="43" y2="90" stroke="#5a3a2a" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="142" y1="88" x2="157" y2="90" stroke="#5a3a2a" stroke-width="3.5" stroke-linecap="round"/>
+  
+  <!-- Lens reflections -->
+  <ellipse cx="72" cy="82" rx="7" ry="5" fill="#fff" opacity="0.7"/>
+  <ellipse cx="116" cy="82" rx="7" ry="5" fill="#fff" opacity="0.7"/>
+  <circle cx="83" cy="93" r="4" fill="#fff" opacity="0.4"/>
+  <circle cx="127" cy="93" r="4" fill="#fff" opacity="0.4"/>
+  
+  <!-- EYES (warm, friendly, brown) -->
+  <ellipse cx="78" cy="88" rx="10" ry="12" fill="#fff" stroke="#000" stroke-width="1"/>
+  <ellipse cx="122" cy="88" rx="10" ry="12" fill="#fff" stroke="#000" stroke-width="1"/>
+  
+  <!-- Irises (warm brown) -->
+  <circle cx="78" cy="89" r="6" fill="#8b6a4a"/>
+  <circle cx="122" cy="89" r="6" fill="#8b6a4a"/>
+  
+  <!-- Pupils -->
+  <circle cx="78" cy="89" r="3" fill="#2a2a2a"/>
+  <circle cx="122" cy="89" r="3" fill="#2a2a2a"/>
+  
+  <!-- Eye highlights (friendly sparkle) -->
+  <circle cx="76" cy="87" r="2" fill="#fff" opacity="0.9"/>
+  <circle cx="120" cy="87" r="2" fill="#fff" opacity="0.9"/>
+  <circle cx="80" cy="91" r="1" fill="#fff" opacity="0.7"/>
+  <circle cx="124" cy="91" r="1" fill="#fff" opacity="0.7"/>
+  
+  <!-- EYEBROWS (gentle, arched) -->
+  <path d="M60,72 Q76,68 90,72" stroke="#6b4d3a" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M110,72 Q124,68 140,72" stroke="#6b4d3a" stroke-width="4" fill="none" stroke-linecap="round"/>
+  
+  <!-- NOSE (small, round, grandmotherly) -->
+  <ellipse cx="100" cy="103" rx="7" ry="9" fill="#eeb895" stroke="#000" stroke-width="2"/>
+  
+  <!-- MOUTH (warm, friendly smile) -->
+  <path d="M82,118 Q100,128 118,118" stroke="#9b5a5a" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Smile creases (laugh lines) -->
+  <path d="M80,116 Q76,118 74,122" stroke="#e5c0a5" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M120,116 Q124,118 126,122" stroke="#e5c0a5" stroke-width="1.5" fill="none" opacity="0.5"/>
+  
+  <!-- Rosy cheeks (friendly, warm) -->
+  <ellipse cx="65" cy="105" rx="12" ry="8" fill="#f5a5a5" opacity="0.4"/>
+  <ellipse cx="135" cy="105" rx="12" ry="8" fill="#f5a5a5" opacity="0.4"/>
+  
+  <!-- Age lines (gentle, kind) -->
+  <path d="M60,100 Q58,105 60,110" stroke="#e5c0a5" stroke-width="1" opacity="0.4"/>
+  <path d="M140,100 Q142,105 140,110" stroke="#e5c0a5" stroke-width="1" opacity="0.4"/>
+  
+  <!-- NECK -->
+  <rect x="85" y="148" width="30" height="15" fill="url(#skinGrad)" stroke="#000" stroke-width="2"/>
+  
+  <!-- Necklace (simple chain) -->
+  <ellipse cx="100" cy="162" rx="18" ry="8" fill="none" stroke="#d4a860" stroke-width="2"/>
+  <circle cx="100" cy="168" r="4" fill="#d4a860" stroke="#b88840" stroke-width="1.5"/>
+</svg>

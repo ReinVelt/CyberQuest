@@ -18,94 +18,93 @@
 
 /**
  * Build a scrollable terminal-style session log from story flags.
- * Returns an array of { speaker, text } entries for game.startDialogue().
- * Each entry is a line of the forensic terminal session log.
+ * Returns an array of plain text lines for _showLaptopTerminal().
  */
 function _buildAirgappedSessionLog(game) {
     const msgs = [
-        { speaker: 'Terminal', text: '╔══════════════════════════════════════════════════════╗' },
-        { speaker: 'Terminal', text: '║       FORENSIC SESSION LOG — ThinkPad X230           ║' },
-        { speaker: 'Terminal', text: '║       root@airgapped — Air-Gap Verified               ║' },
-        { speaker: 'Terminal', text: '╚══════════════════════════════════════════════════════╝' },
+        '╔══════════════════════════════════════════════════════╗',
+        '║       FORENSIC SESSION LOG — ThinkPad X230           ║',
+        '║       root@airgapped — Air-Gap Verified               ║',
+        '╚══════════════════════════════════════════════════════╝',
     ];
 
     // ── Session 1: Forensic Boot & Prep ──────────────────────
     if (game.getFlag('forensic_prep_complete')) {
         msgs.push(
-            { speaker: 'Terminal', text: '' },
-            { speaker: 'Terminal', text: '[ SESSION 1 — FORENSIC ENVIRONMENT SETUP ]' },
-            { speaker: 'Terminal', text: 'System:   ThinkPad X230  |  Kali Linux (forensic mode)' },
-            { speaker: 'Terminal', text: 'Network:  ALL INTERFACES REMOVED (hardware kill)' },
-            { speaker: 'Terminal', text: 'Firmware: Coreboot v4.19 (Libreboot)' },
-            { speaker: 'Terminal', text: 'Bridge:   Tableau T35u — READ ENABLED / WRITE BLOCKED' },
-            { speaker: 'Terminal', text: 'SHA-256 checksums verified: 5 files  ✓' },
-            { speaker: 'Terminal', text: 'Sandbox:  Firejail --net=none --private  ACTIVE' },
-            { speaker: 'Terminal', text: 'Status:   FORENSIC ENVIRONMENT READY — No leaks. No traces.' },
+            '',
+            '[ SESSION 1 — FORENSIC ENVIRONMENT SETUP ]',
+            'System:   ThinkPad X230  |  Kali Linux (forensic mode)',
+            'Network:  ALL INTERFACES REMOVED (hardware kill)',
+            'Firmware: Coreboot v4.19 (Libreboot)',
+            'Bridge:   Tableau T35u — READ ENABLED / WRITE BLOCKED',
+            'SHA-256 checksums verified: 5 files  ✓',
+            'Sandbox:  Firejail --net=none --private  ACTIVE',
+            'Status:   FORENSIC ENVIRONMENT READY — No leaks. No traces.',
         );
     }
 
     // ── Session 2: USB File Listing + README ─────────────────
     if (game.getFlag('usb_analyzed')) {
         msgs.push(
-            { speaker: 'Terminal', text: '' },
-            { speaker: 'Terminal', text: '[ SESSION 2 — USB ANALYSIS: EVIDENCE_01 ]' },
-            { speaker: 'Terminal', text: '> mount /dev/sdb1 (read-only via Tableau T35u)' },
-            { speaker: 'Terminal', text: '> ls /mnt/usb/:' },
-            { speaker: 'Terminal', text: '  README.txt              4.2 KB  2026-02-05 18:42' },
-            { speaker: 'Terminal', text: '  echo_schematics.pdf     2.1 MB  2026-02-04 03:17' },
-            { speaker: 'Terminal', text: '  evidence.zip            847 MB  2026-02-05 12:33  🔒' },
-            { speaker: 'Terminal', text: '' },
-            { speaker: 'Terminal', text: '── README.txt ──────────────────────── FROM: E' },
-            { speaker: 'Terminal', text: '"Ryan, If you\'re reading this, you received my signal and you\'re smarter than I thought."' },
-            { speaker: 'Terminal', text: '"Project Echo — an RF weapon at Steckerdoser Heide, Germany."' },
-            { speaker: 'Terminal', text: '"Range: ~5 km. Can disable electronics, crash vehicles, interrupt medical devices."' },
-            { speaker: 'Terminal', text: '"The encrypted archive: internal emails, test results, casualty reports."' },
-            { speaker: 'Terminal', text: '"The password is the frequency you tuned into. You\'ll know it when you see it."' },
-            { speaker: 'Terminal', text: '"72 hours from the file timestamp. After that — real deployment. Real casualties."' },
-            { speaker: 'Terminal', text: '"Use air-gapped systems only. Encrypt everything. Trust no one until verified."' },
-            { speaker: 'Terminal', text: '"Good luck, Ryan. — E"' },
-            { speaker: 'Terminal', text: '"P.S. 906.875. I\'m listening."' },
+            '',
+            '[ SESSION 2 — USB ANALYSIS: EVIDENCE_01 ]',
+            '> mount /dev/sdb1 (read-only via Tableau T35u)',
+            '> ls /mnt/usb/:',
+            '  README.txt              4.2 KB  2026-02-05 18:42',
+            '  echo_schematics.pdf     2.1 MB  2026-02-04 03:17',
+            '  evidence.zip            847 MB  2026-02-05 12:33  🔒',
+            '',
+            '── README.txt ──────────────────────── FROM: E',
+            '"Ryan, If you\'re reading this, you received my signal and you\'re smarter than I thought."',
+            '"Project Echo — an RF weapon at Steckerdoser Heide, Germany."',
+            '"Range: ~5 km. Can disable electronics, crash vehicles, interrupt medical devices."',
+            '"The encrypted archive: internal emails, test results, casualty reports."',
+            '"The password is the frequency you tuned into. You\'ll know it when you see it."',
+            '"72 hours from the file timestamp. After that — real deployment. Real casualties."',
+            '"Use air-gapped systems only. Encrypt everything. Trust no one until verified."',
+            '"Good luck, Ryan. — E"',
+            '"P.S. 906.875. I\'m listening."',
         );
     }
 
     // ── Session 3: Schematics ─────────────────────────────────
     if (game.getFlag('viewed_schematics')) {
         msgs.push(
-            { speaker: 'Terminal', text: '' },
-            { speaker: 'Terminal', text: '[ SESSION 3 — ECHO SCHEMATICS  ⚠ STRENG GEHEIM ]' },
-            { speaker: 'Terminal', text: 'File: echo_schematics.pdf  |  Classification: TOP SECRET' },
-            { speaker: 'Terminal', text: 'System architecture: phase-locked antenna array, multi-band signal processor' },
-            { speaker: 'Terminal', text: 'Power amplifier rated for 5 km+ effective range' },
-            { speaker: 'Terminal', text: 'Targeting: GPS spoofing + selective frequency jamming (900 MHz / 2.4 GHz / VHF/UHF)' },
-            { speaker: 'Terminal', text: '[Ryan] Directional EM pulse weapon. They can disable anything electronic.' },
-            { speaker: 'Terminal', text: '[Ryan] Cars, planes, medical devices — all vulnerable within 5 km.' },
+            '',
+            '[ SESSION 3 — ECHO SCHEMATICS  ⚠ STRENG GEHEIM ]',
+            'File: echo_schematics.pdf  |  Classification: TOP SECRET',
+            'System architecture: phase-locked antenna array, multi-band signal processor',
+            'Power amplifier rated for 5 km+ effective range',
+            'Targeting: GPS spoofing + selective frequency jamming (900 MHz / 2.4 GHz / VHF/UHF)',
+            '[Ryan] Directional EM pulse weapon. They can disable anything electronic.',
+            '[Ryan] Cars, planes, medical devices — all vulnerable within 5 km.',
         );
     }
 
     // ── Session 4: Evidence.zip + Casualty Report ─────────────
     if (game.getFlag('evidence_unlocked')) {
         msgs.push(
-            { speaker: 'Terminal', text: '' },
-            { speaker: 'Terminal', text: '[ SESSION 4 — EVIDENCE.ZIP DECRYPTED ]' },
-            { speaker: 'Terminal', text: 'Password: 243 MHz  |  Archive integrity: ✓' },
-            { speaker: 'Terminal', text: '' },
-            { speaker: 'Terminal', text: '── PROJECT ECHO — INCIDENT LOG ─────────────────────' },
-            { speaker: 'Terminal', text: 'ECHO-7   2024-03-14  BMW 5-series   → 1 dead, 2 injured' },
-            { speaker: 'Terminal', text: '         Cover: "Driver error"   |  Freq: 2.4 GHz burst, 250ms' },
-            { speaker: 'Terminal', text: 'ECHO-8   2024-06-22  Cessna 172    → 2 dead' },
-            { speaker: 'Terminal', text: '         Cover: "Pilot error"    |  Freq: Multi-band VHF/UHF sweep' },
-            { speaker: 'Terminal', text: 'ECHO-9   2024-09-11  A31 highway   → 3 dead, 7 injured' },
-            { speaker: 'Terminal', text: '         Cover: "Fog/distraction" |  Freq: 900 MHz targeted burst' },
-            { speaker: 'Terminal', text: 'ECHO-10  2025-04-03  SURGERY TABLE → 1 dead (Marlies Bakker, 67, oma van 4)' },
-            { speaker: 'Terminal', text: '         Cover: "Equipment failure"|  Freq: 2.4 GHz sustained interference' },
-            { speaker: 'Terminal', text: 'ECHO-11  2025-10-19  Drone swarm   → no fatalities' },
-            { speaker: 'Terminal', text: '         Cover: "Software glitch"  |  Freq: GPS spoof + control jam' },
-            { speaker: 'Terminal', text: 'ECHO-12  2026-01-28  Ambulance     → 1 dead (patient en route)' },
-            { speaker: 'Terminal', text: '         Cover: "Equipment age"    |  Freq: Multi-vector attack' },
-            { speaker: 'Terminal', text: '' },
-            { speaker: 'Terminal', text: '    ████  8 FATALITIES  ·  9+ INJURED  ████' },
-            { speaker: 'Terminal', text: '"Civilian casualties deemed ACCEPTABLE" — signed: V' },
-            { speaker: 'Terminal', text: '"Phase 3 authorization pending — Urban Environment Testing"' },
+            '',
+            '[ SESSION 4 — EVIDENCE.ZIP DECRYPTED ]',
+            'Password: 243 MHz  |  Archive integrity: ✓',
+            '',
+            '── PROJECT ECHO — INCIDENT LOG ─────────────────────',
+            'ECHO-7   2024-03-14  BMW 5-series   → 1 dead, 2 injured',
+            '         Cover: "Driver error"   |  Freq: 2.4 GHz burst, 250ms',
+            'ECHO-8   2024-06-22  Cessna 172    → 2 dead',
+            '         Cover: "Pilot error"    |  Freq: Multi-band VHF/UHF sweep',
+            'ECHO-9   2024-09-11  A31 highway   → 3 dead, 7 injured',
+            '         Cover: "Fog/distraction" |  Freq: 900 MHz targeted burst',
+            'ECHO-10  2025-04-03  SURGERY TABLE → 1 dead (Marlies Bakker, 67, oma van 4)',
+            '         Cover: "Equipment failure"|  Freq: 2.4 GHz sustained interference',
+            'ECHO-11  2025-10-19  Drone swarm   → no fatalities',
+            '         Cover: "Software glitch"  |  Freq: GPS spoof + control jam',
+            'ECHO-12  2026-01-28  Ambulance     → 1 dead (patient en route)',
+            '         Cover: "Equipment age"    |  Freq: Multi-vector attack',
+            '',
+            '    ████  8 FATALITIES  ·  9+ INJURED  ████',
+            '"Civilian casualties deemed ACCEPTABLE" — signed: V',
+            '"Phase 3 authorization pending — Urban Environment Testing"',
         );
 
         // Tally score
@@ -117,22 +116,107 @@ function _buildAirgappedSessionLog(game) {
         ].filter(Boolean).length;
 
         msgs.push(
-            { speaker: 'Terminal', text: '' },
-            { speaker: 'Terminal', text: `══ ${phases}/4 sessions complete — Evidence integrity: MAINTAINED ══` },
-            { speaker: 'Terminal', text: 'All files remain encrypted on air-gapped ThinkPad. Never touched a network.' },
+            '',
+            `══ ${phases}/4 sessions complete — Evidence integrity: MAINTAINED ══`,
+            'All files remain encrypted on air-gapped ThinkPad. Never touched a network.',
         );
     }
 
     if (msgs.length <= 4) {
-        // Nothing logged yet
         msgs.push(
-            { speaker: 'Terminal', text: '' },
-            { speaker: 'Terminal', text: '[ NO SESSIONS RECORDED ]' },
-            { speaker: 'Terminal', text: 'Insert USB stick and click the forensic workstation to begin.' },
+            '',
+            '[ NO SESSIONS RECORDED ]',
+            'Insert USB stick and click the forensic workstation to begin.',
         );
     }
 
     return msgs;
+}
+
+/**
+ * Render terminal lines directly onto the laptop screen area.
+ * Creates a positioned overlay matching the airgapped_screen hotspot.
+ * Click anywhere or press ESC to dismiss.
+ */
+function _showLaptopTerminal(lines) {
+    // Remove any existing terminal overlay
+    const existing = document.getElementById('airgapped-terminal-overlay');
+    if (existing) existing.remove();
+
+    // Full-screen backdrop to capture dismiss clicks
+    const backdrop = document.createElement('div');
+    backdrop.id = 'airgapped-terminal-overlay';
+    backdrop.style.cssText = [
+        'position:fixed', 'inset:0', 'z-index:2000',
+        'display:flex', 'align-items:flex-start', 'justify-content:center',
+        'background:rgba(0,0,0,0.55)',
+        'cursor:pointer',
+    ].join(';');
+
+    // Terminal window — sized & positioned to sit over the laptop screen
+    // Scene hotspot: x=33% y=10% w=32% h=50% of viewport
+    const term = document.createElement('div');
+    term.style.cssText = [
+        'position:absolute',
+        'left:33%', 'top:10%',
+        'width:32%', 'height:50%',
+        'background:#0a0f0a',
+        'border:2px solid #1a3a1a',
+        'box-shadow:0 0 32px rgba(0,255,65,0.18), inset 0 0 60px rgba(0,0,0,0.8)',
+        'overflow-y:auto',
+        'padding:12px 14px',
+        'box-sizing:border-box',
+        'cursor:default',
+        'font-family:\'Courier New\',Courier,monospace',
+        'font-size:11px',
+        'line-height:1.55',
+        'color:#00ff41',
+        // CRT scanline overlay
+        'background-image:repeating-linear-gradient(transparent,transparent 2px,rgba(0,0,0,0.18) 2px,rgba(0,0,0,0.18) 4px)',
+    ].join(';');
+
+    // Stop clicks inside the terminal from closing
+    term.addEventListener('click', e => e.stopPropagation());
+
+    // Render lines
+    lines.forEach(line => {
+        const div = document.createElement('div');
+        div.style.cssText = 'white-space:pre;min-height:1em;';
+        if (line.startsWith('[Ryan]')) {
+            div.style.color = '#88ddff';
+            div.textContent = line;
+        } else if (line.startsWith('[ SESSION') || line.startsWith('══')) {
+            div.style.color = '#ffcc00';
+            div.style.fontWeight = 'bold';
+            div.textContent = line;
+        } else if (line.includes('FATALITIES') || line.includes('ACCEPTABLE') || line.includes('dead')) {
+            div.style.color = '#ff4444';
+            div.textContent = line;
+        } else if (line.startsWith('╔') || line.startsWith('║') || line.startsWith('╚')) {
+            div.style.color = '#00cc33';
+            div.textContent = line;
+        } else {
+            div.textContent = line;
+        }
+        term.appendChild(div);
+    });
+
+    // Close hint
+    const hint = document.createElement('div');
+    hint.style.cssText = 'margin-top:12px;color:rgba(0,255,65,0.35);font-size:10px;text-align:right;';
+    hint.textContent = '[ click outside or ESC to close ]';
+    term.appendChild(hint);
+
+    backdrop.appendChild(term);
+    document.body.appendChild(backdrop);
+
+    // Scroll to bottom after render
+    requestAnimationFrame(() => { term.scrollTop = term.scrollHeight; });
+
+    const close = () => { backdrop.remove(); document.removeEventListener('keydown', onKey); };
+    const onKey = e => { if (e.key === 'Escape') close(); };
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', onKey);
 }
 
 const AirgappedLaptopScene = {
@@ -203,7 +287,7 @@ const AirgappedLaptopScene = {
                 }
 
                 // All phases complete — show full session history log
-                game.startDialogue(_buildAirgappedSessionLog(game));
+                _showLaptopTerminal(_buildAirgappedSessionLog(game));
             }
         },
 
@@ -214,7 +298,7 @@ const AirgappedLaptopScene = {
             x: 66, y: 10, width: 7, height: 8,
             cursor: 'look',
             action: function(game) {
-                game.startDialogue(_buildAirgappedSessionLog(game));
+                _showLaptopTerminal(_buildAirgappedSessionLog(game));
             }
         },
 
@@ -270,7 +354,7 @@ const AirgappedLaptopScene = {
 
                 // Full session log once evidence is unlocked; brief notes otherwise
                 if (game.getFlag('evidence_unlocked')) {
-                    game.startDialogue(_buildAirgappedSessionLog(game));
+                    _showLaptopTerminal(_buildAirgappedSessionLog(game));
                     return;
                 }
 

@@ -1016,7 +1016,7 @@ const TvdocumentaryScene = {
         const sequence = [
             // ─── 0: COLD OPEN ───
             {
-                duration: 8000,
+                duration: 12000,
                 sound: 'impact',
                 voice: { text: 'Drenthe. The Unexpected Tech Hub. From quiet heathlands came wireless innovations that changed the world.', speaker: 'Documentary' },
                 content: `
@@ -1030,7 +1030,7 @@ const TvdocumentaryScene = {
             },
             // ─── 1: NARRATOR — introduces the theme ───
             {
-                duration: 10000,
+                duration: 12000,
                 sound: 'whoosh',
                 voice: { text: 'In the north-east of the Netherlands lies Drenthe. A province of rolling heathlands, ancient dolmens, and vast open skies. It is also home to some of the most revolutionary wireless technology ever created.', speaker: 'Documentary' },
                 content: `
@@ -1150,7 +1150,7 @@ const TvdocumentaryScene = {
             {
                 duration: 7000,
                 sound: 'impact',
-                voice: { text: 'Chapter Two. Software That Sees. LOFAR, the digital telescope that rewrote the rules of radio astronomy.', speaker: 'Documentary' },
+                voice: { text: 'Chapter Two. Software That Sees. Lofar, the digital telescope that rewrote the rules of radio astronomy.', speaker: 'Documentary' },
                 content: `
                     <div class="docu-bg" style="background-image: url('assets/images/scenes/tvdoc_lofar.svg');"></div>
                     <div class="docu-chapter">

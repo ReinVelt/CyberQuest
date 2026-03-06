@@ -43,8 +43,8 @@ const MancaveScene = {
             }
         },
         async function(game) {
-            // Only visit SDR bench if message not yet decoded (avoids re-entry loop)
-            if (!game.getFlag('message_decoded')) {
+            // Visit SDR bench to decode the SSTV image — only skip once already decoded
+            if (!game.getFlag('sstv_decoded')) {
                 game.loadScene('sdr_bench');
             }
         },
@@ -219,7 +219,7 @@ const MancaveScene = {
                                 g.setFlag('military_frequency', 243);
                                 g.setStoryPart(4);
                                 g.startDialogue([
-                                    { speaker: '', text: '*Static crackles, then clear signal*' },
+                                    { speaker: 'Narrator', text: '*Static crackles, then clear signal*' },
                                     { speaker: 'Ryan', text: 'Got something! Repeating data burst on 243 MHz.' },
                                     { speaker: 'Ryan', text: 'Military emergency frequency. Someone\'s broadcasting.' },
                                     { speaker: 'Ryan', text: 'Steckerdoser Heide is only 30 minutes away...' },
@@ -771,8 +771,8 @@ const MancaveScene = {
             game.setFlag('mother_call_count', motherCallCount + 1);
             setTimeout(() => {
                 MC.playIncomingCall(game, 'Mother', [
-                    { speaker: '', text: '📞 *Incoming video call...*' },
-                    { speaker: '', text: '*Mother calling*' },
+                    { speaker: 'Narrator', text: '📞 *Incoming video call...*' },
+                    { speaker: 'Narrator', text: '*Mother calling*' },
                     { speaker: 'Mother', text: 'Ryan! Finally! I haven\'t heard from you in days!' },
                     { speaker: 'Ryan', text: 'Hi Mom. Sorry, I\'ve been busy with work.' },
                     { speaker: 'Mother', text: 'Too busy for your mother? When are you coming to visit?' },
@@ -794,8 +794,8 @@ const MancaveScene = {
             game.setFlag('father_call_count', fatherCallCount + 1);
             const questions = [
                 [
-                    { speaker: '', text: '📞 *Incoming video call...*' },
-                    { speaker: '', text: '*Father-in-Law calling*' },
+                    { speaker: 'Narrator', text: '📞 *Incoming video call...*' },
+                    { speaker: 'Narrator', text: '*Father-in-Law calling*' },
                     { speaker: 'Father-in-Law', text: 'Ryan! Quick question — you got a minute?' },
                     { speaker: 'Ryan', text: 'Sure, what\'s up?' },
                     { speaker: 'Father-in-Law', text: 'My 3D printer keeps under-extruding on the first layer.' },
@@ -810,8 +810,8 @@ const MancaveScene = {
                     { speaker: 'Ryan', text: 'Sounds good!' }
                 ],
                 [
-                    { speaker: '', text: '📞 *Incoming video call...*' },
-                    { speaker: '', text: '*Father-in-Law calling*' },
+                    { speaker: 'Narrator', text: '📞 *Incoming video call...*' },
+                    { speaker: 'Narrator', text: '*Father-in-Law calling*' },
                     { speaker: 'Father-in-Law', text: 'Ryan, got a weird Arduino issue.' },
                     { speaker: 'Ryan', text: 'What\'s happening?' },
                     { speaker: 'Father-in-Law', text: 'Reading analog values from a potentiometer. They\'re super noisy.' },
@@ -826,8 +826,8 @@ const MancaveScene = {
                     { speaker: 'Ryan', text: 'Anytime!' }
                 ],
                 [
-                    { speaker: '', text: '📞 *Incoming video call...*' },
-                    { speaker: '', text: '*Father-in-Law calling*' },
+                    { speaker: 'Narrator', text: '📞 *Incoming video call...*' },
+                    { speaker: 'Narrator', text: '*Father-in-Law calling*' },
                     { speaker: 'Father-in-Law', text: 'Hey Ryan! Quick one — stepper motor question.' },
                     { speaker: 'Ryan', text: 'Shoot.' },
                     { speaker: 'Father-in-Law', text: 'NEMA 17 stepper gets hot after running for 20 minutes.' },

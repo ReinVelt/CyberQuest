@@ -15,29 +15,37 @@ const GardenScene = {
     // 🎬 Accessibility / Movie Mode — drive to the current urgent destination
     accessibilityPath: [
         async function(game) {
-            // 1. Klooster first (after sstv_decoded unlock)
+            // 1. Klooster — first night drive after SSTV decoded
             if (game.getFlag('klooster_unlocked') && !game.getFlag('visited_klooster')) {
                 game.setFlag('driving_destination', 'klooster');
                 game.loadScene('driving');
-            // 2. Hackerspace Drenthe (first visit — always available)
-            } else if (!game.getFlag('visited_hackerspace')) {
+
+            // 2. Dwingeloo radio telescope — after Eva has been contacted in mancave
+            } else if (game.getFlag('eva_contacted') && !game.getFlag('visited_dwingeloo')) {
+                game.setFlag('driving_destination', 'dwingeloo');
+                game.loadScene('driving_day');
+
+            // 3. Westerbork Memorial — after finding the Dwingeloo relay transmitter
+            } else if (game.getFlag('visited_dwingeloo') && !game.getFlag('visited_westerbork_memorial')) {
+                game.setFlag('driving_destination', 'westerbork');
+                game.loadScene('driving_day');
+
+            // 4. Hackerspace Drenthe — after Westerbork Bluetooth node cracked
+            } else if (game.getFlag('visited_westerbork_memorial') && !game.getFlag('visited_hackerspace')) {
                 game.setFlag('driving_destination', 'hackerspace');
                 game.loadScene('driving_day');
-            // 3. WSRT / ASTRON visit (astron_unlocked by ally-recruitment)
+
+            // 5. ASTRON / WSRT — after hackerspace, astron_unlocked by ally-recruitment
             } else if (game.getFlag('astron_unlocked') && !game.getFlag('visited_astron')) {
                 game.setFlag('driving_destination', 'astron');
                 game.loadScene('driving_day');
-            // 4. Westerbork Memorial (after visiting ASTRON)
-            } else if (game.getFlag('visited_astron') && !game.getFlag('visited_westerbork_memorial')) {
-                game.setFlag('driving_destination', 'westerbork');
-                game.loadScene('driving_day');
-            // 5. Mission prep in mancave (Max farewell + gear) before Steckerdoser
-            //    The infiltrate_facility quest is unlocked in astron, but the player
-            //    must return home and complete the Max farewell cinematic first.
+
+            // 6. Mission prep back in mancave (Max farewell + gear) before infiltration
             } else if (game.questManager?.hasQuest('infiltrate_facility')
                        && !game.getFlag('mission_prep_complete')) {
                 game.loadScene('mancave');
-            // 6. Facility infiltration — only after mission prep is complete
+
+            // 7. Facility infiltration — only after mission prep is complete
             } else if (game.questManager?.hasQuest('infiltrate_facility')
                        && game.getFlag('mission_prep_complete')
                        && !game.getFlag('drove_to_facility')) {
@@ -534,11 +542,11 @@ const GardenScene = {
             });
         }
 
-        // LOFAR Superterp — accessible after visiting ASTRON
+        // Lofar Superterp — accessible after visiting ASTRON
         if (game.getFlag('visited_astron')) {
             destinations.push({
                 id: 'lofar',
-                name: 'LOFAR Superterp',
+                name: 'Lofar Superterp',
                 desc: 'World\'s largest low-frequency radio telescope. Cees Bassa.',
                 distance: '30 min · South',
                 icon: '📶',
@@ -977,7 +985,7 @@ const GardenScene = {
         if (!game.getFlag('visited_garden')) {
             game.setFlag('visited_garden', true);
             game.startDialogue([
-                { speaker: '', text: 'The garden. View of the Dutch-German border.' },
+                { speaker: 'Narrator', text: 'The garden. View of the Dutch-German border.' },
                 { speaker: 'Ryan', text: 'Fresh air. Almost want to go for a walk.' },
                 { speaker: 'Ryan', text: 'Almost.' }
             ]);

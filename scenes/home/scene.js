@@ -54,11 +54,11 @@ const HomeScene = {
         {
             id: 'espresso-machine',
             name: 'Espresso Machine',
-            // SVG: translate(1200, 380), rect width=140, height=120
-            x: 62.50,
-            y: 35.19,
-            width: 7.29,
-            height: 11.11,
+            // SVG: x=1298 y=500 w=162 h=142
+            x: 67.60,
+            y: 46.30,
+            width: 8.44,
+            height: 13.15,
             cursor: 'pointer',
             lookMessage: "My trusty Italian espresso maker. Can't start the day without it.",
             action: function(game) {
@@ -68,12 +68,13 @@ const HomeScene = {
                     ]);
                 } else {
                     game.setFlag('made_espresso', true);
-                    game.setStoryPart(1);
+                    // Only advance story part on day 1 (don't regress later days)
+                    if ((game.gameState.day || 1) === 1 || game.gameState.storyPart < 1) game.setStoryPart(1);
                     // Play coffee machine sound sequence
                     if (HomeScene._playCoffeeMachine) HomeScene._playCoffeeMachine();
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Okay, espresso time. Extra strong, double dose.' },
-                        { speaker: '', text: '*The machine whirrs to life, grinding beans... hissing steam... rich aroma fills the kitchen*' },
+                        { speaker: 'Narrator', text: '*The machine whirrs to life, grinding beans... hissing steam... rich aroma fills the kitchen*' },
                         { speaker: 'Ryan', text: 'Perfect. Now I can actually think.' },
                         { speaker: 'Ryan', text: 'I should check what Max is watching in the living room before heading to my mancave.' }
                     ]);
@@ -84,11 +85,11 @@ const HomeScene = {
         {
             id: 'window',
             name: 'Kitchen Window',
-            // SVG: translate(500, 120), outer frame x=-15, y=-15, w=430, h=380
-            x: 25.26,
-            y: 9.72,
-            width: 22.40,
-            height: 35.19,
+            // SVG: x=632 y=232 w=656 h=300
+            x: 32.92,
+            y: 21.48,
+            width: 34.17,
+            height: 27.78,
             cursor: 'pointer',
             lookMessage: "The canal looks peaceful today. Such a nice view.",
             action: function(game) {
@@ -100,24 +101,24 @@ const HomeScene = {
             }
         },
         {
-            id: 'door-livingroom',
-            name: 'Door to Living Room',
-            // SVG: translate(250, 200), rect x=-10, y=-10, w=180, h=570
-            x: 13.02,
-            y: 17.59,
+            id: 'door-bedroom',
+            name: 'Door to Bedroom',
+            // SVG: frame x=55 y=407 w=180 h=374
+            x: 2.86,
+            y: 37.69,
             width: 9.38,
-            height: 52.78,
+            height: 34.63,
             cursor: 'pointer',
-            targetScene: 'livingroom'
+            targetScene: 'bedroom'
         },
         {
             id: 'door-mancave',
             name: 'Door to Mancave',
-            // SVG: translate(1700, 200), rect x=-10, y=-10, w=180, h=570
-            x: 88.02,
-            y: 17.59,
+            // SVG: frame x=285 y=407 w=180 h=374
+            x: 14.84,
+            y: 37.69,
             width: 9.38,
-            height: 52.78,
+            height: 34.63,
             cursor: 'pointer',
             condition: function(game) {
                 return game.getFlag('tv_documentary_watched');
@@ -128,22 +129,33 @@ const HomeScene = {
         {
             id: 'door-garden',
             name: 'Back Door (Garden)',
-            // SVG: translate(50, 200), rect x=-10, y=-10, w=180, h=570
-            x: 2.08,
-            y: 17.59,
+            // SVG: frame x=1465 y=407 w=180 h=374
+            x: 76.30,
+            y: 37.69,
             width: 9.38,
-            height: 52.78,
+            height: 34.63,
             cursor: 'pointer',
             targetScene: 'garden'
         },
         {
+            id: 'door-livingroom',
+            name: 'Door to Living Room',
+            // SVG: frame x=1695 y=407 w=180 h=374
+            x: 88.28,
+            y: 37.69,
+            width: 9.38,
+            height: 34.63,
+            cursor: 'pointer',
+            targetScene: 'livingroom'
+        },
+        {
             id: 'clock',
             name: 'Wall Clock',
-            // SVG: translate(350, 150), circle r=50
-            x: 15.63,
-            y: 9.26,
-            width: 5.21,
-            height: 9.26,
+            // SVG: cx=960 cy=310 r=46
+            x: 47.60,
+            y: 24.44,
+            width: 4.79,
+            height: 8.52,
             cursor: 'pointer',
             lookMessage: "An old clock. It's been keeping time for years.",
             action: function(game) {
@@ -156,11 +168,11 @@ const HomeScene = {
         {
             id: 'counter',
             name: 'Kitchen Counter',
-            // SVG: rect x=1050, y=500, width=520, height=250
-            x: 54.69,
-            y: 46.30,
-            width: 27.08,
-            height: 23.15,
+            // SVG: x=480 y=638 w=960 h=142 (counter top + base cabinets)
+            x: 25.00,
+            y: 59.07,
+            width: 50.00,
+            height: 13.15,
             cursor: 'pointer',
             lookMessage: "My counter. A bit cluttered, but I know where everything is.",
             action: function(game) {
@@ -557,7 +569,39 @@ const HomeScene = {
             const npcCharacters = charactersContainer.querySelectorAll('.npc-character');
             npcCharacters.forEach(npc => npc.remove());
         }
-        
+
+        // ── Night-time auto-sleep ─────────────────────────────────────────
+        // If Ryan arrives home at 22:00 or later (or at midnight) and hasn't
+        // already slept tonight, send him straight to the bedroom.
+        const _homeHour = (game.gameState && game.gameState.time)
+            ? parseInt(game.gameState.time.split(':')[0], 10)
+            : -1;
+        const _homeDayKey = 'slept_day_' + ((game.gameState && game.gameState.day) || 1);
+        if ((_homeHour >= 22 || _homeHour === 0 || _homeHour === 1)
+                && !game.getFlag(_homeDayKey)) {
+            document.getElementById('scene-background').className = 'scene-home';
+            setTimeout(() => {
+                game.startDialogue([
+                    { speaker: 'Ryan', text: 'Long day. Time for some sleep.' }
+                ], () => game.loadScene('bedroom'));
+            }, 500);
+            return;
+        }
+        // ─────────────────────────────────────────────────────────────────
+
+        // ── Morning coffee prompt (every day after waking from bedroom) ────
+        if (game.getFlag('needs_morning_coffee')) {
+            game.setFlag('needs_morning_coffee', false); // consume once
+            setTimeout(() => {
+                game.startDialogue([
+                    { speaker: 'Narrator', text: '*07:00. Morning light creeps through the kitchen window. Ryan shuffles in from the bedroom, squinting.*' },
+                    { speaker: 'Ryan', text: 'Ugh. Right. Coffee. Non-negotiable.' },
+                    { speaker: 'Ryan', text: "...Don't even think about talking to me until I've had my espresso." },
+                ]);
+            }, 800);
+        }
+        // ─────────────────────────────────────────────────────────────────
+
         // First time entering the game
         if (!game.getFlag('game_started')) {
             game.setFlag('game_started', true);
@@ -565,8 +609,8 @@ const HomeScene = {
             
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: '', text: 'Compascuum, Netherlands. Another morning.' },
-                    { speaker: '', text: 'Ryan Weylant, hacker. Age 42. Lives with Max and three rescue dogs.' },
+                    { speaker: 'Narrator', text: 'Compascuum, Netherlands. Another morning.' },
+                    { speaker: 'Narrator', text: 'Ryan Weylant, hacker. Age 42. Lives with Max and three rescue dogs.' },
                     { speaker: 'Ryan', text: 'Coffee. Need coffee.' }
                 ]);
             }, 1000);

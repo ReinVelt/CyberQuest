@@ -1,6 +1,6 @@
 /**
  * TV Documentary Scene - Watching "Drenthe: The Unexpected Tech Hub"
- * A documentary about the pioneers who invented LOFAR, WSRT, and Bluetooth
+ * A documentary about the pioneers who invented Lofar, WSRT, and Bluetooth
  */
 
 const TvdocumentaryScene = {
@@ -452,7 +452,7 @@ const TvdocumentaryScene = {
                     </div>
                     <div class="docu-nameplate">
                         <h3>Cees Bassa</h3>
-                        <p>ASTRON Scientist, LOFAR Team</p>
+                        <p>ASTRON Scientist, Lofar Team</p>
                     </div>
                     <div class="docu-quote-bubble">
                         <p>"We built the most advanced digital radio telescope on Earth. The genius is in the software."</p>
@@ -472,7 +472,7 @@ const TvdocumentaryScene = {
                     </div>
                     <div class="docu-nameplate">
                         <h3>Cees Bassa</h3>
-                        <p>ASTRON Scientist, LOFAR Team</p>
+                        <p>ASTRON Scientist, Lofar Team</p>
                     </div>
                     <div class="docu-quote-bubble">
                         <p>"We can point the telescope anywhere - without moving a single antenna!"</p>

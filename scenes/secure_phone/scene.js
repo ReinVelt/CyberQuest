@@ -14,6 +14,89 @@
  *   back_to_mancave     — return
  */
 
+/**
+ * Render lines directly on the phone screen — positioned over the phone hotspot.
+ * `lines` is an array of { speaker, text } objects.
+ * Speaker colours: System → dim green, Kubecka → cyan, Ryan → white.
+ * After closing, calls optional `onClose` callback.
+ */
+function _showPhoneScreen(lines, onClose) {
+    const existing = document.getElementById('phone-screen-overlay');
+    if (existing) existing.remove();
+
+    // Full-screen backdrop
+    const backdrop = document.createElement('div');
+    backdrop.id = 'phone-screen-overlay';
+    backdrop.style.cssText = [
+        'position:fixed', 'inset:0', 'z-index:2000',
+        'background:rgba(0,0,0,0.60)',
+        'display:flex', 'align-items:flex-start', 'justify-content:flex-start',
+        'cursor:pointer',
+    ].join(';');
+
+    // Phone screen panel — matches hotspot x=39% y=14% w=22% h=56%
+    const panel = document.createElement('div');
+    panel.style.cssText = [
+        'position:absolute',
+        'left:39%', 'top:14%',
+        'width:22%', 'height:56%',
+        'background:#050d0a',
+        'border:1px solid #0d2b1a',
+        'box-shadow:0 0 24px rgba(0,255,100,0.12)',
+        'overflow-y:auto',
+        'padding:10px 12px',
+        'box-sizing:border-box',
+        'cursor:default',
+        'font-family:\'Courier New\',Courier,monospace',
+        'font-size:10px',
+        'line-height:1.6',
+        'color:#00e060',
+    ].join(';');
+    panel.addEventListener('click', e => e.stopPropagation());
+
+    const COLOURS = {
+        System:  '#00e060',
+        Kubecka: '#44ddff',
+        Ryan:    '#f0f0f0',
+        Narrator:'#aaaaaa',
+    };
+
+    lines.forEach(({ speaker, text }) => {
+        const row = document.createElement('div');
+        row.style.cssText = 'margin-bottom:4px;white-space:pre-wrap;word-break:break-word;';
+        const color = COLOURS[speaker] || '#cccccc';
+        if (speaker && speaker !== 'System') {
+            const label = document.createElement('span');
+            label.style.cssText = `color:${color};font-weight:bold;margin-right:4px;`;
+            label.textContent = speaker + ':';
+            row.appendChild(label);
+        }
+        const content = document.createElement('span');
+        content.style.color = (speaker === 'System') ? '#00e060' : '#d0d0d0';
+        content.textContent = text;
+        row.appendChild(content);
+        panel.appendChild(row);
+    });
+
+    const hint = document.createElement('div');
+    hint.style.cssText = 'margin-top:10px;color:rgba(0,200,80,0.30);font-size:9px;text-align:center;';
+    hint.textContent = '— tap outside or ESC to close —';
+    panel.appendChild(hint);
+
+    backdrop.appendChild(panel);
+    document.body.appendChild(backdrop);
+    requestAnimationFrame(() => { panel.scrollTop = panel.scrollHeight; });
+
+    const close = () => {
+        backdrop.remove();
+        document.removeEventListener('keydown', onKey);
+        if (typeof onClose === 'function') onClose();
+    };
+    const onKey = e => { if (e.key === 'Escape') close(); };
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', onKey);
+}
+
 const SecurePhoneScene = {
     id: 'secure_phone',
     name: 'Secure Phone',
@@ -91,7 +174,7 @@ const SecurePhoneScene = {
             action: function(game) {
 
                 if (!game.getFlag('discovered_zerfall')) {
-                    game.startDialogue([
+                    _showPhoneScreen([
                         { speaker: 'System', text: '> ENCRYPTED — AES-256-GCM' },
                         { speaker: 'System', text: '> Decryption key required.' },
                         { speaker: 'System', text: '> Ask Kubecka.' },
@@ -100,14 +183,18 @@ const SecurePhoneScene = {
                 }
 
                 if (!game.getFlag('facility_map_decrypted')) {
-                    game.startDialogue([
+                    const sysLines = [
                         { speaker: 'System', text: '> Decrypting facility_map.enc...' },
                         { speaker: 'System', text: '> Key: 0xA8F3C2-MATCH ✓  HMAC verified ✓' },
                         { speaker: 'System', text: '> File decrypted. Rendering...' },
-                        { speaker: 'Ryan', text: 'A floor plan. Three levels below ground.' },
-                        { speaker: 'Ryan', text: 'Server room is on B-3. Emergency access shaft — outside entry, 4-digit code.' },
-                        { speaker: 'Ryan', text: 'Kubecka already mapped the whole thing. This woman is something else.' },
-                    ]);
+                    ];
+                    _showPhoneScreen(sysLines, function() {
+                        game.startDialogue([
+                            { speaker: 'Ryan', text: 'A floor plan. Three levels below ground.' },
+                            { speaker: 'Ryan', text: 'Server room is on B-3. Emergency access shaft — outside entry, 4-digit code.' },
+                            { speaker: 'Ryan', text: 'Kubecka already mapped the whole thing. This woman is something else.' },
+                        ]);
+                    });
                     game.setFlag('facility_map_decrypted', true);
                     return;
                 }
@@ -189,7 +276,7 @@ const SecurePhoneScene = {
                     { speaker: 'System', text: `Intelligence level: ${stages}/4 — ${['Minimal', 'Limited', 'Moderate', 'Solid', 'Complete'][stages]}` },
                 );
 
-                game.startDialogue(msgs);
+                _showPhoneScreen(msgs);
             }
         },
 

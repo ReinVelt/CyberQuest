@@ -53,9 +53,9 @@ const MancaveScene = {
                     game.setStoryPart(5);
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Wait! New SSTV transmission!' },
-                        { speaker: '', text: '*An image slowly forms, line by line...*' },
+                        { speaker: 'Narrator', text: '*An image slowly forms, line by line...*' },
                         { speaker: 'Ryan', text: 'That\'s... MY HOUSE! Someone took a photo!' },
-                        { speaker: '', text: '*More encoded text appears*' },
+                        { speaker: 'Narrator', text: '*More encoded text appears*' },
                         { speaker: 'Ryan', text: 'They know where I live. They\'ve been watching me.' },
                         { speaker: 'Ryan', text: 'Another encoded message. Decode time!' }
                     ]);
@@ -169,7 +169,7 @@ const MancaveScene = {
                     
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Wait... the SSTV terminal! Something\'s showing!' },
-                        { speaker: '', text: '*Static shifts into a pattern*' },
+                        { speaker: 'Narrator', text: '*Static shifts into a pattern*' },
                         { speaker: 'Ryan', text: 'Not just noise. That looks like... visual morse?' },
                         { speaker: 'Ryan', text: 'And encoded text. Can\'t be a coincidence.' },
                         { speaker: 'Ryan', text: 'Let me analyze this...' }
@@ -241,7 +241,7 @@ const MancaveScene = {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Living in Drenthe has perks. Radio astronomy capital of the world.' },
                         { speaker: 'Ryan', text: 'David Prinsloo at TU Eindhoven - antenna engineering genius, lunar telescope designer.' },
-                        { speaker: 'Ryan', text: 'Cees Bassa from LOFAR - signal processing genius. Paranoid but sharp.' },
+                        { speaker: 'Ryan', text: 'Cees Bassa from Lofar - signal processing genius. Paranoid but sharp.' },
                         { speaker: 'Ryan', text: 'Jaap Haartsen, the Bluetooth inventor. Brilliant and sharp.' },
                         { speaker: 'Ryan', text: 'Three experts. Three different channels. Let\'s make contact.' }
                     ]);
@@ -524,7 +524,7 @@ PS: Delete this email after reading. I'm serious.`
                                     
                                     setTimeout(() => {
                                         game.startDialogue([
-                                            { speaker: '', text: '*Ryan searches test report signatures*' },
+                                            { speaker: 'Narrator', text: '*Ryan searches test report signatures*' },
                                             { speaker: 'Ryan', text: 'ECHO-7 through ECHO-12. The deadliest tests.' },
                                             { speaker: 'Ryan', text: 'Every single one signed: "V."' },
                                             { speaker: 'Ryan', text: 'Volkov designed it. Volkov tested it. Volkov KILLED for it.' },
@@ -568,10 +568,10 @@ PS: Delete this email after reading. I'm serious.`
                     game.setFlag('checked_email', true);
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Let\'s see what\'s in my inbox...' },
-                        { speaker: '', text: '*Ryan scrolls through emails*' },
+                        { speaker: 'Narrator', text: '*Ryan scrolls through emails*' },
                         { speaker: 'Ryan', text: 'Newsletter, spam, another newsletter... nothing urgent.' },
                         { speaker: 'Ryan', text: 'No freelance work either. Back to my project.' },
-                        { speaker: '', text: '*Ryan starts coding*' },
+                        { speaker: 'Narrator', text: '*Ryan starts coding*' },
                         { speaker: 'Ryan', text: 'Now, where was I with this auth module...' }
                     ]);
                     game.advanceTime(60);
@@ -615,7 +615,7 @@ PS: Delete this email after reading. I'm serious.`
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Time to see what\'s on this USB stick.' },
                         { speaker: 'Ryan', text: '*Inserts USB into air-gapped laptop*' },
-                        { speaker: '', text: '*The drive mounts*' },
+                        { speaker: 'Narrator', text: '*The drive mounts*' },
                         { speaker: 'Ryan', text: 'Three files. README.txt, echo_schematics.pdf, evidence.zip' },
                         { speaker: 'Ryan', text: 'Let\'s start with the README.' }
                     ]);
@@ -878,7 +878,7 @@ NOTES:
                                 g.setFlag('military_frequency', 243);
                                 g.setStoryPart(4);
                                 g.startDialogue([
-                                    { speaker: '', text: '*Static crackles, then clear signal*' },
+                                    { speaker: 'Narrator', text: '*Static crackles, then clear signal*' },
                                     { speaker: 'Ryan', text: 'Got something! Repeating data burst on 243 MHz.' },
                                     { speaker: 'Ryan', text: 'Military emergency frequency. Someone\'s broadcasting.' },
                                     { speaker: 'Ryan', text: 'Steckerdoser Heide is only 30 minutes away...' },
@@ -1671,8 +1671,8 @@ SUPERVISOR NOTES:
             game.setFlag('mother_call_count', motherCallCount + 1);
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: '', text: '📞 *Incoming video call...*' },
-                    { speaker: '', text: '*Mother calling*' },
+                    { speaker: 'Narrator', text: '📞 *Incoming video call...*' },
+                    { speaker: 'Narrator', text: '*Mother calling*' },
                     { speaker: 'Mother', text: 'Ryan! Finally! I haven\'t heard from you in days!' },
                     { speaker: 'Ryan', text: 'Hi Mom. Sorry, I\'ve been busy with work.' },
                     { speaker: 'Mother', text: 'Too busy for your mother? When are you coming to visit?' },
@@ -1694,8 +1694,8 @@ SUPERVISOR NOTES:
             game.setFlag('father_call_count', fatherCallCount + 1);
             const questions = [
                 [
-                    { speaker: '', text: '📞 *Incoming video call...*' },
-                    { speaker: '', text: '*Father-in-Law calling*' },
+                    { speaker: 'Narrator', text: '📞 *Incoming video call...*' },
+                    { speaker: 'Narrator', text: '*Father-in-Law calling*' },
                     { speaker: 'Father-in-Law', text: 'Ryan! Quick question - you got a minute?' },
                     { speaker: 'Ryan', text: 'Sure, what\'s up?' },
                     { speaker: 'Father-in-Law', text: 'My 3D printer keeps under-extruding on the first layer.' },
@@ -1710,8 +1710,8 @@ SUPERVISOR NOTES:
                     { speaker: 'Ryan', text: 'Sounds good!' }
                 ],
                 [
-                    { speaker: '', text: '📞 *Incoming video call...*' },
-                    { speaker: '', text: '*Father-in-Law calling*' },
+                    { speaker: 'Narrator', text: '📞 *Incoming video call...*' },
+                    { speaker: 'Narrator', text: '*Father-in-Law calling*' },
                     { speaker: 'Father-in-Law', text: 'Ryan, got a weird Arduino issue.' },
                     { speaker: 'Ryan', text: 'What\'s happening?' },
                     { speaker: 'Father-in-Law', text: 'Reading analog values from a potentiometer. They\'re super noisy.' },
@@ -1726,8 +1726,8 @@ SUPERVISOR NOTES:
                     { speaker: 'Ryan', text: 'Anytime!' }
                 ],
                 [
-                    { speaker: '', text: '📞 *Incoming video call...*' },
-                    { speaker: '', text: '*Father-in-Law calling*' },
+                    { speaker: 'Narrator', text: '📞 *Incoming video call...*' },
+                    { speaker: 'Narrator', text: '*Father-in-Law calling*' },
                     { speaker: 'Father-in-Law', text: 'Hey Ryan! Quick one - stepper motor question.' },
                     { speaker: 'Ryan', text: 'Shoot.' },
                     { speaker: 'Father-in-Law', text: 'NEMA 17 stepper gets hot after running for 20 minutes.' },

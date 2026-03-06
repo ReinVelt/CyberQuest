@@ -19,6 +19,7 @@ const DrivingScene = {
     
     // Store timeout IDs for cleanup
     _timeoutIds: [],
+    _wordRevealInterval: null,
 
     // ======= WEB AUDIO: CAR RADIO + DRIVING AMBIENCE =======
     _audioCtx: null,
@@ -384,242 +385,273 @@ const DrivingScene = {
         console.log('[Driving] Car radio stopped');
     },
 
-    // Scene entry - determines which monologue to play
+    // ── Radio display overlay ─────────────────────────────────────────────
+    _showRadioOverlay: function(bulletin, stationLabel, onSkip) {
+        const existing = document.getElementById('driving-radio-overlay');
+        if (existing) existing.remove();
+        if (this._wordRevealInterval) { clearInterval(this._wordRevealInterval); this._wordRevealInterval = null; }
+
+        const wrap = document.createElement('div');
+        wrap.id = 'driving-radio-overlay';
+        wrap.style.cssText = [
+            'position:absolute', 'top:16px', 'right:20px', 'width:360px',
+            'background:rgba(8,10,16,0.92)',
+            'border:1px solid rgba(80,160,255,0.28)',
+            'border-radius:10px', 'padding:14px 18px 12px',
+            'z-index:50', 'font-family:\'Courier New\',monospace', 'color:#c8e6ff',
+            'box-shadow:0 4px 28px rgba(0,60,160,0.45)',
+        ].join(';');
+
+        const hdr = document.createElement('div');
+        hdr.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:10px;border-bottom:1px solid rgba(80,160,255,0.18);padding-bottom:8px;';
+        const dot = document.createElement('span');
+        dot.style.cssText = 'width:8px;height:8px;border-radius:50%;background:#ff4444;flex-shrink:0;animation:radioPulse 1.2s ease-in-out infinite;';
+        const lbl = document.createElement('span');
+        lbl.style.cssText = 'font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:#7ab8e8;font-weight:bold;';
+        lbl.textContent = stationLabel || 'RTV DRENTHE — NACHT-NIEUWS';
+        const live = document.createElement('span');
+        live.style.cssText = 'margin-left:auto;font-size:11px;opacity:0.55;';
+        live.textContent = '▶ LIVE';
+        hdr.append(dot, lbl, live);
+
+        const txt = document.createElement('div');
+        txt.id = 'driving-radio-text';
+        txt.style.cssText = 'font-size:12.5px;line-height:1.75;color:#ddeeff;max-height:220px;overflow-y:auto;white-space:pre-wrap;word-break:break-word;';
+
+        const btn = document.createElement('button');
+        btn.textContent = 'Doorgaan »';
+        btn.style.cssText = [
+            'margin-top:10px', 'width:100%',
+            'background:rgba(30,60,130,0.55)',
+            'border:1px solid rgba(80,140,255,0.35)',
+            'border-radius:5px', 'color:#a8d0ff',
+            'font-family:\'Courier New\',monospace', 'font-size:11px',
+            'padding:5px 10px', 'cursor:pointer', 'letter-spacing:0.08em',
+        ].join(';');
+        btn.onclick = onSkip;
+
+        wrap.append(hdr, txt, btn);
+
+        if (!document.getElementById('driving-radio-style')) {
+            const s = document.createElement('style');
+            s.id = 'driving-radio-style';
+            s.textContent = '@keyframes radioPulse{0%,100%{opacity:1}50%{opacity:0.15}}';
+            document.head.appendChild(s);
+        }
+        (document.getElementById('scene-container') || document.body).appendChild(wrap);
+
+        // Word-by-word reveal
+        const words = bulletin.split(' ');
+        let i = 0;
+        this._wordRevealInterval = setInterval(() => {
+            const el = document.getElementById('driving-radio-text');
+            if (!el) { clearInterval(this._wordRevealInterval); return; }
+            if (i < words.length) { el.textContent += (i > 0 ? ' ' : '') + words[i++]; el.scrollTop = el.scrollHeight; }
+            else clearInterval(this._wordRevealInterval);
+        }, 110);
+    },
+
+    _removeRadioOverlay: function() {
+        const el = document.getElementById('driving-radio-overlay');
+        if (el) el.remove();
+        if (this._wordRevealInterval) { clearInterval(this._wordRevealInterval); this._wordRevealInterval = null; }
+    },
+
+    // ── RTV Drenthe / NPO Radio 1 night bulletins — multiple variants per destination ──
+    _speakRadioNews: function(destination, game) {
+        const g  = game || window.game;
+        const vm = window.voiceManager;
+
+        // Multiple bulletin variants per destination — picked at random each drive.
+        // Bulletins are ~60-90 words (50-75 s at normal TTS rate) so the full bulletin
+        // plays before the scene transitions. TTS completion drives the transition.
+        const BULLETINS = {
+            klooster: [
+                'RTV Drenthe, nacht-nieuws. ' +
+                'Het is bijna middernacht in Drenthe. ' +
+                'Residents near Ter Apel have reported unusual vehicle activity on rural roads this evening. ' +
+                'Local police say there is no cause for concern. ' +
+                'The Westerbork radio telescope team has filed a signal interference report with the Dutch Radiocommunications Agency. An unidentified transmission on restricted military frequencies was logged earlier tonight. ' +
+                'The N391 between Ter Apel and Emmen is clear. No incidents reported. ' +
+                'Weather: clear skies, four degrees. Light frost possible on rural bridges. ' +
+                'This is RTV Drenthe. Goedenacht.',
+
+                'RTV Drenthe, nacht-nieuws. ' +
+                'Het is middernacht. Een korte bulletijn. ' +
+                'Astronomers at ASTRON have noted interference on a restricted frequency band. The Dutch Radiocommunications Agency is monitoring the situation. ' +
+                'Police in Emmen report no major incidents this evening. ' +
+                'Border crossing Ter Apel is operating on normal overnight schedule. The Westerbork Memorial will be open from nine o\'clock tomorrow morning. ' +
+                'Weather: clear, two degrees. Possible frost before dawn on rural roads. Drive carefully. ' +
+                'RTV Drenthe. Goedenacht.',
+            ],
+            home: [
+                'RTV Drenthe, nacht-nieuws. ' +
+                'Het is na middernacht. Goedenacht Drenthe. ' +
+                'ASTRON confirms an anomalous signal logged near Dwingeloo is under formal investigation by the Dutch Radiocommunications Agency. ' +
+                'In Lower Saxony, German federal police have acknowledged reports of an unidentified individual near the Steckerdoser Heide research area earlier this week. ' +
+                'A late-night lane closure on the N366 near Ter Apel has been lifted. Normal traffic flow is restored. ' +
+                'Weather: clear and cold. Two degrees. Frost on exposed surfaces before dawn. ' +
+                'More news at six. This is RTV Drenthe. Goedenacht.',
+
+                'RTV Drenthe, nacht-nieuws. ' +
+                'Het is laat in de nacht. ' +
+                'Dutch and German authorities are cooperating on an investigation into illegal signal transmissions near the German border in Drenthe. ' +
+                'ASTRON in Dwingeloo declined to release details of its ongoing signal analysis. ' +
+                'Amateur radio operators across Drenthe are advised to report any unusual frequency activity to the Radiocommunications Agency hotline at zero eight hundred, zero three zero three. ' +
+                'The N34 between Coevorden and Emmen is clear. ' +
+                'Weather: one degree. Watch for black ice on ungritted roads overnight. Stay safe. ' +
+                'This is RTV Drenthe. Goedenacht.',
+            ],
+            facility: [
+                'NPO Radio 1, middernacht-nieuws. ' +
+                'Dutch and German border agencies are operating under an elevated information-sharing protocol following security concerns in the Steckerdoser Heide area of Lower Saxony. ' +
+                'The Bundeswehr has declined to comment on reports of unusual activity at a research installation near the Dutch border. ' +
+                'Dutch and German Radiocommunications authorities have jointly identified illegal transmissions on air-defence frequencies originating from the German side of the border. ' +
+                'The Dutch National Cyber Security Centre has issued an advisory to operators of critical communications infrastructure. ' +
+                'Weather: overcast. Ten degrees. Light rain spreading from the west after two a.m. ' +
+                'This is NPO Radio 1.',
+
+                'NPO Radio 1, middernacht. Breaking news at this hour. ' +
+                'Sources close to the Dutch Ministry of Defence confirm that military frequencies were accessed by an unlicensed transmitter operating near the German border in Drenthe earlier tonight. ' +
+                'The MIVD, Dutch military intelligence, is reported to be involved in the investigation. ' +
+                'German authorities confirm they are aware of the incident and are cooperating with the Dutch side. ' +
+                'Civilian services are unaffected. There is no public safety risk, authorities say. ' +
+                'Weather: ten degrees. Rain likely before three a.m. ' +
+                'NPO Radio 1. Het nieuws in de nacht.',
+            ],
+            home_from_facility: [
+                'NPO Radio 1, vroeg-ochtend nieuws. Het is net na één uur. ' +
+                'Breaking: German authorities confirm an incident at the Steckerdoser Heide research facility in Lower Saxony. Details are withheld for operational security reasons. No casualties are reported. ' +
+                'The Dutch National Cyber Security Centre has raised its alert level for critical infrastructure operators. ' +
+                'The anomalous transmission near Dwingeloo tracked by ASTRON has gone silent. The Radiocommunications Agency says its investigation continues. ' +
+                'The N391 border crossing at Ter Apel remains open for essential traffic. ' +
+                'Weather: overcast, nine degrees. Rain clearing by dawn. ' +
+                'This is NPO Radio 1.',
+
+                'NPO Radio 1. Het is vroeg in de ochtend. ' +
+                'German state broadcaster NDR is reporting that an unspecified security incident occurred near the Dutch-German border in Lower Saxony overnight. Sources describe it as a research facility communications breach. ' +
+                'Dutch authorities have not confirmed the incident publicly. ' +
+                'ASTRON scientists are monitoring a frequency band that went silent following the incident. ' +
+                'Weather: nine degrees. Clearing skies before first light. ' +
+                'NPO Radio 1. Goedemorgen.',
+            ],
+            hackerspace: [
+                'RTV Drenthe, avond-nieuws. Goedenavond Drenthe. ' +
+                'Hackerspace Drenthe in Coevorden marks its second anniversary this month. The maker space now hosts eighty active members with weekly sessions in 3D printing, electronics and amateur radio. ' +
+                'The municipality of Coevorden has confirmed a new digital infrastructure grant for rural communities in south Drenthe, worth half a million euros. ' +
+                'The Dutch amateur radio society VERON reports increased interest in low-power mesh networks following news of the Westerbork signal investigation. ' +
+                'Weather: twelve degrees. Light south-westerly wind. Pleasant evening ahead. ' +
+                'RTV Drenthe. Prettige avond.',
+
+                'RTV Drenthe, avond-nieuws. ' +
+                'Coevorden municipality is piloting a smart-city sensor network in the town centre, drawing on expertise from local tech community volunteers, including members of Hackerspace Drenthe. ' +
+                'The N34 is clear of roadworks as of this evening. ' +
+                'A presentation on LoRa mesh networking attracted a full house at the hackerspace last week. Organisers say follow-up sessions are planned. ' +
+                'Weather: eleven degrees. Dry evening. Light cloud. ' +
+                'RTV Drenthe.',
+            ],
+            home_from_wsrt_parking: [
+                'RTV Drenthe, nacht-nieuws. Het is na middernacht. ' +
+                'ASTRON confirms all fourteen Westerbork synthesis radio telescope dishes are back online following calibration. A new all-sky survey begins Tuesday. ' +
+                'The Herinneringscentrum Kamp Westerbork received a record number of school groups this month, with over two thousand pupils visiting the memorial site. ' +
+                'The anomalous signal investigation continues. No new public statement is expected before morning. ' +
+                'The N371 between Westerbork and Beilen is clear. ' +
+                'Weather: clear and cool. Six degrees. ' +
+                'RTV Drenthe. Goedenacht.',
+
+                'RTV Drenthe, nacht-nieuws. Een rustige nacht in Drenthe. ' +
+                'Westerbork radio telescope observers report clear skies and a productive observing window tonight. ' +
+                'The Dutch Radiocommunications Agency has not released further details on the signal investigation. Amateur radio operators are asked to report any unusual frequencies on the agency hotline. ' +
+                'Assen city centre is quiet. No incidents reported this evening. ' +
+                'Weather: five degrees. Clear skies and good visibility. ' +
+                'RTV Drenthe. Goedenacht.',
+            ],
+            home_from_hackerspace: [
+                'RTV Drenthe, laat nacht-nieuws. Goedenacht Drenthe. ' +
+                'The Hackerspace Drenthe evening concluded with a well-attended presentation on LoRa mesh networking and low-power sensor arrays. ' +
+                'Organisers say the techniques demonstrated tonight have direct applications in remote monitoring across rural Drenthe. Follow-up sessions are planned for next month. ' +
+                'Coevorden is quiet overnight. Emergency services report no major incidents. ' +
+                'The N34 near Coevorden is clear. ' +
+                'Weather: eight degrees. Clear sky. Good visibility. ' +
+                'RTV Drenthe. Goedenacht.',
+
+                'RTV Drenthe, nacht-nieuws. Het is laat. Een korte bulletijn. ' +
+                'Amateur radio and open hardware communities across Drenthe are growing. Hackerspace Drenthe reports its highest-ever monthly attendance this month. ' +
+                'VERON, the Dutch amateur radio society, will hold a regional meet in Hoogeveen next Saturday. All licensed operators are welcome. ' +
+                'Weather: seven degrees. Quiet night ahead. ' +
+                'RTV Drenthe. Goedenacht.',
+            ],
+        };
+
+        const ROUTES = {
+            klooster:               { advance: 20, scene: 'klooster',    part: 7,    notify: null },
+            facility:               { advance: 25, scene: 'drone_hunt',  part: 17,   notify: null },
+            home:                   { advance: 25, scene: 'home',        part: null, notify: 'Arrived home' },
+            home_from_facility:     { advance: 30, scene: 'long_night',  part: null, notify: null },
+            hackerspace:            { advance: 25, scene: 'hackerspace', part: null, notify: null },
+            home_from_wsrt_parking: { advance: 20, scene: 'home',        part: null, notify: 'Arrived home' },
+            home_from_hackerspace:  { advance: 25, scene: 'home',        part: null, notify: 'Arrived home' },
+        };
+        const tr = ROUTES[destination] || { advance: 20, scene: 'mancave', part: null, notify: null };
+
+        // Pick a random bulletin variant for this drive
+        const pool    = BULLETINS[destination] || ['RTV Drenthe, nacht-nieuws. Rustige nacht in Drenthe. Weer: koud en helder. RTV Drenthe. Goedenacht.'];
+        const bulletin = pool[Math.floor(Math.random() * pool.length)];
+        const stationLabel = (destination === 'facility' || destination === 'home_from_facility')
+            ? 'NPO RADIO 1 — NACHT-NIEUWS'
+            : 'RTV DRENTHE — NACHT-NIEUWS';
+
+        // Transition — called when TTS finishes (or skip pressed)
+        const doTransition = () => {
+            if (!window.game || window.game.currentScene !== 'driving') return;
+            this._removeRadioOverlay();
+            if (tr.part !== null && g.setStoryPart) g.setStoryPart(tr.part);
+            g.advanceTime(tr.advance);
+            if (tr.notify) g.showNotification(tr.notify);
+            g.loadScene(tr.scene);
+        };
+
+        // Show radio card on screen immediately
+        this._showRadioOverlay(bulletin, stationLabel, doTransition);
+
+        // Speak 2 s in (after engine/tuning sounds settle); transition fires when TTS finishes
+        const tid = setTimeout(() => {
+            if (!window.game || window.game.currentScene !== 'driving') return;
+            if (vm && typeof vm.speak === 'function') {
+                vm.speak(bulletin, 'Documentary').then(() => {
+                    const t2 = setTimeout(doTransition, 2500);
+                    this._timeoutIds.push(t2);
+                });
+            } else {
+                // Fallback: estimate reading time (~450 ms/word)
+                const readMs = Math.max(20000, bulletin.split(' ').length * 450);
+                const t2 = setTimeout(doTransition, readMs);
+                this._timeoutIds.push(t2);
+            }
+        }, 2000);
+        this._timeoutIds.push(tid);
+    },
+
+    // Scene entry — Rick Astley on the car radio, RTV Drenthe news, auto-transition
     onEnter: function(gameInstance) {
         const g = gameInstance || window.game;
         const destination = g.getFlag('driving_destination');
-        
-        console.log('Driving scene entered. Destination:', destination);
-        
-        // Clear any previous timeouts
+        g.setFlag('driving_destination', null);
+
         this._timeoutIds.forEach(id => clearTimeout(id));
         this._timeoutIds = [];
 
-        // Start car radio + engine ambience
         this._startDrivingAudio();
-        
-        if (destination === 'klooster') {
-            // Drive TO klooster - anxious, uncertain
-            g.setTime(1, '22:27'); // clock starts ~22:27; dialogue says 22:47; advanceTime(20) → 22:47 → klooster pins at 22:55
-            const timeoutId1 = setTimeout(() => {
-                g.startDialogue([
-                    { speaker: '', text: '*The Volvo rumbles through the darkness*' },
-                    { speaker: 'Ryan', text: 'Ter Apel. 20 minutes. Maybe less at this hour.' },
-                    { speaker: 'Ryan', text: 'Empty road. Good. Don\'t want anyone seeing me.' },
-                    { speaker: '', text: '*Passes a dark farmhouse. A dog barks in the distance*' },
-                    { speaker: 'Ryan', text: 'What am I doing? Meeting anonymous contacts at a monastery at midnight?' },
-                    { speaker: 'Ryan', text: 'This is insane. This is how people disappear.' },
-                    { speaker: '', text: '*The dashboard clock glows: 22:47*' },
-                    { speaker: 'Ryan', text: 'But those signals. Those messages. They KNEW my equipment.' },
-                    { speaker: 'Ryan', text: 'They knew I\'d decode SSTV. Knew I\'d understand.' },
-                    { speaker: 'Ryan', text: 'This is big. Military frequencies. Encrypted transmissions.' },
-                    { speaker: '', text: '*Approaches the monastery - silhouette against moonlight*' },
-                    { speaker: 'Ryan', text: 'There it is. Ter Apel Klooster.' },
-                    { speaker: 'Ryan', text: 'Centuries old. Perfect for secrets.' },
-                    { speaker: 'Ryan', text: 'Let\'s see what this is about.' }
-                ], () => {
-                    g.advanceTime(20);
-                    g.setStoryPart(7);
-                    g.loadScene('klooster');
-                });
-            }, 1000);
-            this._timeoutIds.push(timeoutId1);
-            
-        } else if (destination === 'facility') {
-            // Drive TO facility - infiltration night with border crossing
-            const timeoutId1 = setTimeout(() => {
-                g.startDialogue([
-                    { speaker: '', text: '*11 PM. The Volvo cuts through darkness toward Germany*' },
-                    { speaker: 'Ryan', text: 'This is it. The real thing.' },
-                    { speaker: 'Ryan', text: 'Not monitoring signals. Not decoding messages. Actually infiltrating.' },
-                    { speaker: '', text: '*N34 eastward. Past Emmen. The road narrows.*' },
-                    { speaker: 'Ryan', text: 'Meshtastic node in pocket. Faraday bag with the USB dumps. Laptop battery full.' },
-                    { speaker: 'Ryan', text: 'Cees should be at WSRT by now. Jaap has the dead-man switch armed.' },
-
-                    // ── Enhanced border crossing ──
-                    { speaker: '', text: '*A small blue sign: "Bundesrepublik Deutschland". That\'s it. No gate. No guard.*' },
-                    { speaker: 'Ryan', text: 'Schengen. No passport check. No record of me crossing.' },
-                    { speaker: 'Ryan', text: 'Same road. Same asphalt. But everything just changed.' },
-                    { speaker: 'Ryan', text: 'In the Netherlands I\'m a radio amateur poking around. Worst case: a fine.' },
-                    { speaker: 'Ryan', text: 'In Germany? Trespassing on a Bundeswehr research facility. That\'s... years.' },
-                    { speaker: 'Ryan', text: 'Espionage, if they want to call it that. Because that\'s what it looks like from the outside.' },
-                    { speaker: '', text: '*Hands tighten on the wheel. Heart rate up.*' },
-                    { speaker: 'Ryan', text: 'Breathe. You\'re not a spy. You\'re a journalist protecting a source.' },
-                    { speaker: 'Ryan', text: 'That thought doesn\'t help as much as it should.' },
-
-                    { speaker: '', text: '*German road signs appear. Steckerdoser Heide: 8 km*' },
-                    { speaker: 'Ryan', text: 'Eva said north entrance. Badge under trash bin.' },
-                    { speaker: 'Ryan', text: 'If she\'s wrong. If this is a trap...' },
-                    { speaker: 'Ryan', text: 'No. She\'s risking as much as me. More, even. She WORKS there.' },
-                    { speaker: '', text: '*Red lights appear through the trees. Guard tower. Radar arrays.*' },
-                    { speaker: 'Ryan', text: 'There it is. Bundeswehr research facility.' },
-                    { speaker: 'Ryan', text: 'Looks like something from a Cold War film. Because it IS.' },
-                    { speaker: 'Ryan', text: 'Focus. Stay calm. You\'ve planned for this.' },
-                    { speaker: '', text: '*Pulls off main road. Parks in shadows near perimeter. Engine off.*' },
-                    { speaker: '', text: '*Silence. Just the ticking of the cooling engine and his own breathing.*' },
-                    { speaker: 'Ryan', text: 'For Klaus Weber. For everyone Volkov has hurt.' },
-                    { speaker: 'Ryan', text: 'Let\'s end this.' }
-                ], () => {
-                    g.advanceTime(25);
-                    g.setStoryPart(17);
-                    g.loadScene('drone_hunt');
-                });
-            }, 1000);
-            this._timeoutIds.push(timeoutId1);
-            
-        } else if (destination === 'home') {
-            // Drive FROM klooster - processing what just happened
-            const timeoutId1 = setTimeout(() => {
-                g.startDialogue([
-                    { speaker: '', text: '*Engine starts. Headlights illuminate the parking lot*' },
-                    { speaker: 'Ryan', text: 'Someone was watching. The whole time.' },
-                    { speaker: 'Ryan', text: 'Watched me walk in. Search the courtyard. Get frustrated.' },
-                    { speaker: '', text: '*Pulls onto the empty road*' },
-                    { speaker: 'Ryan', text: 'Never meant to meet face to face.' },
-                    { speaker: 'Ryan', text: 'This USB stick. "TRUST THE PROCESS - AIR-GAPPED ONLY"' },
-                    { speaker: 'Ryan', text: 'They know operational security. They know MY setup.' },
-                    { speaker: '', text: '*The countryside passes in darkness*' },
-                    { speaker: 'Ryan', text: 'How did they even get here? A monastery in the middle of nowhere, late at night...' },
-
-                    // ── Klaus flashback — Ryan imagines the drop ──
-                    { speaker: '', text: '─── Ryan\'s mind fills the gaps ───' },
-                    { speaker: '', text: '*A modest Volkswagen Passat with German plates. Autobahn A31 heading north.*' },
-                    { speaker: '', text: '*An elderly man at the wheel. Careful. Deliberate. Hands steady.*' },
-                    { speaker: '', text: '*He crosses the border at Bad Bentheim. Doesn\'t stop, doesn\'t hurry. Schengen. No checks.*' },
-                    { speaker: '', text: '*Dutch roads now. Narrower. Darker. He knows the way — has driven it before.*' },
-                    { speaker: '', text: '*Ter Apel. The monastery parking lot. He spots the Volvo. Swedish car. Unmistakable.*' },
-                    { speaker: '', text: '*Engine off. Waits. Watches Ryan walk toward the monastery entrance.*' },
-                    { speaker: '', text: '*Then — quickly, quietly. USB stick. Tape. Under the door handle. Done.*' },
-                    { speaker: '', text: '*Back in the Passat. South again. By midnight, he\'ll be home in Germany.*' },
-                    { speaker: '', text: '*No call. No message. No trace. Just the USB — and trust.*' },
-                    { speaker: '', text: '───' },
-
-                    { speaker: 'Ryan', text: 'They drove from Germany. Had to. Whoever "E" is, they\'re inside the system. Deep.' },
-                    { speaker: 'Ryan', text: 'Who is "E"? Inside the facility? Outside?' },
-                    { speaker: 'Ryan', text: 'Why me? Random hacker in rural Drenthe?' },
-                    { speaker: 'Ryan', text: 'Unless... I\'m NOT random.' },
-                    { speaker: '', text: '*Dashboard clock: 23:37*' },
-                    { speaker: 'Ryan', text: 'They scanned my equipment. Identified my capabilities.' },
-                    { speaker: 'Ryan', text: 'They chose me because I\'m OUTSIDE the system.' },
-                    { speaker: 'Ryan', text: 'Can\'t be controlled. Can\'t be silenced easily.' },
-                    { speaker: '', text: '*Approaches home - familiar darkness*' },
-                    { speaker: 'Ryan', text: 'Time to plug this in. See what\'s worth all this cloak and dagger.' },
-                    { speaker: 'Ryan', text: 'Air-gapped laptop. Isolated. Safe.' },
-                    { speaker: 'Ryan', text: 'Let\'s see what "E" wants me to know.' }
-                ], () => {
-                    g.advanceTime(25);
-                    g.loadScene('mancave');
-                    g.showNotification('Returned to mancave');
-                });
-            }, 1000);
-            this._timeoutIds.push(timeoutId1);
-
-        } else if (destination === 'home_from_facility') {
-            // Drive FROM facility - post-infiltration adrenaline crash
-            const timeoutId1 = setTimeout(() => {
-                g.startDialogue([
-                    { speaker: '', text: '*01:00 AM. The Volvo tears through the darkness toward the Dutch border.*' },
-                    { speaker: 'Ryan', text: 'Hands. Stop shaking. STOP SHAKING.' },
-                    { speaker: '', text: '*Crosses the border. Germany recedes in the mirror.*' },
-                    { speaker: 'Ryan', text: 'Dutch soil. Safe. For now.' },
-                    { speaker: 'Ryan', text: 'The external drive in my bag has everything. EVERYTHING.' },
-                    { speaker: 'Ryan', text: 'Deployment plans. Target coordinates. Hoffmann\'s logs. Volkov\'s FSB comms.' },
-                    { speaker: '', text: '*Empty road. Flat fields. A distant farmhouse light.*' },
-                    { speaker: 'Ryan', text: 'Chris corrupted the calibration data. Eva guided me through. Kubecka caught Volkov off guard.' },
-                    { speaker: 'Ryan', text: 'Three people who barely know each other. And we just dismantled a weapon of mass disruption.' },
-                    { speaker: '', text: '*Dashboard clock: 01:17*' },
-                    { speaker: 'Ryan', text: 'But dismantling isn\'t enough. They\'ll rebuild. They\'ll try again.' },
-                    { speaker: 'Ryan', text: 'Unless the world knows. Unless we go public.' },
-                    { speaker: 'Ryan', text: 'I have the evidence. I have the skills to package it. I have contacts in journalism.' },
-                    { speaker: 'Ryan', text: 'Tonight we stopped the attack. Tomorrow we expose the whole operation.' },
-                    { speaker: '', text: '*The mancave lights glow through the trees. Home.*' },
-                    { speaker: 'Ryan', text: 'No sleep tonight. There\'s work to do.' }
-                ], () => {
-                    g.advanceTime(30);
-                    g.loadScene('long_night');
-                });
-            }, 1000);
-            this._timeoutIds.push(timeoutId1);
-
-        } else if (destination === 'hackerspace') {
-            // Night drive TO Hackerspace Drenthe in Coevorden (~25 min)
-            const timeoutId1 = setTimeout(() => {
-                g.startDialogue([
-                    { speaker: '', text: '*The Volvo rumbles through the darkness toward Coevorden.*' },
-                    { speaker: '', text: '*Rick Astley fades on the radio. The road is empty.*' },
-                    { speaker: 'Ryan', text: 'Hackerspace night. Twenty-five minutes south-east.' },
-                    { speaker: 'Ryan', text: 'Late start tonight. But that\'s when the best conversations happen.' },
-                    { speaker: '', text: '*Flat fields stretch into the dark. A distant farmhouse light.*' },
-                    { speaker: 'Ryan', text: 'CNC machines, 3D printers, welding rigs. My kind of people.' },
-                    { speaker: 'Ryan', text: 'Sometimes you need to step away from the screen and build something physical.' },
-                    { speaker: '', text: '*Road sign: Coevorden 5 km*' },
-                    { speaker: 'Ryan', text: 'There it is. Lights on. Good — someone\'s already there.' },
-                    { speaker: 'Ryan', text: 'Let\'s see what\'s happening tonight.' }
-                ], () => {
-                    g.advanceTime(25);
-                    g.loadScene('hackerspace');
-                });
-            }, 1000);
-            this._timeoutIds.push(timeoutId1);
-
-        } else if (destination === 'home_from_wsrt_parking') {
-            // Night drive FROM WSRT parking area back to garden (~20 min)
-            const timeoutId1wp = setTimeout(() => {
-                g.startDialogue([
-                    { speaker: '', text: '*Night. The Volvo crunches over the gravel and onto the road.*' },
-                    { speaker: '', text: '*Stars above. The WSRT dishes are silhouettes against the Milky Way.*' },
-                    { speaker: 'Ryan', text: 'Three completely different worlds radiating from one parking lot.' },
-                    { speaker: 'Ryan', text: 'Radio telescopes. A war memorial. A scale model of the solar system.' },
-                    { speaker: 'Ryan', text: 'Only in Drenthe.' },
-                    { speaker: '', text: '*Dark heath stretches out on both sides. Headlights on empty road.*' },
-                    { speaker: 'Ryan', text: 'Quiet out here at night. Eerily quiet.' },
-                    { speaker: '', text: '*Approaching Compascuum. Familiar territory.*' },
-                    { speaker: 'Ryan', text: 'Home. Good night for some tea and tinkering.' }
-                ], () => {
-                    g.advanceTime(20);
-                    g.loadScene('garden');
-                    g.showNotification('Returned to garden');
-                });
-            }, 1000);
-            this._timeoutIds.push(timeoutId1wp);
-
-        } else if (destination === 'home_from_hackerspace') {
-            // Night drive FROM Hackerspace back to garden (~25 min)
-            const timeoutId1 = setTimeout(() => {
-                g.startDialogue([
-                    { speaker: '', text: '*Night. The Volvo pulls out of the hackerspace parking lot.*' },
-                    { speaker: '', text: '*Stars above. Engine ticking over. Rick Astley on the radio again.*' },
-                    { speaker: 'Ryan', text: 'Good evening. Always is, at the hackerspace.' },
-                    { speaker: 'Ryan', text: 'Good people. Smart people. People who build things.' },
-                    { speaker: '', text: '*Dark countryside. Headlights carving through the Drenthe night.*' },
-                    { speaker: 'Ryan', text: 'Picked up a few ideas tonight. And some useful contacts.' },
-                    { speaker: 'Ryan', text: 'The mesh networking crowd knows their stuff. Could be useful.' },
-                    { speaker: '', text: '*Approaching Compascuum. Familiar roads.*' },
-                    { speaker: 'Ryan', text: 'Home. Time for some late-night tinkering.' }
-                ], () => {
-                    g.advanceTime(25);
-                    g.loadScene('garden');
-                    g.showNotification('Returned to garden');
-                });
-            }, 1000);
-            this._timeoutIds.push(timeoutId1);
-
-        } else {
-            console.warn('Driving scene: No destination set!');
-            // Fallback - return to mancave
-            const timeoutId = setTimeout(() => {
-                g.loadScene('mancave');
-            }, 2000);
-            this._timeoutIds.push(timeoutId);
-        }
-        
-        // Clear the destination flag
-        g.setFlag('driving_destination', null);
+        this._speakRadioNews(destination, g);
     },
-    
+
+
     onExit: function() {
         // Stop car radio + engine
         this._stopDrivingAudio();
+
+        // Remove radio overlay and word-reveal interval
+        this._removeRadioOverlay();
 
         // Clear all timeouts
         this._timeoutIds.forEach(id => clearTimeout(id));

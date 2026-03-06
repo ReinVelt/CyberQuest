@@ -1185,16 +1185,16 @@ const FacilityServerScene = {
 
                 // Brief transition dialogue then drive home
                 game.startDialogue([
-                    { speaker: '', text: '═══════════════════════════════════════' },
-                    { speaker: '', text: 'OPERATION ZERFALL — DATA EXTRACTED' },
-                    { speaker: '', text: '═══════════════════════════════════════' },
-                    { speaker: '', text: '' },
+                    { speaker: 'Narrator', text: '═══════════════════════════════════════' },
+                    { speaker: 'Narrator', text: 'OPERATION ZERFALL — DATA EXTRACTED' },
+                    { speaker: 'Narrator', text: '═══════════════════════════════════════' },
+                    { speaker: 'Narrator', text: '' },
                     { speaker: 'Ryan', text: 'We have everything. Time to get out of here.' },
                     { speaker: 'Eva', text: 'Go. I\'ll cover the access logs from my end.' },
                     { speaker: 'Chris', text: 'Good luck, Ryan. Make it count.' },
-                    { speaker: '', text: '*Ryan slips into the night. The Volvo waits in the shadows.*' },
-                    { speaker: '', text: '' },
-                    { speaker: '', text: '[Driving home...]' }
+                    { speaker: 'Narrator', text: '*Ryan slips into the night. The Volvo waits in the shadows.*' },
+                    { speaker: 'Narrator', text: '' },
+                    { speaker: 'Narrator', text: '[Driving home...]' }
                 ]);
 
                 game.sceneTimeout(() => {

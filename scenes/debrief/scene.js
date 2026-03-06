@@ -63,7 +63,7 @@ const DebriefScene = {
             action: function(game) {
                 if (game.getFlag('debrief_complete')) {
                     game.startDialogue([
-                        { speaker: '', text: '*A plain white card. AIVD crest. A phone number. Nothing else.*' },
+                        { speaker: 'Narrator', text: '*A plain white card. AIVD crest. A phone number. Nothing else.*' },
                         { speaker: 'Ryan', text: 'Van der Berg\'s direct line.' },
                         { speaker: 'Ryan', text: 'One call. That\'s all it would take.' }
                     ]);
@@ -204,8 +204,8 @@ const DebriefScene = {
         const sections = [
             // ── Arrival ──
             [
-                { speaker: '', text: '11:00 AM — AIVD Headquarters, Zoetermeer' },
-                { speaker: '', text: '*A black car delivers Ryan to the secure complex near Den Haag.*' },
+                { speaker: 'Narrator', text: '11:00 AM — AIVD Headquarters, Zoetermeer' },
+                { speaker: 'Narrator', text: '*A black car delivers Ryan to the secure complex near Den Haag.*' },
                 { speaker: 'Ryan', text: 'Card readers. Security cameras. Armed guards at the gate.' },
                 { speaker: 'Ryan', text: '*Follows an escort through corridors to a conference room*' }
             ],
@@ -221,7 +221,7 @@ const DebriefScene = {
 
             // ── The questioning ──
             [
-                { speaker: '', text: '*They sit around the conference table. Coffee served in government china.*' },
+                { speaker: 'Narrator', text: '*They sit around the conference table. Coffee served in government china.*' },
                 { speaker: 'Agent Van der Berg', text: 'Let\'s start from the beginning. The SSTV transmission.' },
                 { speaker: 'Ryan', text: 'Visual morse code. ROT1 cipher. A photograph of my own house.' },
                 { speaker: 'Agent Van der Berg', text: 'The USB drop at Ter Apel Klooster?' },
@@ -272,16 +272,16 @@ const DebriefScene = {
 
             // ── Departure ──
             [
-                { speaker: '', text: '*Van der Berg places a plain white business card on the table*' },
+                { speaker: 'Narrator', text: '*Van der Berg places a plain white business card on the table*' },
                 { speaker: 'Agent Van der Berg', text: 'My direct line. When you\'re ready.' },
-                { speaker: '', text: '*The agents stand. Coffee cups empty.*' },
+                { speaker: 'Narrator', text: '*The agents stand. Coffee cups empty.*' },
                 { speaker: 'Agent Van der Berg', text: 'Thank you, Ryan. For what you did.' },
                 { speaker: 'Agent Van der Berg', text: 'You may have saved thousands of lives.' }
             ],
 
             // ── Ryan's reflection in the car ──
             [
-                { speaker: '', text: '*A black car waits outside. The Den Haag skyline recedes in the mirror.*' },
+                { speaker: 'Narrator', text: '*A black car waits outside. The Den Haag skyline recedes in the mirror.*' },
                 { speaker: 'Ryan', text: '*In the back of the car, staring at the business card*' },
                 { speaker: 'Ryan', text: 'AIVD. Dutch Intelligence.' },
                 { speaker: 'Ryan', text: 'From freelance hacker to… what? Government agent?' },

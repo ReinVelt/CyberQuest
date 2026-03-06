@@ -382,11 +382,11 @@ const RegionalMapScene = {
       },
       
       lofar: {
-        name: 'LOFAR',
+        name: 'Lofar',
         subtitle: 'Low Frequency Array',
         coordinates: '52.91°N, 6.50°E (~60km W of Ter Apel)',
         description: `
-          <p>LOFAR (Low Frequency Array) - the world's largest low-frequency 
+          <p>Lofar (Low Frequency Array) - the world's largest low-frequency 
           radio telescope, with thousands of antennas across Europe.</p>
           
           <p><strong>Specifications:</strong></p>
@@ -406,7 +406,7 @@ const RegionalMapScene = {
             <li>Epoch of Reionization studies</li>
           </ul>
           
-          <p style="color: #ffa502;">LOFAR's distributed antenna approach shows 
+          <p style="color: #ffa502;">Lofar's distributed antenna approach shows 
           the peaceful scientific applications of RF technology.</p>
         `,
         status: '○ Reference location - research context'
@@ -542,7 +542,7 @@ const RegionalMapScene = {
 
     {
       id: 'location-lofar-hotspot',
-      name: 'LOFAR',
+      name: 'Lofar',
       x: 14.75,
       y: 45.07,
       width: 8,

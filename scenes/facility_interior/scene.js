@@ -124,9 +124,9 @@ const FacilityInteriorScene = {
             action: function(game) {
                 game.startDialogue([
                     { speaker: 'Ryan', text: '*Opens stairwell door quietly*' },
-                    { speaker: '', text: '*Concrete stairs descending into dimness*' },
+                    { speaker: 'Narrator', text: '*Concrete stairs descending into dimness*' },
                     { speaker: 'Ryan', text: 'Basement level. Server room should be here.' },
-                    { speaker: '', text: '*Descends. Fluorescent lights hum. Air is colder.*' }
+                    { speaker: 'Narrator', text: '*Descends. Fluorescent lights hum. Air is colder.*' }
                 ]);
                 
                 game.sceneTimeout(() => {
@@ -213,7 +213,7 @@ const FacilityInteriorScene = {
             
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: '', text: '*Inside the compound. Empty corridors. Night shift minimal staff.*' },
+                    { speaker: 'Narrator', text: '*Inside the compound. Empty corridors. Night shift minimal staff.*' },
                     { speaker: 'Ryan', text: 'Made it inside. Now what?' },
                     { speaker: 'Ryan', text: '*Meshtastic chirps softly*' },
                     { speaker: 'Ryan', text: 'Check the Meshtastic for Eva\'s guidance.' }

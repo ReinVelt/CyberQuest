@@ -282,7 +282,7 @@ window.MancaveForensicAnalysis = (function () {
             { speaker: 'Ryan', text: '"TRUST THE PROCESS - AIR-GAPPED ONLY." They weren\'t kidding.' },
             { speaker: 'Ryan', text: 'Before I look at what\'s on this USB, I need to do this properly.' },
             { speaker: 'Ryan', text: 'Forensic workstation. Write-blocker. Checksums. By the book.' },
-            { speaker: '', text: '*Ryan reaches for the ThinkPad X230 on the lower shelf*' }
+            { speaker: 'Narrator', text: '*Ryan reaches for the ThinkPad X230 on the lower shelf*' }
         ], { pauseBetween: 1500 });
 
         MC.schedule(() => {

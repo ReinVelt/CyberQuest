@@ -29,8 +29,8 @@ const LivingroomScene = {
                     game.setFlag('saw_tv_documentary', true);
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'The TV is showing a documentary about Drenthe\'s wireless pioneers.' },
-                        { speaker: '', text: '*"Drenthe: The Unexpected Tech Hub"*' },
-                        { speaker: 'Ryan', text: 'WSRT, LOFAR, and Bluetooth... might be worth watching.' }
+                        { speaker: 'Narrator', text: '*"Drenthe: The Unexpected Tech Hub"*' },
+                        { speaker: 'Ryan', text: 'WSRT, Lofar, and Bluetooth... might be worth watching.' }
                     ]);
                     game.sceneTimeout(() => {
                         game.loadScene('tvdocumentary');
@@ -67,10 +67,10 @@ const LivingroomScene = {
                         game.startDialogue([
                             { speaker: 'Ryan', text: 'Hey Max, watching documentaries again?' },
                             { speaker: 'Max', text: 'Ryan! This one is fascinating — it\'s about Drenthe\'s wireless technology pioneers.' },
-                            { speaker: 'Max', text: 'They\'re featuring WSRT, LOFAR, and the Ericsson Bluetooth engineers.' },
-                            { speaker: 'Ryan', text: 'Wait, LOFAR and WSRT? Those are serious radio astronomy projects.' },
+                            { speaker: 'Max', text: 'They\'re featuring WSRT, Lofar, and the Ericsson Bluetooth engineers.' },
+                            { speaker: 'Ryan', text: 'Wait, Lofar and WSRT? Those are serious radio astronomy projects.' },
                             { speaker: 'Max', text: 'They interviewed actual engineers! A Dr. David Prinsloo from TU Eindhoven...' },
-                            { speaker: 'Max', text: 'A man named Cees Bassa who works with LOFAR and satellite tracking...' },
+                            { speaker: 'Max', text: 'A man named Cees Bassa who works with Lofar and satellite tracking...' },
                             { speaker: 'Max', text: 'And Jaap Haartsen who invented Bluetooth at Ericsson!' },
                             { speaker: 'Ryan', text: '...Those are my contacts. David, Cees, and Jaap.' },
                             { speaker: 'Max', text: 'Really? Your hacker friends are famous engineers? That\'s amazing!' },
@@ -123,17 +123,17 @@ const LivingroomScene = {
                 const responses = [
                     [
                         { speaker: 'Ryan', text: 'Hey Tino and Kessy! Warm enough by the fire?' },
-                        { speaker: '', text: '*Both dogs are curled up on the rug, basking in the warmth*' },
-                        { speaker: '', text: '*Tino yawns softly without opening his eyes*' }
+                        { speaker: 'Narrator', text: '*Both dogs are curled up on the rug, basking in the warmth*' },
+                        { speaker: 'Narrator', text: '*Tino yawns softly without opening his eyes*' }
                     ],
                     [
                         { speaker: 'Ryan', text: 'You two are spoiled, you know that? Best spot in the house.' },
-                        { speaker: '', text: '*Kessy shifts slightly, stretching closer to the fireplace*' },
-                        { speaker: '', text: '*The fire crackles gently*' }
+                        { speaker: 'Narrator', text: '*Kessy shifts slightly, stretching closer to the fireplace*' },
+                        { speaker: 'Narrator', text: '*The fire crackles gently*' }
                     ],
                     [
                         { speaker: 'Ryan', text: 'Sound asleep by the fire, both of them.' },
-                        { speaker: '', text: '*Tino\'s ear twitches at Ryan\'s voice but he stays asleep*' },
+                        { speaker: 'Narrator', text: '*Tino\'s ear twitches at Ryan\'s voice but he stays asleep*' },
                         { speaker: 'Max', text: 'They love that spot! Been there all afternoon.' }
                     ],
                     [
@@ -166,11 +166,11 @@ const LivingroomScene = {
                 const responses = [
                     [
                         { speaker: 'Ryan', text: 'Nice fire going. The old brick fireplace really warms the room.' },
-                        { speaker: '', text: '*The flames dance and crackle softly*' }
+                        { speaker: 'Narrator', text: '*The flames dance and crackle softly*' }
                     ],
                     [
                         { speaker: 'Ryan', text: 'That mantel clock has been there since we moved in.' },
-                        { speaker: '', text: '*The fire pops, sending a tiny spark up the chimney*' }
+                        { speaker: 'Narrator', text: '*The fire pops, sending a tiny spark up the chimney*' }
                     ],
                     [
                         { speaker: 'Ryan', text: 'Nothing beats a real fire on a Drenthe evening.' },
@@ -193,23 +193,23 @@ const LivingroomScene = {
                 const responses = [
                     [
                         { speaker: 'Ryan', text: 'ET! Come here little guy!' },
-                        { speaker: '', text: '*The pug waddles over, tongue hanging out*' },
+                        { speaker: 'Narrator', text: '*The pug waddles over, tongue hanging out*' },
                         { speaker: 'Ryan', text: 'Such a good boy!' }
                     ],
                     [
                         { speaker: 'Ryan', text: 'Still walking around, ET?' },
-                        { speaker: '', text: '*Snort snort* The pug is on patrol!' },
+                        { speaker: 'Narrator', text: '*Snort snort* The pug is on patrol!' },
                         { speaker: 'Max', text: 'He never stops exploring!' }
                     ],
                     [
                         { speaker: 'Ryan', text: 'Why don\'t you join Tino and Kessy on the couch?' },
-                        { speaker: '', text: '*The pug looks at the couch, then continues walking*' },
+                        { speaker: 'Narrator', text: '*The pug looks at the couch, then continues walking*' },
                         { speaker: 'Ryan', text: 'Too busy, I see.' }
                     ],
                     [
-                        { speaker: '', text: '*ET snuffles around the coffee table*' },
+                        { speaker: 'Narrator', text: '*ET snuffles around the coffee table*' },
                         { speaker: 'Ryan', text: 'Looking for snacks? There are none here!' },
-                        { speaker: '', text: '*The pug gives Ryan a disappointed look*' }
+                        { speaker: 'Narrator', text: '*The pug gives Ryan a disappointed look*' }
                     ]
                 ];
                 
@@ -540,9 +540,9 @@ const LivingroomScene = {
             setTimeout(() => {
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'The living room. Max is watching TV.' },
-                    { speaker: '', text: '*On screen: "Drenthe: The Unexpected Tech Hub" - Documentary*' },
-                    { speaker: '', text: '*Tino and Kessy are sleeping peacefully on the rug by the fireplace*' },
-                    { speaker: '', text: '*ET the pug waddles around exploring*' },
+                    { speaker: 'Narrator', text: '*On screen: "Drenthe: The Unexpected Tech Hub" - Documentary*' },
+                    { speaker: 'Narrator', text: '*Tino and Kessy are sleeping peacefully on the rug by the fireplace*' },
+                    { speaker: 'Narrator', text: '*ET the pug waddles around exploring*' },
                     { speaker: 'Ryan', text: 'That documentary looks interesting... wireless technology from Drenthe?' },
                     { speaker: 'Ryan', text: 'I should watch this before heading to the mancave. Might learn something.' }
                 ]);

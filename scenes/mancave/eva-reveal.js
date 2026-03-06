@@ -389,7 +389,7 @@ Has raised concerns about network anomalies (see incident log 2024-07-22)`,
         MC.revealDialogue(openDiv, [
             { speaker: 'Ryan', text: 'How does E know me? Why choose a random hacker in Drenthe?' },
             { speaker: 'Ryan', text: 'There must be a connection. Something personal. But first — the photo.' },
-            { speaker: '', text: '*Pulls up SSTV image on air-gapped laptop*' }
+            { speaker: 'Narrator', text: '*Pulls up SSTV image on air-gapped laptop*' }
         ], { pauseBetween: 1800 });
 
         MC.schedule(() => {

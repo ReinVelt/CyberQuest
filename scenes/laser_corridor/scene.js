@@ -564,7 +564,7 @@ const LaserCorridorScene = {
                     ]);
                 } else {
                     game.startDialogue([
-                        { speaker: '', text: '*Red beams slice through the corridor — sweeping, pulsing, lethal*' },
+                        { speaker: 'Narrator', text: '*Red beams slice through the corridor — sweeping, pulsing, lethal*' },
                         { speaker: 'Ryan', text: 'Laser tripwire grid. Industrial security.' },
                         { speaker: 'Ryan', text: 'IR emitters on both walls. Break a beam and alarms go off.' },
                         { speaker: 'Ryan', text: 'Five beams. Some sweeping, one vertical slicer.' },
@@ -607,10 +607,10 @@ const LaserCorridorScene = {
                 if (!s.laserAnalysed) {
                     // First interaction: analyse
                     game.startDialogue([
-                        { speaker: '', text: '*Ryan pulls the Flipper Zero from his jacket*' },
+                        { speaker: 'Narrator', text: '*Ryan pulls the Flipper Zero from his jacket*' },
                         { speaker: 'Ryan', text: 'Flipper Zero. Swiss army knife for hackers.' },
                         { speaker: 'Ryan', text: 'IR transceiver, RFID, sub-GHz radio, GPIO — all in one.' },
-                        { speaker: '', text: '*Points the IR receiver at the nearest emitter*' },
+                        { speaker: 'Narrator', text: '*Points the IR receiver at the nearest emitter*' },
                         { speaker: 'Ryan', text: 'The emitters use modulated infrared. Like a TV remote on steroids.' },
                         { speaker: 'Ryan', text: 'Standard consumer IR operates at 38 kHz modulation.' },
                         { speaker: 'Ryan', text: 'Military would use non-standard frequencies. But Volkov cut corners.' },
@@ -663,8 +663,8 @@ const LaserCorridorScene = {
                     ]);
                 } else {
                     game.startDialogue([
-                        { speaker: '', text: '*The sensor pods\' LEDs shift from green to angry red*' },
-                        { speaker: '', text: '*Faint ultrasonic pulsing — barely audible. Like tinnitus.*' },
+                        { speaker: 'Narrator', text: '*The sensor pods\' LEDs shift from green to angry red*' },
+                        { speaker: 'Narrator', text: '*Faint ultrasonic pulsing — barely audible. Like tinnitus.*' },
                         { speaker: 'Ryan', text: 'Backup system activated. Ultrasonic motion sensors.' },
                         { speaker: 'Ryan', text: 'They send out 40 kHz sound pulses. Inaudible to most humans.' },
                         { speaker: 'Ryan', text: 'When the returning echo shifts in frequency — Doppler effect — they know something moved.' },
@@ -729,7 +729,7 @@ const LaserCorridorScene = {
                     ]);
                 } else if (!s.jamFrequencySet) {
                     game.startDialogue([
-                        { speaker: '', text: '*Ryan connects the antenna to the HackRF*' },
+                        { speaker: 'Narrator', text: '*Ryan connects the antenna to the HackRF*' },
                         { speaker: 'Ryan', text: 'HackRF One. 1 MHz to 6 GHz. Transmit and receive.' },
                         { speaker: 'Ryan', text: 'Those sensors use ultrasonic — technically sound, not radio.' },
                         { speaker: 'Ryan', text: 'But the HackRF drives a piezo transducer through the GPIO pins.' },
@@ -777,12 +777,12 @@ const LaserCorridorScene = {
                     ]);
                 } else if (!s.panelActivated) {
                     game.startDialogue([
-                        { speaker: '', text: '*Ryan approaches the biometric panel beside the steel door*' },
+                        { speaker: 'Narrator', text: '*Ryan approaches the biometric panel beside the steel door*' },
                         { speaker: 'Ryan', text: 'Fingerprint scanner with keypad override.' },
                         { speaker: 'Ryan', text: 'The scanner wants an enrolled print. I\'m not in the system.' },
                         { speaker: 'Ryan', text: 'But Eva said there\'s an override code. Emergency maintenance access.' },
                         { speaker: 'Ryan', text: 'She sent it via Meshtastic earlier. Let me check...' },
-                        { speaker: '', text: '*Glances at the Meshtastic log on his phone*' },
+                        { speaker: 'Narrator', text: '*Glances at the Meshtastic log on his phone*' },
                         { speaker: 'Eva (Mesh)', text: 'Override code: 2847' },
                         { speaker: 'Ryan', text: '2847. Right. Let\'s try the keypad.' }
                     ], () => {
@@ -815,13 +815,13 @@ const LaserCorridorScene = {
                 if (s.doorUnlocked && s.phase === 4) {
                     // Enter the server room
                     game.startDialogue([
-                        { speaker: '', text: '*Ryan grips the massive handle and pulls*' },
-                        { speaker: '', text: '*The steel door swings open with a deep mechanical groan*' },
-                        { speaker: '', text: '*Cold air rushes out. The hum of server fans. Blinking LEDs in the darkness.*' },
+                        { speaker: 'Narrator', text: '*Ryan grips the massive handle and pulls*' },
+                        { speaker: 'Narrator', text: '*The steel door swings open with a deep mechanical groan*' },
+                        { speaker: 'Narrator', text: '*Cold air rushes out. The hum of server fans. Blinking LEDs in the darkness.*' },
                         { speaker: 'Ryan', text: 'The server room. This is it.' },
                         { speaker: 'Ryan', text: 'Weber\'s evidence. Volkov\'s secrets. Everything is in there.' },
                         { speaker: 'Ryan', text: 'For Klaus. For Eva. For everyone Volkov crushed.' },
-                        { speaker: '', text: '*Steps through the threshold*' }
+                        { speaker: 'Narrator', text: '*Steps through the threshold*' }
                     ], () => {
                         game.setFlag('laser_corridor_complete', true);
                         game.loadScene('facility_server');
@@ -878,7 +878,7 @@ const LaserCorridorScene = {
             cursor: 'look',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*Water drips from a corroded pipe joint. Steam wisps drift across the corridor.*' },
+                    { speaker: 'Narrator', text: '*Water drips from a corroded pipe joint. Steam wisps drift across the corridor.*' },
                     { speaker: 'Ryan', text: 'Old infrastructure. This facility has layers of history.' },
                     { speaker: 'Ryan', text: 'Cold War bunker foundations, NATO upgrades, now Volkov\'s playground.' },
                     { speaker: 'Ryan', text: 'The pipes are sweating. Probably coolant for the servers below.' }
@@ -914,7 +914,7 @@ const LaserCorridorScene = {
             cursor: 'look',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*CRACK — a spark arcs from the damaged junction box*' },
+                    { speaker: 'Narrator', text: '*CRACK — a spark arcs from the damaged junction box*' },
                     { speaker: 'Ryan', text: 'Damaged conduit. Exposed wiring.' },
                     { speaker: 'Ryan', text: 'Wouldn\'t want to touch that. 230 volts, European standard.' },
                     { speaker: 'Ryan', text: 'Adds to the ambience though. Very Hollywood.' }
@@ -980,14 +980,14 @@ const LaserCorridorScene = {
 
         setTimeout(() => {
             game.startDialogue([
-                { speaker: '', text: '*Concrete stairs end. A heavy fire door opens into a long corridor.*' },
-                { speaker: '', text: '*Red laser beams sweep back and forth. Emergency lights pulse crimson.*' },
-                { speaker: '', text: '*Steam drifts from leaking pipes. Sparks arc from a damaged conduit.*' },
+                { speaker: 'Narrator', text: '*Concrete stairs end. A heavy fire door opens into a long corridor.*' },
+                { speaker: 'Narrator', text: '*Red laser beams sweep back and forth. Emergency lights pulse crimson.*' },
+                { speaker: 'Narrator', text: '*Steam drifts from leaking pipes. Sparks arc from a damaged conduit.*' },
                 { speaker: 'Ryan', text: '...Whoa.' },
                 { speaker: 'Ryan', text: 'Laser tripwire grid. Motion sensors on the ceiling. Biometric lock on the door.' },
                 { speaker: 'Ryan', text: 'Three layers of security. Classic defence-in-depth.' },
                 { speaker: 'Ryan', text: 'Good thing I brought three hacking tools.' },
-                { speaker: '', text: '*Pats the Flipper Zero in his jacket pocket*' },
+                { speaker: 'Narrator', text: '*Pats the Flipper Zero in his jacket pocket*' },
                 { speaker: 'Ryan', text: 'Flipper for the IR lasers. HackRF for the sensors. Eva\'s code for the door.' },
                 { speaker: 'Ryan', text: 'One layer at a time. Start with the lasers.' }
             ]);
@@ -1041,7 +1041,7 @@ const LaserCorridorScene = {
             game.setFlag('ir_frequency_set', true);
             game.showNotification('IR frequency locked: 38 kHz');
             game.startDialogue([
-                { speaker: '', text: '*Flipper Zero display: IR DEMOD 38 kHz — SIGNAL CAPTURED*' },
+                { speaker: 'Narrator', text: '*Flipper Zero display: IR DEMOD 38 kHz — SIGNAL CAPTURED*' },
                 { speaker: 'Ryan', text: '38 kHz. Standard consumer IR. Flipper captured the emitter handshake.' },
                 { speaker: 'Ryan', text: 'Replaying shutdown sequence now.' }
             ], () => LaserCorridorScene._disableLasers(game));
@@ -1063,7 +1063,7 @@ const LaserCorridorScene = {
                     game.setFlag('ir_frequency_set', true);
                     game.showNotification('IR frequency locked: 38 kHz');
                     game.startDialogue([
-                        { speaker: '', text: '*Flipper Zero display: IR DEMOD 38 kHz — SIGNAL CAPTURED*' },
+                        { speaker: 'Narrator', text: '*Flipper Zero display: IR DEMOD 38 kHz — SIGNAL CAPTURED*' },
                         { speaker: 'Ryan', text: '38 kHz. Standard consumer IR. Volkov cheaped out on security.' },
                         { speaker: 'Ryan', text: 'Flipper captured the emitter handshake. Now replay the shutdown sequence.' },
                         { speaker: 'Ryan', text: 'Use the Flipper again to transmit.' }
@@ -1084,16 +1084,16 @@ const LaserCorridorScene = {
     _disableLasers: (game) => {
         const s = LaserCorridorScene.state;
         game.startDialogue([
-            { speaker: '', text: '*Ryan points the Flipper Zero at the nearest emitter*' },
-            { speaker: '', text: '*FLIPPER ZERO: REPLAYING IR SEQUENCE...*' },
-            { speaker: '', text: '*The first laser beam flickers — and dies*' },
-            { speaker: '', text: '*One by one, the red beams wink out*' },
-            { speaker: '', text: '*The sweeping vertical slicer stutters, fades, goes dark*' },
-            { speaker: '', text: '*Last beam — the floor tripwire — flickers twice, then nothing*' },
-            { speaker: '', text: '*Darkness. The corridor\'s red haze fades to emergency lighting only.*' },
+            { speaker: 'Narrator', text: '*Ryan points the Flipper Zero at the nearest emitter*' },
+            { speaker: 'Narrator', text: '*FLIPPER ZERO: REPLAYING IR SEQUENCE...*' },
+            { speaker: 'Narrator', text: '*The first laser beam flickers — and dies*' },
+            { speaker: 'Narrator', text: '*One by one, the red beams wink out*' },
+            { speaker: 'Narrator', text: '*The sweeping vertical slicer stutters, fades, goes dark*' },
+            { speaker: 'Narrator', text: '*Last beam — the floor tripwire — flickers twice, then nothing*' },
+            { speaker: 'Narrator', text: '*Darkness. The corridor\'s red haze fades to emergency lighting only.*' },
             { speaker: 'Ryan', text: 'All five beams down. Flipper Zero — the €200 skeleton key.' },
             { speaker: 'Ryan', text: '38 kilohertz. Same as a TV remote. Million-euro security system.' },
-            { speaker: '', text: '*A soft whirring starts above — sensor pods activating*' },
+            { speaker: 'Narrator', text: '*A soft whirring starts above — sensor pods activating*' },
             { speaker: 'Ryan', text: '...And there\'s the backup. Motion sensors just woke up.' }
         ], () => {
             s.lasersDisabled = true;
@@ -1124,7 +1124,7 @@ const LaserCorridorScene = {
             game.setFlag('jam_frequency_set', true);
             game.showNotification('Jamming frequency set: 40 kHz');
             game.startDialogue([
-                { speaker: '', text: '*HackRF display: ULTRASONIC JAM 40 kHz — READY*' },
+                { speaker: 'Narrator', text: '*HackRF display: ULTRASONIC JAM 40 kHz — READY*' },
                 { speaker: 'Ryan', text: '40 kHz. Sensors flooded. They cannot hear their own echoes.' }
             ], () => LaserCorridorScene._disableSensors(game));
             return;
@@ -1145,7 +1145,7 @@ const LaserCorridorScene = {
                     game.setFlag('jam_frequency_set', true);
                     game.showNotification('Jamming frequency set: 40 kHz');
                     game.startDialogue([
-                        { speaker: '', text: '*HackRF display: ULTRASONIC JAM 40 kHz — READY*' },
+                        { speaker: 'Narrator', text: '*HackRF display: ULTRASONIC JAM 40 kHz — READY*' },
                         { speaker: 'Ryan', text: '40 kHz. Same as every HC-SR04 sensor on Amazon.' },
                         { speaker: 'Ryan', text: 'Flood the air with 40 kHz noise. Sensors can\'t hear their own echoes.' },
                         { speaker: 'Ryan', text: 'Activate the jammer.' }
@@ -1166,17 +1166,17 @@ const LaserCorridorScene = {
     _disableSensors: (game) => {
         const s = LaserCorridorScene.state;
         game.startDialogue([
-            { speaker: '', text: '*Ryan activates the HackRF jammer*' },
-            { speaker: '', text: '*HackRF: TRANSMITTING — 40 kHz BROADBAND NOISE*' },
-            { speaker: '', text: '*The transducer emits a high-pitched whine*' },
+            { speaker: 'Narrator', text: '*Ryan activates the HackRF jammer*' },
+            { speaker: 'Narrator', text: '*HackRF: TRANSMITTING — 40 kHz BROADBAND NOISE*' },
+            { speaker: 'Narrator', text: '*The transducer emits a high-pitched whine*' },
             { speaker: 'Ryan', text: 'Can barely hear it. Right at the edge of human range.' },
-            { speaker: '', text: '*Sensor pod 1: LED shifts from red to confused amber flickering*' },
-            { speaker: '', text: '*Sensor pod 2: LED strobes wildly, then goes dark*' },
-            { speaker: '', text: '*Sensor pod 3: a final angry red pulse, then nothing*' },
+            { speaker: 'Narrator', text: '*Sensor pod 1: LED shifts from red to confused amber flickering*' },
+            { speaker: 'Narrator', text: '*Sensor pod 2: LED strobes wildly, then goes dark*' },
+            { speaker: 'Narrator', text: '*Sensor pod 3: a final angry red pulse, then nothing*' },
             { speaker: 'Ryan', text: 'Sensors are blind. The HackRF is flooding their echo channel.' },
             { speaker: 'Ryan', text: 'They can\'t distinguish movement from noise. Effectively deaf.' },
             { speaker: 'Ryan', text: 'Two layers down. One to go.' },
-            { speaker: '', text: '*Ryan moves down the corridor. Footsteps echo on concrete.*' },
+            { speaker: 'Narrator', text: '*Ryan moves down the corridor. Footsteps echo on concrete.*' },
             { speaker: 'Ryan', text: 'The biometric panel. Eva\'s override code.' },
             { speaker: 'Ryan', text: 'Last barrier between me and Volkov\'s servers.' }
         ], () => {
@@ -1225,7 +1225,7 @@ const LaserCorridorScene = {
                 },
                 onFailure: (g) => {
                     game.startDialogue([
-                        { speaker: '', text: '*Panel flashes red: ACCESS DENIED*' },
+                        { speaker: 'Narrator', text: '*Panel flashes red: ACCESS DENIED*' },
                         { speaker: 'Ryan', text: 'Wrong code. Think. Eva sent it via Meshtastic.' },
                         { speaker: 'Ryan', text: 'Four digits. When we were upstairs in the corridor.' }
                     ]);
@@ -1238,17 +1238,17 @@ const LaserCorridorScene = {
     _unlockDoor: (game) => {
         const s = LaserCorridorScene.state;
         game.startDialogue([
-            { speaker: '', text: '*Ryan types 2-8-4-7 on the keypad*' },
-            { speaker: '', text: '*A long pause. The panel hums.*' },
-            { speaker: '', text: '*CLICK*' },
-            { speaker: '', text: '*Panel display shifts: red → amber → GREEN*' },
-            { speaker: '', text: '*BIOMETRIC: OVERRIDE ACCEPTED*' },
-            { speaker: '', text: '*Deep mechanical CLUNK from inside the steel door*' },
-            { speaker: '', text: '*The lock indicator changes from red to green*' },
+            { speaker: 'Narrator', text: '*Ryan types 2-8-4-7 on the keypad*' },
+            { speaker: 'Narrator', text: '*A long pause. The panel hums.*' },
+            { speaker: 'Narrator', text: '*CLICK*' },
+            { speaker: 'Narrator', text: '*Panel display shifts: red → amber → GREEN*' },
+            { speaker: 'Narrator', text: '*BIOMETRIC: OVERRIDE ACCEPTED*' },
+            { speaker: 'Narrator', text: '*Deep mechanical CLUNK from inside the steel door*' },
+            { speaker: 'Narrator', text: '*The lock indicator changes from red to green*' },
             { speaker: 'Ryan', text: '...It worked. Eva\'s code. 2847.' },
             { speaker: 'Ryan', text: 'Three layers of security. Flipper Zero. HackRF. And Eva.' },
             { speaker: 'Ryan', text: 'Defence-in-depth means nothing when every layer has a weakness.' },
-            { speaker: '', text: '*The heavy steel door shifts slightly — unsealed, ready to open*' },
+            { speaker: 'Narrator', text: '*The heavy steel door shifts slightly — unsealed, ready to open*' },
             { speaker: 'Ryan', text: 'The server room is right through that door.' },
             { speaker: 'Ryan', text: 'This is it.' }
         ], () => {

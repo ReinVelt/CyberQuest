@@ -142,8 +142,8 @@ const EpilogueScene = {
         const sections = [
             // ── Title card ──
             [
-                { speaker: '', text: '— THREE MONTHS LATER — May 2026 —' },
-                { speaker: '', text: 'Spring light fills the farmhouse windows. The heath is in bloom.' }
+                { speaker: 'Narrator', text: '— THREE MONTHS LATER — May 2026 —' },
+                { speaker: 'Narrator', text: 'Spring light fills the farmhouse windows. The heath is in bloom.' }
             ],
 
             // ── The facility ──
@@ -219,12 +219,12 @@ const EpilogueScene = {
 
             // ── Closing ──
             [
-                { speaker: '', text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━' },
-                { speaker: '', text: 'CYBERQUEST: OPERATION ZERFALL' },
-                { speaker: '', text: 'Sometimes, one person with the right skills,' },
-                { speaker: '', text: 'the courage to act, and a strong espresso…' },
-                { speaker: '', text: 'can change the world.' },
-                { speaker: '', text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━' }
+                { speaker: 'Narrator', text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━' },
+                { speaker: 'Narrator', text: 'CYBERQUEST: OPERATION ZERFALL' },
+                { speaker: 'Narrator', text: 'Sometimes, one person with the right skills,' },
+                { speaker: 'Narrator', text: 'the courage to act, and a strong espresso…' },
+                { speaker: 'Narrator', text: 'can change the world.' },
+                { speaker: 'Narrator', text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━' }
             ]
         ];
 

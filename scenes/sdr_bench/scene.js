@@ -39,7 +39,7 @@ const SdrBenchScene = {
                         { speaker: 'Ryan', text: 'The spectrum analyzer shows frequency vs signal power.' },
                         { speaker: 'Ryan', text: 'The X-axis is frequency in MHz. The Y-axis is signal strength in dBm — decibels relative to 1 milliwatt.' },
                         { speaker: 'Ryan', text: 'That big green spike at 14.230 MHz... that\'s not normal background noise.' },
-                        { speaker: '', text: '*Ryan leans closer*' },
+                        { speaker: 'Narrator', text: '*Ryan leans closer*' },
                         { speaker: 'Ryan', text: 'The shape of it — narrow band, persistent — that\'s a data transmission. Not voice, not noise.' },
                         { speaker: 'Ryan', text: 'The 14 MHz band is amateur radio territory. HF — high frequency, long range, bounces off the ionosphere.' },
                         { speaker: 'Ryan', text: 'This signal could be coming from hundreds of kilometres away. Or right next door.' },
@@ -65,7 +65,7 @@ const SdrBenchScene = {
                     { speaker: 'Ryan', text: 'That pattern... it matches SSTV. Slow Scan Television transmits images one line at a time.' },
                     { speaker: 'Ryan', text: 'Each burst is one frame. About 114 seconds for a full Martin M2 format image.' },
                     { speaker: 'Ryan', text: 'Someone sent two images over this frequency within the last 8 minutes.' },
-                    { speaker: '', text: '📚 EDUCATIONAL: SSTV was developed in the 1960s for transmitting still images via radio. Ham operators still use it. Astronauts have sent SSTV images from the ISS on 145.800 MHz.' },
+                    { speaker: 'Narrator', text: '📚 EDUCATIONAL: SSTV was developed in the 1960s for transmitting still images via radio. Ham operators still use it. Astronauts have sent SSTV images from the ISS on 145.800 MHz.' },
                 ]);
             }
         },
@@ -85,7 +85,7 @@ const SdrBenchScene = {
                     { speaker: 'Ryan', text: 'Costs about €25. Covers 500 kHz to 1.7 GHz. A few years ago this kind of receiver would cost thousands.' },
                     { speaker: 'Ryan', text: 'SDR — Software Defined Radio. Instead of hardware circuits doing the filtering and decoding, you do it in software on your computer.' },
                     { speaker: 'Ryan', text: 'Change the frequency, change the modulation, change the bandwidth — all in software. Infinitely flexible.' },
-                    { speaker: '', text: '📚 EDUCATIONAL: RTL-SDR is used by researchers, hobbyists, aviation enthusiasts (ADS-B), weather satellite reception, and security researchers. LOFAR and modern radio telescopes use the same software-defined principle, just at much larger scale.' },
+                    { speaker: 'Narrator', text: '📚 EDUCATIONAL: RTL-SDR is used by researchers, hobbyists, aviation enthusiasts (ADS-B), weather satellite reception, and security researchers. Lofar and modern radio telescopes use the same software-defined principle, just at much larger scale.' },
                 ]);
             }
         },
@@ -164,14 +164,14 @@ const SdrBenchScene = {
 
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Signal detected on 14.230 MHz. Martin M2 format confirmed by the tone cadence.' },
-                        { speaker: '', text: '*Ryan clicks the DECODE button*' },
-                        { speaker: '', text: '*The SSTV decoder begins reconstructing the image, line by line — a static-streaked photograph slowly resolves...*' },
+                        { speaker: 'Narrator', text: '*Ryan clicks the DECODE button*' },
+                        { speaker: 'Narrator', text: '*The SSTV decoder begins reconstructing the image, line by line — a static-streaked photograph slowly resolves...*' },
                         { speaker: 'Ryan', text: 'That\'s... that\'s my house. My white farmhouse with the red roof. Taken from across the canal.' },
                         { speaker: 'Ryan', text: 'The angle — someone was standing on the road, maybe sitting in a parked car. You can see the power lines, the garden... and that\'s me. That\'s me in the garden.' },
                         { speaker: 'Ryan', text: 'Wait — there\'s data embedded in the image. Steganographic encoding hidden in the SSTV pixel values.' },
                         { speaker: 'Ryan', text: '"52°27\'N 6°36\'E — OPERATION ZERFALL — NODE ACTIVE"' },
                         { speaker: 'Ryan', text: 'GPS coordinates near Westerbork. Right next to WSRT. And a timestamp — tonight.' },
-                        { speaker: '', text: '📚 EDUCATIONAL: SSTV steganography — hiding data in the grey values of image pixels — is a real technique used by intelligence services. Operators monitoring amateur bands often miss it entirely.' },
+                        { speaker: 'Narrator', text: '📚 EDUCATIONAL: SSTV steganography — hiding data in the grey values of image pixels — is a real technique used by intelligence services. Operators monitoring amateur bands often miss it entirely.' },
                         { speaker: 'Ryan', text: 'Someone has been watching me. They know where I live. And they just told me exactly where to look.' },
                     ], () => {
                         // Fade out the SSTV overlay
@@ -213,12 +213,12 @@ const SdrBenchScene = {
             cursor: 'pointer',
             action: (game) => {
                 game.startDialogue([
-                    { speaker: '', text: '📚 WHAT IS SOFTWARE DEFINED RADIO?' },
-                    { speaker: '', text: 'Traditional radio: hardware circuits fixed at manufacture — AM radio only does AM, FM radio only does FM.' },
-                    { speaker: '', text: 'SDR: antenna → analog-to-digital converter → computer. The computer\'s software defines everything else.' },
-                    { speaker: '', text: 'The same €25 dongle can receive FM radio, track aircraft (ADS-B), decode weather satellites, monitor power meters, analyse Wi-Fi, listen to amateur bands, and more.' },
-                    { speaker: '', text: 'LOFAR is the world\'s largest SDR. 20,000+ antennas all feeding digital samples into a central supercomputer. The "telescope pointing" is pure mathematics.' },
-                    { speaker: '', text: 'Jaap Haartsen\'s Bluetooth uses frequency-hopping spread spectrum — jumping 1600 times per second across 79 channels — inspired by military radio principles originally developed to prevent jamming.' },
+                    { speaker: 'Narrator', text: '📚 WHAT IS SOFTWARE DEFINED RADIO?' },
+                    { speaker: 'Narrator', text: 'Traditional radio: hardware circuits fixed at manufacture — AM radio only does AM, FM radio only does FM.' },
+                    { speaker: 'Narrator', text: 'SDR: antenna → analog-to-digital converter → computer. The computer\'s software defines everything else.' },
+                    { speaker: 'Narrator', text: 'The same €25 dongle can receive FM radio, track aircraft (ADS-B), decode weather satellites, monitor power meters, analyse Wi-Fi, listen to amateur bands, and more.' },
+                    { speaker: 'Narrator', text: 'Lofar is the world\'s largest SDR. 20,000+ antennas all feeding digital samples into a central supercomputer. The "telescope pointing" is pure mathematics.' },
+                    { speaker: 'Narrator', text: 'Jaap Haartsen\'s Bluetooth uses frequency-hopping spread spectrum — jumping 1600 times per second across 79 channels — inspired by military radio principles originally developed to prevent jamming.' },
                 ]);
             }
         },

@@ -15,6 +15,18 @@ const DwingelooScene = {
 
     playerStart: { x: 50, y: 85 },
 
+    // 🎬 Accessibility / Movie Mode
+    accessibilityPath: [
+        'telescope_dish',     // look at the dish, learn its history
+        'control_building',   // find broadcast log → sets dwingeloo_broadcast_found
+        'telescope_fence',    // discover relay transmitter → sets dwingeloo_transmitter_found
+        async function(game) {
+            // Drive home after finding transmitter
+            game.setFlag('driving_destination', 'home_from_dwingeloo');
+            game.loadScene('driving_day');
+        }
+    ],
+
     hotspots: [
         // ── The Telescope Dish ──
         {
@@ -31,7 +43,7 @@ const DwingelooScene = {
                     { speaker: 'Ryan', text: 'It discovered that the Milky Way has spiral arms — the same structure as other galaxies. That was 1958. Jan Oort and his team used the 21 cm hydrogen line.' },
                     { speaker: 'Ryan', text: 'The 21 cm line — hydrogen emits radio waves at exactly 1420.405752 MHz when its electron flips spin. Every hydrogen atom in the universe does this.' },
                     { speaker: 'Ryan', text: 'By mapping where this signal came from, they mapped our entire galaxy. From right here, in Drenthe.' },
-                    { speaker: '', text: '📚 EDUCATIONAL: The Dwingeloo telescope is now operated by the Camras Foundation (CAMRAS = C.A. Muller Radio Astronomy Station). Volunteers run it for amateur radio and outreach. It\'s on the UNESCO World Heritage list.' },
+                    { speaker: 'Narrator', text: '📚 EDUCATIONAL: The Dwingeloo telescope is now operated by the Camras Foundation (CAMRAS = C.A. Muller Radio Astronomy Station). Volunteers run it for amateur radio and outreach. It\'s on the UNESCO World Heritage list.' },
                 ]);
             }
         },
@@ -54,10 +66,10 @@ const DwingelooScene = {
                 } else {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'The control building is unlocked — it\'s a volunteer-run observatory. Anyone can visit on open days.' },
-                        { speaker: '', text: '*Ryan steps inside. Banks of vintage equipment line the walls alongside modern computers*' },
+                        { speaker: 'Narrator', text: '*Ryan steps inside. Banks of vintage equipment line the walls alongside modern computers*' },
                         { speaker: 'Ryan', text: 'Beautiful. Original 1950s receivers next to modern SDR setups. The volunteers keep it all running.' },
                         { speaker: 'Ryan', text: 'Wait... the logging computer shows something unusual.' },
-                        { speaker: '', text: '*Ryan reads the screen*' },
+                        { speaker: 'Narrator', text: '*Ryan reads the screen*' },
                         { speaker: 'Ryan', text: '"PERIODIC SIGNAL — 1420.500 MHz — STRUCTURED PATTERN — FIRST DETECTED 14 DAYS AGO"' },
                         { speaker: 'Ryan', text: '1420.500 MHz. That\'s just 95 kHz above the hydrogen line. Close enough to hide in the noise for most observers.' },
                         { speaker: 'Ryan', text: 'But someone with access to this telescope noticed it. The signal has structure — it\'s not natural. It\'s data.' },
@@ -88,12 +100,12 @@ const DwingelooScene = {
             cursor: 'pointer',
             action: (game) => {
                 game.startDialogue([
-                    { speaker: '', text: '📚 DWINGELOO TELESCOPE — KEY FACTS' },
-                    { speaker: '', text: 'Diameter: 25 metres. Built: 1956. Decommissioned as research instrument: 1999.' },
-                    { speaker: '', text: 'Major discoveries: spiral arm structure of the Milky Way (1958), several new galaxies behind the galactic plane hidden by dust.' },
-                    { speaker: '', text: 'Current status: operated by CAMRAS volunteers. Used for amateur radio, SETI (Search for Extraterrestrial Intelligence), and educational outreach.' },
-                    { speaker: '', text: 'The telescope can still receive signals from spacecraft. In 2014 volunteers tracked the Rosetta comet mission.' },
-                    { speaker: '', text: 'UNESCO World Heritage Site (2024) as part of the Dutch Radio Telescope Sites.' },
+                    { speaker: 'Narrator', text: '📚 DWINGELOO TELESCOPE — KEY FACTS' },
+                    { speaker: 'Narrator', text: 'Diameter: 25 metres. Built: 1956. Decommissioned as research instrument: 1999.' },
+                    { speaker: 'Narrator', text: 'Major discoveries: spiral arm structure of the Milky Way (1958), several new galaxies behind the galactic plane hidden by dust.' },
+                    { speaker: 'Narrator', text: 'Current status: operated by CAMRAS volunteers. Used for amateur radio, SETI (Search for Extraterrestrial Intelligence), and educational outreach.' },
+                    { speaker: 'Narrator', text: 'The telescope can still receive signals from spacecraft. In 2014 volunteers tracked the Rosetta comet mission.' },
+                    { speaker: 'Narrator', text: 'UNESCO World Heritage Site (2024) as part of the Dutch Radio Telescope Sites.' },
                 ]);
             }
         },
@@ -144,11 +156,11 @@ const DwingelooScene = {
             cursor: 'pointer',
             action: (game) => {
                 game.startDialogue([
-                    { speaker: '', text: '📚 THE 21 CM HYDROGEN LINE' },
-                    { speaker: '', text: 'Hydrogen is the most common element in the universe. When a hydrogen atom\'s single electron flips its spin direction, it emits a radio wave at exactly 1420.405752 MHz.' },
-                    { speaker: '', text: 'This wavelength (21 cm) passes through dust clouds that block visible light. Radio telescopes can map the entire Milky Way using this signal.' },
-                    { speaker: '', text: 'The frequency is internationally protected — no transmitters allowed near 1420 MHz. Except someone near Westerbork is ignoring that rule.' },
-                    { speaker: '', text: 'SETI researchers often monitor the hydrogen line for alien signals, reasoning that any intelligent civilisation would know about it.' },
+                    { speaker: 'Narrator', text: '📚 THE 21 CM HYDROGEN LINE' },
+                    { speaker: 'Narrator', text: 'Hydrogen is the most common element in the universe. When a hydrogen atom\'s single electron flips its spin direction, it emits a radio wave at exactly 1420.405752 MHz.' },
+                    { speaker: 'Narrator', text: 'This wavelength (21 cm) passes through dust clouds that block visible light. Radio telescopes can map the entire Milky Way using this signal.' },
+                    { speaker: 'Narrator', text: 'The frequency is internationally protected — no transmitters allowed near 1420 MHz. Except someone near Westerbork is ignoring that rule.' },
+                    { speaker: 'Narrator', text: 'SETI researchers often monitor the hydrogen line for alien signals, reasoning that any intelligent civilisation would know about it.' },
                 ]);
             }
         },

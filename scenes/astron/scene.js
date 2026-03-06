@@ -2,7 +2,7 @@
  * WSRT Scene — Westerbork Synthesis Radio Telescope
  * Ryan visits Cees Bassa at the WSRT radio telescope array to have
  * the Project Echo schematics verified and triangulate the facility's
- * signal using the LOFAR low-frequency array.
+ * signal using the Lofar low-frequency array.
  *
  * The WSRT is located between Westerbork and Hooghalen in Drenthe.
  * It is operated by ASTRON, whose headquarters are in Dwingeloo.
@@ -32,7 +32,7 @@ const AstronScene = {
         "The hum of the servers is oddly calming.",
         "Between Westerbork and Hooghalen. Former Camp Westerbork land. Radio-quiet zone.",
         "This is where they discovered SpaceX interference.",
-        "LOFAR, WSRT, Apertif — Drenthe punches above its weight.",
+        "Lofar, WSRT, Apertif — Drenthe punches above its weight.",
         "Hard to believe we're 40 minutes from home.",
         "The monitors show data from all fourteen dishes in real time.",
         "Peaceful place to do terrifying analysis.",
@@ -113,7 +113,7 @@ const AstronScene = {
                     ]);
                 } else {
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'Wall-mounted status screens. LOFAR array status, RF spectrum, dish pointing coords.' },
+                        { speaker: 'Ryan', text: 'Wall-mounted status screens. Lofar array status, RF spectrum, dish pointing coords.' },
                         { speaker: 'Ryan', text: 'Some of the most powerful radio-astronomy computers in the country feed these displays.' },
                         { speaker: 'Ryan', text: 'Cees said he\'d run the schematics through the ASTRON signal-analysis pipeline.' }
                     ]);
@@ -196,7 +196,7 @@ const AstronScene = {
             action: function(game) {
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'The parking area is 400 metres back. The memorial and Planetenpad are out that way too.' },
-                    { speaker: '', text: '*Ryan steps outside and walks across the heath toward the parking area*' }
+                    { speaker: 'Narrator', text: '*Ryan steps outside and walks across the heath toward the parking area*' }
                 ], () => {
                     game.loadScene('wsrt_parking');
                 });
@@ -216,7 +216,7 @@ const AstronScene = {
             action: function(game) {
                 game.startDialogue([
                     { speaker: 'Ryan', text: '"ASTRON — Netherlands Institute for Radio Astronomy."' },
-                    { speaker: 'Ryan', text: 'Operated the WSRT since the seventies, then built LOFAR.' },
+                    { speaker: 'Ryan', text: 'Operated the WSRT since the seventies, then built Lofar.' },
                     { speaker: 'Ryan', text: 'This place has been decoding the universe for over fifty years.' },
                     { speaker: 'Ryan', text: 'Today it helps decode something a lot closer to home.' }
                 ]);
@@ -308,9 +308,9 @@ const AstronScene = {
             game.setFlag('visited_astron', true);
 
             game.startDialogue([
-                { speaker: '', text: '*Ryan steps into the WSRT control room. Through the panoramic window, fourteen dishes stretch across the heath.*' },
+                { speaker: 'Narrator', text: '*Ryan steps into the WSRT control room. Through the panoramic window, fourteen dishes stretch across the heath.*' },
                 { speaker: 'Ryan', text: 'Impressive. All that radio astronomy hardware, controlled from this one room.' },
-                { speaker: '', text: '*Cees Bassa looks up from his workstation, tablet in hand*' },
+                { speaker: 'Narrator', text: '*Cees Bassa looks up from his workstation, tablet in hand*' },
                 { speaker: 'Cees Bassa', text: 'Ryan! Come in. Close the door behind you.' },
                 { speaker: 'Cees Bassa', text: 'I ran the schematics you sent through our signal-analysis pipeline overnight.' },
                 { speaker: 'Cees Bassa', text: 'You\'re going to want to sit down for this.' },
@@ -319,7 +319,7 @@ const AstronScene = {
             ]);
         } else {
             game.startDialogue([
-                { speaker: '', text: '*The monitors hum softly. Through the window, dishes track across the sky.*' },
+                { speaker: 'Narrator', text: '*The monitors hum softly. Through the window, dishes track across the sky.*' },
                 { speaker: 'Ryan', text: 'Back in the control room. Cees is at his workstation.' }
             ]);
         }
@@ -355,13 +355,13 @@ const AstronScene = {
             game.startDialogue([
                 { speaker: 'Cees Bassa', text: 'Okay. Here\'s what I found.' },
                 { speaker: 'Cees Bassa', text: 'The antenna array in these schematics uses phased-array beam-steering.' },
-                { speaker: 'Cees Bassa', text: 'Similar to what we use in LOFAR — digital beamforming, hundreds of elements working in phase.' },
+                { speaker: 'Cees Bassa', text: 'Similar to what we use in Lofar — digital beamforming, hundreds of elements working in phase.' },
                 { speaker: 'Cees Bassa', text: 'But the power levels are INSANE. This isn\'t for listening. It\'s for projecting.' },
                 { speaker: 'Ryan', text: 'Projecting what?' },
                 { speaker: 'Cees Bassa', text: 'Concentrated electromagnetic energy. Multi-band, tuneable from 100 MHz to 6 GHz.' },
                 { speaker: 'Cees Bassa', text: 'At these power levels? It would overload any unshielded electronics within five kilometres.' },
                 { speaker: 'Cees Bassa', text: 'Cars would stall. Phones would brick. Medical implants would…' },
-                { speaker: '', text: '*Cees trails off, shaking his head*' },
+                { speaker: 'Narrator', text: '*Cees trails off, shaking his head*' },
                 { speaker: 'Cees Bassa', text: 'Ryan, this is weaponised radio. Pure and simple.' },
                 { speaker: 'Cees Bassa', text: 'And the signal-processing algorithms? They\'re not German. The coding style, the variable naming — it\'s Russian school.' },
                 { speaker: 'Ryan', text: 'Volkov.' },
@@ -478,8 +478,8 @@ const AstronScene = {
         // Triangulation sequence — interactive puzzle
         game.startDialogue([
             { speaker: 'Ryan', text: 'HackRF is scanning… looking for that calibration beacon Cees mentioned.' },
-            { speaker: '', text: '*The laptop screen fills with a waterfall display — noise across multiple bands*' },
-            { speaker: 'Ryan', text: 'There\'s a lot of interference. LOFAR stations, satellite downlinks, commercial radio…' },
+            { speaker: 'Narrator', text: '*The laptop screen fills with a waterfall display — noise across multiple bands*' },
+            { speaker: 'Ryan', text: 'There\'s a lot of interference. Lofar stations, satellite downlinks, commercial radio…' },
             { speaker: 'Ryan', text: 'Need to isolate the right frequency. Cees said the beacon would be in the military band.' }
         ]);
 
@@ -488,7 +488,7 @@ const AstronScene = {
             game.setFlag('signal_triangulated', true);
             if (game.questManager) game.completeQuest('triangulate_signal');
             game.startDialogue([
-                { speaker: '', text: '*The HackRF locks onto 243 MHz — a faint but steady pulse appears*' },
+                { speaker: 'Narrator', text: '*The HackRF locks onto 243 MHz — a faint but steady pulse appears*' },
                 { speaker: 'Ryan', text: 'Triangulation complete. 53.28°N, 7.42°E. Steckerdoser Heide facility.' },
                 { speaker: 'Ryan', text: 'The beacon is real. The weapon is real. The location is confirmed.' }
             ]);
@@ -509,11 +509,11 @@ const AstronScene = {
                     game.completeQuest('triangulate_signal');
 
                     game.startDialogue([
-                        { speaker: '', text: '*The HackRF locks onto 243 MHz — a faint but steady pulse appears*' },
+                        { speaker: 'Narrator', text: '*The HackRF locks onto 243 MHz — a faint but steady pulse appears*' },
                         { speaker: 'Ryan', text: 'There it is! The beacon. Faint, but the WSRT dishes are amplifying it.' },
-                        { speaker: '', text: '*On the laptop, 14 signal traces converge into a single bearing*' },
+                        { speaker: 'Narrator', text: '*On the laptop, 14 signal traces converge into a single bearing*' },
                         { speaker: 'Ryan', text: 'Triangulation in progress… combining dish baselines…' },
-                        { speaker: '', text: '*A map renders with a red crosshair — right on Steckerdoser Heide*' },
+                        { speaker: 'Narrator', text: '*A map renders with a red crosshair — right on Steckerdoser Heide*' },
                         { speaker: 'Ryan', text: 'Got it. 53.28°N, 7.42°E. Steckerdoser Heide facility. Dead centre.' },
                         { speaker: 'Ryan', text: 'The beacon is real. The weapon is real. The location is confirmed.' },
                         { speaker: 'Ryan', text: 'Now we know EXACTLY where it is. Talk to Cees — time to plan.' }

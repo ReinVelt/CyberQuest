@@ -77,8 +77,8 @@ const MorningAfterScene = {
                 if (!game.getFlag('read_eva_email')) {
                     game.setFlag('read_eva_email', true);
                     game.startDialogue([
-                        { speaker: '', text: '*A single Protonmail notification. From Eva Weber.*' },
-                        { speaker: '', text: '' },
+                        { speaker: 'Narrator', text: '*A single Protonmail notification. From Eva Weber.*' },
+                        { speaker: 'Narrator', text: '' },
                         { speaker: 'Eva (email)', text: 'Ryan,' },
                         { speaker: 'Eva (email)', text: 'I\'m writing this from a BND safehouse in Munich. They\'re keeping me here while they process Volkov and Hoffmann.' },
                         { speaker: 'Eva (email)', text: 'I read your press package. Every word. You captured it perfectly. The technical details, the human cost, the urgency.' },
@@ -88,7 +88,7 @@ const MorningAfterScene = {
                         { speaker: 'Eva (email)', text: 'Thank you, Ryan. For believing a stranger. For risking everything.' },
                         { speaker: 'Eva (email)', text: '— Eva' },
                         { speaker: 'Eva (email)', text: 'P.S. Destroy this email. Old habits.' },
-                        { speaker: '', text: '' },
+                        { speaker: 'Narrator', text: '' },
                         { speaker: 'Ryan', text: '*Stares at the screen for a long time*' },
                         { speaker: 'Ryan', text: '*Types: "Your father already was proud. Come visit anytime. The dogs miss you."*' },
                         { speaker: 'Ryan', text: '*Send. Delete.*' }
@@ -110,7 +110,7 @@ const MorningAfterScene = {
             cursor: 'pointer',
             action: function(game) {
                 game.startDialogue([
-                    { speaker: '', text: '*A plain white card on the desk. AIVD crest. Van der Berg\'s number.*' },
+                    { speaker: 'Narrator', text: '*A plain white card on the desk. AIVD crest. Van der Berg\'s number.*' },
                     { speaker: 'Ryan', text: '"When you\'re ready," he said.' },
                     { speaker: 'Ryan', text: 'Am I ready? Government agent? Me?' },
                     { speaker: 'Ryan', text: 'The hacker from Compascuum, working for Dutch intelligence.' },
@@ -132,7 +132,7 @@ const MorningAfterScene = {
                 if (!game.getFlag('morning_max_talk')) {
                     game.setFlag('morning_max_talk', true);
                     game.startDialogue([
-                        { speaker: '', text: '*Max appears in the doorway. Two cups of espresso.*' },
+                        { speaker: 'Narrator', text: '*Max appears in the doorway. Two cups of espresso.*' },
                         { speaker: 'Max', text: 'You\'re still down here.' },
                         { speaker: 'Ryan', text: 'Couldn\'t sleep. Too much in my head.' },
                         { speaker: 'Max', text: '*Sets the espresso down. Sits on the workbench.*' },
@@ -142,14 +142,14 @@ const MorningAfterScene = {
                         { speaker: 'Max', text: 'You infiltrated a military facility. In Germany. At night. Alone.' },
                         { speaker: 'Ryan', text: 'I wasn\'t alone. Eva was—' },
                         { speaker: 'Max', text: 'You could have DIED, Ryan.' },
-                        { speaker: '', text: '*Silence. The equipment hums.*' },
+                        { speaker: 'Narrator', text: '*Silence. The equipment hums.*' },
                         { speaker: 'Max', text: 'But you saved people. A lot of people.' },
                         { speaker: 'Max', text: 'I\'m furious. And terrified. And... proud. All at once.' },
                         { speaker: 'Ryan', text: 'The AIVD wants to—' },
                         { speaker: 'Max', text: 'I know. Van der Berg\'s card. I saw it.' },
                         { speaker: 'Max', text: 'Let\'s not decide anything today. Today we walk the dogs. Eat stamppot. Be normal.' },
                         { speaker: 'Ryan', text: '*Smiles* Normal sounds perfect.' },
-                        { speaker: '', text: '*Tino and Kessy trot in, tails wagging. ET snorts from the hallway.*' },
+                        { speaker: 'Narrator', text: '*Tino and Kessy trot in, tails wagging. ET snorts from the hallway.*' },
                         { speaker: 'Max', text: 'See? They don\'t care about Russian spies. They want dinner.' },
                         { speaker: 'Ryan', text: '*Laughs* The real priorities.' }
                     ]);
@@ -177,8 +177,8 @@ const MorningAfterScene = {
                 if (emailRead && iesTalk) {
                     game.setFlag('morning_after_complete', true);
                     game.startDialogue([
-                        { speaker: '', text: '*Days pass. Then weeks. Then months.*' },
-                        { speaker: '', text: '*The world moves on. But some things have changed forever.*' }
+                        { speaker: 'Narrator', text: '*Days pass. Then weeks. Then months.*' },
+                        { speaker: 'Narrator', text: '*The world moves on. But some things have changed forever.*' }
                     ]);
                     game.sceneTimeout(() => {
                         game.loadScene('epilogue');
@@ -266,12 +266,12 @@ const MorningAfterScene = {
 
         const tid = setTimeout(() => {
             game.startDialogue([
-                { speaker: '', text: 'The next morning — Mancave, Compascuum' },
-                { speaker: '', text: '*Ryan sits in his chair. The equipment hums around him. For the first time in days, there is no crisis.*' },
+                { speaker: 'Narrator', text: 'The next morning — Mancave, Compascuum' },
+                { speaker: 'Narrator', text: '*Ryan sits in his chair. The equipment hums around him. For the first time in days, there is no crisis.*' },
                 { speaker: 'Ryan', text: 'It\'s quiet. Almost too quiet.' },
                 { speaker: 'Ryan', text: 'No Meshtastic alerts. No encrypted calls. No countdown.' },
                 { speaker: 'Ryan', text: 'Just... morning.' },
-                { speaker: '', text: '*247 unread emails on the laptop. An AIVD card on the desk. A Protonmail notification.*' }
+                { speaker: 'Narrator', text: '*247 unread emails on the laptop. An AIVD card on the desk. A Protonmail notification.*' }
             ]);
         }, 800);
         this._timeoutIds.push(tid);

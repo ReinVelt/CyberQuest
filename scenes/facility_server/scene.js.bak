@@ -64,8 +64,8 @@ const FacilityServerScene = {
                 game.startDialogue([
                     { speaker: 'Ryan', text: 'Blue maintenance panel. Right where Eva said.' },
                     { speaker: 'Ryan', text: '*Types: 2-8-4-7*' },
-                    { speaker: '', text: '*CLICK* Red light turns green.' },
-                    { speaker: '', text: '*Door lock disengages*' },
+                    { speaker: 'Narrator', text: '*CLICK* Red light turns green.' },
+                    { speaker: 'Narrator', text: '*Door lock disengages*' },
                     { speaker: 'Ryan', text: 'I\'m in. Server room ahead.' }
                 ]);
                 
@@ -107,13 +107,13 @@ const FacilityServerScene = {
                     FacilityServerScene.state.terminalAccessed = true;
                     
                     game.startDialogue([
-                        { speaker: '', text: '*Black terminal case. Isolated from network.*' },
+                        { speaker: 'Narrator', text: '*Black terminal case. Isolated from network.*' },
                         { speaker: 'Ryan', text: '*Powers on terminal*' },
-                        { speaker: '', text: '*Boot sequence. Login prompt appears.*' },
+                        { speaker: 'Narrator', text: '*Boot sequence. Login prompt appears.*' },
                         { speaker: 'Ryan', text: 'Need credentials. Eva?' },
                         { speaker: 'Eva (Mesh)', text: 'Try: username "volkov_d", password "Moskau_1991"' },
                         { speaker: 'Ryan', text: '*Types carefully*' },
-                        { speaker: '', text: '*SYSTEM ACCESS GRANTED - DR. DMITRI VOLKOV*' },
+                        { speaker: 'Narrator', text: '*SYSTEM ACCESS GRANTED - DR. DMITRI VOLKOV*' },
                         { speaker: 'Ryan', text: 'I\'m in. His personal account.' }
                     ]);
                     
@@ -123,15 +123,15 @@ const FacilityServerScene = {
                 } else if (!FacilityServerScene.state.evidenceDownloaded) {
                     game.startDialogue([
                         { speaker: 'Ryan', text: '*Navigates filesystem*' },
-                        { speaker: '', text: '*Opens: /ZERFALL/PHASE_3/*' },
+                        { speaker: 'Narrator', text: '*Opens: /ZERFALL/PHASE_3/*' },
                         { speaker: 'Ryan', text: 'Financial transfers... FSB routing codes... Target coordinates.' },
                         { speaker: 'Ryan', text: 'Hamburg. Amsterdam. Berlin. All three cities.' },
                         { speaker: 'Ryan', text: 'Ambulance systems. Hospital equipment. Traffic control.' },
                         { speaker: 'Ryan', text: 'Deployment date: 72 hours from now.' },
                         { speaker: 'Eva (Mesh)', text: 'Copy everything. USB drive in the drawer.' },
                         { speaker: 'Ryan', text: '*Finds drive. Inserts it.*' },
-                        { speaker: '', text: '*File transfer begins...*' },
-                        { speaker: '', text: '*Progress: 34%... 67%... 89%...*' }
+                        { speaker: 'Narrator', text: '*File transfer begins...*' },
+                        { speaker: 'Narrator', text: '*Progress: 34%... 67%... 89%...*' }
                     ]);
                     
                     setTimeout(() => {
@@ -140,7 +140,7 @@ const FacilityServerScene = {
                         game.setFlag('collected_evidence', true);
                         
                         game.startDialogue([
-                            { speaker: '', text: '*100% COMPLETE*' },
+                            { speaker: 'Narrator', text: '*100% COMPLETE*' },
                             { speaker: 'Ryan', text: 'Got it. All of it.' },
                             { speaker: 'Ryan', text: 'Let\'s—' }
                         ]);
@@ -260,7 +260,7 @@ const FacilityServerScene = {
         
         setTimeout(() => {
             game.startDialogue([
-                { speaker: '', text: '*Basement corridor. Concrete walls. Cold.*' },
+                { speaker: 'Narrator', text: '*Basement corridor. Concrete walls. Cold.*' },
                 { speaker: 'Ryan', text: 'Server room door ahead.' },
                 { speaker: 'Ryan', text: 'Blue override panel on the right. Code: 2847' }
             ]);
@@ -290,8 +290,8 @@ function startVolkovConfrontation(game) {
     }
     
     game.startDialogue([
-        { speaker: '', text: '*Footsteps in the corridor behind*' },
-        { speaker: '', text: '*Door opens*' },
+        { speaker: 'Narrator', text: '*Footsteps in the corridor behind*' },
+        { speaker: 'Narrator', text: '*Door opens*' },
         { speaker: 'Volkov', text: 'Interesting technique with the gate. Old KGB tradecraft.' },
         { speaker: 'Ryan', text: '*Spins around. Dmitri Volkov stands in doorway.*' },
         { speaker: 'Volkov', text: 'You must be E\'s new friend. The Dutch hacker.' },
@@ -300,7 +300,7 @@ function startVolkovConfrontation(game) {
         { speaker: 'Ryan', text: 'ZERFALL. The FSB connection. Financial records. All of it.' },
         { speaker: 'Volkov', text: '*Smiles coldly* Perhaps.' },
         { speaker: 'Volkov', text: 'But I have something too.' },
-        { speaker: '', text: '*Volkov reaches into his jacket—*' }
+        { speaker: 'Narrator', text: '*Volkov reaches into his jacket—*' }
     ]);
     
     game.sceneTimeout(() => {
@@ -314,12 +314,12 @@ function startVolkovConfrontation(game) {
         
         game.startDialogue([
             { speaker: 'Kubecka', text: 'I wouldn\'t.' },
-            { speaker: '', text: '*Chris Kubecka steps from the shadows behind Volkov*' },
-            { speaker: '', text: '*Weapon drawn. Trained on Volkov.*' },
+            { speaker: 'Narrator', text: '*Chris Kubecka steps from the shadows behind Volkov*' },
+            { speaker: 'Narrator', text: '*Weapon drawn. Trained on Volkov.*' },
             { speaker: 'Kubecka', text: 'Hands where I can see them, Doctor.' },
             { speaker: 'Volkov', text: '*Freezes. Calculates. Slowly raises hands.*' },
-            { speaker: '', text: '*Bundeswehr military police flood the corridor*' },
-            { speaker: '', text: '*Tactical gear. Automatic weapons.*' }
+            { speaker: 'Narrator', text: '*Bundeswehr military police flood the corridor*' },
+            { speaker: 'Narrator', text: '*Tactical gear. Automatic weapons.*' }
         ]);
         
         game.sceneTimeout(() => {
@@ -339,7 +339,7 @@ function startVolkovConfrontation(game) {
                 { speaker: 'Volkov', text: 'He would be proud. You have his fire.' },
                 { speaker: 'Eva', text: 'My father is dead because of you.' },
                 { speaker: 'Eva', text: 'Take him away.' },
-                { speaker: '', text: '*Military police handcuff Volkov. Lead him out.*' }
+                { speaker: 'Narrator', text: '*Military police handcuff Volkov. Lead him out.*' }
             ]);
             
             game.sceneTimeout(() => {
@@ -371,28 +371,28 @@ function showEpilogue(game) {
     game.setStoryPart(20);
     
     game.startDialogue([
-        { speaker: '', text: '═══════════════════════════════════════' },
-        { speaker: '', text: 'EPILOGUE' },
-        { speaker: '', text: '═══════════════════════════════════════' },
-        { speaker: '', text: '' },
-        { speaker: '', text: 'Three months later.' },
-        { speaker: '', text: '' },
+        { speaker: 'Narrator', text: '═══════════════════════════════════════' },
+        { speaker: 'Narrator', text: 'EPILOGUE' },
+        { speaker: 'Narrator', text: '═══════════════════════════════════════' },
+        { speaker: 'Narrator', text: '' },
+        { speaker: 'Narrator', text: 'Three months later.' },
+        { speaker: 'Narrator', text: '' },
         { speaker: 'Ryan', text: '*Back in my mancave. Coffee in hand. Radio frequencies humming.*' },
         { speaker: 'Ryan', text: 'Volkov is awaiting trial outside Munich. Maximum-security wing.' },
         { speaker: 'Ryan', text: 'The evidence held up. Ironclad.' },
         { speaker: 'Ryan', text: 'ZERFALL never launched. Hamburg, Amsterdam, Berlin—all safe.' },
         { speaker: 'Ryan', text: '1.2 million people who don\'t know how close they came.' },
-        { speaker: '', text: '' },
+        { speaker: 'Narrator', text: '' },
         { speaker: 'Ryan', text: 'Eva was promoted. Leads NATO\'s new cyber defense task force now.' },
         { speaker: 'Ryan', text: 'Chris Kubecka went back to Geneva. We email sometimes.' },
         { speaker: 'Ryan', text: 'She says hi. Asks if I need any more "exciting field work".' },
         { speaker: 'Ryan', text: 'David got his equipment back. Still drives that rusty Opel.' },
         { speaker: 'Ryan', text: 'Still complains about everything. Some things never change.' },
-        { speaker: '', text: '' },
+        { speaker: 'Narrator', text: '' },
         { speaker: 'Ryan', text: '*Meshtastic device chirps*' },
-        { speaker: '', text: '*Message from EVA_W: "Thanks again. -E"*' },
+        { speaker: 'Narrator', text: '*Message from EVA_W: "Thanks again. -E"*' },
         { speaker: 'Ryan', text: '*Smiles. Types back: "Anytime."*' },
-        { speaker: '', text: '' },
+        { speaker: 'Narrator', text: '' },
         { speaker: 'Ryan', text: 'Outside, the Dutch countryside is quiet.' },
         { speaker: 'Ryan', text: 'Agricultural land stretching to the horizon.' },
         { speaker: 'Ryan', text: 'My Volvo sits in the garden. License plate still Dutch.' },
@@ -401,18 +401,18 @@ function showEpilogue(game) {
         { speaker: 'Ryan', text: 'Listen to the static between stations.' },
         { speaker: 'Ryan', text: 'Sometimes I wonder what else is out there.' },
         { speaker: 'Ryan', text: 'What other operations are running right now.' },
-        { speaker: '', text: '' },
+        { speaker: 'Narrator', text: '' },
         { speaker: 'Ryan', text: 'But tonight?' },
         { speaker: 'Ryan', text: 'Tonight I just drink my coffee.' },
         { speaker: 'Ryan', text: 'Check my radio gear.' },
         { speaker: 'Ryan', text: 'And know that, this time,' },
         { speaker: 'Ryan', text: 'We won.' },
-        { speaker: '', text: '' },
-        { speaker: '', text: '═══════════════════════════════════════' },
-        { speaker: '', text: 'MISSION COMPLETE' },
-        { speaker: '', text: '═══════════════════════════════════════' },
-        { speaker: '', text: '' },
-        { speaker: '', text: '[Continue for epilogue...]' }
+        { speaker: 'Narrator', text: '' },
+        { speaker: 'Narrator', text: '═══════════════════════════════════════' },
+        { speaker: 'Narrator', text: 'MISSION COMPLETE' },
+        { speaker: 'Narrator', text: '═══════════════════════════════════════' },
+        { speaker: 'Narrator', text: '' },
+        { speaker: 'Narrator', text: '[Continue for epilogue...]' }
     ]);
     
     // Transition to AIVD debrief
