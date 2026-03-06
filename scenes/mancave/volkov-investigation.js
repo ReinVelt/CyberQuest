@@ -247,7 +247,7 @@ window.MancaveVolkovInvestigation = (function () {
             content.appendChild(chatArea);
 
             MC.revealChat(chatArea, KUBECKA_MESSAGES_1, 'Ryan', {
-                typingDelay: 4500,   // how long 'typing...' shows before message appears
+                typingDelay: 9500,   // how long 'typing...' shows before message appears
                 msgDelay:    5500,   // minimum dwell after message shown
                 readDelay:   48,     // extra ms per character — long messages get more time
                 useTTS:      true,   // speak each message via voiceManager
