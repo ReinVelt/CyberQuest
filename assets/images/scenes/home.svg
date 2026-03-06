@@ -112,6 +112,26 @@
     <feGaussianBlur stdDeviation="5" result="b"/>
     <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
   </filter>
+  <!-- ── CANAL SCENE gradients ── -->
+  <linearGradient id="hSky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#5ecbf5"/>
+    <stop offset="55%"  stop-color="#a8dcf8"/>
+    <stop offset="100%" stop-color="#cceeff"/>
+  </linearGradient>
+  <linearGradient id="hCanal" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#4a9ec8"/>
+    <stop offset="55%"  stop-color="#2e7aaa"/>
+    <stop offset="100%" stop-color="#1a567a"/>
+  </linearGradient>
+  <radialGradient id="hSunGlow" cx="50%" cy="50%" r="50%">
+    <stop offset="0%"   stop-color="#ffe878" stop-opacity="0.9"/>
+    <stop offset="100%" stop-color="#ffe878" stop-opacity="0"/>
+  </radialGradient>
+  <!-- Clip to both window panes (muntin excluded automatically by frame on top) -->
+  <clipPath id="winClip">
+    <rect x="652" y="248" width="292" height="270"/>
+    <rect x="966" y="248" width="292" height="270"/>
+  </clipPath>
 </defs>
 
 <!-- ═══════════════════════════════════════════════════════
@@ -236,10 +256,144 @@
 <rect x="620" y="225" width="680" height="22"  rx="5" fill="#7a4820" stroke="#5a3010" stroke-width="2"/>
 <!-- Frame -->
 <rect x="640" y="240" width="640" height="286" rx="5" fill="none" stroke="#8b5a28" stroke-width="12"/>
-<!-- Left pane outside -->
-<rect x="652" y="248" width="292" height="270" rx="4" fill="url(#hOutside)"/>
-<!-- Right pane outside -->
-<rect x="966" y="248" width="292" height="270" rx="4" fill="url(#hOutside)"/>
+<!-- ── OUTSIDE WINDOW — animated Dutch canal scene ── -->
+<g clip-path="url(#winClip)">
+  <!-- Sky -->
+  <rect x="640" y="248" width="640" height="270" fill="url(#hSky)"/>
+
+  <!-- Sun glow halo -->
+  <circle cx="722" cy="285" r="56" fill="url(#hSunGlow)">
+    <animate attributeName="opacity" values="0.7;0.9;0.7" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Sun disc -->
+  <circle cx="722" cy="285" r="30" fill="#ffe060">
+    <animate attributeName="r" values="29;31;29" dur="5s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Sun corona ring -->
+  <circle cx="722" cy="285" r="38" fill="none" stroke="#ffe06040" stroke-width="4"/>
+
+  <!-- Cloud 1 — large, slow -->
+  <g opacity="0.88">
+    <animateTransform attributeName="transform" type="translate" from="-620 0" to="680 0" dur="55s" repeatCount="indefinite"/>
+    <ellipse cx="900" cy="270" rx="72" ry="22" fill="#eef6ff"/>
+    <ellipse cx="950" cy="257" rx="52" ry="21" fill="#f0f8ff"/>
+    <ellipse cx="856" cy="277" rx="42" ry="17" fill="#eef6ff"/>
+    <ellipse cx="972" cy="270" rx="36" ry="16" fill="#eef6ff"/>
+  </g>
+
+  <!-- Cloud 2 — medium, faster -->
+  <g opacity="0.75">
+    <animateTransform attributeName="transform" type="translate" from="-900 0" to="680 0" dur="40s" repeatCount="indefinite"/>
+    <ellipse cx="1060" cy="293" rx="58" ry="17" fill="#e8f4ff"/>
+    <ellipse cx="1100" cy="281" rx="42" ry="17" fill="#eef6ff"/>
+    <ellipse cx="1022" cy="297" rx="36" ry="14" fill="#e8f4ff"/>
+  </g>
+
+  <!-- Cloud 3 — small, wispy -->
+  <g opacity="0.58">
+    <animateTransform attributeName="transform" type="translate" from="-300 0" to="680 0" dur="70s" repeatCount="indefinite"/>
+    <ellipse cx="1160" cy="266" rx="40" ry="13" fill="#f0f8ff"/>
+    <ellipse cx="1192" cy="258" rx="30" ry="12" fill="#f4faff"/>
+  </g>
+
+  <!-- Distant horizon treeline -->
+  <rect x="640" y="415" width="640" height="22" fill="#3a7828" opacity="0.8"/>
+  <!-- Tree canopy bumps -->
+  <ellipse cx="670"  cy="413" rx="28" ry="17" fill="#2d6020"/>
+  <ellipse cx="710"  cy="408" rx="34" ry="21" fill="#3a7828"/>
+  <ellipse cx="756"  cy="411" rx="27" ry="16" fill="#2d6020"/>
+  <ellipse cx="800"  cy="406" rx="32" ry="20" fill="#4a8a30"/>
+  <ellipse cx="840"  cy="413" rx="24" ry="15" fill="#2d6020"/>
+  <ellipse cx="880"  cy="409" rx="30" ry="18" fill="#3a7828"/>
+  <ellipse cx="960"  cy="411" rx="28" ry="17" fill="#3a7828"/>
+  <ellipse cx="1004" cy="406" rx="35" ry="21" fill="#2d6020"/>
+  <ellipse cx="1050" cy="410" rx="29" ry="16" fill="#4a8a30"/>
+  <ellipse cx="1090" cy="407" rx="27" ry="19" fill="#2d6020"/>
+  <ellipse cx="1132" cy="413" rx="32" ry="16" fill="#3a7828"/>
+  <ellipse cx="1172" cy="408" rx="28" ry="18" fill="#2d6020"/>
+  <ellipse cx="1212" cy="412" rx="33" ry="20" fill="#4a8a30"/>
+  <ellipse cx="1248" cy="409" rx="26" ry="16" fill="#2d6020"/>
+  <!-- Windmill silhouette far right -->
+  <rect x="1228" y="378" width="6"  height="38" fill="#2a5018" opacity="0.7"/>
+  <ellipse cx="1231" cy="377" rx="14" ry="5" fill="#2a5018" opacity="0.6"/>
+  <line x1="1231" y1="372" x2="1218" y2="358" stroke="#2a5018" stroke-width="2" opacity="0.6"/>
+  <line x1="1231" y1="372" x2="1244" y2="358" stroke="#2a5018" stroke-width="2" opacity="0.6"/>
+  <line x1="1231" y1="372" x2="1220" y2="388" stroke="#2a5018" stroke-width="2" opacity="0.6"/>
+  <line x1="1231" y1="372" x2="1242" y2="388" stroke="#2a5018" stroke-width="2" opacity="0.6"/>
+
+  <!-- Canal bank / grass -->
+  <rect x="640" y="432" width="640" height="26" fill="#4a9030"/>
+  <rect x="640" y="452" width="640" height="6"  fill="#2a6018" opacity="0.5"/>
+
+  <!-- Canal water -->
+  <rect x="640" y="458" width="640" height="60" fill="url(#hCanal)"/>
+
+  <!-- Water shimmer lines moving right -->
+  <g opacity="0.18">
+    <animateTransform attributeName="transform" type="translate" from="0 0" to="48 0" dur="4s" repeatCount="indefinite"/>
+    <line x1="590" y1="467" x2="1280" y2="467" stroke="#ffffff" stroke-width="1.5"/>
+    <line x1="590" y1="479" x2="1280" y2="479" stroke="#ffffff" stroke-width="1"/>
+    <line x1="590" y1="492" x2="1280" y2="492" stroke="#ffffff" stroke-width="1.5"/>
+    <line x1="590" y1="505" x2="1280" y2="505" stroke="#ffffff" stroke-width="1"/>
+  </g>
+  <!-- Water shimmer lines moving left (offset timing) -->
+  <g opacity="0.10">
+    <animateTransform attributeName="transform" type="translate" from="48 0" to="0 0" dur="5.5s" repeatCount="indefinite"/>
+    <line x1="590" y1="473" x2="1280" y2="473" stroke="#aaddff" stroke-width="1"/>
+    <line x1="590" y1="486" x2="1280" y2="486" stroke="#aaddff" stroke-width="1.5"/>
+    <line x1="590" y1="499" x2="1280" y2="499" stroke="#aaddff" stroke-width="1"/>
+  </g>
+  <!-- Sun reflection in canal -->
+  <ellipse cx="722" cy="488" rx="55" ry="10" fill="#ffe060" opacity="0.18">
+    <animate attributeName="opacity" values="0.14;0.26;0.14" dur="3.5s" repeatCount="indefinite"/>
+    <animate attributeName="rx" values="50;62;50" dur="3.5s" repeatCount="indefinite"/>
+  </ellipse>
+
+  <!-- Dutch canal boat (moves right→left) -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" from="640 0" to="-480 0" dur="48s" repeatCount="indefinite"/>
+    <!-- Hull -->
+    <polygon points="750,478 1000,478 1022,494 728,494" fill="#7a3c10"/>
+    <rect x="758" y="466" width="220" height="13" rx="2" fill="#9a4e1a"/>
+    <!-- Cabin superstructure -->
+    <rect x="788" y="440" width="160" height="28" rx="3" fill="#c8a060"/>
+    <!-- Cabin windows -->
+    <rect x="794" y="445" width="28" height="17" rx="2" fill="#7ab8e8" opacity="0.75"/>
+    <rect x="836" y="445" width="28" height="17" rx="2" fill="#7ab8e8" opacity="0.75"/>
+    <rect x="878" y="445" width="28" height="17" rx="2" fill="#7ab8e8" opacity="0.75"/>
+    <rect x="920" y="445" width="22" height="17" rx="2" fill="#7ab8e8" opacity="0.60"/>
+    <!-- Mast -->
+    <line x1="808" y1="440" x2="808" y2="412" stroke="#4a2808" stroke-width="3"/>
+    <!-- Dutch flag -->
+    <rect x="808" y="412" width="22" height="8"  fill="#ae1c28"/>
+    <rect x="808" y="420" width="22" height="8"  fill="#ffffff"/>
+    <rect x="808" y="428" width="22" height="7"  fill="#21468b"/>
+    <!-- Bow line -->
+    <line x1="728" y1="486" x2="760" y2="484" stroke="#8a6030" stroke-width="2" opacity="0.55"/>
+    <!-- Stern wake -->
+    <ellipse cx="1040" cy="488" rx="28" ry="5" fill="#78b8d8" opacity="0.35"/>
+    <ellipse cx="1066" cy="490" rx="18" ry="3" fill="#78b8d8" opacity="0.22"/>
+  </g>
+
+  <!-- Birds — group 1: pair drifting right to left -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" from="640 0" to="-100 0" dur="22s" repeatCount="indefinite"/>
+    <path d="M 680 275 Q 686 269 692 275" fill="none" stroke="#334455" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M 698 282 Q 703 277 708 282" fill="none" stroke="#334455" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+  <!-- Birds — group 2: three birds, slower and higher -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" from="680 0" to="-100 0" dur="34s" repeatCount="indefinite"/>
+    <path d="M 820 262 Q 825 257 830 262" fill="none" stroke="#445566" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 838 268 Q 843 263 848 268" fill="none" stroke="#445566" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 810 272 Q 814 268 818 272" fill="none" stroke="#445566" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+  <!-- Birds — group 3: lone bird, mid-height -->
+  <g>
+    <animateTransform attributeName="transform" type="translate" from="-200 0" to="700 0" dur="28s" repeatCount="indefinite"/>
+    <path d="M 700 308 Q 706 303 712 308" fill="none" stroke="#3a4d5c" stroke-width="2.2" stroke-linecap="round"/>
+  </g>
+</g>
 <!-- Centre muntin vertical -->
 <rect x="944" y="240" width="22" height="286" fill="#8b5a28"/>
 <!-- Horizontal cross bar -->
