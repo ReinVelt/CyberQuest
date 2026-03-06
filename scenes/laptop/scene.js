@@ -18,7 +18,22 @@ const LaptopScene = {
 
     // 🎬 Accessibility / Movie Mode
     // Screen auto-opens on enter; runner just waits for it to close then navigates back.
-    accessibilityPath: ['back_to_mancave'],
+    accessibilityPath: [
+        async function(game) {
+            // Wait until all pending laptop work is done before returning to mancave.
+            // Mirrors the same guard used by mancave's accessibilityPath to decide
+            // whether to send the player here in the first place.
+            function needsWork() {
+                return !game.getFlag('checked_email')
+                    || (game.getFlag('evidence_unlocked') && !game.getFlag('volkov_investigated'));
+            }
+            var deadline = Date.now() + 300000; // 5-min safety cap
+            while (needsWork() && Date.now() < deadline) {
+                await new Promise(function(r) { setTimeout(r, 1500); });
+            }
+            game.loadScene('mancave');
+        }
+    ],
 
     idleThoughts: [
         "Kali Linux. The hacker's Swiss Army knife.",
