@@ -17,15 +17,60 @@
     <stop offset="0%"   stop-color="#c2bea8"/>
     <stop offset="100%" stop-color="#d2ceba"/>
   </linearGradient>
-  <!-- ── FLOOR TILES ── -->
-  <pattern id="hTile" patternUnits="userSpaceOnUse" width="120" height="120">
-    <rect width="60"  height="60"  fill="#7a4018"/>
-    <rect x="60"      height="60"  fill="#904c20"/>
-    <rect y="60"      width="60"   height="60" fill="#904c20"/>
-    <rect x="60" y="60" width="60" height="60" fill="#7a4018"/>
-    <!-- grout lines -->
-    <line x1="60" y1="0"  x2="60" y2="120" stroke="#5a2c0a" stroke-width="2" opacity="0.5"/>
-    <line x1="0"  y1="60" x2="120" y2="60" stroke="#5a2c0a" stroke-width="2" opacity="0.5"/>
+  <!-- ── FLOOR — WOODEN PLANKS ── -->
+  <linearGradient id="hWoodSheen" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%"   stop-color="#fff8e0" stop-opacity="0.18"/>
+    <stop offset="35%"  stop-color="#fff8e0" stop-opacity="0.05"/>
+    <stop offset="100%" stop-color="#000"    stop-opacity="0.22"/>
+  </linearGradient>
+  <pattern id="hWood" patternUnits="userSpaceOnUse" width="480" height="120">
+    <!-- Row 1 — 3 planks -->
+    <rect x="0"   y="0"  width="158" height="58" fill="#c4924a"/>
+    <rect x="162" y="0"  width="156" height="58" fill="#b87838"/>
+    <rect x="322" y="0"  width="158" height="58" fill="#cc9c50"/>
+    <!-- Row 1 grain lines -->
+    <line x1="50"  y1="0" x2="55"  y2="58" stroke="#7a5020" stroke-width="0.8" opacity="0.20"/>
+    <line x1="92"  y1="0" x2="96"  y2="58" stroke="#7a5020" stroke-width="0.5" opacity="0.14"/>
+    <line x1="248" y1="0" x2="253" y2="58" stroke="#7a5020" stroke-width="0.7" opacity="0.18"/>
+    <line x1="288" y1="0" x2="284" y2="58" stroke="#7a5020" stroke-width="0.5" opacity="0.13"/>
+    <line x1="400" y1="0" x2="405" y2="58" stroke="#7a5020" stroke-width="0.7" opacity="0.17"/>
+    <!-- Row 1 top highlight + bottom shadow -->
+    <rect x="0"   y="0"  width="158" height="11" fill="#fff" opacity="0.07"/>
+    <rect x="162" y="0"  width="156" height="11" fill="#fff" opacity="0.05"/>
+    <rect x="322" y="0"  width="158" height="11" fill="#fff" opacity="0.07"/>
+    <rect x="0"   y="47" width="158" height="11" fill="#000" opacity="0.08"/>
+    <rect x="162" y="47" width="156" height="11" fill="#000" opacity="0.07"/>
+    <rect x="322" y="47" width="158" height="11" fill="#000" opacity="0.08"/>
+    <!-- Row 1 butt joints (vertical gaps) -->
+    <rect x="158" y="0"  width="4" height="62" fill="#4a2408" opacity="0.52"/>
+    <rect x="318" y="0"  width="4" height="62" fill="#4a2408" opacity="0.52"/>
+    <!-- Horizontal gap between rows -->
+    <rect x="0"   y="58" width="480" height="4" fill="#4a2408" opacity="0.55"/>
+    <!-- Row 2 — 4 planks (offset by 80 px) -->
+    <rect x="0"   y="62" width="78"  height="58" fill="#c08040"/>
+    <rect x="82"  y="62" width="156" height="58" fill="#d4a455"/>
+    <rect x="242" y="62" width="156" height="58" fill="#b47030"/>
+    <rect x="402" y="62" width="78"  height="58" fill="#c89448"/>
+    <!-- Row 2 grain lines -->
+    <line x1="140" y1="62" x2="145" y2="120" stroke="#7a5020" stroke-width="0.8" opacity="0.19"/>
+    <line x1="178" y1="62" x2="175" y2="120" stroke="#7a5020" stroke-width="0.5" opacity="0.13"/>
+    <line x1="312" y1="62" x2="317" y2="120" stroke="#7a5020" stroke-width="0.7" opacity="0.18"/>
+    <line x1="352" y1="62" x2="348" y2="120" stroke="#7a5020" stroke-width="0.5" opacity="0.13"/>
+    <!-- Row 2 top highlight + bottom shadow -->
+    <rect x="0"   y="62" width="78"  height="11" fill="#fff" opacity="0.06"/>
+    <rect x="82"  y="62" width="156" height="11" fill="#fff" opacity="0.08"/>
+    <rect x="242" y="62" width="156" height="11" fill="#fff" opacity="0.06"/>
+    <rect x="402" y="62" width="78"  height="11" fill="#fff" opacity="0.07"/>
+    <rect x="0"   y="109" width="78"  height="11" fill="#000" opacity="0.07"/>
+    <rect x="82"  y="109" width="156" height="11" fill="#000" opacity="0.08"/>
+    <rect x="242" y="109" width="156" height="11" fill="#000" opacity="0.07"/>
+    <rect x="402" y="109" width="78"  height="11" fill="#000" opacity="0.07"/>
+    <!-- Row 2 butt joints -->
+    <rect x="78"  y="62" width="4" height="60" fill="#4a2408" opacity="0.48"/>
+    <rect x="238" y="62" width="4" height="60" fill="#4a2408" opacity="0.48"/>
+    <rect x="398" y="62" width="4" height="60" fill="#4a2408" opacity="0.48"/>
+    <!-- Bottom edge of pattern -->
+    <rect x="0"   y="118" width="480" height="2" fill="#4a2408" opacity="0.45"/>
   </pattern>
   <!-- ── DOOR WOOD ── -->
   <linearGradient id="hDoorWood" x1="0" y1="0" x2="1" y2="0">
@@ -143,8 +188,9 @@
 <rect x="0" y="0"   width="1920" height="220" fill="url(#hCeil)"/>
 <!-- Wall -->
 <rect x="0" y="220" width="1920" height="528" fill="url(#hWall)"/>
-<!-- Floor -->
-<rect x="0" y="780" width="1920" height="300" fill="url(#hTile)"/>
+<!-- Floor — wooden planks -->
+<rect x="0" y="780" width="1920" height="300" fill="url(#hWood)"/>
+<rect x="0" y="780" width="1920" height="300" fill="url(#hWoodSheen)"/>
 
 <!-- Ceiling–wall cornice line -->
 <rect x="0" y="217" width="1920" height="8"   fill="#b0aa92" rx="1"/>
