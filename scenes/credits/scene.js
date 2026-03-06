@@ -322,7 +322,7 @@ const CreditsScene = {
 .cr-grain { position: absolute; inset: -50%; z-index: 3; pointer-events: none;
     width: 200%; height: 200%; opacity: 0.025;
     animation: cr-grain-shift 0.6s steps(4) infinite;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.85' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); }
+    background-image: url("assets/images/overlayimg/grain-noise-credits.svg"); }
 @keyframes cr-grain-shift {
     0%   { transform: translate(0,0); }
     25%  { transform: translate(-4%,-6%); }

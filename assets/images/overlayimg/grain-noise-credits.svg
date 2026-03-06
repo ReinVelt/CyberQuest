@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+  <!-- Film grain overlay for credits scene / CRT phosphor effect -->
+  <!-- baseFrequency=0.85, no numOctaves (browser default=1) -->
+  <filter id="n">
+    <feTurbulence baseFrequency="0.85" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#n)" opacity="1"/>
+</svg>
