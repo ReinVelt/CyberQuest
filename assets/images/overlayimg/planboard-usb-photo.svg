@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140" width="200" height="140">
+  <!-- Close-up photo of a USB stick on dark surface -->
+  <!-- Dark surface texture -->
+  <rect width="200" height="140" fill="#1a1816"/>
+  <rect x="0" y="0" width="200" height="140" fill="#222018" opacity="0.5"/>
+  <!-- USB body -->
+  <rect x="50" y="30" width="80" height="45" rx="4" fill="#1565c0" stroke="#0d47a1" stroke-width="2"/>
+  <rect x="55" y="35" width="70" height="30" rx="2" fill="#1e88e5" opacity="0.6"/>
+  <!-- USB connector -->
+  <rect x="130" y="38" width="28" height="28" rx="2" fill="#c0c0c0" stroke="#999" stroke-width="1"/>
+  <rect x="133" y="42" width="22" height="8" fill="#888"/>
+  <rect x="133" y="54" width="22" height="8" fill="#888"/>
+  <!-- SanDisk label -->
+  <text x="90" y="56" font-family="Arial" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">SanDisk</text>
+  <text x="90" y="66" font-family="Arial" font-size="6" fill="#ddd" text-anchor="middle">64GB USB 3.0</text>
+  <!-- LED indicator -->
+  <circle cx="62" cy="68" r="3" fill="#00ff00" opacity="0.8">
+    <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Duct tape piece -->
+  <rect x="40" y="85" width="120" height="18" rx="1" fill="#8a8060" opacity="0.7" transform="rotate(-3,100,94)"/>
+  <text x="100" y="97" font-family="sans-serif" font-size="7" fill="#3a2a10" text-anchor="middle" transform="rotate(-3,100,97)">AIR-GAPPED ONLY</text>
+  <!-- Evidence marker -->
+  <text x="15" y="130" font-family="monospace" font-size="6" fill="#ff6600" opacity="0.7">EVIDENCE #002</text>
+</svg>

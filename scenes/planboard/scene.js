@@ -365,175 +365,19 @@ const PlanboardScene = {
   /* ─── PHOTO CONTENT GENERATORS ─── */
 
   _photoSSTVSignal() {
-    // SSTV decoded surveillance photo — Ryan's farmhouse from across the canal
-    return `
-      <svg viewBox="0 0 200 140" style="width:100%;height:100%;background:#0a0a0a;">
-        <defs>
-          <linearGradient id="pb-crt" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#001a00"/><stop offset="50%" stop-color="#002200"/><stop offset="100%" stop-color="#001000"/>
-          </linearGradient>
-        </defs>
-        <rect width="200" height="140" fill="url(#pb-crt)"/>
-        <!-- Scan lines -->
-        <g opacity="0.08"><line x1="0" y1="10" x2="200" y2="10" stroke="#0f0" stroke-width="0.5"/>
-        <line x1="0" y1="20" x2="200" y2="20" stroke="#0f0" stroke-width="0.5"/>
-        <line x1="0" y1="30" x2="200" y2="30" stroke="#0f0" stroke-width="0.5"/>
-        <line x1="0" y1="40" x2="200" y2="40" stroke="#0f0" stroke-width="0.5"/>
-        <line x1="0" y1="50" x2="200" y2="50" stroke="#0f0" stroke-width="0.5"/>
-        <line x1="0" y1="60" x2="200" y2="60" stroke="#0f0" stroke-width="0.5"/>
-        <line x1="0" y1="70" x2="200" y2="70" stroke="#0f0" stroke-width="0.5"/>
-        <line x1="0" y1="80" x2="200" y2="80" stroke="#0f0" stroke-width="0.5"/>
-        <line x1="0" y1="90" x2="200" y2="90" stroke="#0f0" stroke-width="0.5"/>
-        <line x1="0" y1="100" x2="200" y2="100" stroke="#0f0" stroke-width="0.5"/>
-        <line x1="0" y1="110" x2="200" y2="110" stroke="#0f0" stroke-width="0.5"/>
-        <line x1="0" y1="120" x2="200" y2="120" stroke="#0f0" stroke-width="0.5"/>
-        <line x1="0" y1="130" x2="200" y2="130" stroke="#0f0" stroke-width="0.5"/></g>
-        <!-- Farmhouse silhouette (green phosphor) -->
-        <g opacity="0.7">
-          <!-- Sky -->
-          <rect x="5" y="18" width="190" height="40" fill="#002a00" opacity="0.3"/>
-          <!-- Trees behind house -->
-          <ellipse cx="25" cy="48" rx="18" ry="12" fill="#003a00"/>
-          <ellipse cx="170" cy="46" rx="16" ry="14" fill="#003a00"/>
-          <!-- House body -->
-          <rect x="65" y="38" width="55" height="32" fill="#00aa00" opacity="0.3"/>
-          <!-- Roof -->
-          <polygon points="60,38 92,22 130,38" fill="#006600" opacity="0.5"/>
-          <!-- Windows -->
-          <rect x="72" y="42" width="8" height="8" fill="#00ff00" opacity="0.3"/>
-          <rect x="100" y="42" width="8" height="8" fill="#00ff00" opacity="0.3"/>
-          <!-- Door -->
-          <rect x="88" y="54" width="8" height="16" fill="#004400" opacity="0.5"/>
-          <!-- Ryan figure -->
-          <circle cx="84" cy="62" r="2" fill="#00ff00" opacity="0.5"/>
-          <rect x="82.5" y="64" width="3" height="5" fill="#00ff00" opacity="0.4"/>
-          <!-- Canal -->
-          <rect x="5" y="73" width="190" height="12" fill="#004444" opacity="0.4"/>
-          <!-- Road -->
-          <rect x="5" y="88" width="190" height="8" fill="#002200" opacity="0.3"/>
-        </g>
-        <!-- Header text -->
-        <text x="100" y="14" font-family="monospace" font-size="8" fill="#00ff00" text-anchor="middle" opacity="0.8">
-          SSTV DECODE — 14.230 MHz
-        </text>
-        <!-- Overlay data -->
-        <text x="10" y="108" font-family="monospace" font-size="6" fill="#00ff00" opacity="0.6">
-          52°27'N 6°36'E</text>
-        <text x="10" y="118" font-family="monospace" font-size="6" fill="#00ff00" opacity="0.6">
-          OP. ZERFALL — ACTIVE</text>
-        <text x="10" y="128" font-family="monospace" font-size="6" fill="#00ff00" opacity="0.6">
-          SURVEILLANCE — RYAN'S HOUSE</text>
-        <!-- Glow dot -->
-        <circle cx="185" cy="12" r="3" fill="#00ff00" opacity="0.7">
-          <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1.5s" repeatCount="indefinite"/>
-        </circle>
-      </svg>`;
+    return '<img src="assets/images/overlayimg/planboard-sstv-photo.svg" style="width:100%;height:100%;display:block;">'; 
   },
 
   _photoUSBStick() {
-    // Close-up photo of a USB stick on dark surface
-    return `
-      <svg viewBox="0 0 200 140" style="width:100%;height:100%;background:#1a1816;">
-        <!-- Dark surface texture -->
-        <rect width="200" height="140" fill="#1a1816"/>
-        <rect x="0" y="0" width="200" height="140" fill="#222018" opacity="0.5"/>
-        <!-- USB body -->
-        <rect x="50" y="30" width="80" height="45" rx="4" fill="#1565c0" stroke="#0d47a1" stroke-width="2"/>
-        <rect x="55" y="35" width="70" height="30" rx="2" fill="#1e88e5" opacity="0.6"/>
-        <!-- USB connector -->
-        <rect x="130" y="38" width="28" height="28" rx="2" fill="#c0c0c0" stroke="#999" stroke-width="1"/>
-        <rect x="133" y="42" width="22" height="8" fill="#888"/>
-        <rect x="133" y="54" width="22" height="8" fill="#888"/>
-        <!-- SanDisk label -->
-        <text x="90" y="56" font-family="Arial" font-size="8" fill="#fff" text-anchor="middle" font-weight="bold">SanDisk</text>
-        <text x="90" y="66" font-family="Arial" font-size="6" fill="#ddd" text-anchor="middle">64GB USB 3.0</text>
-        <!-- LED indicator -->
-        <circle cx="62" cy="68" r="3" fill="#00ff00" opacity="0.8">
-          <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Duct tape piece -->
-        <rect x="40" y="85" width="120" height="18" rx="1" fill="#8a8060" opacity="0.7" transform="rotate(-3,100,94)"/>
-        <text x="100" y="97" font-family="'Segoe Print',cursive" font-size="7" fill="#3a2a10" text-anchor="middle" transform="rotate(-3,100,97)">
-          AIR-GAPPED ONLY
-        </text>
-        <!-- Evidence marker -->
-        <text x="15" y="130" font-family="monospace" font-size="6" fill="#ff6600" opacity="0.7">EVIDENCE #002</text>
-      </svg>`;
+    return '<img src="assets/images/overlayimg/planboard-usb-photo.svg" style="width:100%;height:100%;display:block;">'; 
   },
 
   _photoEvaSilhouette() {
-    // Surveillance-style photo, blurry silhouette
-    return `
-      <svg viewBox="0 0 200 140" style="width:100%;height:100%;background:#1a1a22;">
-        <defs>
-          <radialGradient id="pb-surv" cx="50%" cy="45%">
-            <stop offset="0%" stop-color="#2a2a3a"/><stop offset="100%" stop-color="#0a0a12"/>
-          </radialGradient>
-        </defs>
-        <rect width="200" height="140" fill="url(#pb-surv)"/>
-        <!-- Surveillance camera grain lines -->
-        <g opacity="0.06">
-          <rect x="0" y="5" width="200" height="1" fill="#fff"/>
-          <rect x="0" y="15" width="200" height="1" fill="#fff"/>
-          <rect x="0" y="25" width="200" height="1" fill="#fff"/>
-          <rect x="0" y="35" width="200" height="1" fill="#fff"/>
-          <rect x="0" y="45" width="200" height="1" fill="#fff"/>
-          <rect x="0" y="55" width="200" height="1" fill="#fff"/>
-          <rect x="0" y="65" width="200" height="1" fill="#fff"/>
-          <rect x="0" y="75" width="200" height="1" fill="#fff"/>
-          <rect x="0" y="85" width="200" height="1" fill="#fff"/>
-          <rect x="0" y="95" width="200" height="1" fill="#fff"/>
-          <rect x="0" y="105" width="200" height="1" fill="#fff"/>
-          <rect x="0" y="115" width="200" height="1" fill="#fff"/>
-          <rect x="0" y="125" width="200" height="1" fill="#fff"/>
-        </g>
-        <!-- Figure silhouette -->
-        <circle cx="100" cy="48" r="22" fill="#333" opacity="0.9"/>
-        <ellipse cx="100" cy="95" rx="28" ry="35" fill="#333" opacity="0.85"/>
-        <!-- Question mark -->
-        <text x="100" y="58" font-family="serif" font-size="28" fill="#888" text-anchor="middle" font-weight="bold">?</text>
-        <!-- Surveillance HUD -->
-        <text x="5" y="12" font-family="monospace" font-size="6" fill="#ff3333" opacity="0.7">● REC</text>
-        <text x="155" y="12" font-family="monospace" font-size="5" fill="#ff3333" opacity="0.5">CAM-07</text>
-        <text x="5" y="135" font-family="monospace" font-size="5" fill="#888" opacity="0.5">2024-03-14 21:33:12</text>
-        <rect x="2" y="2" width="196" height="136" fill="none" stroke="#ff3333" stroke-width="1" opacity="0.15" rx="2"/>
-      </svg>`;
+    return '<img src="assets/images/overlayimg/planboard-eva-silhouette.svg" style="width:100%;height:100%;display:block;">'; 
   },
 
   _photoFacility() {
-    // Aerial/satellite-style recon photo
-    return `
-      <svg viewBox="0 0 200 140" style="width:100%;height:100%;background:#1a2a1a;">
-        <defs>
-          <linearGradient id="pb-sat" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#2a3a25"/><stop offset="100%" stop-color="#1a2a18"/>
-          </linearGradient>
-        </defs>
-        <rect width="200" height="140" fill="url(#pb-sat)"/>
-        <!-- Terrain -->
-        <rect x="10" y="20" width="180" height="110" fill="#3a4a2a" opacity="0.5"/>
-        <!-- Tree patches -->
-        <ellipse cx="30" cy="45" rx="18" ry="12" fill="#2a4a1a" opacity="0.6"/>
-        <ellipse cx="165" cy="35" rx="22" ry="14" fill="#2a4a1a" opacity="0.6"/>
-        <ellipse cx="40" cy="110" rx="25" ry="10" fill="#2a4a1a" opacity="0.6"/>
-        <!-- Facility buildings -->
-        <rect x="70" y="50" width="45" height="30" fill="#555" stroke="#888" stroke-width="1"/>
-        <rect x="120" y="55" width="30" height="25" fill="#555" stroke="#888" stroke-width="1"/>
-        <rect x="85" y="85" width="40" height="20" fill="#4a4a4a" stroke="#888" stroke-width="1"/>
-        <!-- Antenna/tower -->
-        <line x1="155" y1="48" x2="155" y2="30" stroke="#888" stroke-width="1.5"/>
-        <circle cx="155" cy="28" r="3" fill="none" stroke="#ff3333" stroke-width="1"/>
-        <!-- Road/path -->
-        <path d="M 0 100 Q 40 95 70 90 Q 100 85 140 80 Q 170 78 200 80" fill="none" stroke="#666" stroke-width="3" opacity="0.5"/>
-        <!-- Crosshair overlay -->
-        <line x1="95" y1="0" x2="95" y2="140" stroke="#ff3333" stroke-width="0.5" opacity="0.3"/>
-        <line x1="0" y1="65" x2="200" y2="65" stroke="#ff3333" stroke-width="0.5" opacity="0.3"/>
-        <circle cx="95" cy="65" r="15" fill="none" stroke="#ff3333" stroke-width="0.5" opacity="0.4"/>
-        <!-- HUD data -->
-        <text x="5" y="12" font-family="monospace" font-size="5" fill="#ff6600" opacity="0.7">53°17'N  7°25'E</text>
-        <text x="5" y="135" font-family="monospace" font-size="5" fill="#888">ALT: 820m · ZOOM: 14x</text>
-        <text x="140" y="135" font-family="monospace" font-size="5" fill="#ff3333" opacity="0.7">RECON</text>
-      </svg>`;
+    return '<img src="assets/images/overlayimg/planboard-facility-photo.svg" style="width:100%;height:100%;display:block;">'; 
   },
 
   _folderWeaponSpecs() {
@@ -544,14 +388,7 @@ const PlanboardScene = {
           EM PULSE WEAPON — SPECS
         </div>
         <div style="display:flex;gap:4%;">
-          <svg viewBox="0 0 100 80" style="width:48%;flex-shrink:0;border:1px solid #ccc;background:#faf8f0;border-radius:2px;">
-            <circle cx="50" cy="35" r="20" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
-            <circle cx="50" cy="35" r="12" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-dasharray="2,2"/>
-            <line x1="50" y1="10" x2="50" y2="60" stroke="#1a1a1a" stroke-width="1"/>
-            <line x1="25" y1="35" x2="75" y2="35" stroke="#1a1a1a" stroke-width="1"/>
-            <rect x="42" y="3" width="16" height="8" fill="none" stroke="#1a1a1a" stroke-width="1"/>
-            <text x="50" y="72" font-family="monospace" font-size="5" fill="#666" text-anchor="middle">Fig. 3a — Emitter</text>
-          </svg>
+          <img src="assets/images/overlayimg/planboard-weapon-schematic.svg" style="width:48%;flex-shrink:0;border:1px solid #ccc;background:#faf8f0;border-radius:2px;">
           <div style="flex:1;">
             <b>Type:</b> EM Pulse<br>
             <b>Freq:</b> 14.230 MHz<br>

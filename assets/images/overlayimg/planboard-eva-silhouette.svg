@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140" width="200" height="140">
+  <!-- Surveillance-style photo, blurry silhouette of Eva Weber -->
+  <defs>
+    <radialGradient id="pb-surv" cx="50%" cy="45%">
+      <stop offset="0%" stop-color="#2a2a3a"/>
+      <stop offset="100%" stop-color="#0a0a12"/>
+    </radialGradient>
+  </defs>
+  <rect width="200" height="140" fill="url(#pb-surv)"/>
+  <!-- Surveillance camera grain lines -->
+  <g opacity="0.06">
+    <rect x="0" y="5"   width="200" height="1" fill="#fff"/>
+    <rect x="0" y="15"  width="200" height="1" fill="#fff"/>
+    <rect x="0" y="25"  width="200" height="1" fill="#fff"/>
+    <rect x="0" y="35"  width="200" height="1" fill="#fff"/>
+    <rect x="0" y="45"  width="200" height="1" fill="#fff"/>
+    <rect x="0" y="55"  width="200" height="1" fill="#fff"/>
+    <rect x="0" y="65"  width="200" height="1" fill="#fff"/>
+    <rect x="0" y="75"  width="200" height="1" fill="#fff"/>
+    <rect x="0" y="85"  width="200" height="1" fill="#fff"/>
+    <rect x="0" y="95"  width="200" height="1" fill="#fff"/>
+    <rect x="0" y="105" width="200" height="1" fill="#fff"/>
+    <rect x="0" y="115" width="200" height="1" fill="#fff"/>
+    <rect x="0" y="125" width="200" height="1" fill="#fff"/>
+  </g>
+  <!-- Figure silhouette -->
+  <circle cx="100" cy="48" r="22" fill="#333" opacity="0.9"/>
+  <ellipse cx="100" cy="95" rx="28" ry="35" fill="#333" opacity="0.85"/>
+  <!-- Question mark -->
+  <text x="100" y="58" font-family="serif" font-size="28" fill="#888" text-anchor="middle" font-weight="bold">?</text>
+  <!-- Surveillance HUD -->
+  <text x="5"   y="12"  font-family="monospace" font-size="6" fill="#ff3333" opacity="0.7">● REC</text>
+  <text x="155" y="12"  font-family="monospace" font-size="5" fill="#ff3333" opacity="0.5">CAM-07</text>
+  <text x="5"   y="135" font-family="monospace" font-size="5" fill="#888" opacity="0.5">2024-03-14 21:33:12</text>
+  <rect x="2" y="2" width="196" height="136" fill="none" stroke="#ff3333" stroke-width="1" opacity="0.15" rx="2"/>
+</svg>

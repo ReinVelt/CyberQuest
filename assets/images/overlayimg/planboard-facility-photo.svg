@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 140" width="200" height="140">
+  <!-- Aerial / satellite-style recon photo of Steckerdoser Heide facility -->
+  <defs>
+    <linearGradient id="pb-sat" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2a3a25"/>
+      <stop offset="100%" stop-color="#1a2a18"/>
+    </linearGradient>
+  </defs>
+  <rect width="200" height="140" fill="url(#pb-sat)"/>
+  <!-- Terrain -->
+  <rect x="10" y="20" width="180" height="110" fill="#3a4a2a" opacity="0.5"/>
+  <!-- Tree patches -->
+  <ellipse cx="30"  cy="45"  rx="18" ry="12" fill="#2a4a1a" opacity="0.6"/>
+  <ellipse cx="165" cy="35"  rx="22" ry="14" fill="#2a4a1a" opacity="0.6"/>
+  <ellipse cx="40"  cy="110" rx="25" ry="10" fill="#2a4a1a" opacity="0.6"/>
+  <!-- Facility buildings -->
+  <rect x="70"  y="50" width="45" height="30" fill="#555" stroke="#888" stroke-width="1"/>
+  <rect x="120" y="55" width="30" height="25" fill="#555" stroke="#888" stroke-width="1"/>
+  <rect x="85"  y="85" width="40" height="20" fill="#4a4a4a" stroke="#888" stroke-width="1"/>
+  <!-- Antenna/tower -->
+  <line x1="155" y1="48" x2="155" y2="30" stroke="#888" stroke-width="1.5"/>
+  <circle cx="155" cy="28" r="3" fill="none" stroke="#ff3333" stroke-width="1"/>
+  <!-- Road/path -->
+  <path d="M 0 100 Q 40 95 70 90 Q 100 85 140 80 Q 170 78 200 80" fill="none" stroke="#666" stroke-width="3" opacity="0.5"/>
+  <!-- Crosshair overlay -->
+  <line x1="95" y1="0"   x2="95"  y2="140" stroke="#ff3333" stroke-width="0.5" opacity="0.3"/>
+  <line x1="0"  y1="65"  x2="200" y2="65"  stroke="#ff3333" stroke-width="0.5" opacity="0.3"/>
+  <circle cx="95" cy="65" r="15" fill="none" stroke="#ff3333" stroke-width="0.5" opacity="0.4"/>
+  <!-- HUD data -->
+  <text x="5"   y="12"  font-family="monospace" font-size="5" fill="#ff6600" opacity="0.7">53°17'N  7°25'E</text>
+  <text x="5"   y="135" font-family="monospace" font-size="5" fill="#888">ALT: 820m · ZOOM: 14x</text>
+  <text x="140" y="135" font-family="monospace" font-size="5" fill="#ff3333" opacity="0.7">RECON</text>
+</svg>
