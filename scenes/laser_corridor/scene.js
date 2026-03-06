@@ -621,10 +621,12 @@ const LaserCorridorScene = {
                         game.setFlag('laser_grid_analysed', true);
                         LaserCorridorScene._sfxFlipperBeep();
                         game.showNotification('Flipper Zero IR receiver active');
-                        // Now show the puzzle
-                        setTimeout(() => {
-                            LaserCorridorScene._showLaserPuzzle(game);
-                        }, 1000);
+                        // Now show the puzzle (skip in accessibility mode — runner retries this hotspot)
+                        if (!game.accessibilityMode) {
+                            setTimeout(() => {
+                                LaserCorridorScene._showLaserPuzzle(game);
+                            }, 1000);
+                        }
                     });
                 } else if (!s.laserFrequencySet) {
                     // Already analysed, show puzzle again

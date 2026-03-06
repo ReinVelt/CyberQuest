@@ -932,7 +932,9 @@ class CyberQuestEngine {
         }
 
         const _twSignal = this.typewriterAbortController.signal;
-        const typePromise = this.typeText(textEl, displayText, this.settings.textSpeed, _twSignal);
+        // 🎬 Movie mode: instant typewriter so auto-advance is bounded only by TTS, not typing speed
+        const typePromise = this.typeText(textEl, displayText,
+            this.accessibilityMode ? 0 : this.settings.textSpeed, _twSignal);
         const speechPromise = this.speakText(displayText, effectiveSpeaker);
 
         Promise.all([typePromise, speechPromise]).then(() => {
@@ -1280,7 +1282,7 @@ class CyberQuestEngine {
                 if (!this._accessibilityRunnerActive || !this.accessibilityMode) return true;
                 if (this.currentScene !== scene.id && scene.id !== undefined) return true;
 
-                await this._waitForIdle();
+                await this._waitForIdle(60000); // 60s — allows long scene-entry cinematics
                 if (!this._accessibilityRunnerActive || !this.accessibilityMode) return true;
 
                 await this.wait(600);
@@ -1291,7 +1293,7 @@ class CyberQuestEngine {
                     console.log(`[🎬] fn entry in '${this.currentScene}'`);
                     await entry(this);
                     await this.wait(300);
-                    await this._waitForIdle(30000);
+                    await this._waitForIdle(120000); // 120s — handles long cinematic sequences
                     if (this.currentScene !== scene.id && scene.id !== undefined) return true;
                     continue;
                 }
@@ -1332,7 +1334,7 @@ class CyberQuestEngine {
                     console.log(`[🎬] Executing '${hotspotId}'`);
                     this.executeHotspotAction(hotspot);
                     await this.wait(300);
-                    await this._waitForIdle(30000);
+                    await this._waitForIdle(120000); // 120s — handles long cinematic puzzle chains
                     if (this.currentScene !== scene.id && scene.id !== undefined) return true;
 
                     // If no flags changed → this action is done; move to next entry
