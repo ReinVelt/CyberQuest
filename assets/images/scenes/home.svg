@@ -104,14 +104,16 @@
     <stop offset="50%"  stop-color="#a8a8a8"/>
     <stop offset="100%" stop-color="#606060"/>
   </linearGradient>
-  <!-- ── WINDOW: outside sky + grass ── -->
+  <!-- ── WINDOW: outside sky + grass (horizon at 68% matches main window) ── -->
   <linearGradient id="hOutside" x1="0" y1="0" x2="0" y2="1">
     <stop offset="0%"   stop-color="#4eb8f0"/>
     <stop offset="50%"  stop-color="#a8dcf8"/>
-    <stop offset="65%"  stop-color="#c8ecf8"/>
-    <stop offset="66%"  stop-color="#58a830"/>
-    <stop offset="85%"  stop-color="#3a8020"/>
-    <stop offset="100%" stop-color="#286010"/>
+    <stop offset="67%"  stop-color="#ceeeff"/>
+    <stop offset="68%"  stop-color="#4a9030"/>
+    <stop offset="75%"  stop-color="#3a8020"/>
+    <stop offset="82%"  stop-color="#4a9ec8"/>
+    <stop offset="95%"  stop-color="#2e7aaa"/>
+    <stop offset="100%" stop-color="#1a567a"/>
   </linearGradient>
   <!-- ── DOOR FLOOR GLOWS ── -->
   <radialGradient id="gBedroom"   cx="50%" cy="100%" r="70%">
