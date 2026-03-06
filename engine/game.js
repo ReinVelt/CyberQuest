@@ -522,7 +522,8 @@ class CyberQuestEngine {
         bgElement.setAttribute('data-scene-name', scene.name || sceneId);
         
         if (scene.background) {
-            bgElement.style.backgroundImage = `url('${scene.background}')`;
+            const bgUrl = scene.background.includes('?') ? scene.background : `${scene.background}?v=5`;
+            bgElement.style.backgroundImage = `url('${bgUrl}')`;
             bgElement.style.backgroundSize = '100% 100%';
             bgElement.style.backgroundRepeat = 'no-repeat';
             bgElement.style.backgroundPosition = 'center';
