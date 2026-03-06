@@ -3,6 +3,15 @@
  * Sierra-style adventure game engine
  */
 
+// Suppress console.log in production (non-localhost) builds.
+// All debug logging is still available on localhost / 127.0.0.1.
+const DEV_MODE = typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+if (!DEV_MODE) {
+    // eslint-disable-next-line no-console
+    console.log = () => {};
+}
+
 /** @type {Object} Engine configuration constants */
 const ENGINE_CONFIG = Object.freeze({
     TRANSITION_DURATION: 500,
@@ -1114,7 +1123,7 @@ class CyberQuestEngine {
         if (!f('jaap_contacted')) {
             return 'Contact Jaap Haartsen — the inventor of Bluetooth. His expertise in wireless protocols may be key to understanding the device.';
         }
-        if (!f('all_allies_contacted') || !f('contacted_allies')) {
+        if (!f('all_allies_contacted') && !f('contacted_allies')) {
             return 'Keep reaching out to your network. Each contact has a piece of the puzzle. Check the mancave communications panel.';
         }
         if (!f('volkov_investigated')) {
@@ -1151,6 +1160,9 @@ class CyberQuestEngine {
         }
         if (!f('schematics_verified') || !f('signal_triangulated')) {
             return 'Work with Cees at ASTRON. Feed the device schematics into the telescope analysis software to pinpoint the transmitter location.';
+        }
+        if (!f('visited_lofar')) {
+            return 'Drive to the LOFAR Superterp at Exloo — the world\'s largest low-frequency radio array. Cees arranged access to verify the coordinates using LOFAR\'s wider baseline. The Volvo is waiting.';
         }
 
         // ── Day 2: Infiltration ───────────────────────────────────────────
@@ -3082,9 +3094,20 @@ class CyberQuestEngine {
                 </div>
 
                 <div class="dbg-step">
-                    <div class="dbg-time">17:00</div>
+                    <div class="dbg-time">16:00</div>
                     <div class="dbg-body">
-                        <div class="dbg-scene-row">${drv('home_from_astron','driving_day','🚗 Drive → Home')} — Return, prepare for infiltration</div>
+                        <div class="dbg-scene-row">
+                            ${drv('lofar','driving_day','🚗 Drive → LOFAR')}
+                            ${sb('lofar','📡 LOFAR Superterp')} — Cross-verify coordinates with wide-baseline array
+                        </div>
+                        <div class="dbg-flags">${fb('visited_lofar')}</div>
+                    </div>
+                </div>
+
+                <div class="dbg-step">
+                    <div class="dbg-time">17:30</div>
+                    <div class="dbg-body">
+                        <div class="dbg-scene-row">${drv('home_from_lofar','driving_day','🚗 Drive → Home')} — Return, prepare for infiltration</div>
                     </div>
                 </div>
             </div>
@@ -3477,13 +3500,19 @@ class CyberQuestEngine {
         const SKIP_SCENES = new Set(['bedroom', 'driving', 'driving_day']);
         const panel = document.getElementById('debug-panel');
         if (!panel) return;
-        // Collect the first <button> inside each dbg-scene-row (the scene jump button)
-        const steps = Array.from(panel.querySelectorAll('.dbg-step .dbg-scene-row button:first-child'))
-            .filter(btn => {
-                // Skip buttons whose onclick contains a skipped scene name
-                const oc = btn.getAttribute('onclick') || '';
-                return !Array.from(SKIP_SCENES).some(s => oc.includes(`'${s}'`));
-            });
+        // For each dbg-step, find the primary scene-jump button:
+        //   • skip drive buttons (onclick includes driving_day / driving / bedroom)
+        //   • take the last remaining button in the row (the sb() scene button)
+        const steps = Array.from(panel.querySelectorAll('.dbg-step .dbg-scene-row'))
+            .map(row => {
+                const candidates = Array.from(row.querySelectorAll('button'))
+                    .filter(btn => {
+                        const oc = btn.getAttribute('onclick') || '';
+                        return !Array.from(SKIP_SCENES).some(s => oc.includes(`'${s}'`));
+                    });
+                return candidates[candidates.length - 1] || null; // prefer last (scene btn)
+            })
+            .filter(Boolean);
         if (!steps.length) { this.showNotification('Autoplay: no steps found'); return; }
         this._apIndex = 0;
         this.showNotification(`▶ Autoplay — ${steps.length} steps`);
@@ -3522,7 +3551,7 @@ class CyberQuestEngine {
             'game_started','made_espresso','espresso_count','talked_to_max','saw_tv_documentary',
             'tv_documentary_watched','documentary_completed_once','post_documentary_reminder_shown',
             'visited_livingroom','visited_garden','visited_mancave','visited_sdr_bench',
-            'visited_dwingeloo','visited_westerbork_memorial','visited_astron','visited_planboard','visited_hackerspace','visited_hackerspace_classroom','classroom_presentation_index',
+            'visited_dwingeloo','visited_westerbork_memorial','visited_astron','visited_lofar','visited_planboard','visited_hackerspace','visited_hackerspace_classroom','classroom_presentation_index',
             'visited_videocall','visited_facility','visited_debrief','visited_epilogue',
             'dog_interactions','pug_interactions','fireplace_interactions',
             'frequency_tuned','military_frequency','sstv_transmission_received','sstv_decoded',
@@ -3552,7 +3581,7 @@ class CyberQuestEngine {
         ];
         const FACILITY_FLAGS = [
             ...FIELD_FLAGS,
-            'astron_unlocked','astron_complete','schematics_verified','signal_triangulated',
+            'astron_unlocked','astron_complete','schematics_verified','signal_triangulated','visited_astron','visited_lofar',
             'facility_unlocked','drove_to_facility'
         ];
         if (preset === 'complete_all') {
