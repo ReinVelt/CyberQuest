@@ -892,7 +892,10 @@ window.MancaveCinematic = (function () {
     function revealChat(container, messages, selfName, opts) {
         opts = opts || {};
         const typingDelay = opts.typingDelay || 1200;
-        const msgDelay = opts.msgDelay || 1500;
+        const msgDelay    = opts.msgDelay    || 1500;
+        // readDelay: extra ms per character of a received message so long
+        // messages are given proportional reading time before the next appears.
+        const readDelay   = opts.readDelay   || 0;
 
         return new Promise(resolve => {
             let i = 0;
@@ -913,11 +916,16 @@ window.MancaveCinematic = (function () {
                     container.appendChild(typing);
                     container.scrollTop = container.scrollHeight;
 
+                    // Reading dwell: at least msgDelay, or length-proportional
+                    const readDwell = readDelay
+                        ? Math.max(msgDelay, (msg.text || '').length * readDelay)
+                        : msgDelay;
+
                     schedule(() => {
                         typing.remove();
                         appendMsg(msg, isSelf);
                         i++;
-                        schedule(showNext, msgDelay);
+                        schedule(showNext, readDwell);
                     }, typingDelay);
                 } else {
                     appendMsg(msg, isSelf);

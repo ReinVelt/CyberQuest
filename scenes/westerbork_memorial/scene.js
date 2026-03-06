@@ -100,102 +100,85 @@ const WesterborkMemorialScene = {
             height: (292 / 900) * 100,  // 32.44%
             cursor: 'pointer',
             action: (game) => {
-                const cameraInspected = game.getFlag('westerbork_camera_inspected');
-                const hasFlipperZero = game.hasItem('flipper_zero');
-                const knowsSurveillance = game.getFlag('visited_klooster');
-
-                if (cameraInspected && !game.getFlag('westerbork_bt_cracked')) {
-                    if (hasFlipperZero) {
-                        game.startDialogue([
-                            { speaker: 'Ryan', text: 'The camera. Let me try the Flipper Zero on it now.' },
-                            { speaker: 'Narrator', text: '*Ryan holds the Flipper Zero near the camera and runs a Bluetooth scan*' },
-                            { speaker: 'Narrator', text: '*The device lights up — multiple devices detected*' },
-                            { speaker: 'Ryan', text: '"ZERFALL-NODE-WB01" — there it is. Advertising on Bluetooth Low Energy.' },
-                            { speaker: 'Ryan', text: 'Manufacturer ID: 0x004C... spoofed Apple identifier. Whoever built this disguised it as consumer hardware.' },
-                            { speaker: 'Ryan', text: 'I can read the beacon data. It\'s broadcasting HCI packets with encrypted payload. Frequency of transmission: every 90 seconds.' },
-                            { speaker: 'Ryan', text: 'And the MAC address — partially randomised but with a fixed prefix. I can use that to track other nodes in the network.' },
-                        ], () => {
-                            game.setFlag('westerbork_bt_cracked', true);
-                            game.setFlag('zerfall_network_mapped', true);
-                            game.addEvidence({
-                                id: 'zerfall_bt_node',
-                                name: 'ZERFALL-NODE-WB01 Bluetooth Data',
-                                description: 'Bluetooth LE beacon at Westerbork memorial: device name "ZERFALL-NODE-WB01", spoofed Apple manufacturer ID (0x004C), MAC prefix consistent with other Zerfall nodes. Transmits encrypted HCI payload every 90 seconds.',
-                                icon: '📱'
-                            });
-                            game.showNotification('📱 Evidence added: Bluetooth Zerfall Node data');
-                            game.completeQuest('trace_bluetooth_network');
-                        });
-                    } else {
-                        game.startDialogue([
-                            { speaker: 'Ryan', text: 'I need my Flipper Zero to properly scan this camera\'s Bluetooth module. It\'s back in the mancave.' },
-                        ]);
-                    }
-                } else if (cameraInspected) {
+                // Already solved
+                if (game.getFlag('westerbork_bt_cracked')) {
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'Already documented the Zerfall node here. The Flipper caught everything I need.' },
+                        { speaker: 'Ryan', text: 'Already documented the Zerfall node. The Flipper caught everything I need.' },
                     ]);
-                } else if (knowsSurveillance) {
-                    // Ryan knows about the surveillance network from the USB — immediately suspicious
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'That\'s... not a standard memorial camera.' },
-                        { speaker: 'Narrator', text: '*Ryan looks more closely*' },
-                        { speaker: 'Ryan', text: 'The housing is a Hikvision body but the internals have been modified. I can see a secondary PCB through the ventilation slot.' },
-                        { speaker: 'Ryan', text: 'That\'s a Bluetooth module. A surveillance camera with a Bluetooth transmitter bolted in.' },
-                        { speaker: 'Ryan', text: 'No legitimate security system needs that. Bluetooth range is at best 100 metres. This isn\'t for camera control.' },
-                        { speaker: 'Ryan', text: 'It\'s a beacon. It\'s broadcasting something. And the LED is pulsing in a pattern — not random.' },
-                        { speaker: 'Ryan', text: 'The USB data mentioned sensor nodes across the region. This must be one of them. Right here at the memorial.' },
-                        { speaker: 'Ryan', text: 'If I had the Flipper Zero, I could read what it\'s transmitting. I need to come back with it.' },
-                        { speaker: 'Narrator', text: '💡 HINT: Get the Flipper Zero from the mancave, then return here.' },
-                    ], () => {
-                        game.setFlag('westerbork_camera_inspected', true);
-                        game.addEvidence({
-                            id: 'modified_camera',
-                            name: 'Modified Surveillance Camera',
-                            description: 'Security camera at Westerbork memorial with non-standard Bluetooth module installed. LED pulses in structured pattern. Likely part of the sensor network mentioned in the USB data.',
-                            icon: '📷'
-                        });
-                        game.showNotification('📷 Evidence added: Modified Surveillance Camera');
-                        if (!game.getFlag('bt_camera_quest_started')) {
-                            game.setFlag('bt_camera_quest_started', true);
-                            game.addQuest({
-                                id: 'trace_bluetooth_network',
-                                name: 'Trace the Bluetooth Network',
-                                description: 'A modified camera at Westerbork memorial is transmitting Bluetooth signals. Return with the Flipper Zero to read the beacon data.'
-                            });
-                        }
-                    });
-                } else {
-                    // Ryan has only been to ASTRON — no prior knowledge of surveillance network
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'A security camera. Nothing unusual about that at a memorial site...' },
-                        { speaker: 'Narrator', text: '*Ryan looks more closely*' },
-                        { speaker: 'Ryan', text: 'Wait. The housing is a Hikvision body, but something\'s been added. I can see a secondary circuit board through the ventilation slot.' },
-                        { speaker: 'Ryan', text: 'That\'s... a Bluetooth module? On a heritage site security camera?' },
-                        { speaker: 'Ryan', text: 'The LED is pulsing in a pattern. Not random. Not standard status blinking either.' },
-                        { speaker: 'Ryan', text: 'Strange. Why would a memorial camera need Bluetooth? The signal range is only about 100 metres.' },
-                        { speaker: 'Ryan', text: 'Probably nothing. But my SDR instincts are tingling. I should note this down.' },
-                        { speaker: 'Ryan', text: 'If I had my Flipper Zero, I could scan what it\'s broadcasting. Something to keep in mind.' },
-                        { speaker: 'Narrator', text: '💡 HINT: Get the Flipper Zero from the mancave, then return here.' },
-                    ], () => {
-                        game.setFlag('westerbork_camera_inspected', true);
-                        game.addEvidence({
-                            id: 'modified_camera',
-                            name: 'Modified Surveillance Camera',
-                            description: 'Security camera at Westerbork memorial with non-standard Bluetooth module installed. LED pulses in structured pattern. Purpose unclear.',
-                            icon: '📷'
-                        });
-                        game.showNotification('📷 Evidence added: Modified Surveillance Camera');
-                        if (!game.getFlag('bt_camera_quest_started')) {
-                            game.setFlag('bt_camera_quest_started', true);
-                            game.addQuest({
-                                id: 'trace_bluetooth_network',
-                                name: 'Trace the Bluetooth Network',
-                                description: 'A modified camera at Westerbork memorial has an unusual Bluetooth module. Return with the Flipper Zero to scan it.'
-                            });
-                        }
-                    });
+                    return;
                 }
+
+                const hasFlipperZero = game.hasItem('flipper_zero');
+
+                // ── Phase 1: Inspect camera (no Flipper or first look) ──────
+                if (!game.getFlag('westerbork_camera_inspected')) {
+                    const knownNetwork = game.getFlag('visited_klooster');
+                    const inspectLines = knownNetwork ? [
+                        { speaker: 'Ryan', text: 'That\'s... not a standard memorial camera.' },
+                        { speaker: 'Narrator', text: '*Ryan looks more closely at the housing*' },
+                        { speaker: 'Ryan', text: 'Hikvision body, but the internals are modified. I can see a secondary PCB through the ventilation slot.' },
+                        { speaker: 'Ryan', text: 'That\'s a Bluetooth module. And the LED on the back — it\'s pulsing. Three short blinks, long pause, repeat.' },
+                        { speaker: 'Ryan', text: 'No legitimate security camera needs a BLE transmitter. 100-metre Bluetooth range is useless for camera control.' },
+                        { speaker: 'Ryan', text: 'The USB data mentioned sensor nodes broadcasting every 90 seconds. This is one of them. Right here on the memorial.' },
+                        { speaker: 'Ryan', text: hasFlipperZero
+                            ? 'I\'ve got my Flipper Zero. I can scan what it\'s transmitting. Let me try.' 
+                            : 'I need the Flipper Zero to read the beacon. I should come back with it.' },
+                        { speaker: 'Narrator', text: hasFlipperZero
+                            ? '💡 Click the camera again to run the Flipper Zero BLE scan.'
+                            : '💡 HINT: Collect the Flipper Zero from the mancave, then return here.' },
+                    ] : [
+                        { speaker: 'Ryan', text: 'A security camera on a heritage site...' },
+                        { speaker: 'Narrator', text: '*Ryan looks more closely*' },
+                        { speaker: 'Ryan', text: 'Wait. Hikvision housing, but something has been added — a second PCB through the ventilation slot.' },
+                        { speaker: 'Ryan', text: 'That\'s a Bluetooth module. And the LED is pulsing in a deliberate pattern. Three blinks, long pause, three blinks...' },
+                        { speaker: 'Ryan', text: 'Why does a memorial camera need Bluetooth? BLE range is at best 100 metres. This isn\'t for camera control.' },
+                        { speaker: 'Ryan', text: hasFlipperZero
+                            ? 'Good thing I have the Flipper Zero. I can read what it\'s broadcasting right now.' 
+                            : 'If I had my Flipper Zero I could scan what it\'s broadcasting. I should come back.' },
+                        { speaker: 'Narrator', text: hasFlipperZero
+                            ? '💡 Click the camera again to run the Flipper Zero BLE scan.'
+                            : '💡 HINT: Get the Flipper Zero from the mancave, then return here.' },
+                    ];
+
+                    game.startDialogue(inspectLines, () => {
+                        game.setFlag('westerbork_camera_inspected', true);
+                        game.addEvidence({
+                            id: 'modified_camera',
+                            name: 'Modified Surveillance Camera',
+                            description: 'Security camera at Westerbork memorial with non-standard Bluetooth module. LED pulses three short blinks / long pause — structured transmission. Likely a ZERFALL sensor node.',
+                            icon: '📷'
+                        });
+                        game.showNotification('📷 Evidence added: Modified Surveillance Camera');
+                        if (!game.getFlag('bt_camera_quest_started')) {
+                            game.setFlag('bt_camera_quest_started', true);
+                            game.addQuest({
+                                id: 'trace_bluetooth_network',
+                                name: 'Trace the Bluetooth Network',
+                                description: 'A modified camera at Westerbork memorial is transmitting Bluetooth signals. Use the Flipper Zero to scan it and identify the node.',
+                                hint: 'The USB data mentioned spoofed Apple manufacturer IDs (0x004C) and a 90-second transmission interval.'
+                            });
+                        }
+                    });
+                    return;
+                }
+
+                // ── Phase 2: Flipper Zero required ───────────────────────────
+                if (!hasFlipperZero) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'I can see the Bluetooth module is active — the LED is still pulsing.' },
+                        { speaker: 'Ryan', text: 'I need the Flipper Zero to read the BLE beacon. It\'s in the mancave.' },
+                        { speaker: 'Narrator', text: '💡 HINT: Collect the Flipper Zero from the mancave gear section, then come back.' },
+                    ]);
+                    return;
+                }
+
+                // ── Phase 3: Flipper Zero BLE Puzzle ─────────────────────────
+                // Show a Flipper Zero OLED-style UI listing 3 BLE devices.
+                // Player must identify the ZERFALL node using two clues from
+                // the USB data: (1) spoofed Apple mfr ID 0x004C,
+                //               (2) 90-second advertisement interval.
+                // Devices A and B are plausible distractors.
+                WesterborkMemorialScene._showFlipperPuzzle(game);
             }
         },
 
@@ -308,6 +291,229 @@ const WesterborkMemorialScene = {
             }
         }
     ],
+
+    // ── Flipper Zero BLE Puzzle ──────────────────────────────────────────
+    // Shows a Flipper Zero OLED-style interface listing 3 BLE devices.
+    // Player identifies the ZERFALL node using two clues already established
+    // by the USB analysis:  (1) spoofed Apple mfr 0x004C
+    //                       (2) 90-second advertisement interval
+    _showFlipperPuzzle: function(game) {
+        const existing = document.getElementById('flipper-puzzle-overlay');
+        if (existing) existing.remove();
+
+        // Three devices: B is the decoy that looks almost right, C is correct.
+        const DEVICES = [
+            {
+                label: 'A',
+                name: 'HK-WB-CAM-01',
+                mac:  'B4:A3:82:11:CC:05',
+                mfr:  '0x0085  (Hikvision)',
+                rssi: '-41 dBm',
+                interval: '10 s',
+                hint: 'Standard camera vendor ID. Normal status beacon.'
+            },
+            {
+                label: 'B',
+                name: 'iBeacon-DE4A',
+                mac:  'DE:4A:FF:90:12:AA',
+                mfr:  '0x004C  (Apple Inc.)',
+                rssi: '-58 dBm',
+                interval: '1 s',
+                hint: 'Apple mfr ID — but 1-second interval is normal iBeacon behaviour.'
+            },
+            {
+                label: 'C',
+                name: 'UNKNOWN-4C-7B',
+                mac:  'D0:4A:A1:7B:C2:03',
+                mfr:  '0x004C  (Apple Inc.)  ⚑',
+                rssi: '-63 dBm',
+                interval: '90 s  ⚑',
+                hint: null   // correct — no hint, player deduces from clues
+            },
+        ];
+        const CORRECT = 'C';
+
+        const overlay = document.createElement('div');
+        overlay.id = 'flipper-puzzle-overlay';
+        overlay.style.cssText = [
+            'position:fixed','inset:0','z-index:3000',
+            'background:rgba(0,0,0,0.82)',
+            'display:flex','align-items:center','justify-content:center',
+            'font-family:"Courier New",Courier,monospace',
+        ].join(';');
+
+        // ── Flipper Zero shell ──
+        const shell = document.createElement('div');
+        shell.style.cssText = [
+            'background:#1a1a1f',
+            'border:3px solid #ff6600',
+            'border-radius:16px',
+            'width:520px','max-width:95vw',
+            'padding:0 0 18px 0',
+            'box-shadow:0 0 40px rgba(255,102,0,0.25)',
+        ].join(';');
+
+        // Flipper top bar
+        shell.innerHTML = `
+            <div style="background:#ff6600;border-radius:12px 12px 0 0;padding:8px 16px;
+                        display:flex;align-items:center;gap:10px;">
+                <span style="font-size:20px;">🐬</span>
+                <span style="color:#000;font-weight:bold;font-size:13px;letter-spacing:1px;">
+                    FLIPPER ZERO — BLE Scanner
+                </span>
+                <span style="margin-left:auto;color:#000;font-size:10px;opacity:0.7;">v0.82.3</span>
+            </div>
+
+            <!-- OLED screen area -->
+            <div id="fp-screen" style="
+                background:#0a1a0a;margin:12px 14px 6px;border-radius:6px;
+                border:1px solid #1a3a1a;padding:12px 14px;
+                min-height:220px;
+            ">
+                <div style="color:#00cc44;font-size:9px;letter-spacing:3px;
+                            margin-bottom:8px;">SCANNING... BLE ADV CHANNELS 37/38/39</div>
+                <div id="fp-scan-progress" style="color:#006622;font-size:9px;
+                            margin-bottom:10px;">
+                    ████████████████ 100%  —  3 devices found
+                </div>
+                <div style="color:#00aa33;font-size:8px;letter-spacing:2px;
+                            border-bottom:1px solid #0d2a0d;padding-bottom:6px;
+                            margin-bottom:8px; display:grid;
+                            grid-template-columns:1.2fr 2fr 1.3fr 1fr 1fr;">
+                    <span>#</span><span>NAME</span><span>MFR ID</span>
+                    <span>RSSI</span><span>INTV</span>
+                </div>
+                <div id="fp-device-list"></div>
+            </div>
+
+            <!-- Clue reminder -->
+            <div style="margin:0 14px 10px;padding:8px 10px;
+                        background:rgba(255,204,0,0.06);border:1px solid rgba(255,204,0,0.2);
+                        border-radius:4px;font-size:9px;color:#ccaa22;">
+                📋 USB data: <em>Nodes use spoofed Apple mfr ID (0x004C) and broadcast every 90 seconds.</em>
+            </div>
+
+            <!-- Question -->
+            <div style="margin:0 14px;color:#eeeeee;font-size:11px;margin-bottom:10px;">
+                Which device is the ZERFALL surveillance node?
+            </div>
+            <div id="fp-buttons" style="display:flex;gap:10px;padding:0 14px;flex-wrap:wrap;"></div>
+            <div id="fp-feedback" style="padding:8px 14px 0;font-size:10px;min-height:20px;"></div>
+        `;
+
+        overlay.appendChild(shell);
+        document.body.appendChild(overlay);
+
+        // Populate device list
+        const list = document.getElementById('fp-device-list');
+        DEVICES.forEach(d => {
+            const row = document.createElement('div');
+            row.style.cssText = [
+                'display:grid',
+                'grid-template-columns:1.2fr 2fr 1.3fr 1fr 1fr',
+                'gap:2px',
+                'font-size:9px',
+                'padding:5px 0',
+                'border-bottom:1px solid #0d1f0d',
+                'color:#00bb33',
+                'line-height:1.5',
+            ].join(';');
+            row.innerHTML = `
+                <span style="color:#00ff44;font-weight:bold;">${d.label}</span>
+                <span>${d.name}</span>
+                <span style="color:${d.mfr.includes('⚑') ? '#ffcc00' : '#007722'}">${d.mfr.replace(' ⚑','')}</span>
+                <span>${d.rssi}</span>
+                <span style="color:${d.interval.includes('⚑') ? '#ffcc00' : '#007722'}">${d.interval.replace(' ⚑','')}</span>
+            `;
+            list.appendChild(row);
+        });
+
+        // Choice buttons
+        const btnContainer = document.getElementById('fp-buttons');
+        const feedback = document.getElementById('fp-feedback');
+        let attempts = 0;
+
+        DEVICES.forEach(d => {
+            const btn = document.createElement('button');
+            btn.style.cssText = [
+                'background:#0d1f0d','border:1px solid #00aa33',
+                'color:#00cc44','padding:7px 18px','border-radius:4px',
+                'font-family:"Courier New",Courier,monospace','font-size:11px',
+                'cursor:pointer','letter-spacing:1px',
+                'transition:background 0.15s',
+            ].join(';');
+            btn.textContent = `Device ${d.label}`;
+            btn.onmouseover = () => { btn.style.background = '#152a15'; };
+            btn.onmouseout  = () => { btn.style.background = '#0d1f0d'; };
+
+            btn.onclick = () => {
+                if (d.label === CORRECT) {
+                    // ── SUCCESS ──
+                    feedback.style.color = '#00ff44';
+                    feedback.textContent = '✓ MATCH — device C: spoofed 0x004C + 90s interval = ZERFALL node confirmed.';
+                    btnContainer.querySelectorAll('button').forEach(b => b.disabled = true);
+
+                    setTimeout(() => {
+                        overlay.remove();
+                        game.startDialogue([
+                            { speaker: 'Ryan', text: 'Device C. "UNKNOWN-4C-7B" — spoofed as Apple hardware, broadcasting every 90 seconds exactly.' },
+                            { speaker: 'Ryan', text: 'The MAC: D0:4A:A1. That prefix... let me check. That\'s not an Apple OUI. It\'s been fabricated.' },
+                            { speaker: 'Narrator', text: '*The Flipper Zero captures the full BLE advertisement frame*' },
+                            { speaker: 'Ryan', text: 'Node name in the payload: "ZERFALL-NODE-WB01". There it is.' },
+                            { speaker: 'Ryan', text: 'Encrypted HCI payload. Timestamp counter. And the MAC structure matches what the USB logs described.' },
+                            { speaker: 'Ryan', text: 'Right here. On a Holocaust memorial. They put their surveillance node on a Holocaust memorial.' },
+                            { speaker: 'Narrator', text: '*Ryan stands still for a moment*' },
+                            { speaker: 'Ryan', text: 'I\'ve got the data. Let\'s go.' },
+                        ], () => {
+                            game.setFlag('westerbork_bt_cracked', true);
+                            game.setFlag('zerfall_network_mapped', true);
+                            game.addEvidence({
+                                id: 'zerfall_bt_node',
+                                name: 'ZERFALL-NODE-WB01 Bluetooth Data',
+                                description: 'BLE beacon at Westerbork: name "ZERFALL-NODE-WB01", spoofed Apple mfr ID (0x004C), MAC D0:4A:A1:7B:C2:03. Transmits encrypted HCI payload every 90 seconds. MAC prefix matches other Zerfall nodes.',
+                                icon: '📱'
+                            });
+                            game.showNotification('📱 Evidence added: ZERFALL-NODE-WB01 Bluetooth data');
+                            game.completeQuest('trace_bluetooth_network');
+                        });
+                    }, 1800);
+
+                } else {
+                    // ── WRONG ──
+                    attempts++;
+                    btn.style.background  = '#2a0d0d';
+                    btn.style.borderColor = '#cc2222';
+                    btn.style.color       = '#cc4444';
+                    btn.disabled = true;
+
+                    if (d.label === 'A') {
+                        feedback.style.color = '#cc6644';
+                        feedback.textContent = '✗ Device A — manufacturer 0x0085 is genuine Hikvision. Not 0x004C. Normal camera beacon.';
+                    } else {
+                        feedback.style.color = '#cc6644';
+                        feedback.textContent = '✗ Device B — 0x004C matches, but 1-second interval is standard iBeacon. The USB data said 90 seconds.';
+                    }
+
+                    if (attempts >= 2) {
+                        setTimeout(() => {
+                            feedback.style.color = '#ffcc44';
+                            feedback.innerHTML += '<br>💡 Both clues must match: manufacturer 0x004C <em>and</em> 90-second interval.';
+                        }, 400);
+                    }
+                }
+            };
+            btnContainer.appendChild(btn);
+        });
+
+        // ESC or click outside closes (before solved — just dismisses)
+        overlay.addEventListener('click', e => {
+            if (e.target === overlay) overlay.remove();
+        });
+        const onKey = e => {
+            if (e.key === 'Escape') { overlay.remove(); document.removeEventListener('keydown', onKey); }
+        };
+        document.addEventListener('keydown', onKey);
+    },
 
     // ── Ambient Audio ───────────────────────────────────────────
     _audioCtx: null, _audioNodes: [], _audioIntervals: [],
