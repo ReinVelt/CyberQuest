@@ -457,6 +457,15 @@ const DrivingScene = {
         if (this._wordRevealInterval) { clearInterval(this._wordRevealInterval); this._wordRevealInterval = null; }
     },
 
+    // ── Returns time-appropriate Dutch greeting + programme label based on game hour ──
+    _getGreeting: function(hour) {
+        // hour: 0-23 from game time HH:MM
+        if (hour >= 5  && hour < 12) return { greeting: 'Goedemorgen', label: 'OCHTEND-NIEUWS' };
+        if (hour >= 12 && hour < 18) return { greeting: 'Goedemiddag', label: 'MIDDAG-NIEUWS'  };
+        if (hour >= 18 && hour < 22) return { greeting: 'Goedenavond', label: 'AVOND-NIEUWS'   };
+        return                               { greeting: 'Goedenacht',  label: 'NACHT-NIEUWS'   };
+    },
+
     // ── RTV Drenthe / NPO Radio 1 night bulletins — multiple variants per destination ──
     _speakRadioNews: function(destination, game) {
         const g  = game || window.game;
@@ -596,10 +605,20 @@ const DrivingScene = {
 
         // Pick a random bulletin variant for this drive
         const pool    = BULLETINS[destination] || ['RTV Drenthe, nacht-nieuws. Rustige nacht in Drenthe. Weer: koud en helder. RTV Drenthe. Goedenacht.'];
-        const bulletin = pool[Math.floor(Math.random() * pool.length)];
-        const stationLabel = (destination === 'facility' || destination === 'home_from_facility')
-            ? 'NPO RADIO 1 — NACHT-NIEUWS'
-            : 'RTV DRENTHE — NACHT-NIEUWS';
+        let bulletin  = pool[Math.floor(Math.random() * pool.length)];
+
+        // ── Swap greeting words to match game time ──
+        const rawTime   = (g.gameState && g.gameState.time) ? g.gameState.time : '23:00';
+        const gameHour  = parseInt(rawTime.split(':')[0], 10);
+        const gObj      = this._getGreeting(gameHour);
+        // Replace any Dutch time-of-day greeting in the chosen bulletin text
+        bulletin = bulletin.replace(
+            /Goedenacht|Goedenavond|Goedemiddag|Goedemorgen/g,
+            gObj.greeting
+        );
+
+        const isNPO      = (destination === 'facility' || destination === 'home_from_facility');
+        const stationLabel = (isNPO ? 'NPO RADIO 1' : 'RTV DRENTHE') + ' — ' + gObj.label;
 
         // Transition — called when TTS finishes (or skip pressed)
         const doTransition = () => {
