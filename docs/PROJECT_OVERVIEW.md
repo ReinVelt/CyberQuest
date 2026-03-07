@@ -1,6 +1,6 @@
 # CyberQuest: Project Overview & Documentation Index
-**Last Updated:** February 27, 2026  
-**Version:** 1.1  
+**Last Updated:** March 7, 2026  
+**Version:** 1.2  
 **Status:** Production Ready
 
 ---
@@ -25,7 +25,7 @@
 
 ### Story Premise
 
-You are **Ryan Weylant**, a 42-year-old Dutch hacker living in Compascuum, Netherlands. Your quiet life analyzing radio signals is disrupted when you receive a mysterious SSTV transmission from a German military facility. What starts as curiosity becomes a race against time to expose a Russian infiltration operation and prevent mass casualties.
+You are **Ryan Weylant**, a 55-year-old Dutch hacker living in Compascuum, Netherlands. Your quiet life analyzing radio signals is disrupted when you receive a mysterious SSTV transmission from a German military facility. What starts as curiosity becomes a race against time to expose a Russian infiltration operation and prevent mass casualties.
 
 ### Core Gameplay
 
@@ -382,7 +382,7 @@ This project contains comprehensive documentation across multiple files:
 
 ## Future Enhancements
 
-### Planned (v1.1+)
+### Planned (v1.2+)
 - [ ] Achievement system
 - [ ] Multiple save slots (3-5)
 - [ ] Statistics tracking (time played, choices made)
@@ -440,7 +440,7 @@ This project contains comprehensive documentation across multiple files:
 
 ```bash
 # Clone repository
-git clone [repository-url]
+git clone https://github.com/ReinVelt/CyberQuest.git
 cd CyberQuest
 
 # No build process! Just open in browser:
@@ -458,6 +458,7 @@ python -m http.server 8000
 - **Modularity:** One scene per file, systems separated
 
 ### Testing Checklist
+- [x] **Unit tests: 179/179 passing** (`tests/test-runner.html`)
 - [ ] Works in Chrome, Firefox, Safari, Edge
 - [ ] Mobile touch controls functional
 - [ ] Save/load persists correctly
@@ -472,7 +473,8 @@ python -m http.server 8000
 ## License & Credits
 
 ### Game License
-[Specify license here - MIT, GPL, Creative Commons, etc.]
+[Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/) (CC BY-SA 4.0) — © 2025–2026 Rein Velt.  
+You may share and adapt this work for any purpose, provided you give credit to Rein Velt and distribute derivatives under the same license. See `LICENSE` for full terms.
 
 ### Technology Credits
 - **Web Speech API** (W3C standard)
@@ -524,23 +526,74 @@ A: Yes! See SCENES.md for structure and examples.
 A: Optional text-to-speech narration using Web Speech API (browser-dependent).
 
 **Q: Can I save my progress?**  
-A: Yes, automatically saves via localStorage. Can load save from menu.
+A: Yes, automatically saves via `localStorage` in your browser. Can load save from menu.
 
 **Q: What if I get stuck?**  
 A: Quest log provides hints. Future versions will have progressive hint system.
+
+**Q: Does the game collect any data about me?**  
+A: No. See the Privacy & Data section below.
+
+---
+
+## Privacy & Data
+
+**CyberQuest does not collect, transmit, or store any personal data. Full stop.**
+
+### What data exists
+
+| What | Where it lives | Sent to a server? |
+|------|----------------|-------------------|
+| Save game (progress, flags, inventory) | Your browser's `localStorage` | ❌ Never |
+| Game statistics | Not tracked at all | ❌ Never |
+| Playtime / choices made | Not tracked at all | ❌ Never |
+| Analytics / telemetry | None — zero | ❌ Never |
+| Personal information | None collected | ❌ Never |
+
+### What this game does NOT have
+
+| Thing | Present? |
+|-------|----------|
+| Advertisements | ❌ No |
+| Google Analytics (or any analytics) | ❌ No |
+| Tracking pixels / beacon calls | ❌ No |
+| Third-party scripts (CDN, social, etc.) | ❌ No |
+| Cookies | ❌ No |
+| Accounts / sign-up / login | ❌ No |
+| Cookie consent banners | ❌ No |
+| Dark patterns | ❌ No |
+| Newsletter popups / nag screens | ❌ No |
+| Paywalls / microtransactions | ❌ No |
+
+### Technology stack
+
+The game is **100% plain HTML + CSS + JavaScript + images**. No frameworks, no bundlers, no external dependencies, no phone-home code. The full source is readable in any text editor.
+
+- Runs entirely in your browser with **no internet connection required after download**.
+- Your save data exists **only on your device**. Clearing browser `localStorage` deletes it permanently.
+- **GDPR-compliant by design** — there is no data processing to report because no data is processed.
 
 ---
 
 ## Contact & Support
 
-**Issues:** [GitHub Issues or contact method]  
-**Discussions:** [Community forum or Discord]  
+**Issues:** [GitHub Issues](https://github.com/ReinVelt/CyberQuest/issues)  
+**Repository:** [github.com/ReinVelt/CyberQuest](https://github.com/ReinVelt/CyberQuest)  
 **Documentation:** This repository (`docs/` folder)  
-**Updates:** [Version history or changelog]
+**Author:** Rein Velt
 
 ---
 
 ## Version History
+
+**v1.2 (March 7, 2026)**
+- ✅ Engine storage null-injection bug fixed (DI now uses `'in'` check)
+- ✅ All 179 unit tests passing (24 suites)
+- ✅ Cache-busters unified (`?v=7`)
+- ✅ CC BY-SA 4.0 License added
+- ✅ README and all documentation updated for production
+- ✅ Stale `.bak` files removed from repository
+- ✅ Debug HTML files excluded via `.gitignore`
 
 **v1.1 (February 27, 2026)**
 - ✅ Expanded to 33 scenes (15 new scenes)
@@ -550,7 +603,7 @@ A: Quest log provides hints. Future versions will have progressive hint system.
 - ✅ Debug panel overhauled
 - ✅ Hackerspace / Dwingeloo / ASTRON / LOFAR / Westerbork scenes
 - ✅ Laser corridor stealth scene
-- ✅ Long night / morning after / return to Max scenes
+- ✅ Long night / morning after / return to max scenes
 - ✅ Drone hunt scene
 
 **v1.0 (February 15, 2026)**
@@ -571,6 +624,8 @@ A: Quest log provides hints. Future versions will have progressive hint system.
 - **[Systems](SYSTEMS.md)** - Game mechanics (60+ pages)
 - **[Scenes](SCENES.md)** - Scene catalog (80+ pages)
 - **[Story](STORY.md)** - Full screenplay (1491 lines)
+- **[Game Flow Analysis](GAME_FLOW_ANALYSIS.md)** - Scene transitions and flag registry
+- **[Security Audit](SECURITY_AUDIT.md)** - Static security audit (v1.2)
 - **[Assets](../assets/)** - All game assets
 - **[Engine](../engine/)** - Core engine code
 
@@ -580,8 +635,8 @@ A: Quest log provides hints. Future versions will have progressive hint system.
 *A techno-thriller adventure built with curiosity, code, and coffee.*
 
 **Status:** Production Ready ✅  
-**Last Updated:** February 27, 2026  
-**Version:** 1.1
+**Last Updated:** March 7, 2026  
+**Version:** 1.2
 
 ---
 

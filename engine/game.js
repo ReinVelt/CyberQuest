@@ -124,7 +124,8 @@ class CyberQuestEngine {
         
         // Dependency injection for testing
         this._deps = deps;
-        this._storage = deps.storage || (typeof localStorage !== 'undefined' ? localStorage : null);
+        // Respect explicit null: only fall back to localStorage if 'storage' was NOT provided at all
+        this._storage = ('storage' in deps) ? deps.storage : (typeof localStorage !== 'undefined' ? localStorage : null);
         
         // Track event handlers for cleanup
         this._boundHandlers = [];
@@ -796,6 +797,13 @@ class CyberQuestEngine {
     hasItem(itemId) {
         return this.inventory.some(i => i.id === itemId);
     }
+
+    /** Escape a string for safe insertion into innerHTML. */
+    _esc(str) {
+        const d = document.createElement('div');
+        d.textContent = str ?? '';
+        return d.innerHTML;
+    }
     
     updateInventoryUI() {
         const container = document.getElementById('inventory-items');
@@ -811,8 +819,8 @@ class CyberQuestEngine {
             const element = document.createElement('div');
             element.className = 'inventory-item';
             element.innerHTML = `
-                <img src="${item.icon || 'assets/images/icons/item-default.svg'}" alt="${item.name}">
-                <span class="item-name">${item.name}</span>
+                <img src="${this._esc(item.icon || 'assets/images/icons/item-default.svg')}" alt="${this._esc(item.name)}">
+                <span class="item-name">${this._esc(item.name)}</span>
             `;
             element.setAttribute('data-tooltip', item.description || item.name);
             const useItemHandler = (e) => {
@@ -1594,9 +1602,9 @@ class CyberQuestEngine {
             const element = document.createElement('div');
             element.className = 'quest-item';
             element.innerHTML = `
-                <div class="quest-name">${quest.name}</div>
-                <div class="quest-description">${quest.description}</div>
-                ${quest.hint ? `<div class="quest-hint"><button class="quest-hint-btn">💡 Hint</button><p class="quest-hint-text hidden">${quest.hint}</p></div>` : ''}
+                <div class="quest-name">${this._esc(quest.name)}</div>
+                <div class="quest-description">${this._esc(quest.description)}</div>
+                ${quest.hint ? `<div class="quest-hint"><button class="quest-hint-btn">💡 Hint</button><p class="quest-hint-text hidden">${this._esc(quest.hint)}</p></div>` : ''}
             `;
             const hintBtn = element.querySelector('.quest-hint-btn');
             if (hintBtn) {

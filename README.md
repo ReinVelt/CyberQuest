@@ -74,9 +74,8 @@ This project includes **200+ pages of detailed documentation**:
 - **[⚙️ RULES.md](docs/RULES.md)** - Game design philosophy
 
 ### Quality Assurance
-- **[✅ CONSISTENCY_CHECK.md](docs/CONSISTENCY_CHECK.md)** - Story consistency validation
-- **[📋 VALIDATION_REPORT.md](docs/VALIDATION_REPORT.md)** - Integration testing
-- **[📝 FIXES_LOG.md](docs/FIXES_LOG.md)** - Implementation log
+- **[🔍 GAME_FLOW_ANALYSIS.md](docs/GAME_FLOW_ANALYSIS.md)** - Story flow and scene transition analysis
+- **[🔒 SECURITY_AUDIT.md](docs/SECURITY_AUDIT.md)** - Static security audit (v1.2)
 
 ---
 
@@ -123,7 +122,7 @@ CyberQuest/
 ├── index.html              # Main game entry point
 ├── README.md               # This file
 ├── engine/                 # Core game systems (~5,500 LOC)
-│   ├── game.js            # Main engine (2704 lines)
+│   ├── game.js            # Main engine (4,000+ lines)
 │   ├── player.js          # Player character system
 │   ├── voice.js           # Voice narration system
 │   ├── evidence-viewer.js # Evidence display system
@@ -175,6 +174,7 @@ CyberQuest/
 │   └── fonts/             # Custom fonts
 └── docs/                   # Documentation (200+ pages)
     ├── PROJECT_OVERVIEW.md    # Complete overview
+    ├── SECURITY_AUDIT.md      # Security audit report
     ├── GAME_ARCHITECTURE.md   # Technical docs (70+ pages)
     ├── SYSTEMS.md             # Game mechanics (60+ pages)
     ├── SCENES.md              # Scene catalog (80+ pages)
@@ -311,7 +311,7 @@ Contributions welcome! See [PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md) for d
 
 ### Development Setup
 ```bash
-git clone [repository-url]
+git clone https://github.com/ReinVelt/CyberQuest.git
 cd CyberQuest
 # No build process! Just open index.html
 open index.html
@@ -322,13 +322,30 @@ python -m http.server 8000
 
 ---
 
-## 📜 License & Credits
+## � Privacy & Data
+
+**CyberQuest collects no personal data. Full stop.**
+
+- All save data (progress, flags, inventory) is stored **only on your own device** using the browser's `localStorage` API.
+- Nothing is transmitted to any server — there is no back-end, no analytics, no tracking.
+- **No advertisements.** None. Ever.
+- **No Google Analytics**, no Matomo, no tracking pixels, no beacon calls.
+- **No third-party scripts** of any kind — no CDN-loaded libraries, no social widgets, no chat bots.
+- **No dark patterns** — no cookie banners, consent popups, newsletter nags, or manipulative UI.
+- **No accounts**, no sign-up, no cookies (beyond `localStorage` for your own save).
+- The entire game is plain **HTML + CSS + JavaScript + images**. What you download is what runs.
+- Clearing your browser's `localStorage` will erase your save. That is the only data that exists.
+
+---
+
+## �📜 License & Credits
 
 ### License
-[Specify your license - MIT, GPL, Creative Commons, etc.]
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) — see [LICENSE](LICENSE) for full terms.  
+You must credit **Rein Velt** and share derivatives under the same license.
 
 ### Created By
-[Your Name/Team]  
+Rein Velt  
 Development: 2025-2026  
 Version: 1.1
 
@@ -356,12 +373,19 @@ Version: 1.1
 
 **Documentation:** See [`docs/`](docs/) folder for comprehensive guides  
 **Start Here:** [PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md)  
-**Issues:** [Report bugs or suggest features]  
-**Discussions:** [Community forum or Discord - if applicable]
+**Issues:** [GitHub Issues](https://github.com/ReinVelt/CyberQuest/issues)  
+**Discussions:** [GitHub Discussions](https://github.com/ReinVelt/CyberQuest/discussions)
 
 ---
 
 ## 🏆 Version History
+
+**v1.2 (March 7, 2026)** - Production Polish
+- 179/179 unit tests passing
+- Fixed `_storage` null-injection bug in engine dependency injection
+- Production console.log suppression on non-localhost deployments
+- Removed debug files from build; all cache-busters bumped to v=7
+- CC BY-SA 4.0 license added; README links and placeholders resolved
 
 **v1.1 (February 27, 2026)** - Expanded Release
 - Expanded to 33 scenes (15 new scenes)

@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; connect-src 'self'; frame-ancestors 'none';">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -273,68 +275,68 @@
     </div>
 
     <!-- Load Engine -->
-    <script src="engine/voice.js?v=5"></script>
-    <script src="engine/evidence-viewer.js?v=5"></script>
-    <script src="engine/puzzles/password-puzzle.js?v=5"></script>
-    <script src="engine/chat-interface.js?v=5"></script>
-    <script src="engine/game.js?v=5"></script>
-    <script src="engine/player.js?v=5"></script>
+    <script src="engine/voice.js?v=7"></script>
+    <script src="engine/evidence-viewer.js?v=7"></script>
+    <script src="engine/puzzles/password-puzzle.js?v=7"></script>
+    <script src="engine/chat-interface.js?v=7"></script>
+    <script src="engine/game.js?v=7"></script>
+    <script src="engine/player.js?v=7"></script>
     
     <!-- Load Scenes -->
-    <script src="scenes/intro/scene.js?v=5"></script>
-    <script src="scenes/home/scene.js?v=5"></script>
-    <script src="scenes/livingroom/scene.js?v=5"></script>
-    <script src="scenes/tvdocumentary/scene.js?v=5"></script>
-    <script src="scenes/tvnews/scene.js?v=5"></script>
+    <script src="scenes/intro/scene.js?v=7"></script>
+    <script src="scenes/home/scene.js?v=7"></script>
+    <script src="scenes/livingroom/scene.js?v=7"></script>
+    <script src="scenes/tvdocumentary/scene.js?v=7"></script>
+    <script src="scenes/tvnews/scene.js?v=7"></script>
     <!-- Mancave cinematic modules (loaded before hub) -->
-    <script src="scenes/mancave/cinematic-utils.js?v=5"></script>
-    <script src="scenes/mancave/usb-analysis.js?v=5"></script>
-    <script src="scenes/mancave/dilemma.js?v=5"></script>
-    <script src="scenes/mancave/ally-recruitment.js?v=5"></script>
-    <script src="scenes/mancave/volkov-investigation.js?v=5"></script>
-    <script src="scenes/mancave/eva-reveal.js?v=5"></script>
-    <script src="scenes/mancave/eva-contact.js?v=5"></script>
-    <script src="scenes/mancave/meshtastic-setup.js?v=5"></script>
-    <script src="scenes/mancave/forensic-analysis.js?v=5"></script>
-    <script src="scenes/mancave/mission-prep.js?v=5"></script>
-    <script src="scenes/mancave/scene.js?v=5"></script>
-    <script src="scenes/laptop/laptop-screen.js?v=6"></script>
-    <script src="scenes/laptop/scene.js?v=5"></script>
-    <script src="scenes/sstv_terminal/scene.js?v=5"></script>
-    <script src="scenes/secure_phone/scene.js?v=5"></script>
-    <script src="scenes/airgapped_laptop/scene.js?v=5"></script>
-    <script src="scenes/sdr_bench/scene.js?v=5"></script>
-    <script src="scenes/planboard/scene.js?v=5"></script>
-    <script src="scenes/regional_map/scene.js?v=5"></script>
-    <script src="scenes/dwingeloo/scene.js?v=5"></script>
-    <script src="scenes/videocall/scene.js?v=5"></script>
-    <script src="scenes/garden/scene.js?v=5"></script>
-    <script src="scenes/garden_back/scene.js?v=5"></script>
-    <script src="scenes/klooster/scene.js?v=5"></script>
-    <script src="scenes/westerbork_memorial/scene.js?v=5"></script>
-    <script src="scenes/usb_discovery/scene.js?v=5"></script>
-    <script src="scenes/car_discovery/scene.js?v=5"></script>
-    <script src="scenes/driving/scene.js?v=5"></script>
-    <script src="scenes/driving_day/scene.js?v=5"></script>
-    <script src="scenes/astron/scene.js?v=5"></script>
-    <script src="scenes/wsrt_parking/scene.js?v=5"></script>
-    <script src="scenes/planetenpad/scene.js?v=5"></script>
-    <script src="scenes/lofar/scene.js?v=5"></script>
-    <script src="scenes/drone_hunt/scene.js?v=5"></script>
-    <script src="scenes/facility/ally-overlay.js?v=5"></script>
-    <script src="scenes/facility/scene.js?v=5"></script>
-    <script src="scenes/facility_interior/scene.js?v=5"></script>
-    <script src="scenes/laser_corridor/scene.js?v=5"></script>
-    <script src="scenes/facility_server/scene.js?v=5"></script>
-    <script src="scenes/long_night/scene.js?v=5"></script>
-    <script src="scenes/bedroom/scene.js?v=5"></script>
-    <script src="scenes/debrief/scene.js?v=5"></script>
-    <script src="scenes/return_to_ies/scene.js?v=5"></script>
-    <script src="scenes/morning_after/scene.js?v=5"></script>
-    <script src="scenes/epilogue/scene.js?v=5"></script>
-    <script src="scenes/hackerspace/scene.js?v=5"></script>
-    <script src="scenes/hackerspace_classroom/scene.js?v=5"></script>
-    <script src="scenes/credits/scene.js?v=5"></script>
+    <script src="scenes/mancave/cinematic-utils.js?v=7"></script>
+    <script src="scenes/mancave/usb-analysis.js?v=7"></script>
+    <script src="scenes/mancave/dilemma.js?v=7"></script>
+    <script src="scenes/mancave/ally-recruitment.js?v=7"></script>
+    <script src="scenes/mancave/volkov-investigation.js?v=7"></script>
+    <script src="scenes/mancave/eva-reveal.js?v=7"></script>
+    <script src="scenes/mancave/eva-contact.js?v=7"></script>
+    <script src="scenes/mancave/meshtastic-setup.js?v=7"></script>
+    <script src="scenes/mancave/forensic-analysis.js?v=7"></script>
+    <script src="scenes/mancave/mission-prep.js?v=7"></script>
+    <script src="scenes/mancave/scene.js?v=7"></script>
+    <script src="scenes/laptop/laptop-screen.js?v=7"></script>
+    <script src="scenes/laptop/scene.js?v=7"></script>
+    <script src="scenes/sstv_terminal/scene.js?v=7"></script>
+    <script src="scenes/secure_phone/scene.js?v=7"></script>
+    <script src="scenes/airgapped_laptop/scene.js?v=7"></script>
+    <script src="scenes/sdr_bench/scene.js?v=7"></script>
+    <script src="scenes/planboard/scene.js?v=7"></script>
+    <script src="scenes/regional_map/scene.js?v=7"></script>
+    <script src="scenes/dwingeloo/scene.js?v=7"></script>
+    <script src="scenes/videocall/scene.js?v=7"></script>
+    <script src="scenes/garden/scene.js?v=7"></script>
+    <script src="scenes/garden_back/scene.js?v=7"></script>
+    <script src="scenes/klooster/scene.js?v=7"></script>
+    <script src="scenes/westerbork_memorial/scene.js?v=7"></script>
+    <script src="scenes/usb_discovery/scene.js?v=7"></script>
+    <script src="scenes/car_discovery/scene.js?v=7"></script>
+    <script src="scenes/driving/scene.js?v=7"></script>
+    <script src="scenes/driving_day/scene.js?v=7"></script>
+    <script src="scenes/astron/scene.js?v=7"></script>
+    <script src="scenes/wsrt_parking/scene.js?v=7"></script>
+    <script src="scenes/planetenpad/scene.js?v=7"></script>
+    <script src="scenes/lofar/scene.js?v=7"></script>
+    <script src="scenes/drone_hunt/scene.js?v=7"></script>
+    <script src="scenes/facility/ally-overlay.js?v=7"></script>
+    <script src="scenes/facility/scene.js?v=7"></script>
+    <script src="scenes/facility_interior/scene.js?v=7"></script>
+    <script src="scenes/laser_corridor/scene.js?v=7"></script>
+    <script src="scenes/facility_server/scene.js?v=7"></script>
+    <script src="scenes/long_night/scene.js?v=7"></script>
+    <script src="scenes/bedroom/scene.js?v=7"></script>
+    <script src="scenes/debrief/scene.js?v=7"></script>
+    <script src="scenes/return_to_ies/scene.js?v=7"></script>
+    <script src="scenes/morning_after/scene.js?v=7"></script>
+    <script src="scenes/epilogue/scene.js?v=7"></script>
+    <script src="scenes/hackerspace/scene.js?v=7"></script>
+    <script src="scenes/hackerspace_classroom/scene.js?v=7"></script>
+    <script src="scenes/credits/scene.js?v=7"></script>
 
     <!-- Game Initialization -->
     <script>

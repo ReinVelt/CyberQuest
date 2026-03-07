@@ -160,13 +160,20 @@ TestRunner.suite('CyberQuestEngine Constructor', (assert) => {
 // 3. Dependency Injection
 TestRunner.suite('Dependency Injection', (assert) => {
     const mockStorage = createMockStorage();
-    const engine = new CyberQuestEngine({ storage: mockStorage });
+    // Explicitly pass null for each component to verify null suppresses initialization
+    const engine = new CyberQuestEngine({
+        storage: mockStorage,
+        PlayerCharacter: null,
+        EvidenceViewer: null,
+        PasswordPuzzle: null,
+        ChatInterface: null
+    });
     engine.init();
     assert.equal(engine._storage, mockStorage, 'Custom storage injected');
-    assert.equal(engine.player, null, 'Player is null when PlayerCharacter not injected');
-    assert.equal(engine.evidenceViewer, null, 'EvidenceViewer null when not injected');
-    assert.equal(engine.passwordPuzzle, null, 'PasswordPuzzle null when not injected');
-    assert.equal(engine.chatInterface, null, 'ChatInterface null when not injected');
+    assert.equal(engine.player, null, 'Player is null when PlayerCharacter injected as null');
+    assert.equal(engine.evidenceViewer, null, 'EvidenceViewer null when injected as null');
+    assert.equal(engine.passwordPuzzle, null, 'PasswordPuzzle null when injected as null');
+    assert.equal(engine.chatInterface, null, 'ChatInterface null when injected as null');
     engine.destroy();
 });
 

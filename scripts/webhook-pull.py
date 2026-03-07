@@ -22,7 +22,14 @@ import logging
 import os
 import subprocess
 import sys
+import time
 from http.server import HTTPServer, BaseHTTPRequestHandler
+
+# ---------------------------------------------------------------------------
+# Rate limiting (per-server, not per-IP)
+# ---------------------------------------------------------------------------
+_last_pull_time: float = 0.0
+PULL_COOLDOWN_SECONDS: int = 30  # minimum seconds between git pulls
 
 # ---------------------------------------------------------------------------
 # Configuration defaults
@@ -110,15 +117,23 @@ class WebhookHandler(BaseHTTPRequestHandler):
         content_length = int(self.headers.get("Content-Length", 0))
         payload = self.rfile.read(content_length)
 
-        # --- Signature check (if a secret is configured) ---
-        if self.secret:
-            sig = self.headers.get("X-Hub-Signature-256", "")
-            if not verify_signature(payload, sig, self.secret):
-                log.warning("Invalid signature from %s", self.client_address[0])
-                self.send_response(403)
-                self.end_headers()
-                self.wfile.write(b"Forbidden: bad signature\n")
-                return
+        # --- Rate limiting ---
+        global _last_pull_time
+        now = time.monotonic()
+        if now - _last_pull_time < PULL_COOLDOWN_SECONDS:
+            remaining = int(PULL_COOLDOWN_SECONDS - (now - _last_pull_time))
+            log.warning("Rate limit hit from %s (%ds remaining)", self.client_address[0], remaining)
+            self._respond(429, {"error": "rate limited", "retry_after": remaining})
+            return
+
+        # --- Signature check (required) ---
+        sig = self.headers.get("X-Hub-Signature-256", "")
+        if not verify_signature(payload, sig, self.secret):
+            log.warning("Invalid or missing signature from %s", self.client_address[0])
+            self.send_response(403)
+            self.end_headers()
+            self.wfile.write(b"Forbidden: bad signature\n")
+            return
 
         # --- Parse event ---
         event = self.headers.get("X-GitHub-Event", "")
@@ -149,6 +164,7 @@ class WebhookHandler(BaseHTTPRequestHandler):
         commits = len(body.get("commits", []))
         log.info("Push from %s: %d commit(s) to %s — pulling…", pusher, commits, self.branch)
 
+        _last_pull_time = time.monotonic()
         result = git_pull(self.repo_path, self.branch)
         status_code = 200 if result["ok"] else 500
         self._respond(status_code, result)
@@ -176,6 +192,13 @@ def main():
     args = parser.parse_args()
 
     secret = args.secret or os.environ.get("WEBHOOK_SECRET", "")
+    if not secret:
+        log.error(
+            "WEBHOOK_SECRET is not set. "
+            "Set it via --secret or the WEBHOOK_SECRET environment variable. "
+            "Running without a secret would allow unauthenticated git pulls."
+        )
+        sys.exit(1)
 
     # Inject config into handler class
     WebhookHandler.repo_path = args.repo
@@ -184,7 +207,7 @@ def main():
 
     server = HTTPServer(("127.0.0.1", args.port), WebhookHandler)
     log.info("Listening on 127.0.0.1:%d", args.port)
-    log.info("Repo: %s  Branch: %s  Secret: %s", args.repo, args.branch, "yes" if secret else "NO (unsigned)")
+    log.info("Repo: %s  Branch: %s  Secret: configured", args.repo, args.branch)
 
     try:
         server.serve_forever()

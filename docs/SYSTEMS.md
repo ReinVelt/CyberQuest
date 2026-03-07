@@ -1,6 +1,6 @@
 # CyberQuest: Game Systems Documentation
-**Last Updated:** February 27, 2026  
-**Version:** 1.1
+**Last Updated:** March 7, 2026  
+**Version:** 1.2
 
 ---
 
@@ -25,7 +25,7 @@
 
 ### CyberQuestEngine
 **File:** `engine/game.js`  
-**Lines:** 2704
+**Lines:** 4,000+
 
 The central engine that coordinates all game systems.
 

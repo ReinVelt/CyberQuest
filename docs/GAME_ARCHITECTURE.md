@@ -1,6 +1,6 @@
 # CyberQuest: Game Architecture Documentation
-**Last Updated:** February 27, 2026  
-**Version:** 1.1  
+**Last Updated:** March 7, 2026  
+**Version:** 1.2  
 **Status:** Production
 
 ---
@@ -74,7 +74,7 @@ const SCENE_TIME_MAP = Object.freeze({
 ## Core Engine
 
 ### CyberQuestEngine Class
-**Location:** `engine/game.js` (2704 lines)
+**Location:** `engine/game.js` (4,000+ lines)
 
 The main game engine manages all game state, scene transitions, and system coordination.
 

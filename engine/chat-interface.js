@@ -243,7 +243,7 @@ class ChatInterface {
 
         messageEl.innerHTML = `
             <div class="message-bubble">
-                ${!isOutgoing ? `<div class="message-sender">${message.from}</div>` : ''}
+                ${!isOutgoing ? `<div class="message-sender">${this._sanitizeHTML(message.from)}</div>` : ''}
                 <div class="message-text">${this.formatMessageText(message.text)}</div>
                 ${timestamp}
             </div>
