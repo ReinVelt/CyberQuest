@@ -25,7 +25,7 @@
 
 ### Story Premise
 
-You are **Ryan Weylant**, a 55-year-old Dutch hacker living in Compascuum, Netherlands. Your quiet life analyzing radio signals is disrupted when you receive a mysterious SSTV transmission from a German military facility. What starts as curiosity becomes a race against time to expose a Russian infiltration operation and prevent mass casualties.
+You are **Ryan Weylant**, a 42-year-old Dutch hacker living in Compascuum, Netherlands. Your quiet life analyzing radio signals is disrupted when you receive a mysterious SSTV transmission from a German military facility. What starts as curiosity becomes a race against time to expose a Russian infiltration operation and prevent mass casualties.
 
 ### Core Gameplay
 
