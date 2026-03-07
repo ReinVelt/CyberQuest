@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300">
+  <!-- MOTHER - South Park Style Character -->
+  <!-- ~68 years old, warm grandmotherly, floral blouse, cardigan, pearls -->
+
+  <defs>
+    <linearGradient id="mom-skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f4c4a0"/>
+      <stop offset="100%" style="stop-color:#e0a880"/>
+    </linearGradient>
+    <linearGradient id="mom-cardiganGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#9a7a8a"/>
+      <stop offset="100%" style="stop-color:#7a5a6a"/>
+    </linearGradient>
+    <linearGradient id="mom-blouseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4e8c8"/>
+      <stop offset="100%" style="stop-color:#b8d4ac"/>
+    </linearGradient>
+    <linearGradient id="mom-skirtGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7a6a9a"/>
+      <stop offset="100%" style="stop-color:#5a4a7a"/>
+    </linearGradient>
+    <linearGradient id="mom-hairGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f0f0f0"/>
+      <stop offset="100%" style="stop-color:#d8d8d8"/>
+    </linearGradient>
+    <filter id="mom-shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-opacity="0.35"/>
+    </filter>
+    <filter id="mom-lightShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- SHOES (low-heeled sensible court shoes) -->
+  <ellipse cx="83" cy="296" rx="15" ry="5" fill="#000" opacity="0.2"/>
+  <ellipse cx="117" cy="296" rx="15" ry="5" fill="#000" opacity="0.2"/>
+  <!-- Low heel block -->
+  <rect x="84" y="289" width="6" height="9" rx="1" fill="#5a3a4a" stroke="#000" stroke-width="1.5"/>
+  <rect x="110" y="289" width="6" height="9" rx="1" fill="#5a3a4a" stroke="#000" stroke-width="1.5"/>
+  <!-- Shoe uppers -->
+  <path d="M70,282 Q83,278 96,281 L96,292 Q83,296 70,292 Z" fill="#5a3a4a" stroke="#000" stroke-width="2.5"/>
+  <path d="M104,282 Q117,278 130,281 L130,292 Q117,296 104,292 Z" fill="#5a3a4a" stroke="#000" stroke-width="2.5"/>
+  <!-- Bow detail -->
+  <path d="M78,284 Q83,280 88,284" stroke="#8a6a7a" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M112,284 Q117,280 122,284" stroke="#8a6a7a" stroke-width="2" fill="none" stroke-linecap="round"/>
+
+  <!-- STOCKINGS / legs (nylon-colored) -->
+  <rect x="74" y="246" width="22" height="36" rx="2" fill="#e8c8b0" stroke="#000" stroke-width="2.5"/>
+  <rect x="104" y="246" width="22" height="36" rx="2" fill="#e8c8b0" stroke="#000" stroke-width="2.5"/>
+
+  <!-- SKIRT (A-line, below knee — wider at hem) -->
+  <path d="M65,186 L58,248 L142,248 L135,186 Z"
+        fill="url(#mom-skirtGrad)" stroke="#000" stroke-width="3" filter="url(#mom-shadow)"/>
+  <!-- Skirt hem -->
+  <line x1="58" y1="248" x2="142" y2="248" stroke="#4a3a6a" stroke-width="2.5"/>
+  <!-- Small floral pattern dots on skirt -->
+  <circle cx="80" cy="205" r="3" fill="#e070a0" opacity="0.7"/>
+  <circle cx="95" cy="220" r="3" fill="#e070a0" opacity="0.7"/>
+  <circle cx="112" cy="208" r="3" fill="#e070a0" opacity="0.7"/>
+  <circle cx="124" cy="228" r="3" fill="#e070a0" opacity="0.7"/>
+  <circle cx="75" cy="232" r="3" fill="#e070a0" opacity="0.7"/>
+  <circle cx="105" cy="238" r="3" fill="#e070a0" opacity="0.7"/>
+  <circle cx="87" cy="242" r="2.5" fill="#80c080" opacity="0.6"/>
+  <circle cx="118" cy="218" r="2.5" fill="#80c080" opacity="0.6"/>
+
+  <!-- BODY (slightly rounder, warm grandma proportions) -->
+  <!-- Cardigan (open front, over blouse) -->
+  <path d="M60,136 L56,188 L144,188 L140,136 Q100,124 60,136 Z"
+        fill="url(#mom-cardiganGrad)" stroke="#000" stroke-width="3" filter="url(#mom-shadow)"/>
+
+  <!-- Blouse underneath showing in center -->
+  <path d="M83,136 L86,188 L114,188 L117,136 Z"
+        fill="url(#mom-blouseGrad)" stroke="#000" stroke-width="1.5"/>
+
+  <!-- Floral pattern on blouse -->
+  <circle cx="96" cy="152" r="3.5" fill="#e070a0" opacity="0.7"/>
+  <circle cx="104" cy="162" r="3" fill="#e070a0" opacity="0.6"/>
+  <circle cx="98" cy="172" r="3.5" fill="#60a060" opacity="0.6"/>
+  <circle cx="106" cy="148" r="2.5" fill="#60a060" opacity="0.55"/>
+
+  <!-- Cardigan v-neck + collar -->
+  <path d="M60,136 Q82,158 100,148 Q118,158 140,136" fill="#8a6a7a" stroke="#000" stroke-width="2"/>
+
+  <!-- Cardigan edging (knit look) -->
+  <rect x="58" y="140" width="6" height="48" rx="2" fill="#7a5a6a" stroke="#000" stroke-width="1.5"/>
+  <rect x="136" y="140" width="6" height="48" rx="2" fill="#7a5a6a" stroke="#000" stroke-width="1.5"/>
+
+  <!-- PEARL NECKLACE -->
+  <path d="M76,138 Q100,150 124,138" stroke="#e8e8e8" stroke-width="0" fill="none"/>
+  <!-- Individual pearls -->
+  <circle cx="78" cy="140" r="3.5" fill="#f0f0f0" stroke="#d0c8c0" stroke-width="1"/>
+  <circle cx="85" cy="144" r="3.5" fill="#f0f0f0" stroke="#d0c8c0" stroke-width="1"/>
+  <circle cx="92" cy="147" r="3.5" fill="#f0f0f0" stroke="#d0c8c0" stroke-width="1"/>
+  <circle cx="100" cy="148" r="3.5" fill="#f0f0f0" stroke="#d0c8c0" stroke-width="1"/>
+  <circle cx="108" cy="147" r="3.5" fill="#f0f0f0" stroke="#d0c8c0" stroke-width="1"/>
+  <circle cx="115" cy="144" r="3.5" fill="#f0f0f0" stroke="#d0c8c0" stroke-width="1"/>
+  <circle cx="122" cy="140" r="3.5" fill="#f0f0f0" stroke="#d0c8c0" stroke-width="1"/>
+
+  <!-- ARMS (soft, rounded) -->
+  <path d="M60,148 Q39,178 44,214 L60,216 Q58,179 68,156"
+        fill="url(#mom-cardiganGrad)" stroke="#000" stroke-width="3" filter="url(#mom-lightShadow)"/>
+  <path d="M140,148 Q161,178 156,214 L140,216 Q142,179 132,156"
+        fill="url(#mom-cardiganGrad)" stroke="#000" stroke-width="3" filter="url(#mom-lightShadow)"/>
+
+  <!-- HANDS (aged, gentle) -->
+  <ellipse cx="48" cy="219" rx="10" ry="12" fill="url(#mom-skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="152" cy="219" rx="10" ry="12" fill="url(#mom-skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <!-- Light age marks -->
+  <circle cx="45" cy="217" r="1.2" fill="#c09060" opacity="0.5"/>
+  <circle cx="50" cy="223" r="1" fill="#c09060" opacity="0.45"/>
+  <circle cx="149" cy="216" r="1.2" fill="#c09060" opacity="0.5"/>
+  <circle cx="155" cy="222" r="1" fill="#c09060" opacity="0.45"/>
+
+  <!-- HEAD (round, warm, slightly wider at jowls) -->
+  <ellipse cx="100" cy="80" rx="44" ry="52" fill="url(#mom-skinGrad)" stroke="#000" stroke-width="3.5" filter="url(#mom-shadow)"/>
+
+  <!-- Soft jowls / round cheeks -->
+  <ellipse cx="68" cy="98" rx="14" ry="11" fill="#f0b888" opacity="0.45"/>
+  <ellipse cx="132" cy="98" rx="14" ry="11" fill="#f0b888" opacity="0.45"/>
+  <!-- Rosy cheeks (grandma blush) -->
+  <ellipse cx="70" cy="100" rx="10" ry="7" fill="#e89090" opacity="0.3"/>
+  <ellipse cx="130" cy="100" rx="10" ry="7" fill="#e89090" opacity="0.3"/>
+
+  <!-- EARS -->
+  <ellipse cx="53" cy="82" rx="9" ry="13" fill="url(#mom-skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="56" cy="82" rx="5" ry="8" fill="#d8a878"/>
+  <!-- Pearl earrings -->
+  <circle cx="55" cy="93" r="4" fill="#f0f0f0" stroke="#d0c8c0" stroke-width="1.5"/>
+  <ellipse cx="147" cy="82" rx="9" ry="13" fill="url(#mom-skinGrad)" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="144" cy="82" rx="5" ry="8" fill="#d8a878"/>
+  <circle cx="145" cy="93" r="4" fill="#f0f0f0" stroke="#d0c8c0" stroke-width="1.5"/>
+
+  <!-- HAIR (short permed white/silver — classic grandma set) -->
+  <!-- Hair base cap (full, tight curls overall) -->
+  <ellipse cx="100" cy="46" rx="48" ry="30" fill="url(#mom-hairGrad)" stroke="#000" stroke-width="3"/>
+  <!-- Volume on sides (permed style) -->
+  <ellipse cx="60" cy="60" rx="18" ry="24" fill="#f0f0f0" stroke="#000" stroke-width="2.5"/>
+  <ellipse cx="140" cy="60" rx="18" ry="24" fill="#f0f0f0" stroke="#000" stroke-width="2.5"/>
+  <!-- Curly texture bumps on top -->
+  <path d="M62,44 Q68,38 74,44 Q80,38 86,44 Q92,38 98,44 Q104,38 110,44 Q116,38 122,44 Q128,38 134,44"
+        fill="#f0f0f0" stroke="#d0d0d0" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M64,52 Q70,46 76,52 Q82,46 88,52 Q94,46 100,52 Q106,46 112,52 Q118,46 124,52 Q130,46 136,52"
+        fill="#f0f0f0" stroke="#d0d0d0" stroke-width="2"/>
+  <!-- Side curl bumps -->
+  <path d="M56,58 Q62,52 66,58 Q62,64 58,70 Q62,76 60,82"
+        fill="#f0f0f0" stroke="#d0d0d0" stroke-width="2"/>
+  <path d="M144,58 Q138,52 134,58 Q138,64 142,70 Q138,76 140,82"
+        fill="#f0f0f0" stroke="#d0d0d0" stroke-width="2"/>
+  <!-- Very light blue rinse tint (classic old lady tint) -->
+  <ellipse cx="100" cy="46" rx="44" ry="26" fill="#d8e8f8" opacity="0.12"/>
+
+  <!-- FOREHEAD WRINKLES -->
+  <path d="M74,58 Q100,54 126,58" stroke="#c09060" stroke-width="1.5" fill="none" opacity="0.35" stroke-linecap="round"/>
+  <path d="M78,65 Q100,61 122,65" stroke="#c09060" stroke-width="1" fill="none" opacity="0.25" stroke-linecap="round"/>
+
+  <!-- EYEBROWS (thin, pencilled-in — classic older woman look) -->
+  <path d="M70,70 Q81,65 92,69" stroke="#8a6858" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M108,69 Q119,65 130,70" stroke="#8a6858" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- EYES (warm brown, slightly hooded with age) -->
+  <ellipse cx="79" cy="80" rx="9" ry="8" fill="white" stroke="#000" stroke-width="2"/>
+  <ellipse cx="121" cy="80" rx="9" ry="8" fill="white" stroke="#000" stroke-width="2"/>
+  <!-- Irises (warm brown) -->
+  <circle cx="80" cy="80" r="5" fill="#8a6040"/>
+  <circle cx="122" cy="80" r="5" fill="#8a6040"/>
+  <!-- Pupils -->
+  <circle cx="80" cy="80" r="2.8" fill="#2a1a0a"/>
+  <circle cx="122" cy="80" r="2.8" fill="#2a1a0a"/>
+  <!-- Eye highlights -->
+  <circle cx="78" cy="78" r="1.6" fill="#fff" opacity="0.9"/>
+  <circle cx="120" cy="78" r="1.6" fill="#fff" opacity="0.9"/>
+  <!-- Hooded upper lids -->
+  <path d="M70,77 Q79,72 88,77" fill="#e0a878" stroke="#000" stroke-width="1" opacity="0.6"/>
+  <path d="M112,77 Q121,72 130,77" fill="#e0a878" stroke="#000" stroke-width="1" opacity="0.6"/>
+  <!-- Crow's feet -->
+  <line x1="90" y1="79" x2="95" y2="77" stroke="#c09060" stroke-width="1" opacity="0.45"/>
+  <line x1="90" y1="82" x2="95" y2="84" stroke="#c09060" stroke-width="1" opacity="0.45"/>
+  <line x1="110" y1="79" x2="105" y2="77" stroke="#c09060" stroke-width="1" opacity="0.45"/>
+  <line x1="110" y1="82" x2="105" y2="84" stroke="#c09060" stroke-width="1" opacity="0.45"/>
+
+  <!-- NOSE (soft, rounded) -->
+  <path d="M100,83 L100,93" stroke="#c09060" stroke-width="2" stroke-linecap="round"/>
+  <ellipse cx="100" cy="95" rx="6" ry="7" fill="#d8a878" stroke="#000" stroke-width="1.5"/>
+  <ellipse cx="96.5" cy="95" rx="3" ry="3.5" fill="#c89868"/>
+  <ellipse cx="103.5" cy="95" rx="3" ry="3.5" fill="#c89868"/>
+
+  <!-- NASOLABIAL FOLDS -->
+  <path d="M86,98 Q82,108 84,116" stroke="#c09060" stroke-width="1.5" fill="none" opacity="0.45" stroke-linecap="round"/>
+  <path d="M114,98 Q118,108 116,116" stroke="#c09060" stroke-width="1.5" fill="none" opacity="0.45" stroke-linecap="round"/>
+
+  <!-- MOUTH (warm smile, slight lipstick) -->
+  <path d="M85,115 Q100,126 115,115" fill="#c05870" stroke="#000" stroke-width="2"/>
+  <path d="M85,115 Q100,111 115,115" fill="#e07888" stroke="#000" stroke-width="1.5"/>
+  <!-- Lipstick highlight -->
+  <path d="M92,112 Q100,109 108,112" stroke="#f090a0" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <!-- Smile lines at corners -->
+  <line x1="85" y1="115" x2="81" y2="111" stroke="#c09060" stroke-width="1" opacity="0.5"/>
+  <line x1="115" y1="115" x2="119" y2="111" stroke="#c09060" stroke-width="1" opacity="0.5"/>
+
+  <!-- CHIN / NECK (gentle wattle) -->
+  <path d="M84,124 Q90,136 100,134 Q110,136 116,124" fill="#e0a878" stroke="#000" stroke-width="2"/>
+  <!-- Chin wrinkle dimple -->
+  <path d="M94,128 Q100,132 106,128" stroke="#c09060" stroke-width="1" fill="none" opacity="0.35"/>
+
+</svg>

@@ -22,8 +22,8 @@ const MorningAfterScene = {
 
     playerStart: { x: 20, y: 85 },
 
-    // 🎬 Accessibility / Movie Mode — continue to epilogue
-    accessibilityPath: ['continue-epilogue'],
+    // 🎬 Accessibility / Movie Mode — read Eva's email, talk to Max, then continue
+    accessibilityPath: ['protonmail', 'max-moment', 'continue-epilogue'],
 
     idleThoughts: [
         "247 unread emails. Most of them can wait forever.",
