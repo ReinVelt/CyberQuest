@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; connect-src 'self';">
+          content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; connect-src 'self'; manifest-src 'self';">
     <!-- Note: frame-ancestors cannot be set via <meta>; set it via HTTP header (see scripts/apache-webhook.conf) -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#00ff88">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="CyberQuest">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="description" content="A point-and-click cyberpunk adventure. You are Ryan Weylant — Dutch hacker, radio amateur, reluctant hero.">
     <title>CyberQuest: Operation ZERFALL</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="assets/images/icons/icon-192.png">
     <link rel="stylesheet" href="engine/styles.css">
     <style>
         /* Loading screen */
