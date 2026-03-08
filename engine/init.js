@@ -134,6 +134,21 @@ function continueGame() {
 }
 
 function showAbout() {
+    // Render changelog dynamically from engine/changelog.js
+    const container = document.getElementById('about-changelog');
+    if (container && typeof CYBERQUEST_CHANGELOG !== 'undefined' && !container._rendered) {
+        container._rendered = true;
+        container.innerHTML = CYBERQUEST_CHANGELOG.map((entry, i) => {
+            const versionColor = i === 0 ? '#00ff88' : '#777';
+            const itemColor   = i === 0 ? '#00cc55' : '';
+            const itemStyle   = itemColor ? ` style="color:${itemColor}"` : '';
+            const topMargin   = i === 0 ? '' : ' style="margin-top:6px"';
+            return [
+                `<div${topMargin} style="color:${versionColor}${i > 0 ? ';margin-top:6px' : ''};margin-bottom:${i === 0 ? '4' : '0'}px">${entry.version} — ${entry.date}</div>`,
+                ...entry.items.map(item => `<div${itemStyle}>• ${item}</div>`),
+            ].join('');
+        }).join('');
+    }
     document.getElementById('about-modal').style.display = 'flex';
 }
 

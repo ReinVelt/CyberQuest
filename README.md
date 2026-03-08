@@ -1,5 +1,7 @@
 # CyberQuest: Operation ZERFALL
 
+![CyberQuest: Operation ZERFALL](assets/images/cover.png)
+
 A techno-thriller point-and-click adventure game built with vanilla JavaScript. Featuring realistic hacking scenarios, RF signal analysis, and a story inspired by real-world technology and espionage.
 
 ---

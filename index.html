@@ -229,71 +229,113 @@
 
     <!-- About Modal -->
     <div id="about-modal" class="modal" style="display: none;">
-        <div class="modal-content" style="max-width: 640px;">
+        <div class="modal-content" style="max-width: 660px;">
             <div class="modal-header">
                 <h2>About CyberQuest</h2>
                 <button class="modal-close" id="close-about">&times;</button>
             </div>
-            <div class="modal-body" style="text-align: left; line-height: 1.8;">
+            <div class="modal-body" style="text-align: left; line-height: 1.7;">
 
-                <!-- Version badge -->
-                <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-                    <span style="background:#00cc66;color:#000;font-weight:bold;font-family:monospace;padding:3px 10px;border-radius:4px;font-size:0.85em;">v0.5.0</span>
-                    <span style="color:#888;font-size:0.82em;font-family:monospace;">March 6, 2026</span>
-                    <a href="https://github.com/ReinVelt/CyberQuest" target="_blank" rel="noopener"
-                       style="margin-left:auto;color:#00cc66;font-family:monospace;font-size:0.82em;text-decoration:none;border:1px solid #00cc6655;padding:2px 8px;border-radius:4px;">
-                        ⌥ GitHub ↗
-                    </a>
+                <!-- Cover image -->
+                <div style="margin-bottom:14px;border-radius:6px;overflow:hidden;border:1px solid #00cc6633;line-height:0;">
+                    <img src="assets/images/cover.png" alt="CyberQuest: Operation ZERFALL"
+                         style="width:100%;display:block;object-fit:contain;">
                 </div>
 
-                <p><strong>CyberQuest: Operation ZERFALL</strong> is a Sierra-style point-and-click adventure game.</p>
-                <br>
-                <p>You play as <strong>Ryan Weylant</strong>, a 42-year-old Dutch hacker living in Compascuum, a quiet village near the German border. What starts as a routine morning quickly escalates into an international espionage thriller involving:</p>
-                <br>
-                <ul style="margin-left: 1.5rem;">
-                    <li>Mysterious SSTV transmissions</li>
-                    <li>A Russian infiltration operation</li>
-                    <li>German military research facilities</li>
-                    <li>Old friends and new allies</li>
-                </ul>
-                <br>
-                <p><strong>Controls:</strong></p>
-                <ul style="margin-left: 1.5rem;">
-                    <li>Click on highlighted areas to interact</li>
-                    <li>Use the inventory to combine and use items</li>
-                    <li>Read dialogue carefully for clues</li>
-                    <li>Solve puzzles to progress the story — or press <kbd style="background:#222;border:1px solid #555;padding:1px 5px;border-radius:3px;font-size:0.85em;">H</kbd> for a hint</li>
-                </ul>
-                <br>
-                <p style="color: var(--warning-amber);">Note: This game features realistic hacking scenarios and encryption puzzles. The ROT1 cipher is deliberately weak — just like in real spy games of old.</p>
+                <!-- Title block -->
+                <div style="display:flex;gap:18px;align-items:flex-start;margin-bottom:16px;">
+                    <!-- Inline SVG icon badge -->
+                    <svg viewBox="0 0 110 150" style="width:70px;min-width:70px;border-radius:6px;border:1px solid #00cc6633;flex-shrink:0;" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="ab-sky" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#050d18"/><stop offset="100%" stop-color="#0a1a10"/>
+                            </linearGradient>
+                            <linearGradient id="ab-glow" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#00ff88" stop-opacity="0.18"/><stop offset="100%" stop-color="#00ff88" stop-opacity="0"/>
+                            </linearGradient>
+                        </defs>
+                        <rect width="110" height="150" fill="url(#ab-sky)"/>
+                        <circle cx="14" cy="12" r="0.6" fill="#fff" opacity="0.6"/>
+                        <circle cx="38" cy="7"  r="0.5" fill="#fff" opacity="0.5"/>
+                        <circle cx="62" cy="18" r="0.7" fill="#fff" opacity="0.7"/>
+                        <circle cx="85" cy="9"  r="0.5" fill="#fff" opacity="0.5"/>
+                        <circle cx="96" cy="25" r="0.6" fill="#fff" opacity="0.4"/>
+                        <circle cx="22" cy="32" r="0.5" fill="#fff" opacity="0.4"/>
+                        <circle cx="75" cy="30" r="0.5" fill="#fff" opacity="0.5"/>
+                        <path d="M55 95 Q55 68 30 58" fill="none" stroke="#00cc66" stroke-width="1.5" opacity="0.6"/>
+                        <path d="M55 95 Q55 68 80 58" fill="none" stroke="#00cc66" stroke-width="1.5" opacity="0.6"/>
+                        <path d="M30 58 Q55 70 80 58" fill="none" stroke="#00cc66" stroke-width="1.5" opacity="0.6"/>
+                        <line x1="55" y1="95" x2="55" y2="115" stroke="#888" stroke-width="2"/>
+                        <line x1="42" y1="115" x2="68" y2="115" stroke="#888" stroke-width="1.5"/>
+                        <circle cx="55" cy="58" r="10" fill="none" stroke="#00ff88" stroke-width="0.7" opacity="0.25"/>
+                        <circle cx="55" cy="58" r="18" fill="none" stroke="#00ff88" stroke-width="0.5" opacity="0.15"/>
+                        <circle cx="55" cy="58" r="26" fill="none" stroke="#00ff88" stroke-width="0.4" opacity="0.08"/>
+                        <rect x="0" y="112" width="110" height="38" fill="url(#ab-glow)"/>
+                        <rect x="0" y="112" width="110" height="4" fill="#0a2a14" opacity="0.8"/>
+                        <text x="55" y="128" font-family="monospace" font-size="7" fill="#00ff88" text-anchor="middle" font-weight="bold">CYBERQUEST</text>
+                        <text x="55" y="139" font-family="monospace" font-size="5" fill="#00cc66" text-anchor="middle" opacity="0.8">OPERATION ZERFALL</text>
+                    </svg>
 
-                <!-- Changelog -->
-                <hr style="border:none;border-top:1px solid #1a2a1a;margin:18px 0 14px;">
-                <p style="font-family:monospace;font-size:0.88em;color:#00cc66;margin-bottom:8px;">▸ CHANGELOG</p>
-                <div style="font-family:monospace;font-size:0.78em;line-height:1.7;color:#aaa;max-height:200px;overflow-y:auto;background:#050f05;padding:10px 12px;border-radius:4px;border:1px solid #0a1f0a;">
-                    <div style="color:#00ff88;margin-bottom:4px;">v0.5.0 — 2026-03-06</div>
-                    <div style="color:#00cc55;">• Dedicated SSTV Terminal scene with custom SVG (green-phosphor CRT, waterfall display)</div>
-                    <div style="color:#00cc55;">• Full movie / accessibility mode flow audit — Dwingeloo, Westerbork, LOFAR, ASTRON ordering fixed</div>
-                    <div style="color:#00cc55;">• 💡 Hint button + H-key shortcut with full story-progression hint table</div>
-                    <div style="color:#00cc55;">• ▶ Autoplay debug mode with 8–12 s step delay</div>
-                    <div style="color:#00cc55;">• Morning coffee ritual every day after bedroom wake</div>
-                    <div style="color:#00cc55;">• Bedroom scene with sleep mechanic and auto wake-up timer</div>
-                    <div style="color:#777;margin-top:6px;">v0.4.0 — 2026-02-28</div>
-                    <div>• Laser corridor: auto-solve all 3 puzzles in movie mode</div>
-                    <div>• ASTRON: auto-solve equipment puzzle, Cees revisit for astron_complete</div>
-                    <div>• Hackerspace NPCs: one-shot met flags, accessibilityRetries to stop retry loops</div>
-                    <div>• Klooster accessibilityPath covers all hotspots before driving away</div>
-                    <div style="color:#777;margin-top:6px;">v0.3.0 — 2026-02-15</div>
-                    <div>• Dwingeloo, Westerbork Memorial, LOFAR Superterp scenes</div>
-                    <div>• Facility infiltration: badge clone, laser corridor, server room</div>
-                    <div>• EVA Weber contact and ally recruitment system</div>
-                    <div style="color:#777;margin-top:6px;">v0.2.0 — 2026-01-20</div>
-                    <div>• SDR bench, secure phone, airgapped laptop scenes</div>
-                    <div>• USB discovery and evidence viewer</div>
-                    <div>• Mancave cinematic modules (forensic analysis, Volkov investigation)</div>
-                    <div style="color:#777;margin-top:6px;">v0.1.0 — 2025-12-01</div>
-                    <div>• Initial release — intro, home, livingroom, mancave, SSTV terminal</div>
-                    <div>• Core engine: dialogue, inventory, scene transitions, voice TTS</div>
+                    <!-- Title + abstract -->
+                    <div style="flex:1;">
+                        <div style="font-size:1.05em;font-weight:bold;color:#00ff88;font-family:monospace;line-height:1.3;margin-bottom:4px;">
+                            CyberQuest<br>
+                            <span style="color:#00cc66;font-size:0.82em;">Operation ZERFALL</span>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">
+                            <span style="background:#00cc66;color:#000;font-weight:bold;font-family:monospace;padding:2px 8px;border-radius:4px;font-size:0.78em;">v0.6.0-alpha</span>
+                            <span style="color:#666;font-size:0.78em;font-family:monospace;">2026-03-08</span>
+                            <a href="https://github.com/ReinVelt/CyberQuest" target="_blank" rel="noopener"
+                               style="color:#00cc66;font-family:monospace;font-size:0.76em;text-decoration:none;border:1px solid #00cc6644;padding:1px 7px;border-radius:4px;">GitHub ↗</a>
+                        </div>
+                        <p style="font-size:0.85em;color:#ccc;margin:0;">A Sierra-style point-and-click adventure. You are <strong>Ryan Weylant</strong> — Dutch hacker, radio amateur, reluctant hero. A mysterious SSTV signal pulls you into an international espionage thriller.</p>
+                    </div>
+                </div>
+
+                <!-- Author / Copyright / License -->
+                <div style="background:#070f07;border:1px solid #0e2010;border-radius:6px;padding:12px 14px;margin-bottom:14px;font-size:0.83em;line-height:2;">
+                    <div style="display:grid;grid-template-columns:max-content 1fr;gap:0 14px;">
+                        <span style="color:#00cc66;font-family:monospace;">Author</span>
+                        <span>Rein Velt</span>
+                        <span style="color:#00cc66;font-family:monospace;">Copyright</span>
+                        <span>&copy; 2025–2026 Rein Velt. All rights reserved.</span>
+                        <span style="color:#00cc66;font-family:monospace;">License</span>
+                        <span>
+                            <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"
+                               style="color:#00cc66;text-decoration:none;">CC BY-SA 4.0 ↗</a>
+                            — Creative Commons Attribution-ShareAlike 4.0
+                        </span>
+                        <span style="color:#00cc66;font-family:monospace;">Citation</span>
+                        <span style="font-family:monospace;font-size:0.9em;color:#aaa;">Velt, R. (2026). <em>CyberQuest: Operation ZERFALL</em>.<br>
+                            <a href="https://github.com/ReinVelt/CyberQuest" target="_blank" rel="noopener" style="color:#00cc66;text-decoration:none;">github.com/ReinVelt/CyberQuest</a>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Story summary -->
+                <p style="font-size:0.87em;margin-bottom:6px;">
+                    Mysterious SSTV transmissions, a Russian infiltration operation, German military research
+                    facilities, radio telescopes in the Dutch countryside — and the 72-hour countdown has already started.
+                </p>
+
+                <!-- Controls -->
+                <p style="font-family:monospace;font-size:0.82em;color:#00cc66;margin:12px 0 5px;">▸ CONTROLS</p>
+                <ul style="margin-left:1.2rem;font-size:0.85em;">
+                    <li>Click highlighted areas to interact</li>
+                    <li>Use the inventory to combine and use items</li>
+                    <li>Press <kbd style="background:#222;border:1px solid #555;padding:1px 5px;border-radius:3px;font-size:0.85em;">H</kbd> for a hint at any time</li>
+                </ul>
+
+                <!-- Changelog — rendered from engine/changelog.js -->
+                <hr style="border:none;border-top:1px solid #0e2010;margin:16px 0 12px;">
+                <p style="font-family:monospace;font-size:0.82em;color:#00cc66;margin-bottom:8px;">▸ CHANGELOG</p>
+                <div id="about-changelog" style="font-family:monospace;font-size:0.78em;line-height:1.7;color:#aaa;max-height:180px;overflow-y:auto;background:#050f05;padding:10px 12px;border-radius:4px;border:1px solid #0a1f0a;"></div>
+                <div style="margin-top:8px;text-align:right;">
+                    <a href="https://github.com/ReinVelt/CyberQuest/releases" target="_blank" rel="noopener"
+                       style="font-family:monospace;font-size:0.76em;color:#00cc66;text-decoration:none;border:1px solid #00cc6644;padding:2px 8px;border-radius:4px;opacity:0.8;"
+                       onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+                        ↗ Full changelog on GitHub
+                    </a>
                 </div>
 
             </div>
@@ -301,6 +343,7 @@
     </div>
 
     <!-- Load Engine -->
+    <script src="engine/changelog.js?v=7"></script>
     <script src="engine/voice.js?v=7"></script>
     <script src="engine/evidence-viewer.js?v=7"></script>
     <script src="engine/puzzles/password-puzzle.js?v=7"></script>
