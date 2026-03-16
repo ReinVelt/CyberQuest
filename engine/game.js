@@ -266,7 +266,6 @@ class CyberQuestEngine {
             </div>
             <div id="game-bottom-bar">
                 <div id="game-menu">
-                    <button id="menu-pause" title="Pause / Resume (P)">⏸️ Pause</button>
                     <button id="menu-voice" title="Toggle Voice">🔊 Voice</button>
                     <button id="menu-movie" title="Toggle Movie / Accessibility Mode">🎬 Movie</button>
                     <button id="menu-hint" title="What to do next (H)" style="background:rgba(255,200,0,0.12);border-color:#ffcc00;color:#ffcc00;">💡 Hint</button>
@@ -372,7 +371,6 @@ class CyberQuestEngine {
             btn?.addEventListener('click', wrappedHandler);
             btn?.addEventListener('touchend', wrappedHandler);
         };
-        addButtonHandler('menu-pause',    () => this.togglePause());
         addButtonHandler('menu-save',     () => this.openSaveSlotModal('save'));
         addButtonHandler('menu-load',     () => this.openSaveSlotModal('load'));
         addButtonHandler('menu-voice',    () => this.toggleVoice());
@@ -1024,6 +1022,13 @@ class CyberQuestEngine {
             console.log(`Speaking: "${textStr.substring(0, 50)}..." as ${speaker || 'Narrator'}`);
             return this.voiceManager.speak(textStr, speaker);
         }
+        // Voice disabled: in accessibility (movie) mode, simulate reading time so text
+        // isn't skipped instantly. ~60 ms/character, minimum 1.5 s, maximum 12 s.
+        if (this.accessibilityMode) {
+            const textStr = typeof text === 'string' ? text : String(text);
+            const readMs = Math.min(12000, Math.max(1500, textStr.length * 60));
+            return this.wait(readMs);
+        }
         return Promise.resolve();
     }
 
@@ -1240,6 +1245,10 @@ class CyberQuestEngine {
         this._updateAccessibilityBadge();
 
         if (this.accessibilityMode) {
+            // Ensure voice is on when entering movie mode
+            if (!this.voiceEnabled) {
+                this.toggleVoice();
+            }
             this.showNotification('🎬 Movie Mode ON — sit back and enjoy the story');
             // If a scene with an accessibilityPath is already active, start runner
             const scene = this.scenes?.[this.currentScene];
@@ -2911,7 +2920,7 @@ class CyberQuestEngine {
             const val = f(name);
             const cls = val ? 'flag-on' : 'flag-off';
             const tick = val ? '✓' : '✗';
-            return `<button class="debug-flag-btn ${cls}" onclick="game.debugToggleFlag('${name}')">${name}:${tick}</button>`;
+            return `<button class="debug-flag-btn ${cls}" data-dbg-action="toggleFlag" data-dbg-flag="${name}">${name}:${tick}</button>`;
         };
         const cur = _g.gameState;
         const panel = document.createElement('div');
@@ -2920,18 +2929,18 @@ class CyberQuestEngine {
 
         // Scene jump helper
         const sb = (scene, label, extra) => {
-            const cmd = extra ? `${extra}game.loadScene('${scene}');game.toggleDebugPanel()` : `game.loadScene('${scene}');game.toggleDebugPanel()`;
             const active = cur.currentScene === scene ? ' style="background:#00ff88;color:#000;font-weight:bold"' : '';
-            return `<button onclick="${cmd}"${active}>${label || scene}</button>`;
+            const extraAttr = extra ? ` data-dbg-extra="${extra.replace(/"/g, '&quot;')}"` : '';
+            return `<button data-dbg-action="loadScene" data-dbg-scene="${scene}"${extraAttr}${active}>${label || scene}</button>`;
         };
         // Driving scene helper
         const drv = (dest, scene, label) => {
-            return `<button onclick="game.setFlag('driving_destination','${dest}');game.loadScene('${scene}');game.toggleDebugPanel()">${label}</button>`;
+            return `<button data-dbg-action="drive" data-dbg-dest="${dest}" data-dbg-scene="${scene}">${label}</button>`;
         };
         // Story part indicator
         const sp = (n) => {
             const active = cur.storyPart === n;
-            return `<span class="dbg-sp ${active ? 'dbg-sp-active' : ''}" onclick="game.debugSetStoryPart(${n})" title="Click to set story part ${n}">SP${n}</span>`;
+            return `<span class="dbg-sp ${active ? 'dbg-sp-active' : ''}" data-dbg-action="setSP" data-dbg-sp="${n}" title="Click to set story part ${n}">SP${n}</span>`;
         };
 
         panel.innerHTML = `
@@ -2941,8 +2950,8 @@ class CyberQuestEngine {
                 &nbsp;|&nbsp; Story Part: <b>${cur.storyPart}</b>
                 &nbsp;|&nbsp; Day ${cur.day} ${cur.time || ''}
                 &nbsp;|&nbsp;
-                <button onclick="game.debugAutoplay()" id="dbg-autoplay-btn" style="background:#00cc66;color:#000;font-weight:bold;padding:2px 8px;border:none;border-radius:3px;cursor:pointer;">▶ Autoplay</button>
-                <button onclick="game.debugStopAutoplay()" style="background:#cc3300;color:#fff;font-weight:bold;padding:2px 8px;border:none;border-radius:3px;cursor:pointer;">■ Stop</button>
+                <button data-dbg-action="autoplay" id="dbg-autoplay-btn" style="background:#00cc66;color:#000;font-weight:bold;padding:2px 8px;border:none;border-radius:3px;cursor:pointer;">▶ Autoplay</button>
+                <button data-dbg-action="stopAutoplay" style="background:#cc3300;color:#fff;font-weight:bold;padding:2px 8px;border:none;border-radius:3px;cursor:pointer;">■ Stop</button>
             </div>
             <div class="debug-content">
 
@@ -3327,7 +3336,7 @@ class CyberQuestEngine {
                     <div class="dbg-time" style="color:#888;">SP</div>
                     <div class="dbg-body">
                         <div class="dbg-scene-row" style="font-size:0.78rem;color:#888;">Story Part: <b style="color:#00ff88">${cur.storyPart}</b> — click to set →
-                            ${[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].map(n => `<button onclick="game.debugSetStoryPart(${n})" ${cur.storyPart === n ? 'style="background:#00ff88;color:#000;font-weight:bold"' : ''} class="dbg-sp-btn">${n}</button>`).join('')}
+                            ${[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20].map(n => `<button data-dbg-action="setSP" data-dbg-sp="${n}" ${cur.storyPart === n ? 'style="background:#00ff88;color:#000;font-weight:bold"' : ''} class="dbg-sp-btn">${n}</button>`).join('')}
                         </div>
                     </div>
                 </div>
@@ -3337,22 +3346,22 @@ class CyberQuestEngine {
                     <div class="dbg-body">
                         <div class="dbg-scene-row" style="font-size:0.78rem;color:#888;">Inventory:</div>
                         <div>
-                            <button onclick="game.giveDebugItem('flipper_zero')">Flipper Zero</button>
-                            <button onclick="game.giveDebugItem('meshtastic')">Meshtastic</button>
-                            <button onclick="game.giveDebugItem('usb_stick')">USB Stick</button>
-                            <button onclick="game.giveDebugItem('wifi_pineapple')">WiFi Pineapple</button>
-                            <button onclick="game.giveDebugItem('hackrf')">HackRF One</button>
-                            <button onclick="game.giveDebugItem('night_vision')">Night Vision</button>
-                            <button onclick="game.giveDebugItem('security_badge')">Security Badge</button>
-                            <button onclick="game.giveDebugItem('astron_mesh_radio')">Astron Mesh</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="flipper_zero">Flipper Zero</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="meshtastic">Meshtastic</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="usb_stick">USB Stick</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="wifi_pineapple">WiFi Pineapple</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="hackrf">HackRF One</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="night_vision">Night Vision</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="security_badge">Security Badge</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="astron_mesh_radio">Astron Mesh</button>
                         </div>
                         <div style="margin-top:4px;">
                             <span style="font-size:0.72rem;color:#888;">Evidence: </span>
-                            <button onclick="game.giveDebugItem('sstv_decoded_image')">SSTV Image</button>
-                            <button onclick="game.giveDebugItem('dwingeloo_signal_log')">Dwingeloo Log</button>
-                            <button onclick="game.giveDebugItem('relay_transmitter')">Relay Transmitter</button>
-                            <button onclick="game.giveDebugItem('modified_camera')">Modified Camera</button>
-                            <button onclick="game.giveDebugItem('zerfall_bt_node')">Zerfall BT Node</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="sstv_decoded_image">SSTV Image</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="dwingeloo_signal_log">Dwingeloo Log</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="relay_transmitter">Relay Transmitter</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="modified_camera">Modified Camera</button>
+                            <button data-dbg-action="giveItem" data-dbg-item="zerfall_bt_node">Zerfall BT Node</button>
                         </div>
                     </div>
                 </div>
@@ -3362,11 +3371,11 @@ class CyberQuestEngine {
                     <div class="dbg-body">
                         <div class="dbg-scene-row" style="font-size:0.78rem;color:#888;">Quick Presets:</div>
                         <div>
-                            <button onclick="game.setupKloosterTest();game.toggleDebugPanel()">✅ Klooster Test</button>
-                            <button onclick="game.debugPreset('unlock_field')">✅ Field Ops (SP 8)</button>
-                            <button onclick="game.debugPreset('unlock_facility')">✅ Facility (SP 12)</button>
-                            <button onclick="game.debugPreset('complete_all')">✅ ALL Flags True</button>
-                            <button onclick="game.debugPreset('reset_all')" style="border-color:#ff4444;color:#ff4444">⛔ Reset ALL</button>
+                            <button data-dbg-action="kloosterTest">✅ Klooster Test</button>
+                            <button data-dbg-action="preset" data-dbg-preset="unlock_field">✅ Field Ops (SP 8)</button>
+                            <button data-dbg-action="preset" data-dbg-preset="unlock_facility">✅ Facility (SP 12)</button>
+                            <button data-dbg-action="preset" data-dbg-preset="complete_all">✅ ALL Flags True</button>
+                            <button data-dbg-action="preset" data-dbg-preset="reset_all" style="border-color:#ff4444;color:#ff4444">⛔ Reset ALL</button>
                         </div>
                     </div>
                 </div>
@@ -3376,11 +3385,11 @@ class CyberQuestEngine {
                     <div class="dbg-body">
                         <div class="dbg-scene-row" style="font-size:0.78rem;color:#888;">Test Tools:</div>
                         <div>
-                            <button onclick="game.testEvidenceViewer()">Evidence Viewer</button>
-                            <button onclick="game.testPasswordPuzzle()">Password Puzzle</button>
-                            <button onclick="game.testChatSignal()">Signal Chat</button>
-                            <button onclick="game.testChatMeshtastic()">Meshtastic Chat</button>
-                            <button onclick="game.testChatBBS()">BBS Terminal</button>
+                            <button data-dbg-action="testTool" data-dbg-tool="evidenceViewer">Evidence Viewer</button>
+                            <button data-dbg-action="testTool" data-dbg-tool="passwordPuzzle">Password Puzzle</button>
+                            <button data-dbg-action="testTool" data-dbg-tool="chatSignal">Signal Chat</button>
+                            <button data-dbg-action="testTool" data-dbg-tool="chatMeshtastic">Meshtastic Chat</button>
+                            <button data-dbg-action="testTool" data-dbg-tool="chatBBS">BBS Terminal</button>
                         </div>
                     </div>
                 </div>
@@ -3388,6 +3397,62 @@ class CyberQuestEngine {
 
             </div>
         `;
+
+        // Delegated event listener — CSP-safe, no inline onclick handlers
+        panel.addEventListener('click', e => {
+            const el = e.target.closest('[data-dbg-action]');
+            if (!el) return;
+            const action = el.dataset.dbgAction;
+            switch (action) {
+                case 'toggleFlag':
+                    _g.debugToggleFlag(el.dataset.dbgFlag);
+                    break;
+                case 'loadScene': {
+                    const extra = el.dataset.dbgExtra;
+                    if (extra) {
+                        // Parse known flag-set pattern: game.setFlag('key','val');
+                        const m = extra.match(/game\.setFlag\('([^']+)','([^']+)'\)/);
+                        if (m) _g.setFlag(m[1], m[2]);
+                    }
+                    _g.loadScene(el.dataset.dbgScene);
+                    _g.toggleDebugPanel();
+                    break;
+                }
+                case 'drive':
+                    _g.setFlag('driving_destination', el.dataset.dbgDest);
+                    _g.loadScene(el.dataset.dbgScene);
+                    _g.toggleDebugPanel();
+                    break;
+                case 'setSP':
+                    _g.debugSetStoryPart(parseInt(el.dataset.dbgSp));
+                    break;
+                case 'autoplay':
+                    _g.debugAutoplay();
+                    break;
+                case 'stopAutoplay':
+                    _g.debugStopAutoplay();
+                    break;
+                case 'giveItem':
+                    _g.giveDebugItem(el.dataset.dbgItem);
+                    break;
+                case 'preset':
+                    _g.debugPreset(el.dataset.dbgPreset);
+                    break;
+                case 'kloosterTest':
+                    _g.setupKloosterTest();
+                    _g.toggleDebugPanel();
+                    break;
+                case 'testTool': {
+                    const tool = el.dataset.dbgTool;
+                    if (tool === 'evidenceViewer') _g.testEvidenceViewer();
+                    else if (tool === 'passwordPuzzle') _g.testPasswordPuzzle();
+                    else if (tool === 'chatSignal') _g.testChatSignal();
+                    else if (tool === 'chatMeshtastic') _g.testChatMeshtastic();
+                    else if (tool === 'chatBBS') _g.testChatBBS();
+                    break;
+                }
+            }
+        });
 
         // Add CSS (only once)
         if (!document.getElementById('debug-panel-styles')) {

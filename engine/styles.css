@@ -700,22 +700,6 @@ body {
     border-color: var(--color-text-dim);
 }
 
-/* Pause button */
-#menu-pause {
-    min-width: 100px;
-}
-
-#menu-pause.paused {
-    background: linear-gradient(135deg, #1a3a1a 0%, #0a2a0a 100%);
-    border-color: #44ff44;
-    color: #44ff44;
-    animation: pause-btn-pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pause-btn-pulse {
-    0%, 100% { box-shadow: 0 0 4px rgba(68, 255, 68, 0.3); }
-    50% { box-shadow: 0 0 12px rgba(68, 255, 68, 0.6); }
-}
 
 /* Pause overlay — covers the entire game */
 #pause-overlay {

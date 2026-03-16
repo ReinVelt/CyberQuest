@@ -68,6 +68,7 @@ function initGame() {
     game.registerScene(VideocallScene);
     game.registerScene(GardenScene);
     game.registerScene(GardenBackScene);
+    game.registerScene(SitMowerScene);
     game.registerScene(KloosterScene);
     game.registerScene(UsbDiscoveryScene);
     game.registerScene(CarDiscoveryScene);

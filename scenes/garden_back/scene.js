@@ -101,31 +101,23 @@ const GardenBackScene = {
             height: (120 / 1080) * 100,
             cursor: 'pointer',
             action: function(game) {
-                const thoughts = [
-                    [
-                        { speaker: 'Narrator', text: '*Ryan looks at the sit-on mower. The grass IS getting long.*' },
-                        { speaker: 'Ryan', text: 'The zitmaaier. Best thinking machine ever built.' },
-                        { speaker: 'Ryan', text: 'Something about the rhythm. Engine humming, blades spinning, rows appearing.' },
-                        { speaker: 'Ryan', text: 'Your hands steer but your brain wanders. Free-association mode.' },
-                        { speaker: 'Ryan', text: 'I\'ve solved more bugs on this mower than at my desk.' },
-                        { speaker: 'Ryan', text: 'Monotone motion frees the creative mind. It\'s almost meditative.' },
-                        { speaker: 'Ryan', text: 'Maybe I should take a ride. The grass needs it. And so does my brain.' }
-                    ],
-                    [
-                        { speaker: 'Ryan', text: 'The mower. My mobile think tank.' },
-                        { speaker: 'Ryan', text: 'Last week I rode for ninety minutes. Came back with the solution to a race condition.' },
-                        { speaker: 'Ryan', text: 'The lawn looked perfect too. Win-win.' },
-                        { speaker: 'Ryan', text: 'There\'s research on this. Repetitive physical tasks activate the default mode network.' },
-                        { speaker: 'Ryan', text: 'Same brain state as showering or long drives. Where creativity lives.' }
-                    ],
-                    [
-                        { speaker: 'Ryan', text: 'Green machine. Twelve horsepower of creative inspiration.' },
-                        { speaker: 'Ryan', text: 'Max says I mow too often. I say I\'m working.' },
-                        { speaker: 'Ryan', text: 'She doesn\'t buy it. But the lawn looks great.' }
-                    ]
-                ];
-                const idx = Math.floor(Math.random() * thoughts.length);
-                game.startDialogue(thoughts[idx]);
+                if (game.getFlag('garden_mowed')) {
+                    const done = [
+                        [{ speaker: 'Ryan', text: 'Already mowed. The lawn looks perfect.' }],
+                        [{ speaker: 'Ryan', text: 'Nope. That grass is pristine. No excuse to ride again.' },
+                         { speaker: 'Ryan', text: '...well, maybe later.' }],
+                        [{ speaker: 'Ryan', text: 'The zitmaaier rests. Its work is done. For now.' }],
+                    ];
+                    game.startDialogue(done[Math.floor(Math.random() * done.length)]);
+                    return;
+                }
+                game.startDialogue([
+                    { speaker: 'Narrator', text: '*Ryan looks at the sit-on mower. The grass IS getting long.*' },
+                    { speaker: 'Ryan', text: 'The zitmaaier. Best thinking machine ever built.' },
+                    { speaker: 'Ryan', text: 'Maybe I should take a ride. The grass needs it. And so does my brain.' },
+                ], () => {
+                    game.loadScene('sitmower');
+                });
             }
         },
 
