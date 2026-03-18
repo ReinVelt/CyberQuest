@@ -1,11 +1,11 @@
 /**
  * USB Discovery — Hollywood Cinematic Scene
- * 
- * A tense, multi-shot cinematic that plays ONCE when Ryan walks to his Volvo
- * at Ter Apel Klooster and discovers the USB stick on the door handle.
- * 
- * Flow: klooster (click Volvo) → usb_discovery (cinematic) → car_discovery (pick up USB)
- * Only triggers when !picked_up_usb. If already picked up, klooster skips straight to driving.
+ *
+ * A tense, multi-shot cinematic that plays ONCE when Ryan approaches the stone bench
+ * at Ter Apel Klooster and discovers the USB stick taped underneath it.
+ *
+ * Flow: klooster (click bench after courtyard) → usb_discovery (cinematic) → car_discovery (pick up USB)
+ * Only triggers when !found_usb_stick. Gate: checked_courtyard must be set.
  */
 
 const UsbDiscoveryScene = {
@@ -372,15 +372,15 @@ const UsbDiscoveryScene = {
             '<div class="ud-flash-overlay" id="ud-flash"></div>' +
             '<button class="ud-skip" id="ud-skip">SKIP ▶▶</button>' +
 
-            // SHOT 1: ESTABLISH — Parking lot, dark monastery in background
+            // SHOT 1: ESTABLISH — Monastery courtyard, dark and empty
             '<div class="ud-shot" id="ud-shot-1" style="background:#0a0a18">' +
                 '<div class="ud-bg-image" style="' +
                     'background: linear-gradient(to bottom, #0f0f28 0%, #1a1a35 40%, #0a0f12 70%, #080a0c 100%);' +
                     'animation: ud-slow-zoom 6s ease-out forwards;' +
                 '"></div>' +
                 '<div style="position:relative;z-index:5">' +
-                    '<div class="ud-location">Ter Apel Klooster — Parking Lot</div>' +
-                    '<div class="ud-time">23:14 — 14 minutes past the meet</div>' +
+                    '<div class="ud-location">Ter Apel Klooster — Monastery Courtyard</div>' +
+                    '<div class="ud-time">23:03 — She sent the message. Check the bench.</div>' +
                 '</div>' +
             '</div>' +
 
@@ -404,15 +404,15 @@ const UsbDiscoveryScene = {
                 '</div>' +
             '</div>' +
 
-            // SHOT 4: CAR APPROACH — the Volvo in shadow
+            // SHOT 4: BENCH APPROACH — the stone bench in moonlight
             '<div class="ud-shot" id="ud-shot-4" style="background:#080a10">' +
                 '<div class="ud-bg-image" style="' +
                     'background: linear-gradient(to top, #0a0f12 0%, #0f1520 50%, #0a0a18 100%);' +
                     'animation: ud-slow-zoom 5s ease-out forwards;' +
                 '"></div>' +
                 '<div style="position:relative;z-index:5">' +
-                    '<div class="ud-narration" style="animation-delay:0.3s">The Volvo sits alone under the old oak.</div>' +
-                    '<div class="ud-narration" style="animation-delay:2s;margin-top:16px;color:#9a968a">Moonlight catches something on the door handle.</div>' +
+                    '<div class="ud-narration" style="animation-delay:0.3s">The stone bench stands alone in the monastery courtyard.</div>' +
+                    '<div class="ud-narration" style="animation-delay:2s;margin-top:16px;color:#9a968a">Moonlight catches something beneath the seat.</div>' +
                 '</div>' +
             '</div>' +
 
@@ -423,14 +423,14 @@ const UsbDiscoveryScene = {
                 '</div>' +
             '</div>' +
 
-            // SHOT 6: CLOSE-UP — door handle detail, something taped
+            // SHOT 6: CLOSE-UP — underside of bench, something taped
             '<div class="ud-shot" id="ud-shot-6" style="background:#0c0c10">' +
                 '<div class="ud-bg-image" style="' +
                     'background: radial-gradient(ellipse at 45% 50%, #1a1a2a 0%, #0a0a14 60%, #060608 100%);' +
                     'animation: ud-slow-zoom 4s ease-out forwards;' +
                 '"></div>' +
                 '<div style="position:relative;z-index:5">' +
-                    '<div class="ud-narration" style="animation-delay:0.3s">A black USB stick. Taped to the underside of the handle.</div>' +
+                    '<div class="ud-narration" style="animation-delay:0.3s">A black USB stick. Taped under the stone bench.</div>' +
                     '<div class="ud-whisper" style="animation: ud-fade-in 2s 2s forwards;margin-top:30px;animation: ud-fade-in 2s 2s forwards, ud-pulse-glow 2s 3s infinite">' +
                         'TRUST THE PROCESS — AIR-GAPPED ONLY' +
                     '</div>' +
@@ -443,7 +443,7 @@ const UsbDiscoveryScene = {
                     '<div class="ud-thought" style="animation: ud-fade-in 1.5s 0.3s forwards">They watched me walk in.</div>' +
                     '<div class="ud-thought" style="animation: ud-fade-in 1.5s 1.5s forwards;margin-top:16px">Watched me search the courtyard.</div>' +
                     '<div class="ud-thought" style="animation: ud-fade-in 1.5s 2.8s forwards;margin-top:16px">Watched me give up.</div>' +
-                    '<div class="ud-thought" style="animation: ud-fade-in 1.5s 4.2s forwards;margin-top:30px;color:#e0d0a0;font-size:clamp(18px,2.6vw,36px)">The car was the dead drop all along.</div>' +
+                    '<div class="ud-thought" style="animation: ud-fade-in 1.5s 4.2s forwards;margin-top:30px;color:#e0d0a0;font-size:clamp(18px,2.6vw,36px)">The bench was the dead drop all along.</div>' +
                 '</div>' +
             '</div>' +
 
@@ -464,7 +464,7 @@ const UsbDiscoveryScene = {
 
         // ─── SHOT SEQUENCER ─────────────────────────────────
         const shots = [
-            { id: 1, start: 500,   dur: 5000  },  // Establish: parking lot
+            { id: 1, start: 500,   dur: 5000  },  // Establish: monastery courtyard
             { id: 2, start: 5500,  dur: 5500  },  // Walking on gravel
             { id: 3, start: 11000, dur: 5000  },  // Inner monologue
             { id: 4, start: 16000, dur: 4500  },  // Car approach

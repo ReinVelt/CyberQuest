@@ -488,10 +488,9 @@ const GardenScene = {
             });
         }
 
-        // WSRT Parking Area — always available as a day drive
+        // WSRT Parking Area — always available as a day drive, always re-visitable
         {
             const astronUnlocked = !!game.getFlag('astron_unlocked');
-            const visitedParking = !!game.getFlag('visited_wsrt_parking');
             const visitedAstron = !!game.getFlag('visited_astron');
             destinations.push({
                 id: 'wsrt_parking',
@@ -504,7 +503,7 @@ const GardenScene = {
                 drivingScene: 'driving_day',
                 drivingDest: astronUnlocked && !visitedAstron ? 'astron' : 'wsrt_parking',
                 night: false,
-                visited: astronUnlocked ? visitedAstron : visitedParking,
+                visited: false,
                 urgent: astronUnlocked && !visitedAstron
             });
         }
@@ -575,7 +574,7 @@ const GardenScene = {
             });
         }
 
-        // Hackerspace Drenthe — always available
+        // Hackerspace Drenthe — always available and always re-visitable
         {
             const hour = parseInt(game.gameState.time.split(':')[0], 10);
             const isNight = hour >= 20 || hour < 7;
@@ -588,7 +587,7 @@ const GardenScene = {
                 drivingScene: isNight ? 'driving' : 'driving_day',
                 drivingDest: 'hackerspace',
                 night: isNight,
-                visited: !!game.getFlag('visited_hackerspace'),
+                visited: false,
                 urgent: false
             });
         }

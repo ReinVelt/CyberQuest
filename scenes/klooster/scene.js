@@ -25,9 +25,9 @@ const KloosterScene = {
         'right-wing',     // explore right wing
         'well',           // investigate the ancient well
         'garden',         // inspect the hedge garden
-        'bench',          // sit and wait on the stone bench
-        'courtyard',      // main story beat: 23:00, no one here → check the car
-        'volvo',          // approach car → USB discovery → drives home
+        'courtyard',      // main story beat: 23:00, no one here → sets checked_courtyard + Meshtastic clue
+        'bench',          // checked_courtyard=true → triggers USB discovery cinematic → car_discovery
+        'volvo',          // fallback: if player returns to klooster after picking up USB → drive home
     ],
 
     // Random idle thoughts for this scene
@@ -89,9 +89,28 @@ const KloosterScene = {
                         { speaker: 'Ryan', text: '23:00. Exactly when they said.' },
                         { speaker: 'Ryan', text: 'Nobody here. Surprise, surprise.' },
                         { speaker: 'Narrator', text: '*He waits in the shadows for fifteen minutes*' },
-                        { speaker: 'Ryan', text: 'Screw this. Maybe it was all a joke.' },
-                        { speaker: 'Ryan', text: 'Better check my car.' }
-                    ]);
+                        { speaker: 'Ryan', text: 'Screw this. Maybe it was all a joke.' }
+                    ], () => {
+                        // A few seconds after 23:00 — Eva sends a Meshtastic message
+                        setTimeout(() => {
+                            game.showNotification('📡 Meshtastic — incoming message from E');
+                        }, 3500);
+                        setTimeout(() => {
+                            game.showChat({
+                                id: 'eva_bench_clue',
+                                type: 'meshtastic',
+                                contact: 'E',
+                                contactSubtitle: 'Node: ??? — encrypted',
+                                messages: [
+                                    {
+                                        from: 'E',
+                                        text: 'Look under the stone bench. There is the evidence. E',
+                                        timestamp: '23:03'
+                                    }
+                                ]
+                            });
+                        }, 4500);
+                    });
                 } else {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Still no one. Time to go.' }
@@ -145,12 +164,25 @@ const KloosterScene = {
             width: (180 / 1920) * 100, // 9.38%
             height: (65 / 1080) * 100, // 6.02%
             cursor: 'use',
-            interactions: {
-                look: (game) => {
-                    game.showDialogue([
-                        "A cold stone bench. Monks used these for meditation.",
-                        "I use it for waiting."
-                    ], "Ryan");
+            action: function(game) {
+                if (game.getFlag('picked_up_usb')) {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'The bench where I found the drop. That USB changed everything.' }
+                    ]);
+                } else if (game.getFlag('found_usb_stick')) {
+                    // Found but not picked up yet — return to pickup scene
+                    game.loadScene('car_discovery');
+                } else if (game.getFlag('checked_courtyard')) {
+                    // Courtyard checked + Meshtastic clue received — discover the USB under the bench
+                    game.sceneTimeout(() => {
+                        game.loadScene('usb_discovery');
+                    }, 500);
+                } else {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'A cold stone bench. Monks used these for meditation.' },
+                        { speaker: 'Ryan', text: 'I use it for waiting.' },
+                        { speaker: 'Ryan', text: 'Better check the courtyard first.' }
+                    ]);
                 }
             }
         },
@@ -177,14 +209,7 @@ const KloosterScene = {
                     picked_up_usb: game.getFlag('picked_up_usb')
                 });
                 
-                if (!game.getFlag('found_usb_stick')) {
-                    // First time approaching the car — play Hollywood cinematic
-                    console.log('[Klooster] First Volvo click → USB discovery cinematic');
-                    
-                    game.sceneTimeout(() => {
-                        game.loadScene('usb_discovery');
-                    }, 500);
-                } else if (game.getFlag('picked_up_usb')) {
+                if (game.getFlag('picked_up_usb')) {
                     // Already picked up USB, allow driving home
                     game.startDialogue([
                         { speaker: 'Ryan', text: '*Gets in the car*' },
@@ -197,9 +222,14 @@ const KloosterScene = {
                         console.log('Klooster: Loading driving scene');
                         game.loadScene('driving');
                     }, 2000);
-                } else {
-                    // Found USB but haven't picked it up yet - go back to car discovery
+                } else if (game.getFlag('found_usb_stick')) {
+                    // Found USB at bench but haven't picked it up yet
                     game.loadScene('car_discovery');
+                } else {
+                    game.startDialogue([
+                        { speaker: 'Ryan', text: 'My old Volvo. Parked in the shadows.' },
+                        { speaker: 'Ryan', text: 'I should check around first.' }
+                    ]);
                 }
             }
         },
@@ -673,7 +703,7 @@ const KloosterScene = {
     onEnter: function(game) {
         console.log('[Klooster] Scene entered');
         console.log('[Klooster] Hotspots:', this.hotspots.map(h => h.id));
-        game.showNotification('Arrived at Ter Apel Klooster - Click the Volvo (bottom right)');
+        game.showNotification('Arrived at Ter Apel Klooster — check the courtyard at 23:00');
 
         // Mark visited so the garden Volvo picker won't offer this destination again
         game.setFlag('visited_klooster', true);

@@ -1,23 +1,23 @@
 /**
- * Car Discovery Scene - USB Stick on Door Handle
- * Ryan discovers the USB stick left under his Volvo's door handle at Ter Apel Klooster
+ * Bench Discovery Scene - USB Stick Under the Stone Bench
+ * Ryan retrieves the USB stick taped under the stone bench at Ter Apel Klooster
  */
 
 const CarDiscoveryScene = {
     id: 'car_discovery',
-    name: 'Volvo Door Handle',
+    name: 'Stone Bench',
     
-    // SVG background - close-up of car door with USB stick
+    // SVG background - monastery bench with USB detail inset
     background: 'assets/images/scenes/car_discovery.svg',
     
     // Ambient description
-    description: 'A close-up view of the Volvo\'s door handle. Something is hidden underneath.',
+    description: 'The stone bench in the monastery courtyard. Something is taped underneath the seat.',
     
     // Player starting position (off-screen, this is a static discovery scene)
     playerStart: { x: 50, y: 90 },
 
-    // 🎬 Accessibility / Movie Mode
-    accessibilityPath: ['usb_stick', 'car'],
+    // 🎥 Accessibility / Movie Mode
+    accessibilityPath: ['usb_stick', 'under_bench', 'car'],
 
     // Scene hotspots
     hotspots: [
@@ -36,10 +36,10 @@ const CarDiscoveryScene = {
                     game.setFlag('picked_up_usb', true);
                     
                     game.startDialogue([
-                        { speaker: 'Narrator', text: '*Ryan carefully removes the USB stick from under the door handle*' },
+                        { speaker: 'Narrator', text: '*Ryan carefully peels the USB stick from under the stone bench*' },
                         { speaker: 'Ryan', text: 'A piece of tape wrapped around it with handwritten text...' },
                         { speaker: 'Narrator', text: '"TRUST THE PROCESS - AIR-GAPPED ONLY"' },
-                        { speaker: 'Ryan', text: 'They watched me walk in. Watched me look around.' },
+                        { speaker: 'Ryan', text: 'They watched me walk in. Watched me search the courtyard.' },
                         { speaker: 'Ryan', text: 'Never meant to meet face-to-face.' },
                         { speaker: 'Ryan', text: 'This IS the meeting.' },
                         { speaker: 'Ryan', text: 'Back to the mancave. Time to see what this is.' }
@@ -49,7 +49,7 @@ const CarDiscoveryScene = {
                     game.addItem({
                         id: 'usb_stick',
                         name: 'USB Stick',
-                        description: 'Black USB stick with note: "TRUST THE PROCESS - AIR-GAPPED ONLY". Whatever is on this drive, someone risked everything to deliver it.',
+                        description: 'Black USB stick with note: "TRUST THE PROCESS - AIR-GAPPED ONLY". Taped under a monastery bench — whoever left this planned every detail.',
                         icon: 'assets/images/icons/usb-stick.svg'
                     });
                     
@@ -76,24 +76,24 @@ const CarDiscoveryScene = {
             }
         },
         {
-            id: 'door_handle',
-            name: 'Door Handle',
-            // Actual car door handle on the left side
-            x: 35,  // (670/1920) * 100
-            y: 65,  // (700/1080) * 100
-            width: 10,  // (190/1920) * 100
-            height: 10,  // (108/1080) * 100
+            id: 'under_bench',
+            name: 'Underside of Bench',
+            // The central underside of the bench seat (between the legs)
+            x: 21,  // (400/1920) * 100
+            y: 44,  // (480/1080) * 100
+            width: 58,  // (1120/1920) * 100
+            height: 11,  // (115/1080) * 100
             cursor: 'look',
             action: function(game) {
                 if (!game.getFlag('picked_up_usb')) {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Wait. What the hell?' },
-                        { speaker: 'Ryan', text: 'There\'s something under the door handle...' },
+                        { speaker: 'Ryan', text: 'There\'s something taped under the bench seat...' },
                         { speaker: 'Narrator', text: '*A USB stick. Someone WAS here.*' }
                     ]);
                 } else {
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'Just the door handle now. The USB stick is safely in my pocket.' }
+                        { speaker: 'Ryan', text: 'Just the empty bench now. The USB is safely in my pocket.' }
                     ]);
                 }
             }
@@ -101,12 +101,11 @@ const CarDiscoveryScene = {
         {
             id: 'car',
             name: 'Get in Car',
-            // Entire car body area: translate(250,400), body from x=60 to x=1220
-            // Abs: x=310 to x=1470, y=600 to y=905
-            x: 13,    // (250/1920) * 100
-            y: 55,    // (600/1080) * 100
-            width: 64, // (1220/1920) * 100 — covers full car including rear
-            height: 35, // (380/1080) * 100
+            // Volvo parked in background (left side)
+            x: 2,
+            y: 55,
+            width: 20,
+            height: 28,
             cursor: 'use',
             action: function(game) {
                 if (game.getFlag('picked_up_usb')) {
@@ -123,7 +122,7 @@ const CarDiscoveryScene = {
                     }, 2000);
                 } else {
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'Not yet. There\'s something on the door handle...' }
+                        { speaker: 'Ryan', text: 'Not yet. I need to get that USB stick from under the bench.' }
                     ]);
                 }
             }
@@ -182,10 +181,10 @@ const CarDiscoveryScene = {
             
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: 'Narrator', text: '*Ryan approaches the Volvo*' },
-                    { speaker: 'Ryan', text: 'Time to go home. What a waste of—' },
+                    { speaker: 'Narrator', text: '*Ryan passes the stone bench on the way to his car*' },
+                    { speaker: 'Ryan', text: 'Nobody came. What a waste—' },
                     { speaker: 'Ryan', text: 'Wait. What the hell?' },
-                    { speaker: 'Ryan', text: 'There\'s something taped under the door handle...' }
+                    { speaker: 'Ryan', text: 'There\'s something taped under the bench...' }
                 ]);
                 
                 setTimeout(() => {

@@ -3071,7 +3071,7 @@ class CyberQuestEngine {
                 <div class="dbg-step">
                     <div class="dbg-time">23:15</div>
                     <div class="dbg-body">
-                        <div class="dbg-scene-row">${sb('car_discovery','🚙 Car Discovery')} — Find USB stick taped to Volvo</div>
+                        <div class="dbg-scene-row">${sb('car_discovery','🪑 Bench Discovery')} — Find USB stick taped under monastery bench</div>
                         <div class="dbg-flags">${fb('found_usb_stick')}${fb('picked_up_usb')}</div>
                     </div>
                 </div>

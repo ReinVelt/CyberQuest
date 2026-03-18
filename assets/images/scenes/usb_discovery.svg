@@ -147,58 +147,45 @@
   <!-- Moonlight pool on ground -->
   <rect width="1920" height="1080" fill="url(#moonPool)"/>
 
-  <!-- ===== THE VOLVO 240 ===== -->
-  <g transform="translate(820, 520)" filter="url(#shadow)">
-    <!-- Shadow underneath car -->
-    <ellipse cx="220" cy="195" rx="250" ry="15" fill="rgba(0,0,0,0.35)"/>
+  <!-- ===== STONE BENCH (the dead drop location) ===== -->
+  <g transform="translate(400, 620)" filter="url(#shadow)">
+    <!-- Shadow under bench -->
+    <ellipse cx="560" cy="175" rx="520" ry="18" fill="rgba(0,0,0,0.4)"/>
 
-    <!-- Body -->
-    <path d="M40,100 L40,60 Q45,55 60,55 L120,10 Q130,5 150,5 L340,5 Q360,5 370,15 L400,60 Q410,58 420,60 L430,100 Z"
-          fill="url(#volvoBody)" stroke="#1a2028" stroke-width="1"/>
+    <!-- Stone seat slab (top surface) -->
+    <rect x="0" y="40" width="1120" height="85" rx="4" fill="#4a4a52"/>
+    <!-- Seat surface highlight (moonlight) -->
+    <rect x="10" y="42" width="1100" height="18" rx="2" fill="#5e5e68" opacity="0.6"/>
+    <!-- Seat front face -->
+    <rect x="0" y="125" width="1120" height="28" rx="3" fill="#3a3a42"/>
 
-    <!-- Roof line -->
-    <path d="M120,10 Q130,5 150,5 L340,5 Q360,5 370,15" fill="none" stroke="#4a5560" stroke-width="0.5" opacity="0.3"/>
+    <!-- Left stone leg -->
+    <rect x="40" y="153" width="170" height="210" rx="5" fill="#3e3e48"/>
+    <rect x="48" y="157" width="154" height="20" rx="2" fill="#504e58" opacity="0.5"/>
 
-    <!-- Windows -->
-    <path d="M130,15 L155,15 L155,55 L125,55 Z" fill="#0a1218" opacity="0.8" stroke="#2a3540" stroke-width="0.5"/>
-    <path d="M160,15 L260,15 L260,55 L160,55 Z" fill="#0a1218" opacity="0.8" stroke="#2a3540" stroke-width="0.5"/>
-    <path d="M265,15 L350,18 L365,55 L265,55 Z" fill="#0a1218" opacity="0.8" stroke="#2a3540" stroke-width="0.5"/>
+    <!-- Right stone leg -->
+    <rect x="910" y="153" width="170" height="210" rx="5" fill="#3e3e48"/>
+    <rect x="918" y="157" width="154" height="20" rx="2" fill="#504e58" opacity="0.5"/>
 
-    <!-- Moonlight reflection on roof -->
-    <path d="M200,6 L300,6 L290,8 L210,8 Z" fill="rgba(180,190,210,0.1)"/>
+    <!-- Ground contact / base plates -->
+    <rect x="20" y="355" width="210" height="14" rx="2" fill="#2e2e36"/>
+    <rect x="890" y="355" width="210" height="14" rx="2" fill="#2e2e36"/>
 
-    <!-- Front -->
-    <rect x="38" y="60" width="15" height="35" rx="2" fill="#1e2830"/>
-    <!-- Headlights (off) -->
-    <rect x="38" y="62" width="12" height="12" rx="2" fill="#1a2228"/>
+    <!-- === UNDERSIDE AREA (where USB is hidden) === -->
+    <!-- Space beneath the seat between the legs — barely lit -->
+    <rect x="210" y="153" width="700" height="70" fill="#14141c" opacity="0.9" rx="2"/>
 
-    <!-- Rear -->
-    <rect x="420" y="60" width="12" height="35" rx="2" fill="#1e2830"/>
-    <!-- Tail light -->
-    <rect x="422" y="62" width="8" height="10" rx="1" fill="#2a1015"/>
-
-    <!-- Wheels -->
-    <circle cx="110" cy="100" r="28" fill="#0a0c0e"/>
-    <circle cx="110" cy="100" r="20" fill="#141618"/>
-    <circle cx="110" cy="100" r="8" fill="#1a1c1e"/>
-    <circle cx="360" cy="100" r="28" fill="#0a0c0e"/>
-    <circle cx="360" cy="100" r="20" fill="#141618"/>
-    <circle cx="360" cy="100" r="8" fill="#1a1c1e"/>
-
-    <!-- === DOOR HANDLE (the important bit) === -->
-    <rect x="175" y="60" width="30" height="6" rx="2" fill="#2a3540" stroke="#1a2028" stroke-width="0.5"/>
-
-    <!-- === USB STICK (barely visible, mysterious) === -->
-    <g transform="translate(190, 66)">
-      <!-- Subtle glow around it -->
-      <circle cx="0" cy="4" r="20" fill="url(#usbGlow)">
-        <animate attributeName="r" values="18;22;18" dur="3s" repeatCount="indefinite"/>
+    <!-- === USB STICK (taped under seat — barely visible) === -->
+    <g transform="translate(500, 160)">
+      <!-- Subtle amber glow -->
+      <circle cx="30" cy="20" r="55" fill="url(#usbGlow)">
+        <animate attributeName="r" values="50;65;50" dur="4s" repeatCount="indefinite"/>
       </circle>
-      <!-- The USB stick itself (tiny, dark) -->
-      <rect x="-4" y="0" width="8" height="14" rx="1" fill="#1a1a1e" stroke="#2a2a30" stroke-width="0.5"/>
-      <rect x="-2" y="12" width="4" height="4" rx="0.5" fill="#c0c0c0" opacity="0.3"/>
-      <!-- Tape -->
-      <rect x="-6" y="3" width="12" height="3" rx="0.5" fill="#888" opacity="0.2"/>
+      <!-- Tape strip -->
+      <rect x="0" y="8" width="60" height="8" rx="1" fill="#787878" opacity="0.35"/>
+      <!-- USB body (tiny, dark, mysterious) -->
+      <rect x="8" y="2" width="14" height="28" rx="1.5" fill="#181820" stroke="#2a2a32" stroke-width="0.5"/>
+      <rect x="10" y="26" width="10" height="6" rx="0.5" fill="#a0a0a8" opacity="0.2"/>
     </g>
   </g>
 
@@ -232,5 +219,5 @@
   <rect width="1920" height="1080" fill="url(#vignette)"/>
 
   <!-- Scene label (very subtle) -->
-  <text x="960" y="1065" text-anchor="middle" font-family="monospace" font-size="10" fill="#1a2028" opacity="0.15" letter-spacing="4">TER APEL — 23:14</text>
+  <text x="960" y="1065" text-anchor="middle" font-family="monospace" font-size="10" fill="#1a2028" opacity="0.15" letter-spacing="4">TER APEL KLOOSTER — 23:03</text>
 </svg>
