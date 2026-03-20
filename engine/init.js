@@ -134,6 +134,38 @@ function continueGame() {
     game.showNotification('Game loaded successfully');
 }
 
+function startInteractiveMovie() {
+    titleScreen.classList.remove('visible');
+
+    // Clear any existing save so movie always runs from the start
+    localStorage.removeItem('cyberquest_autosave');
+    localStorage.removeItem('cyberquest_save');
+
+    window.location.hash = '';
+
+    // Initialize game engine
+    initGame();
+
+    // Enable accessibility / movie mode before the first scene loads
+    game.accessibilityMode = true;
+    game.settings.accessibilityMode = true;
+    game._saveSettings();
+    game._updateAccessibilityBadge();
+
+    // Enable voice (movie mode needs TTS)
+    if (!game.voiceEnabled) {
+        game.toggleVoice();
+    }
+
+    // Load intro scene — the accessibility runner attaches automatically
+    game.loadScene('intro');
+
+    // Show a brief welcome notification after the scene is live
+    setTimeout(() => {
+        game.showNotification('🎬 Interactive Movie — sit back and enjoy the story');
+    }, 1500);
+}
+
 function showAbout() {
     // Render changelog dynamically from engine/changelog.js
     const container = document.getElementById('about-changelog');
@@ -160,6 +192,7 @@ function hideAbout() {
 // Event listeners
 document.getElementById('btn-new-game').addEventListener('click', startNewGame);
 document.getElementById('btn-continue').addEventListener('click', continueGame);
+document.getElementById('btn-movie').addEventListener('click', startInteractiveMovie);
 document.getElementById('btn-about').addEventListener('click', showAbout);
 document.getElementById('close-about').addEventListener('click', hideAbout);
 document.getElementById('about-modal').addEventListener('click', (e) => {
