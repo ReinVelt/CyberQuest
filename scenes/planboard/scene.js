@@ -385,16 +385,16 @@ const PlanboardScene = {
     return `
       <div style="font-size:clamp(5px,0.65vw,9px);line-height:1.6;color:#2a2a2a;">
         <div style="text-align:center;font-weight:bold;font-size:1.1em;margin-bottom:4%;border-bottom:1px solid #8a7040;padding-bottom:3%;">
-          EM PULSE WEAPON — SPECS
+          PROJECT ECHO — EM WEAPON
         </div>
         <div style="display:flex;gap:4%;">
           <img src="assets/images/overlayimg/planboard-weapon-schematic.svg" style="width:48%;flex-shrink:0;border:1px solid #ccc;background:#faf8f0;border-radius:2px;">
           <div style="flex:1;">
-            <b>Type:</b> EM Pulse<br>
-            <b>Freq:</b> 14.230 MHz<br>
-            <b>Power:</b> 1.21 GW<br>
-            <b>Range:</b> 500 m<br>
-            <span style="color:#cc0000;font-weight:bold;">STATUS: ACTIVE</span>
+            <b>Type:</b> Multi-band RF<br>
+            <b>Freq:</b> 900 MHz / 2.4 GHz<br>
+            <b>Range:</b> ~5 km<br>
+            <b>Dead:</b> 8 confirmed<br>
+            <span style="color:#cc0000;font-weight:bold;">PHASE 3 IMMINENT</span>
           </div>
         </div>
       </div>`;
@@ -404,13 +404,13 @@ const PlanboardScene = {
     return `
       <div style="font-family:'Courier New',monospace;font-size:clamp(5px,0.6vw,8px);line-height:1.5;color:#2a2a2a;">
         <div style="font-weight:bold;margin-bottom:3%;">PROJECT ECHO — CLASSIFIED</div>
-        This USB contains everything you need<br>
-        to know about the EM pulse weapon being<br>
-        developed at Steckerdoser Heide.<br><br>
-        <span style="color:#cc0000;font-weight:bold;">⚠ 72-HOUR COUNTDOWN INITIATED</span><br><br>
-        The weapon will be activated in 72 hours.<br>
-        Target: Major European data center.<br><br>
-        <span style="background:#cc0000;color:#fff;padding:1px 3px;font-size:0.9em;">WARNING: AIR-GAPPED ONLY</span><br><br>
+        RF weapon. Steckerdoser Heide.<br>
+        Range: ~5 km. Targets: vehicles,<br>
+        aircraft, medical devices.<br><br>
+        <span style="color:#cc0000;font-weight:bold;">⚠ 72-HOUR DEADLINE</span><br><br>
+        Phase 3: Urban area testing.<br>
+        Civilians will die. Stop it.<br><br>
+        <span style="background:#cc0000;color:#fff;padding:1px 3px;font-size:0.9em;">AIR-GAPPED ONLY</span><br><br>
         Trust the process.<br><br>
         <span style="font-family:'Segoe Print',cursive;font-size:1.4em;color:#333;">— E</span>
       </div>`;
@@ -787,32 +787,31 @@ const PlanboardScene = {
       
       usb: {
         title: 'USB Stick Evidence',
-        subtitle: 'Found: Ter Apel Monastery - March 16, 2024',
+        subtitle: 'Found: Ter Apel Monastery — Under Stone Bench',
         content: `
           <p style="line-height: 1.8; font-size: 15px;">
             <strong style="color: #1e88e5;">Device:</strong> SanDisk 64GB USB 3.0<br>
-            <strong style="color: #1e88e5;">Location:</strong> Duct-taped to Volvo door handle<br>
-            <strong style="color: #1e88e5;">Condition:</strong> Weatherproof packaging<br>
-            <strong style="color: #1e88e5;">Security:</strong> Air-gapped transfer only
+            <strong style="color: #1e88e5;">Location:</strong> Taped under bench in monastery courtyard<br>
+            <strong style="color: #1e88e5;">Note:</strong> "TRUST THE PROCESS — AIR-GAPPED ONLY"<br>
+            <strong style="color: #1e88e5;">Forensics:</strong> Tableau T35u write-blocker, SHA-256 verified
           </p>
           <div style="background: #fafad2; color: #2a2a2a; padding: 15px; border-radius: 5px; margin: 15px 0;">
-            <strong>Attached Note:</strong><br>
-            <em style="font-family: 'Brush Script MT', cursive; font-size: 18px;">
-            "TRUST THE PROCESS<br>
-            AIR-GAPPED ONLY"
-            </em>
+            <strong>USB Contents:</strong><br>
+            <code>README.txt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.2 KB — Eva's warning</code><br>
+            <code>echo_schematics.pdf&nbsp;2.1 MB — weapon specs</code><br>
+            <code>evidence.zip&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;847 MB — 🔒 encrypted</code>
           </div>
         `,
         details: `
           <strong>FORENSIC NOTES:</strong><br>
-          The USB was deliberately placed at a location Ryan would visit. The duct tape and note
-          suggest someone familiar with operational security who wanted to ensure the data couldn't
-          be intercepted during transfer.
+          Dead drop arranged by Klaus Weber — Eva's father. He drove from Germany to Ter Apel with
+          German plates on an A/B31 route. He thought it was a personal backup drive. Plausible
+          deniability. Evidence chain of custody maintained via Tableau write-blocker.
         `,
         notes: `
-          <p style="color: #ff0000; font-weight: bold;">⚠ Contents analyzed on air-gapped laptop only</p>
-          <p>The deliberate choice of Ter Apel monastery suggests the source knew about Ryan's
-          interest in historical radio sites and Klaus Weber's legacy.</p>
+          <p style="color: #ff0000; font-weight: bold;">⚠ Contents analyzed on air-gapped ThinkPad only — never touched a network</p>
+          <p>Klaus Weber delivered the USB without knowing its contents. His daughter Eva was
+          risking his freedom as well as her own. He died before this could be resolved.</p>
         `
       },
       
@@ -882,84 +881,73 @@ const PlanboardScene = {
       },
       
       weapon: {
-        title: 'EM Pulse Weapon Specifications',
-        subtitle: 'Project Echo - Electromagnetic Pulse Device',
+        title: 'EM Weapon Specifications',
+        subtitle: 'Project Echo — Multi-band RF Weapon',
         content: `
           <p style="line-height: 1.8; font-size: 15px;">
-            <strong style="color: #0ff;">Weapon Type:</strong> Electromagnetic Pulse Generator<br>
-            <strong style="color: #0ff;">Frequency:</strong> 14.230 MHz (Tuned)<br>
-            <strong style="color: #0ff;">Power Output:</strong> 1.21 Gigawatts<br>
-            <strong style="color: #0ff;">Effective Range:</strong> 500 meters<br>
-            <strong style="color: #0ff;">Status:</strong> <span style="color: #ff0000;">ACTIVE</span>
+            <strong style="color: #0ff;">Weapon Type:</strong> Multi-band RF Weapon (Directed Energy)<br>
+            <strong style="color: #0ff;">Frequencies:</strong> 900 MHz / 2.4 GHz / GPS / VHF/UHF<br>
+            <strong style="color: #0ff;">Effective Range:</strong> ~5 km (test-confirmed)<br>
+            <strong style="color: #0ff;">Power Supply:</strong> Facility-grade (classified)<br>
+            <strong style="color: #0ff;">Status:</strong> <span style="color: #ff0000;">OPERATIONAL — PHASE 3 PENDING</span>
           </p>
           <div style="background: #0a0a1a; padding: 15px; border-radius: 5px; font-family: monospace; color: #0ff; margin: 15px 0;">
-            [WEAPON SCHEMATIC - CLASSIFIED]<br><br>
-            ┌──────────────────────┐<br>
-            │  PULSE GENERATOR     │<br>
-            │  ════════════════    │<br>
-            │  FREQ: 14.230 MHz    │<br>
-            │  POWER: 1.21 GW      │<br>
-            │  RANGE: 500m         │<br>
-            │  ════════════════    │<br>
-            │  ⚠ DANGEROUS ⚠       │<br>
-            └──────────────────────┘
+            [WEAPON SCHEMATIC — STRENG GEHEIM]<br><br>
+            ┌──────────────────────────┐<br>
+            │  PHASE-LOCKED ARRAY      │<br>
+            │  ══════════════════      │<br>
+            │  900 MHz / 2.4 GHz       │<br>
+            │  GPS spoof + VHF/UHF jam │<br>
+            │  Range: ~5 km effective  │<br>
+            │  ══════════════════      │<br>
+            │  8 DEAD — 9+ INJURED     │<br>
+            └──────────────────────────┘
           </div>
         `,
         details: `
-          <strong>THREAT ASSESSMENT:</strong><br>
-          This device is capable of disabling all electronic equipment within a 500-meter radius.
-          Potential targets include power grids, data centers, communication networks, and even
-          vehicles with electronic systems. The weapon could cause catastrophic infrastructure damage.
+          <strong>CONFIRMED INCIDENTS (ECHO-7 through ECHO-12):</strong><br>
+          • ECHO-7: BMW crash — 1 dead, 2 injured (covered as driver error)<br>
+          • ECHO-8: Cessna 172 — 2 dead (covered as pilot error)<br>
+          • ECHO-9: A31 highway pile-up — 3 dead, 7 injured<br>
+          • ECHO-10: Hospital surgery table — 1 dead (Marlies Bakker, 67, grandmother of 4)<br>
+          • ECHO-11: Drone swarm — 0 dead (agricultural field)<br>
+          • ECHO-12: Ambulance failure — 1 dead (patient en route)<br><br>
+          <strong style="color:#ff4444;">Signed "V" — Dr. Volkov. Phase 3: urban environment testing.</strong>
         `,
         notes: `
-          <p style="color: #ff0000; font-weight: bold;">⚠ IMMEDIATE THREAT</p>
-          <p>The weapon is operational and scheduled for activation within 72 hours of the warning.
-          Primary concern: What is the intended target? Who authorized this project?</p>
+          <p style="color: #ff0000; font-weight: bold;">⚠ IMMEDIATE THREAT — PHASE 3 AUTHORIZATION PENDING</p>
+          <p>Phase 3 means testing in populated urban areas. More vehicles. More aircraft. More Marlies Bakkers. This must be stopped before 09:00.</p>
         `
       },
       
       readme: {
-        title: 'README.txt - Eva\'s Warning',
-        subtitle: 'USB Contents - Air-Gapped Transfer',
+        title: "README.txt — Eva's Warning",
+        subtitle: 'USB Contents — Air-Gapped Transfer',
         content: `
           <div style="background: #fafad2; color: #2a2a2a; padding: 20px; border-radius: 5px; margin: 15px 0; font-family: monospace;">
             <strong style="font-size: 16px;">README.txt</strong><br>
             <hr style="border: 1px solid #2a2a2a; margin: 10px 0;">
             <br>
-            PROJECT ECHO - CLASSIFIED<br>
-            <br>
-            This USB contains everything you need to know about<br>
-            the EM pulse weapon being developed at Steckerdoser Heide.<br>
-            <br>
-            <span style="color: #d32f2f; font-weight: bold;">⚠ 72-HOUR COUNTDOWN INITIATED ⚠</span><br>
-            <br>
-            The weapon will be activated in 72 hours.<br>
-            The target is a major European data center.<br>
-            <br>
-            <span style="background: #ff0000; color: #fff; padding: 2px 5px;">WARNING: AIR-GAPPED ONLY</span><br>
-            <br>
-            Do not connect this drive to any networked computer.<br>
-            They are watching. They have network monitoring everywhere.<br>
-            <br>
-            If you're reading this, you're the only one who can<br>
-            stop what's coming. I've tried everything from inside.<br>
-            Now it's up to you.<br>
-            <br>
-            Included files:<br>
-            - weapon_schematic.pdf<br>
-            - facility_layout.dwg<br>
-            - access_codes.txt (time-sensitive)<br>
-            - project_echo_origins.txt<br>
-            <br>
-            Trust the process.<br>
-            <br>
-            <span style="font-family: 'Brush Script MT', cursive; font-size: 20px;">- E</span>
+            Ryan,<br><br>
+            Project Echo — an RF weapon at Steckerdoser Heide.<br>
+            Range: ~5 km. Can disable electronics, crash<br>
+            vehicles, interrupt medical devices.<br><br>
+            <span style="color: #d32f2f; font-weight: bold;">⚠ 72-HOUR DEADLINE ⚠</span><br><br>
+            72 hours from this file's timestamp. After that:<br>
+            Phase 3. Real deployment. Real casualties.<br><br>
+            The archive password is the frequency you<br>
+            tuned into. You'll know it when you see it.<br><br>
+            <span style="background: #ff0000; color: #fff; padding: 2px 5px;">AIR-GAPPED ONLY — ENCRYPT EVERYTHING</span><br><br>
+            P.S. 906.875. I'm listening.<br><br>
+            <span style="font-family: 'Brush Script MT', cursive; font-size: 20px;">— E</span>
           </div>
         `,
         notes: `
-          <p style="color: #d32f2f; font-weight: bold;">This is Eva's primary communication</p>
+          <p style="color: #d32f2f; font-weight: bold;">Eva's primary communication — received via USB dead drop</p>
           <p>The emphasis on air-gapped security and the 72-hour deadline make this the most
-          critical piece of evidence. Everything else confirms what's in this message.</p>
+          critical piece of evidence. The archive (evidence.zip) contains casualty reports from
+          ECHO-7 through ECHO-12 — 8 dead, 9+ injured, all covered up. Everything else confirms
+          what's in this message.</p>
         `
       },
       
@@ -1003,44 +991,41 @@ const PlanboardScene = {
         content: `
           <div style="border-left: 4px solid #0f0; padding-left: 20px; margin: 20px 0;">
             <div style="margin-bottom: 20px;">
-              <strong style="color: #0f0; font-size: 18px;">T-72 HOURS</strong><br>
-              <span style="color: #888;">March 16, 2024 - 00:00</span><br>
-              USB warning received. README.txt reveals 72-hour countdown to weapon activation.
+              <strong style="color: #0f0; font-size: 18px;">T-72h — FEB 9, 07:45</strong><br>
+              <span style="color: #888;">Compascuum — Warning received</span><br>
+              USB decoded. README.txt: 72-hour deadline.
             </div>
           </div>
           
           <div style="border-left: 4px solid #ff9800; padding-left: 20px; margin: 20px 0;">
             <div style="margin-bottom: 20px;">
-              <strong style="color: #ff9800; font-size: 18px;">T-48 HOURS</strong><br>
-              <span style="color: #888;">March 16, 2024 - 12:00 (estimated)</span><br>
-              Investigation initiated. SSTV decoded, USB analyzed, experts consulted.
-              Facility location confirmed: Steckerdoser Heide.
+              <strong style="color: #ff9800; font-size: 18px;">T-48h — FEB 9–10</strong><br>
+              <span style="color: #888;">Mancave — Investigation</span><br>
+              Allies recruited. Weapon schematics confirmed. Eva identified. Facility located.
             </div>
           </div>
           
           <div style="border-left: 4px solid #ff5722; padding-left: 20px; margin: 20px 0;">
             <div style="margin-bottom: 20px;">
-              <strong style="color: #ff5722; font-size: 18px;">T-24 HOURS</strong><br>
-              <span style="color: #888;">March 17, 2024 - 00:00 (estimated)</span><br>
-              Facility infiltration planned. RFID badge cloned, equipment prepared.
-              Night vision and WiFi Pineapple acquired for covert entry.
+              <strong style="color: #ff5722; font-size: 18px;">T-09h — FEB 11, 23:00</strong><br>
+              <span style="color: #888;">Steckerdoser Heide — Infiltration</span><br>
+              RFID badge cloned. Server room reached. Test abort executed.
             </div>
           </div>
           
           <div style="border-left: 4px solid #ff0000; padding-left: 20px; margin: 20px 0; animation: pulse 2s infinite;">
             <div style="margin-bottom: 20px;">
-              <strong style="color: #ff0000; font-size: 18px;">⚠ T-00 HOURS ⚠</strong><br>
-              <span style="color: #888;">March 19, 2024 - 00:00</span><br>
-              <strong style="color: #ff0000;">WEAPON ACTIVATION IMMINENT</strong><br>
-              Target: Major European data center (location unknown)<br>
-              <span style="color: #ff0000; font-weight: bold;">Time remaining: CRITICAL</span>
+              <strong style="color: #ff0000; font-size: 18px;">⚠ T-00h — FEB 12, 09:00 ⚠</strong><br>
+              <span style="color: #888;">Phase 3 Authorization Deadline</span><br>
+              <strong style="color: #ff0000;">PHASE 3: URBAN ENVIRONMENT TESTING</strong><br>
+              <span style="color: #cc0000;">Target: Civilian infrastructure — populated area</span>
             </div>
           </div>
         `,
         notes: `
-          <p style="color: #ff0000; font-weight: bold;">⚠ THE CLOCK IS TICKING</p>
-          <p>Every hour counts. The weapon must be stopped before activation or the consequences
-          could be catastrophic: Infrastructure collapse, data loss, economic chaos.</p>
+          <p style="color: #ff0000; font-weight: bold;">⚠ The clock is ticking</p>
+          <p>Phase 3 means urban testing — densely populated areas. More vehicles, more aircraft,
+          more medical devices. More Marlies Bakkers. The Echo system must be aborted before 09:00.</p>
         `
       }
     };
