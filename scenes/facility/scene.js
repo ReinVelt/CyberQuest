@@ -57,10 +57,10 @@ const FacilityScene = {
                         { speaker: 'Ryan', text: '*Reaches under the plastic bin liner*' },
                         { speaker: 'Ryan', text: 'There. Something taped underneath.' },
                         { speaker: 'Narrator', text: '*Pulls free a security badge with keycard*' },
-                        { speaker: 'Ryan', text: "Eva Weber's own ID. She's risking everything." },
-                        { speaker: 'Ryan', text: 'Photo shows a woman about my age. Dark hair, determined eyes.' },
-                        { speaker: 'Ryan', text: 'This badge gets me through the front gate. After that...' },
-                        { speaker: 'Ryan', text: "Time to see what I'm made of." }
+                        { speaker: 'Ryan', text: "Eva Weber's own ID. Her photograph. Her career. Her life." },
+                        { speaker: 'Ryan', text: 'She walked into that facility this morning, clocked in, clocked out.' },
+                        { speaker: 'Ryan', text: 'And then taped this underneath a trash bin for a stranger she met twice, three years ago.' },
+                        { speaker: 'Ryan', text: 'Six hours left. No time to think. Move.' }
                     ]);
                     
                     setTimeout(() => {
@@ -258,14 +258,15 @@ const FacilityScene = {
                     if (game.hasItem('flipper_zero') && game.hasItem('security_badge')) {
                         game.startDialogue([
                             { speaker: 'Ryan', text: 'This is it. Camera is down. Time to get through that gate.' },
+                            { speaker: 'Narrator', text: '*Heart pounding. The guard tower searchlight sweeps left. Now.*' },
                             { speaker: 'Ryan', text: '*Holds Eva\'s badge to the reader*' },
                             { speaker: 'Narrator', text: '*BEEP* ACCESS DENIED - BADGE SUSPENDED' },
-                            { speaker: 'Ryan', text: 'Shit. They suspended her credentials. Expected.' },
-                            { speaker: 'Ryan', text: 'But the Flipper Zero recorded valid badge signals earlier...' },
+                            { speaker: 'Ryan', text: '*breath stops* They suspended her credentials. Of course they did.' },
+                            { speaker: 'Ryan', text: 'Come on. The Flipper cloned a guard badge earlier — RFID signal is in memory.' },
                             { speaker: 'Narrator', text: '*Replays captured RFID signal from guard\'s badge*' },
                             { speaker: 'Narrator', text: '*BEEP* AUTHORIZED - LEVEL 2 ACCESS' },
                             { speaker: 'Narrator', text: '*Gate mechanism clicks. Barrier slowly rises.*' },
-                            { speaker: 'Ryan', text: 'We\'re in. Move fast before they check the camera logs.' }
+                            { speaker: 'Ryan', text: '*exhales* Okay. Move. Now. Before the searchlight comes back.' }
                         ]);
                         
                         state.gateOpen = true;
@@ -454,11 +455,12 @@ const FacilityScene = {
             
             setTimeout(() => {
                 game.startDialogue([
-                    { speaker: 'Narrator', text: '*The facility looms in the darkness*' },
-                    { speaker: 'Ryan', text: 'This is real. Military research facility.' },
-                    { speaker: 'Ryan', text: 'No turning back now.' },
-                    { speaker: 'Ryan', text: 'First: find that badge. Trash bin, north entrance.' },
-                    { speaker: 'Ryan', text: 'Stay in shadows. Move carefully.' }
+                    { speaker: 'Narrator', text: '*03:11 AM. The facility looms against a starless sky.*' },
+                    { speaker: 'Ryan', text: 'This is real. Military research facility. Armed guards. Live weapon inside.' },
+                    { speaker: 'Ryan', text: 'Six hours. At 09:00 Volkov runs Phase 3. Urban target. Real people.' },
+                    { speaker: 'Narrator', text: '*Checks Meshtastic — Eva\'s last message still glowing green: \'Badge is under north entrance bin. Go.\'*' },
+                    { speaker: 'Ryan', text: 'Six hours. Find the badge. Kill the cameras. Get through that gate.' },
+                    { speaker: 'Ryan', text: 'Stay in shadows. Move carefully. One step at a time.' }
                 ]);
             }, 1000);
         } else if (storyPart === 17 && game.hasItem('security_badge')) {
