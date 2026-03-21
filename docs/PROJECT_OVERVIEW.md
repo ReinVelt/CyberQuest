@@ -382,7 +382,7 @@ This project contains comprehensive documentation across multiple files:
 
 ## Future Enhancements
 
-### Planned (v1.2+)
+### Planned (v1.4+)
 - [ ] Achievement system
 - [ ] Multiple save slots (3-5)
 - [ ] Statistics tracking (time played, choices made)
@@ -635,8 +635,8 @@ The game is **100% plain HTML + CSS + JavaScript + images**. No frameworks, no b
 *A techno-thriller adventure built with curiosity, code, and coffee.*
 
 **Status:** Production Ready ✅  
-**Last Updated:** March 7, 2026  
-**Version:** 1.2
+**Last Updated:** March 21, 2026
+**Version:** 1.3
 
 ---
 

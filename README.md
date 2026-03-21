@@ -270,7 +270,7 @@ CyberQuest/
 
 ## 🎯 Development Status
 
-**Version 1.1 - Production Ready** ✅
+**Version 1.3 - Production Ready** ✅
 
 ### Completed
 - ✅ Complete story (20 parts + epilogue)
@@ -288,7 +288,7 @@ CyberQuest/
 - ✅ Scene-based clock (SCENE_TIME_MAP)
 - ✅ 200+ pages of documentation
 
-### Planned (v1.2+)
+### Planned (v1.4+)
 - ⏳ Achievement system
 - ⏳ Multiple save slots (3-5)
 - ⏳ Statistics tracking
@@ -382,6 +382,15 @@ Version: 1.1
 
 ## 🏆 Version History
 
+**v1.3 (March 21, 2026)** - Interactive Movie & Story Polish
+- Interactive Movie button on title screen (one-click full-story playthrough)
+- Movie mode: voice auto-enabled, pause button removed, dialog timing fixed
+- Sitmower scene added (garden-path interlude before WSRT parking)
+- USB dead-drop relocated from car boot to monastery bench (Klooster 23:03)
+- Klooster bench hotspot + Eva Meshtastic clue via chat
+- New SVG artwork for USB/car discovery scenes
+- Audio asset files (MP3/OGG/WAV) removed from repository
+
 **v1.2 (March 7, 2026)** - Production Polish
 - 179/179 unit tests passing
 - Fixed `_storage` null-injection bug in engine dependency injection
@@ -419,7 +428,7 @@ Version: 1.1
 
 **Genre:** Point-and-Click Adventure / Techno-Thriller  
 **Platform:** Web Browser (Desktop & Mobile)  
-**Status:** v1.1 Production Ready ✅  
+**Status:** v1.3 Production Ready ✅  
 **Playtime:** 2-4 hours  
 
 *"When strange signals appear, investigate. But don't do it alone."* — Ryan Weylant
