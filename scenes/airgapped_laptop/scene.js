@@ -63,7 +63,7 @@ function _buildAirgappedSessionLog(game) {
             '"72 hours from the file timestamp. After that — real deployment. Real casualties."',
             '"Use air-gapped systems only. Encrypt everything. Trust no one until verified."',
             '"Good luck, Ryan. — E"',
-            '"P.S. 906.875. I\'m listening."',
+            '"P.S. 869.525. I\'m listening."',
         );
     }
 

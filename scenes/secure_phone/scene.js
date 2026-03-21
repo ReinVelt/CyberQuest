@@ -151,8 +151,8 @@ const SecurePhoneScene = {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Eva Weber. IT Security Analyst. Whistleblower.' },
                         { speaker: 'Ryan', text: 'Need to contact her securely. Off-grid.' },
-                        { speaker: 'Ryan', text: 'Wait — the USB README. "Think mesh. 906.875." She\'s on Meshtastic!' },
-                        { speaker: 'Ryan', text: '906.875 MHz. That\'s the EU LoRa frequency. She\'s been listening this whole time.' }
+                        { speaker: 'Ryan', text: 'Wait — the USB README. "Think mesh. 869.525." She\'s on Meshtastic!' },
+                        { speaker: 'Ryan', text: '869.525 MHz. EU LoRa band. She\'s been listening this whole time.' }
                     ]);
                     return;
                 }
@@ -252,7 +252,7 @@ const SecurePhoneScene = {
                 if (game.getFlag('identified_eva')) {
                     msgs.push(
                         { speaker: 'Kubecka', text: 'The photo — Eva Weber. She went dark 6 months ago. Left breadcrumbs.' },
-                        { speaker: 'Kubecka', text: 'Follow the LoRa signal. 906.875 MHz. She\'s waiting.' },
+                        { speaker: 'Kubecka', text: 'Follow the LoRa signal. 869.525 MHz. She\'s waiting.' },
                         { speaker: 'Ryan', text: 'She\'s on Meshtastic. She planned for someone to find her.' },
                     );
                 }

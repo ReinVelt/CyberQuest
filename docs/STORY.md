@@ -13,7 +13,7 @@ Ryan tells Max about the mission before departing for the facility. They trust e
 Ryan seriously considers calling the AIVD. But E's README says the people protecting Project Echo have infiltrated military AND intelligence. If Ryan calls the wrong person — someone who reports to someone who reports to Hoffmann — the evidence disappears, the casualties get buried deeper, and Ryan becomes a target. He can't risk it. Not with 72 hours. Not when Marlies Bakker's death was already covered up as "equipment malfunction."
 
 ### The Meshtastic connection
-Eva planted a clue in the USB README: "P.P.S. If you need to reach me, think mesh. 906.875. I'm listening." 906.875 MHz is the EU LoRa frequency. When Ryan finally identifies Eva through photo analysis and needs to contact her, he remembers this line and connects via Meshtastic — the decentralized mesh network that runs without cell towers or internet.
+Eva planted a clue in the USB README: "P.P.S. If you need to reach me, think mesh. 869.525. I'm listening." 869.525 MHz is the EU LoRa frequency. When Ryan finally identifies Eva through photo analysis and needs to contact her, he remembers this line and connects via Meshtastic — the decentralized mesh network that runs without cell towers or internet.
 
 ### Named casualty: Marlies Bakker
 Among the eight confirmed dead in Project Echo's "calibration accidents" is Marlies Bakker, 67, grandmother of four, from the town near Steckerdoser Heide. She went in for routine surgery at a local hospital. During the operation, a 2.4 GHz sustained interference test (ECHO-10) disabled the hospital equipment. She died of cardiac arrest on the operating table. The cover story: "equipment malfunction, patient pre-existing condition." Ryan fixates on her specifically — her name, her age, her grandchildren. She becomes the human face of the abstract casualty numbers.
@@ -45,7 +45,7 @@ Scene 5b: Forensic Analysis Cinematic (Mancave)
 Before examining the USB contents, Ryan demonstrates proper forensic discipline: air-gapped ThinkPad boot, Tableau T35u write-blocker connection, SHA-256 checksums of all USB files, firejail sandbox setup. Sets flag: forensic_prep_complete. Triggered from the air-gapped laptop hotspot in the mancave after obtaining the USB stick.
 
 Scene 5c: Meshtastic Setup Cinematic (Mancave)
-After identifying Eva Weber through photo analysis, Ryan configures his Meshtastic node to match her specs: LILYGO T-Beam (ESP32 + SX1276 LoRa + GPS), 906.875 MHz, EU_868 region, SF12 spreading factor, 250 kHz bandwidth, 20 dBm TX power, AES-256 channel "ZERFALL". Discovers node EVA_W (RSSI: −67 dBm, 1 hop). Sets flag: meshtastic_configured.
+After identifying Eva Weber through photo analysis, Ryan configures his Meshtastic node to match her specs: LILYGO T-Beam (ESP32 + SX1276 LoRa + GPS), 869.525 MHz, EU_868 region, SF12 spreading factor, 250 kHz bandwidth, 20 dBm TX power, AES-256 channel "ZERFALL". Discovers node EVA_W (RSSI: −67 dBm, 1 hop). Sets flag: meshtastic_configured.
 
 Scene 5d: Mission Prep Cinematic (Mancave)
 Pre-infiltration preparation sequence: gear check (HackRF, Flipper Zero, external drive, Faraday bag, Meshtastic node, backup batteries, lockpick set, gloves), ally coordination messages to Cees/Jaap/David, and an emotional goodbye with Max at the door. Sets flag: mission_prep_complete.
@@ -358,7 +358,7 @@ Trust no one. Not even me.
 
 - E
 
-P.S. If you need to reach me, think mesh. 906.875. I'm listening.
+P.S. If you need to reach me, think mesh. 869.525. I'm listening.
 ```
 
 Quest: Unlock the evidence archive
@@ -820,9 +820,9 @@ Quest: Make contact with Eva Weber
 24 hours remaining.
 
 Story part 16: The Meshtastic Connection
-Ryan stares at his equipment shelf. Then he remembers. The USB README — that cryptic postscript: "If you need to reach me, think mesh. 906.875. I'm listening."
+Ryan stares at his equipment shelf. Then he remembers. The USB README — that cryptic postscript: "If you need to reach me, think mesh. 869.525. I'm listening."
 
-906.875 MHz. That's the EU LoRa frequency. She's on Meshtastic — the decentralized mesh network that runs on cheap LoRa radios. No cell towers, no internet, no logs. Messages hop from device to device across kilometers. Eva planned this from the beginning.
+869.525 MHz. That's the EU LoRa frequency. She's on Meshtastic — the decentralized mesh network that runs on cheap LoRa radios. No cell towers, no internet, no logs. Messages hop from device to device across kilometers. Eva planned this from the beginning.
 
 He grabs two of his Meshtastic devices - a T-Beam with GPS and a smaller Heltec unit. If Eva is monitoring any mesh traffic near the facility, he might be able to reach her. But he'll need to get close.
 

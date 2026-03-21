@@ -3,7 +3,7 @@
  * ═══════════════════════════════════════════════════════════
  * Interactive Meshtastic device configuration:
  *   Phase 1 — Device power-on (boot sequence animation)
- *   Phase 2 — Frequency configuration (906.875 MHz EU LoRa)
+ *   Phase 2 — Frequency configuration (869.525 MHz EU LoRa)
  *   Phase 3 — Encryption setup (AES-256 key exchange)
  *   Phase 4 — Channel configuration & node discovery
  *
@@ -53,7 +53,7 @@ window.MancaveMeshtasticSetup = (function () {
                 { text: 'SX1276 init... OK', delay: 400 },
                 { text: 'GPS acquiring...', delay: 600 },
                 { text: 'GPS fix: 52.8°N 7.0°E', delay: 800 },
-                { text: 'LoRa: 906.875 MHz', delay: 400 },
+                { text: 'LoRa: 869.525 MHz', delay: 400 },
                 { text: 'Ready.', delay: 300 }
             ];
 
@@ -87,8 +87,8 @@ window.MancaveMeshtasticSetup = (function () {
             content.appendChild(freqDiv);
 
             const params = [
-                { label: 'Region', value: 'EU_868', note: 'European ISM band (863-870 MHz)' },
-                { label: 'Frequency', value: '906.875 MHz', note: 'Eva\'s specified channel — "think mesh"', highlight: true },
+                { label: 'Region', value: 'EU_868', note: 'European ISM band (863–870 MHz)' },
+                { label: 'Frequency', value: '869.525 MHz', note: 'Eva\'s specified channel — "think mesh"', highlight: true },
                 { label: 'Bandwidth', value: '250 kHz', note: 'Long range mode' },
                 { label: 'Spreading Factor', value: 'SF12', note: 'Maximum range, slower data rate' },
                 { label: 'TX Power', value: '20 dBm', note: 'Legal maximum for EU region' },
@@ -129,7 +129,7 @@ window.MancaveMeshtasticSetup = (function () {
                 freqDiv.appendChild(react);
 
                 MC.revealDialogue(react, [
-                    { speaker: 'Ryan', text: '906.875 MHz. Exactly what Eva said in the README.' },
+                    { speaker: 'Ryan', text: '869.525 MHz. Exactly what Eva said in the README.' },
                     { speaker: 'Ryan', text: 'EU LoRa band. Legal. Anonymous. No registration required.' },
                     { speaker: 'Ryan', text: 'Range with SF12 should be 10+ kilometers in flat terrain. More than enough for Drenthe.' }
                 ], { pauseBetween: 1500 });
@@ -165,7 +165,7 @@ window.MancaveMeshtasticSetup = (function () {
                 { text: '', delay: 100 },
                 { text: '  ╔════════════════════════════════════╗', delay: 400, color: '#00ff41' },
                 { text: '  ║  SECURE CHANNEL ESTABLISHED        ║', delay: 200, color: '#00ff41' },
-                { text: '  ║  AES-256 | SF12 | 906.875 MHz     ║', delay: 200, color: '#00ff41' },
+                { text: '  ║  AES-256 | SF12 | 869.525 MHz     ║', delay: 200, color: '#00ff41' },
                 { text: '  ╚════════════════════════════════════╝', delay: 200, color: '#00ff41' }
             ];
 
@@ -264,9 +264,9 @@ window.MancaveMeshtasticSetup = (function () {
         content.appendChild(openDiv);
 
         MC.revealDialogue(openDiv, [
-            { speaker: 'Ryan', text: '"Think mesh. 906.875." That\'s what Eva\'s README said.' },
+            { speaker: 'Ryan', text: '"Think mesh. 869.525." That\'s what Eva\'s README said.' },
             { speaker: 'Ryan', text: 'Meshtastic. Off-grid mesh networking. No internet, no cell towers.' },
-            { speaker: 'Ryan', text: 'If she\'s listening on 906.875, I need to configure my node to match.' },
+            { speaker: 'Ryan', text: 'If she\'s listening on 869.525, I need to configure my node to match.' },
             { speaker: 'Narrator', text: '*Ryan picks up the LILYGO T-Beam from the shelf*' }
         ], { pauseBetween: 1500 });
 

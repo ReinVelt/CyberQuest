@@ -23,7 +23,7 @@ window.MancaveMissionPrep = (function () {
         { name: 'Flipper Zero', icon: '🐬', desc: 'RFID, NFC, sub-GHz. Badge cloning capability.' },
         { name: 'WiFi Pineapple', icon: '🍍', desc: 'Network auditing. Rogue AP for credential capture.' },
         { name: 'Night Vision Monocular', icon: '🌙', desc: 'Gen 2+ surplus. Perimeter navigation in darkness.' },
-        { name: 'Meshtastic Node', icon: '📡', desc: 'Off-grid comms. Eva contact frequency: 906.875 MHz.' },
+        { name: 'Meshtastic Node', icon: '📡', desc: 'Off-grid comms. Eva contact frequency: 869.525 MHz.' },
         { name: 'Air-Gapped Laptop', icon: '💻', desc: 'Kali Linux. Data extraction and evidence packaging.' },
         { name: 'External Drive (encrypted)', icon: '💾', desc: 'VeraCrypt. 256-bit AES. For the server room data.' },
         { name: 'USB Rubber Ducky', icon: '🦆', desc: 'Keystroke injection. Quick-deploy exploit payloads.' }
@@ -232,6 +232,7 @@ window.MancaveMissionPrep = (function () {
                 { speaker: 'Max', text: '*Stands up. Hugs him. Holds on tight.*' },
                 { speaker: 'Max', text: 'The dogs will be waiting. I\'ll be waiting.' },
                 { speaker: 'Narrator', text: '*Tino lifts his head, watches Ryan pick up the bag.*' },
+                { speaker: 'Narrator', text: '*Kessy presses her nose against his hand. White fur in the lamplight.*' },
                 { speaker: 'Narrator', text: '*ET opens one eye, decides it\'s not food-related, and goes back to sleep.*' },
                 { speaker: 'Ryan', text: '*At the door* I love you.' },
                 { speaker: 'Max', text: 'I know. Now go.' }

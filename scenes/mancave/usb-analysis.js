@@ -43,7 +43,7 @@ Good luck, Ryan. The fate of a lot of innocent people depends on what you do nex
 - E
 
 P.S. Destroy this USB after copying the files. It's traceable.
-P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
+P.P.S. If you need to reach me, think mesh. 869.525. I'm listening.`;
 
     const README_HIGHLIGHTS = [
         { text: 'Project Echo', class: 'mc-highlight-yellow' },
@@ -54,7 +54,7 @@ P.P.S. If you need to reach me, think mesh. 906.875. I'm listening.`;
         { text: 'Trust no one', class: 'mc-highlight' },
         { text: 'casualty reports', class: 'mc-highlight' },
         { text: 'silenced', class: 'mc-highlight' },
-        { text: '906.875', class: 'mc-highlight-yellow' },
+        { text: '869.525', class: 'mc-highlight-yellow' },
         { text: 'think mesh', class: 'mc-highlight' },
     ];
 

@@ -976,7 +976,7 @@ const PlanboardScene = {
             The archive password is the frequency you<br>
             tuned into. You'll know it when you see it.<br><br>
             <span style="background: #ff0000; color: #fff; padding: 2px 5px;">AIR-GAPPED ONLY — ENCRYPT EVERYTHING</span><br><br>
-            P.S. 906.875. I'm listening.<br><br>
+            P.S. 869.525. I'm listening.<br><br>
             <span style="font-family: 'Brush Script MT', cursive; font-size: 20px;">— E</span>
           </div>
         `,
