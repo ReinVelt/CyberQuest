@@ -86,7 +86,7 @@ const DebriefScene = {
             skipWalk: true,
             action: function(game) {
                 if (game.getFlag('debrief_complete')) {
-                    game.loadScene('morning_after');
+                    game.loadScene('return_to_max');
                 } else {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Not yet. Still processing all this.' }
@@ -318,7 +318,7 @@ const DebriefScene = {
                 game.setFlag('debrief_complete', true);
                 game.showNotification('Click to continue…');
                 const tid = setTimeout(() => {
-                    game.loadScene('morning_after');
+                    game.loadScene('return_to_max');
                 }, 10000);
                 this._timeoutIds.push(tid);
                 return;
