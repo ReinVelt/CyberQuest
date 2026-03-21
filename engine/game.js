@@ -2259,7 +2259,14 @@ class CyberQuestEngine {
             return this.chatInterface.sendMessagesWithDelay(conversationId, messages, delay);
         }
     }
-    
+
+    /** Progressive chat reveal — wrapper for chatInterface.showSequence(). */
+    async showChatSequence(config) {
+        if (this.chatInterface) {
+            return this.chatInterface.showSequence(config);
+        }
+    }
+
     // Save/Load
     /**
      * Silent autosave to the dedicated autosave slot ('cyberquest_autosave').

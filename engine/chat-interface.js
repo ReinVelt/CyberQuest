@@ -129,6 +129,59 @@ class ChatInterface {
     }
 
     /**
+     * Simplified convenience wrapper — matches the documented scene-script API.
+     * Opens a chat with all messages already present.
+     *
+     * @param {Object} config
+     * @param {string}   config.contact  - Contact display name
+     * @param {string}   [config.type]   - 'signal' | 'meshtastic' | 'bbs' (default: 'signal')
+     * @param {string}   [config.avatar] - Ignored (no portrait rendering yet; reserved for future)
+     * @param {Array}    [config.messages] - Array of { sender, text, time } or { from, text, timestamp }
+     * @param {Function} [config.onClose] - Called when player closes the chat
+     */
+    show(config) {
+        const id = `chat_${Date.now()}`;
+        this.showConversation({
+            id,
+            type:     config.type    || 'signal',
+            contact:  config.contact,
+            messages: (config.messages || []).map(m => this._normalizeMessage(m)),
+            onClose:  config.onClose,
+        });
+    }
+
+    /**
+     * Progressive reveal — opens an empty chat then delivers messages one by
+     * one, each preceded by a typing indicator and a configurable delay.
+     *
+     * @param {Object} config
+     * @param {string}   config.contact  - Contact display name
+     * @param {string}   [config.type]   - 'signal' | 'meshtastic' | 'bbs' (default: 'signal')
+     * @param {Array}    config.sequence - Array of { delay: ms, message: {sender,text,time} }
+     * @param {Function} [config.onClose] - Called when player closes the chat
+     */
+    async showSequence(config) {
+        const id = `seq_${Date.now()}`;
+        this.showConversation({
+            id,
+            type:    config.type    || 'signal',
+            contact: config.contact,
+            messages: [],
+            onClose: config.onClose,
+        });
+
+        for (const entry of (config.sequence || [])) {
+            if (!this.isOpen || this.currentConversation?.id !== id) break;
+            const msg = this._normalizeMessage(entry.message);
+            this.showTypingIndicator(msg.from !== 'Ryan');
+            await this.game.wait(entry.delay);
+            if (!this.isOpen || this.currentConversation?.id !== id) break;
+            this.hideTypingIndicator();
+            this.addMessage(id, msg, true);
+        }
+    }
+
+    /**
      * Create the chat UI based on type
      */
     createChatUI() {
@@ -224,11 +277,27 @@ class ChatInterface {
     }
 
     /**
+     * Normalise a message object to the internal { from, timestamp } form.
+     * Accepts both the documented scene-script API ({ sender, time }) and the
+     * internal API ({ from, timestamp }) so either convention works.
+     * @param {Object} msg
+     * @returns {Object}
+     */
+    _normalizeMessage(msg) {
+        return {
+            ...msg,
+            from:      msg.from      || msg.sender    || '',
+            timestamp: msg.timestamp || msg.time      || '',
+        };
+    }
+
+    /**
      * Display a single message
      * @param {Object} message - Message object
      * @param {boolean} animate - Whether to animate the message
      */
     displaySingleMessage(message, animate = false) {
+        message = this._normalizeMessage(message);
         const container = document.getElementById('chat-messages');
         if (!container) return;
 
@@ -238,7 +307,7 @@ class ChatInterface {
 
         let timestamp = '';
         if (message.timestamp) {
-            timestamp = `<div class="message-timestamp">${message.timestamp}</div>`;
+            timestamp = `<div class="message-timestamp">${this._sanitizeHTML(message.timestamp)}</div>`;
         }
 
         messageEl.innerHTML = `
