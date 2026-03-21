@@ -16,7 +16,7 @@ A techno-thriller point-and-click adventure game built with vanilla JavaScript. 
 
 ## 📖 Story
 
-You are **Ryan Weylant**, a 55-year-old Dutch hacker living in Compascuum, a quiet village near the German border. Your peaceful morning is disrupted when your SSTV terminal picks up a mysterious transmission from a German military facility. What starts as curiosity becomes a race against time to expose a Russian infiltration operation codenamed **Operation ZERFALL** and prevent a devastating attack.
+You are **Ryan Weylant**, a 42-year-old Dutch hacker living in Compascuum, a quiet village near the German border. Your peaceful morning is disrupted when your SSTV terminal picks up a mysterious transmission from a German military facility. What starts as curiosity becomes a race against time to expose a Russian infiltration operation codenamed **Operation ZERFALL** and prevent a devastating attack.
 
 ### Key Characters
 - **Ryan Weylant** - Protagonist, hacker, RF enthusiast (you!)

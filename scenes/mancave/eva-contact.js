@@ -183,7 +183,7 @@ window.MancaveEvaContact = (function () {
                                 { speaker: 'Max', text: 'How dangerous is this?' },
                                 { speaker: 'Ryan', text: 'Very. But if I don\'t go, more people die. A city full of people.' },
                                 { speaker: 'Max', text: '*Takes his hand*' },
-                                { speaker: 'Max', text: 'I\'ve been married to you for thirty years. I know who you are. You wouldn\'t be telling me this if you\'d already decided not to go.' },
+                                { speaker: 'Max', text: 'I\'ve been married to you for fifteen years. I know who you are. You wouldn\'t be telling me this if you\'d already decided not to go.' },
                                 { speaker: 'Ryan', text: 'I should be back by midnight. If I\'m not...' },
                                 { speaker: 'Max', text: 'You\'ll be back. Be careful, darling. Come back safe.' },
                                 { speaker: 'Narrator', text: '*10:45 PM — Mancave*' },

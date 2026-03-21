@@ -1098,13 +1098,13 @@ That evening, 22:30. The house is quiet. Ryan finds Max in the kitchen, making t
 
 "Max. I need to tell you something."
 
-She looks up. She can read his face after thirty years. "I know that face. Something's wrong."
+She looks up. She can read his face after fifteen years. "I know that face. Something's wrong."
 
 Ryan tells her. Not everything — not the schematics, not the Python script, not the transformer station — but enough. A weapons project. Russian infiltration. A woman named Eva who needs his help tonight. The same Eva from the dog training.
 
 Max is quiet for a long moment. Then she takes his hand.
 
-"I've been married to you for thirty years. I know who you are. You wouldn't be telling me this if you'd already decided not to go."
+"I've been married to you for fifteen years. I know who you are. You wouldn't be telling me this if you'd already decided not to go."
 
 "I should be back by midnight. If I'm not..."
 
