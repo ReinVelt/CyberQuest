@@ -2,10 +2,10 @@
  * Westerbork Memorial Scene
  * Herinneringscentrum Kamp Westerbork — former transit camp, now memorial.
  * Located 200 m from the WSRT radio telescope array.
- * The same ground now houses WSRT and a covert Bluetooth surveillance node.
+ * The same ground now houses WSRT and a covert ZERFALL sensor node.
  * Reached from: garden → volvo → driving_day → westerbork_memorial
  *              or on foot from ASTRON/WSRT (200 m)
- * Purpose: moral weight of surveillance story + key Bluetooth evidence discovery
+ * Purpose: moral weight of the story + key Bluetooth evidence discovery (Flipper Zero BLE puzzle)
  */
 
 const WesterborkMemorialScene = {
@@ -50,7 +50,7 @@ const WesterborkMemorialScene = {
                         { speaker: 'Ryan', text: 'Anne Frank was on one of those trains.' },
                         { speaker: 'Narrator', text: '*Silence*' },
                         { speaker: 'Ryan', text: 'The Nazis built this camp specifically as a holding and sorting facility. They monitored everyone here. Catalogued them. Assigned them numbers.' },
-                        { speaker: 'Ryan', text: 'And now, less than two kilometres from here, someone is running a mass surveillance operation. Using the same ground. The same infrastructure.' },
+                        { speaker: 'Ryan', text: 'And now, less than two kilometres from here, someone has planted sensor nodes for a weapons programme. On a memorial. On this ground.' },
                         { speaker: 'Ryan', text: 'I don\'t think that\'s a coincidence. I think someone chose this location deliberately.' },
                     ]);
                 } else {

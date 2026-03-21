@@ -32,31 +32,31 @@ const VideocallScene = {
                 if (visitedFacility) {
                     game.startDialogue([
                         { speaker: 'Narrator', text: '📹 *Connecting to Dr. David Prinsloo...*' },
-                        { speaker: 'Narrator', text: '*Video feed stabilizes - David appears in his TU Eindhoven lab with antenna arrays behind him*' },
-                        { speaker: 'Dr. David Prinsloo', text: 'Ryan! You made it out safely. I was worried.' },
-                        { speaker: 'Ryan', text: 'The facility... David, what the hell is Operation Zerfall really about?' },
-                        { speaker: 'David Prinsloo', text: 'I wish I could tell you more. All I know is it involves classified signal interception.' },
-                        { speaker: 'David Prinsloo', text: 'Something about using Lofar and WSRT infrastructure for government surveillance.' },
-                        { speaker: 'Ryan', text: 'They had entire server rooms dedicated to this. Military-grade encryption.' },
-                        { speaker: 'David Prinsloo', text: 'Be careful, Ryan. If they know you\'ve been inside...' },
-                        { speaker: 'Ryan', text: 'I know. But I need to understand what they\'re hiding.' },
-                        { speaker: 'David Prinsloo', text: 'If you need technical analysis of any signals, send them my way. Encrypted channel only.' }
+                        { speaker: 'Narrator', text: '*Video feed stabilizes — David appears in his TU Eindhoven lab with antenna arrays behind him*' },
+                        { speaker: 'Dr. David Prinsloo', text: 'Ryan! You made it out. I\'ve been staring at my phone for hours.' },
+                        { speaker: 'Ryan', text: 'The facility is real. Server rooms full of test data — casualties documented down to the serial number.' },
+                        { speaker: 'David Prinsloo', text: 'The schematics I analysed — 900 MHz, 2.4 GHz, GPS disruption — it\'s all deployed?' },
+                        { speaker: 'Ryan', text: 'Phased array mounted on a trailer. Five-kilometre kill radius, tuneable across the whole band.' },
+                        { speaker: 'David Prinsloo', text: '*Long exhale* Eight confirmed casualties, Ryan. That was in the schematics.' },
+                        { speaker: 'David Prinsloo', text: 'And the phase-control algorithms — Russian school. Volkov\'s fingerprints are everywhere.' },
+                        { speaker: 'Ryan', text: 'I have the server data. Encrypted, but it\'s everything.' },
+                        { speaker: 'David Prinsloo', text: 'Get it to someone who can act on it. AIVD, maybe Europol. This is beyond us now.' }
                     ]);
                 } else if (hasTransmission) {
                     game.startDialogue([
                         { speaker: 'Narrator', text: '📹 *Connecting to Dr. David Prinsloo...*' },
-                        { speaker: 'Narrator', text: '*Video feed stabilizes - David appears at his TU/e workstation*' },
+                        { speaker: 'Narrator', text: '*Video feed stabilizes — David appears at his TU/e workstation*' },
                         { speaker: 'Dr. David Prinsloo', text: 'Ryan! Good to see you. What\'s on your mind?' },
-                        { speaker: 'Ryan', text: 'David, I intercepted something strange on 14.23 MHz this morning.' },
-                        { speaker: 'David Prinsloo', text: 'Amateur band? What kind of signal?' },
-                        { speaker: 'Ryan', text: 'SSTV transmission. Military-grade encryption. Coordinates to a facility.' },
-                        { speaker: 'David Prinsloo', text: '*Leans forward* That\'s... unusual. SSTV is typically for ham radio hobbyists.' },
-                        { speaker: 'David Prinsloo', text: 'Military using it suggests they\'re hiding in plain sight. Old-school steganography.' },
-                        { speaker: 'Ryan', text: 'The coordinates point to something near Westerbork. Any facilities there?' },
-                        { speaker: 'David Prinsloo', text: 'Besides WSRT? There are some old government buildings from the Cold War era.' },
-                        { speaker: 'David Prinsloo', text: 'Officially decommissioned. But officially doesn\'t mean much, does it?' },
-                        { speaker: 'Ryan', text: 'I might need to investigate in person.' },
-                        { speaker: 'David Prinsloo', text: 'Be careful. If this is active military intelligence... you could attract attention.' }
+                        { speaker: 'Ryan', text: 'David, I picked up an SSTV transmission on 14.230 MHz. Image mode — Martin M2.' },
+                        { speaker: 'David Prinsloo', text: 'Amateur band? What kind of content?' },
+                        { speaker: 'Ryan', text: 'A surveillance photo of my own farmhouse. Steganographic GPS coordinates hidden in it.' },
+                        { speaker: 'David Prinsloo', text: '*Leans forward* That\'s not amateur. Whoever sent that knows exactly what they\'re doing.' },
+                        { speaker: 'David Prinsloo', text: 'SSTV with stego payload — that\'s old-school signals intelligence. Military tradecraft.' },
+                        { speaker: 'Ryan', text: 'The GPS points to something near Westerbork. Not the WSRT — further east, across the border.' },
+                        { speaker: 'David Prinsloo', text: 'Steckerdoser Heide? There are rumours about a facility there. Officially decommissioned.' },
+                        { speaker: 'David Prinsloo', text: 'But \'officially\' doesn\'t mean much when there\'s military R&D involved.' },
+                        { speaker: 'Ryan', text: 'I need to find out what\'s there.' },
+                        { speaker: 'David Prinsloo', text: 'Be careful. If someone\'s photographing your house AND transmitting coordinates... you\'re already on their radar.' }
                     ]);
                 } else {
                     game.startDialogue([
@@ -90,33 +90,29 @@ const VideocallScene = {
                 if (solvedPassword) {
                     game.startDialogue([
                         { speaker: 'Narrator', text: '📹 *Connecting to Cees Bassa...*' },
-                        { speaker: 'Narrator', text: '*Video feed connects - Cees appears with a miniature Lofar antenna model on his desk*' },
-                        { speaker: 'Cees Bassa', text: 'Ryan! I heard through the grapevine you cracked something big?' },
-                        { speaker: 'Ryan', text: 'You could say that. Beam-forming algorithms were the key.' },
-                        { speaker: 'Cees Bassa', text: '*Eyes widen* You used Lofar principles for cryptography? Brilliant!' },
-                        { speaker: 'Ryan', text: 'The password was based on your exact antenna configuration. 25 antennas, specific pattern.' },
-                        { speaker: 'Cees Bassa', text: 'Someone in intelligence must have worked with us. That\'s not public knowledge.' },
-                        { speaker: 'Cees Bassa', text: 'The core station layout... Ryan, that\'s classified infrastructure data.' },
-                        { speaker: 'Ryan', text: 'Which means government is deeply involved in whatever this is.' },
-                        { speaker: 'Cees Bassa', text: 'What did you find once you got in?' },
-                        { speaker: 'Ryan', text: 'Evidence. Lots of it. But I need to analyze it properly.' },
-                        { speaker: 'Cees Bassa', text: 'If you need help with signal processing or pattern analysis, I\'m here. Encrypted only.' }
+                        { speaker: 'Narrator', text: '*Video feed connects — Cees appears at the WSRT control desk, dishes visible through the window behind him*' },
+                        { speaker: 'Cees Bassa', text: 'Ryan! You\'re out? The mesh radio went dark for three hours — I nearly called the police.' },
+                        { speaker: 'Ryan', text: 'I got in. Server room, data extracted. The triangulation was dead-on.' },
+                        { speaker: 'Cees Bassa', text: 'So the calibration beacon we tracked — it really led to a weapons facility?' },
+                        { speaker: 'Ryan', text: 'Phased array EM cannon. Exactly what the schematics described. Five-kilometre kill radius.' },
+                        { speaker: 'Cees Bassa', text: '*Shakes head* The signal-processing code in those schematics... Russian school, no question.' },
+                        { speaker: 'Ryan', text: 'Volkov. FSB. And they documented everything — casualties, field tests, deployment schedules.' },
+                        { speaker: 'Cees Bassa', text: 'This needs to go to AIVD immediately. My signed analysis is still on your dead-drop.' },
+                        { speaker: 'Cees Bassa', text: 'Ryan — you did good. The dishes are still listening if you need anything else.' }
                     ]);
                 } else if (hasTransmission) {
                     game.startDialogue([
                         { speaker: 'Narrator', text: '📹 *Connecting to Cees Bassa...*' },
-                        { speaker: 'Narrator', text: '*Video feed connects - Cees appears drinking coffee*' },
-                        { speaker: 'Cees Bassa', text: 'Ryan! Morning! Well, almost afternoon for me.' },
-                        { speaker: 'Ryan', text: 'Cees, I need to pick your brain about beam-forming patterns.' },
-                        { speaker: 'Cees Bassa', text: 'Oh? Working on a Lofar-related project?' },
-                        { speaker: 'Ryan', text: 'Something like that. How many antennas in your core station configuration?' },
-                        { speaker: 'Cees Bassa', text: 'The main array? We typically use 25 antenna elements in specific geometric patterns.' },
-                        { speaker: 'Cees Bassa', text: 'Each positioned to maximize signal coherence. Why do you ask?' },
-                        { speaker: 'Ryan', text: 'Just curious about the math. The spatial correlation algorithms fascinate me.' },
-                        { speaker: 'Cees Bassa', text: 'It\'s beautiful mathematics. Phase delays, interference patterns, coherent summation...' },
-                        { speaker: 'Cees Bassa', text: 'You can create a synthetic aperture larger than any physical dish could be.' },
-                        { speaker: 'Ryan', text: 'Amazing work. Thanks for the insight.' },
-                        { speaker: 'Cees Bassa', text: 'Anytime! Call if you need more technical details.' }
+                        { speaker: 'Narrator', text: '*Video feed connects — Cees appears with satellite tracking software on his second monitor*' },
+                        { speaker: 'Cees Bassa', text: 'Ryan! I was just looking at that SSTV image you forwarded.' },
+                        { speaker: 'Ryan', text: 'The surveillance photo? What did you find?' },
+                        { speaker: 'Cees Bassa', text: '14.230 MHz, Martin M2 mode — someone knows their SSTV protocols.' },
+                        { speaker: 'Cees Bassa', text: 'And the steganographic GPS payload? That\'s not amateur work. That\'s tradecraft.' },
+                        { speaker: 'Ryan', text: 'The coordinates point east, near the German border.' },
+                        { speaker: 'Cees Bassa', text: 'If you bring me the full schematics, I can run them through ASTRON\'s signal-analysis pipeline.' },
+                        { speaker: 'Cees Bassa', text: 'Fourteen dishes and a supercomputer — we can triangulate any active transmitter in the region.' },
+                        { speaker: 'Ryan', text: 'I might take you up on that. This is getting serious.' },
+                        { speaker: 'Cees Bassa', text: 'Come to WSRT when you\'re ready. I\'ll clear the schedule. Encrypted channels only from now on.' }
                     ]);
                 } else {
                     game.startDialogue([
@@ -150,35 +146,31 @@ const VideocallScene = {
                 if (hasEvidence) {
                     game.startDialogue([
                         { speaker: 'Narrator', text: '📹 *Connecting to Jaap Haartsen...*' },
-                        { speaker: 'Narrator', text: '*Video feed connects - Jaap Haartsen in home office, Bluetooth certification plaques on wall*' },
-                        { speaker: 'Jaap Haartsen', text: 'Ryan. You look stressed. What\'s going on?' },
-                        { speaker: 'Ryan', text: 'I need your expertise. Bluetooth protocol analysis - can you help?' },
-                        { speaker: 'Jaap Haartsen', text: 'Of course. What are we looking at?' },
-                        { speaker: 'Ryan', text: 'Government surveillance devices. Modified Bluetooth with custom frequency hopping.' },
-                        { speaker: 'Jaap Haartsen', text: '*Serious expression* That\'s... concerning. Send me the packet captures.' },
-                        { speaker: 'Ryan', text: 'They\'re using your protocols for mass surveillance. Jaap, this is big.' },
-                        { speaker: 'Jaap Haartsen', text: 'Jesus. I designed Bluetooth for device connectivity, not government spying.' },
-                        { speaker: 'Jaap Haartsen', text: 'But yes, the frequency hopping makes it nearly impossible to jam or intercept.' },
-                        { speaker: 'Jaap Haartsen', text: 'Someone with deep knowledge of the protocol architecture created this.' },
-                        { speaker: 'Ryan', text: 'Can you trace the modifications? Find who implemented them?' },
-                        { speaker: 'Jaap Haartsen', text: 'I can try. Give me a few hours to analyze the patterns.' },
-                        { speaker: 'Jaap Haartsen', text: 'Ryan... be careful with this. If they\'re watching Bluetooth traffic...' },
-                        { speaker: 'Ryan', text: 'I know. Using encrypted channels only from now on.' }
+                        { speaker: 'Narrator', text: '*Video feed connects — Jaap Haartsen in home office, Bluetooth certifications on the wall behind him*' },
+                        { speaker: 'Jaap Haartsen', text: 'Ryan. You look like you haven\'t slept.' },
+                        { speaker: 'Ryan', text: 'Jaap, I need to ask you something. DEF CON 2003 — you mentioned meeting a Russian researcher.' },
+                        { speaker: 'Jaap Haartsen', text: '...Dmitri. He said he was an independent consultant.' },
+                        { speaker: 'Ryan', text: 'His real name is Dr. Alexei Volkov. FSB. He built an EM weapon that\'s killed eight people.' },
+                        { speaker: 'Jaap Haartsen', text: '*Long silence* He kept asking me about medical device protocols. Pacemakers. Insulin pumps.' },
+                        { speaker: 'Jaap Haartsen', text: 'I thought he was doing safety research. God, I even explained the interference thresholds.' },
+                        { speaker: 'Ryan', text: 'It\'s not your fault. He deceived everyone. But your testimony places him at the start of this.' },
+                        { speaker: 'Jaap Haartsen', text: 'Twenty years ago he was already planning this. *Rubs face* What do you need from me?' },
+                        { speaker: 'Ryan', text: 'A signed statement. DEF CON, the questions about medical devices, the name he used.' },
+                        { speaker: 'Jaap Haartsen', text: 'You\'ll have it within the hour. Encrypted.' }
                     ]);
                 } else if (visitedFacility) {
                     game.startDialogue([
                         { speaker: 'Narrator', text: '📹 *Connecting to Jaap Haartsen...*' },
-                        { speaker: 'Narrator', text: '*Video feed connects - Jaap Haartsen looks concerned*' },
+                        { speaker: 'Narrator', text: '*Video feed connects — Jaap Haartsen looks concerned*' },
                         { speaker: 'Jaap Haartsen', text: 'Ryan, are you okay? You look like you\'ve been through something.' },
-                        { speaker: 'Ryan', text: 'Long story. Let\'s just say I went somewhere I wasn\'t supposed to be.' },
-                        { speaker: 'Jaap Haartsen', text: 'The facility near Westerbork?' },
-                        { speaker: 'Ryan', text: 'How did you—' },
-                        { speaker: 'Jaap Haartsen', text: 'I\'ve heard rumors. Old Ericsson colleagues mentioned government contracts there.' },
-                        { speaker: 'Jaap Haartsen', text: 'Bluetooth-based surveillance systems. I didn\'t want to believe it.' },
-                        { speaker: 'Ryan', text: 'It\'s real. And it\'s massive.' },
-                        { speaker: 'Jaap Haartsen', text: 'What are you going to do?' },
-                        { speaker: 'Ryan', text: 'Find out who\'s running it. And why.' },
-                        { speaker: 'Jaap Haartsen', text: 'Let me know if you need technical analysis. I know these protocols better than anyone.' },
+                        { speaker: 'Ryan', text: 'I infiltrated Steckerdoser Heide. The RF weapon — it\'s real, Jaap.' },
+                        { speaker: 'Jaap Haartsen', text: 'The phased array David described? Multi-band EM weapon?' },
+                        { speaker: 'Ryan', text: 'Trailer-mounted. Five-klick radius. Eight confirmed casualties in the test data.' },
+                        { speaker: 'Jaap Haartsen', text: 'And the Bluetooth vulnerability angle — pacemakers, insulin pumps...' },
+                        { speaker: 'Ryan', text: 'The schematics show deliberate targeting of medical device frequencies. 2.4 GHz band.' },
+                        { speaker: 'Jaap Haartsen', text: 'That\'s... that\'s exactly what that man at DEF CON was asking me about. Two decades ago.' },
+                        { speaker: 'Ryan', text: 'Volkov. Russian FSB. He\'s been planning this for twenty years.' },
+                        { speaker: 'Jaap Haartsen', text: 'If you need a technical witness — someone who can confirm the medical device attack vector — I\'m in.' },
                     ]);
                 } else {
                     game.startDialogue([
