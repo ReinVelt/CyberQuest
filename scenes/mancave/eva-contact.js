@@ -50,11 +50,14 @@ window.MancaveEvaContact = (function () {
         { from: 'Ryan', text: 'When?', timestamp: '03:29' },
         { from: 'EVA_W', text: 'Tomorrow night. 11 PM. North entrance. I\'ll leave a badge for you. From there, you\'re on your own until you reach the server room. Then I can guide you remotely.', timestamp: '03:30' },
         { from: 'EVA_W', text: 'This is dangerous, Ryan. If they catch you, I can\'t help. If Volkov finds out... we both disappear.', timestamp: '03:31' },
-        { from: 'Ryan', text: 'I\'m in. For your father. For Marlies Bakker. For everyone they\'ve hurt.', timestamp: '03:32' },
-        { from: 'EVA_W', text: 'Thank you. Tomorrow night. Be ready. Stay off the grid until then. Meshtastic only. They monitor everything else.', timestamp: '03:33' },
-        { from: 'EVA_W', text: 'And Ryan — give Tino and Kessy a treat from me. I still think about those dogs.', timestamp: '03:34' },
-        { from: 'Ryan', text: '...You even remember their names.', timestamp: '03:34' },
-        { from: 'EVA_W', text: 'Rescue dogs, Ryan. We never forget.', timestamp: '03:35' }
+        { from: 'EVA_W', text: 'I almost didn\'t send that SSTV signal. Three times I had the transmission ready. Three times I deleted it. What gives me the right to pull someone else into this?', timestamp: '03:32' },
+        { from: 'EVA_W', text: 'My father had no idea what he was carrying across that border. He just trusted his daughter. Fourteen days later he was dead. I think about that every single day.', timestamp: '03:33' },
+        { from: 'Ryan', text: 'I\'m in. For your father. For Marlies Bakker. For everyone they\'ve hurt.', timestamp: '03:34' },
+        { from: 'Ryan', text: 'You didn\'t pull me into this. You gave me the chance to do something that matters.', timestamp: '03:34' },
+        { from: 'EVA_W', text: 'Thank you. Tomorrow night. Be ready. Stay off the grid until then. Meshtastic only. They monitor everything else.', timestamp: '03:35' },
+        { from: 'EVA_W', text: 'And Ryan — give Tino and Kessy a treat from me. I still think about those dogs.', timestamp: '03:36' },
+        { from: 'Ryan', text: '...You even remember their names.', timestamp: '03:36' },
+        { from: 'EVA_W', text: 'Rescue dogs, Ryan. We never forget.', timestamp: '03:37' }
     ];
 
     /* ══════════════════════════════════════════════════════════

@@ -54,7 +54,8 @@ window.MancaveVolkovInvestigation = (function () {
         { from: 'Chris Kubecka', text: 'Okay, this is interesting. Dimitri Volkov, 52, former Soviet military researcher. Officially "defected" in 1998 after the USSR collapse. Worked at various European defense contractors under different names — Volkov is his real one.', timestamp: '09:37' },
         { from: 'Chris Kubecka', text: 'Here\'s the kicker: he was part of a Soviet program called СПЕКТР (Spektr) in the late 80s. Classified RF research. The program was supposedly shut down, but rumors in certain circles say the research continued... privately.', timestamp: '09:38' },
         { from: 'Chris Kubecka', text: 'I\'ve seen his name pop up in connection with some very nasty drone incidents in Ukraine. Signal jamming, GPS spoofing — but more targeted than usual. Like someone knew exactly which frequencies to hit.', timestamp: '09:39' },
-        { from: 'Chris Kubecka', text: 'If he\'s at that German facility, they didn\'t hire a consultant. They hired the architect of Soviet RF warfare.\n\nBe careful, Ryan. People who dig into Volkov tend to have accidents.\n\nI\'ll keep looking. Watch your back.', timestamp: '09:41' }
+        { from: 'Chris Kubecka', text: 'I found a 1991 conference photo of him. Young guy, laughing with colleagues at a Moscow symposium. People who knew him said he had a gift for teaching, actually liked explaining his work. Then the USSR collapsed and the records go dark for years. When he surfaces again, the warmth is gone. That happens to people — a whole world ends and something in them ends too.', timestamp: '09:40' },
+        { from: 'Chris Kubecka', text: 'Doesn\'t excuse ECHO-10. Nothing excuses ECHO-10.\n\nIf he\'s at that German facility, they didn\'t hire a consultant. They hired the architect of Soviet RF warfare.\n\nBe careful, Ryan. People who dig into Volkov tend to have accidents.\n\nI\'ll keep looking. Watch your back.', timestamp: '09:41' }
     ];
 
     const KUBECKA_MESSAGES_2 = [
@@ -128,7 +129,10 @@ window.MancaveVolkovInvestigation = (function () {
                         MC.revealDialogue(reaction, [
                             { speaker: 'Ryan', text: 'Background check STILL pending. Gaps in work history.' },
                             { speaker: 'Ryan', text: '"Personally vouched for at the highest levels"' },
-                            { speaker: 'Ryan', text: 'Someone powerful is protecting him. This goes deep.' }
+                            { speaker: 'Ryan', text: 'Someone powerful is protecting him. This goes deep.' },
+                            { speaker: 'Ryan', text: 'Klaus Weber wrote this email. He was 58 years old.' },
+                            { speaker: 'Ryan', text: 'Six weeks later — heart attack. He knew exactly what Volkov was.' },
+                            { speaker: 'Ryan', text: 'He wrote “delete this after reading” and then he died for it.' }
                         ], { pauseBetween: 2000, useTTS: true });
                     }, 1000);
 

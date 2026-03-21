@@ -35,7 +35,7 @@ window.MancaveDilemma = (function () {
             num: 'OPTION 3',
             title: 'Walk Away',
             desc: 'Delete everything. Pretend this never happened.',
-            monologue: 'A 67-year-old grandmother went into surgery and never came out because some Russian needed to calibrate his toy. Walk away from that? ...Who am I kidding? That was never an option.',
+            monologue: 'Marlies Bakker. 67. Four grandchildren. She went in to get her hip replaced and they used her surgery as a calibration test. ECHO-10. The report filed it under "equipment malfunction, patient pre-existing condition." She\'s a line in a log. An experiment result. Walk away from THAT? ...Who am I kidding? That was never an option.',
             rejected: true,
             direction: 'mc-slideRight'
         },
