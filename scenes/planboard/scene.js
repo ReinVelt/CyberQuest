@@ -752,6 +752,7 @@ const PlanboardScene = {
    * Get detailed content for each evidence type
    */
   getDossierContent: function(evidenceType) {
+    const evaIdentified = (typeof game !== 'undefined') && game.getFlag && game.getFlag('identified_eva');
     const dossiers = {
       sstv: {
         title: 'SSTV Transmission — Surveillance Photo',
@@ -815,9 +816,44 @@ const PlanboardScene = {
         `
       },
       
-      eva: {
-        title: 'Eva - Whistleblower',
-        subtitle: 'Inside Source - Project Echo',
+      eva: evaIdentified ? {
+        title: 'Eva Weber — Identity Confirmed',
+        subtitle: 'Junior RF Engineer — Klaus Weber\'s Daughter',
+        content: `
+          <p style="line-height: 1.8; font-size: 15px;">
+            <strong style="color: #d32f2f;">Full Name:</strong> Eva Weber<br>
+            <strong style="color: #d32f2f;">Age:</strong> 24<br>
+            <strong style="color: #d32f2f;">Role:</strong> Junior RF Engineer, Project Echo<br>
+            <strong style="color: #d32f2f;">Connection:</strong> Daughter of Klaus Weber (deceased)
+          </p>
+          <div style="background: rgba(211, 47, 47, 0.2); border: 2px solid #d32f2f; padding: 15px; border-radius: 5px; margin: 15px 0; font-family: monospace; font-size: 13px; color: #d32f2f;">
+            [PERSONNEL FILE — STECKERDOSER HEIDE]<br>
+            Weber, E. — RF-Engineer Jr.  ACCESS: LEVEL 2<br>
+            STATUS: <span style="color:#ff0000;">TERMINATED — SECURITY RISK</span><br>
+            NOTE: "Too inquisitive about matters outside her purview."
+          </div>
+          <p style="line-height: 1.6; font-size: 14px; color: #555;">
+            Grew up watching her father ship crates marked "industrial components" 
+            to a facility she was never allowed to ask about. She joined the project 
+            at 24 — then saw the casualty logs. ECHO-7. ECHO-8. ECHO-9. Marlies Bakker.
+          </p>
+        `,
+        details: `
+          <strong>HOW RYAN KNOWS HER:</strong><br>
+          Eva met Ryan two years ago at a dog training field — introduced by Max, who vouched for Ryan's
+          radio lab and lack of government ties. She filed it away. When she saw the Phase 3 authorization,
+          she remembered: a hacker in Drenthe, no strings attached.<br><br>
+          <strong>DEAD DROP:</strong> USB under stone bench, Ter Apel monastery courtyard.<br>
+          <strong>CODENAME:</strong> "E" — signed in README.txt.<br>
+          <strong>SECURITY:</strong> Air-gapped only. No digital trail.
+        `,
+        notes: `
+          <p style="color: #ff0000; font-weight: bold;">⚠ Eva's location is unknown</p>
+          <p>Her personnel file was terminated. Volkov knows she talked. She has hours, not days.</p>
+        `
+      } : {
+        title: 'Eva — Whistleblower',
+        subtitle: 'Inside Source — Project Echo',
         content: `
           <p style="line-height: 1.8; font-size: 15px;">
             <strong style="color: #d32f2f;">Identity:</strong> Eva (Codename: "E")<br>
@@ -869,9 +905,11 @@ const PlanboardScene = {
         `,
         details: `
           <strong>INTELLIGENCE GATHERED:</strong><br>
-          The facility is located in a remote area of northern Germany, providing isolation for
-          classified weapons testing. The site appears to be privately funded but may have
-          government connections.
+          Remote location deliberately chosen for classified RF testing — no civilian oversight.
+          The facility fronts as a "radio propagation research station." Dr. Volkov's signature
+          appears on all Phase 2 and Phase 3 authorization documents — Russian state-actor
+          involvement confirmed. Klaus Weber's cargo manifests link Amsterdam Schiphol freight
+          to Steckerdoser Heide, disguised as "industrial components."
         `,
         notes: `
           <p style="color: #ff6b00; font-weight: bold;">⚠ High-security target</p>
