@@ -201,8 +201,8 @@ const MancaveScene = {
             action: function(game) {
                 if (game.getFlag('message_decoded') && !game.getFlag('frequency_tuned')) {
                     game.startDialogue([
-                        { speaker: 'Ryan', text: 'Message said military frequency from Steckerdoser Heide.' },
-                        { speaker: 'Ryan', text: 'Let\'s tune the HackRF and see what we get.' }
+                        { speaker: 'Ryan', text: 'The decoded message listed 243 MHz — military emergency frequency.' },
+                        { speaker: 'Ryan', text: 'Let\'s tune the HackRF and see what\'s broadcasting there.' }
                     ]);
 
                     setTimeout(() => {

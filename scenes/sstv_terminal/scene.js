@@ -109,20 +109,19 @@ const SstvTerminalScene = {
                                 id: 'rot1_message_1',
                                 type: 'rot1',
                                 questId: 'decode_message',
-                                encryptedText: 'XBSOJOH - QSPKFDU FDIP JT DPNQSPNJTFE - NPWF UP CBDLVQ DIBOOFM - DPPSEJOBUFT GPMMPX - USVTU OP POF',
-                                hint: 'In ROT1, each letter is shifted by 1. B→A, C→B, etc.',
-                                solution: 'WARNING - PROJECT ECHO IS COMPROMISED - MOVE TO BACKUP CHANNEL - COORDINATES FOLLOW - TRUST NO ONE',
+                                encryptedText: 'XBSOJOH - QSPKFDU FDIP JT DPNQSPNJTFE - NPWF UP CBDLVQ DIBOOFM - 243 NIA - DPPSEJOBUFT GPMMPX - USVTU OP POF',
+                                hint: 'In ROT1, each letter is shifted by 1. B→A, C→B, Z→Y, etc. Numbers stay the same.',
+                                solution: 'WARNING - PROJECT ECHO IS COMPROMISED - MOVE TO BACKUP CHANNEL - 243 MHZ - COORDINATES FOLLOW - TRUST NO ONE',
                                 onSolve: function(g) {
                                     g.setFlag('message_decoded', true);
                                     g.setStoryPart(3);
                                     g.advanceTime(30);
                                     g.startDialogue([
-                                        { speaker: 'Ryan', text: 'WARNING - PROJECT ECHO IS COMPROMISED - MOVE TO BACKUP CHANNEL - COORDINATES FOLLOW - TRUST NO ONE' },
+                                        { speaker: 'Ryan', text: 'WARNING - PROJECT ECHO IS COMPROMISED - MOVE TO BACKUP CHANNEL - 243 MHZ - COORDINATES FOLLOW - TRUST NO ONE' },
                                         { speaker: 'Ryan', text: 'Project Echo? German military R&D? Serious stuff.' },
                                         { speaker: 'Ryan', text: 'But wait... ROT1 isn\'t real encryption. Any idiot could break this.' },
                                         { speaker: 'Ryan', text: 'This was deliberate. They WANT to be found... by the right person.' },
-                                        { speaker: 'Ryan', text: 'And why SSTV? That\'s for images. This whole thing is weird.' },
-                                        { speaker: 'Ryan', text: 'Message mentioned a frequency. Check the HackRF.' }
+                                        { speaker: 'Ryan', text: '243 MHz — military emergency frequency. Someone\'s using it as a dead-drop channel. Check the HackRF.' }
                                     ]);
                                 }
                             });

@@ -502,7 +502,7 @@ const AstronScene = {
                 title: '📡 Beacon Frequency Isolation',
                 description: 'The Project Echo calibration beacon broadcasts on a military frequency.<br>Enter the frequency (in MHz) from the original SSTV intercept to lock on.',
                 placeholder: 'Frequency in MHz (e.g. 243)',
-                hint: 'Remember the military frequency Ryan tuned his HackRF to in the mancave. It was mentioned in the first decoded SSTV message.',
+                hint: 'It\'s the frequency listed in the decoded SSTV message — described as the backup channel frequency.',
                 correctAnswer: ['243', '243.0', '243.00'],
                 onSuccess: function(game) {
                     game.setFlag('signal_triangulated', true);

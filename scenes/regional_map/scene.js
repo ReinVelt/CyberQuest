@@ -294,7 +294,7 @@ const RegionalMapScene = {
             <li>Quiet, isolated meeting location</li>
             <li>Public parking area - discrete exchanges</li>
             <li>Far enough from prying eyes</li>
-            <li>Historical radio connection to Klaus Weber</li>
+            <li>The whistleblower chose this as a dead-drop — neutral ground near the German border</li>
           </ul>
           
           <p>${game.getFlag('picked_up_usb') ? 
