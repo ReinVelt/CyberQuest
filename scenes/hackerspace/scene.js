@@ -821,6 +821,18 @@ const HackerspaceScene = {
                         { speaker: 'Dennis', text: 'SDR++. Open source, runs beautifully on the Pi 5. The 2.4 GHz clock is fast enough for real-time demodulation now.' },
                     ],
                 ];
+                // One-shot story-reactive line: fires once when the player has decoded the SSTV signal
+                if (!game.getFlag('dennis_story_reacted') && game.getFlag('sstv_decoded')) {
+                    game.setFlag('dennis_story_reacted', true);
+                    game.startDialogue([
+                        { speaker: 'Dennis', text: '*lowers his voice* Hey — were you the one picking up that weird SSTV burst on 243 MHz last week?' },
+                        { speaker: 'Dennis', text: 'I caught it on my waterfall. Robot36 format, buried inside what looked like routine mil-band carrier. I couldn\'t decode it.' },
+                        { speaker: 'Ryan', text: '...I decoded it.' },
+                        { speaker: 'Dennis', text: '*slow exhale* 243 MHz is international military distress spectrum. Someone hid a message there deliberately. That doesn\'t happen by accident.' },
+                        { speaker: 'Dennis', text: 'Be careful. SIGINT at that level gets noticed. Whatever you\'re into — watch your back.' },
+                    ]);
+                    return;
+                }
                 game.startDialogue(lines[visits % lines.length]);
             }
         },
@@ -861,6 +873,19 @@ const HackerspaceScene = {
                         { speaker: 'Sophie', text: '*grins* Nope. 620mm diameter, printed in 16 sections, glued together. 43 hours of print time total. My personal record.' },
                     ],
                 ];
+                // One-shot story-reactive line: fires once when player has identified Eva Weber
+                if (!game.getFlag('sophie_story_reacted') && game.getFlag('identified_eva')) {
+                    game.setFlag('sophie_story_reacted', true);
+                    game.startDialogue([
+                        { speaker: 'Sophie', text: '*quieter than usual* Can I ask you something weird? A few weeks ago we got an anonymous donation for the STEM workshop fund. €500 in cash.' },
+                        { speaker: 'Sophie', text: 'A handwritten note: "For the next generation. — E.W."' },
+                        { speaker: 'Ryan', text: '*pauses*... That\'s generous.' },
+                        { speaker: 'Sophie', text: 'You know who it is.' },
+                        { speaker: 'Ryan', text: 'Someone who believes in what you\'re building here.' },
+                        { speaker: 'Sophie', text: '*studies Ryan a moment, then nods* ...Good enough for me. The money went to Raspberry Pi kits for the school workshops.' },
+                    ]);
+                    return;
+                }
                 game.startDialogue(lines[visits % lines.length]);
             }
         },
@@ -901,6 +926,19 @@ const HackerspaceScene = {
                         { speaker: 'Marco', text: 'That\'s hackerspace philosophy, man. Why buy it when you can build it better? We know every bolt, every motor step, every line of code.' },
                     ],
                 ];
+                // One-shot story-reactive line: fires once when the player has analysed the USB contents
+                if (!game.getFlag('marco_story_reacted') && game.getFlag('usb_analyzed')) {
+                    game.setFlag('marco_story_reacted', true);
+                    game.startDialogue([
+                        { speaker: 'Marco', text: '*drops his voice* I mounted some LoRa hardware near the German border last month — coverage extension for the mesh network.' },
+                        { speaker: 'Marco', text: 'There\'s a security perimeter about 4 km south of Coevorden. Fencing, cameras, signs marked "ATIS GROUP — RESTRICTED AREA".' },
+                        { speaker: 'Ryan', text: '...I\'ve seen that name.' },
+                        { speaker: 'Marco', text: 'While I was on the mounting ladder, a dark van passed me twice. Slowly. No readable plates.' },
+                        { speaker: 'Marco', text: 'Probably nothing. But I figured you should know, given what you\'ve been up to.' },
+                        { speaker: 'Ryan', text: 'It\'s not nothing. Thanks, Marco.' },
+                    ]);
+                    return;
+                }
                 game.startDialogue(lines[visits % lines.length]);
             }
         },
@@ -941,6 +979,21 @@ const HackerspaceScene = {
                         { speaker: 'Kim', text: 'Exactly. We\'re hackers, not cowboys. You can innovate AND be safe.' },
                     ],
                 ];
+                // One-shot story-reactive line: fires once when the player has picked up the USB dead-drop
+                if (!game.getFlag('kim_story_reacted') && game.getFlag('picked_up_usb')) {
+                    game.setFlag('kim_story_reacted', true);
+                    game.startDialogue([
+                        { speaker: 'Kim', text: '*stops welding, flips up her helmet, studies Ryan* You okay? You\'ve got that look.' },
+                        { speaker: 'Ryan', text: 'What look?' },
+                        { speaker: 'Kim', text: 'Like someone who picked something up and can\'t put it down. I know it — I\'ve worn it.' },
+                        { speaker: 'Ryan', text: 'I found something at Ter Apel. I don\'t fully know what I\'m dealing with yet.' },
+                        { speaker: 'Kim', text: 'We\'ve got a Faraday cage in the back room. Air-gapped system, encrypted storage. Joris built it for exactly this kind of thing.' },
+                        { speaker: 'Kim', text: 'If you need to analyse something off-network, no questions asked.' },
+                        { speaker: 'Ryan', text: 'That\'s really good to know. Thank you.' },
+                        { speaker: 'Kim', text: '*nods* Hackerspace rules. We look out for each other.' },
+                    ]);
+                    return;
+                }
                 game.startDialogue(lines[visits % lines.length]);
             }
         },
@@ -982,6 +1035,19 @@ const HackerspaceScene = {
                         { speaker: 'Joris', text: 'At SF7 on 868 MHz, we get about 5.5 kbps. A 100KB update takes about 150 seconds. Not fast, but way faster than driving to Dalen with a USB cable.' },
                     ],
                 ];
+                // One-shot story-reactive line: fires once when player has identified Eva Weber
+                if (!game.getFlag('joris_story_reacted') && game.getFlag('identified_eva')) {
+                    game.setFlag('joris_story_reacted', true);
+                    game.startDialogue([
+                        { speaker: 'Joris', text: '*glances at his Grafana dashboard* Actually — I\'ve been meaning to ask you something. I\'ve got a ghost node in our Meshtastic network.' },
+                        { speaker: 'Joris', text: 'Shows up after midnight, sends one encrypted packet, then vanishes. Location traces to south of Coevorden, near the border. Node ID: EVA-W-39.' },
+                        { speaker: 'Ryan', text: '*carefully* What frequency hop key is it using?' },
+                        { speaker: 'Joris', text: 'Our network\'s own key. Which means whoever it is has our setup details. But they\'ve never tried anything harmful — just listening, or sending to someone specific.' },
+                        { speaker: 'Ryan', text: 'Don\'t lock it out. Please.' },
+                        { speaker: 'Joris', text: '*raises an eyebrow* ...Okay. I won\'t ask questions. But I\'ll keep watching for you.' },
+                    ]);
+                    return;
+                }
                 game.startDialogue(lines[visits % lines.length]);
             }
         },

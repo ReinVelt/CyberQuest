@@ -264,6 +264,31 @@ const MorningAfterScene = {
 
         game.setFlag('visited_morning_after', true);
 
+        // Extend idle thoughts with path-specific reactions to the player's endgame choice
+        const pathThoughts = [];
+        if (game.getFlag('press_sent') || game.getFlag('news_broken')) {
+            pathThoughts.push(
+                "Der Spiegel ran the headline at 06:00. There's no un-ringing that bell.",
+                "Press requests from seventeen countries. I stopped counting at noon.",
+                "Bellingcat's open-source satellite analysis just confirmed our facility coordinates."
+            );
+        } else if (game.getFlag('bnd_only')) {
+            pathThoughts.push(
+                "The arrests were quiet. Hoffmann and Volkov, gone overnight. No press, no names.",
+                "Nobody outside the BND knows I exist. That's what I asked for. I think.",
+                "Quiet justice feels strange. It still counts. I keep telling myself that."
+            );
+        } else if (game.getFlag('underground_chosen')) {
+            pathThoughts.push(
+                "The encrypted package is set. Three weeks until it's safe to release.",
+                "Max asked why I'm still tense. I said I'm just tired. She didn't believe me.",
+                "The Spiegel journalist is sitting on the folder right now. Waiting for my signal."
+            );
+        }
+        if (pathThoughts.length) {
+            game.player.setIdleThoughts([...MorningAfterScene.idleThoughts, ...pathThoughts]);
+        }
+
         const tid = setTimeout(() => {
             game.startDialogue([
                 { speaker: 'Narrator', text: 'The next morning — Mancave, Compascuum' },

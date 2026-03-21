@@ -87,15 +87,41 @@ const KloosterScene = {
                     game.setFlag('checked_courtyard', true);
                     game.startDialogue([
                         { speaker: 'Ryan', text: '23:00. Exactly when they said.' },
-                        { speaker: 'Ryan', text: 'Nobody here. Surprise, surprise.' },
-                        { speaker: 'Narrator', text: '*He waits in the shadows for fifteen minutes*' },
-                        { speaker: 'Ryan', text: 'Screw this. Maybe it was all a joke.' }
+                        { speaker: 'Narrator', text: '*Cold flagstones. The monastery tower looms. A bat circles the belfry.*' },
+                        { speaker: 'Ryan', text: 'Nobody here.' },
+                        { speaker: 'Narrator', text: '*Ryan waits in the shadow of a pillar. Five minutes. Ten. The courtyard echo makes his own footsteps loud.*' },
+                        { speaker: 'Ryan', text: '*checks watch — 23:14* Fourteen minutes. I give it three more.' },
+                        { speaker: 'Ryan', text: 'Medieval quiet. The kind where your heartbeat gets loud.' },
+                        { speaker: 'Ryan', text: 'Screw this. It was a joke. Or a trap.' },
+                        { speaker: 'Ryan', text: '*starts walking back toward the Volvo*' }
                     ], () => {
-                        // A few seconds after 23:00 — Eva sends a Meshtastic message
-                        setTimeout(() => {
+                        // Low ambient drone — monastery dread while Eva's message arrives
+                        try {
+                            const __ac = new (window.AudioContext || window.webkitAudioContext)();
+                            const drone = __ac.createOscillator();
+                            drone.type = 'sine'; drone.frequency.value = 55;
+                            const droneG = __ac.createGain();
+                            droneG.gain.setValueAtTime(0, __ac.currentTime);
+                            droneG.gain.linearRampToValueAtTime(0.045, __ac.currentTime + 1.5);
+                            droneG.gain.linearRampToValueAtTime(0.02, __ac.currentTime + 3.5);
+                            droneG.gain.linearRampToValueAtTime(0, __ac.currentTime + 5.5);
+                            drone.connect(droneG).connect(__ac.destination);
+                            drone.start(); drone.stop(__ac.currentTime + 6);
+                            // Stone resonance shimmer as the ping arrives
+                            const shimmer = __ac.createOscillator();
+                            shimmer.type = 'triangle'; shimmer.frequency.value = 330;
+                            const shimG = __ac.createGain();
+                            shimG.gain.setValueAtTime(0, __ac.currentTime + 3.2);
+                            shimG.gain.linearRampToValueAtTime(0.018, __ac.currentTime + 3.6);
+                            shimG.gain.linearRampToValueAtTime(0, __ac.currentTime + 5.2);
+                            shimmer.connect(shimG).connect(__ac.destination);
+                            shimmer.start(__ac.currentTime + 3.2); shimmer.stop(__ac.currentTime + 5.5);
+                        } catch (e) { /* Audio API unavailable */ }
+                        // Meshtastic ping, then message
+                        game.sceneTimeout(() => {
                             game.showNotification('📡 Meshtastic — incoming message from E');
                         }, 3500);
-                        setTimeout(() => {
+                        game.sceneTimeout(() => {
                             game.showChat({
                                 id: 'eva_bench_clue',
                                 type: 'meshtastic',
