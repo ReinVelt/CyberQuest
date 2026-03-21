@@ -130,8 +130,9 @@ window.MancaveEvaContact = (function () {
             content.appendChild(chatArea);
 
             MC.revealChat(chatArea, EVA_MESSAGES, 'Ryan', {
-                typingDelay: 1000,
-                msgDelay: 1300,
+                typingDelay: 1800,
+                msgDelay: 2000,
+                readDelay: 28,
                 onDone: () => {
                     // Dramatic closing
                     MC.schedule(() => {
