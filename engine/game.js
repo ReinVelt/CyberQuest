@@ -1427,6 +1427,7 @@ class CyberQuestEngine {
     async _waitForIdle(timeout = 20000) {
         const start = Date.now();
         while (this.isDialogueActive || this.isPuzzleActive || this._sceneLoading
+               || this.chatInterface?.isOpen
                || document.querySelector('.mc-overlay')
                || document.querySelector('.ls-overlay')) {
             if (Date.now() - start > timeout) {
@@ -2242,6 +2243,16 @@ class CyberQuestEngine {
     showChat(config) {
         if (this.chatInterface) {
             this.chatInterface.showConversation(config);
+            // In Movie Mode no one can click Close — auto-close after a read delay
+            // so _waitForIdle can unblock and the accessibility runner can continue.
+            if (this.accessibilityMode) {
+                const msgs = (config.messages || []).length;
+                // 1 s base + 2 s per message, minimum 3 s
+                const readDelay = Math.max(3000, 1000 + msgs * 2000);
+                this.sceneTimeout(() => {
+                    if (this.chatInterface?.isOpen) this.chatInterface.close();
+                }, readDelay);
+            }
         } else {
             console.error('Chat interface not initialized');
             this.showNotification('Cannot display chat');
