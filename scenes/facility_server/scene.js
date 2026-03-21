@@ -606,6 +606,8 @@ const FacilityServerScene = {
             '<div class="fs-scanlines"></div>' +
             '<div class="fs-red-pulse" id="fs-red-pulse"></div>' +
             '<div class="fs-alert-strobe" id="fs-alert-strobe"></div>' +
+            '<div class="fs-door-strobe" id="fs-door-strobe"></div>' +
+            '<div id="fs-mesh-container" style="position:absolute;bottom:9vh;left:3vw;z-index:18;width:350px;pointer-events:none;"></div>' +
             '<div class="fs-flash" id="fs-flash"></div>' +
             '<div class="fs-hud-tl" id="fs-hud-tl">KELLER B // SERVER ROOM<br><span class="fs-hud-time" id="fs-hud-time">23:14:37</span></div>' +
             '<div class="fs-hud-br" id="fs-hud-br">STECKERDOSER HEIDE<br>FORSCHUNGSZENTRUM</div>' +
@@ -672,6 +674,23 @@ const FacilityServerScene = {
             self._schedule(() => p.classList.add('visible'), 50);
         }
 
+        function showMeshtastic(from, msg, durationMs) {
+            const container = document.getElementById('fs-mesh-container');
+            if (!container) return;
+            const el = document.createElement('div');
+            el.className = 'fs-mesh-msg';
+            el.innerHTML = '<div class="fs-mesh-header">&#9656; MESHTASTIC &#8212; ' + from.toUpperCase() + '</div>' + msg;
+            container.innerHTML = '';
+            container.appendChild(el);
+            self._schedule(() => el.classList.add('visible'), 50);
+            if (durationMs) {
+                self._schedule(() => {
+                    el.classList.remove('visible');
+                    self._schedule(() => { if (el.parentNode) el.remove(); }, 700);
+                }, durationMs);
+            }
+        }
+
         // ── SKIP ──────────────────────────────────────────
         document.getElementById('fs-skip')?.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -698,6 +717,14 @@ const FacilityServerScene = {
                 self._schedule(() => {
                     document.getElementById(id)?.classList.add('visible');
                     self._playBeep();
+                    // Eva checks in as Ryan reaches the server room door
+                    if (i === 3) {
+                        self._schedule(() => showMeshtastic(
+                            'Eva Weber',
+                            'In position. BND team 400m out.<br>Signal when extracted.',
+                            8000
+                        ), 700);
+                    }
                 }, 800 + i * 1800);
             });
 
@@ -751,9 +778,79 @@ const FacilityServerScene = {
                     game.setFlag('facility_password_solved', true);
                 }, 600 + 4 * 500 + 600);
 
-                // → Phase 2
-                self._schedule(() => startPhase2(), 600 + 4 * 500 + 600 + 2500);
+                // → Phase 1b (credential discovery)
+                self._schedule(() => startPhase1b(), 600 + 4 * 500 + 600 + 2500);
             }, 500);
+        }
+
+        // ══════════════════════════════════════════════════════
+        // PHASE 1b – CREDENTIAL DISCOVERY
+        // ══════════════════════════════════════════════════════
+        function startPhase1b() {
+            self.state.phase = 1;
+            setPhaseLabel('Workstation Locked');
+            self._setDroneIntensity(140, 0.4, 2);
+            clearPanel();
+
+            self._schedule(() => {
+                showPanel(
+                    '<div class="fs-descent-text visible" style="color:rgba(0,255,255,0.6);font-style:italic">' +
+                        '*Volkov\'s workstation. Screen still on — session timed out.*' +
+                    '</div>' +
+                    '<div class="fs-descent-text visible" style="margin-top:18px;color:rgba(255,255,255,0.45);font-style:italic">' +
+                        '*A yellow sticky note tucked under the keyboard. Handwriting. Four digits.*' +
+                    '</div>'
+                );
+                self._playBeep();
+
+                // Eva sends the PIN context over Meshtastic
+                self._schedule(() => {
+                    showMeshtastic(
+                        'Eva Weber',
+                        'Session PIN: <strong style="color:#fff;letter-spacing:3px">0119</strong><br>' +
+                        'His father\'s birth year. Classic Volkov — found in his BND file.',
+                        9000
+                    );
+                }, 1800);
+
+                // Show PIN entry panel
+                self._schedule(() => {
+                    clearPanel();
+                    showPanel(
+                        '<div class="fs-override-box">' +
+                            '<div class="fs-override-title">Session PIN</div>' +
+                            '<div class="fs-code-display" id="fs-pin">' +
+                                '<span class="digit" id="fsp0">0</span>' +
+                                '<span class="digit" id="fsp1">1</span>' +
+                                '<span class="digit" id="fsp2">1</span>' +
+                                '<span class="digit" id="fsp3">9</span>' +
+                            '</div>' +
+                            '<div class="fs-lock-status fs-lock-red" id="fs-pin-status">&#9679; SESSION LOCKED</div>' +
+                        '</div>'
+                    );
+
+                    ['fsp0','fsp1','fsp2','fsp3'].forEach((id, i) => {
+                        self._schedule(() => {
+                            document.getElementById(id)?.classList.add('typed');
+                            self._playBeep();
+                        }, 400 + i * 480);
+                    });
+
+                    self._schedule(() => {
+                        const s = document.getElementById('fs-pin-status');
+                        if (s) {
+                            s.classList.remove('fs-lock-red');
+                            s.classList.add('fs-lock-green');
+                            s.innerHTML = '&#9679; SESSION RESTORED — Dr. D. Volkov';
+                        }
+                        self._playDoorUnlock();
+                        flash();
+                    }, 400 + 4 * 480 + 400);
+
+                    // → Phase 2
+                    self._schedule(() => startPhase2(), 400 + 4 * 480 + 400 + 2200);
+                }, 4200);
+            }, 400);
         }
 
         // ══════════════════════════════════════════════════════
@@ -835,6 +932,7 @@ const FacilityServerScene = {
 
                     let pct = 0;
                     let fileIdx = 0;
+                    let guard1done = false, guard2done = false, chrisMsgDone = false, evaMsgDone = false;
                     const dlInterval = setInterval(() => {
                         pct += 1 + Math.random() * 2.5;
                         if (pct > 100) pct = 100;
@@ -843,6 +941,51 @@ const FacilityServerScene = {
                         const tickEl = document.getElementById('fs-ticker');
                         if (fill) fill.style.width = pct.toFixed(0) + '%';
                         if (pctEl) pctEl.textContent = pct.toFixed(0) + '%';
+
+                        // ── Guard sweep 1: distant footsteps in corridor ─────────────
+                        if (pct >= 44 && !guard1done) {
+                            guard1done = true;
+                            if (tickEl) { tickEl.style.color = 'rgba(255,180,0,0.75)'; tickEl.textContent = 'Footsteps. Corridor. Far. — don\'t stop moving.'; }
+                            self._playAlarm();
+                            self._schedule(() => { if (tickEl) tickEl.style.color = ''; }, 3500);
+                        }
+
+                        // ── Chris: Volkov incoming ───────────────────────────────
+                        if (pct >= 50 && !chrisMsgDone) {
+                            chrisMsgDone = true;
+                            showMeshtastic(
+                                'Chris Kubecka',
+                                'Volkov\'s Mercedes just turned into the facility road.<br>' +
+                                'He\'s coming in. I\'m 90 seconds behind him.<br>' +
+                                '<strong style="color:#ffd700">Do NOT leave until MPs arrive.</strong>',
+                                11000
+                            );
+                        }
+
+                        // ── Guard sweep 2: card reader, door opens ─────────────
+                        if (pct >= 68 && !guard2done) {
+                            guard2done = true;
+                            if (tickEl) { tickEl.style.color = 'rgba(255,60,0,0.9)'; tickEl.textContent = 'Card reader. Someone at the door.'; }
+                            self._playImpact();
+                            shake();
+                            const ds = document.getElementById('fs-door-strobe');
+                            if (ds) ds.classList.add('open');
+                            self._schedule(() => {
+                                if (tickEl) tickEl.textContent = 'Don\'t breathe.';
+                            }, 1200);
+                            self._schedule(() => {
+                                if (ds) ds.classList.remove('open');
+                                if (tickEl) { tickEl.style.color = 'rgba(0,255,65,0.5)'; tickEl.textContent = 'Gone. Keep going.'; }
+                                self._playBeep();
+                            }, 5800);
+                            self._schedule(() => { if (tickEl) tickEl.style.color = ''; }, 7800);
+                        }
+
+                        // ── Eva: team moving ─────────────────────────────────
+                        if (pct >= 88 && !evaMsgDone) {
+                            evaMsgDone = true;
+                            showMeshtastic('Eva Weber', 'Team moving. Volkov is inside the building.<br>3 minutes.', 7000);
+                        }
 
                         // Cycle files
                         if (Math.random() > 0.4 && fileIdx < files.length) {
@@ -854,7 +997,7 @@ const FacilityServerScene = {
                         if (pct >= 100) {
                             clearInterval(dlInterval);
                             if (pctEl) pctEl.textContent = '100%';
-                            if (tickEl) tickEl.textContent = 'TRANSFER COMPLETE — 21 FILES — 847 MB';
+                            if (tickEl) { tickEl.style.color = 'rgba(0,255,65,0.8)'; tickEl.textContent = 'TRANSFER COMPLETE — 21 FILES — 847 MB'; }
                             self._playTransferComplete();
                             flash();
 
@@ -862,13 +1005,101 @@ const FacilityServerScene = {
                             game.setFlag('data_extracted', true);
                             game.setFlag('collected_evidence', true);
 
-                            // → Phase 3 after beat
-                            self._schedule(() => startPhase3(), 2000);
+                            // → Active test abort before confrontation
+                            self._schedule(() => startPhase2c(), 2000);
                         }
                     }, 180);
                     self._intervalIds.push(dlInterval);
                 }, dlStart);
             }, 500);
+        }
+
+        // ══════════════════════════════════════════════════════
+        // PHASE 2c – ACTIVE TEST ABORT
+        // ══════════════════════════════════════════════════════
+        function startPhase2c() {
+            self.state.phase = 2;
+            setPhaseLabel('Active Test Detected');
+            self._setDroneIntensity(400, 0.65, 1);
+            clearPanel();
+
+            self._schedule(() => {
+                const alertLines = [
+                    { text: '', cls: '' },
+                    { text: '&#9888; &#9888; &nbsp; ACTIVE TEST DETECTED &nbsp; &#9888; &#9888;', cls: 'fs-term-warning' },
+                    { text: '', cls: '' },
+                    { text: 'TARGET &nbsp;&nbsp;&nbsp;&nbsp;: GRONINGEN_T07', cls: 'fs-term-warning' },
+                    { text: 'ETA &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: 04:12:07', cls: 'fs-term-warning' },
+                    { text: 'CASUALTIES: 200+ estimated (pacemakers / vehicle control)', cls: 'fs-term-warning' },
+                    { text: '', cls: '' },
+                    { text: '> sudo inject_calibration --target GRONINGEN_T07 --offset 999.9', cls: 'fs-term-gold' }
+                ];
+
+                let html = '<div class="fs-terminal" id="fs-abort-term">';
+                alertLines.forEach((line, i) => {
+                    html += '<div class="fs-term-line ' + line.cls + '" id="fsat' + i + '">' + line.text + '</div>';
+                });
+                html += '</div>';
+                showPanel(html);
+
+                document.getElementById('fs-red-pulse')?.classList.add('beating');
+                self._playAlarm(); shake();
+
+                alertLines.forEach((line, i) => {
+                    self._schedule(() => {
+                        document.getElementById('fsat' + i)?.classList.add('typed');
+                        if (i === 1) { self._playAlarm(); shake(); }
+                        if (i === 5) { self._playAlarm(); }
+                        if (i === 7) { self._playDataBlip(); }
+                    }, 300 + i * 900);
+                });
+
+                const injectDelay = 300 + alertLines.length * 900 + 600;
+                self._schedule(() => {
+                    const term = document.getElementById('fs-abort-term');
+                    if (term) {
+                        const l1 = document.createElement('div');
+                        l1.className = 'fs-term-line fs-term-dim typed';
+                        l1.textContent = 'Injecting false calibration data...';
+                        term.appendChild(l1);
+                        self._playDataBlip();
+                        self._schedule(() => self._playDataBlip(), 400);
+                        self._schedule(() => self._playDataBlip(), 800);
+                    }
+                }, injectDelay);
+
+                self._schedule(() => {
+                    const term = document.getElementById('fs-abort-term');
+                    if (term) {
+                        const result = document.createElement('div');
+                        result.className = 'fs-term-line fs-lock-green typed';
+                        result.innerHTML = '&#9679; TEST FAILURE — SAFETY PROTOCOLS ENGAGED';
+                        const saved = document.createElement('div');
+                        saved.className = 'fs-term-line fs-lock-green typed';
+                        saved.textContent = 'Estimated 200+ casualties averted.';
+                        term.appendChild(result);
+                        term.appendChild(saved);
+                        self._playTransferComplete();
+                        flash();
+                        document.getElementById('fs-red-pulse')?.classList.remove('beating');
+                    }
+                    game.setFlag('test_aborted', true);
+                }, injectDelay + 2200);
+
+                self._schedule(() => {
+                    clearPanel();
+                    showPanel(
+                        '<div class="fs-confront-text fs-ct-narration visible" ' +
+                            'style="color:rgba(180,180,200,0.55);font-style:italic">' +
+                            '*Four minutes. We had four minutes.*' +
+                        '</div>'
+                    );
+                    self._setDroneIntensity(70, 0.18, 3);
+                }, injectDelay + 4500);
+
+                // → Volkov confrontation after a long beat of silence
+                self._schedule(() => startPhase3(), injectDelay + 8000);
+            }, 400);
         }
 
         // ══════════════════════════════════════════════════════
@@ -879,19 +1110,9 @@ const FacilityServerScene = {
             self.state.confrontationStarted = true;
             game.setStoryPart(19);
             setPhaseLabel('');
-            self._setDroneIntensity(350, 0.6, 2);
+            // Volkov enters alone — low drone, no red pulse yet
+            self._setDroneIntensity(110, 0.3, 3);
             clearPanel();
-
-            // Red pulse
-            document.getElementById('fs-red-pulse')?.classList.add('beating');
-            // Heartbeat
-            let hbCount = 0;
-            const hbInterval = setInterval(() => {
-                if (self.state.phase !== 3 || hbCount > 20) { clearInterval(hbInterval); return; }
-                self._playHeartbeat();
-                hbCount++;
-            }, 1000);
-            self._intervalIds.push(hbInterval);
 
             // Show Volkov NPC
             const volkovChar = document.getElementById('volkov_character');
@@ -910,18 +1131,27 @@ const FacilityServerScene = {
                 }
 
                 const lines = [
-                    { text: '*Footsteps echo in the corridor behind you*', cls: 'fs-ct-narration' },
-                    { text: '*Heavy door swings open. Blinding corridor light.*', cls: 'fs-ct-narration' },
-                    { text: '"Interesting technique with the gate. Old KGB tradecraft."', cls: 'fs-ct-volkov' },
-                    { text: '*You spin around. Dmitri Volkov fills the doorframe.*', cls: 'fs-ct-narration' },
-                    { text: '"You must be E\'s new friend. The Dutch hacker."', cls: 'fs-ct-volkov' },
-                    { text: '*His eyes move to the terminal. The USB drive. Your hands.*', cls: 'fs-ct-narration' },
-                    { text: '"You have no idea what you\'re interfering with."', cls: 'fs-ct-volkov fs-ct-bold' },
-                    { text: '"It\'s over, Volkov. I have everything."', cls: 'fs-ct-ryan' },
-                    { text: '"ZERFALL. The FSB connection. Financial records. All of it."', cls: 'fs-ct-ryan' },
-                    { text: '*Volkov\'s mouth curves. Not a smile. A calculation.*', cls: 'fs-ct-narration' },
-                    { text: '"Perhaps. But I have something too."', cls: 'fs-ct-volkov' },
-                    { text: '*He reaches slowly into his jacket—*', cls: 'fs-ct-narration fs-ct-bold' }
+                    { text: '*A soft knock. Then the door opens slowly.*', cls: 'fs-ct-narration' },
+                    { text: '*Volkov enters alone. No guards called. No alarm.*', cls: 'fs-ct-narration' },
+                    { text: '*He walks to the terminal. Reads the transfer log. Unhurried.*', cls: 'fs-ct-narration' },
+                    { text: '"You forgot to clear the transfer log."', cls: 'fs-ct-volkov fs-ct-whisper' },
+                    { text: '*He turns. Meets your eyes. He was watching the whole time.*', cls: 'fs-ct-narration' },
+                    { text: '"I\'ve been watching on the building camera since you entered the gate."', cls: 'fs-ct-volkov' },
+                    { text: '"847 megabytes. Thorough."', cls: 'fs-ct-volkov' },
+                    { text: '*A beat. Something almost like approval.*', cls: 'fs-ct-narration fs-ct-whisper' },
+                    { text: '"Did E explain what we were building? Or just show you the casualty projections?"', cls: 'fs-ct-volkov' },
+                    { text: '"I have the files. That\'s enough."', cls: 'fs-ct-ryan' },
+                    { text: '"You have data. I have context. There\'s a difference."', cls: 'fs-ct-volkov' },
+                    { text: '"This weapon was never meant to kill. It was a demonstration."', cls: 'fs-ct-volkov' },
+                    { text: '"To show what Europe ignores when it looks east."', cls: 'fs-ct-volkov' },
+                    { text: '"We... miscalibrated the margins."', cls: 'fs-ct-volkov fs-ct-whisper' },
+                    { text: '"Two hundred people in Groningen. That\'s your miscalibration."', cls: 'fs-ct-ryan' },
+                    { text: '*Volkov pauses. Not guilt. Arithmetic.*', cls: 'fs-ct-narration fs-ct-whisper' },
+                    { text: '"2022. 2014. 2008. Every warning Europe ignored cost more than mine ever would."', cls: 'fs-ct-volkov' },
+                    { text: '"That\'s not how it works."', cls: 'fs-ct-ryan' },
+                    { text: '*Long silence. The servers hum.*', cls: 'fs-ct-narration fs-ct-whisper' },
+                    { text: '"No."', cls: 'fs-ct-volkov fs-ct-bold' },
+                    { text: '*His hand moves toward his jacket &#8212; slowly. Deliberately.*', cls: 'fs-ct-narration fs-ct-bold' }
                 ];
 
                 let html = '<div id="fs-confront">';
@@ -931,21 +1161,34 @@ const FacilityServerScene = {
                 html += '</div>';
                 showPanel(html);
 
+                // Ramp tension gradually through the dialogue
+                self._schedule(() => document.getElementById('fs-red-pulse')?.classList.add('beating'), 9000);
+                let hbCount = 0;
+                const hbInterval = setInterval(() => {
+                    if (self.state.phase !== 3 || hbCount > 32) { clearInterval(hbInterval); return; }
+                    self._playHeartbeat();
+                    hbCount++;
+                }, 1300);
+                self._intervalIds.push(hbInterval);
+
                 lines.forEach((l, i) => {
                     self._schedule(() => {
                         const el = document.getElementById('fsc' + i);
                         if (el) el.classList.add('visible');
-                        // Effects on key lines
-                        if (i === 0) { self._playImpact(); shake(); } // footsteps
-                        if (i === 1) flash(); // door
-                        if (i === 2) self._playAlarm(); // Volkov speaks
-                        if (i === 6) { shake(); self._playImpact(); } // threat
-                        if (i === 11) { flash(); shake(); self._playImpact(); } // reaches into jacket
+                        if (i === 0) { self._playBeep(); }                        // soft knock
+                        if (i === 3) { self._setDroneIntensity(180, 0.42, 2); } // first words
+                        if (i === 5) { self._playAlarm(); shake(); }            // "watching on camera"
+                        if (i === 14) { shake(); self._playImpact(); }          // "two hundred people"
+                        if (i === 18) { self._setDroneIntensity(360, 0.62, 2); } // long silence
+                        if (i === 20) {                                          // hand in jacket
+                            flash(); shake(); self._playImpact();
+                            self._schedule(() => showMeshtastic('Eva Weber', 'MOVING NOW.', 3500), 600);
+                        }
                     }, 800 + i * 1600);
                 });
 
                 // → Phase 4
-                self._schedule(() => startPhase4(), 800 + lines.length * 1600 + 1500);
+                self._schedule(() => startPhase4(), 800 + lines.length * 1600 + 1200);
             }, 500);
         }
 
@@ -982,7 +1225,7 @@ const FacilityServerScene = {
 
                 const lines = [
                     { text: '"I wouldn\'t."', cls: 'fs-ct-kubecka fs-ct-bold' },
-                    { text: '*Chris Kubecka steps from the shadows behind Volkov.*', cls: 'fs-ct-narration' },
+                    { text: '*Chris Kubecka steps through the door — she followed him down from the entrance.*', cls: 'fs-ct-narration' },
                     { text: '*Weapon drawn. Laser-steady. Trained on Volkov\'s center mass.*', cls: 'fs-ct-narration' },
                     { text: '"Hands where I can see them, Doctor."', cls: 'fs-ct-kubecka' },
                     { text: '*Volkov freezes. Calculates. Options closing like airlocks.*', cls: 'fs-ct-narration' },
@@ -1045,8 +1288,10 @@ const FacilityServerScene = {
                 }
 
                 const lines = [
-                    { text: '*Eva Weber enters with German intelligence officers.*', cls: 'fs-ct-narration' },
-                    { text: '*She stops three paces from Volkov. Looks him in the eye.*', cls: 'fs-ct-narration' },
+                    { text: '*Eva Weber enters with BND officers. Bundeswehr MPs close behind.*', cls: 'fs-ct-narration' },
+                    { text: '*She stops three paces from Volkov. There\'s no surprise on either face.*', cls: 'fs-ct-narration' },
+                    { text: '"We were always going to be here, Dmitri."', cls: 'fs-ct-eva' },
+                    { text: '*She holds his gaze for one long second. Then:*', cls: 'fs-ct-narration fs-ct-whisper' },
                     { text: '"Dmitri Volkov."', cls: 'fs-ct-eva fs-ct-bold' },
                     { text: '"You are under arrest for espionage against the Federal Republic of Germany."', cls: 'fs-ct-eva' },
                     { text: '"For the development of illegal signal weapons on German soil."', cls: 'fs-ct-eva' },
@@ -1073,10 +1318,10 @@ const FacilityServerScene = {
                     self._schedule(() => {
                         const el = document.getElementById('fse' + i);
                         if (el) el.classList.add('visible');
-                        if (i === 2) self._playImpact(); // "Dmitri Volkov"
-                        if (i === 5) { flash(); shake(); self._playImpact(); } // murder
-                        if (i === 9) self._playImpact(); // "My father"
-                        if (i === 12) self._playAlarm(); // handcuffs
+                        if (i === 4) self._playImpact();                    // "Dmitri Volkov"
+                        if (i === 7) { flash(); shake(); self._playImpact(); } // murder charge
+                        if (i === 11) self._playImpact();                   // "My father"
+                        if (i === 14) self._playAlarm();                    // handcuffs
                     }, 600 + i * 1400);
                 });
 
@@ -1100,7 +1345,10 @@ const FacilityServerScene = {
 
             self._schedule(() => {
                 const lines = [
-                    { text: '"Nice work. You got the evidence?"', cls: 'fs-aftermath-line fs-aftermath-gold', speaker: 'Kubecka' },
+                    { text: '*Silence.*', cls: 'fs-aftermath-line' },
+                    { text: '"How close was the Groningen test?"', cls: 'fs-aftermath-line fs-aftermath-gold' },
+                    { text: '"Four minutes."', cls: 'fs-aftermath-line fs-aftermath-cyan' },
+                    { text: '"Thank you."', cls: 'fs-aftermath-line fs-aftermath-gold' },
                     { text: '*You hold up the USB drive. Everything.*', cls: 'fs-aftermath-line' },
                     { text: '"Financial records. Deployment schedules. FSB communications."', cls: 'fs-aftermath-line fs-aftermath-cyan' },
                     { text: '"NATO command is on the line."', cls: 'fs-aftermath-line fs-aftermath-gold', speaker: 'Eva' },
