@@ -991,35 +991,36 @@ const PlanboardScene = {
       
       experts: {
         title: 'Expert Contacts',
-        subtitle: 'Technical Consultants - RF & Security',
+        subtitle: 'Technical Consultants — RF & Wireless Security',
         content: `
           <div style="margin-bottom: 25px;">
             <div style="background: linear-gradient(90deg, #4a90e2, #357abd); padding: 15px; border-radius: 5px; margin-bottom: 15px;">
               <strong style="font-size: 18px; color: #fff;">Dr. David Prinsloo</strong><br>
-              <span style="color: #cce5ff;">TU Eindhoven - RF Engineering Professor</span><br><br>
-              <strong style="color: #fff;">Expertise:</strong> Radio frequency systems, electromagnetic propagation<br>
-              <strong style="color: #fff;">Consultation:</strong> Confirmed 14.230 MHz frequency capabilities
+              <span style="color: #cce5ff;">TU Eindhoven — Antenna &amp; RF Engineering</span><br><br>
+              <strong style="color: #fff;">Expertise:</strong> Phased array antennas, EM field modeling, lunar telescope systems<br>
+              <strong style="color: #fff;">Consultation:</strong> Confirmed multi-band weapon schematics — 900 MHz / 2.4 GHz / GPS phased array architecture
             </div>
             
             <div style="background: linear-gradient(90deg, #e94b3c, #c23728); padding: 15px; border-radius: 5px; margin-bottom: 15px;">
               <strong style="font-size: 18px; color: #fff;">Cees Bassa</strong><br>
-              <span style="color: #ffcccc;">ASTRON - Satellite Tracking Expert</span><br><br>
-              <strong style="color: #fff;">Expertise:</strong> Satellite systems, signal analysis, tracking<br>
-              <strong style="color: #fff;">Consultation:</strong> Analyzed SSTV transmission patterns
+              <span style="color: #ffcccc;">ASTRON — Signal Processing &amp; Satellite Tracking</span><br><br>
+              <strong style="color: #fff;">Expertise:</strong> Radio signal analysis, LOFAR beamforming, interference detection<br>
+              <strong style="color: #fff;">Consultation:</strong> Analyzed SSTV transmission (14.230 MHz, Martin M2 mode), confirmed steganographic GPS payload
             </div>
             
             <div style="background: linear-gradient(90deg, #50c878, #3da35d); padding: 15px; border-radius: 5px;">
-              <strong style="font-size: 18px; color: #fff;">Prof. Jaap Haartsen</strong><br>
-              <span style="color: #ccffdd;">Inventor of Bluetooth</span><br><br>
-              <strong style="color: #fff;">Expertise:</strong> Wireless protocols, security, encryption<br>
-              <strong style="color: #fff;">Consultation:</strong> Advised on facility network infiltration
+              <strong style="font-size: 18px; color: #fff;">Jaap Haartsen</strong><br>
+              <span style="color: #ccffdd;">Inventor of Bluetooth — Wireless Protocol Security</span><br><br>
+              <strong style="color: #fff;">Expertise:</strong> Wireless protocol vulnerabilities, RF countermeasures, Bluetooth security<br>
+              <strong style="color: #fff;">Prior Intel:</strong> Met Volkov at DEF CON 2003 — knew him as "Dmitri," independent consultant asking about medical device protocols
             </div>
           </div>
         `,
         notes: `
-          <p style="color: #4a90e2;">These consultations were critical for understanding the threat</p>
-          <p>Each expert provided specific technical insights that confirmed Eva's warnings and
-          helped plan the facility infiltration.</p>
+          <p style="color: #4a90e2;">Three experts. Three different angles on the same threat.</p>
+          <p>David confirmed the weapon architecture. Cees traced the SSTV signal origin.
+          Jaap placed Volkov at DEF CON 2003 — researching pacemaker and insulin pump vulnerabilities 
+          two decades before ECHO-10.</p>
         `
       },
       
