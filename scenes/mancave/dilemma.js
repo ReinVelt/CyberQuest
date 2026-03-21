@@ -107,15 +107,38 @@ window.MancaveDilemma = (function () {
                         : Promise.resolve();
 
                     speakDone.then(() => {
-                        // If rejected, gray out after monologue
+                        // If rejected, show a button the player must click to confirm rejection
                         if (opt.rejected) {
-                            MC.schedule(() => {
+                            const rejectBtn = document.createElement('button');
+                            rejectBtn.className = 'mc-reject-btn';
+                            rejectBtn.textContent = '— Reject this option →';
+                            rejectBtn.style.cssText = [
+                                'display:block', 'margin:14px 0 0 20px',
+                                'background:none',
+                                'border:1px solid rgba(255,80,80,0.35)',
+                                'color:rgba(255,150,150,0.75)',
+                                'font-family:\'Courier New\',monospace',
+                                'font-size:0.7em', 'letter-spacing:3px',
+                                'padding:6px 16px', 'cursor:pointer',
+                                'border-radius:2px',
+                                'transition:border-color 0.2s,color 0.2s',
+                            ].join(';');
+                            rejectBtn.addEventListener('mouseenter', () => {
+                                rejectBtn.style.borderColor = 'rgba(255,80,80,0.7)';
+                                rejectBtn.style.color = 'rgba(255,150,150,1)';
+                            });
+                            rejectBtn.addEventListener('mouseleave', () => {
+                                rejectBtn.style.borderColor = 'rgba(255,80,80,0.35)';
+                                rejectBtn.style.color = 'rgba(255,150,150,0.75)';
+                            });
+                            rejectBtn.addEventListener('click', () => {
+                                rejectBtn.remove();
                                 card.classList.add('mc-option-rejected');
                                 MC.playBeep(300, 0.08);
-
                                 optIdx++;
-                                MC.schedule(showOption, 2500);
-                            }, 2000);
+                                MC.schedule(showOption, 1800);
+                            });
+                            cardsContainer.appendChild(rejectBtn);
                         } else {
                             // Selected! Glow green
                             MC.schedule(() => {
