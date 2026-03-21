@@ -872,22 +872,22 @@ const IntroScene = {
                 '<div class="bunker-time" id="bunker-time">07:27:14 CET</div>' +
                 '<div class="bunker-terminal" id="bunker-term">' +
                     '<div class="term-line">root@sigint-den-haag:~$ <span class="bunker-cursor"></span></div>' +
-                    '<div class="term-line">&gt; INITIALIZING ZERFALL MONITORING GRID...</div>' +
+                    '<div class="term-line">&gt; NATIONAL SIGINT GRID &mdash; AUTOMATED SWEEP</div>' +
                     '<div class="term-line">&gt; SCANNING FREQ RANGE: 0.1 MHz &mdash; 24.000 GHz</div>' +
                     '<div class="term-line">&gt; Lofar ARRAY: <span class="term-highlight">ONLINE</span> &nbsp;[50,412 ANTENNAS]</div>' +
                     '<div class="term-line">&gt; WSRT ARRAY:  <span class="term-highlight">ONLINE</span> &nbsp;[14 DISHES]</div>' +
                     '<div class="term-line">&gt; AI ANOMALY ENGINE: <span class="term-highlight">ACTIVE</span></div>' +
                     '<div class="term-line">&nbsp;</div>' +
-                    '<div class="term-line term-warning">&#9888;  FLAGGED SUBJECT &mdash; DOSSIER #VK-7291</div>' +
-                    '<div class="term-line term-classified">&nbsp;&nbsp; NAME:   WEYLANT, RYAN</div>' +
-                    '<div class="term-line term-classified">&nbsp;&nbsp; LOC:    52.7924&deg;N, 7.0281&deg;E &mdash; COMPASCUUM</div>' +
-                    '<div class="term-line term-classified">&nbsp;&nbsp; STATUS: ACTIVE MONITORING</div>' +
-                    '<div class="term-line term-classified">&nbsp;&nbsp; THREAT: <span class="term-warning">UNDETERMINED</span></div>' +
+                    '<div class="term-line term-warning">&#9888;  RF ANOMALY DETECTED &mdash; CASE #ZF-2026-0209</div>' +
+                    '<div class="term-line term-classified">&nbsp;&nbsp; FREQ:   14.230 MHz &mdash; AMATEUR BAND (UNSCHEDULED)</div>' +
+                    '<div class="term-line term-classified">&nbsp;&nbsp; TYPE:   SSTV BURST &mdash; ENCODED PAYLOAD</div>' +
+                    '<div class="term-line term-classified">&nbsp;&nbsp; ORIGIN: DRENTHE SECTOR &mdash; GRID 52.79&deg;N 7.03&deg;E</div>' +
+                    '<div class="term-line term-classified">&nbsp;&nbsp; THREAT: <span class="term-warning">UNDETERMINED &mdash; MATCHES NO KNOWN AGENCY</span></div>' +
                     '<div class="term-line">&nbsp;</div>' +
-                    '<div class="term-line term-warning">&#9888;  INCOMING ANOMALY &mdash; 14.230 MHz</div>' +
-                    '<div class="term-line term-warning">&#9888;  SSTV BURST &mdash; UNSCHEDULED &mdash; ORIGIN: UNKNOWN</div>' +
+                    '<div class="term-line term-warning">&#9888;  CORRELATES WITH NOS NEWS TIP &mdash; "STRANGE SIGNALS DRENTHE"</div>' +
+                    '<div class="term-line term-warning">&#9888;  MULTIPLE REPORTS FROM RADIO AMATEURS &mdash; LAST 72 HRS</div>' +
                     '<div class="term-line">&nbsp;</div>' +
-                    '<div class="term-line">root@sigint-den-haag:~$ INITIATING COUNTERMEASURES...<span class="bunker-cursor"></span></div>' +
+                    '<div class="term-line">root@sigint-den-haag:~$ ESCALATING TO FIELD ANALYSIS...<span class="bunker-cursor"></span></div>' +
                 '</div>' +
                 '<div class="bunker-stamp" id="bunker-stamp">GEHEIM</div>' +
             '</div>' +
@@ -979,13 +979,13 @@ const IntroScene = {
                 '<div class="threat-text" id="threat-text">' +
                     '<p class="t-sinister">Deep beneath The Hague, in a bunker that doesn\'t officially exist &mdash;</p>' +
                     '<p class="t-sinister">Screens glow in the darkness. AI systems scan every frequency. Every transmission. Every anomaly.</p>' +
-                    '<p class="t-sinister">People in dark suits have protocols. Response teams on standby. Methods that leave no trace.</p>' +
-                    '<p class="t-warn">In eighteen minutes, everything changes.</p>' +
-                    '<p class="t-warn">A transmission that shouldn\'t exist. Encrypted with algorithms no civilian should possess.</p>' +
-                    '<p class="t-gold">A conspiracy at the highest levels of power. A secret nations have killed to protect.</p>' +
-                    '<p class="t-defiant">But they don\'t know about Ryan Weylant.</p>' +
-                    '<p class="t-gold">They don\'t know what he\'s capable of when pushed.</p>' +
-                    '<p class="t-gold">They\'ve just made their last mistake.</p>' +
+                    '<p class="t-sinister">For three days, analysts have tracked strange signals from Drenthe. The news has picked up the story. Radio amateurs are talking.</p>' +
+                    '<p class="t-warn">Then &mdash; a new transmission. 14.230 MHz. Encrypted SSTV. Algorithms no civilian should possess.</p>' +
+                    '<p class="t-warn">AIVD doesn\'t know who is sending it. They don\'t know why. But they know it shouldn\'t exist.</p>' +
+                    '<p class="t-gold">A conspiracy. A weapon. A secret that nations have killed to protect.</p>' +
+                    '<p class="t-defiant">But someone else is listening too.</p>' +
+                    '<p class="t-gold">A man in a farmhouse by a canal, with a HackRF and nothing to lose.</p>' +
+                    '<p class="t-gold">They just don\'t know it yet.</p>' +
                 '</div>' +
             '</div>' +
 
