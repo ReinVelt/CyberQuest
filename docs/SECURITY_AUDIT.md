@@ -1,6 +1,6 @@
 # CyberQuest: Security Audit Report
-**Date:** March 7, 2026  
-**Version audited:** 1.2  
+**Date:** March 21, 2026  
+**Version audited:** 1.3  
 **Auditor:** GitHub Copilot (static analysis)  
 **Status:** ✅ All findings resolved
 **Scope:** All client-side JS/HTML, all server-side scripts in `scripts/`

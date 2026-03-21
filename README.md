@@ -66,18 +66,17 @@ This project includes **200+ pages of detailed documentation**:
 - **[📘 PROJECT_OVERVIEW.md](docs/PROJECT_OVERVIEW.md)** - Complete project overview, FAQ, quick links
 
 ### Core Documentation
-- **[🏗️ GAME_ARCHITECTURE.md](docs/GAME_ARCHITECTURE.md)** - Technical architecture (70+ pages)
-- **[🎮 SYSTEMS.md](docs/SYSTEMS.md)** - All game systems explained (60+ pages)
-- **[🗺️ SCENES.md](docs/SCENES.md)** - Complete scene catalog (80+ pages)
+- **[🔧 TECHNICAL_REFERENCE.md](docs/TECHNICAL_REFERENCE.md)** - Engine internals, all 12 systems, scene API, dev guide
+- **[🗺️ SCENES.md](docs/SCENES.md)** - Complete scene catalog (34 scenes)
 
 ### Story & Design
-- **[📖 STORY.md](docs/STORY.md)** - Full screenplay (1491 lines, 20 story parts)
+- **[📖 STORY.md](docs/STORY.md)** - Full screenplay (20 story parts)
 - **[🎬 STORYBOARD.md](docs/STORYBOARD.md)** - Visual storyboard with panels
-- **[⚙️ RULES.md](docs/RULES.md)** - Game design philosophy
+- **[🤝 CONTRIBUTING.md](CONTRIBUTING.md)** - Scene checklist, code style, story rules
 
 ### Quality Assurance
-- **[🔍 GAME_FLOW_ANALYSIS.md](docs/GAME_FLOW_ANALYSIS.md)** - Story flow and scene transition analysis
-- **[🔒 SECURITY_AUDIT.md](docs/SECURITY_AUDIT.md)** - Static security audit (v1.2)
+- **[🔍 FLOW_ANALYSIS.md](docs/FLOW_ANALYSIS.md)** - Scene flow QA report and flag registry
+- **[🔒 SECURITY_AUDIT.md](docs/SECURITY_AUDIT.md)** - Static security audit (all findings resolved)
 
 ---
 
@@ -174,13 +173,13 @@ CyberQuest/
 │   │   └── characters/    # Character portraits
 │   ├── audio/             # Sound effects (future)
 │   └── fonts/             # Custom fonts
-└── docs/                   # Documentation (200+ pages)
+└── docs/                   # Documentation
     ├── PROJECT_OVERVIEW.md    # Complete overview
     ├── SECURITY_AUDIT.md      # Security audit report
-    ├── GAME_ARCHITECTURE.md   # Technical docs (70+ pages)
-    ├── SYSTEMS.md             # Game mechanics (60+ pages)
-    ├── SCENES.md              # Scene catalog (80+ pages)
-    ├── STORY.md               # Full screenplay (1491 lines)
+    ├── TECHNICAL_REFERENCE.md # Engine + systems reference
+    ├── FLOW_ANALYSIS.md       # Scene flow QA report
+    ├── SCENES.md              # Scene catalog (34 scenes)
+    ├── STORY.md               # Full screenplay
     └── ...
 ```
 
@@ -416,9 +415,9 @@ Version: 1.1
 ## 🎯 Quick Links
 
 - **[📘 Start Here: Project Overview](docs/PROJECT_OVERVIEW.md)** - Complete overview, FAQ
-- **[🏗️ Architecture Guide](docs/GAME_ARCHITECTURE.md)** - Technical documentation
-- **[🎮 Game Systems](docs/SYSTEMS.md)** - Mechanics explained
-- **[🗺️ Scene Catalog](docs/SCENES.md)** - All 33 scenes detailed
+- **[🔧 Technical Reference](docs/TECHNICAL_REFERENCE.md)** - Engine + systems docs
+- **[🤝 Contributing](CONTRIBUTING.md)** - Scene checklist, code style, story rules
+- **[🗺️ Scene Catalog](docs/SCENES.md)** - All 34 scenes detailed
 - **[📖 Full Story](docs/STORY.md)** - Complete screenplay
 
 ---

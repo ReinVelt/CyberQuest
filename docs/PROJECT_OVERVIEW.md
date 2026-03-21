@@ -1,6 +1,6 @@
 # CyberQuest: Project Overview & Documentation Index
-**Last Updated:** March 7, 2026  
-**Version:** 1.2  
+**Last Updated:** March 21, 2026  
+**Version:** 1.3  
 **Status:** Production Ready
 
 ---
@@ -29,7 +29,7 @@ You are **Ryan Weylant**, a 42-year-old Dutch hacker living in Compascuum, Nethe
 
 ### Core Gameplay
 
-- **Point-and-click navigation** through 33 handcrafted scenes
+- **Point-and-click navigation** through 34 handcrafted scenes
 - **Dialogue-driven story** with branching conversations
 - **Puzzle solving** (ciphers, passwords, stealth challenges)
 - **Evidence collection** (emails, documents, schematics)
@@ -42,38 +42,20 @@ You are **Ryan Weylant**, a 42-year-old Dutch hacker living in Compascuum, Nethe
 
 This project contains comprehensive documentation across multiple files:
 
-### 📘 [GAME_ARCHITECTURE.md](GAME_ARCHITECTURE.md)
-**Complete technical architecture**  
-- Core engine systems
-- Scene structure and management
-- Asset organization
-- Technical stack details
-- Development workflow
-- 70+ pages of architectural documentation
+### � [TECHNICAL_REFERENCE.md](TECHNICAL_REFERENCE.md)
+**Complete technical reference — engine + systems API**
+- Core engine architecture and constants
+- Scene object structure and loading process
+- Full API for all 12 game systems (dialogue, inventory, quests, evidence, puzzles, chat, voice, save/load, player, flags, Movie Mode)
+- Asset structure and scene catalog
+- Technical stack, development guide, and debugging commands
 
-**Read this if:** You want to understand how the game engine works or contribute code.
-
----
-
-### 🎮 [SYSTEMS.md](SYSTEMS.md)
-**All game systems in detail**  
-- Dialogue system
-- Inventory management
-- Quest tracking
-- Evidence viewer
-- Password puzzles
-- Chat interface
-- Voice narration
-- Save/load functionality
-- Flag system
-- Player character control
-
-**Read this if:** You want to understand game mechanics and implementation details.
+**Read this if:** You want to understand how the engine works, contribute code, or write a new scene.
 
 ---
 
 ### 🗺️ [SCENES.md](SCENES.md)
-**Complete catalog of all 33 scenes**  
+**Complete catalog of all 34 scenes**
 - Scene descriptions and backgrounds
 - Hotspot maps with positions
 - Dialogue sequences
@@ -81,12 +63,24 @@ This project contains comprehensive documentation across multiple files:
 - State management per scene
 - Visual flow diagrams
 
-**Read this if:** You want to understand gameplay flow, scene structure, or create new scenes.
+**Read this if:** You want to understand scene content, add hotspots, or create new scenes.
+
+---
+
+### 🔍 [FLOW_ANALYSIS.md](FLOW_ANALYSIS.md)
+**QA report — scene flow, flag registry, navigation verification**
+- Story part progression (all 20 parts verified)
+- Complete playthrough path diagram
+- Per-scene flag analysis
+- Dead-end and unreachable scene checks
+- Full flag registry with set/check locations
+
+**Read this if:** You're checking story flow integrity, debugging flag issues, or verifying scene connectivity.
 
 ---
 
 ### 📖 [STORY.md](STORY.md)
-**Complete narrative screenplay**  
+**Narrative bible — complete story, character motivations, and plot**
 - Full story from Part 0 to Part 20 + Epilogue
 - All dialogue and character interactions
 - Quest descriptions
@@ -98,25 +92,44 @@ This project contains comprehensive documentation across multiple files:
 ---
 
 ### 🎬 [STORYBOARD.md](STORYBOARD.md)
-**Visual storyboard**  
-- Panel-by-panel scene breakdown
+**Visual storyboard with panel-by-panel breakdowns**
 - Shot types and camera angles
-- Animation notes
-- Character details
+- Animation notes and character details
 - Originally for potential video adaptation
 
 **Read this if:** You're interested in cinematic presentation or adapting the story to other media.
 
 ---
 
-### ⚙️ [RULES.md](RULES.md)
-**Game design rules**  
-- Design philosophy
-- Gameplay principles
-- Story structure conventions
-- Technical constraints
+### 🎭 [SCREENPLAY.md](SCREENPLAY.md)
+**South Park-style animated short screenplay**
+- Full dialogue script for the opening act
+- Comedic timing notes and character voice
+- Stage directions and scene transitions
 
-**Read this if:** You're contributing design or ensuring consistency.
+**Read this if:** You want to understand character voice and comedic tone for writing new dialogue.
+
+---
+
+### 🤝 [CONTRIBUTING.md](../CONTRIBUTING.md)
+**Contributing guide — code, art, scenes, and story**
+- Development setup and PDCA workflow
+- Scene creation checklist
+- Code style and naming conventions
+- Asset guidelines and dialogue writing
+- Story consistency rules and testing checklist
+
+**Read this if:** You want to contribute to the project.
+
+---
+
+### 🔒 [SECURITY_AUDIT.md](SECURITY_AUDIT.md)
+**Static security audit — all findings resolved**
+- OWASP-aligned review of all engine code
+- 6 findings (all fixed in v1.2)
+- Threat model and confirmed non-issues
+
+**Read this if:** You need to assess the security posture of the codebase.
 
 ---
 
@@ -127,16 +140,16 @@ This project contains comprehensive documentation across multiple files:
 | Component | Files | Lines of Code | Size |
 |-----------|-------|---------------|------|
 | **Engine** | 6 | ~5,500 | ~270 KB |
-| **Scenes** | 33 | ~22,000 | ~1.1 MB |
+| **Scenes** | 34 | ~22,500 | ~1.1 MB |
 | **Assets (SVG)** | 20+ | N/A | ~10 MB |
-| **Documentation** | 7+ | N/A | ~500 KB |
-| **Total** | 66+ | ~27,500+ | ~12 MB |
+| **Documentation** | 9 | N/A | ~500 KB |
+| **Total** | 67+ | ~28,000+ | ~12 MB |
 
 ### Content
 
 | Category | Count |
 |----------|-------|
-| **Scenes** | 33 |
+| **Scenes** | 34 |
 | **Hotspots** | ~250+ |
 | **Dialogue Lines** | ~2,000+ |
 | **Evidence Documents** | ~40+ |
@@ -157,30 +170,9 @@ This project contains comprehensive documentation across multiple files:
 
 ---
 
-## Technical Highlights
+## Technical Stack
 
-### Pure Web Technologies
-- ✅ **No frameworks** (React, Vue, etc.)
-- ✅ **No build process** (Webpack, Rollup, etc.)
-- ✅ **No dependencies** (jQuery, etc.)
-- ✅ **Just open index.html** (works offline)
-
-### Modern Web APIs
-- **Web Speech API** - Optional voice narration
-- **localStorage** - Save game progress
-- **Pointer Events** - Touch and mouse support
-- **History API** - Scene-based URL routing
-
-### Scalable Graphics
-- **SVG backgrounds** - Resolution-independent
-- **Percentage positioning** - Works on any screen size
-- **Responsive layout** - Desktop and mobile
-
-### Performance
-- **Fast loading** (~2 seconds)
-- **Low memory** (~50-80 MB)
-- **Smooth transitions** (60 FPS)
-- **On-demand assets** (scenes load as needed)
+CyberQuest uses only vanilla HTML/CSS/JavaScript — no frameworks, no build process, no external dependencies. Open `index.html` to run. For API details, browser support targets, and performance characteristics see [TECHNICAL_REFERENCE.md §7](TECHNICAL_REFERENCE.md#7-technical-stack).
 
 ---
 
@@ -421,8 +413,8 @@ This project contains comprehensive documentation across multiple files:
 - Voice acting (Web Speech API voices)
 
 **3. Code**
-- Engine improvements (see GAME_ARCHITECTURE.md)
-- New game systems (see SYSTEMS.md)
+- Engine improvements (see [TECHNICAL_REFERENCE.md](TECHNICAL_REFERENCE.md))
+- New game systems (see [TECHNICAL_REFERENCE.md §3](TECHNICAL_REFERENCE.md))
 - Performance optimization
 
 **4. Assets**
@@ -586,6 +578,14 @@ The game is **100% plain HTML + CSS + JavaScript + images**. No frameworks, no b
 
 ## Version History
 
+**v1.3 (March 21, 2026)**
+- ✅ Documentation refactored: GAME_ARCHITECTURE.md + SYSTEMS.md merged into TECHNICAL_REFERENCE.md
+- ✅ RULES.md expanded into CONTRIBUTING.md at repo root
+- ✅ GAME_FLOW_ANALYSIS.md renamed to FLOW_ANALYSIS.md with QA preamble
+- ✅ Duplicate sections stripped from SCENES.md
+- ✅ Missing changelog versions added (v0.7.0-alpha through v1.2)
+- ✅ 34th scene confirmed in documentation
+
 **v1.2 (March 7, 2026)**
 - ✅ Engine storage null-injection bug fixed (DI now uses `'in'` check)
 - ✅ All 179 unit tests passing (24 suites)
@@ -620,12 +620,12 @@ The game is **100% plain HTML + CSS + JavaScript + images**. No frameworks, no b
 ## Quick Links
 
 - **[Start Playing](../index.html)** - Open the game
-- **[Architecture](GAME_ARCHITECTURE.md)** - Technical docs (70+ pages)
-- **[Systems](SYSTEMS.md)** - Game mechanics (60+ pages)
-- **[Scenes](SCENES.md)** - Scene catalog (80+ pages)
-- **[Story](STORY.md)** - Full screenplay (1491 lines)
-- **[Game Flow Analysis](GAME_FLOW_ANALYSIS.md)** - Scene transitions and flag registry
-- **[Security Audit](SECURITY_AUDIT.md)** - Static security audit (v1.2)
+- **[Technical Reference](TECHNICAL_REFERENCE.md)** - Engine + systems API
+- **[Scenes](SCENES.md)** - Scene catalog (34 scenes)
+- **[Story](STORY.md)** - Full screenplay
+- **[Flow Analysis](FLOW_ANALYSIS.md)** - Scene transitions and flag registry
+- **[Security Audit](SECURITY_AUDIT.md)** - Static security audit (all findings resolved)
+- **[Contributing](../CONTRIBUTING.md)** - Scene checklist, code style, story rules
 - **[Assets](../assets/)** - All game assets
 - **[Engine](../engine/)** - Core engine code
 

@@ -20,6 +20,50 @@ const CYBERQUEST_CHANGELOG = [
         ],
     },
     {
+        version: 'v1.2',
+        date: '2026-03-07',
+        highlight: false,
+        items: [
+            '179/179 unit tests passing',
+            'Fixed _storage null-injection bug in engine dependency injection',
+            'Production console.log suppression on non-localhost deployments',
+            'Removed debug files from build; all cache-busters bumped to v=7',
+            'CC BY-SA 4.0 license added; README links and placeholders resolved',
+        ],
+    },
+    {
+        version: 'v1.1',
+        date: '2026-02-27',
+        highlight: false,
+        items: [
+            'Expanded to 33 scenes (15 new scenes)',
+            'Pause system, scene-based clock, save format v2',
+            'Hackerspace, ASTRON, LOFAR, Westerbork scenes',
+            'Laser corridor, drone hunt, long night, return to Max, morning after',
+            'Engine line count: 1490 → 2704',
+        ],
+    },
+    {
+        version: 'v1.0',
+        date: '2026-02-15',
+        highlight: true,
+        items: [
+            'Production release — complete game (18 scenes, 20 story parts + epilogue)',
+            'All systems implemented and tested',
+            '200+ pages of documentation',
+            'Mobile support, voice narration, save/load',
+        ],
+    },
+    {
+        version: 'v0.7.0-alpha',
+        date: '2026-03-18',
+        highlight: false,
+        items: [
+            'USB dead-drop relocated from car boot to monastery bench (Ter Apel Klooster 23:03)',
+            'Movie mode: voice auto-enabled on start, dialog timing fixed when voice disabled',
+        ],
+    },
+    {
         version: 'v0.6.0-alpha',
         date: '2026-03-08',
         highlight: true,

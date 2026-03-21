@@ -1,17 +1,19 @@
 # CyberQuest: Complete Scene Catalog
-**Last Updated:** March 7, 2026  
-**Version:** 1.2
+**Last Updated:** March 21, 2026  
+**Version:** 1.3
 
 ---
 
 ## Scene Overview
 
-**Total Scenes:** 33  
-**Scene Types:** Exploration (10), Interface (5), Cinematic (6), Stealth/Puzzle (5), Story (7)  
+**Total Scenes:** 34  
+**Scene Types:** Exploration (11), Interface (5), Cinematic (6), Stealth/Puzzle (5), Story (7)  
 **Estimated Playtime:** 3-6 hours
 
 > **Note:** For a complete scene-transition graph and per-scene flag analysis see
-> [GAME_FLOW_ANALYSIS.md](GAME_FLOW_ANALYSIS.md).
+> [FLOW_ANALYSIS.md](FLOW_ANALYSIS.md). For engine API, hotspot structure, and dev workflow see
+> [TECHNICAL_REFERENCE.md](TECHNICAL_REFERENCE.md). For scene creation guidelines see
+> [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 ### Scene Flow Diagram
 
@@ -1634,11 +1636,34 @@ received in the first act.
 
 ### Description
 The rear portion of Ryan's garden — vegetable beds, tool shed, view toward
-the German border. Connects to the main `garden` scene.
+the German border. Connects to the main `garden` scene. The sit-mower mini-game is accessible from this scene.
 
 ---
 
-## Scene 21: USB_DISCOVERY - USB Discovery
+## Scene 21: SITMOWER - Lawn Mowing Mini-Game
+
+**ID:** `sitmower`  
+**File:** `scenes/sitmower/scene.js` (1926 lines)  
+**Type:** Exploration  
+**Player Visible:** Yes  
+**Clock:** Day 1 · 17:00
+
+### Description
+A pseudo-3D first-person lawn mowing mini-game. Ryan hops on his zitmaaier
+(sit-down mower) and must mow every patch of the back garden while avoiding
+trees, berry bushes, and three loose dogs. Features a live mini-map (overhead
+progress view), Web Audio engine sound (pitch shifts with speed), and full
+touch/pointer controls for mobile play. Accessible from `garden_back`; returns
+to `garden_back` on completion or escape.
+
+### Hotspots
+- No traditional click hotspots — entire scene is the mini-game canvas
+- Dashboard click: brake
+- touch/drag on view: steer and accelerate
+
+---
+
+## Scene 22: USB_DISCOVERY - USB Discovery
 
 **ID:** `usb_discovery`  
 **File:** `scenes/usb_discovery/scene.js` (565 lines)  
@@ -1653,7 +1678,7 @@ back to `klooster`.
 
 ---
 
-## Scene 22: CAR_DISCOVERY - Volvo Night Discovery
+## Scene 23: CAR_DISCOVERY - Volvo Night Discovery
 
 **ID:** `car_discovery`  
 **File:** `scenes/car_discovery/scene.js` (169 lines)  
@@ -1667,7 +1692,7 @@ Volvo — leads into the drive home.
 
 ---
 
-## Scene 23: DRIVING_DAY - Daytime Drive
+## Scene 24: DRIVING_DAY - Daytime Drive
 
 **ID:** `driving_day`  
 **File:** `scenes/driving_day/scene.js` (669 lines)  
@@ -1682,7 +1707,7 @@ before loading.
 
 ---
 
-## Scene 24: DWINGELOO - Dwingeloo Observatory
+## Scene 25: DWINGELOO - Dwingeloo Observatory
 
 **ID:** `dwingeloo`  
 **File:** `scenes/dwingeloo/scene.js` (189 lines)  
@@ -1696,7 +1721,7 @@ to gather expert context or support for his investigation.
 
 ---
 
-## Scene 25: WESTERBORK_MEMORIAL - Westerbork Memorial
+## Scene 26: WESTERBORK_MEMORIAL - Westerbork Memorial
 
 **ID:** `westerbork_memorial`  
 **File:** `scenes/westerbork_memorial/scene.js` (270 lines)  
@@ -1710,7 +1735,7 @@ contextual stop during the Act 2 road trip through Drenthe.
 
 ---
 
-## Scene 26: ASTRON - ASTRON Campus
+## Scene 27: ASTRON - ASTRON Campus
 
 **ID:** `astron`  
 **File:** `scenes/astron/scene.js` (483 lines)  
@@ -1724,7 +1749,7 @@ in-person signal analysis support. Sets `visited_astron` and `astron_unlocked`.
 
 ---
 
-## Scene 27: LOFAR - LOFAR Station
+## Scene 28: LOFAR - LOFAR Station
 
 **ID:** `lofar`  
 **File:** `scenes/lofar/scene.js` (294 lines)  
@@ -1738,7 +1763,7 @@ after visiting ASTRON. Provides technical confirmation of the RF signal source.
 
 ---
 
-## Scene 28: HACKERSPACE - Hackerspace Drenthe
+## Scene 29: HACKERSPACE - Hackerspace Drenthe
 
 **ID:** `hackerspace`  
 **File:** `scenes/hackerspace/scene.js` (1113 lines)  
@@ -1753,7 +1778,7 @@ tree with hackerspace community members.
 
 ---
 
-## Scene 29: HACKERSPACE_CLASSROOM - Hackerspace Classroom
+## Scene 30: HACKERSPACE_CLASSROOM - Hackerspace Classroom
 
 **ID:** `hackerspace_classroom`  
 **File:** `scenes/hackerspace_classroom/scene.js` (987 lines)  
@@ -1768,7 +1793,7 @@ demonstration.
 
 ---
 
-## Scene 30: DRONE_HUNT - Drone Hunt
+## Scene 31: DRONE_HUNT - Drone Hunt
 
 **ID:** `drone_hunt`  
 **File:** `scenes/drone_hunt/scene.js` (1282 lines)  
@@ -1783,7 +1808,7 @@ Design notes in `scenes/drone_hunt/design.md`.
 
 ---
 
-## Scene 31: LASER_CORRIDOR - Laser Corridor
+## Scene 32: LASER_CORRIDOR - Laser Corridor
 
 **ID:** `laser_corridor`  
 **File:** `scenes/laser_corridor/scene.js` (1645 lines)  
@@ -1799,7 +1824,7 @@ Design notes in `scenes/laser_corridor/design.md`.
 
 ---
 
-## Scene 32: LONG_NIGHT - Long Night
+## Scene 33: LONG_NIGHT - Long Night
 
 **ID:** `long_night`  
 **File:** `scenes/long_night/scene.js` (333 lines)  
@@ -1814,7 +1839,7 @@ morning debriefing.
 
 ---
 
-## Scene 33: RETURN_TO_IES - Return to Max
+## Scene 34: RETURN_TO_IES - Return to Max
 
 **ID:** `return_to_max`  
 **File:** `scenes/return_to_max/scene.js` (813 lines)  
@@ -1828,7 +1853,7 @@ longest of the aftermath scenes. Sets final relationship flags before epilogue.
 
 ---
 
-## Scene 34: MORNING_AFTER - Morning After
+## Scene 35: MORNING_AFTER - Morning After
 
 **ID:** `morning_after`  
 **File:** `scenes/morning_after/scene.js` (235 lines)  
@@ -1847,8 +1872,8 @@ transitions to the epilogue timeline jump.
 
 | Category | Count | Notes |
 |----------|-------|-------|
-| **Total Scenes** | 33 | Complete game |
-| **Exploration** | 10 | Player walks around, interacts |
+| **Total Scenes** | 34 | Complete game |
+| **Exploration** | 11 | Player walks around, interacts |
 | **Interface** | 5 | Planboard, map, videocall, sdr_bench, debrief |
 | **Cinematic** | 6 | Intro, documentary, driving ×2, epilogue, credits |
 | **Stealth / Puzzle** | 5 | Facility exterior, interior, laser corridor, server, drone hunt |
@@ -1861,36 +1886,7 @@ transitions to the epilogue timeline jump.
 
 ---
 
-## Scene Development Guidelines
-
-### Creating New Scenes
-
-1. **Choose scene type:** Exploration, Interface, Cinematic, or Stealth
-2. **Define story purpose:** What does this scene accomplish?
-3. **Design hotspots:** What can player interact with?
-4. **Write dialogue:** All interactions need dialogue
-5. **Set flags:** What progress does this scene enable?
-6. **Connect transitions:** How does player reach this scene? Leave it?
-
-### Quality Checklist
-
-- [ ] Scene has clear purpose in story
-- [ ] Player knows what to do (at least one obvious hotspot)
-- [ ] Idle thoughts provide character flavor
-- [ ] Hotspots have appropriate cursors
-- [ ] Transitions tested (can reach scene, can leave scene)
-- [ ] Flags set/checked correctly
-- [ ] Dialogue matches character voice
-- [ ] onEnter/onExit handle cleanup properly
-
-### Performance Tips
-
-- Keep SVG files optimized (< 500 KB each)
-- Limit hotspots to essentials (< 10 per scene)
-- Use efficient dialogue (don't overwrite)
-- Clean up timers in onExit
-- Remove temporary elements properly
-
----
+> For scene creation guidelines, the quality checklist, and performance tips see
+> [CONTRIBUTING.md](../CONTRIBUTING.md).
 
 **End of Scene Catalog**

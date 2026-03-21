@@ -1,8 +1,8 @@
 # CYBERQUEST: OPERATION ZERFALL
-## Complete Visual Storyboard — All 33 Scenes
+## Complete Visual Storyboard — All 34 Scenes
 
-**Coverage:** Scenes 01–33 (all implemented scenes, v1.2)
-**Last updated:** March 7, 2026
+**Coverage:** Scenes 01–34 (all implemented scenes, v1.3)
+**Last updated:** March 21, 2026
 
 ---
 
