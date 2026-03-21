@@ -91,6 +91,7 @@ window.MancaveDilemma = (function () {
                 `;
                 cardsContainer.appendChild(card);
                 MC.playPaperShuffle();
+                content.scrollTop = content.scrollHeight;
 
                 // Show monologue after card appears — give time to read first
                 MC.schedule(() => {
@@ -99,6 +100,7 @@ window.MancaveDilemma = (function () {
                     mono.style.cssText = 'padding-left:20px;margin-bottom:8px;';
                     mono.innerHTML = `<span class="mc-speaker">Ryan:</span> ${opt.monologue}`;
                     cardsContainer.appendChild(mono);
+                    content.scrollTop = content.scrollHeight;
 
                     // Speak the monologue and wait for TTS before greying out
                     const vm = window.voiceManager;

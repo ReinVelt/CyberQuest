@@ -335,7 +335,16 @@ window.MancaveCinematic = (function () {
                 max-width:900px; width:90%;
                 padding:80px 20px;
                 display:flex; flex-direction:column;
-                align-items:center; justify-content:center;
+                align-items:center;
+                overflow-y:auto;
+                max-height:100vh;
+                scrollbar-width:thin;
+                scrollbar-color:rgba(255,255,255,0.2) transparent;
+            }
+            .mc-content::-webkit-scrollbar { width:6px; }
+            .mc-content::-webkit-scrollbar-track { background:transparent; }
+            .mc-content::-webkit-scrollbar-thumb {
+                background:rgba(255,255,255,0.2); border-radius:3px;
             }
 
             /* Phase label */
