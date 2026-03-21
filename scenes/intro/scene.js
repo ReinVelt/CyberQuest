@@ -860,8 +860,7 @@ const IntroScene = {
             '<div class="cine-scene scene-production" id="scene-1">' +
                 '<div class="prod-text" id="prod-1">A</div>' +
                 '<div class="prod-line" id="prod-line"></div>' +
-                '<div class="prod-text prod-director" id="prod-director">Ryan Weylant\'s</div>' +
-                '<div class="prod-text" id="prod-2" style="font-size:1.4em;letter-spacing:12px;margin:8px 0">CYBERQUEST</div>' +
+                '<div class="prod-text prod-director" id="prod-director">RYAN WEYLANT</div>' +
                 '<div class="prod-line" id="prod-line2"></div>' +
                 '<div class="prod-text" id="prod-3">INTERACTIVE PRODUCTION</div>' +
             '</div>' +
@@ -874,7 +873,7 @@ const IntroScene = {
                     '<div class="term-line">root@sigint-den-haag:~$ <span class="bunker-cursor"></span></div>' +
                     '<div class="term-line">&gt; NATIONAL SIGINT GRID &mdash; AUTOMATED SWEEP</div>' +
                     '<div class="term-line">&gt; SCANNING FREQ RANGE: 0.1 MHz &mdash; 24.000 GHz</div>' +
-                    '<div class="term-line">&gt; Lofar ARRAY: <span class="term-highlight">ONLINE</span> &nbsp;[50,412 ANTENNAS]</div>' +
+                    '<div class="term-line">&gt; LOFAR ARRAY: <span class="term-highlight">ONLINE</span> &nbsp;[50,412 ANTENNAS]</div>' +
                     '<div class="term-line">&gt; WSRT ARRAY:  <span class="term-highlight">ONLINE</span> &nbsp;[14 DISHES]</div>' +
                     '<div class="term-line">&gt; AI ANOMALY ENGINE: <span class="term-highlight">ACTIVE</span></div>' +
                     '<div class="term-line">&nbsp;</div>' +
@@ -924,7 +923,7 @@ const IntroScene = {
                     '<p>The province everyone forgets.</p>' +
                     '<p>Quiet heathlands to the horizon. Ancient dolmens. Narrow canals reflecting the first light of dawn.</p>' +
                     '<p class="emphasis">But beneath this surface lies something extraordinary.</p>' +
-                    '<p>Hidden in these fields: the Westerbork Telescope. Lofar\'s 50,000 antennas. Listening posts that pierce the cosmos itself.</p>' +
+                    '<p>Hidden in these fields: the Westerbork Telescope. LOFAR\'s 50,000 antennas. Listening posts that pierce the cosmos itself.</p>' +
                 '</div>' +
             '</div>' +
 
@@ -960,7 +959,7 @@ const IntroScene = {
                     '<div class="mc-item">FLIPPER ZERO</div>' +
                     '<div class="mc-item">WIFI PINEAPPLE</div>' +
                     '<div class="mc-item">MESHTASTIC</div>' +
-                    '<div class="mc-item">SDR</div>' +
+                    '<div class="mc-item">PORTAPACK</div>' +
                     '<div class="mc-item">EVILCROW</div>' +
                     '<div class="mc-item">OSCILLOSCOPE</div>' +
                     '<div class="mc-item">MESHCORE</div>' +
@@ -993,7 +992,7 @@ const IntroScene = {
             '<div class="cine-scene scene-title" id="scene-10">' +
                 '<div class="title-ring" id="title-ring"></div>' +
                 '<div class="title-flare" id="title-flare"></div>' +
-                '<div class="title-director" id="title-director">Ryan Weylant\'s</div>' +
+                '<div class="title-director" id="title-director">A Ryan Weylant Production</div>' +
                 '<div class="title-main" id="title-main">CYBERQUEST</div>' +
                 '<div class="title-line" id="title-line"></div>' +
                 '<div class="title-sub" id="title-sub">OPERATION ZERFALL</div>' +
@@ -1165,7 +1164,7 @@ const IntroScene = {
         const actDurations = [
             1500,   // 0: black hold
             4000,   // 1: production card
-            12000,  // 2: bunker
+            14000,  // 2: bunker
             4000,   // 3: based on
             5000,   // 4: location/date
             11000,  // 5: aerial
@@ -1248,7 +1247,6 @@ const IntroScene = {
                 document.getElementById('prod-1')?.classList.add('visible');
                 document.getElementById('prod-line')?.classList.add('visible');
                 document.getElementById('prod-director')?.classList.add('visible');
-                document.getElementById('prod-2')?.classList.add('visible');
                 document.getElementById('prod-line2')?.classList.add('visible');
                 document.getElementById('prod-3')?.classList.add('visible');
             }, 300);
