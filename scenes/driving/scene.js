@@ -651,6 +651,69 @@ const DrivingScene = {
         this._timeoutIds.push(tid);
     },
 
+    // ── Radio choice bar ─────────────────────────────────────────────────────
+    // Appears ~2.5s after engine starts (after the tuning sweep). The player
+    // can silence the music; the news text/TTS continues regardless.
+    _showRadioChoice: function(g) {
+        const self = this;
+        const tid = setTimeout(function() {
+            if (!window.game || window.game.currentScene !== 'driving') return;
+
+            const wrap = document.createElement('div');
+            wrap.id = 'driving-radio-choice';
+            wrap.style.cssText = [
+                'position:absolute', 'bottom:78px', 'left:50%', 'transform:translateX(-50%)',
+                'background:rgba(8,10,16,0.92)',
+                'border:1px solid rgba(80,160,255,0.22)',
+                'border-radius:8px', 'padding:9px 16px 9px 14px',
+                'z-index:55', 'font-family:\'Courier New\',monospace', 'color:#c8e6ff',
+                'display:flex', 'align-items:center', 'gap:12px', 'font-size:12px',
+                'letter-spacing:0.04em', 'white-space:nowrap',
+                'box-shadow:0 4px 20px rgba(0,40,120,0.4)',
+            ].join(';');
+
+            const label = document.createElement('span');
+            label.style.cssText = 'color:#7ab8e8;opacity:0.85;';
+            label.textContent = '📻  Car radio on.';
+
+            const mkBtn = function(text, handler) {
+                const b = document.createElement('button');
+                b.textContent = text;
+                b.style.cssText = [
+                    'background:rgba(30,60,130,0.5)',
+                    'border:1px solid rgba(80,140,255,0.28)',
+                    'border-radius:4px', 'color:#a8d0ff',
+                    'font-family:\'Courier New\',monospace', 'font-size:11px',
+                    'padding:4px 10px', 'cursor:pointer', 'letter-spacing:0.06em',
+                ].join(';');
+                b.onclick = function() {
+                    handler();
+                    const el = document.getElementById('driving-radio-choice');
+                    if (el) el.remove();
+                };
+                return b;
+            };
+
+            const btnOff = mkBtn('Turn it off', function() {
+                if (self._radioGain && self._audioCtx) {
+                    try { self._radioGain.gain.linearRampToValueAtTime(0, self._audioCtx.currentTime + 0.8); } catch(e) {}
+                }
+            });
+            const btnOn = mkBtn('Leave it on', function() { /* nothing */ });
+
+            wrap.append(label, btnOff, btnOn);
+            (document.getElementById('scene-container') || document.body).appendChild(wrap);
+
+            // Auto-dismiss after 8s if untouched
+            const autoTid = setTimeout(function() {
+                const el = document.getElementById('driving-radio-choice');
+                if (el) el.remove();
+            }, 8000);
+            self._timeoutIds.push(autoTid);
+        }, 2500);
+        this._timeoutIds.push(tid);
+    },
+
     // Scene entry — Rick Astley on the car radio, RTV Drenthe news, auto-transition
     onEnter: function(gameInstance) {
         const g = gameInstance || window.game;
@@ -661,6 +724,7 @@ const DrivingScene = {
         this._timeoutIds = [];
 
         this._startDrivingAudio();
+        this._showRadioChoice(g);
         this._speakRadioNews(destination, g);
     },
 
@@ -669,8 +733,10 @@ const DrivingScene = {
         // Stop car radio + engine
         this._stopDrivingAudio();
 
-        // Remove radio overlay and word-reveal interval
+        // Remove radio overlay, choice bar, and word-reveal interval
         this._removeRadioOverlay();
+        const choiceEl = document.getElementById('driving-radio-choice');
+        if (choiceEl) choiceEl.remove();
 
         // Clear all timeouts
         this._timeoutIds.forEach(id => clearTimeout(id));

@@ -135,10 +135,13 @@ const EpilogueScene = {
 
     /**
      * Multi-part epilogue with natural pauses between sections.
-     * Each section is a separate dialogue call so the player clicks
-     * through at their own pace.
+     * Sections vary based on how the Long Night ended (press/bnd/underground).
      */
     _playEpilogue: function(game) {
+        const isBND        = !!game.getFlag('bnd_only');
+        const isUndergrnd  = !!game.getFlag('underground_chosen');
+        // Default is press path
+
         const sections = [
             // ── Title card ──
             [
@@ -168,10 +171,40 @@ const EpilogueScene = {
             ],
 
             // ── Chris Kubecka ──
-            [
+            isBND ? [
+                { speaker: 'Narrator', text: 'Chris Kubecka provided expert analysis to the BND investigation — off the record, unpublished.' },
+                { speaker: 'Narrator', text: 'She traced Russian influence operations across seven European countries.' },
+                { speaker: 'Narrator', text: 'The full picture exists in a classified file five floors underground in Pullach.' },
+                { speaker: 'Narrator', text: 'She\'s fine with that. For now.' }
+            ] : isUndergrnd ? [
+                { speaker: 'Narrator', text: 'Chris Kubecka published her report on Operation ZERFALL six weeks after Ryan\'s anonymous release.' },
+                { speaker: 'Narrator', text: 'By then the BND arrests had already happened. She filled in the gaps the intelligence community couldn\'t.' },
+                { speaker: 'Narrator', text: 'Now required reading at NATO intelligence agencies.' }
+            ] : [
                 { speaker: 'Narrator', text: 'Chris Kubecka published a comprehensive report on Operation ZERFALL.' },
                 { speaker: 'Narrator', text: 'Tracing Russian influence operations across seven European countries.' },
                 { speaker: 'Narrator', text: 'Now required reading at NATO intelligence agencies.' }
+            ],
+
+            // ── Max ──
+            isBND ? [
+                { speaker: 'Narrator', text: 'Maxine Weylant never saw her husband\'s name in any headline.' },
+                { speaker: 'Narrator', text: 'The news reported "an intelligence operation" with no further details.' },
+                { speaker: 'Narrator', text: 'She knew. She\'d driven forty minutes at midnight, after all.' },
+                { speaker: 'Max', text: '*quiet, over coffee* You know I know, right?' },
+                { speaker: 'Ryan', text: 'Yeah. I know you know.' },
+                { speaker: 'Max', text: 'Good. *sets down her mug* Next time — tell me beforehand.' }
+            ] : isUndergrnd ? [
+                { speaker: 'Narrator', text: 'Maxine Weylant figured it out herself, three weeks before the story broke publicly.' },
+                { speaker: 'Narrator', text: 'She recognised the anonymous technical details in the Spiegel package.' },
+                { speaker: 'Narrator', text: 'She didn\'t say anything until he admitted it over breakfast.' },
+                { speaker: 'Max', text: 'I always figured it would be something like this. *sets down her mug* Couldn\'t have been anything small, could it?' }
+            ] : [
+                { speaker: 'Narrator', text: 'Maxine Weylant was on her second coffee when the NOS bulletin broke.' },
+                { speaker: 'Narrator', text: 'She watched her husband\'s name appear beneath an aerial shot of a sealed German facility.' },
+                { speaker: 'Narrator', text: 'She didn\'t cry. She\'d driven forty minutes at midnight to sit with him before he left — and she hadn\'t asked why.' },
+                { speaker: 'Narrator', text: 'She already knew the kind of man she\'d married.' },
+                { speaker: 'Max', text: 'I always figured it would be something like this. *sets down her mug* Couldn\'t have been anything small, could it?' }
             ],
 
             // ── Cees Bassa ──
@@ -196,7 +229,12 @@ const EpilogueScene = {
             ],
 
             // ── Eva Weber ──
-            [
+            isBND ? [
+                { speaker: 'Narrator', text: 'Eva Weber was the reason Hoffmann and Volkov were in custody before a single headline ran.' },
+                { speaker: 'Narrator', text: 'She handed the complete evidence package to BND Director Maier in person.' },
+                { speaker: 'Narrator', text: 'Her identity remains classified. Her file remains sealed.' },
+                { speaker: 'Narrator', text: 'She prefers it that way.' }
+            ] : [
                 { speaker: 'Narrator', text: 'Eva Weber testified before a closed session of the German parliament.' },
                 { speaker: 'Narrator', text: 'Her identity remains classified.' },
                 { speaker: 'Narrator', text: 'Rumours say she\'s working for a European cybersecurity agency now.' },
@@ -204,7 +242,26 @@ const EpilogueScene = {
             ],
 
             // ── Ryan ──
-            [
+            isBND ? [
+                { speaker: 'Narrator', text: 'Ryan Weylant\'s name never appeared in any press report on ZERFALL.' },
+                { speaker: 'Narrator', text: 'That was by design.' },
+                { speaker: 'Narrator', text: 'The AIVD knows. The BND knows. A few people at NATO know.' },
+                { speaker: 'Narrator', text: 'Everyone else just knows there was a Dutch national involved.' },
+                { speaker: 'Narrator', text: '"A civilian asset of considerable technical capability." That\'s how the BND file describes him.' },
+                { speaker: 'Narrator', text: 'He declined a formal contract. Left his number.' },
+                { speaker: 'Narrator', text: 'These days, when strange signals appear on his SSTV terminal…' },
+                { speaker: 'Narrator', text: '…he still investigates. On his own terms. In the dark.' },
+                { speaker: 'Narrator', text: 'Some people can\'t be tamed. Just aimed.' }
+            ] : isUndergrnd ? [
+                { speaker: 'Narrator', text: 'Three weeks after the BND arrested Hoffmann and Volkov, Ryan Weylant sent an encrypted package to Der Spiegel.' },
+                { speaker: 'Narrator', text: 'Anonymous. Hash-verified. Undeniable.' },
+                { speaker: 'Narrator', text: 'The story broke anyway. Bigger, in some ways, because the arrests had already happened.' },
+                { speaker: 'Narrator', text: '"Mysterious source confirms extent of ZERFALL network." That was the headline.' },
+                { speaker: 'Narrator', text: 'He never identified himself publicly.' },
+                { speaker: 'Narrator', text: 'He took the meeting with Agent Van der Berg. Declined the job.' },
+                { speaker: 'Narrator', text: 'Left his number. "If the shit really hits the fan… call me."' },
+                { speaker: 'Narrator', text: 'Some people can\'t be tamed. Just aimed.' }
+            ] : [
                 { speaker: 'Narrator', text: 'And Ryan Weylant?' },
                 { speaker: 'Narrator', text: 'He took the meeting with Agent Van der Berg.' },
                 { speaker: 'Narrator', text: 'Then politely declined the job offer.' },

@@ -1445,11 +1445,10 @@ const IntroScene = {
                     // Keep Ryan hidden — first appearance is the home scene
                     game.voiceEnabled = originalVoiceState;
 
-                    // Hold on the background for 10 seconds before continuing
                     setTimeout(function() {
                         if (charactersContainer) charactersContainer.style.display = '';
                         game.loadScene('home');
-                    }, 10000);
+                    }, 800);
                 }, 3200);
             }
         }

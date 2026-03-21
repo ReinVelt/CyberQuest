@@ -1031,7 +1031,27 @@ const HackerspaceScene = {
                         { speaker: 'Linda', text: 'Nice lady though. Had a rescue dog with her in the car. Black Shepherd mix, if I remember right. *smiles* I always remember the dogs.' },
                     ],
                 ];
-                game.startDialogue(lines[visits % lines.length]);
+
+                const evaAlreadyShown = game.getFlag('linda_eva_revealed');
+                const otherNPCTalks = (game.getFlag('dennis_talks') || 0) +
+                    (game.getFlag('sophie_talks') || 0) +
+                    (game.getFlag('marco_talks') || 0) +
+                    (game.getFlag('kim_talks') || 0) +
+                    (game.getFlag('joris_talks') || 0);
+
+                // Surface the Eva reveal early: first Linda visit AND player already talked to any NPC
+                if (visits === 0 && !evaAlreadyShown && otherNPCTalks >= 1) {
+                    game.setFlag('linda_eva_revealed', true);
+                    game.startDialogue(lines[3]);
+                } else if (evaAlreadyShown) {
+                    // Cycle through indices 0-2 now that 3 was already shown
+                    game.startDialogue(lines[(visits - 1 + 3) % 3]);
+                } else {
+                    // Normal rotation (Eva reveal surfaces naturally at visit 3)
+                    const idx = visits % lines.length;
+                    if (idx === 3) game.setFlag('linda_eva_revealed', true);
+                    game.startDialogue(lines[idx]);
+                }
             }
         },
 
