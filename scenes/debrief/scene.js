@@ -86,7 +86,7 @@ const DebriefScene = {
             skipWalk: true,
             action: function(game) {
                 if (game.getFlag('debrief_complete')) {
-                    game.loadScene('return_to_max');
+                    game.loadScene('morning_after');
                 } else {
                     game.startDialogue([
                         { speaker: 'Ryan', text: 'Not yet. Still processing all this.' }
@@ -228,20 +228,40 @@ const DebriefScene = {
                 { speaker: 'Ryan', text: 'Schematics. Evidence files. Everything Eva Weber had gathered.' }
             ],
 
-            // ── Deeper ──
+            // ── Deeper: infiltration ──
             [
                 { speaker: 'Agent Van der Berg', text: 'And the Meshtastic communications?' },
-                { speaker: 'Ryan', text: 'Eva guided me. She knew the facility layout. Maintenance access.' },
-                { speaker: 'Agent Van der Berg', text: 'And then you infiltrated a German military facility. Alone.' },
-                { speaker: 'Ryan', text: 'To stop the demonstration. To corrupt the calibration. To save Groningen.' }
+                { speaker: 'Ryan', text: 'Eva guided me through the facility. Maintenance tunnel. Service corridor.' },
+                { speaker: 'Agent Van der Berg', text: 'You bypassed three automated security systems. Laser grid, motion sensors, biometric lock.' },
+                { speaker: 'Ryan', text: 'Flipper Zero for the lasers. HackRF for the sensors. Eva\'s override code for the door.' },
+                { speaker: 'Agent Van der Berg', text: 'And you physically tampered with active military hardware.' },
+                { speaker: 'Ryan', text: 'I corrupted the seismic calibration database. Made the weapon useless — bought enough time for arrests.' }
             ],
 
-            // ── Van der Berg's assessment ──
+            // ── Legal jeopardy ── (interrogation pressure)
             [
-                { speaker: 'Agent Van der Berg', text: '*Nods slowly* You understand this is highly irregular.' },
-                { speaker: 'Agent Van der Berg', text: 'A Dutch citizen conducting an unsanctioned operation on German soil.' },
-                { speaker: 'Ryan', text: 'I understand.' },
-                { speaker: 'Agent Van der Berg', text: 'The Germans want to give you a medal. Or arrest you. They can\'t decide which.' },
+                { speaker: 'Narrator', text: '*Van der Berg sets his pen down. Folds his hands on the table.*' },
+                { speaker: 'Agent Van der Berg', text: 'Mr. Weylant. I need you to hear something clearly.' },
+                { speaker: 'Agent Van der Berg', text: 'What you did is a crime under German law. Multiple crimes.' },
+                { speaker: 'Agent Van der Berg', text: 'Unlawful entry of a classified military installation. Wilful damage to government infrastructure. Sabotage.' },
+                { speaker: 'Ryan', text: 'There were going to be mass casualties—' },
+                { speaker: 'Agent Van der Berg', text: 'You are not a law enforcement officer. You had no authority, no warrant, no sanction from any state actor.' },
+                { speaker: 'Narrator', text: '*The air conditioning hisses. Nobody moves.*' },
+                { speaker: 'Agent Van der Berg', text: 'The BKA — German Federal Criminal Police — has opened a file with your name on it.' },
+                { speaker: 'Ryan', text: '...Am I being arrested?' },
+                { speaker: 'Agent Van der Berg', text: 'You are here voluntarily. You are not under arrest.' },
+                { speaker: 'Agent Van der Berg', text: 'But the BKA and the BND are deciding right now — medal or extradition.' },
+                { speaker: 'Ryan', text: '*quietly* I would do it again.' },
+                { speaker: 'Narrator', text: '*A long pause. Van der Berg studies him.*' }
+            ],
+
+            // ── Pivot: AIVD context and weight of outcome ──
+            [
+                { speaker: 'Agent Van der Berg', text: 'Yes. I believe you would.' },
+                { speaker: 'Agent Van der Berg', text: 'Our models estimate your intervention prevented a 70% probability of a major catalytic seismic event.' },
+                { speaker: 'Agent Van der Berg', text: 'Potentially thousands of dead. Infrastructure collapse across three provinces.' },
+                { speaker: 'Ryan', text: 'That\'s what the data showed.' },
+                { speaker: 'Agent Van der Berg', text: 'The Germans want to give you a medal. The BKA wants to prosecute. They\'re still arguing.' },
                 { speaker: 'Ryan', text: 'And the Dutch?' }
             ],
 
@@ -298,7 +318,7 @@ const DebriefScene = {
                 game.setFlag('debrief_complete', true);
                 game.showNotification('Click to continue…');
                 const tid = setTimeout(() => {
-                    game.loadScene('return_to_max');
+                    game.loadScene('morning_after');
                 }, 10000);
                 this._timeoutIds.push(tid);
                 return;

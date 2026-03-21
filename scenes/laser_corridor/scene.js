@@ -536,7 +536,11 @@ const LaserCorridorScene = {
         // Phase 3: Biometric
         panelActivated: false,
         codeEntered: false,
-        doorUnlocked: false
+        doorUnlocked: false,
+        // Failure counters for escalating consequences
+        _irFailCount: 0,
+        _sensorFailCount: 0,
+        _bioFailCount: 0
     },
 
     // ── Hotspots ─────────────────────────────────────────────
@@ -970,6 +974,9 @@ const LaserCorridorScene = {
         s.panelActivated = false;
         s.codeEntered = false;
         s.doorUnlocked = false;
+        s._irFailCount = 0;
+        s._sensorFailCount = 0;
+        s._bioFailCount = 0;
 
         game.setFlag('laser_corridor_entered', true);
         game.showNotification('Basement Level B — Security Corridor');
@@ -1072,11 +1079,21 @@ const LaserCorridorScene = {
                     ]);
                 },
                 onFailure: (g) => {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'Not that frequency. Think consumer electronics.' },
-                        { speaker: 'Ryan', text: 'Every TV remote in the world uses this carrier frequency.' },
-                        { speaker: 'Ryan', text: 'It\'s the de facto standard. 38...' }
-                    ]);
+                    const s = LaserCorridorScene.state;
+                    s._irFailCount++;
+                    if (s._irFailCount >= 2) {
+                        game.startDialogue([
+                            { speaker: 'Narrator', text: '*Footsteps overhead — heavy, measured. A guard making rounds.*' },
+                            { speaker: 'Ryan', text: 'Come ON. Standard consumer IR. The number every hobbyist knows.' },
+                            { speaker: 'Ryan', text: 'Thirty-EIGHT. The answer is 38. Think.' }
+                        ]);
+                    } else {
+                        game.startDialogue([
+                            { speaker: 'Ryan', text: 'Not that frequency. Think consumer electronics.' },
+                            { speaker: 'Ryan', text: 'Every TV remote in the world uses this carrier frequency.' },
+                            { speaker: 'Ryan', text: 'It\'s the de facto standard. 38...' }
+                        ]);
+                    }
                 }
             });
         }
@@ -1103,6 +1120,18 @@ const LaserCorridorScene = {
             game.setFlag('lasers_disabled', true);
             game.showNotification('Lasers disabled — motion sensors activated!');
             LaserCorridorScene._updateToolOverlays();
+
+            // David's Meshtastic support burst — one-time, fires after lasers fall
+            if (!game.getFlag('david_corridor_support')) {
+                game.setFlag('david_corridor_support', true);
+                setTimeout(() => {
+                    game.startDialogue([
+                        { speaker: 'David (Mesh)', text: '📻 Reading you. 38 kHz confirmed from outside scanners.' },
+                        { speaker: 'David (Mesh)', text: 'Guard rotation logs show ~8 minutes before next sweep hits your level.' },
+                        { speaker: 'David (Mesh)', text: 'You\'ve got this. Go. — D' }
+                    ]);
+                }, 4500);
+            }
 
             // Audio: Flipper replay SFX + fade laser hum + beam death sounds
             LaserCorridorScene._sfxFlipperReplay();
@@ -1154,11 +1183,21 @@ const LaserCorridorScene = {
                     ]);
                 },
                 onFailure: (g) => {
-                    game.startDialogue([
-                        { speaker: 'Ryan', text: 'Not quite. Standard ultrasonic sensors. Think Arduino basics.' },
-                        { speaker: 'Ryan', text: 'HC-SR04, SRF05... they all use the same frequency.' },
-                        { speaker: 'Ryan', text: 'Forty-something kHz. Very standard.' }
-                    ]);
+                    const s = LaserCorridorScene.state;
+                    s._sensorFailCount++;
+                    if (s._sensorFailCount >= 2) {
+                        game.startDialogue([
+                            { speaker: 'Narrator', text: '*A sensor pod emits a sharp diagnostic ping — self-check cycle.*' },
+                            { speaker: 'Ryan', text: 'They\'re running a status check. If one flags an anomaly I\'m done.' },
+                            { speaker: 'Ryan', text: 'HC-SR04. Arduino. Forty kHz exactly. Come on.' }
+                        ]);
+                    } else {
+                        game.startDialogue([
+                            { speaker: 'Ryan', text: 'Not quite. Standard ultrasonic sensors. Think Arduino basics.' },
+                            { speaker: 'Ryan', text: 'HC-SR04, SRF05... they all use the same frequency.' },
+                            { speaker: 'Ryan', text: 'Forty-something kHz. Very standard.' }
+                        ]);
+                    }
                 }
             });
         }
@@ -1226,11 +1265,22 @@ const LaserCorridorScene = {
                     LaserCorridorScene._unlockDoor(game);
                 },
                 onFailure: (g) => {
-                    game.startDialogue([
-                        { speaker: 'Narrator', text: '*Panel flashes red: ACCESS DENIED*' },
-                        { speaker: 'Ryan', text: 'Wrong code. Think. Eva sent it via Meshtastic.' },
-                        { speaker: 'Ryan', text: 'Four digits. When we were upstairs in the corridor.' }
-                    ]);
+                    const s = LaserCorridorScene.state;
+                    s._bioFailCount++;
+                    if (s._bioFailCount >= 2) {
+                        game.startDialogue([
+                            { speaker: 'Narrator', text: '*ACCESS DENIED — a faint alarm tone pulses deep inside the facility*' },
+                            { speaker: 'Ryan', text: 'That\'s — an alert. Someone might hear that.' },
+                            { speaker: 'Ryan', text: 'EVA\'S CODE. Four digits. 2-8-4-7. Read the Meshtastic log.' },
+                            { speaker: 'Ryan', text: 'One more wrong attempt and this whole corridor locks down.' }
+                        ]);
+                    } else {
+                        game.startDialogue([
+                            { speaker: 'Narrator', text: '*Panel flashes red: ACCESS DENIED*' },
+                            { speaker: 'Ryan', text: 'Wrong code. Think. Eva sent it via Meshtastic.' },
+                            { speaker: 'Ryan', text: 'Four digits. When we were upstairs in the corridor.' }
+                        ]);
+                    }
                 }
             });
         }
