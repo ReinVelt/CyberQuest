@@ -5,6 +5,21 @@
  */
 const CYBERQUEST_CHANGELOG = [
     {
+        version: 'v1.3',
+        date: '2026-03-21',
+        highlight: true,
+        items: [
+            'Interactive Movie button on title screen — one-click full-story playthrough with voice and accessibility mode auto-enabled',
+            'Movie mode: voice auto-enabled on start, pause button removed, dialog timing fixed when voice is disabled',
+            'Sitmower scene added (garden-path interlude before WSRT parking)',
+            'USB dead-drop relocated from car boot to monastery bench (Ter Apel Klooster 23:03)',
+            'Klooster: bench hotspot triggers USB discovery after courtyard check; Eva sends Meshtastic clue via chat',
+            'Car/USB discovery scenes fully reworked for bench context with new SVG artwork',
+            'Garden: hackerspace and WSRT parking always re-visitable in Volvo destination picker',
+            'Audio assets (MP3/OGG/WAV) removed from repository',
+        ],
+    },
+    {
         version: 'v0.6.0-alpha',
         date: '2026-03-08',
         highlight: true,
