@@ -24,6 +24,7 @@ const CreditsScene = {
     description: 'Thank you for playing CyberQuest: Operation ZERFALL',
     playerStart: { x: 50, y: 50 },
     hotspots: [],
+    accessibilityPath: [],  // terminal scene — no exit needed
 
     /* ── bookkeeping ────────────────────────────────────────── */
     _timeoutIds: [],

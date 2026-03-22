@@ -17,6 +17,7 @@ const GardenBackScene = {
     description: 'The back garden. Fruit trees sway in the breeze. Berry bushes line the fence. The steel fire drum crackles. The sit-mower waits on the grass. Dogs enjoy the sunshine.',
 
     playerStart: { x: 10, y: 88 },
+    accessibilityPath: ['sit_mower', 'gate_to_garden'],
 
     idleThoughts: [
         'Appels, peren, frambozen... nature provides.',

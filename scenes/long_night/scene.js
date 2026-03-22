@@ -22,6 +22,7 @@ const LongNightScene = {
     name: 'The Long Night',
 
     background: 'assets/images/scenes/mancave.svg',
+    accessibilityPath: [],  // auto-transitions to debrief after story choice
 
     description: 'Back in the mancave. The extracted data fills screen after screen. Coffee grows cold. The weight of what you\'ve uncovered is staggering.',
 

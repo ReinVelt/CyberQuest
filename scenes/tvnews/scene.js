@@ -18,6 +18,7 @@ const TvnewsScene = {
     background: 'assets/images/scenes/livingroom.svg',
     hidePlayer: true,
     playerStart: { x: 50, y: 70 },
+    accessibilityPath: [],  // auto-transitions to livingroom after broadcast
 
     /* ═══════════════════════════════════════════════════════
      *  WEB AUDIO — news broadcast sound FX

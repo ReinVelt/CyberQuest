@@ -7,6 +7,7 @@ const RegionalMapScene = {
   id: 'regional_map',
   name: 'Regional Map',
   background: 'assets/images/scenes/regional_map.svg',
+  accessibilityPath: ['back-button'],
   
   // Player position (not shown, UI-only scene)
   playerStart: { x: 50, y: 50 },

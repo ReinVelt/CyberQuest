@@ -15,6 +15,7 @@ const UsbDiscoveryScene = {
     description: 'Something is wrong. Someone was here.',
     playerStart: { x: 50, y: 50 },
     hotspots: [],
+    accessibilityPath: [],  // auto-transitions to car_discovery
 
     _timeoutIds: [],
     _audioCtx: null,

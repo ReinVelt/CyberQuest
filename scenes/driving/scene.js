@@ -16,6 +16,7 @@ const DrivingScene = {
     
     // No hotspots - this is pure dialogue/transition
     hotspots: [],
+    accessibilityPath: [],  // auto-transitions to destination
     
     // Store timeout IDs for cleanup
     _timeoutIds: [],

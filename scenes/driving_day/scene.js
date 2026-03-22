@@ -22,6 +22,7 @@ const DrivingDayScene = {
     background: 'assets/images/scenes/driving_day.svg',
 
     description: 'Afternoon sun through the windscreen. Flat Drenthe fields, WSRT dishes on the horizon, your thoughts running ahead of the car.',
+    accessibilityPath: [],  // auto-transitions to destination
 
     hidePlayer: true, // Ryan is inside the Volvo
     playerStart: { x: 50, y: 50 },

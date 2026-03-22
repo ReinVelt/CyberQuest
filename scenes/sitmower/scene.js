@@ -20,6 +20,7 @@ const SitMowerScene = {
     description: 'First-person view from the sit-mower. Time to cut this grass.',
     playerStart: { x: -100, y: -100 },
     hotspots: [],
+    accessibilityPath: [],  // mini-game auto-completes and transitions to garden_back
     hidePlayer: true,
 
     /* ── Constants ──────────────────────────────────────────── */

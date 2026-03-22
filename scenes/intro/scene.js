@@ -12,6 +12,7 @@ const IntroScene = {
     playerStart: { x: 50, y: 85 },
     idleThoughts: [],
     hotspots: [],
+    accessibilityPath: [],  // auto-transitions to home after prologue
 
     /* ── bookkeeping ─────────────────────────────────────────── */
     _timeoutIds: [],

@@ -3,3 +3,4 @@
 # Local test/debug pages (not part of the game)
 test_speech.html
 voicetest.html
+_audit*.py

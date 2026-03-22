@@ -13,6 +13,7 @@ const BedroomScene = {
 
     hidePlayer: true,
     playerStart: { x: 50, y: 50 },
+    accessibilityPath: [],  // auto-transitions to home after sleep
     hotspots: [
         {
             id: 'door-home',
