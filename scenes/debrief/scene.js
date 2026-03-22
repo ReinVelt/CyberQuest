@@ -235,7 +235,7 @@ const DebriefScene = {
                 { speaker: 'Agent Van der Berg', text: 'You bypassed three automated security systems. Laser grid, motion sensors, biometric lock.' },
                 { speaker: 'Ryan', text: 'Flipper Zero for the lasers. HackRF for the sensors. Eva\'s override code for the door.' },
                 { speaker: 'Agent Van der Berg', text: 'And you physically tampered with active military hardware.' },
-                { speaker: 'Ryan', text: 'I corrupted the seismic calibration database. Made the weapon useless — bought enough time for arrests.' }
+                { speaker: 'Ryan', text: 'I corrupted the phased-array calibration database. Made the weapon useless — bought enough time for arrests.' }
             ],
 
             // ── Legal jeopardy ── (interrogation pressure)
@@ -258,7 +258,7 @@ const DebriefScene = {
             // ── Pivot: AIVD context and weight of outcome ──
             [
                 { speaker: 'Agent Van der Berg', text: 'Yes. I believe you would.' },
-                { speaker: 'Agent Van der Berg', text: 'Our models estimate your intervention prevented a 70% probability of a major catalytic seismic event.' },
+                { speaker: 'Agent Van der Berg', text: 'Our models estimate your intervention prevented a 70% probability of a major directed-energy attack.' },
                 { speaker: 'Agent Van der Berg', text: 'Potentially thousands of dead. Infrastructure collapse across three provinces.' },
                 { speaker: 'Ryan', text: 'That\'s what the data showed.' },
                 { speaker: 'Agent Van der Berg', text: 'The Germans want to give you a medal. The BKA wants to prosecute. They\'re still arguing.' },

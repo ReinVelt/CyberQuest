@@ -147,7 +147,7 @@ const MorningAfterScene = {
                         { speaker: 'Max', text: 'You built a case from a stranger\'s USB stick. You drove to Germany. You broke into a military facility.' },
                         { speaker: 'Max', text: 'What if she was a trap?' },
                         { speaker: 'Narrator', text: '*Ryan looks at the Flipper Zero on the desk. The HackRF. The Meshtastic nodes.*' },
-                        { speaker: 'Ryan', text: 'I verified everything I could. The schematics matched WSRT data going back years. The seismic activity was real.' },
+                        { speaker: 'Ryan', text: 'I verified everything I could. The schematics matched WSRT data going back years. The RF anomalies were real.' },
                         { speaker: 'Ryan', text: 'I wasn\'t flying blind. I was... as sure as I could be.' },
                         { speaker: 'Max', text: '*Carefully* And that was enough for you to go alone. Without telling me.' },
                         { speaker: 'Ryan', text: 'I kept you out of it deliberately. To protect you.' },
