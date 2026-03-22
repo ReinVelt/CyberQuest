@@ -93,7 +93,7 @@ const LaptopScene = {
             return {
                 narrative: [
                     { speaker: '',      text: '* The USB drive. Everything is on it. *' },
-                    { speaker: 'Ryan',  text: 'GRU Unit 29155. Eight dead. ZERFALL is real.' },
+                    { speaker: 'Ryan',  text: 'FSB. Eight dead. ZERFALL is real.' },
                     { speaker: 'Ryan',  text: 'I have to decide what to do with this.' }
                 ],
                 onComplete: function() { window.MancaveDilemma.play(game); }
@@ -134,7 +134,7 @@ const LaptopScene = {
         if (game.getFlag('volkov_investigated')) {
             return {
                 narrative: [
-                    { speaker: 'Ryan', text: 'Volkov. GRU Unit 29155. Eight people dead.' },
+                    { speaker: 'Ryan', text: 'Volkov. FSB. Eight people dead.' },
                     { speaker: 'Ryan', text: 'Chris Kubecka can go deeper. I need the secure phone.' }
                 ],
                 onComplete: function() {

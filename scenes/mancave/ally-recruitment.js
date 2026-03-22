@@ -11,7 +11,7 @@
  * Each ally gets: dossier card → typing indicator messages →
  *   "ALLY RECRUITED" stamp → dissolve transition.
  *
- * Flags set: contacted_allies, henk_contacted, cees_contacted,
+ * Flags set: contacted_allies, david_contacted, cees_contacted,
  *   jaap_contacted, all_allies_contacted, astron_unlocked
  * Quests: completes find_allies
  * ═══════════════════════════════════════════════════════════
@@ -31,7 +31,7 @@ window.MancaveAllyRecruitment = (function () {
             avatar: '📡',
             chatType: 'SIGNAL',
             chatIcon: '🔒',
-            flag: 'henk_contacted',
+            flag: 'david_contacted',
             messages: [
                 { from: 'Ryan', text: 'David — long time. Need your expertise on something urgent. RF weaponization, military-grade. Have schematics that need expert analysis. Can we talk? Secure channel only.', timestamp: '04:32' },
                 { from: 'Dr. David Prinsloo', text: 'Ryan? Didn\'t expect to hear from you. RF weapons? That\'s heavy. What kind of schematics are we talking about?', timestamp: '05:18' },
@@ -235,7 +235,7 @@ window.MancaveAllyRecruitment = (function () {
         function processNextAlly() {
             if (allyIdx >= ALLIES.length) {
                 // All done — set flags and show team assembled
-                game.setFlag('henk_contacted', true);
+                game.setFlag('david_contacted', true);
                 game.setFlag('cees_contacted', true);
                 game.setFlag('astron_unlocked', true);
                 game.setFlag('jaap_contacted', true);
@@ -289,7 +289,7 @@ window.MancaveAllyRecruitment = (function () {
             MC.destroyOverlay(0.4);
             MC.schedule(() => MC.destroyAudio(), 600);
 
-            game.setFlag('henk_contacted', true);
+            game.setFlag('david_contacted', true);
             game.setFlag('cees_contacted', true);
             game.setFlag('astron_unlocked', true);
             game.setFlag('jaap_contacted', true);

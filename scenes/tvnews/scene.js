@@ -413,14 +413,14 @@ const TvnewsScene = {
             },
             {
                 sound: 'transition',
-                voice: { text: 'ASTRON, the Netherlands Institute for Radio Astronomy, is celebrating the seventy anniversary of the Westerbork Synthesis Radio Telescope. The fourteen-dish array near Hooghalen has contributed to over three thousand scientific publications and remains a cornerstone of European radio astronomy.', speaker: 'Documentary' },
+                voice: { text: 'ASTRON, the Netherlands Institute for Radio Astronomy, is celebrating the seventieth anniversary of the Westerbork Synthesis Radio Telescope. The fourteen-dish array near Hooghalen has contributed to over three thousand scientific publications and remains a cornerstone of European radio astronomy.', speaker: 'Documentary' },
                 content: `
                     <div class="news-bg"></div>
                     <div class="news-lower-third">
                         <div class="lt-accent"></div>
                         <div class="lt-content">
                             <h3>ASTRON Celebrates 70 Years of WSRT</h3>
-                            <p>Westerbork telescope array marks three decades of discovery</p>
+                            <p>Westerbork telescope array marks seven decades of discovery</p>
                         </div>
                     </div>
                     <div class="news-text-panel">

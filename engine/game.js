@@ -3133,8 +3133,8 @@ class CyberQuestEngine {
                 <div class="dbg-step">
                     <div class="dbg-time">09:00</div>
                     <div class="dbg-body">
-                        <div class="dbg-scene-row">${sb('mancave','🖥️ Mancave — Recruit Allies')} ${sp(10)} — Contact Cees, Jaap, Henk</div>
-                        <div class="dbg-flags">${fb('cees_contacted')}${fb('jaap_contacted')}${fb('henk_contacted')}${fb('contacted_allies')}${fb('all_allies_contacted')}${fb('has_flipper_zero')}</div>
+                        <div class="dbg-scene-row">${sb('mancave','🖥️ Mancave — Recruit Allies')} ${sp(10)} — Contact Cees, Jaap, David</div>
+                        <div class="dbg-flags">${fb('cees_contacted')}${fb('jaap_contacted')}${fb('david_contacted')}${fb('contacted_allies')}${fb('all_allies_contacted')}${fb('has_flipper_zero')}</div>
                     </div>
                 </div>
 
@@ -3725,7 +3725,7 @@ class CyberQuestEngine {
             'found_usb_stick','saw_usb_first_time','picked_up_usb',
             'usb_analyzed','evidence_unlocked','viewed_schematics','started_ally_search',
             'volkov_investigated','collected_evidence','contacted_allies','all_allies_contacted','checked_email',
-            'cees_contacted','jaap_contacted','henk_contacted','contacted_kubecka',
+            'cees_contacted','jaap_contacted','david_contacted','contacted_kubecka',
             'eva_contacted','identified_eva','has_flipper_zero',
             'dwingeloo_broadcast_found','dwingeloo_transmitter_found',
             'westerbork_camera_inspected','westerbork_bt_cracked','bt_camera_quest_started',

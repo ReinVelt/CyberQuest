@@ -231,7 +231,7 @@ const SecurePhoneScene = {
                 if (game.getFlag('contacted_kubecka')) {
                     msgs.push(
                         { speaker: 'Kubecka', text: 'Signal only from now on. Delete this chain after reading.' },
-                        { speaker: 'Ryan', text: 'Understood. Volkov profile: GRU — 161st Specialist Centre.' },
+                        { speaker: 'Ryan', text: 'Understood. Volkov profile: FSB — Directorate S.' },
                     );
                 }
 
