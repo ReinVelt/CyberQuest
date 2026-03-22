@@ -668,9 +668,10 @@ const DroneHuntScene = {
         const div = document.createElement('div');
         div.id = 'drone-fg-overlay';
         div.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;';
-fetch('assets/images/overlayimg/drone-hunt-fg-overlay.svg')
-            .then(r => r.text())
-            .then(svg => { div.innerHTML = svg; });
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'assets/images/overlayimg/drone-hunt-fg-overlay.svg', true);
+        xhr.onload = function() { if (xhr.status === 200 || xhr.status === 0) div.innerHTML = xhr.responseText; };
+        xhr.send();
 
         sceneEl.appendChild(div);
         this._droneOverlayEl = div;
@@ -700,9 +701,10 @@ fetch('assets/images/overlayimg/drone-hunt-fg-overlay.svg')
         const div = document.createElement('div');
         div.id = 'drone-fx-overlay';
         div.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;';
-fetch('assets/images/overlayimg/drone-hunt-fx-overlay.svg')
-            .then(r => r.text())
-            .then(svg => { div.innerHTML = svg; });
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'assets/images/overlayimg/drone-hunt-fx-overlay.svg', true);
+        xhr.onload = function() { if (xhr.status === 200 || xhr.status === 0) div.innerHTML = xhr.responseText; };
+        xhr.send();
 
         sceneEl.appendChild(div);
         this._effectsOverlayEl = div;

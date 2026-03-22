@@ -1350,6 +1350,21 @@ const LaserCorridorScene = {
                 const svgEl = tmp.querySelector('svg');
                 const container = document.getElementById('scene-container');
                 if (svgEl && container) container.appendChild(svgEl);
+            })
+            .catch(() => {
+                // file:// fallback
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'assets/images/overlayimg/laser-corridor-overlay.svg', true);
+                xhr.onload = function() {
+                    if (xhr.status === 200 || xhr.status === 0) {
+                        const tmp = document.createElement('div');
+                        tmp.innerHTML = xhr.responseText;
+                        const svgEl = tmp.querySelector('svg');
+                        const container = document.getElementById('scene-container');
+                        if (svgEl && container) container.appendChild(svgEl);
+                    }
+                };
+                xhr.send();
             });
     },
 
