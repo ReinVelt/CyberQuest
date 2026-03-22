@@ -1,7 +1,7 @@
 /**
  * Bedroom Scene — Night
  * Everyone sleeping. No speech, no voices.
- * Random dream think-balloons float above Ryan, Ax, Max, Kessy and Tino.
+ * Random dream think-balloons float above Ryan, Max, ET, Kessy and Tino.
  */
 
 const BedroomScene = {
@@ -41,7 +41,7 @@ const BedroomScene = {
             'The WSRT dishes all point at me.',
             'Running. The flashlight dies.',
         ],
-        ax: [
+        max: [
             'Hands in warm clay. A vase taking shape.',
             'Grandmother\'s kitchen. The smell of cardamom.',
             'A sun-drenched garden. No deadlines.',
@@ -51,7 +51,7 @@ const BedroomScene = {
             'Stars from the roof. No sirens.',
             'The sea. Flat horizon. Nobody else.',
         ],
-        max: [
+        et: [
             '🍖  The kibble bowl. Bottomless.',
             'A squeaky toy that never stops squeaking.',
             'Warm sunlit floorboards, all to myself.',
@@ -87,8 +87,8 @@ const BedroomScene = {
     // balloon appears above each sleeper's head
     _anchors: {
         ryan:  { left: '31%', top: '33%' },   // above Ryan's southpark head on left pillow
-        ax:    { left: '58%', top: '33%' },   // above Ax's pillow (right)
-        max:   { left: '40%', top: '38%' },   // above pug on duvet
+        max:   { left: '58%', top: '33%' },   // above Max's pillow (right)
+        et:    { left: '40%', top: '38%' },   // above ET on duvet
         kessy: { left: '44%', top: '60%' },   // above Kessy at foot of bed
         tino:  { left: '82%', top: '62%' },   // above Tino's basket
     },
@@ -214,7 +214,7 @@ const BedroomScene = {
         // Dreamer label (small, muted)
         const label = document.createElement('div');
         label.style.cssText = 'font-size:10px;opacity:0.55;margin-bottom:5px;letter-spacing:0.05em;text-transform:uppercase;font-style:normal;';
-        label.textContent = dreamer === 'max' ? 'Max 🐾' :
+        label.textContent = dreamer === 'et'    ? 'ET 🐾'    :
                             dreamer === 'kessy' ? 'Kessy 🐾' :
                             dreamer === 'tino'  ? 'Tino 🐾'  :
                             dreamer.charAt(0).toUpperCase() + dreamer.slice(1);
