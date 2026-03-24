@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberQuest: Hoe Het Gemaakt Werd</title>
+    <style>
+        :root {
+            --cyber-green: #00ff88;
+            --cyber-blue:  #00aaff;
+            --cyber-red:   #ff4466;
+            --cyber-gold:  #ffcc00;
+            --dark-bg:     #0a0e17;
+            --panel-bg:    rgba(10,14,23,0.92);
+            --text:        #eaeaea;
+            --text-dim:    #8899aa;
+            --mono:        'Courier New', monospace;
+            --sans:        'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            width: 100%; height: 100%;
+            background: #000;
+            overflow: hidden;
+            font-family: var(--sans);
+            color: var(--text);
+        }
+
+        /* ── STAGE ─────────────────────────────────────── */
+        #stage {
+            position: relative;
+            width: 100vw; height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            background: #000;
+        }
+
+        #slide-box {
+            position: relative;
+            width:  min(100vw, calc(100vh / 9 * 16));
+            height: min(100vh, calc(100vw / 16 * 9));
+            overflow: hidden;
+            background: var(--dark-bg);
+        }
+
+        /* ── BACKGROUND ─────────────────────────────────── */
+        #bg-layer {
+            position: absolute; inset: 0;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 0.8s ease;
+        }
+
+        #bg-layer img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ── OVERLAY LAYERS ────────────────────────────── */
+        #grain-layer {
+            position: absolute; inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 3;
+        }
+        #grain-layer img { width: 100%; height: 100%; object-fit: cover; }
+
+        #color-overlay {
+            position: absolute; inset: 0;
+            pointer-events: none;
+            z-index: 4;
+            transition: background 1s ease, opacity 0.6s;
+            opacity: 0;
+        }
+
+        /* Ken Burns animation on bg */
+        @keyframes kbZoomIn  { from { transform: scale(1.0); } to { transform: scale(1.12); } }
+        @keyframes kbZoomOut { from { transform: scale(1.12); } to { transform: scale(1.0); } }
+        @keyframes kbPanR    { from { transform: scale(1.08) translateX(0);   } to { transform: scale(1.08) translateX(-3%); } }
+        @keyframes kbPanL    { from { transform: scale(1.08) translateX(-3%); } to { transform: scale(1.08) translateX(0); } }
+
+        .kb-zoom-in  { animation: kbZoomIn  18s ease-in-out forwards; }
+        .kb-zoom-out { animation: kbZoomOut 18s ease-in-out forwards; }
+        .kb-pan-r    { animation: kbPanR    18s ease-in-out forwards; }
+        .kb-pan-l    { animation: kbPanL    18s ease-in-out forwards; }
+
+        /* ── VIGNETTE ──────────────────────────────────── */
+        #vignette {
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.75) 100%);
+            pointer-events: none; z-index: 5;
+        }
+
+        /* ── SCANLINES ─────────────────────────────────── */
+        #scanlines {
+            position: absolute; inset: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px, transparent 2px,
+                rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px
+            );
+            pointer-events: none; z-index: 6; opacity: 0.4;
+        }
+
+        /* ── CHARACTER SPRITES ─────────────────────────── */
+        #char-ryan {
+            position: absolute;
+            bottom: 15%;
+            left: 8%;
+            height: 52%;
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            z-index: 20;
+            filter: drop-shadow(0 0 12px rgba(0,255,136,0.3));
+        }
+        #char-ryan.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        #char-narrator {
+            position: absolute;
+            bottom: 15%;
+            right: 8%;
+            height: 48%;
+            opacity: 0;
+            transform: translateX(60px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            z-index: 20;
+            filter: drop-shadow(0 0 12px rgba(0,170,255,0.3));
+        }
+        #char-narrator.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* talking animation */
+        @keyframes bobRyan { 0%,100%{transform:translateY(0) scaleX(1)} 50%{transform:translateY(-4px) scaleX(1.01)} }
+        @keyframes bobNarr { 0%,100%{transform:translateY(0) scaleX(-1)} 50%{transform:translateY(-4px) scaleX(-1.01)} }
+        #char-ryan.talking    { animation: bobRyan 0.5s ease-in-out infinite; }
+        #char-narrator.talking { animation: bobNarr 0.5s ease-in-out infinite; transform: scaleX(-1); }
+        #char-narrator { transform: scaleX(-1) translateX(-60px); }
+        #char-narrator.visible { transform: scaleX(-1) translateX(0); }
+
+        /* ── DIALOG BOX ─────────────────────────────────── */
+        #dialog-box {
+            position: absolute;
+            bottom: 3%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 72%;
+            background: linear-gradient(135deg, rgba(10,14,23,0.96) 0%, rgba(15,22,44,0.96) 100%);
+            border: 1px solid rgba(0,255,136,0.3);
+            border-radius: 8px;
+            padding: 14px 20px 12px;
+            z-index: 50;
+            box-shadow: 0 0 30px rgba(0,255,136,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        #dialog-box.visible { opacity: 1; pointer-events: auto; }
+
+        #dialog-speaker {
+            font-family: var(--mono);
+            font-size: 0.72em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            color: var(--cyber-green);
+        }
+        #dialog-speaker.narrator-color { color: var(--cyber-blue); }
+
+        #dialog-text {
+            font-family: var(--sans);
+            font-size: 0.90em;
+            line-height: 1.55;
+            color: var(--text);
+            min-height: 2.5em;
+        }
+
+        #dialog-continue {
+            position: absolute;
+            bottom: 10px; right: 16px;
+            font-family: var(--mono);
+            font-size: 0.65em;
+            color: var(--cyber-green);
+            opacity: 0;
+            transition: opacity 0.3s;
+            cursor: pointer;
+        }
+        @keyframes blinkCaret { 0%,100%{opacity:1} 50%{opacity:0} }
+        #dialog-continue.visible { opacity: 1; animation: blinkCaret 1s infinite; }
+
+        /* ── SLIDE TITLE (big cinematic overlay) ────────── */
+        #slide-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 60;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+        #slide-title.visible { opacity: 1; }
+
+        #slide-title .label {
+            font-family: var(--mono);
+            font-size: 0.75em;
+            letter-spacing: 4px;
+            color: var(--cyber-blue);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        #slide-title .main {
+            font-family: var(--mono);
+            font-size: clamp(1.4em, 3.5vw, 2.6em);
+            font-weight: bold;
+            color: var(--cyber-green);
+            text-shadow: 0 0 30px rgba(0,255,136,0.6), 0 0 60px rgba(0,255,136,0.3);
+            line-height: 1.2;
+        }
+        #slide-title .sub {
+            font-family: var(--sans);
+            font-size: 0.85em;
+            color: var(--text-dim);
+            margin-top: 10px;
+        }
+
+        /* ── STATS PANEL ─────────────────────────────────── */
+        #stats-panel {
+            position: absolute;
+            top: 10%; right: 4%;
+            width: 28%;
+            background: rgba(10,14,23,0.88);
+            border: 1px solid rgba(0,255,136,0.25);
+            border-radius: 6px;
+            padding: 12px 14px;
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        #stats-panel.visible { opacity: 1; }
+        #stats-panel h4 {
+            font-family: var(--mono);
+            font-size: 0.62em;
+            letter-spacing: 2px;
+            color: var(--cyber-green);
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(0,255,136,0.2);
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+        }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--mono);
+            font-size: 0.68em;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+        }
+        .stat-row span:last-child { color: var(--cyber-gold); }
+
+        /* ── COMMIT TICKER ──────────────────────────────── */
+        #commit-ticker {
+            position: absolute;
+            top: 10%; left: 4%;
+            width: 30%;
+            background: rgba(10,14,23,0.88);
+            border: 1px solid rgba(0,170,255,0.25);
+            border-radius: 6px;
+            padding: 10px 12px;
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+            font-family: var(--mono);
+            font-size: 0.62em;
+            color: var(--cyber-blue);
+            overflow: hidden;
+        }
+        #commit-ticker.visible { opacity: 1; }
+        #commit-ticker h4 {
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            font-size: 0.85em;
+            color: var(--cyber-blue);
+            border-bottom: 1px solid rgba(0,170,255,0.2);
+            padding-bottom: 4px;
+        }
+        .commit-line {
+            color: var(--text-dim);
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .commit-line .hash { color: var(--cyber-gold); margin-right: 6px; }
+        .commit-line .msg  { color: var(--text); }
+
+        /* ── VELOCITY BAR ────────────────────────────────── */
+        #velocity-panel {
+            position: absolute;
+            top: 10%; left: 50%;
+            transform: translateX(-50%);
+            width: 44%;
+            background: rgba(10,14,23,0.88);
+            border: 1px solid rgba(255,204,0,0.25);
+            border-radius: 6px;
+            padding: 10px 14px;
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        #velocity-panel.visible { opacity: 1; }
+        #velocity-panel h4 {
+            font-family: var(--mono);
+            font-size: 0.60em;
+            letter-spacing: 2px;
+            color: var(--cyber-gold);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255,204,0,0.2);
+            padding-bottom: 4px;
+        }
+        .vel-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 3px;
+            font-family: var(--mono);
+            font-size: 0.58em;
+        }
+        .vel-date { color: var(--text-dim); width: 72px; flex-shrink: 0; }
+        .vel-bar-wrap { flex: 1; background: rgba(255,255,255,0.08); border-radius: 2px; height: 8px; margin: 0 6px; }
+        .vel-bar { height: 8px; border-radius: 2px; background: var(--cyber-gold); width: 0; transition: width 1s ease; }
+        .vel-count { color: var(--cyber-gold); width: 24px; text-align: right; }
+
+        /* PDCA CYCLE */
+        #pdca-panel {
+            position: absolute;
+            bottom: 18%; left: 50%;
+            transform: translateX(-50%);
+            display: flex; gap: 16px;
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        #pdca-panel.visible { opacity: 1; }
+        .pdca-step {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            border: 2px solid rgba(0,255,136,0.4);
+            display: flex; align-items: center; justify-content: center;
+            flex-direction: column;
+            font-family: var(--mono);
+            transition: border-color 0.4s, box-shadow 0.4s;
+            background: rgba(10,14,23,0.8);
+        }
+        .pdca-step .pdca-letter {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: var(--cyber-green);
+        }
+        .pdca-step .pdca-word {
+            font-size: 0.42em;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+        .pdca-step.active {
+            border-color: var(--cyber-green);
+            box-shadow: 0 0 20px rgba(0,255,136,0.5);
+        }
+
+        /* ── FLASH TRANSITION ────────────────────────────── */
+        #flash {
+            position: absolute; inset: 0;
+            background: white;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 200;
+            transition: opacity 0.15s;
+        }
+
+        /* ── HUD TOP BAR ─────────────────────────────────── */
+        #hud-bar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 36px;
+            background: linear-gradient(180deg, rgba(10,14,23,0.95) 0%, transparent 100%);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 14px;
+            z-index: 70;
+        }
+        #hud-title {
+            font-family: var(--mono);
+            font-size: 0.62em;
+            letter-spacing: 3px;
+            color: var(--cyber-green);
+            text-transform: uppercase;
+        }
+        #hud-slide {
+            font-family: var(--mono);
+            font-size: 0.58em;
+            color: var(--text-dim);
+        }
+        #hud-progress {
+            width: 120px; height: 3px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        #hud-progress-fill {
+            height: 100%;
+            background: var(--cyber-green);
+            border-radius: 2px;
+            transition: width 0.8s ease;
+        }
+
+        /* ── CONTROLS ────────────────────────────────────── */
+        #controls {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 32px;
+            background: linear-gradient(180deg, transparent, rgba(10,14,23,0.9));
+            display: flex; align-items: center; justify-content: center;
+            gap: 16px;
+            z-index: 70;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        #controls:hover { opacity: 1; }
+        .ctrl-btn {
+            font-family: var(--mono);
+            font-size: 0.6em;
+            color: var(--text-dim);
+            cursor: pointer;
+            padding: 4px 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 3px;
+            background: rgba(255,255,255,0.04);
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .ctrl-btn:hover { color: var(--cyber-green); border-color: var(--cyber-green); }
+
+        /* ── ICON GRID (for slide showing icons) ─────────── */
+        #icon-grid {
+            position: absolute;
+            top: 12%; left: 50%;
+            transform: translateX(-50%);
+            display: flex; flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            width: 60%;
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        #icon-grid.visible { opacity: 1; }
+        .icon-item {
+            display: flex; flex-direction: column; align-items: center;
+            gap: 4px;
+        }
+        .icon-item img {
+            width: 42px; height: 42px;
+            filter: drop-shadow(0 0 8px rgba(0,255,136,0.4));
+        }
+        .icon-item span {
+            font-family: var(--mono);
+            font-size: 0.52em;
+            color: var(--text-dim);
+            text-align: center;
+        }
+
+        /* ── SCENE GRID (mini thumbnails) ────────────────── */
+        #scene-grid {
+            position: absolute;
+            top: 8%; left: 50%;
+            transform: translateX(-50%);
+            display: flex; flex-wrap: wrap;
+            gap: 4px;
+            justify-content: center;
+            width: 88%;
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.6s;
+            pointer-events: none;
+        }
+        #scene-grid.visible { opacity: 1; }
+        .scene-thumb {
+            width: 11%;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            border-radius: 3px;
+            border: 1px solid rgba(0,255,136,0.15);
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .scene-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .scene-thumb.lit {
+            border-color: var(--cyber-green);
+            box-shadow: 0 0 8px rgba(0,255,136,0.4);
+            transform: scale(1.06);
+        }
+
+        /* ── ROLE SPLIT PANEL ────────────────────────────── */
+        #role-panel {
+            position: absolute;
+            top: 8%; left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        #role-panel.visible { opacity: 1; }
+        .role-col {
+            background: rgba(10,14,23,0.88);
+            border-radius: 6px;
+            padding: 10px 14px;
+        }
+        .role-col.human { border: 1px solid rgba(0,255,136,0.3); }
+        .role-col.ai    { border: 1px solid rgba(0,170,255,0.3); }
+        .role-col h4 {
+            font-family: var(--mono);
+            font-size: 0.60em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            padding-bottom: 4px;
+        }
+        .role-col.human h4 { color: var(--cyber-green); border-bottom: 1px solid rgba(0,255,136,0.2); }
+        .role-col.ai    h4 { color: var(--cyber-blue);  border-bottom: 1px solid rgba(0,170,255,0.2); }
+        .role-item {
+            font-family: var(--sans);
+            font-size: 0.62em;
+            color: var(--text-dim);
+            margin-bottom: 3px;
+            padding-left: 10px;
+            position: relative;
+        }
+        .role-item::before {
+            content: '▸';
+            position: absolute; left: 0;
+            font-size: 0.8em;
+        }
+        .role-col.human .role-item::before { color: var(--cyber-green); }
+        .role-col.ai    .role-item::before { color: var(--cyber-blue); }
+
+        /* ── TYPEWRITER TEXT (cinematic caption) ─────────── */
+        #caption {
+            position: absolute;
+            top: 10%; left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 40;
+            width: 70%;
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
+        }
+        #caption.visible { opacity: 1; }
+        #caption-text {
+            font-family: var(--mono);
+            font-size: clamp(0.7em, 2vw, 1.1em);
+            color: var(--cyber-green);
+            text-shadow: 0 0 15px rgba(0,255,136,0.5);
+            line-height: 1.5;
+        }
+
+        /* ── AUDIO STATE ─────────────────────────────────── */
+        #audio-indicator {
+            position: absolute;
+            top: 38px; right: 10px;
+            font-family: var(--mono);
+            font-size: 0.55em;
+            color: var(--text-dim);
+            z-index: 80;
+            opacity: 0.6;
+        }
+
+        /* ── SLIDE FADE CONTAINER ────────────────────────── */
+        #slide-box { transition: opacity 0.5s ease; }
+        #slide-box.fade-out { opacity: 0; }
+
+        /* ── CINEMATIC LETTERBOX ─────────────────────────── */
+        #letterbox-top, #letterbox-bot {
+            position: absolute;
+            left: 0; right: 0;
+            height: 0;
+            background: #000;
+            z-index: 90;
+            transition: height 0.5s ease;
+            pointer-events: none;
+        }
+        #letterbox-top { top: 0; }
+        #letterbox-bot { bottom: 0; }
+        #letterbox-top.cinema, #letterbox-bot.cinema { height: 11%; }
+
+        /* ── IMAGE COMPARE (before/after) ────────────────── */
+        #compare-panel {
+            position: absolute;
+            top: 8%; left: 50%;
+            transform: translateX(-50%);
+            width: 84%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        #compare-panel.visible { opacity: 1; }
+        .compare-tile { position: relative; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+        .compare-tile img { width: 100%; height: auto; display: block; }
+        .compare-label {
+            position: absolute; bottom: 0; left: 0; right: 0;
+            background: rgba(10,14,23,0.85);
+            font-family: var(--mono);
+            font-size: 0.6em;
+            color: var(--cyber-green);
+            text-align: center;
+            padding: 4px;
+            letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0%,100% { box-shadow: 0 0 8px rgba(0,255,136,0.3); }
+            50%      { box-shadow: 0 0 24px rgba(0,255,136,0.7); }
+        }
+        .pulse { animation: pulse 2s infinite; }
+    </style>
+</head>
+<body>
+<div id="stage">
+  <div id="slide-box">
+
+    <!-- Background -->
+    <div id="bg-layer"><img id="bg-img" src="" alt=""></div>
+
+    <!-- Overlay layers -->
+    <div id="grain-layer"><img id="grain-img" src="" alt=""></div>
+    <div id="color-overlay"></div>
+    <div id="vignette"></div>
+    <div id="scanlines"></div>
+
+    <!-- Cinematic letterbox -->
+    <div id="letterbox-top"></div>
+    <div id="letterbox-bot"></div>
+    <div id="flash"></div>
+
+    <!-- HUD -->
+    <div id="hud-bar">
+        <div id="hud-title">CyberQuest: Hoe Het Gemaakt Werd</div>
+        <div id="hud-progress"><div id="hud-progress-fill" style="width:0%"></div></div>
+        <div id="hud-slide">slide 0 / 0</div>
+    </div>
+
+    <!-- Characters -->
+    <img id="char-ryan"     src="assets/images/characters/ryan_southpark.svg"  alt="Ryan">
+    <img id="char-narrator" src="assets/images/characters/eva_southpark.svg"   alt="Narrator">
+
+    <!-- Slide title overlay -->
+    <div id="slide-title">
+        <div class="label" id="st-label"></div>
+        <div class="main"  id="st-main"></div>
+        <div class="sub"   id="st-sub"></div>
+    </div>
+
+    <!-- Caption (top) -->
+    <div id="caption"><div id="caption-text"></div></div>
+
+    <!-- Panels -->
+    <div id="stats-panel">
+        <h4>📊 Project Metrics</h4>
+    </div>
+    <div id="commit-ticker">
+        <h4>git log</h4>
+    </div>
+    <div id="velocity-panel">
+        <h4>⚡ Commit Velocity</h4>
+    </div>
+    <div id="pdca-panel">
+        <div class="pdca-step" id="pdca-p"><div class="pdca-letter">P</div><div class="pdca-word">Plan</div></div>
+        <div class="pdca-step" id="pdca-d"><div class="pdca-letter">D</div><div class="pdca-word">Do</div></div>
+        <div class="pdca-step" id="pdca-c"><div class="pdca-letter">C</div><div class="pdca-word">Check</div></div>
+        <div class="pdca-step" id="pdca-a"><div class="pdca-letter">A</div><div class="pdca-word">Act</div></div>
+    </div>
+    <div id="role-panel">
+        <div class="role-col human">
+            <h4>👤 Rein (Mens)</h4>
+        </div>
+        <div class="role-col ai">
+            <h4>🤖 AI (Copilot)</h4>
+        </div>
+    </div>
+    <div id="icon-grid"></div>
+    <div id="scene-grid"></div>
+    <div id="compare-panel"></div>
+
+    <!-- Dialog box -->
+    <div id="dialog-box">
+        <div id="dialog-speaker">Ryan</div>
+        <div id="dialog-text"></div>
+        <div id="dialog-continue">▶ doorgaan</div>
+    </div>
+
+    <!-- Controls -->
+    <div id="controls">
+        <div class="ctrl-btn" id="btn-prev">◀ vorige</div>
+        <div class="ctrl-btn" id="btn-play">⏸ pauze</div>
+        <div class="ctrl-btn" id="btn-next">volgende ▶</div>
+        <div class="ctrl-btn" id="btn-restart">↺ opnieuw</div>
+    </div>
+
+    <div id="audio-indicator">🔊 voice actief</div>
+
+  </div><!-- /slide-box -->
+</div><!-- /stage -->
+
+<script>
+"use strict";
+/* ================================================================
+   CyberQuest Presentation Engine
+   Self-contained — uses only existing game assets
+   ================================================================ */
+
+// ── Voice System ──────────────────────────────────────────────────
+const Voice = {
+    synth: window.speechSynthesis || null,
+    voices: [],
+    enabled: true,
+    currentUtterance: null,
+
+    init() {
+        if (!this.synth) return;
+        const load = () => { this.voices = this.synth.getVoices(); };
+        load();
+        this.synth.onvoiceschanged = load;
+    },
+
+    pickVoice(prefs = [], lang = 'en-GB') {
+        for (const p of prefs) {
+            if (p === 'male' || p === 'female') continue;
+            const v = this.voices.find(v => v.name.includes(p));
+            if (v) return v;
+        }
+        const gender = prefs.find(p => p === 'male' || p === 'female');
+        return this.voices.find(v => v.lang.startsWith('en') &&
+            (!gender || v.name.toLowerCase().includes(gender))) || null;
+    },
+
+    stop() {
+        if (this.synth) this.synth.cancel();
+        this.currentUtterance = null;
+    },
+
+    speak(text, { pitch = 1, rate = 0.9, voicePreference = [], lang = 'en-GB', onEnd = null } = {}) {
+        if (!this.synth || !this.enabled) { if (onEnd) onEnd(); return; }
+        this.synth.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.pitch = pitch; u.rate = rate; u.lang = lang;
+        u.volume = 0.9;
+        const v = this.pickVoice(voicePreference, lang);
+        if (v) u.voice = v;
+        if (onEnd) u.onend = onEnd;
+        this.currentUtterance = u;
+        this.synth.speak(u);
+    }
+};
+
+// Character voice profiles
+const VOICES = {
+    Ryan:     { pitch: 0.75, rate: 0.95, lang:'en-GB', voicePreference:['Google UK English Male','Microsoft David','male'] },
+    Narrator: { pitch: 1.0,  rate: 0.80, lang:'en-GB', voicePreference:['Google UK English Female','Karen','Moira','female'] },
+};
+
+// ── Audio Engine ───────────────────────────────────────────────────
+const Audio = {
+    ctx: null,
+    master: null,
+    nodes: [],
+
+    init() {
+        try {
+            const AC = window.AudioContext || window.webkitAudioContext;
+            if (!AC) return;
+            this.ctx = new AC();
+            this.master = this.ctx.createGain();
+            this.master.gain.value = 0.18;
+            this.master.connect(this.ctx.destination);
+        } catch(e) {}
+    },
+
+    resume() { if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume(); },
+
+    playDrone(freq = 38, duration = 8) {
+        if (!this.ctx) return;
+        const ctx = this.ctx;
+        const g = ctx.createGain();
+        const f = ctx.createBiquadFilter();
+        f.type = 'lowpass'; f.frequency.value = 120;
+        g.gain.value = 0;
+        g.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 1.5);
+        g.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
+        const o1 = ctx.createOscillator(); o1.type = 'sawtooth'; o1.frequency.value = freq;
+        const o2 = ctx.createOscillator(); o2.type = 'sawtooth'; o2.frequency.value = freq + 1.5;
+        o1.connect(f); o2.connect(f); f.connect(g); g.connect(this.master);
+        o1.start(); o2.start();
+        o1.stop(ctx.currentTime + duration);
+        o2.stop(ctx.currentTime + duration);
+    },
+
+    playTick() {
+        if (!this.ctx) return;
+        const ctx = this.ctx;
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.type = 'square'; o.frequency.value = 800 + Math.random()*400;
+        g.gain.setValueAtTime(0.05, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
+        o.connect(g); g.connect(this.master);
+        o.start(); o.stop(ctx.currentTime + 0.05);
+    },
+
+    playChime() {
+        if (!this.ctx) return;
+        const ctx = this.ctx;
+        [523, 659, 784].forEach((freq, i) => {
+            const o = ctx.createOscillator(); const g = ctx.createGain();
+            o.type = 'sine'; o.frequency.value = freq;
+            g.gain.setValueAtTime(0, ctx.currentTime + i*0.15);
+            g.gain.linearRampToValueAtTime(0.3, ctx.currentTime + i*0.15 + 0.05);
+            g.gain.linearRampToValueAtTime(0, ctx.currentTime + i*0.15 + 0.8);
+            o.connect(g); g.connect(this.master);
+            o.start(ctx.currentTime + i*0.15);
+            o.stop(ctx.currentTime + i*0.15 + 1);
+        });
+    },
+
+    playImpact() {
+        if (!this.ctx) return;
+        const ctx = this.ctx;
+        const buf = ctx.createBuffer(1, ctx.sampleRate * 0.3, ctx.sampleRate);
+        const d = buf.getChannelData(0);
+        for (let i=0;i<d.length;i++) d[i] = (Math.random()*2-1)*Math.exp(-i/3000);
+        const src = ctx.createBufferSource(); src.buffer = buf;
+        const g = ctx.createGain(); g.gain.value = 0.6;
+        src.connect(g); g.connect(this.master);
+        src.start();
+    }
+};
+
+// ── DOM helpers ────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+function show(el) { if(typeof el==='string') el=$(el); el && el.classList.add('visible'); }
+function hide(el) { if(typeof el==='string') el=$(el); el && el.classList.remove('visible'); }
+function hideAll() {
+    ['slide-title','dialog-box','stats-panel','commit-ticker','velocity-panel',
+     'pdca-panel','role-panel','icon-grid','scene-grid','compare-panel','caption']
+     .forEach(id => hide(id));
+    $('char-ryan').classList.remove('visible','talking');
+    $('char-narrator').classList.remove('visible','talking');
+    $('letterbox-top').classList.remove('cinema');
+    $('letterbox-bot').classList.remove('cinema');
+    $('color-overlay').style.opacity = '0';
+    $('grain-layer').style.opacity = '0';
+}
+
+function setKB(mode) {
+    const el = $('bg-img');
+    el.className = '';
+    if (mode) requestAnimationFrame(() => el.classList.add(mode));
+}
+
+function flash() {
+    const f = $('flash');
+    f.style.opacity = '0.6';
+    setTimeout(() => f.style.opacity = '0', 200);
+}
+
+// ── Typewriter ─────────────────────────────────────────────────────
+function typewriter(el, text, msPerChar = 30, cb) {
+    el.textContent = '';
+    let i = 0;
+    const tick = () => {
+        if (i < text.length) {
+            el.textContent += text[i++];
+            Audio.playTick();
+            setTimeout(tick, msPerChar + Math.random()*10);
+        } else {
+            if (cb) cb();
+        }
+    };
+    tick();
+}
+
+// ── Scene data ─────────────────────────────────────────────────────
+const ALL_SCENES = [
+    'intro','home','livingroom','garden','garden_back','bedroom',
+    'mancave','laptop','airgapped_laptop','secure_phone','sstv_terminal',
+    'planboard','sdr_bench','klooster','car_discovery','usb_discovery',
+    'driving','driving_day','regional_map','lofar','astron','dwingeloo',
+    'planetenpad','wsrt_parking','westerbork_memorial',
+    'hackerspace','hackerspace_classroom',
+    'drone_hunt','laser_corridor',
+    'facility','facility_interior','facility_server',
+    'tvdocumentary','tvnews',
+    'long_night','morning_after','return_to_ies',
+    'videocall','debrief','epilogue','credits',
+];
+
+// ── Slides definition ──────────────────────────────────────────────
+// Each slide: { bg, kb, grain, color, cinema, title, dialog[], panels[], duration }
+// dialog[]: { speaker, text, showRyan, showNarrator }
+// panels: array of setup functions
+
+const SLIDES = [
+
+    // ─── 0: OPENING TITLE ───────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/intro.svg',
+        grain: 'assets/images/overlayimg/grain-noise-intro.svg',
+        kb: 'kb-zoom-in',
+        cinema: true,
+        color: { bg: 'rgba(0,255,136,0.04)', opacity: '1' },
+        titleCard: { label: 'CyberQuest: Operation ZERFALL', main: 'Hoe Het Gemaakt Werd', sub: '35 dagen · 143 commits · 44.016 regels code' },
+        duration: 7000,
+    },
+
+    // ─── 1: RYAN INTRO ──────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/home.svg',
+        kb: 'kb-pan-r',
+        cinema: false,
+        dialog: [
+            { speaker:'Ryan', text:"Hey. Ik ben Ryan Weylant. 42 jaar, Compascuum, Drenthe. Hacker. Radio-amateur. En tegenwoordig ook... game character.", showRyan:true },
+            { speaker:'Ryan', text:"Dit spel — CyberQuest — heeft Rein gemaakt. Met een flinke dosis AI. Ik ga je laten zien hoe dat werkte.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 2: DE WERELD OP PAPIER ─────────────────────────────────
+    {
+        bg: 'assets/images/scenes/mancave.svg',
+        kb: 'kb-zoom-out',
+        titleCard: { label: 'Fase 0 — Vóór de code', main: 'De Visie op Papier', sub: 'STORY.md · RULES.md · SCREENPLAY.md · STORYBOARD.md' },
+        cinema: true,
+        duration: 4500,
+    },
+
+    // ─── 3: REIN SCHRIJFT ───────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/laptop.svg',
+        kb: 'kb-pan-l',
+        dialog: [
+            { speaker:'Ryan', text:"Rein schreef eerst alles op. Mijn karakter. Het verhaal. Elke scène. Alle technische details. HackRF, Flipper Zero, LOFAR, Meshtastic.", showRyan:true },
+            { speaker:'Narrator', text:"STORY.md was het architectuurcontract. RULES.md legde de PDCA-cyclus vast. SCREENPLAY.md gaf elk personage zijn eigen stem.", showNarrator:true },
+            { speaker:'Ryan', text:"Zonder die documenten kon de AI niets. Met die documenten kon de AI... alles.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 4: BIG BANG ────────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/intro.svg',
+        grain: 'assets/images/overlayimg/grain-noise-intro.svg',
+        kb: 'kb-zoom-in',
+        cinema: true,
+        color: { bg: 'rgba(0,100,255,0.08)', opacity: '1' },
+        titleCard: { label: '13 februari 2026 — 12:56', main: 'First Commit', sub: '79 bestanden · 25.246 regels · in één sessie' },
+        duration: 5000,
+        onEnter() {
+            Audio.playImpact();
+            flash();
+        }
+    },
+
+    // ─── 5: COMMIT STATS ────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/planboard.svg',
+        kb: 'kb-pan-r',
+        panels: ['stats'],
+        dialog: [
+            { speaker:'Narrator', text:"In één AI-generatiesessie: een volledige game engine, 14 scènes, 20 SVG-achtergronden, 12 South Park personages, en alle puzzels.", showNarrator:true },
+            { speaker:'Ryan', text:"Dat is de kracht van goede voorbereiding. Rein had zijn huiswerk gedaan. De AI deed de rest.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 6: DE SCÈNES — THUIS ───────────────────────────────────
+    {
+        bg: 'assets/images/scenes/home.svg',
+        kb: 'kb-zoom-in',
+        caption: '🏠 Thuis — Compascuum, Drenthe',
+        dialog: [
+            { speaker:'Ryan', text:"Hier begint het. Mijn farmhouse. Koffie. De honden. Max op de bank. En dan... een vreemd signaal op mijn SDR.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 7: LIVINGROOM + BEDROOM ────────────────────────────────
+    {
+        bg: 'assets/images/scenes/livingroom.svg',
+        kb: 'kb-pan-l',
+        caption: '🛋️ Woonkamer · 🛏️ Slaapkamer',
+        dialog: [
+            { speaker:'Narrator', text:"De woonkamer heeft gesynthetiseerde Web Audio: een knetterend haardvuur, snurkende honden, en zelfs hondenwinden.", showNarrator:true },
+            { speaker:'Ryan', text:"Dat laatste was niet mijn idee.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 8: TUIN ────────────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/garden.svg',
+        kb: 'kb-zoom-out',
+        caption: '🌿 Tuin — voor en achter',
+        dialog: [
+            { speaker:'Ryan', text:"Gewoon een Nederlandse boerderijtuin. Maar de animatie van het kanaaltafereel door het raam — dat is Drenthe ten voeten uit.", showRyan:true },
+            { speaker:'Narrator', text:"Rein specificeerde het detail. AI bouwde een geanimeerde SVG-scène met kanaalwater, bomen en wolken.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 9: MANCAVE → LAPTOP → AIRGAPPED ────────────────────────
+    {
+        bg: 'assets/images/scenes/mancave.svg',
+        kb: 'kb-pan-r',
+        caption: '💻 Mancave · Laptop · Airgapped Laptop',
+        dialog: [
+            { speaker:'Ryan', text:"Hier werk ik. SDR-bench, oscilloscoop, Raspberry Pi. Het zenuwcentrum van het onderzoek.", showRyan:true },
+            { speaker:'Narrator', text:"Op 1 maart promoveerde AI de laptop, SSTV terminal en airgapped laptop elk naar eigen Hollywood-stijl forensische scènes.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 10: SDR BENCH + SECURE PHONE + SSTV ────────────────────
+    {
+        bg: 'assets/images/scenes/sdr_bench.svg',
+        kb: 'kb-zoom-in',
+        caption: '📡 SDR Bench · 📱 Secure Phone · 📺 SSTV Terminal',
+        dialog: [
+            { speaker:'Ryan', text:"Mijn HackRF One. De Flipper Zero. En dan opeens — een SSTV-signaal op 14.230 MHz. Eva.", showRyan:true },
+            { speaker:'Narrator', text:"Drie aparte scènes, elk met eigen SVG-achtergrond, puzzels en Movie Mode accessibility pad.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 11: KLOOSTER ───────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/klooster.svg',
+        kb: 'kb-pan-l',
+        caption: '⛪ Ter Apel Klooster',
+        dialog: [
+            { speaker:'Ryan', text:"Eva's dode briefwisseling lag hier. Niet bij het autoportier — Rein besloot dat de stenen bank dramatischer was.", showRyan:true },
+            { speaker:'Narrator', text:"v0.7.0-alpha: USB dead-drop geherplaatst naar kloosterbank. Volledige SVG-herdesign, gecorrigeerde dialogenpaden.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 12: CAR DISCOVERY + USB DISCOVERY ──────────────────────
+    {
+        bg: 'assets/images/scenes/car_discovery.svg',
+        kb: 'kb-zoom-in',
+        caption: '🚗 Auto · 💾 USB Ontdekking',
+        cinema: true,
+        dialog: [
+            { speaker:'Narrator', text:"Hollywood-stijl cinematische scènes. Multi-shot sequenties: tension build-up, ontdekkingsmoment, technische analyse.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 13: DRIVING SCENES ─────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/driving_day.svg',
+        kb: 'kb-pan-r',
+        caption: '🚙 Rijden — nacht en dag · 🗺️ Regionale kaart',
+        dialog: [
+            { speaker:'Ryan', text:"Drenthe is groot. En leeg. Ik rijd veel in dit spel.", showRyan:true },
+            { speaker:'Narrator', text:"De driving_day scène speelt automatisch RTV Drenthe regionaal nieuws af tijdens de rit. Rein besloot: geen NOS Journaal, maar echt Drenthe.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 14: LOFAR ──────────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/lofar.svg',
+        kb: 'kb-zoom-in',
+        caption: '📡 LOFAR Superterp — Exloo',
+        dialog: [
+            { speaker:'Narrator', text:"638 regels SVG-vectorkunstwerk. Het LOFAR Superterp radiotelescoop complex, nauwkeurig nagebootst. Volledig door AI gegenereerd in één commit.", showNarrator:true },
+            { speaker:'Ryan', text:"Ik weet dat het klopt. Ik ben hier geweest.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 15: ASTRON + DWINGELOO ─────────────────────────────────
+    {
+        bg: 'assets/images/scenes/astron.svg',
+        kb: 'kb-pan-l',
+        caption: '🔭 ASTRON · 📡 Dwingeloo',
+        dialog: [
+            { speaker:'Narrator', text:"ASTRON heeft een equipment puzzle: Ryan moet de juiste meetapparatuur instellen. Movie Mode lost dit automatisch op.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 16: PLANETENPAD + WSRT + WESTERBORK ─────────────────────
+    {
+        bg: 'assets/images/scenes/planetenpad.svg',
+        kb: 'kb-zoom-in',
+        caption: '🌍 Planetenpad · 🔭 WSRT · 🕍 Westerbork Memorial',
+        dialog: [
+            { speaker:'Ryan', text:"Het Planetenpad is een echte wandelroute bij de WSRT. Elke planeet op schaal. Westerbork... dat is zwaarder.", showRyan:true },
+            { speaker:'Narrator', text:"Westerbork bevat een Flipper Zero BLE-puzzle. Rein voegde dit toe als narratief — technologie en herinnering verweven.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 17: WSRT PARKING ───────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/wsrt_parking.svg',
+        kb: 'kb-pan-r',
+        caption: '🚗 WSRT Parkeerplaats — Missie Hub',
+        dialog: [
+            { speaker:'Narrator', text:"De WSRT parkeerplaats is de centrale hub na de eerste helft van het spel. Rein kan hier alle bezochte locaties herbezoeken vanuit de Volvo.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 18: HACKERSPACE ────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/hackerspace.svg',
+        kb: 'kb-zoom-out',
+        caption: '💻 Hackerspace Drenthe · 🏫 Classroom',
+        dialog: [
+            { speaker:'Ryan', text:"Mijn mensen. Dennis, Sophie, Marco, Kim, Joris — allemaal echte Drenthse hackers. Nou ja... fictional.", showRyan:true },
+            { speaker:'Narrator', text:"Hollywood-stijl dynamische NPCs: bewegende sprites, real-time audio, VFX. Elke NPC heeft een eigen stemachtig TTS-profiel.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 19: DRONE HUNT ─────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/drone_hunt.svg',
+        grain: 'assets/images/overlayimg/drone-hunt-fg-overlay.svg',
+        kb: 'kb-zoom-in',
+        caption: '🚁 Drone Hunt — GPS Spoofing',
+        dialog: [
+            { speaker:'Narrator', text:"GPS-spoof puzzels. Drones als foreground sprites met crash-animaties. Web Audio geluidseffecten bij neerstorten.", showNarrator:true },
+            { speaker:'Ryan', text:"Movie Mode vuurt automatisch de juiste GPS-coördinaten in. Handig als je lui bent.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 20: LASER CORRIDOR ─────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/laser_corridor.svg',
+        grain: 'assets/images/overlayimg/laser-corridor-overlay.svg',
+        kb: 'kb-pan-l',
+        cinema: true,
+        caption: '🔴 Laser Corridor',
+        dialog: [
+            { speaker:'Narrator', text:"Dynamische foreground overlays voor laserstralen, sensoren en het deurslot. Web Audio synthesizeert de elektronische geluiden.", showNarrator:true },
+            { speaker:'Ryan', text:"Drie puzzels. Flipper Zero, HackRF, en timing. Movie Mode lost ze automatisch op. Ik heb dat niet nodig.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 21: FACILITY ────────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/facility.svg',
+        kb: 'kb-zoom-in',
+        caption: '🏭 De Facility — Steckerdoser Heide',
+        dialog: [
+            { speaker:'Ryan', text:"Het eindpunt. De Steckerdoser Heide facility in Duitsland. Waar Project Echo geboren werd.", showRyan:true },
+            { speaker:'Narrator', text:"Drie scènes: exterieur, interieur, en de serverruimte. Elk met eigen puzzels en dramatische cinematics.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 22: FACILITY SERVER + PLANBOARD ─────────────────────────
+    {
+        bg: 'assets/images/scenes/facility_server.svg',
+        kb: 'kb-pan-r',
+        caption: '💾 Server Room · 📌 Planboard',
+        dialog: [
+            { speaker:'Narrator', text:"Het planboard toont Ryan's onderzoek: dossiers, foto's, SSTV-afbeelding, USB-bewijs, wapenscchema's — alles als overlay tiles.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 23: TV + VIDEOCALL ──────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/tvdocumentary.svg',
+        grain: 'assets/images/overlayimg/grain-noise-tvdoc.svg',
+        kb: 'kb-zoom-out',
+        caption: '📺 TV Documentaire · 📡 RTV Drenthe Nieuws · 📹 Videocall',
+        dialog: [
+            { speaker:'Narrator', text:"De TV documentaire speelt automatisch door met gesynthetiseerde voice-overs voor David Prinsloo, Cees Bassa en Jaap Haartsen.", showNarrator:true },
+            { speaker:'Ryan', text:"Als je Marlies Bakker ziet — de 67-jarige vrouw, slachtoffer van Project Echo. Dát was Rein's beslissing. Een menselijk gezicht.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 24: VIDEOCALL + DEBRIEF ─────────────────────────────────
+    {
+        bg: 'assets/images/scenes/videocall.svg',
+        kb: 'kb-pan-l',
+        caption: '📹 Videocall · 📋 Debrief · 🏠 Return Home',
+        dialog: [
+            { speaker:'Ryan', text:"Na de facility. Chris Kubecka debrieft ons. Dan rijden we naar huis. Max staat er. De honden ook.", showRyan:true },
+            { speaker:'Narrator', text:"Return_to_ies is een volledig cinematische thuiskomst-sequentie. Nu return_to_ies geheten — was Ies, is Max, na Rein's naambeslissing op 1 maart.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 25: LONG NIGHT + MORNING AFTER ──────────────────────────
+    {
+        bg: 'assets/images/scenes/long_night.svg',
+        kb: 'kb-zoom-in',
+        caption: '🌙 Long Night · ☕ Morning After',
+        dialog: [
+            { speaker:'Ryan', text:"Een lange nacht van analyse. En dan... koffie. Altijd koffie.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 26: EPILOGUE + CREDITS ──────────────────────────────────
+    {
+        bg: 'assets/images/scenes/epilogue.svg',
+        kb: 'kb-zoom-out',
+        caption: '🎬 Epilogue · 🙏 Credits',
+        cinema: true,
+        dialog: [
+            { speaker:'Narrator', text:"De epiloog en credits ronden het verhaal af. De credits bevatten een grain-noise overlay voor filmisch effect.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 27: ALLE SCÈNES GRID ────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/planboard.svg',
+        kb: 'kb-pan-r',
+        panels: ['scene-grid'],
+        dialog: [
+            { speaker:'Narrator', text:"42 scènes. 42 SVG-achtergronden. Elk een eigen wereld. Begin: 13 februari, 14 scènes. Eind: 20 maart, 42 scènes.", showNarrator:true },
+            { speaker:'Ryan', text:"Elke scène heeft z'n eigen JavaScript, eigen hotspots, eigen quest-logica, eigen Movie Mode accessibility pad.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 28: COMMIT VELOCITY ─────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/laptop.svg',
+        kb: 'kb-zoom-in',
+        panels: ['velocity'],
+        dialog: [
+            { speaker:'Narrator', text:"De velocity grafiek vertelt het verhaal. Burst-and-stabilise: intense sprints gevolgd door evaluatiepauzes.", showNarrator:true },
+            { speaker:'Ryan', text:"42 commits op één dag — 1 maart. Dat was de Movie Mode Marathon. 14 uur doorwerken.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 29: PDCA CYCLUS ─────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/mancave.svg',
+        kb: 'kb-pan-l',
+        panels: ['pdca'],
+        dialog: [
+            { speaker:'Ryan', text:"Rein's RULES.md definieerde de PDCA-cyclus als fundamentele methode. Plan, Do, Check, Act.", showRyan:true },
+            { speaker:'Narrator', text:"Op macro-schaal: founding docs → AI bootstrap → testplay → bugfixes. Op micro-schaal: elke 'fix:' commit IS een ACT-stap.", showNarrator:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 30: ROLVERDELING ────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/hackerspace.svg',
+        kb: 'kb-zoom-out',
+        panels: ['roles'],
+        dialog: [
+            { speaker:'Narrator', text:"De fundamentele rolverdeling: Rein bepaalt WAT er bestaat en WAAROM. AI bepaalt HOE het technisch gerealiseerd wordt.", showNarrator:true },
+            { speaker:'Ryan', text:"Rein schreef geen JavaScript. Maar hij schreef alles wat ertoe deed.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 31: MOVIE MODE ──────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/secure_phone.svg',
+        kb: 'kb-pan-r',
+        caption: '🎬 Movie Mode — Accessibility Runner',
+        dialog: [
+            { speaker:'Narrator', text:"Movie Mode: het spel speelt zichzelf automatisch door. Elke scène heeft een accessibilityPath[] array. Puzzels worden auto-opgelost.", showNarrator:true },
+            { speaker:'Ryan', text:"Klik op 🎬 Interactive Movie op het startscherm. Pak koffie. Kijk toe. Duurt ongeveer een uur.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 32: SECURITY + PWA ──────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/facility_server.svg',
+        kb: 'kb-zoom-in',
+        caption: '🔒 Security Hardening · 📱 PWA',
+        dialog: [
+            { speaker:'Narrator', text:"v1.2: Content Security Policy, inline script extractie, PWA manifest, Open Graph meta-tags, CC BY-SA 4.0 licentie, privacy statement.", showNarrator:true },
+            { speaker:'Ryan', text:"Alles netjes. Geen XSS. Geen inline scripts. Rein is securitybewust. Ik ook.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 33: DEPLOY PIPELINE ─────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/laptop.svg',
+        kb: 'kb-pan-l',
+        caption: '🚀 GitHub Webhook Auto-Deploy',
+        dialog: [
+            { speaker:'Narrator', text:"Push naar main → GitHub webhook → Python listener op port 9000 → git pull → live op ryanweylant.tech. Volledig geautomatiseerd.", showNarrator:true },
+            { speaker:'Ryan', text:"Dat is het mooie. Rein committet, en 30 seconden later is het overal.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 34: CONCLUSIE ────────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/home.svg',
+        kb: 'kb-zoom-out',
+        titleCard: { label: 'Conclusie', main: 'Mens + AI = Meer dan de som', sub: '35 dagen · 143 commits · van idee naar publiek spel' },
+        cinema: true,
+        duration: 5000,
+    },
+
+    // ─── 35: LAATSTE WOORD RYAN ───────────────────────────────────
+    {
+        bg: 'assets/images/scenes/epilogue.svg',
+        grain: 'assets/images/overlayimg/grain-noise-credits.svg',
+        kb: 'kb-zoom-in',
+        cinema: true,
+        dialog: [
+            { speaker:'Narrator', text:"De kwaliteit van de AI-output is direct evenredig aan de kwaliteit van de menselijke voorbereiding. STORY.md was het contract. RULES.md was het proces.", showNarrator:true },
+            { speaker:'Ryan', text:"Mijn naam is Ryan Weylant. Ik void warranties. Rein maakte me. En nu speel jij me.", showRyan:true },
+            { speaker:'Ryan', text:"Ga het spelen. Op ryanweylant.tech. Of open index.html.", showRyan:true },
+        ],
+        duration: 0,
+    },
+
+    // ─── 36: EINDE ────────────────────────────────────────────────
+    {
+        bg: 'assets/images/scenes/credits.svg',
+        grain: 'assets/images/overlayimg/grain-noise-credits.svg',
+        kb: 'kb-zoom-out',
+        cinema: true,
+        color: { bg: 'rgba(0,255,136,0.06)', opacity: '1' },
+        titleCard: { label: 'CyberQuest: Operation ZERFALL', main: 'Speel het zelf', sub: 'ryanweylant.tech  ·  v0.7.0-alpha  ·  CC BY-SA 4.0' },
+        duration: 999999,
+    },
+
+];
+
+// ── Velocity data ──────────────────────────────────────────────────
+const VELOCITY = [
+    { date:'feb 13', count:2, peak:42 },
+    { date:'feb 14', count:2, peak:42 },
+    { date:'feb 15', count:2, peak:42 },
+    { date:'feb 19', count:1, peak:42 },
+    { date:'feb 20', count:3, peak:42 },
+    { date:'feb 22', count:2, peak:42 },
+    { date:'feb 23', count:1, peak:42 },
+    { date:'feb 24', count:1, peak:42 },
+    { date:'feb 25', count:2, peak:42 },
+    { date:'feb 26', count:19,peak:42 },
+    { date:'feb 27', count:1, peak:42 },
+    { date:'feb 28', count:26,peak:42 },
+    { date:'mar 01', count:42,peak:42 },
+    { date:'mar 06', count:25,peak:42 },
+    { date:'mar 07', count:7, peak:42 },
+    { date:'mar 08', count:4, peak:42 },
+    { date:'mar 16', count:1, peak:42 },
+    { date:'mar 18', count:1, peak:42 },
+    { date:'mar 20', count:1, peak:42 },
+];
+
+// ── Presentation Engine ────────────────────────────────────────────
+const Pres = {
+    cur: 0,
+    dialogIdx: 0,
+    running: false,
+    paused: false,
+    autoTimer: null,
+    dialogActive: false,
+    dialogLines: [],
+
+    init() {
+        Voice.init();
+        Audio.init();
+        this.bindControls();
+        this.goTo(0);
+    },
+
+    bindControls() {
+        $('btn-next').onclick    = () => { Audio.resume(); this.next(); };
+        $('btn-prev').onclick    = () => { Audio.resume(); this.prev(); };
+        $('btn-play').onclick    = () => { Audio.resume(); this.togglePause(); };
+        $('btn-restart').onclick = () => { Audio.resume(); this.goTo(0); };
+        $('dialog-box').onclick  = () => { Audio.resume(); this.advanceDialog(); };
+        $('dialog-continue').onclick = e => { e.stopPropagation(); Audio.resume(); this.advanceDialog(); };
+        document.addEventListener('keydown', e => {
+            Audio.resume();
+            if (e.key === 'ArrowRight' || e.key === ' ') this.next();
+            else if (e.key === 'ArrowLeft') this.prev();
+            else if (e.key === 'p' || e.key === 'P') this.togglePause();
+        });
+    },
+
+    togglePause() {
+        this.paused = !this.paused;
+        $('btn-play').textContent = this.paused ? '▶ doorgaan' : '⏸ pauze';
+        if (!this.paused) this.scheduleAuto();
+        else { clearTimeout(this.autoTimer); Voice.stop(); }
+    },
+
+    goTo(idx) {
+        if (idx < 0 || idx >= SLIDES.length) return;
+        clearTimeout(this.autoTimer);
+        Voice.stop();
+        $('slide-box').classList.add('fade-out');
+        setTimeout(() => {
+            this.cur = idx;
+            this.renderSlide(SLIDES[idx]);
+            $('slide-box').classList.remove('fade-out');
+        }, 400);
+    },
+
+    next() {
+        if (this.dialogActive) { this.advanceDialog(); return; }
+        if (this.cur < SLIDES.length - 1) this.goTo(this.cur + 1);
+    },
+
+    prev() {
+        clearTimeout(this.autoTimer);
+        Voice.stop();
+        if (this.cur > 0) this.goTo(this.cur - 1);
+    },
+
+    renderSlide(s) {
+        hideAll();
+        this.dialogLines = s.dialog || [];
+        this.dialogIdx = 0;
+        this.dialogActive = false;
+
+        // HUD
+        const pct = Math.round((this.cur / (SLIDES.length-1)) * 100);
+        $('hud-progress-fill').style.width = pct + '%';
+        $('hud-slide').textContent = `slide ${this.cur+1} / ${SLIDES.length}`;
+
+        // Background
+        if (s.bg) {
+            const img = $('bg-img');
+            img.src = s.bg;
+            setKB(s.kb || null);
+        }
+
+        // Grain overlay
+        if (s.grain) {
+            $('grain-img').src = s.grain;
+            $('grain-layer').style.opacity = '0.5';
+        }
+
+        // Color tint
+        if (s.color) {
+            $('color-overlay').style.background = s.color.bg;
+            $('color-overlay').style.opacity = s.color.opacity;
+        }
+
+        // Letterbox
+        if (s.cinema) {
+            $('letterbox-top').classList.add('cinema');
+            $('letterbox-bot').classList.add('cinema');
+        }
+
+        // Caption
+        if (s.caption) {
+            $('caption-text').textContent = s.caption;
+            show('caption');
+        }
+
+        // onEnter hook
+        if (s.onEnter) s.onEnter();
+
+        // Title card
+        if (s.titleCard) {
+            $('st-label').textContent = s.titleCard.label || '';
+            $('st-main').textContent  = s.titleCard.main  || '';
+            $('st-sub').textContent   = s.titleCard.sub   || '';
+            show('slide-title');
+            Audio.playChime();
+        }
+
+        // Panels
+        const panels = s.panels || [];
+        if (panels.includes('stats'))      this.renderStats();
+        if (panels.includes('velocity'))   this.renderVelocity();
+        if (panels.includes('pdca'))       this.renderPDCA();
+        if (panels.includes('roles'))      this.renderRoles();
+        if (panels.includes('scene-grid')) this.renderSceneGrid();
+
+        // Start dialog or auto-advance
+        if (this.dialogLines.length > 0) {
+            setTimeout(() => this.startDialog(), s.titleCard ? 3000 : 800);
+        } else {
+            this.scheduleAuto(s.duration || 5000);
+        }
+    },
+
+    startDialog() {
+        this.dialogActive = true;
+        this.dialogIdx = 0;
+        this.showDialogLine();
+    },
+
+    showDialogLine() {
+        if (this.dialogIdx >= this.dialogLines.length) {
+            this.endDialog(); return;
+        }
+        const line = this.dialogLines[this.dialogIdx];
+        const db = $('dialog-box');
+        const sp = $('dialog-speaker');
+        const dt = $('dialog-text');
+        const dc = $('dialog-continue');
+
+        sp.textContent = line.speaker;
+        sp.className = line.speaker === 'Narrator' ? 'narrator-color' : '';
+        dt.textContent = '';
+        dc.classList.remove('visible');
+        show('dialog-box');
+
+        // Character visibility
+        if (line.showRyan) {
+            $('char-ryan').classList.add('visible');
+            $('char-ryan').classList.add('talking');
+            $('char-narrator').classList.remove('talking');
+        } else {
+            $('char-ryan').classList.remove('talking');
+        }
+        if (line.showNarrator) {
+            $('char-narrator').classList.add('visible');
+            $('char-narrator').classList.add('talking');
+            $('char-ryan').classList.remove('talking');
+        } else {
+            $('char-narrator').classList.remove('talking');
+        }
+
+        // Typewrite then speak
+        const text = line.text;
+        const profile = VOICES[line.speaker] || VOICES.Narrator;
+
+        Voice.speak(text, {
+            ...profile,
+            onEnd: () => {
+                $('char-ryan').classList.remove('talking');
+                $('char-narrator').classList.remove('talking');
+            }
+        });
+
+        typewriter(dt, text, 28, () => {
+            dc.classList.add('visible');
+            // Auto-advance after reading time
+            const readMs = Math.max(2000, text.length * 55);
+            this.autoTimer = setTimeout(() => this.advanceDialog(), readMs);
+        });
+    },
+
+    advanceDialog() {
+        clearTimeout(this.autoTimer);
+        Voice.stop();
+        $('char-ryan').classList.remove('talking');
+        $('char-narrator').classList.remove('talking');
+        this.dialogIdx++;
+        if (this.dialogIdx < this.dialogLines.length) {
+            this.showDialogLine();
+        } else {
+            this.endDialog();
+        }
+    },
+
+    endDialog() {
+        this.dialogActive = false;
+        $('char-ryan').classList.remove('talking');
+        $('char-narrator').classList.remove('talking');
+        hide('dialog-box');
+        const s = SLIDES[this.cur];
+        this.scheduleAuto(s.duration || 4000);
+    },
+
+    scheduleAuto(ms = 4000) {
+        clearTimeout(this.autoTimer);
+        if (this.paused) return;
+        this.autoTimer = setTimeout(() => {
+            if (this.cur < SLIDES.length - 1) this.goTo(this.cur + 1);
+        }, ms);
+    },
+
+    // ── Panel renderers ──────────────────────────────────────────
+    renderStats() {
+        const p = $('stats-panel');
+        p.innerHTML = `<h4>📊 Project Metrics</h4>
+        <div class="stat-row"><span>Eerste commit</span><span>13 feb 2026</span></div>
+        <div class="stat-row"><span>Laatste commit</span><span>20 mrt 2026</span></div>
+        <div class="stat-row"><span>Actieve dagen</span><span>19 dagen</span></div>
+        <div class="stat-row"><span>Totale commits</span><span>143</span></div>
+        <div class="stat-row"><span>Bestanden (start)</span><span>79 files</span></div>
+        <div class="stat-row"><span>Regels (start)</span><span>25.246</span></div>
+        <div class="stat-row"><span>Regels JS (nu)</span><span>44.016</span></div>
+        <div class="stat-row"><span>Scènes</span><span>42</span></div>
+        <div class="stat-row"><span>game.js</span><span>4.078 regels</span></div>
+        <div class="stat-row"><span>styles.css</span><span>2.457 regels</span></div>`;
+        show(p);
+    },
+
+    renderVelocity() {
+        const p = $('velocity-panel');
+        let html = `<h4>⚡ Commit Velocity (commits per dag)</h4>`;
+        const max = 42;
+        VELOCITY.forEach(v => {
+            const w = Math.round((v.count / max) * 100);
+            const highlight = v.count >= 19 ? 'var(--cyber-red)' : 'var(--cyber-gold)';
+            html += `<div class="vel-row">
+                <span class="vel-date">${v.date}</span>
+                <span class="vel-bar-wrap"><span class="vel-bar" style="width:0%;background:${highlight}" data-w="${w}"></span></span>
+                <span class="vel-count">${v.count}</span>
+            </div>`;
+        });
+        p.innerHTML = html;
+        show(p);
+        // Animate bars after paint
+        requestAnimationFrame(() => {
+            p.querySelectorAll('.vel-bar').forEach(b => {
+                b.style.width = b.dataset.w + '%';
+            });
+        });
+    },
+
+    renderPDCA() {
+        const p = $('pdca-panel');
+        show(p);
+        const steps = ['pdca-p','pdca-d','pdca-c','pdca-a'];
+        let i = 0;
+        const cycle = () => {
+            steps.forEach(id => $(id).classList.remove('active'));
+            $(steps[i]).classList.add('active');
+            i = (i + 1) % steps.length;
+        };
+        cycle();
+        const id = setInterval(cycle, 1200);
+        // Stop after 20s
+        setTimeout(() => clearInterval(id), 20000);
+    },
+
+    renderRoles() {
+        const p = $('role-panel');
+        p.innerHTML = `
+        <div class="role-col human">
+            <h4>👤 Rein (Mens)</h4>
+            <div class="role-item">Volledige verhaalwereld bedacht</div>
+            <div class="role-item">Founding documents geschreven</div>
+            <div class="role-item">Alle narratieve besluiten</div>
+            <div class="role-item">Ryan's leeftijd: 42 (3x gecorrigeerd)</div>
+            <div class="role-item">USB: bank, niet autoportier</div>
+            <div class="role-item">Ies → Max (naambeslissing)</div>
+            <div class="role-item">RTV Drenthe, niet NOS</div>
+            <div class="role-item">Kwaliteitscontrole door spelen</div>
+        </div>
+        <div class="role-col ai">
+            <h4>🤖 AI (Copilot)</h4>
+            <div class="role-item">79 bestanden in één sessie</div>
+            <div class="role-item">Volledige game engine</div>
+            <div class="role-item">42 scène-implementaties</div>
+            <div class="role-item">42 SVG-achtergronden</div>
+            <div class="role-item">Hollywood cinematics</div>
+            <div class="role-item">Movie Mode accessibility runner</div>
+            <div class="role-item">20+ Web Audio soundscapes</div>
+            <div class="role-item">Security hardening + PWA</div>
+        </div>`;
+        show(p);
+    },
+
+    renderSceneGrid() {
+        const g = $('scene-grid');
+        g.innerHTML = '';
+        ALL_SCENES.forEach((s, i) => {
+            const div = document.createElement('div');
+            div.className = 'scene-thumb';
+            div.id = `thumb-${s}`;
+            const img = document.createElement('img');
+            img.src = `assets/images/scenes/${s}.svg`;
+            img.alt = s;
+            img.onerror = () => { div.style.background = 'rgba(0,255,136,0.05)'; };
+            div.appendChild(img);
+            g.appendChild(div);
+        });
+        show(g);
+        // Light them up one by one
+        let i = 0;
+        const lit = setInterval(() => {
+            if (i >= ALL_SCENES.length) { clearInterval(lit); return; }
+            const el = g.querySelector(`#thumb-${ALL_SCENES[i]}`);
+            if (el) {
+                el.classList.add('lit');
+                setTimeout(() => el.classList.remove('lit'), 600);
+            }
+            i++;
+        }, 120);
+    },
+};
+
+// Start
+window.addEventListener('load', () => {
+    Pres.init();
+    // Show initial audio indicator
+    setTimeout(() => {
+        $('audio-indicator').textContent = Voice.synth ? '🔊 TTS actief' : '📖 tekst modus';
+    }, 2000);
+});
+</script>
+</body>
+</html>
