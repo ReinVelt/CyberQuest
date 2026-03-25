@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CyberQuest: Operatie ZERFALL — Over het spel</title>
+<title>CyberQuest: Operation ZERFALL — About</title>
 <style>
 /* ====================================================
-   CYBERQUEST — OVER HET SPEL (NEDERLANDSE VERSIE)
+   CYBERQUEST — ABOUT PRESENTATION
    Faithful to game intro style. All game assets used.
-   Hacker-termen blijven in het Engels.
    ==================================================== */
 :root {
   --cg:#00ff88; --cb:#00aaff; --cr:#ff3333; --cy:#ffcc00; --cp:#bb44ff;
@@ -19,6 +18,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font-family:var(--sans);}
 
+/* ── STAGE ───────────────────────────────────────────────── */
 #stage{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:#000;}
 #sb{
   position:relative;
@@ -29,8 +29,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 }
 #sb.fo{opacity:0;}
 
+/* ── BACKGROUND + KEN BURNS ──────────────────────────────── */
 #bg{position:absolute;inset:0;overflow:hidden;}
-#bg img{width:100%;height:100%;object-fit:cover;display:block;}
+#bg img{object-fit:cover;display:block;}
+#bg-a,#bg-b{position:absolute;inset:0;width:100%;height:100%;transition:opacity .8s ease;}
+#particles{position:absolute;inset:0;z-index:6;pointer-events:none;}
 @keyframes kbZI{from{transform:scale(1)}to{transform:scale(1.12)}}
 @keyframes kbZO{from{transform:scale(1.12)}to{transform:scale(1)}}
 @keyframes kbPR{from{transform:scale(1.08)translateX(0)}to{transform:scale(1.08)translateX(-4%)}}
@@ -40,6 +43,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 .kb-pr{animation:kbPR 22s ease-in-out forwards;}
 .kb-pl{animation:kbPL 22s ease-in-out forwards;}
 
+/* ── OVERLAY STACK ───────────────────────────────────────── */
 #scanlines{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.4;
   background:repeating-linear-gradient(to bottom,transparent 0,transparent 2px,rgba(0,0,0,.09)2px,rgba(0,0,0,.09)4px);}
 #vignette{position:absolute;inset:0;z-index:4;pointer-events:none;
@@ -51,12 +55,15 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 @keyframes gShift{0%{transform:translate(0,0)}33%{transform:translate(-4%,-3%)}66%{transform:translate(3%,4%)}100%{transform:translate(0,0)}}
 #color-tint{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .8s;}
 
+/* ── LETTERBOX ───────────────────────────────────────────── */
 #lb-t,#lb-b{position:absolute;left:0;right:0;background:#000;z-index:15;pointer-events:none;height:0;transition:height .8s ease;}
 #lb-t{top:0;}#lb-b{bottom:0;}
 #lb-t.on,#lb-b.on{height:10%;}
 
+/* ── FLASH ───────────────────────────────────────────────── */
 #flash{position:absolute;inset:0;z-index:120;background:#fff;opacity:0;pointer-events:none;transition:opacity .1s;}
 
+/* ── CHARACTER SPRITES ───────────────────────────────────── */
 .char{position:absolute;bottom:13%;height:56%;opacity:0;pointer-events:none;z-index:20;
   filter:drop-shadow(0 4px 24px rgba(0,0,0,.9));transition:opacity .7s ease,transform .7s ease;}
 #cl{left:3%;transform:translateX(-50px);}
@@ -69,6 +76,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 #cl.tk{animation:bL .5s ease-in-out infinite;}
 #cr.tk{animation:bR .5s ease-in-out infinite;}
 
+/* ── DIALOG BOX ──────────────────────────────────────────── */
 #dlg{
   position:absolute;bottom:2.5%;left:50%;transform:translateX(-50%);
   width:74%;background:linear-gradient(135deg,rgba(8,12,22,.97),rgba(14,20,42,.97));
@@ -85,12 +93,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 #dc.on{opacity:1;}
 
+/* ── CAPTION ─────────────────────────────────────────────── */
 #cap{position:absolute;top:9%;left:50%;transform:translateX(-50%);text-align:center;z-index:40;
   width:70%;opacity:0;transition:opacity .5s;pointer-events:none;}
 #cap.on{opacity:1;}
 #cap-t{font-family:var(--mono);font-size:clamp(.68em,1.8vw,1em);color:var(--cg);
   text-shadow:0 0 18px rgba(0,255,136,.5);line-height:1.4;letter-spacing:1px;}
 
+/* ── TITLE CARD ──────────────────────────────────────────── */
 #tc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);
   text-align:center;z-index:60;opacity:0;transition:opacity .8s,transform .8s;pointer-events:none;}
 #tc.on{opacity:1;transform:translate(-50%,-50%) scale(1);}
@@ -99,6 +109,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   text-shadow:0 0 40px rgba(0,255,136,.7),0 0 80px rgba(0,255,136,.3);line-height:1.15;}
 #tc-s{font-family:var(--sans);font-size:.82em;color:rgba(255,255,255,.5);margin-top:10px;line-height:1.6;}
 
+/* ── HUD BAR ─────────────────────────────────────────────── */
 #hud{position:absolute;top:0;left:0;right:0;height:34px;
   background:linear-gradient(180deg,rgba(0,0,0,.85),transparent);
   display:flex;align-items:center;justify-content:space-between;padding:0 14px;z-index:70;}
@@ -108,6 +119,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 #hud-pw{width:80px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;}
 #hud-pf{height:100%;background:var(--cg);border-radius:2px;transition:width .6s ease;}
 
+/* ── CONTROLS ────────────────────────────────────────────── */
 #ctrls{position:absolute;bottom:0;left:0;right:0;height:30px;
   background:linear-gradient(0deg,rgba(0,0,0,.8),transparent);
   display:flex;align-items:center;justify-content:center;gap:12px;z-index:70;opacity:.35;transition:opacity .3s;}
@@ -117,10 +129,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   transition:all .2s;user-select:none;}
 .cb:hover{color:var(--cg);border-color:var(--cg);}
 
+/* ── LOCATION TAG ────────────────────────────────────────── */
 #loc{position:absolute;top:36px;left:14px;font-family:var(--mono);font-size:.6em;letter-spacing:2px;
   color:rgba(0,255,136,.5);text-transform:uppercase;z-index:35;opacity:0;transition:opacity .5s;}
 #loc.on{opacity:1;}
 
+/* ── CHAPTER DIVIDER ─────────────────────────────────────── */
 #chap{position:absolute;inset:0;z-index:85;background:rgba(0,0,0,.92);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   opacity:0;transition:opacity .6s;pointer-events:none;}
@@ -129,6 +143,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 #ch-l{width:40px;height:1px;background:rgba(255,255,255,.2);margin:8px auto;}
 #ch-t{font-family:var(--geo);font-size:clamp(1.2em,3.5vw,2.2em);color:#fff;text-align:center;letter-spacing:2px;}
 
+/* ── INFO PANEL (right side character dossier) ───────────── */
 #info{position:absolute;top:9%;right:3%;width:25%;background:rgba(8,12,22,.92);
   border:1px solid rgba(0,170,255,.28);border-radius:6px;padding:10px 12px;
   z-index:40;opacity:0;transition:opacity .5s;pointer-events:none;}
@@ -139,6 +154,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   padding-left:8px;position:relative;}
 .ir::before{content:'▸';position:absolute;left:0;color:var(--cb);font-size:.8em;}
 
+/* ── INVENTORY STRIP ─────────────────────────────────────── */
 #inv{position:absolute;top:9%;left:3%;display:flex;flex-direction:column;gap:5px;z-index:40;opacity:0;transition:opacity .5s;pointer-events:none;}
 #inv.on{opacity:1;}
 .ii{display:flex;align-items:center;gap:7px;background:rgba(8,12,22,.88);
@@ -148,6 +164,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 .ii img{width:22px;height:22px;object-fit:contain;}
 .ii span{font-family:var(--mono);font-size:.56em;color:rgba(255,255,255,.7);}
 
+/* ── QUEST PANEL ─────────────────────────────────────────── */
 #qp{position:absolute;top:9%;left:50%;transform:translateX(-50%);width:76%;
   background:rgba(8,12,22,.93);border:1px solid rgba(0,255,136,.22);border-radius:7px;
   padding:11px 15px;z-index:40;opacity:0;transition:opacity .5s;pointer-events:none;}
@@ -160,6 +177,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 .qi-ico{font-size:1.1em;flex-shrink:0;}
 .qi-nm{color:rgba(255,255,255,.88);font-weight:600;display:block;margin-bottom:2px;}
 
+/* ── PUZZLE PANEL ────────────────────────────────────────── */
 #puz{position:absolute;top:9%;left:50%;transform:translateX(-50%);width:58%;
   background:rgba(8,12,22,.96);border:1px solid rgba(0,255,136,.38);border-radius:7px;
   padding:14px 18px;z-index:40;font-family:var(--mono);opacity:0;transition:opacity .5s;pointer-events:none;}
@@ -167,7 +185,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 #puz h4{font-size:.62em;letter-spacing:3px;color:var(--cg);text-transform:uppercase;
   border-bottom:1px solid rgba(0,255,136,.2);padding-bottom:5px;margin-bottom:10px;}
 .pf{display:flex;gap:8px;align-items:center;margin-bottom:7px;}
-.pl{font-size:.6em;color:rgba(0,255,136,.7);width:150px;flex-shrink:0;}
+.pl{font-size:.6em;color:rgba(0,255,136,.7);width:130px;flex-shrink:0;}
 .pv{flex:1;background:rgba(0,0,0,.6);border:1px solid rgba(0,255,136,.28);color:var(--cg);
   font-family:var(--mono);font-size:.64em;padding:4px 8px;border-radius:3px;}
 .pv.solved{border-color:var(--cg);color:#fff;text-shadow:0 0 8px rgba(0,255,136,.6);}
@@ -178,6 +196,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 #puz-r.ok{color:var(--cg);text-shadow:0 0 10px rgba(0,255,136,.5);}
 #puz-r.err{color:var(--cr);}
 
+/* ── LASER LAYER ─────────────────────────────────────────── */
 #laser-l{position:absolute;inset:0;z-index:22;pointer-events:none;opacity:0;transition:opacity .6s;}
 #laser-l.on{opacity:1;}
 .lb{position:absolute;height:2px;
@@ -207,6 +226,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   text-shadow:0 0 14px rgba(0,255,136,.9);opacity:0;transition:opacity .8s;z-index:30;}
 #laser-status.on{opacity:1;}
 
+/* ── DRONE LAYER ─────────────────────────────────────────── */
 #drone-l{position:absolute;inset:0;z-index:22;pointer-events:none;opacity:0;transition:opacity .8s;}
 #drone-l.on{opacity:1;}
 .dr{position:absolute;width:56px;height:20px;background:rgba(20,20,20,.92);
@@ -220,6 +240,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   border-radius:50%;background:rgba(255,40,40,.95);box-shadow:0 0 5px rgba(255,0,0,.8);
   animation:dlt .6s ease-in-out infinite alternate;}
 @keyframes dlt{from{opacity:.5}to{opacity:1}}
+/* Patrol animations */
 @keyframes dp1{0%{transform:translate(0,0)}25%{transform:translate(18px,-14px)}50%{transform:translate(-10px,9px)}75%{transform:translate(14px,5px)}100%{transform:translate(0,0)}}
 @keyframes dp2{0%{transform:translate(0,0)}33%{transform:translate(-15px,12px)}66%{transform:translate(10px,-10px)}100%{transform:translate(0,0)}}
 @keyframes dp3{0%{transform:translate(0,0)}20%{transform:translate(12px,15px)}60%{transform:translate(-16px,-7px)}100%{transform:translate(0,0)}}
@@ -228,11 +249,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 .dr.p2{animation:dp2 6s ease-in-out infinite;}
 .dr.p3{animation:dp3 4.5s ease-in-out infinite;}
 .dr.p4{animation:dp4 5.5s ease-in-out infinite;}
+/* Crash */
 @keyframes dcrash{0%{opacity:1;transform:rotate(0)translateY(0)scale(1)}
   30%{opacity:.9;transform:rotate(130deg)translateY(70px)scale(1.1)}
   60%{opacity:.5;transform:rotate(400deg)translateY(210px)scale(.6)}
   100%{opacity:0;transform:rotate(800deg)translateY(500px)scale(0)}}
 .dr.crash{animation:dcrash 1.8s ease-in forwards!important;}
+/* Explosion */
 .expl{position:absolute;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%) scale(0);
   background:radial-gradient(circle,#fff 0%,#ffaa00 30%,#ff4400 60%,transparent 100%);
   animation:exAnim .9s ease-out forwards;}
@@ -240,6 +263,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   40%{transform:translate(-50%,-50%) scale(1.5);opacity:.8}
   100%{transform:translate(-50%,-50%) scale(3.5);opacity:0}}
 
+/* ── MOWER LAYER ─────────────────────────────────────────── */
 #mwr-l{position:absolute;inset:0;z-index:22;pointer-events:none;opacity:0;transition:opacity .6s;}
 #mwr-l.on{opacity:1;}
 #mwr-canvas{width:100%;height:100%;}
@@ -249,6 +273,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   z-index:30;opacity:0;transition:opacity .4s;}
 #mwr-hud.on{opacity:1;}
 
+/* ── GPS SPOOF PANEL ─────────────────────────────────────── */
 #gpsp{position:absolute;top:8%;left:50%;transform:translateX(-50%);width:62%;
   background:rgba(8,12,22,.96);border:1px solid rgba(0,255,136,.35);border-radius:7px;
   padding:13px 17px;z-index:40;font-family:var(--mono);opacity:0;transition:opacity .5s;pointer-events:none;}
@@ -258,7 +283,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 .gd{background:rgba(0,30,0,.8);border:1px solid rgba(0,255,65,.28);border-radius:4px;
   padding:7px 11px;margin-bottom:7px;font-size:.66em;color:#00ff41;line-height:2;}
 .gr{display:flex;gap:8px;align-items:center;margin-bottom:4px;}
-.gl{color:rgba(0,255,136,.6);width:160px;flex-shrink:0;font-size:.6em;}
+.gl{color:rgba(0,255,136,.6);width:140px;flex-shrink:0;font-size:.6em;}
 .gv{color:#fff;font-size:.63em;flex:1;}
 .gv.a{color:var(--cg);text-shadow:0 0 8px rgba(0,255,136,.6);animation:gta .3s ease-out;}
 @keyframes gta{from{opacity:.2}to{opacity:1}}
@@ -268,6 +293,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   box-shadow:0 0 20px rgba(0,255,136,.2);animation:gef .5s ease-out;}
 @keyframes gef{0%,100%{background:transparent}50%{background:rgba(0,255,136,.15)}}
 
+/* ── PLANBOARD OVERLAY ───────────────────────────────────── */
 #pb{position:absolute;top:7%;left:50%;transform:translateX(-50%);
   width:84%;z-index:30;opacity:0;transition:opacity .5s;pointer-events:none;}
 #pb.on{opacity:1;}
@@ -282,9 +308,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   color:rgba(255,255,255,.7);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pbc.hl{border-color:rgba(255,50,50,.65);box-shadow:0 0 12px rgba(255,0,0,.35);}
 
-/* ══ INTRO ══════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════
+   INTRO CINEMATIC — Faithful to actual game intro style
+   ══════════════════════════════════════════════════════════ */
 #intro-wrap{position:absolute;inset:0;z-index:200;background:#000;pointer-events:auto;}
 
+/* ACT 1: Production card */
 #prod-card{position:absolute;inset:0;background:#000;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   opacity:0;transition:opacity 1.5s ease;}
@@ -299,6 +328,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   color:rgba(255,215,0,0);transition:color 2s ease;}
 .pc-dir.vis{color:rgba(255,215,0,.6);}
 
+/* ACT 2: Terminal boot */
 #term-boot{position:absolute;inset:0;background:#000;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   opacity:0;transition:opacity 1s ease;padding:6% 8%;}
@@ -315,20 +345,28 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
 .tl.d{color:rgba(0,255,65,.4);}
 .tcur{display:inline-block;width:8px;height:1em;background:#00ff41;vertical-align:text-bottom;animation:blink .65s step-end infinite;}
 
+/* ACT 3: Star Wars crawl */
 #crawl-wrap{position:absolute;inset:0;background:#000;overflow:hidden;opacity:0;transition:opacity 1.5s ease;font-size:clamp(15px,2.4vh,24px);}
 #crawl-wrap.on{opacity:1;}
 .cw-stars{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,#080818 0%,#000 60%);}
+/* Top + bottom fades above the crawl text */
 .cw-ft{position:absolute;top:0;left:0;right:0;height:28%;background:linear-gradient(to bottom,#000 30%,transparent);z-index:6;pointer-events:none;}
 .cw-fb{position:absolute;bottom:0;left:0;right:0;height:18%;background:linear-gradient(to top,#000 20%,transparent);z-index:6;pointer-events:none;}
-.cw-persp{position:absolute;inset:0;z-index:2;perspective:380px;perspective-origin:50% 28%;}
+/* Perspective scene — camera looks down at the tilted text plane */
+.cw-persp{position:absolute;inset:0;z-index:2;
+  perspective:380px;perspective-origin:50% 28%;}
+/* The crawling text strip — starts below viewport, exits above */
 .cw-txt{
   position:absolute;left:50%;width:72%;
   padding-bottom:6%;
   font-family:var(--geo);
+  /* Animation paused at load; CSS activates it when #crawl-wrap.on is set */
   animation:crawl 68s linear forwards;
   animation-play-state:paused;
 }
 #crawl-wrap.on .cw-txt{animation-play-state:running;}
+/* translateX centers the absolute element; rotateX creates the floor tilt;
+   the outer translateY drives the scroll in screen-space */
 @keyframes crawl{
   0%  {transform:translateX(-50%) rotateX(27deg) translateY(115vh);}
   100%{transform:translateX(-50%) rotateX(27deg) translateY(-290vh);}
@@ -344,9 +382,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   letter-spacing:3px;color:rgba(255,255,255,.25);background:none;border:1px solid rgba(255,255,255,.12);
   padding:5px 16px;cursor:pointer;border-radius:2px;transition:all .3s;pointer-events:auto;}
 .cw-skip:hover{color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.35);}
+/* Starfield dots */
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--dur,3s) ease-in-out infinite;}
 @keyframes twinkle{0%,100%{opacity:var(--op,.6)}50%{opacity:.1}}
 
+/* ACT 4: Title blast */
 #title-blast{position:absolute;inset:0;background:#000;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   opacity:0;transition:opacity .6s ease;}
@@ -361,86 +401,137 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   cursor:pointer;transition:all .3s;}
 .tb-skip:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.3);}
 
+/* Scanlines & vignette on intro too */
 .intro-scanlines{position:absolute;inset:0;z-index:10;pointer-events:none;opacity:.4;
   background:repeating-linear-gradient(to bottom,transparent 0,transparent 2px,rgba(0,0,0,.09)2px,rgba(0,0,0,.09)4px);}
 .intro-vignette{position:absolute;inset:0;z-index:9;pointer-events:none;
   background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.8)100%);}
 
-/* ── HOLLYWOOD ACTION EFFECTS ──────────────────────────────── */
-@keyframes shake{0%,100%{transform:none}12%{transform:translate(-5px,2px)rotate(-.4deg)}25%{transform:translate(5px,-3px)rotate(.35deg)}38%{transform:translate(-4px,4px)rotate(-.3deg)}50%{transform:translate(4px,-2px)rotate(.3deg)}62%{transform:translate(-3px,3px)rotate(-.2deg)}75%{transform:translate(3px,-1px)rotate(.2deg)}88%{transform:translate(-2px,2px)rotate(-.1deg)}}
+/* ── HOLLYWOOD EFFECTS ───────────────────────────────────────── */
+@keyframes shake{
+  0%,100%{transform:none}10%,50%,90%{transform:translate(-4px,-2px) rotate(-.5deg)}
+  20%,60%{transform:translate(3px,2px) rotate(.4deg)}30%,70%{transform:translate(-3px,3px)}
+  40%,80%{transform:translate(2px,-1px) rotate(-.3deg)}}
 #sb.shake{animation:shake .52s ease-out;}
-@keyframes glitchFlash{0%{clip-path:inset(38% 0 52% 0);transform:skewX(0)}20%{clip-path:inset(8% 0 80% 0);transform:skewX(2.5deg)}40%{clip-path:inset(63% 0 20% 0);transform:skewX(-3deg)}60%{clip-path:inset(4% 0 84% 0);transform:skewX(1.5deg)}80%{clip-path:inset(76% 0 14% 0);transform:skewX(-1deg)}100%{clip-path:none;transform:none}}
-#glitch-ovl{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;background:linear-gradient(160deg,rgba(0,255,136,.04),rgba(0,80,255,.04));transition:opacity .08s;}
-#glitch-ovl.active{animation:glitchFlash .36s steps(3) forwards;opacity:1;}
-#danger-pulse{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;
-  background:radial-gradient(ellipse at center,transparent 38%,rgba(180,0,0,.28)100%);}
-#danger-pulse.on{animation:dangerpulse 1.8s ease-in-out infinite;}
+@keyframes glitchFlash{
+  0%,100%{opacity:0;clip-path:inset(100% 0 0 0)}
+  15%{opacity:.48;clip-path:inset(10% 0 82% 0);transform:translateX(-4px)}
+  30%{opacity:.35;clip-path:inset(55% 0 30% 0);transform:translateX(3px)}
+  45%{opacity:.52;clip-path:inset(75% 0 10% 0);transform:translateX(-2px)}
+  60%{opacity:0}}
+#glitch-ovl{position:absolute;inset:0;z-index:110;pointer-events:none;opacity:0;
+  background:linear-gradient(rgba(0,255,136,.12),rgba(0,255,136,.08));mix-blend-mode:screen;}
+#glitch-ovl.active{animation:glitchFlash .32s steps(1) forwards;}
 @keyframes dangerpulse{0%,100%{opacity:0}50%{opacity:1}}
-#alert-bar{position:absolute;top:34px;left:0;right:0;z-index:38;pointer-events:none;
-  font-family:var(--mono);font-size:.58em;letter-spacing:4px;color:#fff;text-align:center;padding:4px 0;
-  opacity:0;transform:translateY(-10px);transition:opacity .3s,transform .3s;
-  background:linear-gradient(90deg,transparent,rgba(200,0,0,.9)8%,rgba(200,0,0,.9)92%,transparent);
-  text-shadow:0 0 8px rgba(255,140,140,.7);}
-#alert-bar.on{opacity:1;transform:translateY(0);}
-#live-ind{position:absolute;top:38px;right:14px;z-index:36;display:flex;align-items:center;gap:5px;
-  font-family:var(--mono);font-size:.52em;letter-spacing:2px;color:var(--cr);
-  opacity:0;transition:opacity .3s;pointer-events:none;}
+#danger-pulse{position:absolute;inset:0;z-index:8;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 55%,rgba(180,0,0,.35) 100%);opacity:0;}
+#danger-pulse.on{animation:dangerpulse 1.8s ease-in-out infinite;}
+#alert-bar{position:absolute;top:34px;left:0;right:0;z-index:75;pointer-events:none;
+  font-family:var(--mono);font-size:.62em;letter-spacing:2px;text-transform:uppercase;
+  background:rgba(180,0,0,.9);color:#fff;text-align:center;padding:4px 0;
+  opacity:0;transition:opacity .3s;}
+#alert-bar.on{opacity:1;}
+#live-ind{position:absolute;top:38px;right:14px;z-index:80;pointer-events:none;
+  display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.56em;
+  color:var(--cr);letter-spacing:2px;opacity:0;transition:opacity .3s;}
 #live-ind.on{opacity:1;}
-.live-dot{width:7px;height:7px;border-radius:50%;background:var(--cr);box-shadow:0 0 6px rgba(255,0,0,.9);animation:blink .75s step-end infinite;}
-@keyframes dangerBorder{0%,100%{border-color:rgba(255,0,0,.28);box-shadow:0 0 40px rgba(0,0,0,.6)}50%{border-color:rgba(255,50,50,.92);box-shadow:0 0 40px rgba(0,0,0,.6),0 0 24px rgba(255,0,0,.32)}}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--cr);
+  box-shadow:0 0 6px var(--cr);animation:blink 1s step-end infinite;}
+@keyframes dangerBorder{
+  0%,100%{box-shadow:0 0 40px rgba(0,0,0,.6),0 0 20px rgba(0,255,136,.05)}
+  50%{box-shadow:0 0 40px rgba(0,0,0,.6),0 0 20px rgba(255,30,30,.25),inset 0 0 8px rgba(255,30,30,.12)}}
 #dlg.danger{animation:dangerBorder 1.4s ease-in-out infinite;}
-@keyframes chSlam{0%{letter-spacing:22px;opacity:0;transform:scale(1.12)}70%{letter-spacing:1px;opacity:1}100%{letter-spacing:2px;transform:scale(1)}}
-#chap.on #ch-t{animation:chSlam .55s cubic-bezier(.15,0,.25,1) forwards;}
-@keyframes chapNumFade{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-#chap.on #ch-n{animation:chapNumFade .35s .05s ease-out both;}
-#sb.danger-chap #ch-n{color:var(--cr)!important;text-shadow:0 0 16px rgba(255,0,0,.7);}
-#sb.danger-chap #ch-t{text-shadow:0 0 40px rgba(255,40,30,.45),0 0 80px rgba(255,0,0,.15);}
+@keyframes chSlam{
+  0%{transform:translateY(-30px) scale(.94);opacity:0}
+  60%{transform:translateY(3px) scale(1.01)}
+  100%{transform:translateY(0) scale(1);opacity:1}}
+#chap.on #ch-t{animation:chSlam .55s cubic-bezier(.18,.89,.32,1.28) both;}
+#sb.danger-chap #ch-n{color:var(--cr)!important;}
+
+/* ── CALL TO ACTION SLIDE ─────────────────────────────────── */
+#cta-slide{position:absolute;inset:0;z-index:55;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:18px;
+  opacity:0;transition:opacity .8s;pointer-events:none;}
+#cta-slide.on{opacity:1;pointer-events:auto;}
+.cta-crown{font-family:var(--mono);font-size:clamp(.6em,1.6vw,.88em);letter-spacing:6px;
+  color:rgba(255,255,255,.28);text-transform:uppercase;}
+.cta-head{font-family:var(--mono);font-size:clamp(2em,6vw,4.8em);font-weight:bold;
+  color:var(--cg);text-align:center;line-height:1.1;
+  text-shadow:0 0 60px rgba(0,255,136,.8),0 0 120px rgba(0,255,136,.3);}
+.cta-sub{font-family:var(--sans);font-size:clamp(.78em,2.1vw,1.1em);color:rgba(255,255,255,.5);
+  text-align:center;letter-spacing:2px;line-height:1.8;max-width:60%;}
+.cta-btn{
+  margin-top:6px;padding:16px 52px;
+  background:linear-gradient(135deg,rgba(0,255,136,.18),rgba(0,255,136,.06));
+  border:2px solid var(--cg);border-radius:6px;cursor:pointer;
+  font-family:var(--mono);font-size:clamp(.85em,2.5vw,1.5em);letter-spacing:5px;
+  color:var(--cg);text-decoration:none;display:inline-block;
+  text-shadow:0 0 18px rgba(0,255,136,.7);
+  box-shadow:0 0 40px rgba(0,255,136,.22),inset 0 0 20px rgba(0,255,136,.05);
+  transition:all .25s;animation:ctaPulse 2.8s ease-in-out infinite;}
+@keyframes ctaPulse{
+  0%,100%{box-shadow:0 0 40px rgba(0,255,136,.22),inset 0 0 20px rgba(0,255,136,.05)}
+  50%{box-shadow:0 0 80px rgba(0,255,136,.6),inset 0 0 30px rgba(0,255,136,.15)}}
+.cta-btn:hover{background:linear-gradient(135deg,rgba(0,255,136,.35),rgba(0,255,136,.18));
+  transform:scale(1.05) translateY(-2px);color:#fff;}
+.cta-hint{font-family:var(--mono);font-size:.54em;letter-spacing:2px;
+  color:rgba(255,255,255,.18);text-align:center;}
 </style>
 </head>
 <body>
 <div id="stage">
  <div id="sb">
 
+  <!-- Intro cinematic (game-faithful) -->
   <div id="intro-wrap">
    <div class="intro-scanlines"></div>
    <div class="intro-vignette"></div>
+   <!-- Act 1: Production card -->
    <div id="prod-card">
-    <div class="pc-t" id="pc1">EEN REIN VELT PRODUCTIE</div>
+    <div class="pc-t" id="pc1">A REIN VELT PRODUCTION</div>
     <div class="pc-sep" id="pc-sep"></div>
-    <div class="pc-dir" id="pc2">met GitHub Copilot Claude</div>
+    <div class="pc-dir" id="pc2">with GitHub Copilot Claude</div>
    </div>
+   <!-- Act 2: Terminal boot -->
    <div id="term-boot">
     <div class="tb" id="tb-block"></div>
    </div>
+   <!-- Act 3: Star Wars crawl -->
    <div id="crawl-wrap">
     <div class="cw-stars" id="cw-stars"></div>
     <div class="cw-ft"></div><div class="cw-fb"></div>
     <div class="cw-persp">
      <div class="cw-txt">
-      <div class="cw-sub">Deel I</div>
-      <div class="cw-title">OPERATIE ZERFALL</div>
+      <div class="cw-sub">Episode I</div>
+      <div class="cw-title">OPERATION ZERFALL</div>
       <div class="cw-body">
-       <p>Het is 9 februari 2026. Compascuum, Drenthe, Nederland. Ryan Weylant — softwareontwikkelaar, radioamateur en onwillige held — maakt een espresso.</p>
-       <p>Hij weet nog niet dat een USB stick is vastgetapet onder een stenen bank bij het middeleeuwse Ter Apel Klooster, aan de andere kant van de provincie. Hij weet niets over Eva Weber, Project Echo, of de acht mensen die stierven toen ziekenhuisapparatuur op het verkeerde moment ophield met werken.</p>
-       <p>Hij weet van koffie.</p>
-       <p>Dertig kilometer verderop, net over de grens, in een geheim militair onderzoekscomplex in de Steckerdoser Heide — een donker bos in Neder-Saksen, Duitsland — voert commandant Dmitri Volkov de eindkalibratie uit van een bewapend radiofrequentiesysteem. Project Echo. In staat alle elektronica binnen bereik te verstoren. Ziekenhuizen. Elektriciteitsnetwerken. Vliegtuigen.</p>
-       <p>Drie maanden geleden doodde Project Echo Marlies Bakker, 67 jaar, grootmoeder van vier. Haar hartmonitor faalde halverwege een operatie. Het verhaal: apparatuurfout. Niemand keek twee keer.</p>
-       <p>Eva Weber keek twee keer. En ze herinnerde zich de hacker die ze twee jaar eerder had ontmoet bij Tony Knight's reddingshondtraining in Compascuum — degene met de boerderij vol radioapparatuur die over SDR, mesh-netwerken en hacking had gepraat totdat ze de tijd vergat.</p>
-       <p>Dit is het verhaal van wat er daarna gebeurde.</p>
-       <p>Dit is CyberQuest: Operatie ZERFALL.</p>
+       <p>It is February 9, 2026. Compascuum, Drenthe, Netherlands. Ryan Weylant — software developer, radio amateur, and reluctant hero — is making an espresso.</p>
+       <p>He does not yet know that a USB stick has been taped under a stone bench at the medieval Ter Apel Klooster across the province. He does not know about Eva Weber, or Project Echo, or the eight people who died when hospital equipment stopped working at the wrong moment.</p>
+       <p>He knows about coffee.</p>
+       <p>Thirty kilometres away, just across the German border, at a classified military R&amp;D compound in the Steckerdoser Heide — a dark forest in Lower Saxony, Germany — Commander Dmitri Volkov is running the final calibration of a weaponised radio frequency system. Project Echo. Capable of disrupting any electronics within range. Hospitals. Power grids. Aircraft.</p>
+       <p>Three months ago, Project Echo killed Marlies Bakker, 67, grandmother of four. Her cardiac monitor failed mid-surgery. The cover story: equipment malfunction. Nobody looked twice.</p>
+       <p>Eva Weber looked twice. And she remembered the hacker she had met two years earlier at Tony Knight's rescue dog training in Compascuum — the one with the farmhouse full of radio equipment who had talked about SDR, mesh networks, and hacking until she lost track of time.</p>
+       <p>This is the story of what happened next.</p>
+       <p>This is CyberQuest: Operation ZERFALL.</p>
       </div>
      </div>
     </div>
     <button class="cw-skip" id="crawl-skip">SKIP ▶</button>
    </div>
+   <!-- Act 4: Title blast -->
    <div id="title-blast">
     <div class="tb-main">CYBERQUEST</div>
-    <div class="tb-op">Operatie ZERFALL</div>
+    <div class="tb-op">Operation ZERFALL</div>
     <div class="tb-skip" id="begin-btn">► BEGIN PRESENTATIE</div>
    </div>
-  </div>
+  </div><!-- /intro-wrap -->
 
-  <div id="bg"><img id="bg-img" src="" alt=""></div>
+  <!-- Main presentation stage (revealed after intro) -->
+  <div id="bg">
+    <img id="bg-a" src="" alt="" style="opacity:1;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+    <img id="bg-b" src="" alt="" style="opacity:0;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+  </div>
+  <canvas id="particles"></canvas>
   <div id="grain-ovl"></div>
   <div id="color-tint"></div>
   <div id="scanlines"></div>
@@ -450,54 +541,77 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
   <div id="glitch-ovl"></div>
   <div id="danger-pulse"></div>
   <div id="alert-bar"></div>
-  <div id="live-ind"><div class="live-dot"></div><span>● LIVE</span></div>
+  <div id="live-ind"><div class="live-dot"></div><span>◉ LIVE</span></div>
 
+  <!-- Chapter divider -->
   <div id="chap"><div id="ch-n"></div><div id="ch-l"></div><div id="ch-t"></div></div>
 
+  <!-- Loc tag + HUD -->
   <div id="loc"></div>
   <div id="hud">
-   <div id="hud-logo">CyberQuest: Operatie ZERFALL</div>
+   <div id="hud-logo">CyberQuest: Operation ZERFALL</div>
    <div id="hud-r">
     <div id="hud-pw"><div id="hud-pf" style="width:0%"></div></div>
     <div id="hud-sl">0 / 0</div>
    </div>
   </div>
 
+  <!-- Characters -->
   <img id="cl" class="char" src="" alt="">
   <img id="cr" class="char" src="" alt="">
 
+  <!-- Title card -->
   <div id="tc"><div id="tc-lb"></div><div id="tc-m"></div><div id="tc-s"></div></div>
+
+  <!-- Caption -->
   <div id="cap"><div id="cap-t"></div></div>
 
+  <!-- Info panel -->
   <div id="info"><h4 id="info-h"></h4></div>
+
+  <!-- Inventory -->
   <div id="inv"></div>
 
-  <div id="qp"><h4>📋 Quests &amp; Doelstellingen</h4><div class="qg" id="qg"></div></div>
+  <!-- Quest panel -->
+  <div id="qp"><h4>📋 Quests &amp; Objectives</h4><div class="qg" id="qg"></div></div>
 
+  <!-- Puzzle panel -->
   <div id="puz">
-   <h4 id="puz-title">🔐 Puzzel</h4>
+   <h4 id="puz-title">🔐 Puzzle</h4>
    <div id="puz-fields"></div>
    <div id="puz-r"></div>
   </div>
 
+  <!-- Special action layers -->
   <div id="laser-l"><div id="laser-status"></div></div>
   <div id="drone-l"></div>
-  <div id="mwr-l"><canvas id="mwr-canvas"></canvas><div id="mwr-hud">🚜 Zitmaaier — Maai het gras!</div></div>
-
+  <div id="mwr-l"><canvas id="mwr-canvas"></canvas><div id="mwr-hud">🚜 Zitmaaier — Mow the lawn!</div></div>
   <div id="gpsp"><h4>📡 GPS Spoof — HackRF One</h4>
    <div class="gd">
-    <div class="gr"><span class="gl">Doelfrequentie:</span><span class="gv" id="gv-freq">—</span></div>
-    <div class="gr"><span class="gl">Zendvermogen:</span><span class="gv" id="gv-pwr">—</span></div>
-    <div class="gr"><span class="gl">Spoof coördinaten:</span><span class="gv" id="gv-coord">—</span></div>
-    <div class="gr"><span class="gl">Doeldrones:</span><span class="gv" id="gv-drones">—</span></div>
+    <div class="gr"><span class="gl">Target frequency:</span><span class="gv" id="gv-freq">—</span></div>
+    <div class="gr"><span class="gl">TX power:</span><span class="gv" id="gv-pwr">—</span></div>
+    <div class="gr"><span class="gl">Spoof coordinates:</span><span class="gv" id="gv-coord">—</span></div>
+    <div class="gr"><span class="gl">Target drones:</span><span class="gv" id="gv-drones">—</span></div>
    </div>
    <div class="gexec" id="gexec">[ EXECUTE_SPOOF ]</div>
   </div>
 
+  <!-- Planboard -->
   <div id="pb"><div class="pbg" id="pbg"></div></div>
 
+  <!-- CTA slide -->
+  <div id="cta-slide">
+   <div class="cta-crown">CyberQuest: Operation ZERFALL</div>
+   <div class="cta-head">PLAY<br>THE GAME.</div>
+   <div class="cta-sub">Three hacking devices. Six field missions.<br>One chance to stop Project Echo.</div>
+   <a class="cta-btn" href="index.html">► PLAY NOW</a>
+   <div class="cta-hint">index.html &nbsp;·&nbsp; runs in any browser &nbsp;·&nbsp; no install needed</div>
+  </div>
+
+  <!-- Dialog box -->
   <div id="dlg"><div id="dn">Ryan</div><div id="dt"></div><div id="dc">▶ verder</div></div>
 
+  <!-- Controls -->
   <div id="ctrls">
    <div class="cb" id="b-prev">◀ vorige</div>
    <div class="cb" id="b-pause">⏸ pauze</div>
@@ -505,63 +619,31 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font
    <div class="cb" id="b-restart">↺ opnieuw</div>
   </div>
 
- </div>
-</div>
+ </div><!-- /sb -->
+</div><!-- /stage -->
 
 <script>
 "use strict";
 /* ============================================================
-   CYBERQUEST — NEDERLANDSTALIGE PRESENTATIE
-   Hacker-termen (air-gapped, hack, terminal, done, enz.)
-   blijven in het Engels.
+   CYBERQUEST ABOUT — Presentation Engine
    ============================================================ */
 
-// ── Stem-engine ───────────────────────────────────────────────
+// ── Voice ─────────────────────────────────────────────────────
 const V = {
   synth: window.speechSynthesis||null,
   voices:[],
   init(){ if(!this.synth)return; const l=()=>{this.voices=this.synth.getVoices();}; l(); this.synth.onvoiceschanged=l; },
-  pick(prefs,lang='nl-NL'){
-    // 1. Zoek op exacte stemnaam
+  pick(prefs,lang='en-GB'){
     for(const p of prefs){
-      if(p==='man'||p==='vrouw')continue;
+      if(p==='male'||p==='female')continue;
       const v=this.voices.find(v=>v.name.includes(p));
       if(v)return v;
     }
-    const wantMale=prefs.includes('man');
-    const wantFemale=prefs.includes('vrouw');
-    // Bekende mannelijke/vrouwelijke stemnaam-patronen
-    const maleHints=['frank','bert','xander','bart','ruben','thomas','nl-nl-standard-b','nl-nl-standard-d','nl-nl-wavenet-b','nl-nl-wavenet-d','wavenet-b','standard-b'];
-    const femHints=['lotte','fenna','anne','nl-nl-standard-a','nl-nl-standard-c','nl-nl-wavenet-a','nl-nl-wavenet-c'];
-    // 2. Zoek Nederlandse stem met geslacht
-    if(wantMale){
-      const mv=this.voices.find(v=>v.lang.startsWith('nl')&&maleHints.some(h=>v.name.toLowerCase().includes(h)));
-      if(mv)return mv;
-    } else if(wantFemale){
-      const fv=this.voices.find(v=>v.lang.startsWith('nl')&&femHints.some(h=>v.name.toLowerCase().includes(h)));
-      if(fv)return fv;
-      // Elke Nederlandse stem is prima voor vrouwelijke rol
-      const anyNl=this.voices.find(v=>v.lang.startsWith('nl'));
-      if(anyNl)return anyNl;
-    } else {
-      const anyNl=this.voices.find(v=>v.lang.startsWith('nl'));
-      if(anyNl)return anyNl;
-    }
-    // 3. Geen Nederlandse mannelijke stem gevonden: gebruik Engelse mannelijke stem
-    //    (liever Engelse mannenstem dan Nederlandse vrouwenstem)
-    if(wantMale){
-      const engMaleHints=['google uk english male','microsoft david','microsoft mark','google us english','james','guy','daniel','alex','fred','arthur','ryan'];
-      const em=this.voices.find(v=>engMaleHints.some(h=>v.name.toLowerCase().includes(h)));
-      if(em)return em;
-      // Elke stem die 'male' in naam heeft
-      const em2=this.voices.find(v=>v.name.toLowerCase().includes('male'));
-      if(em2)return em2;
-    }
-    // 4. Absolute terugval
-    return this.voices.find(v=>v.lang.startsWith('nl'))||this.voices[0]||null;
+    const g=prefs.find(p=>p==='male'||p==='female');
+    return this.voices.find(v=>v.lang.startsWith('en')&&(!g||v.name.toLowerCase().includes(g)))||null;
   },
   stop(){ if(this.synth)this.synth.cancel(); },
-  speak(text,{pitch=1,rate=.9,prefs=[],lang='nl-NL',onEnd=null}={}){
+  speak(text,{pitch=1,rate=.9,prefs=[],lang='en-GB',onEnd=null}={}){
     if(!this.synth){if(onEnd)onEnd();return;}
     this.synth.cancel();
     const u=new SpeechSynthesisUtterance(text);
@@ -572,18 +654,15 @@ const V = {
   }
 };
 
-// Stemprofielen — Nederland NL
 const VPROF={
-  // Mannelijke stemmen — specifieke namen eerst, dan mannelijke aanwijzingen, dan Engelse mannen als noodval
-  Ryan:    {pitch:.80,rate:.92,lang:'nl-NL',prefs:['Microsoft Frank','Xander','nl-NL-Standard-B','nl-NL-Wavenet-B','Google UK English Male','Microsoft David','man']},
-  Volkov:  {pitch:.40,rate:.64,lang:'nl-NL',prefs:['Microsoft Frank','Xander','nl-NL-Standard-B','nl-NL-Wavenet-B','Google UK English Male','Microsoft David','man']},
-  Cees:    {pitch:.88,rate:.84,lang:'nl-NL',prefs:['Microsoft Frank','Xander','nl-NL-Standard-B','nl-NL-Wavenet-B','Google UK English Male','man']},
-  // Vrouwelijke stemmen — Nederlandse stem heeft duidelijk voorkeur
-  Max:     {pitch:1.12,rate:.86,lang:'nl-NL',prefs:['Google Nederlands','Lotte','Microsoft Lotte','nl-NL-Wavenet-A','vrouw']},
-  Verteller:{pitch:.95,rate:.78,lang:'nl-NL',prefs:['Google Nederlands','Lotte','Microsoft Lotte','nl-NL-Wavenet-A','vrouw']},
-  Eva:     {pitch:1.18,rate:.88,lang:'nl-NL',prefs:['Google Nederlands','Lotte','Microsoft Lotte','nl-NL-Wavenet-C','vrouw']},
-  Kubecka: {pitch:.90,rate:.94,lang:'nl-NL',prefs:['Google Nederlands','Lotte','Microsoft Lotte','vrouw']},
-  Systeem: {pitch:1.0, rate:1.2, lang:'nl-NL',prefs:['Google Nederlands','Lotte']},
+  Ryan:    {pitch:.75,rate:.93,lang:'en-GB',prefs:['Google UK English Male','Microsoft David','male']},
+  Max:     {pitch:1.1, rate:.85,lang:'en-US',prefs:['Google US English','Samantha','female']},
+  Narrator:{pitch:.95, rate:.78,lang:'en-GB',prefs:['Google UK English Female','Karen','Moira','female']},
+  Eva:     {pitch:1.22,rate:.88,lang:'en-GB',prefs:['Google UK English Female','Kate','female']},
+  Volkov:  {pitch:.42, rate:.68,lang:'en-GB',prefs:['Google UK English Male','Daniel','male']},
+  Cees:    {pitch:.92, rate:.85,lang:'en-GB',prefs:['Google UK English Male','Daniel','male']},
+  Kubecka: {pitch:.85, rate:.95,lang:'en-US',prefs:['Google US English','Samantha','female']},
+  System:  {pitch:1.0, rate:1.2, lang:'en-US',prefs:['Google US English','female']},
 };
 
 // ── Web Audio ─────────────────────────────────────────────────
@@ -666,71 +745,162 @@ const A = {
     }
   },
   stopLaser(){if(this._laserCtx){try{this._laserCtx.close();}catch(e){}this._laserCtx=null;}},
-
-  // Cinematische klap — grote filmische dreun
   stinger(){
     if(!this.ctx)return;
     const ctx=this.ctx,t=ctx.currentTime;
-    [[40,2.2,.58],[50,1.7,.40],[63,1.3,.28]].forEach(([fr,dur,vol])=>{
-      const o=ctx.createOscillator(),g=ctx.createGain();
-      o.type='sine';o.frequency.setValueAtTime(fr*2.5,t);o.frequency.exponentialRampToValueAtTime(fr,t+.22);
-      g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);
-      o.connect(g);g.connect(this.master);o.start(t);o.stop(t+dur+.1);
-    });
-    const buf=ctx.createBuffer(1,ctx.sampleRate*.18,ctx.sampleRate);
-    const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.exp(-i/1600);
-    const s2=ctx.createBufferSource(),gn=ctx.createGain();
-    s2.buffer=buf;gn.gain.value=.62;s2.connect(gn);gn.connect(this.master);s2.start(t);
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.type='sine';o.frequency.setValueAtTime(55,t);o.frequency.exponentialRampToValueAtTime(20,t+.28);
+    g.gain.setValueAtTime(.9,t);g.gain.exponentialRampToValueAtTime(.001,t+.6);
+    o.connect(g);g.connect(this.master);o.start(t);o.stop(t+.65);
+    const buf=ctx.createBuffer(1,ctx.sampleRate*.15,ctx.sampleRate);
+    const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.exp(-i/1800);
+    const src=ctx.createBufferSource(),ng=ctx.createGain();
+    src.buffer=buf;ng.gain.value=.5;src.connect(ng);ng.connect(this.master);src.start(t);
   },
-
-  // Stijgende spanningsdrone — dissonante snarenlaag
-  tension(){
+  tension(dur=7){
     if(!this.ctx)return;
     const ctx=this.ctx,t=ctx.currentTime;
-    [[110,116],[73,77],[55,58.5]].forEach(([f1,f2],i)=>{
-      [f1,f2].forEach(fr=>{
-        const o=ctx.createOscillator(),g=ctx.createGain(),fl=ctx.createBiquadFilter();
-        o.type='sawtooth';o.frequency.setValueAtTime(fr,t);o.frequency.linearRampToValueAtTime(fr*1.1,t+7);
-        fl.type='lowpass';fl.frequency.value=700+i*120;
-        g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.042-i*.01,t+.6);g.gain.linearRampToValueAtTime(0,t+7);
-        o.connect(fl);fl.connect(g);g.connect(this.master);o.start(t);o.stop(t+7.5);
-      });
+    [220,233,246,330,349].forEach((fr,i)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain(),f=ctx.createBiquadFilter();
+      o.type='sawtooth';o.frequency.value=fr;
+      f.type='lowpass';f.frequency.value=800;
+      g.gain.setValueAtTime(0,t+i*.12);g.gain.linearRampToValueAtTime(.018,t+i*.12+.6);
+      g.gain.linearRampToValueAtTime(0,t+dur);
+      o.connect(f);f.connect(g);g.connect(this.master);
+      o.start(t+i*.12);o.stop(t+dur+.1);
     });
   },
-
-  // Hartslag — diepe lage dreun
   heartbeat(){
     if(!this.ctx)return;
     const ctx=this.ctx,t=ctx.currentTime;
-    [[t,.58],[t+.19,.44]].forEach(([when,vol])=>{
+    [0,.18].forEach(off=>{
       const o=ctx.createOscillator(),g=ctx.createGain();
-      o.type='sine';o.frequency.setValueAtTime(72,when);o.frequency.exponentialRampToValueAtTime(28,when+.2);
-      g.gain.setValueAtTime(vol,when);g.gain.exponentialRampToValueAtTime(.001,when+.24);
-      o.connect(g);g.connect(this.master);o.start(when);o.stop(when+.28);
+      o.type='sine';o.frequency.setValueAtTime(72,t+off);o.frequency.exponentialRampToValueAtTime(28,t+off+.22);
+      g.gain.setValueAtTime(.65,t+off);g.gain.exponentialRampToValueAtTime(.001,t+off+.38);
+      o.connect(g);g.connect(this.master);o.start(t+off);o.stop(t+off+.4);
     });
+  },
+
+  // ── Ambient sound system ──────────────────────────────────
+  ambientGain:null,ambientNodes:[],
+  stopAmbient(secs=1.2){
+    if(!this.ambientGain||!this.ctx)return;
+    const g=this.ambientGain,t=this.ctx.currentTime,nodes=this.ambientNodes;
+    this.ambientGain=null;this.ambientNodes=[];
+    g.gain.setValueAtTime(g.gain.value,t);
+    g.gain.linearRampToValueAtTime(0,t+secs);
+    setTimeout(()=>{nodes.forEach(n=>{try{if(n.stop)n.stop();n.disconnect();}catch(e){}});},secs*1000+200);
+  },
+  ambient(type){
+    this.stopAmbient(.8);
+    if(!this.ctx||!type||type==='none')return;
+    const ctx=this.ctx,t=ctx.currentTime;
+    const master=ctx.createGain();
+    master.gain.setValueAtTime(0,t);master.gain.linearRampToValueAtTime(1,t+1.5);
+    master.connect(this.master);
+    this.ambientGain=master;this.ambientNodes=[master];
+    const addNoise=(vol,lo,hi)=>{
+      const buf=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate);
+      const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;
+      const src=ctx.createBufferSource();src.buffer=buf;src.loop=true;
+      const fl=ctx.createBiquadFilter();fl.type='highpass';fl.frequency.value=lo;
+      const fh=ctx.createBiquadFilter();fh.type='lowpass';fh.frequency.value=hi;
+      const g=ctx.createGain();g.gain.value=vol;
+      src.connect(fl);fl.connect(fh);fh.connect(g);g.connect(master);src.start(t);
+      this.ambientNodes.push(src,fl,fh,g);return src;
+    };
+    const addOsc=(freq,type_,vol)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.type=type_;o.frequency.value=freq;
+      g.gain.value=vol;o.connect(g);g.connect(master);o.start(t);
+      this.ambientNodes.push(o,g);return o;
+    };
+    switch(type){
+      case 'indoor':
+        addNoise(.012,50,180);addOsc(60,'sine',.006);addOsc(120,'sine',.003);break;
+      case 'night_rain':
+        addNoise(.055,400,7000);addNoise(.010,60,250);addOsc(48,'sine',.004);break;
+      case 'forest_night':{
+        addNoise(.016,150,1800);addOsc(30,'sine',.008);
+        const wBuf=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate);
+        const wd=wBuf.getChannelData(0);for(let i=0;i<wd.length;i++)wd[i]=Math.random()*2-1;
+        const ws=ctx.createBufferSource();ws.buffer=wBuf;ws.loop=true;
+        const wf=ctx.createBiquadFilter();wf.type='bandpass';wf.frequency.value=500;wf.Q.value=.35;
+        const wg=ctx.createGain();wg.gain.value=.018;
+        const lfo=ctx.createOscillator();const lg=ctx.createGain();
+        lfo.type='sine';lfo.frequency.value=.07;lg.gain.value=.014;
+        lfo.connect(lg);lg.connect(wg.gain);
+        ws.connect(wf);wf.connect(wg);wg.connect(master);ws.start(t);lfo.start(t);
+        this.ambientNodes.push(ws,wf,wg,lfo,lg);break;}
+      case 'server_room':
+        addOsc(160,'sawtooth',.005);addOsc(220,'sawtooth',.003);
+        addOsc(44,'sine',.006);addNoise(.010,800,6000);break;
+      case 'mancave':
+        addOsc(60,'sine',.005);addOsc(120,'sine',.002);
+        addNoise(.006,150,1000);addOsc(160,'sawtooth',.003);break;
+      case 'radio_static':
+        addNoise(.035,300,4500);addOsc(1200,'sine',.0015);break;
+      case 'outdoor_day':
+        addNoise(.013,80,1200);addOsc(44,'sine',.003);break;
+      case 'driving':
+        addOsc(80,'sawtooth',.009);addNoise(.016,40,350);addOsc(160,'sawtooth',.004);break;
+      case 'facility':
+        addOsc(55,'sine',.006);addOsc(110,'sine',.003);
+        addNoise(.008,150,1500);addOsc(275,'sawtooth',.002);break;
+      case 'garden':
+        addNoise(.009,250,2500);addOsc(44,'sine',.003);break;
+      default:
+        addNoise(.008,60,250);
+    }
   },
 };
 
-// ── Hulpfuncties ──────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────
 const $=id=>document.getElementById(id);
 const show=id=>{const e=$(id);if(e)e.classList.add('on');};
 const hide=id=>{const e=$(id);if(e)e.classList.remove('on');};
 function flash(){const f=$('flash');f.style.opacity='.6';setTimeout(()=>f.style.opacity='0',180);}
-function setKB(mode){const i=$('bg-img');i.className='';if(mode)requestAnimationFrame(()=>i.classList.add(mode));}
-
-// ── Hollywood actie-helpers ───────────────────────────────────
-function doShake(dur=520){const sb=$('sb');sb.classList.add('shake');setTimeout(()=>sb.classList.remove('shake'),dur);}
-function doGlitch(){const g=$('glitch-ovl');g.classList.remove('active');void g.offsetWidth;g.classList.add('active');setTimeout(()=>g.classList.remove('active'),400);}
-function showAlert(txt){$('alert-bar').textContent=txt;show('alert-bar');}
-function hideAlert(){hide('alert-bar');}
-function showLive(){show('live-ind');}
-function hideLive(){hide('live-ind');}
-function dangerMode(on){
-  const dlg=$('dlg');
-  if(on){show('danger-pulse');dlg.classList.add('danger');}
-  else{hide('danger-pulse');dlg.classList.remove('danger');}
+let _bgActive='a';
+function setBG(src,mode){
+  if(!src)return;
+  const next=_bgActive==='a'?'b':'a';
+  const nEl=$('bg-'+next),cEl=$('bg-'+_bgActive);
+  nEl.style.opacity='0';nEl.src=src;nEl.className='';
+  _bgActive=next;
+  setTimeout(()=>{nEl.style.opacity='1';cEl.style.opacity='0';if(mode)requestAnimationFrame(()=>nEl.classList.add(mode));},80);
 }
-
+function setKB(mode){const el=$('bg-'+_bgActive);el.className='';if(mode)requestAnimationFrame(()=>el.classList.add(mode));}
+function doShake(dur=520){const s=$('sb');s.classList.add('shake');setTimeout(()=>s.classList.remove('shake'),dur);}
+function doGlitch(){const g=$('glitch-ovl');g.classList.remove('active');void g.offsetWidth;g.classList.add('active');setTimeout(()=>g.classList.remove('active'),400);}
+function showAlert(txt){const a=$('alert-bar');a.textContent=txt;a.classList.add('on');}
+function hideAlert(){$('alert-bar').classList.remove('on');}
+function showLive(){$('live-ind').classList.add('on');}
+function hideLive(){$('live-ind').classList.remove('on');}
+function dangerMode(on){
+  if(on){$('danger-pulse').classList.add('on');$('dlg').classList.add('danger');}
+  else{$('danger-pulse').classList.remove('on');$('dlg').classList.remove('danger');}
+}
+function soundForBg(bg){
+  if(!bg)return'indoor';const n=bg.toLowerCase();
+  if(/klooster|usb_discovery/.test(n))return'night_rain';
+  if(/drone_hunt/.test(n))return'forest_night';
+  if(/facility_server/.test(n))return'server_room';
+  if(/laser_corridor|facility_interior|\/facility\./.test(n))return'facility';
+  if(/mancave|sdr_bench|airgapped|planboard|secure_phone|long_night/.test(n))return'mancave';
+  if(/sstv/.test(n))return'radio_static';
+  if(/driving/.test(n))return'driving';
+  if(/garden/.test(n))return'garden';
+  if(/lofar|westerbork|dwingeloo|planetenpad|astron/.test(n))return'outdoor_day';
+  return'indoor';
+}
+function particlesForBg(bg){
+  if(!bg)return null;const n=bg.toLowerCase();
+  if(/klooster/.test(n))return'rain';
+  if(/long_night/.test(n))return'static';
+  if(/drone_hunt|planetenpad|westerbork|garden/.test(n))return'leaves';
+  if(/facility_server|airgapped|mancave|sdr_bench/.test(n))return'dust';
+  return null;
+}
 function clearChar(){ $('cl').className='char'; $('cr').className='char'; }
 function showChar(side,src,talking=false){
   const el=$(side==='L'?'cl':'cr');
@@ -739,18 +909,89 @@ function showChar(side,src,talking=false){
 }
 function stopTalking(){$('cl').classList.remove('tk');$('cr').classList.remove('tk');}
 function hideAll(){
-  ['cap','tc','info','inv','qp','puz','gpsp','pb','laser-l','drone-l','mwr-l','chap']
+  ['cap','tc','info','inv','qp','puz','gpsp','pb','laser-l','drone-l','mwr-l','chap','cta-slide']
     .forEach(id=>hide(id));
-  clearChar();hide('dlg');
+  clearChar();
+  hide('dlg');
   $('lb-t').classList.remove('on');$('lb-b').classList.remove('on');
   $('color-tint').style.opacity='0';
   $('grain-ovl').style.opacity='0';
   $('loc').classList.remove('on');
-  A.stopLaser();
-  hideAlert();hideLive();dangerMode(false);$('sb').classList.remove('danger-chap');
+  hideAlert();hideLive();dangerMode(false);
+  $('sb').classList.remove('danger-chap');
+  A.stopLaser();A.stopAmbient(.6);stopParticles();
 }
 
-// ── Schrijfmachine-effect ─────────────────────────────────────
+// ── Particle engine ───────────────────────────────────────────
+let _partAnim=null,_partType=null;
+function stopParticles(){
+  if(_partAnim){cancelAnimationFrame(_partAnim);_partAnim=null;}
+  _partType=null;
+  const c=$('particles');if(c){c.getContext('2d').clearRect(0,0,c.width,c.height);}
+}
+function startParticles(type){
+  stopParticles();if(!type)return;
+  _partType=type;
+  const c=$('particles');if(!c)return;
+  const sb=$('sb');c.width=sb.offsetWidth;c.height=sb.offsetHeight;
+  const ctx=c.getContext('2d');
+  const W=c.width,H=c.height;let parts=[];
+  if(type==='rain'){
+    for(let i=0;i<110;i++)parts.push({x:Math.random()*W,y:Math.random()*H,len:7+Math.random()*12,spd:5+Math.random()*7,op:.12+Math.random()*.25});
+  }else if(type==='leaves'){
+    for(let i=0;i<32;i++)parts.push({x:Math.random()*W,y:Math.random()*H,r:3+Math.random()*4,vx:-.3+Math.random()*.6,vy:.25+Math.random()*.65,rot:Math.random()*Math.PI*2,rspd:.01+Math.random()*.03,op:.18+Math.random()*.3});
+  }else if(type==='dust'){
+    for(let i=0;i<50;i++)parts.push({x:Math.random()*W,y:Math.random()*H,r:.8+Math.random()*1.8,vx:-.1+Math.random()*.2,vy:-.05+Math.random()*.1,op:.04+Math.random()*.12});
+  }else if(type==='static'){
+    for(let i=0;i<70;i++)parts.push({x:Math.random()*W,y:Math.random()*H,sz:1+Math.random()*2,life:Math.random(),op:.15+Math.random()*.4});
+  }
+  function loop(){
+    if(_partType!==type)return;
+    ctx.clearRect(0,0,W,H);
+    if(type==='rain'){
+      ctx.lineWidth=.8;
+      parts.forEach(p=>{
+        ctx.globalAlpha=p.op;ctx.strokeStyle='rgba(180,210,255,1)';
+        ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-2.5,p.y+p.len);ctx.stroke();
+        p.x-=1;p.y+=p.spd;
+        if(p.y>H){p.y=Math.random()*-30;p.x=Math.random()*W;}
+        if(p.x<0)p.x=W;
+      });
+    }else if(type==='leaves'){
+      parts.forEach(p=>{
+        ctx.save();ctx.globalAlpha=p.op;ctx.translate(p.x,p.y);ctx.rotate(p.rot);
+        ctx.fillStyle='rgba(120,160,50,.9)';
+        ctx.beginPath();ctx.ellipse(0,0,p.r*1.5,p.r*.7,0,0,Math.PI*2);ctx.fill();
+        ctx.restore();
+        p.x+=p.vx+Math.sin(p.y*.008)*.3;p.y+=p.vy;p.rot+=p.rspd;
+        if(p.y>H+10){p.y=-10;p.x=Math.random()*W;}
+        if(p.x<-10)p.x=W+10;if(p.x>W+10)p.x=-10;
+      });
+    }else if(type==='dust'){
+      parts.forEach(p=>{
+        ctx.globalAlpha=p.op;ctx.fillStyle='rgba(210,190,150,.9)';
+        ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
+        p.x+=p.vx+Math.sin(Date.now()*.0003+p.r)*.08;
+        p.y+=p.vy+Math.cos(Date.now()*.0002+p.r)*.06;
+        if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      });
+    }else if(type==='static'){
+      parts.forEach(p=>{
+        p.life-=.04+Math.random()*.06;
+        if(p.life<=0){p.x=Math.random()*W;p.y=Math.random()*H;p.life=.5+Math.random()*.7;p.op=.12+Math.random()*.4;}
+        const r=100+Math.random()*155|0,g=200+Math.random()*55|0;
+        ctx.globalAlpha=p.op*Math.max(0,p.life);
+        ctx.fillStyle=`rgb(${r},${g},${r})`;
+        ctx.fillRect(p.x,p.y,p.sz,p.sz);
+      });
+    }
+    ctx.globalAlpha=1;
+    _partAnim=requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+// ── Typewriter ────────────────────────────────────────────────
 let _twTimer=null;
 function typewriter(el,text,mspc=26,cb){
   clearTimeout(_twTimer);el.textContent='';let i=0;
@@ -760,7 +1001,7 @@ function typewriter(el,text,mspc=26,cb){
   };tick();
 }
 
-// ── Dialoogsysteem ────────────────────────────────────────────
+// ── Dialog system ─────────────────────────────────────────────
 let _dLines=[],_dIdx=0,_dActive=false,_dAutoTimer=null,_speechDone=false,_typeDone=false;
 
 function showDialog(lines,onDone){
@@ -769,6 +1010,7 @@ function showDialog(lines,onDone){
 }
 let _dDone=null;
 
+// Only auto-advance when BOTH typewriter AND speech have finished
 function _tryAdvance(){
   if(!_dActive)return;
   if(_typeDone&&_speechDone){
@@ -783,25 +1025,33 @@ function _showLine(){
   _speechDone=false;_typeDone=false;
   const ln=_dLines[_dIdx];
   const dn=$('dn'),dt=$('dt'),dc=$('dc');
-  const prof=VPROF[ln.speaker]||VPROF.Verteller;
+  const prof=VPROF[ln.speaker]||VPROF.Narrator;
   dn.textContent=ln.speaker||'';
   dn.className=ln.color||'';
   dt.textContent='';dc.classList.remove('on');
   show('dlg');
+  // Characters
   stopTalking();
   if(ln.charL){showChar('L',ln.charL,true);}
   else{$('cl').classList.remove('in','tk');}
   if(ln.charR){showChar('R',ln.charR,true);}
   else{$('cr').classList.remove('in','tk');}
+  // Speak — advance only after TTS finishes the full sentence
   V.speak(ln.text,{...prof,onEnd:()=>{
-    stopTalking();_speechDone=true;_tryAdvance();
+    stopTalking();
+    _speechDone=true;
+    _tryAdvance();
   }});
-  if(!V.synth||V.voices.length===0){
+  // Fallback when no TTS available: use character-count estimate
+  if(!V.synth||!V.synth.speaking&&V.voices.length===0){
     const ms=Math.max(2000,ln.text.length*60);
     setTimeout(()=>{_speechDone=true;_tryAdvance();},ms);
   }
+  // Typewriter — show caret when done, then wait for speech gate
   typewriter(dt,ln.text,24,()=>{
-    dc.classList.add('on');_typeDone=true;_tryAdvance();
+    dc.classList.add('on');
+    _typeDone=true;
+    _tryAdvance();
   });
 }
 function _endDialog(){
@@ -811,12 +1061,13 @@ function _endDialog(){
 function advanceDialog(){
   if(!_dActive)return;
   clearTimeout(_dAutoTimer);V.stop();stopTalking();
-  _speechDone=true;_typeDone=true;
+  _speechDone=true;_typeDone=true; // clear gates so _showLine starts fresh
   _dIdx++;_showLine();
 }
 
-// ── Intro-sequentie ───────────────────────────────────────────
+// ── Intro Sequence ────────────────────────────────────────────
 function runIntro(){
+  // Build starfield
   const stars=$('cw-stars');
   for(let i=0;i<120;i++){
     const s=document.createElement('div');s.className='star';
@@ -829,7 +1080,7 @@ function runIntro(){
   let t=0;
   function at(ms,fn){setTimeout(fn,ms);}
 
-  // ACT 1: Productiekaart
+  // ACT 1: Production card
   at(t+=500,()=>{ show('prod-card');
     at(800,()=>{ $('pc1').classList.add('vis');$('pc-sep').classList.add('vis'); });
     at(1400,()=>{ $('pc2').classList.add('vis'); });
@@ -844,15 +1095,15 @@ function runIntro(){
     {txt:'═══════════════════════════════════',cls:'d'},
     {txt:'INITIALIZING CORE ENGINE...         [OK]',cls:''},
     {txt:'LOADING SCENE DATABASE...           [42 SCENES]',cls:'i'},
-    {txt:'LOADING CHARACTER REGISTRY...       [14 CHARS]',cls:'i'},
+    {txt:'LOADING CHARACTER REGISTRY...       [14 CHARACTERS]',cls:'i'},
     {txt:'LOADING PUZZLE ENGINE...            [OK]',cls:''},
     {txt:'CHECKING AES-256 ENCRYPTION...      [OK]',cls:''},
     {txt:'MESHTASTIC NODE STATUS...           [ONLINE]',cls:'i'},
     {txt:'WEB AUDIO ENGINE...                 [ACTIVE]',cls:''},
     {txt:'',cls:''},
-    {txt:'>> WAARSCHUWING: OPERATIE ZERFALL ACTIEF',cls:'w'},
-    {txt:'>> CLASSIFICATIE: NIVEAU 5 / VERTROUWELIJK',cls:'c'},
-    {txt:'>> MISSIE-BRIEFING WORDT GELADEN...',cls:''},
+    {txt:'>> WARNING: OPERATION ZERFALL ACTIVE',cls:'w'},
+    {txt:'>> CLASSIFICATION: LEVEL 5 / RESTRICTED',cls:'c'},
+    {txt:'>> MISSION BRIEFING IN PROGRESS...',cls:''},
     {txt:'',cls:''},
   ];
   const tblock=$('tb-block');
@@ -870,17 +1121,18 @@ function runIntro(){
   });
   at(t+=lineDelay+600,()=>{ hide('term-boot'); });
 
-  // ACT 3: Aftiteling / crawl
+  // ACT 3: Star Wars crawl
   at(t+=400,()=>{ show('crawl-wrap'); A.drone(38,70,.3); });
   $('crawl-skip').onclick=()=>endCrawl();
   function endCrawl(){
     hide('crawl-wrap');
     at(400,()=>doTitleBlast());
   }
-  at(t+=67000,()=>endCrawl());
+  at(t+=67000,()=>endCrawl()); // auto-advance after crawl duration (68s animation - 1s buffer)
 
   function doTitleBlast(){
-    show('title-blast');A.sweep();flash();
+    show('title-blast');A.sweep();
+    flash();
   }
   $('begin-btn').onclick=()=>{
     A.resume();
@@ -892,7 +1144,10 @@ function runIntro(){
   };
 }
 
-// ── Dia-inhoud ────────────────────────────────────────────────
+// ── Slides Data ───────────────────────────────────────────────
+// Each slide: bg, kb, grain, lb, tint, loc, chapter,
+//             titleCard, caption, charL/R, dialog, special, duration
+
 const RY='assets/images/characters/ryan_southpark.svg';
 const MAX='assets/images/characters/max_southpark.svg';
 const EVA='assets/images/characters/eva_southpark.svg';
@@ -905,129 +1160,140 @@ const HM1='assets/images/characters/hacker_male_1_southpark.svg';
 const HM2='assets/images/characters/hacker_male_2_southpark.svg';
 const HF1='assets/images/characters/hacker_female_1_southpark.svg';
 const HF2='assets/images/characters/hacker_female_2_southpark.svg';
+const MOTHER='assets/images/characters/mother_southpark.svg';
 const PUG='assets/images/characters/pug_southpark.svg';
+
 const BG=s=>`assets/images/scenes/${s}.svg`;
 
 const SLIDES=[
 
-// ─── HOOFDSTUK 1: KARAKTERS ────────────────────────────────
+// ─── CH1: CHARACTERS ───────────────────────────────────────
 
-{ chapter:{n:'HOOFDSTUK I',t:'Maak kennis met de cast'},
-  bg:BG('home'),kb:'kb-zo',duration:2400 },
+{ chapter:{n:'CHAPTER I',t:'Someone You\'d Never Suspect'},
+  bg:BG('home'),kb:'kb-zo',duration:2800 },
 
 { bg:BG('home'),kb:'kb-pr',loc:'Compascuum, Drenthe — 07:45',
   dialog:[
-    {speaker:'Ryan',charL:RY,text:"Ryan Weylant. Developer. Hacker. Radioamateur. Boerderij in Compascuum. Max, drie honden, koffie en een mancave vol radioapparatuur.",color:''},
+    {speaker:'Ryan',charL:RY,text:"I was making an espresso. Somewhere across the province, a USB stick was being taped under a stone bench. Our lives were about to intersect. Neither of us knew it yet.",color:''},
   ]},
 
-{ bg:BG('livingroom'),kb:'kb-zi',loc:'Woonkamer',grain:true,
+{ bg:BG('livingroom'),kb:'kb-zi',loc:'Living Room',grain:true,
   dialog:[
-    {speaker:'Max',charR:MAX,text:"Ik ben Max. Ik regel de honden, de tuin en de schade van Ryan's projecten. Keukentafel: RF-analysers. Hij noemde het onderzoek.",color:''},
+    {speaker:'Max',charR:MAX,text:"I've learned to recognise the look. The one where Ryan has found something he can't unsee. That Tuesday morning — he had the look.",color:''},
   ]},
 
-{ bg:BG('garden_back'),kb:'kb-pr',loc:'Achtertuin',duration:4000 },
+{ bg:BG('garden_back'),kb:'kb-pr',loc:'Back Garden',duration:4000 },
 
-{ chapter:{n:'HOOFDSTUK II',t:'De Mysterieuze Contactpersoon'},
-  bg:BG('klooster'),kb:'kb-zi',duration:2400,lb:true,grain:true },
+{ chapter:{n:'CHAPTER II',t:'A Message from the Dark'},
+  bg:BG('klooster'),kb:'kb-zi',duration:2800,lb:true,grain:true },
 
 { bg:BG('klooster'),kb:'kb-pl',loc:'Ter Apel Klooster — 22:55',lb:true,grain:true,
   dialog:[
-    {speaker:'Eva',charR:EVA,text:"Eva Weber. IT security analyst. Ik ontdekte een geheim wapenprogramma. Mensen stierven. Intern melden was mijn eerste fout.",color:'blue'},
-    {speaker:'Eva',charR:EVA,text:"Ik kende jou van Tony Knight's hondtraining. Max stelde ons voor. Jij vergat me. Ik niet. Mijn vader Klaus liet de USB achter bij het klooster — hij had geen idee wat erop stond.",color:'blue'},
+    {speaker:'Eva',charR:EVA,text:"I knew something that people had died for. I needed someone completely off the grid. No government ties. No known affiliations.",color:'blue'},
+    {speaker:'Eva',charR:EVA,text:"Why you? Because you're the only person I'd ever met who would actually do this. And yes — you forgot about me the next day. I didn't.",color:'blue'},
   ]},
 
-{ chapter:{n:'HOOFDSTUK III',t:'De Antagonist'},
-  bg:BG('facility_server'),kb:'kb-zi',duration:2400,lb:true,grain:true,tint:'rgba(255,0,0,0.06)' },
+{ chapter:{n:'CHAPTER III',t:'The Man on the Other Side'},
+  bg:BG('facility_server'),kb:'kb-zi',duration:2800,lb:true,grain:true,tint:'rgba(255,0,0,0.06)' },
 
 { bg:BG('facility_server'),kb:'kb-pr',loc:'Steckerdoser Heide — Server Room',lb:true,grain:true,tint:'rgba(255,0,0,0.06)',
   dialog:[
-    {speaker:'Volkov',charR:VOLKOV,text:"Commandant Volkov. Project Echo is geen wapen. Preventieve chirurgie. Marlies Bakker was een kalibratiefout.",color:'red'},
-    {speaker:'Volkov',charR:VOLKOV,text:"Die hacker is een ongemak. En ongemakken… verdwijnen.",color:'red'},
+    {speaker:'Volkov',charR:VOLKOV,text:"I have been running Project Echo for three years. From a facility nobody on the outside even knows exists.",color:'red'},
+    {speaker:'Volkov',charR:VOLKOV,text:"I know about the Dutch hacker with the farmhouse full of radio gear. I'm not worried. Perhaps I should be.",color:'red'},
   ]},
 
-{ chapter:{n:'HOOFDSTUK IV',t:'De Bondgenoten'},
-  bg:BG('astron'),kb:'kb-zi',duration:2400 },
+{ chapter:{n:'CHAPTER IV',t:'No One Can Do This Alone'},
+  bg:BG('astron'),kb:'kb-zi',duration:2800 },
 
 { bg:BG('astron'),kb:'kb-pl',loc:'ASTRON, Dwingeloo',
   dialog:[
-    {speaker:'Cees',charL:CEES,text:"Cees Bassa, ASTRON. LOFAR-data bevestigde het in veertig minuten. Bewapende beamforming. ZERFALL-signatuur. Echt. Actief.",color:'blue'},
+    {speaker:'Cees',charL:CEES,text:"It took me forty minutes. I confirmed everything Ryan had suspected. I had hoped to be wrong about all of it. I wasn't.",color:'blue'},
   ]},
 
 { bg:BG('videocall'),kb:'kb-zi',loc:'Videocall — Prinsloo · Haartsen',
-  caption:'🔗 TU Eindhoven · Bluetooth-uitvinder · ZERFALL-netwerk in kaart',duration:4500 },
+  caption:'🔗 TU Eindhoven · Bluetooth inventor · ZERFALL network mapped',duration:4500 },
 
-{ bg:BG('debrief'),kb:'kb-pr',loc:'AIVD Debriefing — Zoetermeer',
+{ bg:BG('debrief'),kb:'kb-pr',loc:'AIVD Debrief — Zoetermeer',
   dialog:[
-    {speaker:'Kubecka',charL:KUBECKA,text:"Chris Kubecka. Ergste ICS-aanval die ik ooit heb gezien. HackRF, Flipper Zero, Meshtastic — hij liep naar binnen en liep het bewijs naar buiten.",color:''},
+    {speaker:'Kubecka',charL:KUBECKA,text:"I've seen state-sponsored attacks on hospital infrastructure before. But this one — this one is different.",color:''},
   ]},
 
 { bg:BG('hackerspace'),kb:'kb-zi',loc:'Hackerspace Drenthe — Coevorden',
-  caption:'🔧 Dennis · Sophie · Marco · Kim — dinsdagpresentaties houden Ryan scherp',duration:4000 },
+  caption:'🔧 Dennis · Sophie · Marco · Kim — they don’t know what Ryan’s working on',duration:4000 },
 
-// ─── HOOFDSTUK 5: HET ONDERZOEK ────────────────────────────
+// ─── CH2: THE INVESTIGATION ──────────────────────────────
 
-{ chapter:{n:'HOOFDSTUK V',t:'Het Onderzoek'},
-  bg:BG('mancave'),kb:'kb-zo',duration:2400 },
+{ chapter:{n:'CHAPTER V',t:'Down the Rabbit Hole'},
+  bg:BG('mancave'),kb:'kb-zo',duration:2800 },
 
 { bg:BG('sdr_bench'),kb:'kb-zi',loc:'Mancave — SDR Bench',
-  caption:'📡 14.230 MHz · Martin M2 · TRUST NO DATABASE',
+  caption:'📡 14.230 MHz — SSTV burst',
   dialog:[
-    {speaker:'Ryan',charL:RY,text:"Burst op 14.230 MHz. SSTV. Decoded met QSSTV: foto, coördinaten, Ter Apel Klooster.",color:''},
+    {speaker:'Ryan',charL:RY,text:"A signal on 14.230 MHz that had no business being there. I should have written it down and gone to bed. I didn't.",color:''},
   ]},
 
-{ bg:BG('klooster'),kb:'kb-pl',loc:'Ter Apel Klooster — Nacht',lb:true,grain:true,
-  caption:'⛪ 22:55 — Vastgetapet onder de tweede bank. USB. Handgeschreven: PLUG IN ONLY ON AIR-GAPPED MACHINE.',duration:5000 },
+{ bg:BG('sstv_terminal'),kb:'kb-pr',loc:'SSTV Terminal',
+  caption:'📺 Slow Scan Television · 1960s radio protocol · untraceable',duration:4500 },
 
-{ bg:BG('usb_discovery'),kb:'kb-zi',loc:'USB — Inhoud',lb:true,grain:true,
+{ bg:BG('klooster'),kb:'kb-pl',loc:'Ter Apel Klooster — Midnight',lb:true,grain:true,
+  caption:'⛪ 22:55',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Something taped under a stone bench. A handwritten note with three words I can't unhear.",color:''},
+  ]},
+
+{ bg:BG('usb_discovery'),kb:'kb-zi',loc:'USB — Contents',lb:true,grain:true,
   special:'usb',
   dialog:[
-    {speaker:'Ryan',charL:RY,text:"Codeboek ZERFALL. Zeven slachtofferrapporten. Marlies Bakker, 67. Hartmonitor faalde. Verhaal: apparatuurfout. Ik las dat drie keer.",color:''},
+    {speaker:'Ryan',charL:RY,text:"I'm not going to tell you what was on that USB stick. But I read it twice and called Cees. When he called back, his voice was different.",color:''},
   ]},
 
-{ bg:BG('airgapped_laptop'),kb:'kb-pr',loc:'Mancave — Forensische Analyse',
+{ bg:BG('airgapped_laptop'),kb:'kb-pr',loc:'Mancave — Forensic Analysis',
   caption:'🔬 Air-gapped · Write-blocker · SHA-256',
   dialog:[
-    {speaker:'Ryan',charL:RY,text:"Drie uur. Volledig beeld Project Echo. En één naam. Volkov.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Three hours. One name. Everything changed from that point forward.",color:''},
   ]},
 
-{ bg:BG('planboard'),kb:'kb-zi',loc:'Planboard — Bewijsbord',
-  special:'planboard',duration:6000 },
+{ bg:BG('planboard'),kb:'kb-zi',loc:'Investigation Board',
+  special:'planboard',duration:5500 },
 
 { bg:BG('secure_phone'),kb:'kb-pr',loc:'Meshtastic — 906.875 MHz',
   dialog:[
-    {speaker:'Eva',charR:EVA,text:"906.875 MHz. AES-256 kanaal ZERFALL. Verborgen in het USB README. Toen zijn node de mijne vond, wist ik: hij had alles gelezen.",color:'blue'},
+    {speaker:'Eva',charR:EVA,text:"I'd been waiting for months. I picked up on the first ping.",color:'blue'},
   ]},
 
-// ─── HOOFDSTUK 6: VELDMISSIES ──────────────────────────────
+{ bg:BG('regional_map'),kb:'kb-zi',loc:'Regional Map — Drenthe',
+  caption:'🗺️ Compascuum · WSRT · LOFAR · Klooster · Steckerdoser Heide',duration:4500 },
 
-{ chapter:{n:'HOOFDSTUK VI',t:'Veldmissies'},
-  bg:BG('lofar'),kb:'kb-zo',duration:2400,grain:true },
+// ─── CH3: THE FIELD MISSIONS ─────────────────────────
+
+{ chapter:{n:'CHAPTER VI',t:'Into the Field'},
+  bg:BG('lofar'),kb:'kb-zo',duration:2800,grain:true },
 
 { bg:BG('lofar'),kb:'kb-zi',loc:'LOFAR Superterp — Exloo',
-  caption:'📡 638 SVG-lijnen · 51 stations · 13 Tbit/s',
+  caption:'📡 638 SVG lines · 51 stations · 13 Tbit/s',
   dialog:[
-    {speaker:'Cees',charL:CEES,text:"ZERFALL gebruikte LOFAR als onbedoelde repeater. We hadden de anomalie zes weken eerder al geregistreerd.",color:'blue'},
+    {speaker:'Cees',charL:CEES,text:"ZERFALL was using LOFAR — sixty-four years of radio astronomy — as an unwitting relay. Nobody had noticed. Until now.",color:'blue'},
   ]},
 
 { bg:BG('westerbork_memorial'),kb:'kb-pl',loc:'Westerbork · Dwingeloo',lb:true,
   dialog:[
-    {speaker:'Ryan',charL:RY,text:"Westerbork: ZERFALL node in een bewakingscamera — gecracked in 18 seconden. Dwingeloo: relay in de historische schotelstructuur. Volkov heeft smaak.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Two historic landmarks. Two hidden nodes. Volkov has very specific tastes in infrastructure.",color:''},
   ]},
 
-{ bg:BG('driving_day'),kb:'kb-pr',loc:'N34 — Richting doel',lb:true,
+{ bg:BG('driving_day'),kb:'kb-pr',loc:'N34 — Heading north',lb:true,
   dialog:[
-    {speaker:'Ryan',charL:RY,text:"Drie hacktools in een Faraday bag. Eva's code gebrand in mijn geheugen. 2847. Vooruit.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Flat fields. White WSRT dishes above the treeline. I could be going to a picnic. Faraday bag on the passenger seat says otherwise.",color:''},
   ]},
 
-// ─── HOOFDSTUK 7: ACTIE ────────────────────────────────────
+// ─── CH4: ACTION ───────────────────────────────────────
 
-{ chapter:{n:'HOOFDSTUK VII',t:'Actie — Steckerdoser Heide'},
-  bg:BG('drone_hunt'),kb:'kb-zo',duration:2400,lb:true,grain:true },
+{ chapter:{n:'CHAPTER VII',t:'Steckerdoser Heide — 23:30'},
+  bg:BG('drone_hunt'),kb:'kb-zo',duration:2800,lb:true,grain:true },
 
-{ bg:BG('drone_hunt'),kb:'kb-zi',loc:'Steckerdoser Heide — 23:30',lb:true,grain:true,
+{ bg:BG('drone_hunt'),kb:'kb-zi',loc:'Steckerdoser Heide Forest',lb:true,grain:true,
   special:'drones-start',
   dialog:[
-    {speaker:'Ryan',charL:RY,text:"Vier drones. Thermische camera's. Volkov's perimeter. Goed.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Four drones. Thermal imaging. The forest wasn't as empty as I needed it to be.",color:''},
   ]},
 
 { bg:BG('drone_hunt'),kb:'kb-pr',loc:'GPS Spoof — HackRF One',lb:true,grain:true,
@@ -1036,102 +1302,112 @@ const SLIDES=[
 { bg:BG('drone_hunt'),kb:'kb-zi',loc:'EXECUTE',lb:true,grain:true,
   special:'drones-crash',
   dialog:[
-    {speaker:'Ryan',charL:RY,text:"Vier drones. Vier plonzen. Vijftigduizend euro. Ham radio trucje.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Four drones. Four splashes. Let's go.",color:''},
   ]},
 
-{ bg:BG('facility'),kb:'kb-pr',loc:'Faciliteit Exterieur',lb:true,
-  caption:'🔓 RFID badge gekloond — 4 seconden',duration:4000 },
+{ bg:BG('facility'),kb:'kb-pr',loc:'Facility Exterior',lb:true,
+  caption:'🔑 RFID badge cloned — 4 seconds',duration:4200 },
 
-{ bg:BG('laser_corridor'),kb:'kb-zi',loc:'Basement Niveau B',lb:true,grain:true,
+{ bg:BG('laser_corridor'),kb:'kb-zi',loc:'Basement Level B',lb:true,grain:true,
   special:'lasers-start',
   dialog:[
-    {speaker:'Ryan',charL:RY,text:"Laser grid. Bewegingssensoren. Biometrisch slot. Flipper: IR. HackRF: 40 kHz. Code: 2847.",color:''},
+    {speaker:'Ryan',charL:RY,text:"IR. Ultrasonic. Biometric. Three layers between me and the server room. I had nine minutes and a Flipper Zero.",color:''},
   ]},
 
 { bg:BG('laser_corridor'),kb:'kb-pl',loc:'Laser Grid — Bypass',lb:true,grain:true,
   special:'lasers-bypass',
   dialog:[
-    {speaker:'Ryan',charL:RY,text:"38 kHz. Shutdown commando. Corridor: groen. Negentig seconden.",color:''},
+    {speaker:'Ryan',charL:RY,text:"38 kHz. Shutdown command. The corridor went green. I didn't look down.",color:''},
   ]},
 
-{ bg:BG('facility_server'),kb:'kb-zi',loc:'Server Room — TOEGANG',lb:true,grain:true,tint:'rgba(0,255,136,0.04)',
+{ bg:BG('facility_server'),kb:'kb-zi',loc:'Server Room — ACCESS',lb:true,grain:true,tint:'rgba(0,255,136,0.04)',
   dialog:[
-    {speaker:'Eva',charR:EVA,text:"Ryan — vier minuten. Haast de checksums NIET.",color:'blue'},
-    {speaker:'Ryan',charL:RY,text:"4,2 gigabyte gedownload. Database gecorrumpeerd. We zijn weg.",color:''},
+    {speaker:'Eva',charR:EVA,text:"Ryan — four minutes. Shift change. Don't rush the checksums.",color:'blue'},
+    {speaker:'Ryan',charL:RY,text:"4.2 gigabytes. Database corrupted. She said don't rush. I didn't rush.",color:''},
   ]},
 
-{ bg:BG('facility_interior'),kb:'kb-pr',loc:'Ontsnapping',lb:true,
-  caption:'🚗 Timestamps vervalst — Volvo op de A31',duration:4000 },
+{ bg:BG('facility_interior'),kb:'kb-pr',loc:'Escape',lb:true,
+  caption:'🚗 Timestamps scrambled · Volvo on the A31',duration:4000 },
 
-// ─── HOOFDSTUK 8: PUZZELS ──────────────────────────────────
+// ─── CH5: PUZZLES ───────────────────────────────────────
 
-{ chapter:{n:'HOOFDSTUK VIII',t:'De Puzzels'},
-  bg:BG('laptop'),kb:'kb-zo',duration:2400 },
+{ chapter:{n:'CHAPTER VIII',t:'Your Turn — Can You Crack It?'},
+  bg:BG('laptop'),kb:'kb-zo',duration:2800 },
 
-{ bg:BG('drone_hunt'),kb:'kb-zi',loc:'Puzzel 1 — GPS Spoofing',
-  special:'puzzle-gps',duration:99999 },
+{ bg:BG('drone_hunt'),kb:'kb-zi',loc:'Puzzle 1 — GPS Spoofing',
+  special:'puzzle-gps',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"You saw how I did it. GPS L1. 1575.42 MHz. No authentication. Now — can YOU do it?",color:''},
+  ]},
 
-{ bg:BG('laser_corridor'),kb:'kb-pl',loc:'Puzzel 2 — Flipper Zero IR',lb:true,
-  special:'puzzle-laser',duration:99999 },
+{ bg:BG('laser_corridor'),kb:'kb-pl',loc:'Puzzle 2 — Flipper Zero IR',lb:true,
+  special:'puzzle-laser',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"38 kHz. Shutdown command. Your move.",color:''},
+  ]},
 
-{ bg:BG('sstv_terminal'),kb:'kb-zi',loc:'Puzzel 3 — SSTV Decode',
-  special:'puzzle-sstv',duration:99999 },
+{ bg:BG('sstv_terminal'),kb:'kb-zi',loc:'Puzzle 3 — SSTV Decode',
+  special:'puzzle-sstv',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"The signal is still out there. Martin M2. 14.230 MHz. Find it.",color:''},
+  ]},
 
-// ─── INTERMEZZO: ZITMAAIER ─────────────────────────────────
+// ─── INTERMEZZO ──────────────────────────────────────────
 
-{ chapter:{n:'INTERMEZZO',t:'De Zitmaaier'},
-  bg:BG('garden_back'),kb:'kb-zo',duration:2400 },
+{ chapter:{n:'INTERMEZZO',t:'But First — The Lawn'},
+  bg:BG('garden_back'),kb:'kb-zo',duration:2800 },
 
-{ bg:BG('garden_back'),kb:'kb-zi',loc:'Achtertuin — Zitmaaier',
+{ bg:BG('garden_back'),kb:'kb-zi',loc:'Back Garden — Sit Mower',
   special:'mower',
   dialog:[
-    {speaker:'Max',charR:MAX,text:"Het gras eerst, Ryan. Dat is een grens.",color:''},
+    {speaker:'Max',charR:MAX,text:"The lawn first, Ryan. That is a boundary.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Arrow keys or WASD. Avoid the dogs. The fire drum is non-negotiable.",color:''},
   ]},
 
-// ─── HOOFDSTUK 9: DE NASLEEP ───────────────────────────────
+// ─── CH6: WHAT HAPPENS NEXT? ────────────────────────────
 
-{ chapter:{n:'HOOFDSTUK IX',t:'De Nasleep'},
-  bg:BG('long_night'),kb:'kb-zo',duration:2400,grain:true },
+{ chapter:{n:'CHAPTER IX',t:'What Happens Next?'},
+  bg:BG('long_night'),kb:'kb-zo',duration:2800,grain:true },
 
-{ bg:BG('long_night'),kb:'kb-zi',loc:'Mancave — 07:15',grain:true,
+{ bg:BG('long_night'),kb:'kb-zi',loc:'Mancave — 01:30',grain:true,
   dialog:[
-    {speaker:'Ryan',charL:RY,text:"Zeven uur. Database gecorrumpeerd. Testmislukking bevestigd. 07:15 — persbericht verstuurd. Reuters, NRC, Der Spiegel. Sorry Tom.",color:''},
+    {speaker:'Ryan',charL:RY,text:"01:30. The data was all there. The 07:15 decision was mine to make.",color:''},
   ]},
 
-{ bg:BG('morning_after'),kb:'kb-pr',loc:'Ochtend Erna',
+{ bg:BG('morning_after'),kb:'kb-pr',loc:'Morning After',
   dialog:[
-    {speaker:'Max',charR:MAX,text:"Trots op je. Eet nu iets.",color:''},
+    {speaker:'Ryan',charL:RY,text:"I'm not going to tell you what happened next. That's what the game is for.",color:''},
   ]},
 
-{ bg:BG('return_to_ies'),kb:'kb-zi',loc:'Thuis',lb:true,duration:4500 },
+{ bg:BG('epilogue'),kb:'kb-zo',lb:true,grain:true,
+  titleCard:{label:'CyberQuest: Operation ZERFALL',main:'The rest\nis up to you.',sub:'Play the game. Make the choices. Finish the mission.'},
+  duration:4800 },
 
-{ bg:BG('epilogue'),kb:'kb-zo',loc:'Mei 2026',lb:true,grain:true,
-  titleCard:{label:'Epiloog',main:'Drie Maanden Later',sub:'Mei 2026 — Compascuum'},
-  dialog:[
-    {speaker:'Verteller',text:"Faciliteit gesloten. Zeven gearresteerd. Volkov in München. Eva getuigde voor het Europees Parlement.",color:'blue'},
-    {speaker:'Ryan',charL:RY,text:"AIVD — parttime, remote, mancave. En ik hield de HackRF.",color:''},
-  ]},
+// ─── CALL TO ACTION ────────────────────────────────────────
 
 { bg:BG('credits'),kb:'kb-zi',grain:true,lb:true,tint:'rgba(0,255,136,0.05)',
-  titleCard:{label:'CyberQuest: Operatie ZERFALL',main:'Speel het nu',sub:'ryanweylant.tech  ·  Open index.html  ·  v0.7.0-alpha\nCC BY-SA 4.0  ·  Rein Velt × GitHub Copilot Claude'},
+  special:'cta',
   duration:99999 },
 
-]; // einde SLIDES
+]; // end SLIDES
 
-// ── Speciale scènehandlers ────────────────────────────────────
-function specialEnter(id){
+// ── Special handlers ──────────────────────────────────────────
+
+function specialEnter(id,slideIdx){
   setTimeout(()=>{
     switch(id){
-      case 'drones-start': buildDrones(false);showAlert('⚠ BEWAKINGSDRONES GEDETECTEERD');showLive();break;
-      case 'gps-panel':    buildDrones(false);showGpsPanel();showAlert('⚡ GPS SPOOF INITIALISEREN…');break;
-      case 'drones-crash': buildDrones(true);setTimeout(()=>{doShake(600);A.stinger();},1350);hideAlert();break;
-      case 'lasers-start': buildLasers(false);A.laserHum();showAlert('🔴 LASER GRID ACTIEF — TOEGANG GEBLOKKEERD');break;
-      case 'lasers-bypass':buildLasers(true);A.stopLaser();setTimeout(()=>{doGlitch();A.beep(1400,.14);},280);hideAlert();break;
+      case 'drones-start': buildDrones(false); showAlert('⚠ SURVEILLANCE DRONES DETECTED'); showLive(); break;
+      case 'gps-panel':    buildDrones(false); showGpsPanel(); showAlert('⚡ GPS SPOOF INITIALISING…'); break;
+      case 'drones-crash': buildDrones(true); setTimeout(()=>{doShake(600);A.stinger();hideAlert();hideLive();},1350); break;
+      case 'lasers-start': buildLasers(false); A.laserHum(); showAlert('🔴 LASER GRID ACTIVE — ACCESS BLOCKED'); break;
+      case 'lasers-bypass':buildLasers(true); A.stopLaser(); setTimeout(()=>{doGlitch();A.beep(1400,.14);},280); hideAlert(); break;
       case 'planboard':    buildPlanboard(); break;
       case 'mower':        startMower(); break;
       case 'puzzle-gps':   showPuzzle('gps'); break;
       case 'puzzle-laser': showPuzzle('laser'); break;
       case 'puzzle-sstv':  showPuzzle('sstv'); break;
+      case 'usb':          /* handled by caption */ break;
+      case 'cta':          show('cta-slide'); setTimeout(()=>{A.stinger();doGlitch();},400); break;
     }
   },600);
 }
@@ -1142,10 +1418,12 @@ function buildDrones(crash){
   const layer=$('drone-l');layer.innerHTML='';_droneEls=[];
   show('drone-l');
   const positions=[
-    {left:'18%',top:'18%',pat:'p1'},{left:'58%',top:'12%',pat:'p2'},
-    {left:'72%',top:'32%',pat:'p3'},{left:'38%',top:'22%',pat:'p4'},
+    {left:'18%',top:'18%',pat:'p1'},
+    {left:'58%',top:'12%',pat:'p2'},
+    {left:'72%',top:'32%',pat:'p3'},
+    {left:'38%',top:'22%',pat:'p4'},
   ];
-  positions.forEach((p)=>{
+  positions.forEach((p,i)=>{
     const d=document.createElement('div');d.className='dr '+p.pat;
     d.style.left=p.left;d.style.top=p.top;
     const lt=document.createElement('div');lt.className='dr-lt';d.appendChild(lt);
@@ -1154,14 +1432,19 @@ function buildDrones(crash){
   if(crash){
     setTimeout(()=>{
       _droneEls.forEach((d,i)=>{
+        const rect=d.getBoundingClientRect();
+        const layerRect=layer.getBoundingClientRect();
         const cx=d.offsetLeft+26,cy=d.offsetTop+10;
         setTimeout(()=>{
-          d.classList.remove('p1','p2','p3','p4');d.classList.add('crash');
+          d.classList.remove('p1','p2','p3','p4');
+          d.classList.add('crash');
           A.explosion();
+          // explosion effect
           setTimeout(()=>{
             const ex=document.createElement('div');ex.className='expl';
             ex.style.cssText=`left:${cx}px;top:${cy}px;width:60px;height:60px;`;
-            layer.appendChild(ex);setTimeout(()=>ex.remove(),1000);
+            layer.appendChild(ex);
+            setTimeout(()=>ex.remove(),1000);
           },200+i*150);
         },i*450);
       });
@@ -1174,20 +1457,23 @@ function showGpsPanel(){
   const steps=[
     {id:'gv-freq',val:'1575.42 MHz (GPS L1)',delay:600},
     {id:'gv-pwr', val:'40 dBm',delay:1400},
-    {id:'gv-coord',val:'52.8340° N, 7.4185° E (moeras)',delay:2200},
+    {id:'gv-coord',val:'52.8340° N, 7.4185° E (bog)',delay:2200},
     {id:'gv-drones',val:'4 × ZERFALL-1 drones',delay:3000},
   ];
   steps.forEach(s=>setTimeout(()=>{
     const el=$(s.id);el.textContent=s.val;el.classList.add('a');A.beep(900,.06);
   },s.delay));
-  setTimeout(()=>{$('gexec').classList.add('fire');A.beep(1200,.15);},4000);
+  setTimeout(()=>{
+    const ex=$('gexec');ex.classList.add('fire');A.beep(1200,.15);
+  },4000);
 }
 
 // LASERS
 function buildLasers(bypass){
-  const layer=$('laser-l');
+  const layer=$('laser-l');layer.innerHTML='';
   layer.innerHTML='<div id="laser-status"></div>';
   show('laser-l');
+  // Diagonal horizontal beams across corridor
   const beams=[
     {type:'h',top:'32%',left:'0%',width:'45%',rot:'-12deg'},
     {type:'h',top:'52%',left:'20%',width:'50%',rot:'8deg'},
@@ -1195,21 +1481,35 @@ function buildLasers(bypass){
     {type:'v',left:'42%',top:'28%',height:'40%',rot:'15deg'},
     {type:'v',left:'62%',top:'20%',height:'50%',rot:'-10deg'},
   ];
+  const els=[];
   beams.forEach((b,i)=>{
     const el=document.createElement('div');
-    if(b.type==='h'){el.className='lb';el.style.cssText=`top:${b.top};left:${b.left};width:${b.width};transform:rotate(${b.rot});animation-delay:${i*.07}s;`;}
-    else{el.className='lv';el.style.cssText=`left:${b.left};top:${b.top};height:${b.height};transform:rotate(${b.rot});animation-delay:${i*.07}s;`;}
-    layer.appendChild(el);
-    const d=document.createElement('div');d.className='ldot';d.style.left=b.left;d.style.top=b.top;layer.appendChild(d);
+    if(b.type==='h'){
+      el.className='lb';el.style.cssText=`top:${b.top};left:${b.left};width:${b.width};transform:rotate(${b.rot});animation-delay:${i*.07}s;`;
+    }else{
+      el.className='lv';el.style.cssText=`left:${b.left};top:${b.top};height:${b.height};transform:rotate(${b.rot});animation-delay:${i*.07}s;`;
+    }
+    layer.appendChild(el);els.push(el);
+    // sensor dots
+    const d=document.createElement('div');d.className='ldot';
+    d.style.cssText=`left:calc(${b.left||b.left});top:calc(${b.top||b.top});`;
+    d.style.left=b.left;d.style.top=b.top;
+    layer.appendChild(d);
     const s=document.createElement('div');s.className='lsns';
     s.style.left=(b.type==='h')?(parseFloat(b.left)+parseFloat(b.width)+'%'):b.left;
     s.style.top=(b.type==='h')?b.top:(parseFloat(b.top)+parseFloat(b.height)+'%');
-    layer.appendChild(s);
+    layer.appendChild(s);els.push(s);
   });
   if(bypass){
+    // Disable beams one by one
     const allBeams=layer.querySelectorAll('.lb,.lv,.ldot,.lsns');
-    allBeams.forEach((el,i)=>{setTimeout(()=>{el.classList.add('off');A.beep(Math.max(200,600-i*50),.12);},i*400);});
-    setTimeout(()=>{const st=$('laser-status');st.textContent='✓ LASER GRID DISABLED';st.classList.add('on');},allBeams.length*400+200);
+    allBeams.forEach((el,i)=>{
+      setTimeout(()=>{el.classList.add('off');A.beep(Math.max(200,600-i*50),.12);},i*400);
+    });
+    setTimeout(()=>{
+      const st=$('laser-status');
+      st.textContent='✓ LASER GRID DISABLED';st.classList.add('on');
+    },allBeams.length*400+200);
   }
 }
 
@@ -1221,82 +1521,94 @@ function buildPlanboard(){
     {label:'Eva Weber',img:'assets/images/characters/eva_southpark.svg'},
     {label:'Volkov',img:'assets/images/characters/volkov_southpark.svg'},
     {label:'USB Stick',img:'assets/images/overlayimg/planboard-usb-photo.svg'},
-    {label:'SSTV Foto',img:'assets/images/overlayimg/planboard-sstv-photo.svg'},
-    {label:'Faciliteit Foto',img:'assets/images/overlayimg/planboard-facility-photo.svg'},
-    {label:'Eva Silhouet',img:'assets/images/overlayimg/planboard-eva-silhouette.svg'},
-    {label:'Wapen Schema',img:'assets/images/overlayimg/planboard-weapon-schematic.svg'},
+    {label:'SSTV Photo',img:'assets/images/overlayimg/planboard-sstv-photo.svg'},
+    {label:'Facility Photo',img:'assets/images/overlayimg/planboard-facility-photo.svg'},
+    {label:'Eva Silhouette',img:'assets/images/overlayimg/planboard-eva-silhouette.svg'},
+    {label:'Weapon Schema',img:'assets/images/overlayimg/planboard-weapon-schematic.svg'},
   ];
   cards.forEach((c,i)=>{
-    const div=document.createElement('div');div.className='pbc';
+    const div=document.createElement('div');div.className='pbc'+(c.highlight?' hl':'');
     div.innerHTML=`<img src="${c.img}" alt="${c.label}"><div class="pbc-lbl">${c.label}</div>`;
+    div.style.animationDelay=i*.1+'s';
     g.appendChild(div);
     setTimeout(()=>div.style.opacity='1',i*120);
     div.style.opacity='0';div.style.transition='opacity .4s';
   });
 }
 
-// ZITMAAIER
+// MOWER
 function startMower(){
-  show('mwr-l');$('mwr-hud').classList.add('on');
+  show('mwr-l');show('mwr-hud');
   const canvas=$('mwr-canvas');
   const W=canvas.offsetWidth,H=canvas.offsetHeight;
   canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext('2d');
   const COLS=24,ROWS=16,CW=W/COLS,CH=H/ROWS;
   const grid=Array.from({length:ROWS},()=>Array(COLS).fill(0));
-  let mx=1,my=1;
-  const DOGS=[[6,8],[12,10],[18,7]];
+  // Mower state
+  let mx=1,my=1,dir=1,step=0;
+  const DOG_POSITIONS=[[6,8],[12,10],[18,7]]; // dog obstacles
   function draw(){
     ctx.clearRect(0,0,W,H);
+    // Draw cells
     for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
-      ctx.fillStyle=grid[r][c]?'rgba(200,220,160,0.35)':'rgba(60,120,40,0.25)';
+      const mowed=grid[r][c];
+      ctx.fillStyle=mowed?'rgba(200,220,160,0.35)':'rgba(60,120,40,0.25)';
       ctx.fillRect(c*CW,r*CH,CW-1,CH-1);
     }
-    DOGS.forEach(([dc,dr])=>{
+    // Dogs
+    DOG_POSITIONS.forEach(([dc,dr])=>{
+      ctx.fillStyle='rgba(255,200,100,0.8)';
+      ctx.beginPath();ctx.ellipse(dc*CW+CW/2,dr*CH+CH/2,CW*.4,CH*.35,0,0,Math.PI*2);ctx.fill();
       ctx.font=`${CW*.7}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.fillText('🐕',dc*CW+CW/2,dr*CH+CH/2);
     });
+    // Mower
+    ctx.fillStyle='rgba(255,200,0,0.9)';
+    ctx.fillRect(mx*CW+2,my*CH+2,CW-4,CH-4);
     ctx.font=`${CW*.75}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText('🚜',mx*CW+CW/2,my*CH+CH/2);
   }
+  // Serpentine path
   const path=[];
   for(let r=1;r<ROWS-1;r++){
     if(r%2===1)for(let c=1;c<COLS-1;c++)path.push([c,r]);
     else for(let c=COLS-2;c>=1;c--)path.push([c,r]);
   }
   let pathIdx=0;
-  const iv=setInterval(()=>{
-    if(pathIdx>=path.length){clearInterval(iv);return;}
+  const moverInterval=setInterval(()=>{
+    if(pathIdx>=path.length){clearInterval(moverInterval);return;}
     const [nc,nr]=path[pathIdx++];
-    if(!DOGS.some(([dc,dr])=>dc===nc&&dr===nr)){mx=nc;my=nr;grid[nr][nc]=1;}
+    const isDog=DOG_POSITIONS.some(([dc,dr])=>dc===nc&&dr===nr);
+    if(!isDog){mx=nc;my=nr;grid[nr][nc]=1;}
     draw();
   },80);
   draw();
 }
 
-// PUZZELS
+// PUZZLES
 function showPuzzle(type){
-  show('puz');
+  const puz=$('puz');show('puz');
   $('puz-r').textContent='';$('puz-r').className='';
   $('puz-fields').innerHTML='';
   if(type==='gps'){
-    $('puz-title').textContent='📡 GPS Spoof — Voer parameters in';
+    $('puz-title').textContent='📡 GPS Spoof — Enter Parameters';
     $('puz-fields').innerHTML=`
-      <div class="pf"><span class="pl">Frequentie (MHz):</span><input class="pv" id="pi-f" placeholder="bijv. 1575.42"></div>
-      <div class="pf"><span class="pl">Zendvermogen (dBm):</span><input class="pv" id="pi-p" placeholder="bijv. 40"></div>
-      <div class="pf"><span class="pl">Doel:</span><input class="pv" id="pi-t" placeholder="bijv. moeras"></div>
+      <div class="pf"><span class="pl">Frequency (MHz):</span><input class="pv" id="pi-f" placeholder="e.g. 1575.42"></div>
+      <div class="pf"><span class="pl">TX Power (dBm):</span><input class="pv" id="pi-p" placeholder="e.g. 40"></div>
+      <div class="pf"><span class="pl">Target:</span><input class="pv" id="pi-t" placeholder="e.g. bog / swamp"></div>
       <button class="pbtn" onclick="checkPuzzle('gps')">[ EXECUTE SPOOF ]</button>`;
   }else if(type==='laser'){
-    $('puz-title').textContent='🔴 Flipper Zero IR — Vind de frequentie';
+    $('puz-title').textContent='🔴 Flipper Zero IR — Find the Frequency';
     $('puz-fields').innerHTML=`
-      <div class="pf"><span class="pl">IR Modulatie (kHz):</span><input class="pv" id="pi-f" placeholder="?? kHz"></div>
-      <div class="pf"><span class="pl">Commando:</span><input class="pv" id="pi-p" placeholder="bijv. shutdown / replay"></div>
+      <div class="pf"><span class="pl">IR Modulation (kHz):</span><input class="pv" id="pi-f" placeholder="?? kHz"></div>
+      <div class="pf"><span class="pl">Command:</span><input class="pv" id="pi-p" placeholder="e.g. shutdown / replay"></div>
       <button class="pbtn" onclick="checkPuzzle('laser')">[ SEND COMMAND ]</button>`;
   }else if(type==='sstv'){
-    $('puz-title').textContent='📺 SSTV Decode — Identificeer de modus';
+    $('puz-title').textContent='📺 SSTV Decode — Identify the Mode';
     $('puz-fields').innerHTML=`
-      <div class="pf"><span class="pl">SSTV Modus:</span><input class="pv" id="pi-f" placeholder="bijv. Martin M1, M2..."></div>
-      <div class="pf"><span class="pl">Frequentie (MHz):</span><input class="pv" id="pi-p" placeholder="bijv. 14.230"></div>
+      <div class="pf"><span class="pl">SSTV Mode:</span><input class="pv" id="pi-f" placeholder="e.g. Martin M1, M2..."></div>
+      <div class="pf"><span class="pl">Frequency (MHz):</span><input class="pv" id="pi-p" placeholder="e.g. 14.230"></div>
       <button class="pbtn" onclick="checkPuzzle('sstv')">[ DECODE ]</button>`;
   }
 }
@@ -1312,16 +1624,18 @@ window.checkPuzzle=function(type){
     f.classList.add('solved');p.classList.add('solved');
     r.textContent='✓ CORRECT — ACCESS GRANTED';r.className='ok';A.chime();
   }else{
-    r.textContent='✗ Onjuiste parameters. Probeer opnieuw.';r.className='err';A.beep(200,.2);
+    r.textContent='✗ Incorrect parameters. Try again.';r.className='err';A.beep(200,.2);
   }
 };
 
-// ── Presentatie-engine ────────────────────────────────────────
+// ── Main Presentation Engine ──────────────────────────────────
 const P={
   cur:0,paused:false,autoTimer:null,started:false,
 
   start(){
-    this.started=true;$('ctrls').style.display='flex';this.goTo(0);
+    this.started=true;
+    $('ctrls').style.display='flex';
+    this.goTo(0);
   },
 
   goTo(idx){
@@ -1329,11 +1643,13 @@ const P={
     clearTimeout(this.autoTimer);V.stop();
     $('sb').classList.add('fo');
     setTimeout(()=>{
-      this.cur=idx;$('sb').classList.remove('fo');this._render(SLIDES[idx]);
+      this.cur=idx;
+      $('sb').classList.remove('fo');
+      this._render(SLIDES[idx]);
     },450);
   },
 
-  next(){if(_dActive){advanceDialog();return;}if(this.cur<SLIDES.length-1)this.goTo(this.cur+1);},
+  next(){if(_dActive){advanceDialog();return;} if(this.cur<SLIDES.length-1)this.goTo(this.cur+1);},
   prev(){clearTimeout(this.autoTimer);V.stop();if(this.cur>0)this.goTo(this.cur-1);},
 
   togglePause(){
@@ -1345,42 +1661,49 @@ const P={
 
   _render(s){
     hideAll();
+    // HUD
     const pct=Math.round((this.cur/(SLIDES.length-1))*100);
     $('hud-pf').style.width=pct+'%';
     $('hud-sl').textContent=`${this.cur+1} / ${SLIDES.length}`;
-    if(s.bg){$('bg-img').src=s.bg;setKB(s.kb||null);}
+    // Background
+    if(s.bg)setBG(s.bg,s.kb||null);
     if(s.grain)$('grain-ovl').style.opacity='.45';
     if(s.lb){show('lb-t');show('lb-b');}
     if(s.tint){$('color-tint').style.background=s.tint;$('color-tint').style.opacity='1';}
     if(s.loc){$('loc').textContent=s.loc;show('loc');}
     if(s.caption){$('cap-t').textContent=s.caption;show('cap');}
+    // Chapter divider
     if(s.chapter){
-      $('ch-n').textContent=s.chapter.n||'';$('ch-t').textContent=s.chapter.t||'';
-      show('chap');
-      const _chNum=parseInt((s.chapter.n||'').replace(/\D/g,''))||0;
-      if(_chNum>=7){$('sb').classList.add('danger-chap');A.stinger();setTimeout(()=>flash(),300);}
-      else{$('sb').classList.remove('danger-chap');A.chime();}
-      setTimeout(()=>hide('chap'),s.duration||3000);
-      this._scheduleAuto((s.duration||3000)+300);
+      const _isLate=/VII|VIII|IX/.test(s.chapter.n||'');
+      $('ch-n').textContent=s.chapter.n||'';
+      $('ch-t').textContent=s.chapter.t||'';
+      if(_isLate){$('sb').classList.add('danger-chap');show('chap');flash();A.stinger();}
+      else{show('chap');A.chime();}
+      setTimeout(()=>{hide('chap');},s.duration||2800);
+      this._scheduleAuto((s.duration||2800)+300);
       return;
     }
+    // Title card
     if(s.titleCard){
       $('tc-lb').textContent=s.titleCard.label||'';
       $('tc-m').textContent=s.titleCard.main||'';
       $('tc-s').textContent=s.titleCard.sub||'';
       show('tc');A.chime();
     }
-    if(s.special)specialEnter(s.special);
-    // Hollywood: context-gevoelig geluid + effecten
-    const _bg=s.bg||'';
-    const _isDanger=/facility_server|laser_corridor|facility_interior/.test(_bg);
-    const _isVolkov=!!(s.dialog&&s.dialog.some(l=>l.speaker==='Volkov'));
-    const _isAction=/drone_hunt|laser_corridor|facility/.test(_bg);
-    dangerMode(_isDanger||_isVolkov);
-    if(_isAction&&!s.special){A.tension();}else{A.drone(38,20,.15);}
-    if(_isDanger&&!s.special){setTimeout(()=>doGlitch(),820);}
+    // Special action
+    if(s.special)specialEnter(s.special,this.cur);
+    // Danger / action atmosphere
+    const _bgL=(s.bg||'').toLowerCase();
+    const _isDanger=s.tint==='rgba(255,0,0,0.06)'||/facility_server/.test(_bgL);
+    const _isAction=/drone_hunt|laser_corridor/.test(_bgL)||/facility/.test(_bgL);
+    if(_isDanger){dangerMode(true);setTimeout(doGlitch,1600+Math.random()*900);}
+    if(_isAction&&!_isDanger){A.tension();}
+    // Audio + Particles
+    A.ambient(s.sound!==undefined?s.sound:soundForBg(s.bg));
+    startParticles(s.particles!==undefined?s.particles:particlesForBg(s.bg));
+    // Dialog or auto-advance
     if(s.dialog&&s.dialog.length){
-      const startDlg=()=>showDialog(s.dialog,()=>this._scheduleAuto(s.duration||3500));
+      const startDlg=()=>showDialog(s.dialog,()=>{this._scheduleAuto(s.duration||3500);});
       setTimeout(startDlg,s.titleCard?2800:700);
     }else{
       this._scheduleAuto(s.duration||5000);
@@ -1396,7 +1719,7 @@ const P={
   }
 };
 
-// ── Bediening ─────────────────────────────────────────────────
+// ── Controls binding ──────────────────────────────────────────
 document.addEventListener('click',e=>{
   if(!P.started)return;
   A.resume();
@@ -1416,6 +1739,7 @@ document.addEventListener('keydown',e=>{
   else if(e.key==='p'||e.key==='P'){P.togglePause();}
 });
 
+// ── Boot ──────────────────────────────────────────────────────
 window.addEventListener('load',()=>{
   V.init();A.init();
   $('ctrls').style.display='none';

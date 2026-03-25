@@ -48,7 +48,7 @@ Het begrijpen van dit project vereist een expliciete scheiding tussen wat de **m
 | **SVG refactoring** | Extractie van inline SVG overlays naar `assets/images/overlayimg/` |
 | **Commit messages** | Beschrijvende conventionele commit messages vanaf feb 26 |
 
-**Vuistregel:** Rein definieert *wat* er moet bestaan en *waarom*. AI bepaalt *hoe* het technisch gerealiseerd wordt.
+**Vuistregel:** Rein definieert *wat* er moet bestaan en *waarom*. AI bepaalt *hoe* het technisch gerealiseerd wordt binnen de kaders die Rein heeft gesteld.
 
 ---
 
