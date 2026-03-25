@@ -1,1745 +1,1501 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberQuest: Hoe Het Gemaakt Werd</title>
-    <style>
-        :root {
-            --cyber-green: #00ff88;
-            --cyber-blue:  #00aaff;
-            --cyber-red:   #ff4466;
-            --cyber-gold:  #ffcc00;
-            --dark-bg:     #0a0e17;
-            --panel-bg:    rgba(10,14,23,0.92);
-            --text:        #eaeaea;
-            --text-dim:    #8899aa;
-            --mono:        'Courier New', monospace;
-            --sans:        'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CyberQuest: Operation ZERFALL — About</title>
+<style>
+/* ====================================================
+   CYBERQUEST — ABOUT PRESENTATION
+   Faithful to game intro style. All game assets used.
+   ==================================================== */
+:root {
+  --cg:#00ff88; --cb:#00aaff; --cr:#ff3333; --cy:#ffcc00; --cp:#bb44ff;
+  --mono:'Courier New',Courier,monospace;
+  --sans:'Segoe UI',Tahoma,Verdana,sans-serif;
+  --geo:Georgia,'Times New Roman',serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font-family:var(--sans);}
 
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── STAGE ───────────────────────────────────────────────── */
+#stage{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;background:#000;}
+#sb{
+  position:relative;
+  width:min(100vw,calc(100vh/9*16));
+  height:min(100vh,calc(100vw/16*9));
+  overflow:hidden;background:#000;
+  transition:opacity .6s ease;
+}
+#sb.fo{opacity:0;}
 
-        html, body {
-            width: 100%; height: 100%;
-            background: #000;
-            overflow: hidden;
-            font-family: var(--sans);
-            color: var(--text);
-        }
+/* ── BACKGROUND + KEN BURNS ──────────────────────────────── */
+#bg{position:absolute;inset:0;overflow:hidden;}
+#bg img{width:100%;height:100%;object-fit:cover;display:block;}
+@keyframes kbZI{from{transform:scale(1)}to{transform:scale(1.12)}}
+@keyframes kbZO{from{transform:scale(1.12)}to{transform:scale(1)}}
+@keyframes kbPR{from{transform:scale(1.08)translateX(0)}to{transform:scale(1.08)translateX(-4%)}}
+@keyframes kbPL{from{transform:scale(1.08)translateX(-4%)}to{transform:scale(1.08)translateX(0)}}
+.kb-zi{animation:kbZI 22s ease-in-out forwards;}
+.kb-zo{animation:kbZO 22s ease-in-out forwards;}
+.kb-pr{animation:kbPR 22s ease-in-out forwards;}
+.kb-pl{animation:kbPL 22s ease-in-out forwards;}
 
-        /* ── STAGE ─────────────────────────────────────── */
-        #stage {
-            position: relative;
-            width: 100vw; height: 100vh;
-            display: flex; align-items: center; justify-content: center;
-            background: #000;
-        }
+/* ── OVERLAY STACK ───────────────────────────────────────── */
+#scanlines{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:.4;
+  background:repeating-linear-gradient(to bottom,transparent 0,transparent 2px,rgba(0,0,0,.09)2px,rgba(0,0,0,.09)4px);}
+#vignette{position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.82)100%);}
+#grain-ovl{position:absolute;inset:-40%;z-index:5;pointer-events:none;width:180%;height:180%;
+  opacity:0;transition:opacity .5s;
+  background:url('assets/images/overlayimg/grain-noise-intro.svg') repeat;background-size:220px 220px;
+  animation:gShift .45s steps(3) infinite;}
+@keyframes gShift{0%{transform:translate(0,0)}33%{transform:translate(-4%,-3%)}66%{transform:translate(3%,4%)}100%{transform:translate(0,0)}}
+#color-tint{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .8s;}
 
-        #slide-box {
-            position: relative;
-            width:  min(100vw, calc(100vh / 9 * 16));
-            height: min(100vh, calc(100vw / 16 * 9));
-            overflow: hidden;
-            background: var(--dark-bg);
-        }
+/* ── LETTERBOX ───────────────────────────────────────────── */
+#lb-t,#lb-b{position:absolute;left:0;right:0;background:#000;z-index:15;pointer-events:none;height:0;transition:height .8s ease;}
+#lb-t{top:0;}#lb-b{bottom:0;}
+#lb-t.on,#lb-b.on{height:10%;}
 
-        /* ── BACKGROUND ─────────────────────────────────── */
-        #bg-layer {
-            position: absolute; inset: 0;
-            background-size: cover;
-            background-position: center;
-            transition: opacity 0.8s ease;
-        }
+/* ── FLASH ───────────────────────────────────────────────── */
+#flash{position:absolute;inset:0;z-index:120;background:#fff;opacity:0;pointer-events:none;transition:opacity .1s;}
 
-        #bg-layer img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            display: block;
-        }
+/* ── CHARACTER SPRITES ───────────────────────────────────── */
+.char{position:absolute;bottom:13%;height:56%;opacity:0;pointer-events:none;z-index:20;
+  filter:drop-shadow(0 4px 24px rgba(0,0,0,.9));transition:opacity .7s ease,transform .7s ease;}
+#cl{left:3%;transform:translateX(-50px);}
+#cr{right:3%;transform:scaleX(-1) translateX(-50px);}
+.char.in{opacity:1;}
+#cl.in{transform:translateX(0);}
+#cr.in{transform:scaleX(-1) translateX(0);}
+@keyframes bL{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes bR{0%,100%{transform:scaleX(-1)translateY(0)}50%{transform:scaleX(-1)translateY(-5px)}}
+#cl.tk{animation:bL .5s ease-in-out infinite;}
+#cr.tk{animation:bR .5s ease-in-out infinite;}
 
-        /* ── OVERLAY LAYERS ────────────────────────────── */
-        #grain-layer {
-            position: absolute; inset: 0;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.5s;
-            z-index: 3;
-        }
-        #grain-layer img { width: 100%; height: 100%; object-fit: cover; }
+/* ── DIALOG BOX ──────────────────────────────────────────── */
+#dlg{
+  position:absolute;bottom:2.5%;left:50%;transform:translateX(-50%);
+  width:74%;background:linear-gradient(135deg,rgba(8,12,22,.97),rgba(14,20,42,.97));
+  border:1px solid rgba(0,255,136,.3);border-radius:8px;padding:13px 20px 11px;
+  z-index:50;box-shadow:0 0 40px rgba(0,0,0,.6),0 0 20px rgba(0,255,136,.05);
+  opacity:0;transition:opacity .4s;pointer-events:none;
+}
+#dlg.on{opacity:1;pointer-events:auto;cursor:pointer;}
+#dn{font-family:var(--mono);font-size:.68em;letter-spacing:3px;text-transform:uppercase;margin-bottom:5px;color:var(--cg);}
+#dn.blue{color:var(--cb);}#dn.red{color:var(--cr);}#dn.gold{color:var(--cy);}#dn.purple{color:var(--cp);}
+#dt{font-family:var(--sans);font-size:.87em;line-height:1.58;color:#eaeaea;min-height:2.2em;}
+#dc{position:absolute;bottom:8px;right:14px;font-family:var(--mono);font-size:.6em;color:var(--cg);
+  opacity:0;animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+#dc.on{opacity:1;}
 
-        #color-overlay {
-            position: absolute; inset: 0;
-            pointer-events: none;
-            z-index: 4;
-            transition: background 1s ease, opacity 0.6s;
-            opacity: 0;
-        }
+/* ── CAPTION ─────────────────────────────────────────────── */
+#cap{position:absolute;top:9%;left:50%;transform:translateX(-50%);text-align:center;z-index:40;
+  width:70%;opacity:0;transition:opacity .5s;pointer-events:none;}
+#cap.on{opacity:1;}
+#cap-t{font-family:var(--mono);font-size:clamp(.68em,1.8vw,1em);color:var(--cg);
+  text-shadow:0 0 18px rgba(0,255,136,.5);line-height:1.4;letter-spacing:1px;}
 
-        /* Ken Burns animation on bg */
-        @keyframes kbZoomIn  { from { transform: scale(1.0); } to { transform: scale(1.12); } }
-        @keyframes kbZoomOut { from { transform: scale(1.12); } to { transform: scale(1.0); } }
-        @keyframes kbPanR    { from { transform: scale(1.08) translateX(0);   } to { transform: scale(1.08) translateX(-3%); } }
-        @keyframes kbPanL    { from { transform: scale(1.08) translateX(-3%); } to { transform: scale(1.08) translateX(0); } }
+/* ── TITLE CARD ──────────────────────────────────────────── */
+#tc{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);
+  text-align:center;z-index:60;opacity:0;transition:opacity .8s,transform .8s;pointer-events:none;}
+#tc.on{opacity:1;transform:translate(-50%,-50%) scale(1);}
+#tc-lb{font-family:var(--mono);font-size:.68em;letter-spacing:4px;color:var(--cb);text-transform:uppercase;margin-bottom:10px;}
+#tc-m{font-family:var(--mono);font-size:clamp(1.4em,3.8vw,2.8em);font-weight:bold;color:var(--cg);
+  text-shadow:0 0 40px rgba(0,255,136,.7),0 0 80px rgba(0,255,136,.3);line-height:1.15;}
+#tc-s{font-family:var(--sans);font-size:.82em;color:rgba(255,255,255,.5);margin-top:10px;line-height:1.6;}
 
-        .kb-zoom-in  { animation: kbZoomIn  18s ease-in-out forwards; }
-        .kb-zoom-out { animation: kbZoomOut 18s ease-in-out forwards; }
-        .kb-pan-r    { animation: kbPanR    18s ease-in-out forwards; }
-        .kb-pan-l    { animation: kbPanL    18s ease-in-out forwards; }
+/* ── HUD BAR ─────────────────────────────────────────────── */
+#hud{position:absolute;top:0;left:0;right:0;height:34px;
+  background:linear-gradient(180deg,rgba(0,0,0,.85),transparent);
+  display:flex;align-items:center;justify-content:space-between;padding:0 14px;z-index:70;}
+#hud-logo{font-family:var(--mono);font-size:.6em;letter-spacing:3px;color:var(--cg);text-transform:uppercase;}
+#hud-r{display:flex;align-items:center;gap:10px;}
+#hud-sl{font-family:var(--mono);font-size:.54em;color:rgba(255,255,255,.32);}
+#hud-pw{width:80px;height:2px;background:rgba(255,255,255,.1);border-radius:2px;}
+#hud-pf{height:100%;background:var(--cg);border-radius:2px;transition:width .6s ease;}
 
-        /* ── VIGNETTE ──────────────────────────────────── */
-        #vignette {
-            position: absolute; inset: 0;
-            background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.75) 100%);
-            pointer-events: none; z-index: 5;
-        }
+/* ── CONTROLS ────────────────────────────────────────────── */
+#ctrls{position:absolute;bottom:0;left:0;right:0;height:30px;
+  background:linear-gradient(0deg,rgba(0,0,0,.8),transparent);
+  display:flex;align-items:center;justify-content:center;gap:12px;z-index:70;opacity:.35;transition:opacity .3s;}
+#ctrls:hover{opacity:1;}
+.cb{font-family:var(--mono);font-size:.57em;color:rgba(255,255,255,.5);padding:3px 10px;
+  border:1px solid rgba(255,255,255,.1);border-radius:3px;cursor:pointer;background:rgba(255,255,255,.04);
+  transition:all .2s;user-select:none;}
+.cb:hover{color:var(--cg);border-color:var(--cg);}
 
-        /* ── SCANLINES ─────────────────────────────────── */
-        #scanlines {
-            position: absolute; inset: 0;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent 0px, transparent 2px,
-                rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px
-            );
-            pointer-events: none; z-index: 6; opacity: 0.4;
-        }
+/* ── LOCATION TAG ────────────────────────────────────────── */
+#loc{position:absolute;top:36px;left:14px;font-family:var(--mono);font-size:.6em;letter-spacing:2px;
+  color:rgba(0,255,136,.5);text-transform:uppercase;z-index:35;opacity:0;transition:opacity .5s;}
+#loc.on{opacity:1;}
 
-        /* ── CHARACTER SPRITES ─────────────────────────── */
-        #char-ryan {
-            position: absolute;
-            bottom: 15%;
-            left: 8%;
-            height: 52%;
-            opacity: 0;
-            transform: translateX(-60px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-            z-index: 20;
-            filter: drop-shadow(0 0 12px rgba(0,255,136,0.3));
-        }
-        #char-ryan.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
+/* ── CHAPTER DIVIDER ─────────────────────────────────────── */
+#chap{position:absolute;inset:0;z-index:85;background:rgba(0,0,0,.92);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .6s;pointer-events:none;}
+#chap.on{opacity:1;}
+#ch-n{font-family:var(--mono);font-size:.65em;letter-spacing:6px;color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:8px;}
+#ch-l{width:40px;height:1px;background:rgba(255,255,255,.2);margin:8px auto;}
+#ch-t{font-family:var(--geo);font-size:clamp(1.2em,3.5vw,2.2em);color:#fff;text-align:center;letter-spacing:2px;}
 
-        #char-narrator {
-            position: absolute;
-            bottom: 15%;
-            right: 8%;
-            height: 48%;
-            opacity: 0;
-            transform: translateX(60px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-            z-index: 20;
-            filter: drop-shadow(0 0 12px rgba(0,170,255,0.3));
-        }
-        #char-narrator.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
+/* ── INFO PANEL (right side character dossier) ───────────── */
+#info{position:absolute;top:9%;right:3%;width:25%;background:rgba(8,12,22,.92);
+  border:1px solid rgba(0,170,255,.28);border-radius:6px;padding:10px 12px;
+  z-index:40;opacity:0;transition:opacity .5s;pointer-events:none;}
+#info.on{opacity:1;}
+#info h4{font-family:var(--mono);font-size:.58em;letter-spacing:2px;color:var(--cb);text-transform:uppercase;
+  border-bottom:1px solid rgba(0,170,255,.15);padding-bottom:5px;margin-bottom:7px;}
+.ir{font-family:var(--sans);font-size:.61em;color:rgba(255,255,255,.6);margin-bottom:3px;
+  padding-left:8px;position:relative;}
+.ir::before{content:'▸';position:absolute;left:0;color:var(--cb);font-size:.8em;}
 
-        /* talking animation */
-        @keyframes bobRyan { 0%,100%{transform:translateY(0) scaleX(1)} 50%{transform:translateY(-4px) scaleX(1.01)} }
-        @keyframes bobNarr { 0%,100%{transform:translateY(0) scaleX(-1)} 50%{transform:translateY(-4px) scaleX(-1.01)} }
-        #char-ryan.talking    { animation: bobRyan 0.5s ease-in-out infinite; }
-        #char-narrator.talking { animation: bobNarr 0.5s ease-in-out infinite; transform: scaleX(-1); }
-        #char-narrator { transform: scaleX(-1) translateX(-60px); }
-        #char-narrator.visible { transform: scaleX(-1) translateX(0); }
+/* ── INVENTORY STRIP ─────────────────────────────────────── */
+#inv{position:absolute;top:9%;left:3%;display:flex;flex-direction:column;gap:5px;z-index:40;opacity:0;transition:opacity .5s;pointer-events:none;}
+#inv.on{opacity:1;}
+.ii{display:flex;align-items:center;gap:7px;background:rgba(8,12,22,.88);
+  border:1px solid rgba(0,255,136,.2);border-radius:4px;padding:5px 9px;
+  opacity:0;transform:translateX(-18px);transition:all .4s;}
+.ii.in{opacity:1;transform:translateX(0);}
+.ii img{width:22px;height:22px;object-fit:contain;}
+.ii span{font-family:var(--mono);font-size:.56em;color:rgba(255,255,255,.7);}
 
-        /* ── DIALOG BOX ─────────────────────────────────── */
-        #dialog-box {
-            position: absolute;
-            bottom: 3%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 72%;
-            background: linear-gradient(135deg, rgba(10,14,23,0.96) 0%, rgba(15,22,44,0.96) 100%);
-            border: 1px solid rgba(0,255,136,0.3);
-            border-radius: 8px;
-            padding: 14px 20px 12px;
-            z-index: 50;
-            box-shadow: 0 0 30px rgba(0,255,136,0.1), inset 0 1px 0 rgba(255,255,255,0.05);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-        }
-        #dialog-box.visible { opacity: 1; pointer-events: auto; }
+/* ── QUEST PANEL ─────────────────────────────────────────── */
+#qp{position:absolute;top:9%;left:50%;transform:translateX(-50%);width:76%;
+  background:rgba(8,12,22,.93);border:1px solid rgba(0,255,136,.22);border-radius:7px;
+  padding:11px 15px;z-index:40;opacity:0;transition:opacity .5s;pointer-events:none;}
+#qp.on{opacity:1;}
+#qp h4{font-family:var(--mono);font-size:.6em;letter-spacing:3px;color:var(--cg);text-transform:uppercase;
+  border-bottom:1px solid rgba(0,255,136,.15);padding-bottom:5px;margin-bottom:8px;}
+.qg{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.qi{display:flex;align-items:flex-start;gap:7px;font-family:var(--sans);font-size:.63em;color:rgba(255,255,255,.62);
+  padding:5px 7px;border:1px solid rgba(255,255,255,.07);border-radius:4px;background:rgba(255,255,255,.025);}
+.qi-ico{font-size:1.1em;flex-shrink:0;}
+.qi-nm{color:rgba(255,255,255,.88);font-weight:600;display:block;margin-bottom:2px;}
 
-        #dialog-speaker {
-            font-family: var(--mono);
-            font-size: 0.72em;
-            font-weight: bold;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            color: var(--cyber-green);
-        }
-        #dialog-speaker.narrator-color { color: var(--cyber-blue); }
+/* ── PUZZLE PANEL ────────────────────────────────────────── */
+#puz{position:absolute;top:9%;left:50%;transform:translateX(-50%);width:58%;
+  background:rgba(8,12,22,.96);border:1px solid rgba(0,255,136,.38);border-radius:7px;
+  padding:14px 18px;z-index:40;font-family:var(--mono);opacity:0;transition:opacity .5s;pointer-events:none;}
+#puz.on{opacity:1;}
+#puz h4{font-size:.62em;letter-spacing:3px;color:var(--cg);text-transform:uppercase;
+  border-bottom:1px solid rgba(0,255,136,.2);padding-bottom:5px;margin-bottom:10px;}
+.pf{display:flex;gap:8px;align-items:center;margin-bottom:7px;}
+.pl{font-size:.6em;color:rgba(0,255,136,.7);width:130px;flex-shrink:0;}
+.pv{flex:1;background:rgba(0,0,0,.6);border:1px solid rgba(0,255,136,.28);color:var(--cg);
+  font-family:var(--mono);font-size:.64em;padding:4px 8px;border-radius:3px;}
+.pv.solved{border-color:var(--cg);color:#fff;text-shadow:0 0 8px rgba(0,255,136,.6);}
+.pbtn{margin-top:8px;padding:5px 16px;background:rgba(0,255,136,.12);border:1px solid rgba(0,255,136,.45);
+  color:var(--cg);font-family:var(--mono);font-size:.62em;letter-spacing:2px;border-radius:3px;cursor:pointer;transition:all .2s;}
+.pbtn:hover{background:rgba(0,255,136,.25);}
+#puz-r{font-size:.64em;text-align:center;padding-top:6px;min-height:1.5em;transition:color .3s;}
+#puz-r.ok{color:var(--cg);text-shadow:0 0 10px rgba(0,255,136,.5);}
+#puz-r.err{color:var(--cr);}
 
-        #dialog-text {
-            font-family: var(--sans);
-            font-size: 0.90em;
-            line-height: 1.55;
-            color: var(--text);
-            min-height: 2.5em;
-        }
+/* ── LASER LAYER ─────────────────────────────────────────── */
+#laser-l{position:absolute;inset:0;z-index:22;pointer-events:none;opacity:0;transition:opacity .6s;}
+#laser-l.on{opacity:1;}
+.lb{position:absolute;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(255,10,10,.85)20%,rgba(255,80,80,1)50%,rgba(255,10,10,.85)80%,transparent);
+  box-shadow:0 0 6px rgba(255,0,0,.7),0 0 18px rgba(255,0,0,.4);
+  animation:lpulse .4s ease-in-out infinite alternate;}
+@keyframes lpulse{from{opacity:.72;box-shadow:0 0 5px rgba(255,0,0,.6),0 0 12px rgba(255,0,0,.3)}
+  to{opacity:1;box-shadow:0 0 12px rgba(255,0,0,.95),0 0 30px rgba(255,0,0,.6),0 0 60px rgba(255,0,0,.2)}}
+.lv{position:absolute;width:2px;
+  background:linear-gradient(180deg,transparent,rgba(255,10,10,.85)20%,rgba(255,80,80,1)50%,rgba(255,10,10,.85)80%,transparent);
+  box-shadow:0 0 6px rgba(255,0,0,.7),0 0 18px rgba(255,0,0,.4);
+  animation:lpulse .4s ease-in-out infinite alternate;}
+.ldot{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);
+  background:rgba(255,210,210,.95);box-shadow:0 0 8px rgba(255,80,80,.9),0 0 20px rgba(255,0,0,.6);
+  animation:dpulse .4s ease-in-out infinite alternate;}
+@keyframes dpulse{from{transform:translate(-50%,-50%) scale(.8)}to{transform:translate(-50%,-50%) scale(1.3)}}
+.lsns{position:absolute;width:14px;height:14px;border-radius:50%;transform:translate(-50%,-50%);
+  background:rgba(255,100,0,.9);border:2px solid rgba(255,160,0,.8);
+  box-shadow:0 0 10px rgba(255,100,0,.7);animation:sblink 1.2s ease-in-out infinite;}
+@keyframes sblink{0%,100%{opacity:1;box-shadow:0 0 10px rgba(255,100,0,.7)}50%{opacity:.35;box-shadow:0 0 4px rgba(255,100,0,.3)}}
+.lb.off,.lv.off{animation:none;background:rgba(0,255,136,.06)!important;
+  box-shadow:0 0 3px rgba(0,255,136,.2)!important;opacity:.25;transition:all 1s;}
+.ldot.off,.lsns.off{animation:none;background:rgba(0,255,136,.4)!important;
+  box-shadow:0 0 5px rgba(0,255,136,.5)!important;transition:all 1s;}
+#laser-status{position:absolute;bottom:26%;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:.72em;letter-spacing:2px;color:var(--cg);
+  text-shadow:0 0 14px rgba(0,255,136,.9);opacity:0;transition:opacity .8s;z-index:30;}
+#laser-status.on{opacity:1;}
 
-        #dialog-continue {
-            position: absolute;
-            bottom: 10px; right: 16px;
-            font-family: var(--mono);
-            font-size: 0.65em;
-            color: var(--cyber-green);
-            opacity: 0;
-            transition: opacity 0.3s;
-            cursor: pointer;
-        }
-        @keyframes blinkCaret { 0%,100%{opacity:1} 50%{opacity:0} }
-        #dialog-continue.visible { opacity: 1; animation: blinkCaret 1s infinite; }
+/* ── DRONE LAYER ─────────────────────────────────────────── */
+#drone-l{position:absolute;inset:0;z-index:22;pointer-events:none;opacity:0;transition:opacity .8s;}
+#drone-l.on{opacity:1;}
+.dr{position:absolute;width:56px;height:20px;background:rgba(20,20,20,.92);
+  border-radius:50%;border:1px solid rgba(120,120,120,.5);box-shadow:0 2px 8px rgba(0,0,0,.6);}
+.dr::before,.dr::after{content:'';position:absolute;top:-4px;width:24px;height:4px;
+  background:rgba(180,180,180,.7);border-radius:2px;}
+.dr::before{left:3px;transform-origin:12px 2px;animation:rSpin .07s linear infinite;}
+.dr::after{right:3px;transform-origin:12px 2px;animation:rSpin .07s linear infinite reverse;}
+@keyframes rSpin{to{transform:rotate(180deg)}}
+.dr-lt{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:5px;height:5px;
+  border-radius:50%;background:rgba(255,40,40,.95);box-shadow:0 0 5px rgba(255,0,0,.8);
+  animation:dlt .6s ease-in-out infinite alternate;}
+@keyframes dlt{from{opacity:.5}to{opacity:1}}
+/* Patrol animations */
+@keyframes dp1{0%{transform:translate(0,0)}25%{transform:translate(18px,-14px)}50%{transform:translate(-10px,9px)}75%{transform:translate(14px,5px)}100%{transform:translate(0,0)}}
+@keyframes dp2{0%{transform:translate(0,0)}33%{transform:translate(-15px,12px)}66%{transform:translate(10px,-10px)}100%{transform:translate(0,0)}}
+@keyframes dp3{0%{transform:translate(0,0)}20%{transform:translate(12px,15px)}60%{transform:translate(-16px,-7px)}100%{transform:translate(0,0)}}
+@keyframes dp4{0%{transform:translate(0,0)}40%{transform:translate(-8px,-15px)}80%{transform:translate(16px,8px)}100%{transform:translate(0,0)}}
+.dr.p1{animation:dp1 5s ease-in-out infinite;}
+.dr.p2{animation:dp2 6s ease-in-out infinite;}
+.dr.p3{animation:dp3 4.5s ease-in-out infinite;}
+.dr.p4{animation:dp4 5.5s ease-in-out infinite;}
+/* Crash */
+@keyframes dcrash{0%{opacity:1;transform:rotate(0)translateY(0)scale(1)}
+  30%{opacity:.9;transform:rotate(130deg)translateY(70px)scale(1.1)}
+  60%{opacity:.5;transform:rotate(400deg)translateY(210px)scale(.6)}
+  100%{opacity:0;transform:rotate(800deg)translateY(500px)scale(0)}}
+.dr.crash{animation:dcrash 1.8s ease-in forwards!important;}
+/* Explosion */
+.expl{position:absolute;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%) scale(0);
+  background:radial-gradient(circle,#fff 0%,#ffaa00 30%,#ff4400 60%,transparent 100%);
+  animation:exAnim .9s ease-out forwards;}
+@keyframes exAnim{0%{transform:translate(-50%,-50%) scale(0);opacity:1}
+  40%{transform:translate(-50%,-50%) scale(1.5);opacity:.8}
+  100%{transform:translate(-50%,-50%) scale(3.5);opacity:0}}
 
-        /* ── SLIDE TITLE (big cinematic overlay) ────────── */
-        #slide-title {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 60;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.6s ease;
-        }
-        #slide-title.visible { opacity: 1; }
+/* ── MOWER LAYER ─────────────────────────────────────────── */
+#mwr-l{position:absolute;inset:0;z-index:22;pointer-events:none;opacity:0;transition:opacity .6s;}
+#mwr-l.on{opacity:1;}
+#mwr-canvas{width:100%;height:100%;}
+#mwr-hud{position:absolute;top:9%;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:.7em;letter-spacing:2px;color:var(--cy);
+  background:rgba(8,12,22,.85);border:1px solid rgba(255,204,0,.3);border-radius:4px;padding:5px 14px;
+  z-index:30;opacity:0;transition:opacity .4s;}
+#mwr-hud.on{opacity:1;}
 
-        #slide-title .label {
-            font-family: var(--mono);
-            font-size: 0.75em;
-            letter-spacing: 4px;
-            color: var(--cyber-blue);
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-        #slide-title .main {
-            font-family: var(--mono);
-            font-size: clamp(1.4em, 3.5vw, 2.6em);
-            font-weight: bold;
-            color: var(--cyber-green);
-            text-shadow: 0 0 30px rgba(0,255,136,0.6), 0 0 60px rgba(0,255,136,0.3);
-            line-height: 1.2;
-        }
-        #slide-title .sub {
-            font-family: var(--sans);
-            font-size: 0.85em;
-            color: var(--text-dim);
-            margin-top: 10px;
-        }
+/* ── GPS SPOOF PANEL ─────────────────────────────────────── */
+#gpsp{position:absolute;top:8%;left:50%;transform:translateX(-50%);width:62%;
+  background:rgba(8,12,22,.96);border:1px solid rgba(0,255,136,.35);border-radius:7px;
+  padding:13px 17px;z-index:40;font-family:var(--mono);opacity:0;transition:opacity .5s;pointer-events:none;}
+#gpsp.on{opacity:1;}
+#gpsp h4{font-size:.6em;letter-spacing:3px;color:var(--cg);text-transform:uppercase;
+  border-bottom:1px solid rgba(0,255,136,.15);padding-bottom:5px;margin-bottom:9px;}
+.gd{background:rgba(0,30,0,.8);border:1px solid rgba(0,255,65,.28);border-radius:4px;
+  padding:7px 11px;margin-bottom:7px;font-size:.66em;color:#00ff41;line-height:2;}
+.gr{display:flex;gap:8px;align-items:center;margin-bottom:4px;}
+.gl{color:rgba(0,255,136,.6);width:140px;flex-shrink:0;font-size:.6em;}
+.gv{color:#fff;font-size:.63em;flex:1;}
+.gv.a{color:var(--cg);text-shadow:0 0 8px rgba(0,255,136,.6);animation:gta .3s ease-out;}
+@keyframes gta{from{opacity:.2}to{opacity:1}}
+.gexec{text-align:center;padding:6px;border:1px solid rgba(0,255,136,.3);border-radius:3px;
+  font-size:.68em;color:rgba(0,255,136,.5);letter-spacing:2px;transition:all .4s;}
+.gexec.fire{color:var(--cg);border-color:var(--cg);text-shadow:0 0 12px rgba(0,255,136,.8);
+  box-shadow:0 0 20px rgba(0,255,136,.2);animation:gef .5s ease-out;}
+@keyframes gef{0%,100%{background:transparent}50%{background:rgba(0,255,136,.15)}}
 
-        /* ── STATS PANEL ─────────────────────────────────── */
-        #stats-panel {
-            position: absolute;
-            top: 10%; right: 4%;
-            width: 28%;
-            background: rgba(10,14,23,0.88);
-            border: 1px solid rgba(0,255,136,0.25);
-            border-radius: 6px;
-            padding: 12px 14px;
-            z-index: 40;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-        #stats-panel.visible { opacity: 1; }
-        #stats-panel h4 {
-            font-family: var(--mono);
-            font-size: 0.62em;
-            letter-spacing: 2px;
-            color: var(--cyber-green);
-            text-transform: uppercase;
-            border-bottom: 1px solid rgba(0,255,136,0.2);
-            padding-bottom: 6px;
-            margin-bottom: 8px;
-        }
-        .stat-row {
-            display: flex;
-            justify-content: space-between;
-            font-family: var(--mono);
-            font-size: 0.68em;
-            color: var(--text-dim);
-            margin-bottom: 4px;
-        }
-        .stat-row span:last-child { color: var(--cyber-gold); }
+/* ── PLANBOARD OVERLAY ───────────────────────────────────── */
+#pb{position:absolute;top:7%;left:50%;transform:translateX(-50%);
+  width:84%;z-index:30;opacity:0;transition:opacity .5s;pointer-events:none;}
+#pb.on{opacity:1;}
+.pbg{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;}
+.pbc{width:calc(16% - 3px);aspect-ratio:3/4;border-radius:4px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.14);position:relative;}
+.pbc:nth-child(2n){transform:rotate(-1.4deg);}
+.pbc:nth-child(3n){transform:rotate(1.1deg);}
+.pbc img{width:100%;height:78%;object-fit:cover;}
+.pbc-lbl{position:absolute;bottom:0;left:0;right:0;padding:3px 4px;
+  background:rgba(8,12,22,.92);font-family:var(--mono);font-size:.45em;
+  color:rgba(255,255,255,.7);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pbc.hl{border-color:rgba(255,50,50,.65);box-shadow:0 0 12px rgba(255,0,0,.35);}
 
-        /* ── COMMIT TICKER ──────────────────────────────── */
-        #commit-ticker {
-            position: absolute;
-            top: 10%; left: 4%;
-            width: 30%;
-            background: rgba(10,14,23,0.88);
-            border: 1px solid rgba(0,170,255,0.25);
-            border-radius: 6px;
-            padding: 10px 12px;
-            z-index: 40;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-            font-family: var(--mono);
-            font-size: 0.62em;
-            color: var(--cyber-blue);
-            overflow: hidden;
-        }
-        #commit-ticker.visible { opacity: 1; }
-        #commit-ticker h4 {
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 6px;
-            font-size: 0.85em;
-            color: var(--cyber-blue);
-            border-bottom: 1px solid rgba(0,170,255,0.2);
-            padding-bottom: 4px;
-        }
-        .commit-line {
-            color: var(--text-dim);
-            margin-bottom: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .commit-line .hash { color: var(--cyber-gold); margin-right: 6px; }
-        .commit-line .msg  { color: var(--text); }
+/* ══════════════════════════════════════════════════════════
+   INTRO CINEMATIC — Faithful to actual game intro style
+   ══════════════════════════════════════════════════════════ */
+#intro-wrap{position:absolute;inset:0;z-index:200;background:#000;pointer-events:auto;}
 
-        /* ── VELOCITY BAR ────────────────────────────────── */
-        #velocity-panel {
-            position: absolute;
-            top: 10%; left: 50%;
-            transform: translateX(-50%);
-            width: 44%;
-            background: rgba(10,14,23,0.88);
-            border: 1px solid rgba(255,204,0,0.25);
-            border-radius: 6px;
-            padding: 10px 14px;
-            z-index: 40;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-        #velocity-panel.visible { opacity: 1; }
-        #velocity-panel h4 {
-            font-family: var(--mono);
-            font-size: 0.60em;
-            letter-spacing: 2px;
-            color: var(--cyber-gold);
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            border-bottom: 1px solid rgba(255,204,0,0.2);
-            padding-bottom: 4px;
-        }
-        .vel-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 3px;
-            font-family: var(--mono);
-            font-size: 0.58em;
-        }
-        .vel-date { color: var(--text-dim); width: 72px; flex-shrink: 0; }
-        .vel-bar-wrap { flex: 1; background: rgba(255,255,255,0.08); border-radius: 2px; height: 8px; margin: 0 6px; }
-        .vel-bar { height: 8px; border-radius: 2px; background: var(--cyber-gold); width: 0; transition: width 1s ease; }
-        .vel-count { color: var(--cyber-gold); width: 24px; text-align: right; }
+/* ACT 1: Production card */
+#prod-card{position:absolute;inset:0;background:#000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;transition:opacity 1.5s ease;}
+#prod-card.on{opacity:1;}
+.pc-t{font-family:var(--geo);font-size:clamp(.8em,2vw,1.1em);letter-spacing:8px;text-transform:uppercase;
+  color:rgba(255,255,255,0);transition:color 2s ease;}
+.pc-t.vis{color:rgba(255,255,255,.65);}
+.pc-sep{width:50px;height:1px;background:rgba(255,255,255,0);margin:16px auto;
+  transition:background 2s ease .3s,width 2s ease .3s;}
+.pc-sep.vis{background:rgba(255,255,255,.25);width:100px;}
+.pc-dir{font-family:var(--geo);font-size:clamp(.65em,1.6vw,.85em);letter-spacing:5px;font-style:italic;
+  color:rgba(255,215,0,0);transition:color 2s ease;}
+.pc-dir.vis{color:rgba(255,215,0,.6);}
 
-        /* PDCA CYCLE */
-        #pdca-panel {
-            position: absolute;
-            bottom: 18%; left: 50%;
-            transform: translateX(-50%);
-            display: flex; gap: 16px;
-            z-index: 40;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-        #pdca-panel.visible { opacity: 1; }
-        .pdca-step {
-            width: 70px; height: 70px;
-            border-radius: 50%;
-            border: 2px solid rgba(0,255,136,0.4);
-            display: flex; align-items: center; justify-content: center;
-            flex-direction: column;
-            font-family: var(--mono);
-            transition: border-color 0.4s, box-shadow 0.4s;
-            background: rgba(10,14,23,0.8);
-        }
-        .pdca-step .pdca-letter {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: var(--cyber-green);
-        }
-        .pdca-step .pdca-word {
-            font-size: 0.42em;
-            color: var(--text-dim);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-top: 2px;
-        }
-        .pdca-step.active {
-            border-color: var(--cyber-green);
-            box-shadow: 0 0 20px rgba(0,255,136,0.5);
-        }
+/* ACT 2: Terminal boot */
+#term-boot{position:absolute;inset:0;background:#000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;transition:opacity 1s ease;padding:6% 8%;}
+#term-boot.on{opacity:1;}
+.tb{font-family:var(--mono);color:#00ff41;font-size:clamp(.55em,1.4vw,.85em);
+  line-height:2;text-align:left;width:100%;max-width:620px;
+  text-shadow:0 0 6px rgba(0,255,65,.5);}
+.tl{opacity:0;transform:translateX(-6px);white-space:nowrap;}
+.tl.in{animation:tlin .4s ease-out forwards;}
+@keyframes tlin{to{opacity:1;transform:translateX(0)}}
+.tl.w{color:#ff3333;text-shadow:0 0 8px rgba(255,51,51,.7);}
+.tl.i{color:#00ffff;text-shadow:0 0 6px rgba(0,255,255,.5);}
+.tl.c{color:#ff6600;text-shadow:0 0 8px rgba(255,102,0,.5);}
+.tl.d{color:rgba(0,255,65,.4);}
+.tcur{display:inline-block;width:8px;height:1em;background:#00ff41;vertical-align:text-bottom;animation:blink .65s step-end infinite;}
 
-        /* ── FLASH TRANSITION ────────────────────────────── */
-        #flash {
-            position: absolute; inset: 0;
-            background: white;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 200;
-            transition: opacity 0.15s;
-        }
+/* ACT 3: Star Wars crawl */
+#crawl-wrap{position:absolute;inset:0;background:#000;overflow:hidden;opacity:0;transition:opacity 1.5s ease;}
+#crawl-wrap.on{opacity:1;}
+.cw-stars{position:absolute;inset:0;background:radial-gradient(ellipse at bottom,#080818 0%,#000 70%);}
+.cw-ft{position:absolute;top:0;left:0;right:0;height:30%;background:linear-gradient(to bottom,#000,transparent);z-index:5;}
+.cw-fb{position:absolute;bottom:0;left:0;right:0;height:20%;background:linear-gradient(to top,#000,transparent);z-index:5;}
+.cw-persp{position:absolute;bottom:0;left:0;right:0;height:100%;perspective:340px;perspective-origin:50% 100%;
+  display:flex;align-items:flex-end;justify-content:center;}
+.cw-txt{width:54%;font-family:var(--geo);transform-origin:50% 100%;
+  transform:rotateX(28deg)translateY(0%);animation:crawl 58s linear forwards;padding-bottom:4%;}
+@keyframes crawl{0%{transform:rotateX(28deg)translateY(0%)}100%{transform:rotateX(28deg)translateY(-380%)}}
+.cw-title{font-size:clamp(1.4em,4vw,2.5em);font-weight:bold;color:#ffe81f;text-align:center;
+  letter-spacing:3px;line-height:1.3;margin-bottom:1em;text-shadow:0 0 20px rgba(255,232,31,.5);}
+.cw-sub{font-size:clamp(.65em,1.8vw,1em);color:#ffe81f;text-align:center;letter-spacing:8px;
+  text-transform:uppercase;margin-bottom:2em;}
+.cw-body{font-size:clamp(.58em,1.5vw,.92em);color:#ffe81f;text-align:justify;line-height:1.95;
+  text-shadow:0 0 4px rgba(255,200,0,.3);}
+.cw-body p{margin-bottom:1.5em;}
+.cw-skip{position:absolute;bottom:4%;right:3%;z-index:9999;font-family:var(--mono);font-size:.65em;
+  letter-spacing:3px;color:rgba(255,255,255,.25);background:none;border:1px solid rgba(255,255,255,.12);
+  padding:5px 16px;cursor:pointer;border-radius:2px;transition:all .3s;pointer-events:auto;}
+.cw-skip:hover{color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.35);}
+/* Starfield dots */
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle var(--dur,3s) ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:var(--op,.6)}50%{opacity:.1}}
 
-        /* ── HUD TOP BAR ─────────────────────────────────── */
-        #hud-bar {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 36px;
-            background: linear-gradient(180deg, rgba(10,14,23,0.95) 0%, transparent 100%);
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 14px;
-            z-index: 70;
-        }
-        #hud-title {
-            font-family: var(--mono);
-            font-size: 0.62em;
-            letter-spacing: 3px;
-            color: var(--cyber-green);
-            text-transform: uppercase;
-        }
-        #hud-slide {
-            font-family: var(--mono);
-            font-size: 0.58em;
-            color: var(--text-dim);
-        }
-        #hud-progress {
-            width: 120px; height: 3px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-        #hud-progress-fill {
-            height: 100%;
-            background: var(--cyber-green);
-            border-radius: 2px;
-            transition: width 0.8s ease;
-        }
+/* ACT 4: Title blast */
+#title-blast{position:absolute;inset:0;background:#000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;transition:opacity .6s ease;}
+#title-blast.on{opacity:1;}
+.tb-main{font-family:var(--mono);font-size:clamp(1.5em,5vw,3.5em);font-weight:bold;color:var(--cg);
+  letter-spacing:4px;text-shadow:0 0 50px rgba(0,255,136,.8),0 0 100px rgba(0,255,136,.4);
+  text-align:center;line-height:1.2;}
+.tb-op{font-family:var(--mono);font-size:clamp(.75em,2.2vw,1.5em);color:rgba(255,255,255,.45);
+  letter-spacing:8px;text-transform:uppercase;margin-top:8px;text-align:center;}
+.tb-skip{margin-top:28px;font-family:var(--mono);font-size:.6em;letter-spacing:3px;
+  color:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.12);padding:5px 16px;border-radius:2px;
+  cursor:pointer;transition:all .3s;}
+.tb-skip:hover{color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.3);}
 
-        /* ── CONTROLS ────────────────────────────────────── */
-        #controls {
-            position: absolute;
-            bottom: 0; left: 0; right: 0;
-            height: 32px;
-            background: linear-gradient(180deg, transparent, rgba(10,14,23,0.9));
-            display: flex; align-items: center; justify-content: center;
-            gap: 16px;
-            z-index: 70;
-            opacity: 0.5;
-            transition: opacity 0.3s;
-        }
-        #controls:hover { opacity: 1; }
-        .ctrl-btn {
-            font-family: var(--mono);
-            font-size: 0.6em;
-            color: var(--text-dim);
-            cursor: pointer;
-            padding: 4px 10px;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 3px;
-            background: rgba(255,255,255,0.04);
-            transition: all 0.2s;
-            user-select: none;
-        }
-        .ctrl-btn:hover { color: var(--cyber-green); border-color: var(--cyber-green); }
-
-        /* ── ICON GRID (for slide showing icons) ─────────── */
-        #icon-grid {
-            position: absolute;
-            top: 12%; left: 50%;
-            transform: translateX(-50%);
-            display: flex; flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-            width: 60%;
-            z-index: 40;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-        #icon-grid.visible { opacity: 1; }
-        .icon-item {
-            display: flex; flex-direction: column; align-items: center;
-            gap: 4px;
-        }
-        .icon-item img {
-            width: 42px; height: 42px;
-            filter: drop-shadow(0 0 8px rgba(0,255,136,0.4));
-        }
-        .icon-item span {
-            font-family: var(--mono);
-            font-size: 0.52em;
-            color: var(--text-dim);
-            text-align: center;
-        }
-
-        /* ── SCENE GRID (mini thumbnails) ────────────────── */
-        #scene-grid {
-            position: absolute;
-            top: 8%; left: 50%;
-            transform: translateX(-50%);
-            display: flex; flex-wrap: wrap;
-            gap: 4px;
-            justify-content: center;
-            width: 88%;
-            z-index: 40;
-            opacity: 0;
-            transition: opacity 0.6s;
-            pointer-events: none;
-        }
-        #scene-grid.visible { opacity: 1; }
-        .scene-thumb {
-            width: 11%;
-            aspect-ratio: 16/9;
-            overflow: hidden;
-            border-radius: 3px;
-            border: 1px solid rgba(0,255,136,0.15);
-            transition: border-color 0.3s, transform 0.3s;
-        }
-        .scene-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .scene-thumb.lit {
-            border-color: var(--cyber-green);
-            box-shadow: 0 0 8px rgba(0,255,136,0.4);
-            transform: scale(1.06);
-        }
-
-        /* ── ROLE SPLIT PANEL ────────────────────────────── */
-        #role-panel {
-            position: absolute;
-            top: 8%; left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            z-index: 40;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-        #role-panel.visible { opacity: 1; }
-        .role-col {
-            background: rgba(10,14,23,0.88);
-            border-radius: 6px;
-            padding: 10px 14px;
-        }
-        .role-col.human { border: 1px solid rgba(0,255,136,0.3); }
-        .role-col.ai    { border: 1px solid rgba(0,170,255,0.3); }
-        .role-col h4 {
-            font-family: var(--mono);
-            font-size: 0.60em;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            padding-bottom: 4px;
-        }
-        .role-col.human h4 { color: var(--cyber-green); border-bottom: 1px solid rgba(0,255,136,0.2); }
-        .role-col.ai    h4 { color: var(--cyber-blue);  border-bottom: 1px solid rgba(0,170,255,0.2); }
-        .role-item {
-            font-family: var(--sans);
-            font-size: 0.62em;
-            color: var(--text-dim);
-            margin-bottom: 3px;
-            padding-left: 10px;
-            position: relative;
-        }
-        .role-item::before {
-            content: '▸';
-            position: absolute; left: 0;
-            font-size: 0.8em;
-        }
-        .role-col.human .role-item::before { color: var(--cyber-green); }
-        .role-col.ai    .role-item::before { color: var(--cyber-blue); }
-
-        /* ── TYPEWRITER TEXT (cinematic caption) ─────────── */
-        #caption {
-            position: absolute;
-            top: 10%; left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            z-index: 40;
-            width: 70%;
-            opacity: 0;
-            transition: opacity 0.4s;
-            pointer-events: none;
-        }
-        #caption.visible { opacity: 1; }
-        #caption-text {
-            font-family: var(--mono);
-            font-size: clamp(0.7em, 2vw, 1.1em);
-            color: var(--cyber-green);
-            text-shadow: 0 0 15px rgba(0,255,136,0.5);
-            line-height: 1.5;
-        }
-
-        /* ── AUDIO STATE ─────────────────────────────────── */
-        #audio-indicator {
-            position: absolute;
-            top: 38px; right: 10px;
-            font-family: var(--mono);
-            font-size: 0.55em;
-            color: var(--text-dim);
-            z-index: 80;
-            opacity: 0.6;
-        }
-
-        /* ── SLIDE FADE CONTAINER ────────────────────────── */
-        #slide-box { transition: opacity 0.5s ease; }
-        #slide-box.fade-out { opacity: 0; }
-
-        /* ── CINEMATIC LETTERBOX ─────────────────────────── */
-        #letterbox-top, #letterbox-bot {
-            position: absolute;
-            left: 0; right: 0;
-            height: 0;
-            background: #000;
-            z-index: 90;
-            transition: height 0.5s ease;
-            pointer-events: none;
-        }
-        #letterbox-top { top: 0; }
-        #letterbox-bot { bottom: 0; }
-        #letterbox-top.cinema, #letterbox-bot.cinema { height: 11%; }
-
-        /* ── IMAGE COMPARE (before/after) ────────────────── */
-        #compare-panel {
-            position: absolute;
-            top: 8%; left: 50%;
-            transform: translateX(-50%);
-            width: 84%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            z-index: 40;
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-        #compare-panel.visible { opacity: 1; }
-        .compare-tile { position: relative; border-radius: 4px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
-        .compare-tile img { width: 100%; height: auto; display: block; }
-        .compare-label {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            background: rgba(10,14,23,0.85);
-            font-family: var(--mono);
-            font-size: 0.6em;
-            color: var(--cyber-green);
-            text-align: center;
-            padding: 4px;
-            letter-spacing: 1px;
-        }
-
-        @keyframes pulse {
-            0%,100% { box-shadow: 0 0 8px rgba(0,255,136,0.3); }
-            50%      { box-shadow: 0 0 24px rgba(0,255,136,0.7); }
-        }
-        .pulse { animation: pulse 2s infinite; }
-    </style>
+/* Scanlines & vignette on intro too */
+.intro-scanlines{position:absolute;inset:0;z-index:10;pointer-events:none;opacity:.4;
+  background:repeating-linear-gradient(to bottom,transparent 0,transparent 2px,rgba(0,0,0,.09)2px,rgba(0,0,0,.09)4px);}
+.intro-vignette{position:absolute;inset:0;z-index:9;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.8)100%);}
+</style>
 </head>
 <body>
 <div id="stage">
-  <div id="slide-box">
+ <div id="sb">
 
-    <!-- Background -->
-    <div id="bg-layer"><img id="bg-img" src="" alt=""></div>
-
-    <!-- Overlay layers -->
-    <div id="grain-layer"><img id="grain-img" src="" alt=""></div>
-    <div id="color-overlay"></div>
-    <div id="vignette"></div>
-    <div id="scanlines"></div>
-
-    <!-- Cinematic letterbox -->
-    <div id="letterbox-top"></div>
-    <div id="letterbox-bot"></div>
-    <div id="flash"></div>
-
-    <!-- HUD -->
-    <div id="hud-bar">
-        <div id="hud-title">CyberQuest: Hoe Het Gemaakt Werd</div>
-        <div id="hud-progress"><div id="hud-progress-fill" style="width:0%"></div></div>
-        <div id="hud-slide">slide 0 / 0</div>
+  <!-- Intro cinematic (game-faithful) -->
+  <div id="intro-wrap">
+   <div class="intro-scanlines"></div>
+   <div class="intro-vignette"></div>
+   <!-- Act 1: Production card -->
+   <div id="prod-card">
+    <div class="pc-t" id="pc1">A REIN VELT PRODUCTION</div>
+    <div class="pc-sep" id="pc-sep"></div>
+    <div class="pc-dir" id="pc2">with GitHub Copilot Claude</div>
+   </div>
+   <!-- Act 2: Terminal boot -->
+   <div id="term-boot">
+    <div class="tb" id="tb-block"></div>
+   </div>
+   <!-- Act 3: Star Wars crawl -->
+   <div id="crawl-wrap">
+    <div class="cw-stars" id="cw-stars"></div>
+    <div class="cw-ft"></div><div class="cw-fb"></div>
+    <div class="cw-persp">
+     <div class="cw-txt">
+      <div class="cw-sub">Episode I</div>
+      <div class="cw-title">OPERATION ZERFALL</div>
+      <div class="cw-body">
+       <p>It is February 9, 2026. Compascuum, Drenthe, Netherlands. Ryan Weylant — software developer, radio amateur, and reluctant hero — is making an espresso.</p>
+       <p>He does not yet know that a USB stick has been taped under a stone bench at the medieval Ter Apel Klooster across the province. He does not know about Eva Weber, or Project Echo, or the eight people who died when hospital equipment stopped working at the wrong moment.</p>
+       <p>He knows about coffee.</p>
+       <p>Two thousand kilometres away, at a classified military R&amp;D compound in the Steckerdoser Heide — a dark forest in Lower Saxony, Germany — Commander Dmitri Volkov is running the final calibration of a weaponised radio frequency system. Project Echo. Capable of disrupting any electronics within range. Hospitals. Power grids. Aircraft.</p>
+       <p>Three months ago, Project Echo killed Marlies Bakker, 67, grandmother of four. Her cardiac monitor failed mid-surgery. The cover story: equipment malfunction. Nobody looked twice.</p>
+       <p>Eva Weber looked twice. And she remembered a hacker in a farmhouse in Drenthe who once asked very good questions about SDR antennas.</p>
+       <p>This is the story of what happened next.</p>
+       <p>This is CyberQuest: Operation ZERFALL.</p>
+      </div>
+     </div>
     </div>
+    <button class="cw-skip" id="crawl-skip">SKIP ▶</button>
+   </div>
+   <!-- Act 4: Title blast -->
+   <div id="title-blast">
+    <div class="tb-main">CYBERQUEST</div>
+    <div class="tb-op">Operation ZERFALL</div>
+    <div class="tb-skip" id="begin-btn">► BEGIN PRESENTATIE</div>
+   </div>
+  </div><!-- /intro-wrap -->
 
-    <!-- Characters -->
-    <img id="char-ryan"     src="assets/images/characters/ryan_southpark.svg"  alt="Ryan">
-    <img id="char-narrator" src="assets/images/characters/eva_southpark.svg"   alt="Narrator">
+  <!-- Main presentation stage (revealed after intro) -->
+  <div id="bg"><img id="bg-img" src="" alt=""></div>
+  <div id="grain-ovl"></div>
+  <div id="color-tint"></div>
+  <div id="scanlines"></div>
+  <div id="vignette"></div>
+  <div id="lb-t"></div><div id="lb-b"></div>
+  <div id="flash"></div>
 
-    <!-- Slide title overlay -->
-    <div id="slide-title">
-        <div class="label" id="st-label"></div>
-        <div class="main"  id="st-main"></div>
-        <div class="sub"   id="st-sub"></div>
-    </div>
+  <!-- Chapter divider -->
+  <div id="chap"><div id="ch-n"></div><div id="ch-l"></div><div id="ch-t"></div></div>
 
-    <!-- Caption (top) -->
-    <div id="caption"><div id="caption-text"></div></div>
+  <!-- Loc tag + HUD -->
+  <div id="loc"></div>
+  <div id="hud">
+   <div id="hud-logo">CyberQuest: Operation ZERFALL</div>
+   <div id="hud-r">
+    <div id="hud-pw"><div id="hud-pf" style="width:0%"></div></div>
+    <div id="hud-sl">0 / 0</div>
+   </div>
+  </div>
 
-    <!-- Panels -->
-    <div id="stats-panel">
-        <h4>📊 Project Metrics</h4>
-    </div>
-    <div id="commit-ticker">
-        <h4>git log</h4>
-    </div>
-    <div id="velocity-panel">
-        <h4>⚡ Commit Velocity</h4>
-    </div>
-    <div id="pdca-panel">
-        <div class="pdca-step" id="pdca-p"><div class="pdca-letter">P</div><div class="pdca-word">Plan</div></div>
-        <div class="pdca-step" id="pdca-d"><div class="pdca-letter">D</div><div class="pdca-word">Do</div></div>
-        <div class="pdca-step" id="pdca-c"><div class="pdca-letter">C</div><div class="pdca-word">Check</div></div>
-        <div class="pdca-step" id="pdca-a"><div class="pdca-letter">A</div><div class="pdca-word">Act</div></div>
-    </div>
-    <div id="role-panel">
-        <div class="role-col human">
-            <h4>👤 Rein (Mens)</h4>
-        </div>
-        <div class="role-col ai">
-            <h4>🤖 AI (Copilot)</h4>
-        </div>
-    </div>
-    <div id="icon-grid"></div>
-    <div id="scene-grid"></div>
-    <div id="compare-panel"></div>
+  <!-- Characters -->
+  <img id="cl" class="char" src="" alt="">
+  <img id="cr" class="char" src="" alt="">
 
-    <!-- Dialog box -->
-    <div id="dialog-box">
-        <div id="dialog-speaker">Ryan</div>
-        <div id="dialog-text"></div>
-        <div id="dialog-continue">▶ doorgaan</div>
-    </div>
+  <!-- Title card -->
+  <div id="tc"><div id="tc-lb"></div><div id="tc-m"></div><div id="tc-s"></div></div>
 
-    <!-- Controls -->
-    <div id="controls">
-        <div class="ctrl-btn" id="btn-prev">◀ vorige</div>
-        <div class="ctrl-btn" id="btn-play">⏸ pauze</div>
-        <div class="ctrl-btn" id="btn-next">volgende ▶</div>
-        <div class="ctrl-btn" id="btn-restart">↺ opnieuw</div>
-    </div>
+  <!-- Caption -->
+  <div id="cap"><div id="cap-t"></div></div>
 
-    <div id="audio-indicator">🔊 voice actief</div>
+  <!-- Info panel -->
+  <div id="info"><h4 id="info-h"></h4></div>
 
-  </div><!-- /slide-box -->
+  <!-- Inventory -->
+  <div id="inv"></div>
+
+  <!-- Quest panel -->
+  <div id="qp"><h4>📋 Quests &amp; Objectives</h4><div class="qg" id="qg"></div></div>
+
+  <!-- Puzzle panel -->
+  <div id="puz">
+   <h4 id="puz-title">🔐 Puzzle</h4>
+   <div id="puz-fields"></div>
+   <div id="puz-r"></div>
+  </div>
+
+  <!-- Special action layers -->
+  <div id="laser-l"><div id="laser-status"></div></div>
+  <div id="drone-l"></div>
+  <div id="mwr-l"><canvas id="mwr-canvas"></canvas><div id="mwr-hud">🚜 Zitmaaier — Mow the lawn!</div></div>
+  <div id="gpsp"><h4>📡 GPS Spoof — HackRF One</h4>
+   <div class="gd">
+    <div class="gr"><span class="gl">Target frequency:</span><span class="gv" id="gv-freq">—</span></div>
+    <div class="gr"><span class="gl">TX power:</span><span class="gv" id="gv-pwr">—</span></div>
+    <div class="gr"><span class="gl">Spoof coordinates:</span><span class="gv" id="gv-coord">—</span></div>
+    <div class="gr"><span class="gl">Target drones:</span><span class="gv" id="gv-drones">—</span></div>
+   </div>
+   <div class="gexec" id="gexec">[ EXECUTE_SPOOF ]</div>
+  </div>
+
+  <!-- Planboard -->
+  <div id="pb"><div class="pbg" id="pbg"></div></div>
+
+  <!-- Dialog box -->
+  <div id="dlg"><div id="dn">Ryan</div><div id="dt"></div><div id="dc">▶ verder</div></div>
+
+  <!-- Controls -->
+  <div id="ctrls">
+   <div class="cb" id="b-prev">◀ vorige</div>
+   <div class="cb" id="b-pause">⏸ pauze</div>
+   <div class="cb" id="b-next">volgende ▶</div>
+   <div class="cb" id="b-restart">↺ opnieuw</div>
+  </div>
+
+ </div><!-- /sb -->
 </div><!-- /stage -->
 
 <script>
 "use strict";
-/* ================================================================
-   CyberQuest Presentation Engine
-   Self-contained — uses only existing game assets
-   ================================================================ */
+/* ============================================================
+   CYBERQUEST ABOUT — Presentation Engine
+   ============================================================ */
 
-// ── Voice System ──────────────────────────────────────────────────
-const Voice = {
-    synth: window.speechSynthesis || null,
-    voices: [],
-    enabled: true,
-    currentUtterance: null,
-
-    init() {
-        if (!this.synth) return;
-        const load = () => { this.voices = this.synth.getVoices(); };
-        load();
-        this.synth.onvoiceschanged = load;
-    },
-
-    pickVoice(prefs = [], lang = 'en-GB') {
-        for (const p of prefs) {
-            if (p === 'male' || p === 'female') continue;
-            const v = this.voices.find(v => v.name.includes(p));
-            if (v) return v;
-        }
-        const gender = prefs.find(p => p === 'male' || p === 'female');
-        return this.voices.find(v => v.lang.startsWith('en') &&
-            (!gender || v.name.toLowerCase().includes(gender))) || null;
-    },
-
-    stop() {
-        if (this.synth) this.synth.cancel();
-        this.currentUtterance = null;
-    },
-
-    speak(text, { pitch = 1, rate = 0.9, voicePreference = [], lang = 'en-GB', onEnd = null } = {}) {
-        if (!this.synth || !this.enabled) { if (onEnd) onEnd(); return; }
-        this.synth.cancel();
-        const u = new SpeechSynthesisUtterance(text);
-        u.pitch = pitch; u.rate = rate; u.lang = lang;
-        u.volume = 0.9;
-        const v = this.pickVoice(voicePreference, lang);
-        if (v) u.voice = v;
-        if (onEnd) u.onend = onEnd;
-        this.currentUtterance = u;
-        this.synth.speak(u);
+// ── Voice ─────────────────────────────────────────────────────
+const V = {
+  synth: window.speechSynthesis||null,
+  voices:[],
+  init(){ if(!this.synth)return; const l=()=>{this.voices=this.synth.getVoices();}; l(); this.synth.onvoiceschanged=l; },
+  pick(prefs,lang='en-GB'){
+    for(const p of prefs){
+      if(p==='male'||p==='female')continue;
+      const v=this.voices.find(v=>v.name.includes(p));
+      if(v)return v;
     }
+    const g=prefs.find(p=>p==='male'||p==='female');
+    return this.voices.find(v=>v.lang.startsWith('en')&&(!g||v.name.toLowerCase().includes(g)))||null;
+  },
+  stop(){ if(this.synth)this.synth.cancel(); },
+  speak(text,{pitch=1,rate=.9,prefs=[],lang='en-GB',onEnd=null}={}){
+    if(!this.synth){if(onEnd)onEnd();return;}
+    this.synth.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.pitch=pitch;u.rate=rate;u.lang=lang;u.volume=.9;
+    const v=this.pick(prefs,lang);if(v)u.voice=v;
+    if(onEnd)u.onend=onEnd;
+    this.synth.speak(u);
+  }
 };
 
-// Character voice profiles
-const VOICES = {
-    Ryan:     { pitch: 0.75, rate: 0.95, lang:'en-GB', voicePreference:['Google UK English Male','Microsoft David','male'] },
-    Narrator: { pitch: 1.0,  rate: 0.80, lang:'en-GB', voicePreference:['Google UK English Female','Karen','Moira','female'] },
+const VPROF={
+  Ryan:    {pitch:.75,rate:.93,lang:'en-GB',prefs:['Google UK English Male','Microsoft David','male']},
+  Max:     {pitch:1.1, rate:.85,lang:'en-US',prefs:['Google US English','Samantha','female']},
+  Narrator:{pitch:.95, rate:.78,lang:'en-GB',prefs:['Google UK English Female','Karen','Moira','female']},
+  Eva:     {pitch:1.22,rate:.88,lang:'en-GB',prefs:['Google UK English Female','Kate','female']},
+  Volkov:  {pitch:.42, rate:.68,lang:'en-GB',prefs:['Google UK English Male','Daniel','male']},
+  Cees:    {pitch:.92, rate:.85,lang:'en-GB',prefs:['Google UK English Male','Daniel','male']},
+  Kubecka: {pitch:.85, rate:.95,lang:'en-US',prefs:['Google US English','Samantha','female']},
+  System:  {pitch:1.0, rate:1.2, lang:'en-US',prefs:['Google US English','female']},
 };
 
-// ── Audio Engine ───────────────────────────────────────────────────
-const Audio = {
-    ctx: null,
-    master: null,
-    nodes: [],
-
-    init() {
-        try {
-            const AC = window.AudioContext || window.webkitAudioContext;
-            if (!AC) return;
-            this.ctx = new AC();
-            this.master = this.ctx.createGain();
-            this.master.gain.value = 0.18;
-            this.master.connect(this.ctx.destination);
-        } catch(e) {}
-    },
-
-    resume() { if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume(); },
-
-    playDrone(freq = 38, duration = 8) {
-        if (!this.ctx) return;
-        const ctx = this.ctx;
-        const g = ctx.createGain();
-        const f = ctx.createBiquadFilter();
-        f.type = 'lowpass'; f.frequency.value = 120;
-        g.gain.value = 0;
-        g.gain.linearRampToValueAtTime(0.5, ctx.currentTime + 1.5);
-        g.gain.linearRampToValueAtTime(0, ctx.currentTime + duration);
-        const o1 = ctx.createOscillator(); o1.type = 'sawtooth'; o1.frequency.value = freq;
-        const o2 = ctx.createOscillator(); o2.type = 'sawtooth'; o2.frequency.value = freq + 1.5;
-        o1.connect(f); o2.connect(f); f.connect(g); g.connect(this.master);
-        o1.start(); o2.start();
-        o1.stop(ctx.currentTime + duration);
-        o2.stop(ctx.currentTime + duration);
-    },
-
-    playTick() {
-        if (!this.ctx) return;
-        const ctx = this.ctx;
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
-        o.type = 'square'; o.frequency.value = 800 + Math.random()*400;
-        g.gain.setValueAtTime(0.05, ctx.currentTime);
-        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.04);
-        o.connect(g); g.connect(this.master);
-        o.start(); o.stop(ctx.currentTime + 0.05);
-    },
-
-    playChime() {
-        if (!this.ctx) return;
-        const ctx = this.ctx;
-        [523, 659, 784].forEach((freq, i) => {
-            const o = ctx.createOscillator(); const g = ctx.createGain();
-            o.type = 'sine'; o.frequency.value = freq;
-            g.gain.setValueAtTime(0, ctx.currentTime + i*0.15);
-            g.gain.linearRampToValueAtTime(0.3, ctx.currentTime + i*0.15 + 0.05);
-            g.gain.linearRampToValueAtTime(0, ctx.currentTime + i*0.15 + 0.8);
-            o.connect(g); g.connect(this.master);
-            o.start(ctx.currentTime + i*0.15);
-            o.stop(ctx.currentTime + i*0.15 + 1);
-        });
-    },
-
-    playImpact() {
-        if (!this.ctx) return;
-        const ctx = this.ctx;
-        const buf = ctx.createBuffer(1, ctx.sampleRate * 0.3, ctx.sampleRate);
-        const d = buf.getChannelData(0);
-        for (let i=0;i<d.length;i++) d[i] = (Math.random()*2-1)*Math.exp(-i/3000);
-        const src = ctx.createBufferSource(); src.buffer = buf;
-        const g = ctx.createGain(); g.gain.value = 0.6;
-        src.connect(g); g.connect(this.master);
-        src.start();
+// ── Web Audio ─────────────────────────────────────────────────
+const A = {
+  ctx:null,master:null,
+  init(){
+    try{
+      const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+      this.ctx=new AC();this.master=this.ctx.createGain();
+      this.master.gain.value=.2;this.master.connect(this.ctx.destination);
+    }catch(e){}
+  },
+  resume(){if(this.ctx&&this.ctx.state==='suspended')this.ctx.resume();},
+  drone(freq=38,dur=10,vol=.5){
+    if(!this.ctx)return;
+    const ctx=this.ctx,t=ctx.currentTime;
+    const g=ctx.createGain(),f=ctx.createBiquadFilter();
+    f.type='lowpass';f.frequency.value=130;
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+2);g.gain.linearRampToValueAtTime(0,t+dur);
+    [freq,freq+1.5].forEach(fr=>{const o=ctx.createOscillator();o.type='sawtooth';o.frequency.value=fr;o.connect(f);o.start();o.stop(t+dur);});
+    f.connect(g);g.connect(this.master);
+  },
+  chime(){
+    if(!this.ctx)return;
+    const ctx=this.ctx;
+    [523,659,784].forEach((fr,i)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.type='sine';o.frequency.value=fr;
+      g.gain.setValueAtTime(0,ctx.currentTime+i*.15);
+      g.gain.linearRampToValueAtTime(.3,ctx.currentTime+i*.15+.05);
+      g.gain.linearRampToValueAtTime(0,ctx.currentTime+i*.15+.9);
+      o.connect(g);g.connect(this.master);o.start(ctx.currentTime+i*.15);o.stop(ctx.currentTime+i*.15+1);
+    });
+  },
+  impact(){
+    if(!this.ctx)return;
+    const ctx=this.ctx,t=ctx.currentTime;
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.type='sine';o.frequency.setValueAtTime(80,t);o.frequency.exponentialRampToValueAtTime(25,t+.35);
+    g.gain.setValueAtTime(.7,t);g.gain.exponentialRampToValueAtTime(.001,t+.5);
+    o.connect(g);g.connect(this.master);o.start(t);o.stop(t+.55);
+  },
+  sweep(){
+    if(!this.ctx)return;
+    const ctx=this.ctx,t=ctx.currentTime;
+    const o=ctx.createOscillator(),f=ctx.createBiquadFilter(),g=ctx.createGain();
+    o.type='sawtooth';o.frequency.setValueAtTime(60,t);o.frequency.exponentialRampToValueAtTime(400,t+1.5);
+    f.type='lowpass';f.frequency.setValueAtTime(200,t);f.frequency.exponentialRampToValueAtTime(2000,t+1.5);
+    g.gain.setValueAtTime(.2,t);g.gain.linearRampToValueAtTime(.5,t+1.2);g.gain.exponentialRampToValueAtTime(.001,t+2.5);
+    o.connect(f);f.connect(g);g.connect(this.master);o.start(t);o.stop(t+2.6);
+    setTimeout(()=>this.impact(),1500);
+  },
+  beep(freq=800,dur=.08){
+    if(!this.ctx)return;
+    const ctx=this.ctx,t=ctx.currentTime;
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.type='square';o.frequency.value=freq;
+    g.gain.setValueAtTime(.06,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+    o.connect(g);g.connect(this.master);o.start(t);o.stop(t+dur+.01);
+  },
+  explosion(){
+    if(!this.ctx)return;
+    const ctx=this.ctx,t=ctx.currentTime;
+    const buf=ctx.createBuffer(1,ctx.sampleRate*.4,ctx.sampleRate);
+    const d=buf.getChannelData(0);
+    for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*Math.exp(-i/5000);
+    const src=ctx.createBufferSource(),g=ctx.createGain();
+    src.buffer=buf;g.gain.value=.7;src.connect(g);g.connect(this.master);src.start(t);
+  },
+  laserHum(){
+    if(!this._laserCtx){
+      try{
+        const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+        this._laserCtx=new AC();
+        const m=this._laserCtx.createGain();m.gain.value=.2;m.connect(this._laserCtx.destination);
+        [120,180].forEach(fr=>{const o=this._laserCtx.createOscillator(),g=this._laserCtx.createGain();
+          o.type='square';o.frequency.value=fr;g.gain.value=.012;o.connect(g);g.connect(m);o.start();});
+        this._laserOsc=m;
+      }catch(e){}
     }
+  },
+  stopLaser(){if(this._laserCtx){try{this._laserCtx.close();}catch(e){}this._laserCtx=null;}},
 };
 
-// ── DOM helpers ────────────────────────────────────────────────────
-const $ = id => document.getElementById(id);
-function show(el) { if(typeof el==='string') el=$(el); el && el.classList.add('visible'); }
-function hide(el) { if(typeof el==='string') el=$(el); el && el.classList.remove('visible'); }
-function hideAll() {
-    ['slide-title','dialog-box','stats-panel','commit-ticker','velocity-panel',
-     'pdca-panel','role-panel','icon-grid','scene-grid','compare-panel','caption']
-     .forEach(id => hide(id));
-    $('char-ryan').classList.remove('visible','talking');
-    $('char-narrator').classList.remove('visible','talking');
-    $('letterbox-top').classList.remove('cinema');
-    $('letterbox-bot').classList.remove('cinema');
-    $('color-overlay').style.opacity = '0';
-    $('grain-layer').style.opacity = '0';
+// ── Helpers ───────────────────────────────────────────────────
+const $=id=>document.getElementById(id);
+const show=id=>{const e=$(id);if(e)e.classList.add('on');};
+const hide=id=>{const e=$(id);if(e)e.classList.remove('on');};
+function flash(){const f=$('flash');f.style.opacity='.6';setTimeout(()=>f.style.opacity='0',180);}
+function setKB(mode){const i=$('bg-img');i.className='';if(mode)requestAnimationFrame(()=>i.classList.add(mode));}
+function clearChar(){ $('cl').className='char'; $('cr').className='char'; }
+function showChar(side,src,talking=false){
+  const el=$(side==='L'?'cl':'cr');
+  el.src=src;el.classList.add('in');
+  if(talking)el.classList.add('tk');
+}
+function stopTalking(){$('cl').classList.remove('tk');$('cr').classList.remove('tk');}
+function hideAll(){
+  ['cap','tc','info','inv','qp','puz','gpsp','pb','laser-l','drone-l','mwr-l','chap']
+    .forEach(id=>hide(id));
+  clearChar();
+  hide('dlg');
+  $('lb-t').classList.remove('on');$('lb-b').classList.remove('on');
+  $('color-tint').style.opacity='0';
+  $('grain-ovl').style.opacity='0';
+  $('loc').classList.remove('on');
+  A.stopLaser();
 }
 
-function setKB(mode) {
-    const el = $('bg-img');
-    el.className = '';
-    if (mode) requestAnimationFrame(() => el.classList.add(mode));
+// ── Typewriter ────────────────────────────────────────────────
+let _twTimer=null;
+function typewriter(el,text,mspc=26,cb){
+  clearTimeout(_twTimer);el.textContent='';let i=0;
+  const tick=()=>{
+    if(i<text.length){el.textContent+=text[i++];A.beep(700+Math.random()*400,.04);_twTimer=setTimeout(tick,mspc+Math.random()*8);}
+    else{if(cb)cb();}
+  };tick();
 }
 
-function flash() {
-    const f = $('flash');
-    f.style.opacity = '0.6';
-    setTimeout(() => f.style.opacity = '0', 200);
+// ── Dialog system ─────────────────────────────────────────────
+let _dLines=[],_dIdx=0,_dActive=false,_dAutoTimer=null;
+
+function showDialog(lines,onDone){
+  _dLines=lines;_dIdx=0;_dActive=true;_dDone=onDone;
+  _showLine();
+}
+let _dDone=null;
+function _showLine(){
+  if(_dIdx>=_dLines.length){_endDialog();return;}
+  const ln=_dLines[_dIdx];
+  const dn=$('dn'),dt=$('dt'),dc=$('dc');
+  const prof=VPROF[ln.speaker]||VPROF.Narrator;
+  dn.textContent=ln.speaker||'';
+  dn.className=ln.color||'';
+  dt.textContent='';dc.classList.remove('on');
+  show('dlg');
+  // Characters
+  stopTalking();
+  if(ln.charL){showChar('L',ln.charL,true);}
+  else{$('cl').classList.remove('in','tk');}
+  if(ln.charR){showChar('R',ln.charR,true);}
+  else{$('cr').classList.remove('in','tk');}
+  // Speak
+  V.speak(ln.text,{...prof,onEnd:()=>{stopTalking();}});
+  typewriter(dt,ln.text,24,()=>{
+    dc.classList.add('on');
+    const readMs=Math.max(1800,ln.text.length*52);
+    _dAutoTimer=setTimeout(()=>{stopTalking();_dIdx++;_showLine();},readMs);
+  });
+}
+function _endDialog(){
+  _dActive=false;V.stop();stopTalking();hide('dlg');
+  if(_dDone)_dDone();
+}
+function advanceDialog(){
+  if(!_dActive)return;
+  clearTimeout(_dAutoTimer);V.stop();stopTalking();
+  _dIdx++;_showLine();
 }
 
-// ── Typewriter ─────────────────────────────────────────────────────
-function typewriter(el, text, msPerChar = 30, cb) {
-    el.textContent = '';
-    let i = 0;
-    const tick = () => {
-        if (i < text.length) {
-            el.textContent += text[i++];
-            Audio.playTick();
-            setTimeout(tick, msPerChar + Math.random()*10);
-        } else {
-            if (cb) cb();
-        }
-    };
-    tick();
+// ── Intro Sequence ────────────────────────────────────────────
+function runIntro(){
+  // Build starfield
+  const stars=$('cw-stars');
+  for(let i=0;i<120;i++){
+    const s=document.createElement('div');s.className='star';
+    const sz=.5+Math.random()*2;
+    s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*100}%;width:${sz}px;height:${sz}px;
+      --op:${.2+Math.random()*.8};--dur:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s;`;
+    stars.appendChild(s);
+  }
+
+  let t=0;
+  function at(ms,fn){setTimeout(fn,ms);}
+
+  // ACT 1: Production card
+  at(t+=500,()=>{ show('prod-card');
+    at(800,()=>{ $('pc1').classList.add('vis');$('pc-sep').classList.add('vis'); });
+    at(1400,()=>{ $('pc2').classList.add('vis'); });
+  });
+  at(t+=4500,()=>{ $('pc1').classList.remove('vis');$('pc-sep').classList.remove('vis');$('pc2').classList.remove('vis'); });
+  at(t+=1600,()=>{ hide('prod-card'); });
+
+  // ACT 2: Terminal boot
+  at(t+=400,()=>{ show('term-boot'); });
+  const termLines=[
+    {txt:'CYBERQUEST MISSION SYSTEM v2.1.4',cls:''},
+    {txt:'═══════════════════════════════════',cls:'d'},
+    {txt:'INITIALIZING CORE ENGINE...         [OK]',cls:''},
+    {txt:'LOADING SCENE DATABASE...           [42 SCENES]',cls:'i'},
+    {txt:'LOADING CHARACTER REGISTRY...       [14 CHARACTERS]',cls:'i'},
+    {txt:'LOADING PUZZLE ENGINE...            [OK]',cls:''},
+    {txt:'CHECKING AES-256 ENCRYPTION...      [OK]',cls:''},
+    {txt:'MESHTASTIC NODE STATUS...           [ONLINE]',cls:'i'},
+    {txt:'WEB AUDIO ENGINE...                 [ACTIVE]',cls:''},
+    {txt:'',cls:''},
+    {txt:'>> WARNING: OPERATION ZERFALL ACTIVE',cls:'w'},
+    {txt:'>> CLASSIFICATION: LEVEL 5 / RESTRICTED',cls:'c'},
+    {txt:'>> MISSION BRIEFING IN PROGRESS...',cls:''},
+    {txt:'',cls:''},
+  ];
+  const tblock=$('tb-block');
+  let lineDelay=0;
+  termLines.forEach((ln,i)=>{
+    at(t+lineDelay,()=>{
+      const div=document.createElement('div');div.className='tl'+(ln.cls?' '+ln.cls:'');
+      div.textContent=ln.txt;tblock.appendChild(div);
+      requestAnimationFrame(()=>div.classList.add('in'));
+      if(i===termLines.length-1){
+        const cur=document.createElement('span');cur.className='tcur';tblock.appendChild(cur);
+      }
+    });
+    lineDelay+=340+Math.random()*80;
+  });
+  at(t+=lineDelay+600,()=>{ hide('term-boot'); });
+
+  // ACT 3: Star Wars crawl
+  at(t+=400,()=>{ show('crawl-wrap'); A.drone(38,70,.3); });
+  $('crawl-skip').onclick=()=>endCrawl();
+  function endCrawl(){
+    hide('crawl-wrap');
+    at(400,()=>doTitleBlast());
+  }
+  at(t+=56000,()=>endCrawl()); // auto-advance after crawl duration
+
+  function doTitleBlast(){
+    show('title-blast');A.sweep();
+    flash();
+  }
+  $('begin-btn').onclick=()=>{
+    A.resume();
+    hide('title-blast');
+    at(300,()=>{
+      $('intro-wrap').style.display='none';
+      P.start();
+    });
+  };
 }
 
-// ── Scene data ─────────────────────────────────────────────────────
-const ALL_SCENES = [
-    'intro','home','livingroom','garden','garden_back','bedroom',
-    'mancave','laptop','airgapped_laptop','secure_phone','sstv_terminal',
-    'planboard','sdr_bench','klooster','car_discovery','usb_discovery',
-    'driving','driving_day','regional_map','lofar','astron','dwingeloo',
-    'planetenpad','wsrt_parking','westerbork_memorial',
-    'hackerspace','hackerspace_classroom',
-    'drone_hunt','laser_corridor',
-    'facility','facility_interior','facility_server',
-    'tvdocumentary','tvnews',
-    'long_night','morning_after','return_to_ies',
-    'videocall','debrief','epilogue','credits',
-];
-
-// ── Slides definition ──────────────────────────────────────────────
-// Each slide: { bg, kb, grain, color, cinema, title, dialog[], panels[], duration }
-// dialog[]: { speaker, text, showRyan, showNarrator }
-// panels: array of setup functions
-
-const SLIDES = [
-
-    // ─── 0: OPENING TITLE ───────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/intro.svg',
-        grain: 'assets/images/overlayimg/grain-noise-intro.svg',
-        kb: 'kb-zoom-in',
-        cinema: true,
-        color: { bg: 'rgba(0,255,136,0.04)', opacity: '1' },
-        titleCard: { label: 'CyberQuest: Operation ZERFALL', main: 'Hoe Het Gemaakt Werd', sub: '35 dagen · 143 commits · 44.016 regels code' },
-        duration: 7000,
-    },
-
-    // ─── 1: RYAN INTRO ──────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/home.svg',
-        kb: 'kb-pan-r',
-        cinema: false,
-        dialog: [
-            { speaker:'Ryan', text:"Hey. Ik ben Ryan Weylant. 42 jaar, Compascuum, Drenthe. Hacker. Radio-amateur. En tegenwoordig ook... game character.", showRyan:true },
-            { speaker:'Ryan', text:"Dit spel — CyberQuest — heeft Rein gemaakt. Met een flinke dosis AI. Ik ga je laten zien hoe dat werkte.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 2: DE WERELD OP PAPIER ─────────────────────────────────
-    {
-        bg: 'assets/images/scenes/mancave.svg',
-        kb: 'kb-zoom-out',
-        titleCard: { label: 'Fase 0 — Vóór de code', main: 'De Visie op Papier', sub: 'STORY.md · RULES.md · SCREENPLAY.md · STORYBOARD.md' },
-        cinema: true,
-        duration: 4500,
-    },
-
-    // ─── 3: REIN SCHRIJFT ───────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/laptop.svg',
-        kb: 'kb-pan-l',
-        dialog: [
-            { speaker:'Ryan', text:"Rein schreef eerst alles op. Mijn karakter. Het verhaal. Elke scène. Alle technische details. HackRF, Flipper Zero, LOFAR, Meshtastic.", showRyan:true },
-            { speaker:'Narrator', text:"STORY.md was het architectuurcontract. RULES.md legde de PDCA-cyclus vast. SCREENPLAY.md gaf elk personage zijn eigen stem.", showNarrator:true },
-            { speaker:'Ryan', text:"Zonder die documenten kon de AI niets. Met die documenten kon de AI... alles.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 4: BIG BANG ────────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/intro.svg',
-        grain: 'assets/images/overlayimg/grain-noise-intro.svg',
-        kb: 'kb-zoom-in',
-        cinema: true,
-        color: { bg: 'rgba(0,100,255,0.08)', opacity: '1' },
-        titleCard: { label: '13 februari 2026 — 12:56', main: 'First Commit', sub: '79 bestanden · 25.246 regels · in één sessie' },
-        duration: 5000,
-        onEnter() {
-            Audio.playImpact();
-            flash();
-        }
-    },
-
-    // ─── 5: COMMIT STATS ────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/planboard.svg',
-        kb: 'kb-pan-r',
-        panels: ['stats'],
-        dialog: [
-            { speaker:'Narrator', text:"In één AI-generatiesessie: een volledige game engine, 14 scènes, 20 SVG-achtergronden, 12 South Park personages, en alle puzzels.", showNarrator:true },
-            { speaker:'Ryan', text:"Dat is de kracht van goede voorbereiding. Rein had zijn huiswerk gedaan. De AI deed de rest.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 6: DE SCÈNES — THUIS ───────────────────────────────────
-    {
-        bg: 'assets/images/scenes/home.svg',
-        kb: 'kb-zoom-in',
-        caption: '🏠 Thuis — Compascuum, Drenthe',
-        dialog: [
-            { speaker:'Ryan', text:"Hier begint het. Mijn farmhouse. Koffie. De honden. Max op de bank. En dan... een vreemd signaal op mijn SDR.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 7: LIVINGROOM + BEDROOM ────────────────────────────────
-    {
-        bg: 'assets/images/scenes/livingroom.svg',
-        kb: 'kb-pan-l',
-        caption: '🛋️ Woonkamer · 🛏️ Slaapkamer',
-        dialog: [
-            { speaker:'Narrator', text:"De woonkamer heeft gesynthetiseerde Web Audio: een knetterend haardvuur, snurkende honden, en zelfs hondenwinden.", showNarrator:true },
-            { speaker:'Ryan', text:"Dat laatste was niet mijn idee.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 8: TUIN ────────────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/garden.svg',
-        kb: 'kb-zoom-out',
-        caption: '🌿 Tuin — voor en achter',
-        dialog: [
-            { speaker:'Ryan', text:"Gewoon een Nederlandse boerderijtuin. Maar de animatie van het kanaaltafereel door het raam — dat is Drenthe ten voeten uit.", showRyan:true },
-            { speaker:'Narrator', text:"Rein specificeerde het detail. AI bouwde een geanimeerde SVG-scène met kanaalwater, bomen en wolken.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 9: MANCAVE → LAPTOP → AIRGAPPED ────────────────────────
-    {
-        bg: 'assets/images/scenes/mancave.svg',
-        kb: 'kb-pan-r',
-        caption: '💻 Mancave · Laptop · Airgapped Laptop',
-        dialog: [
-            { speaker:'Ryan', text:"Hier werk ik. SDR-bench, oscilloscoop, Raspberry Pi. Het zenuwcentrum van het onderzoek.", showRyan:true },
-            { speaker:'Narrator', text:"Op 1 maart promoveerde AI de laptop, SSTV terminal en airgapped laptop elk naar eigen Hollywood-stijl forensische scènes.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 10: SDR BENCH + SECURE PHONE + SSTV ────────────────────
-    {
-        bg: 'assets/images/scenes/sdr_bench.svg',
-        kb: 'kb-zoom-in',
-        caption: '📡 SDR Bench · 📱 Secure Phone · 📺 SSTV Terminal',
-        dialog: [
-            { speaker:'Ryan', text:"Mijn HackRF One. De Flipper Zero. En dan opeens — een SSTV-signaal op 14.230 MHz. Eva.", showRyan:true },
-            { speaker:'Narrator', text:"Drie aparte scènes, elk met eigen SVG-achtergrond, puzzels en Movie Mode accessibility pad.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 11: KLOOSTER ───────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/klooster.svg',
-        kb: 'kb-pan-l',
-        caption: '⛪ Ter Apel Klooster',
-        dialog: [
-            { speaker:'Ryan', text:"Eva's dode briefwisseling lag hier. Niet bij het autoportier — Rein besloot dat de stenen bank dramatischer was.", showRyan:true },
-            { speaker:'Narrator', text:"v0.7.0-alpha: USB dead-drop geherplaatst naar kloosterbank. Volledige SVG-herdesign, gecorrigeerde dialogenpaden.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 12: CAR DISCOVERY + USB DISCOVERY ──────────────────────
-    {
-        bg: 'assets/images/scenes/car_discovery.svg',
-        kb: 'kb-zoom-in',
-        caption: '🚗 Auto · 💾 USB Ontdekking',
-        cinema: true,
-        dialog: [
-            { speaker:'Narrator', text:"Hollywood-stijl cinematische scènes. Multi-shot sequenties: tension build-up, ontdekkingsmoment, technische analyse.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 13: DRIVING SCENES ─────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/driving_day.svg',
-        kb: 'kb-pan-r',
-        caption: '🚙 Rijden — nacht en dag · 🗺️ Regionale kaart',
-        dialog: [
-            { speaker:'Ryan', text:"Drenthe is groot. En leeg. Ik rijd veel in dit spel.", showRyan:true },
-            { speaker:'Narrator', text:"De driving_day scène speelt automatisch RTV Drenthe regionaal nieuws af tijdens de rit. Rein besloot: geen NOS Journaal, maar echt Drenthe.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 14: LOFAR ──────────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/lofar.svg',
-        kb: 'kb-zoom-in',
-        caption: '📡 LOFAR Superterp — Exloo',
-        dialog: [
-            { speaker:'Narrator', text:"638 regels SVG-vectorkunstwerk. Het LOFAR Superterp radiotelescoop complex, nauwkeurig nagebootst. Volledig door AI gegenereerd in één commit.", showNarrator:true },
-            { speaker:'Ryan', text:"Ik weet dat het klopt. Ik ben hier geweest.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 15: ASTRON + DWINGELOO ─────────────────────────────────
-    {
-        bg: 'assets/images/scenes/astron.svg',
-        kb: 'kb-pan-l',
-        caption: '🔭 ASTRON · 📡 Dwingeloo',
-        dialog: [
-            { speaker:'Narrator', text:"ASTRON heeft een equipment puzzle: Ryan moet de juiste meetapparatuur instellen. Movie Mode lost dit automatisch op.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 16: PLANETENPAD + WSRT + WESTERBORK ─────────────────────
-    {
-        bg: 'assets/images/scenes/planetenpad.svg',
-        kb: 'kb-zoom-in',
-        caption: '🌍 Planetenpad · 🔭 WSRT · 🕍 Westerbork Memorial',
-        dialog: [
-            { speaker:'Ryan', text:"Het Planetenpad is een echte wandelroute bij de WSRT. Elke planeet op schaal. Westerbork... dat is zwaarder.", showRyan:true },
-            { speaker:'Narrator', text:"Westerbork bevat een Flipper Zero BLE-puzzle. Rein voegde dit toe als narratief — technologie en herinnering verweven.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 17: WSRT PARKING ───────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/wsrt_parking.svg',
-        kb: 'kb-pan-r',
-        caption: '🚗 WSRT Parkeerplaats — Missie Hub',
-        dialog: [
-            { speaker:'Narrator', text:"De WSRT parkeerplaats is de centrale hub na de eerste helft van het spel. Rein kan hier alle bezochte locaties herbezoeken vanuit de Volvo.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 18: HACKERSPACE ────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/hackerspace.svg',
-        kb: 'kb-zoom-out',
-        caption: '💻 Hackerspace Drenthe · 🏫 Classroom',
-        dialog: [
-            { speaker:'Ryan', text:"Mijn mensen. Dennis, Sophie, Marco, Kim, Joris — allemaal echte Drenthse hackers. Nou ja... fictional.", showRyan:true },
-            { speaker:'Narrator', text:"Hollywood-stijl dynamische NPCs: bewegende sprites, real-time audio, VFX. Elke NPC heeft een eigen stemachtig TTS-profiel.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 19: DRONE HUNT ─────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/drone_hunt.svg',
-        grain: 'assets/images/overlayimg/drone-hunt-fg-overlay.svg',
-        kb: 'kb-zoom-in',
-        caption: '🚁 Drone Hunt — GPS Spoofing',
-        dialog: [
-            { speaker:'Narrator', text:"GPS-spoof puzzels. Drones als foreground sprites met crash-animaties. Web Audio geluidseffecten bij neerstorten.", showNarrator:true },
-            { speaker:'Ryan', text:"Movie Mode vuurt automatisch de juiste GPS-coördinaten in. Handig als je lui bent.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 20: LASER CORRIDOR ─────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/laser_corridor.svg',
-        grain: 'assets/images/overlayimg/laser-corridor-overlay.svg',
-        kb: 'kb-pan-l',
-        cinema: true,
-        caption: '🔴 Laser Corridor',
-        dialog: [
-            { speaker:'Narrator', text:"Dynamische foreground overlays voor laserstralen, sensoren en het deurslot. Web Audio synthesizeert de elektronische geluiden.", showNarrator:true },
-            { speaker:'Ryan', text:"Drie puzzels. Flipper Zero, HackRF, en timing. Movie Mode lost ze automatisch op. Ik heb dat niet nodig.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 21: FACILITY ────────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/facility.svg',
-        kb: 'kb-zoom-in',
-        caption: '🏭 De Facility — Steckerdoser Heide',
-        dialog: [
-            { speaker:'Ryan', text:"Het eindpunt. De Steckerdoser Heide facility in Duitsland. Waar Project Echo geboren werd.", showRyan:true },
-            { speaker:'Narrator', text:"Drie scènes: exterieur, interieur, en de serverruimte. Elk met eigen puzzels en dramatische cinematics.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 22: FACILITY SERVER + PLANBOARD ─────────────────────────
-    {
-        bg: 'assets/images/scenes/facility_server.svg',
-        kb: 'kb-pan-r',
-        caption: '💾 Server Room · 📌 Planboard',
-        dialog: [
-            { speaker:'Narrator', text:"Het planboard toont Ryan's onderzoek: dossiers, foto's, SSTV-afbeelding, USB-bewijs, wapenscchema's — alles als overlay tiles.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 23: TV + VIDEOCALL ──────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/tvdocumentary.svg',
-        grain: 'assets/images/overlayimg/grain-noise-tvdoc.svg',
-        kb: 'kb-zoom-out',
-        caption: '📺 TV Documentaire · 📡 RTV Drenthe Nieuws · 📹 Videocall',
-        dialog: [
-            { speaker:'Narrator', text:"De TV documentaire speelt automatisch door met gesynthetiseerde voice-overs voor David Prinsloo, Cees Bassa en Jaap Haartsen.", showNarrator:true },
-            { speaker:'Ryan', text:"Als je Marlies Bakker ziet — de 67-jarige vrouw, slachtoffer van Project Echo. Dát was Rein's beslissing. Een menselijk gezicht.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 24: VIDEOCALL + DEBRIEF ─────────────────────────────────
-    {
-        bg: 'assets/images/scenes/videocall.svg',
-        kb: 'kb-pan-l',
-        caption: '📹 Videocall · 📋 Debrief · 🏠 Return Home',
-        dialog: [
-            { speaker:'Ryan', text:"Na de facility. Chris Kubecka debrieft ons. Dan rijden we naar huis. Max staat er. De honden ook.", showRyan:true },
-            { speaker:'Narrator', text:"Return_to_ies is een volledig cinematische thuiskomst-sequentie. Nu return_to_ies geheten — was Ies, is Max, na Rein's naambeslissing op 1 maart.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 25: LONG NIGHT + MORNING AFTER ──────────────────────────
-    {
-        bg: 'assets/images/scenes/long_night.svg',
-        kb: 'kb-zoom-in',
-        caption: '🌙 Long Night · ☕ Morning After',
-        dialog: [
-            { speaker:'Ryan', text:"Een lange nacht van analyse. En dan... koffie. Altijd koffie.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 26: EPILOGUE + CREDITS ──────────────────────────────────
-    {
-        bg: 'assets/images/scenes/epilogue.svg',
-        kb: 'kb-zoom-out',
-        caption: '🎬 Epilogue · 🙏 Credits',
-        cinema: true,
-        dialog: [
-            { speaker:'Narrator', text:"De epiloog en credits ronden het verhaal af. De credits bevatten een grain-noise overlay voor filmisch effect.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 27: ALLE SCÈNES GRID ────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/planboard.svg',
-        kb: 'kb-pan-r',
-        panels: ['scene-grid'],
-        dialog: [
-            { speaker:'Narrator', text:"42 scènes. 42 SVG-achtergronden. Elk een eigen wereld. Begin: 13 februari, 14 scènes. Eind: 20 maart, 42 scènes.", showNarrator:true },
-            { speaker:'Ryan', text:"Elke scène heeft z'n eigen JavaScript, eigen hotspots, eigen quest-logica, eigen Movie Mode accessibility pad.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 28: COMMIT VELOCITY ─────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/laptop.svg',
-        kb: 'kb-zoom-in',
-        panels: ['velocity'],
-        dialog: [
-            { speaker:'Narrator', text:"De velocity grafiek vertelt het verhaal. Burst-and-stabilise: intense sprints gevolgd door evaluatiepauzes.", showNarrator:true },
-            { speaker:'Ryan', text:"42 commits op één dag — 1 maart. Dat was de Movie Mode Marathon. 14 uur doorwerken.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 29: PDCA CYCLUS ─────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/mancave.svg',
-        kb: 'kb-pan-l',
-        panels: ['pdca'],
-        dialog: [
-            { speaker:'Ryan', text:"Rein's RULES.md definieerde de PDCA-cyclus als fundamentele methode. Plan, Do, Check, Act.", showRyan:true },
-            { speaker:'Narrator', text:"Op macro-schaal: founding docs → AI bootstrap → testplay → bugfixes. Op micro-schaal: elke 'fix:' commit IS een ACT-stap.", showNarrator:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 30: ROLVERDELING ────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/hackerspace.svg',
-        kb: 'kb-zoom-out',
-        panels: ['roles'],
-        dialog: [
-            { speaker:'Narrator', text:"De fundamentele rolverdeling: Rein bepaalt WAT er bestaat en WAAROM. AI bepaalt HOE het technisch gerealiseerd wordt.", showNarrator:true },
-            { speaker:'Ryan', text:"Rein schreef geen JavaScript. Maar hij schreef alles wat ertoe deed.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 31: MOVIE MODE ──────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/secure_phone.svg',
-        kb: 'kb-pan-r',
-        caption: '🎬 Movie Mode — Accessibility Runner',
-        dialog: [
-            { speaker:'Narrator', text:"Movie Mode: het spel speelt zichzelf automatisch door. Elke scène heeft een accessibilityPath[] array. Puzzels worden auto-opgelost.", showNarrator:true },
-            { speaker:'Ryan', text:"Klik op 🎬 Interactive Movie op het startscherm. Pak koffie. Kijk toe. Duurt ongeveer een uur.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 32: SECURITY + PWA ──────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/facility_server.svg',
-        kb: 'kb-zoom-in',
-        caption: '🔒 Security Hardening · 📱 PWA',
-        dialog: [
-            { speaker:'Narrator', text:"v1.2: Content Security Policy, inline script extractie, PWA manifest, Open Graph meta-tags, CC BY-SA 4.0 licentie, privacy statement.", showNarrator:true },
-            { speaker:'Ryan', text:"Alles netjes. Geen XSS. Geen inline scripts. Rein is securitybewust. Ik ook.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 33: DEPLOY PIPELINE ─────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/laptop.svg',
-        kb: 'kb-pan-l',
-        caption: '🚀 GitHub Webhook Auto-Deploy',
-        dialog: [
-            { speaker:'Narrator', text:"Push naar main → GitHub webhook → Python listener op port 9000 → git pull → live op ryanweylant.tech. Volledig geautomatiseerd.", showNarrator:true },
-            { speaker:'Ryan', text:"Dat is het mooie. Rein committet, en 30 seconden later is het overal.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 34: CONCLUSIE ────────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/home.svg',
-        kb: 'kb-zoom-out',
-        titleCard: { label: 'Conclusie', main: 'Mens + AI = Meer dan de som', sub: '35 dagen · 143 commits · van idee naar publiek spel' },
-        cinema: true,
-        duration: 5000,
-    },
-
-    // ─── 35: LAATSTE WOORD RYAN ───────────────────────────────────
-    {
-        bg: 'assets/images/scenes/epilogue.svg',
-        grain: 'assets/images/overlayimg/grain-noise-credits.svg',
-        kb: 'kb-zoom-in',
-        cinema: true,
-        dialog: [
-            { speaker:'Narrator', text:"De kwaliteit van de AI-output is direct evenredig aan de kwaliteit van de menselijke voorbereiding. STORY.md was het contract. RULES.md was het proces.", showNarrator:true },
-            { speaker:'Ryan', text:"Mijn naam is Ryan Weylant. Ik void warranties. Rein maakte me. En nu speel jij me.", showRyan:true },
-            { speaker:'Ryan', text:"Ga het spelen. Op ryanweylant.tech. Of open index.html.", showRyan:true },
-        ],
-        duration: 0,
-    },
-
-    // ─── 36: EINDE ────────────────────────────────────────────────
-    {
-        bg: 'assets/images/scenes/credits.svg',
-        grain: 'assets/images/overlayimg/grain-noise-credits.svg',
-        kb: 'kb-zoom-out',
-        cinema: true,
-        color: { bg: 'rgba(0,255,136,0.06)', opacity: '1' },
-        titleCard: { label: 'CyberQuest: Operation ZERFALL', main: 'Speel het zelf', sub: 'ryanweylant.tech  ·  v0.7.0-alpha  ·  CC BY-SA 4.0' },
-        duration: 999999,
-    },
-
-];
-
-// ── Velocity data ──────────────────────────────────────────────────
-const VELOCITY = [
-    { date:'feb 13', count:2, peak:42 },
-    { date:'feb 14', count:2, peak:42 },
-    { date:'feb 15', count:2, peak:42 },
-    { date:'feb 19', count:1, peak:42 },
-    { date:'feb 20', count:3, peak:42 },
-    { date:'feb 22', count:2, peak:42 },
-    { date:'feb 23', count:1, peak:42 },
-    { date:'feb 24', count:1, peak:42 },
-    { date:'feb 25', count:2, peak:42 },
-    { date:'feb 26', count:19,peak:42 },
-    { date:'feb 27', count:1, peak:42 },
-    { date:'feb 28', count:26,peak:42 },
-    { date:'mar 01', count:42,peak:42 },
-    { date:'mar 06', count:25,peak:42 },
-    { date:'mar 07', count:7, peak:42 },
-    { date:'mar 08', count:4, peak:42 },
-    { date:'mar 16', count:1, peak:42 },
-    { date:'mar 18', count:1, peak:42 },
-    { date:'mar 20', count:1, peak:42 },
-];
-
-// ── Presentation Engine ────────────────────────────────────────────
-const Pres = {
-    cur: 0,
-    dialogIdx: 0,
-    running: false,
-    paused: false,
-    autoTimer: null,
-    dialogActive: false,
-    dialogLines: [],
-
-    init() {
-        Voice.init();
-        Audio.init();
-        this.bindControls();
-        this.goTo(0);
-    },
-
-    bindControls() {
-        $('btn-next').onclick    = () => { Audio.resume(); this.next(); };
-        $('btn-prev').onclick    = () => { Audio.resume(); this.prev(); };
-        $('btn-play').onclick    = () => { Audio.resume(); this.togglePause(); };
-        $('btn-restart').onclick = () => { Audio.resume(); this.goTo(0); };
-        $('dialog-box').onclick  = () => { Audio.resume(); this.advanceDialog(); };
-        $('dialog-continue').onclick = e => { e.stopPropagation(); Audio.resume(); this.advanceDialog(); };
-        document.addEventListener('keydown', e => {
-            Audio.resume();
-            if (e.key === 'ArrowRight' || e.key === ' ') this.next();
-            else if (e.key === 'ArrowLeft') this.prev();
-            else if (e.key === 'p' || e.key === 'P') this.togglePause();
-        });
-    },
-
-    togglePause() {
-        this.paused = !this.paused;
-        $('btn-play').textContent = this.paused ? '▶ doorgaan' : '⏸ pauze';
-        if (!this.paused) this.scheduleAuto();
-        else { clearTimeout(this.autoTimer); Voice.stop(); }
-    },
-
-    goTo(idx) {
-        if (idx < 0 || idx >= SLIDES.length) return;
-        clearTimeout(this.autoTimer);
-        Voice.stop();
-        $('slide-box').classList.add('fade-out');
-        setTimeout(() => {
-            this.cur = idx;
-            this.renderSlide(SLIDES[idx]);
-            $('slide-box').classList.remove('fade-out');
-        }, 400);
-    },
-
-    next() {
-        if (this.dialogActive) { this.advanceDialog(); return; }
-        if (this.cur < SLIDES.length - 1) this.goTo(this.cur + 1);
-    },
-
-    prev() {
-        clearTimeout(this.autoTimer);
-        Voice.stop();
-        if (this.cur > 0) this.goTo(this.cur - 1);
-    },
-
-    renderSlide(s) {
-        hideAll();
-        this.dialogLines = s.dialog || [];
-        this.dialogIdx = 0;
-        this.dialogActive = false;
-
-        // HUD
-        const pct = Math.round((this.cur / (SLIDES.length-1)) * 100);
-        $('hud-progress-fill').style.width = pct + '%';
-        $('hud-slide').textContent = `slide ${this.cur+1} / ${SLIDES.length}`;
-
-        // Background
-        if (s.bg) {
-            const img = $('bg-img');
-            img.src = s.bg;
-            setKB(s.kb || null);
-        }
-
-        // Grain overlay
-        if (s.grain) {
-            $('grain-img').src = s.grain;
-            $('grain-layer').style.opacity = '0.5';
-        }
-
-        // Color tint
-        if (s.color) {
-            $('color-overlay').style.background = s.color.bg;
-            $('color-overlay').style.opacity = s.color.opacity;
-        }
-
-        // Letterbox
-        if (s.cinema) {
-            $('letterbox-top').classList.add('cinema');
-            $('letterbox-bot').classList.add('cinema');
-        }
-
-        // Caption
-        if (s.caption) {
-            $('caption-text').textContent = s.caption;
-            show('caption');
-        }
-
-        // onEnter hook
-        if (s.onEnter) s.onEnter();
-
-        // Title card
-        if (s.titleCard) {
-            $('st-label').textContent = s.titleCard.label || '';
-            $('st-main').textContent  = s.titleCard.main  || '';
-            $('st-sub').textContent   = s.titleCard.sub   || '';
-            show('slide-title');
-            Audio.playChime();
-        }
-
-        // Panels
-        const panels = s.panels || [];
-        if (panels.includes('stats'))      this.renderStats();
-        if (panels.includes('velocity'))   this.renderVelocity();
-        if (panels.includes('pdca'))       this.renderPDCA();
-        if (panels.includes('roles'))      this.renderRoles();
-        if (panels.includes('scene-grid')) this.renderSceneGrid();
-
-        // Start dialog or auto-advance
-        if (this.dialogLines.length > 0) {
-            setTimeout(() => this.startDialog(), s.titleCard ? 3000 : 800);
-        } else {
-            this.scheduleAuto(s.duration || 5000);
-        }
-    },
-
-    startDialog() {
-        this.dialogActive = true;
-        this.dialogIdx = 0;
-        this.showDialogLine();
-    },
-
-    showDialogLine() {
-        if (this.dialogIdx >= this.dialogLines.length) {
-            this.endDialog(); return;
-        }
-        const line = this.dialogLines[this.dialogIdx];
-        const db = $('dialog-box');
-        const sp = $('dialog-speaker');
-        const dt = $('dialog-text');
-        const dc = $('dialog-continue');
-
-        sp.textContent = line.speaker;
-        sp.className = line.speaker === 'Narrator' ? 'narrator-color' : '';
-        dt.textContent = '';
-        dc.classList.remove('visible');
-        show('dialog-box');
-
-        // Character visibility
-        if (line.showRyan) {
-            $('char-ryan').classList.add('visible');
-            $('char-ryan').classList.add('talking');
-            $('char-narrator').classList.remove('talking');
-        } else {
-            $('char-ryan').classList.remove('talking');
-        }
-        if (line.showNarrator) {
-            $('char-narrator').classList.add('visible');
-            $('char-narrator').classList.add('talking');
-            $('char-ryan').classList.remove('talking');
-        } else {
-            $('char-narrator').classList.remove('talking');
-        }
-
-        // Typewrite then speak
-        const text = line.text;
-        const profile = VOICES[line.speaker] || VOICES.Narrator;
-
-        Voice.speak(text, {
-            ...profile,
-            onEnd: () => {
-                $('char-ryan').classList.remove('talking');
-                $('char-narrator').classList.remove('talking');
-            }
-        });
-
-        typewriter(dt, text, 28, () => {
-            dc.classList.add('visible');
-            // Auto-advance after reading time
-            const readMs = Math.max(2000, text.length * 55);
-            this.autoTimer = setTimeout(() => this.advanceDialog(), readMs);
-        });
-    },
-
-    advanceDialog() {
-        clearTimeout(this.autoTimer);
-        Voice.stop();
-        $('char-ryan').classList.remove('talking');
-        $('char-narrator').classList.remove('talking');
-        this.dialogIdx++;
-        if (this.dialogIdx < this.dialogLines.length) {
-            this.showDialogLine();
-        } else {
-            this.endDialog();
-        }
-    },
-
-    endDialog() {
-        this.dialogActive = false;
-        $('char-ryan').classList.remove('talking');
-        $('char-narrator').classList.remove('talking');
-        hide('dialog-box');
-        const s = SLIDES[this.cur];
-        this.scheduleAuto(s.duration || 4000);
-    },
-
-    scheduleAuto(ms = 4000) {
-        clearTimeout(this.autoTimer);
-        if (this.paused) return;
-        this.autoTimer = setTimeout(() => {
-            if (this.cur < SLIDES.length - 1) this.goTo(this.cur + 1);
-        }, ms);
-    },
-
-    // ── Panel renderers ──────────────────────────────────────────
-    renderStats() {
-        const p = $('stats-panel');
-        p.innerHTML = `<h4>📊 Project Metrics</h4>
-        <div class="stat-row"><span>Eerste commit</span><span>13 feb 2026</span></div>
-        <div class="stat-row"><span>Laatste commit</span><span>20 mrt 2026</span></div>
-        <div class="stat-row"><span>Actieve dagen</span><span>19 dagen</span></div>
-        <div class="stat-row"><span>Totale commits</span><span>143</span></div>
-        <div class="stat-row"><span>Bestanden (start)</span><span>79 files</span></div>
-        <div class="stat-row"><span>Regels (start)</span><span>25.246</span></div>
-        <div class="stat-row"><span>Regels JS (nu)</span><span>44.016</span></div>
-        <div class="stat-row"><span>Scènes</span><span>42</span></div>
-        <div class="stat-row"><span>game.js</span><span>4.078 regels</span></div>
-        <div class="stat-row"><span>styles.css</span><span>2.457 regels</span></div>`;
-        show(p);
-    },
-
-    renderVelocity() {
-        const p = $('velocity-panel');
-        let html = `<h4>⚡ Commit Velocity (commits per dag)</h4>`;
-        const max = 42;
-        VELOCITY.forEach(v => {
-            const w = Math.round((v.count / max) * 100);
-            const highlight = v.count >= 19 ? 'var(--cyber-red)' : 'var(--cyber-gold)';
-            html += `<div class="vel-row">
-                <span class="vel-date">${v.date}</span>
-                <span class="vel-bar-wrap"><span class="vel-bar" style="width:0%;background:${highlight}" data-w="${w}"></span></span>
-                <span class="vel-count">${v.count}</span>
-            </div>`;
-        });
-        p.innerHTML = html;
-        show(p);
-        // Animate bars after paint
-        requestAnimationFrame(() => {
-            p.querySelectorAll('.vel-bar').forEach(b => {
-                b.style.width = b.dataset.w + '%';
-            });
-        });
-    },
-
-    renderPDCA() {
-        const p = $('pdca-panel');
-        show(p);
-        const steps = ['pdca-p','pdca-d','pdca-c','pdca-a'];
-        let i = 0;
-        const cycle = () => {
-            steps.forEach(id => $(id).classList.remove('active'));
-            $(steps[i]).classList.add('active');
-            i = (i + 1) % steps.length;
-        };
-        cycle();
-        const id = setInterval(cycle, 1200);
-        // Stop after 20s
-        setTimeout(() => clearInterval(id), 20000);
-    },
-
-    renderRoles() {
-        const p = $('role-panel');
-        p.innerHTML = `
-        <div class="role-col human">
-            <h4>👤 Rein (Mens)</h4>
-            <div class="role-item">Volledige verhaalwereld bedacht</div>
-            <div class="role-item">Founding documents geschreven</div>
-            <div class="role-item">Alle narratieve besluiten</div>
-            <div class="role-item">Ryan's leeftijd: 42 (3x gecorrigeerd)</div>
-            <div class="role-item">USB: bank, niet autoportier</div>
-            <div class="role-item">Ies → Max (naambeslissing)</div>
-            <div class="role-item">RTV Drenthe, niet NOS</div>
-            <div class="role-item">Kwaliteitscontrole door spelen</div>
-        </div>
-        <div class="role-col ai">
-            <h4>🤖 AI (Copilot)</h4>
-            <div class="role-item">79 bestanden in één sessie</div>
-            <div class="role-item">Volledige game engine</div>
-            <div class="role-item">42 scène-implementaties</div>
-            <div class="role-item">42 SVG-achtergronden</div>
-            <div class="role-item">Hollywood cinematics</div>
-            <div class="role-item">Movie Mode accessibility runner</div>
-            <div class="role-item">20+ Web Audio soundscapes</div>
-            <div class="role-item">Security hardening + PWA</div>
-        </div>`;
-        show(p);
-    },
-
-    renderSceneGrid() {
-        const g = $('scene-grid');
-        g.innerHTML = '';
-        ALL_SCENES.forEach((s, i) => {
-            const div = document.createElement('div');
-            div.className = 'scene-thumb';
-            div.id = `thumb-${s}`;
-            const img = document.createElement('img');
-            img.src = `assets/images/scenes/${s}.svg`;
-            img.alt = s;
-            img.onerror = () => { div.style.background = 'rgba(0,255,136,0.05)'; };
-            div.appendChild(img);
-            g.appendChild(div);
-        });
-        show(g);
-        // Light them up one by one
-        let i = 0;
-        const lit = setInterval(() => {
-            if (i >= ALL_SCENES.length) { clearInterval(lit); return; }
-            const el = g.querySelector(`#thumb-${ALL_SCENES[i]}`);
-            if (el) {
-                el.classList.add('lit');
-                setTimeout(() => el.classList.remove('lit'), 600);
-            }
-            i++;
-        }, 120);
-    },
+// ── Slides Data ───────────────────────────────────────────────
+// Each slide: bg, kb, grain, lb, tint, loc, chapter,
+//             titleCard, caption, charL/R, dialog, special, duration
+
+const RY='assets/images/characters/ryan_southpark.svg';
+const MAX='assets/images/characters/max_southpark.svg';
+const EVA='assets/images/characters/eva_southpark.svg';
+const CEES='assets/images/characters/cees_bassa_southpark.svg';
+const DAVID='assets/images/characters/david_prinsloo_southpark.svg';
+const JAAP='assets/images/characters/jaap_haartsen_southpark.svg';
+const VOLKOV='assets/images/characters/volkov_southpark.svg';
+const KUBECKA='assets/images/characters/kubecka_southpark.svg';
+const HM1='assets/images/characters/hacker_male_1_southpark.svg';
+const HM2='assets/images/characters/hacker_male_2_southpark.svg';
+const HF1='assets/images/characters/hacker_female_1_southpark.svg';
+const HF2='assets/images/characters/hacker_female_2_southpark.svg';
+const MOTHER='assets/images/characters/mother_southpark.svg';
+const PUG='assets/images/characters/pug_southpark.svg';
+
+const BG=s=>`assets/images/scenes/${s}.svg`;
+
+const SLIDES=[
+
+// ─── CH1: CHARACTERS ───────────────────────────────────────
+
+{ chapter:{n:'CHAPTER I',t:'Maak kennis met de cast'},
+  bg:BG('home'),kb:'kb-zo',duration:3200 },
+
+// RYAN — home / kitchen
+{ bg:BG('home'),kb:'kb-pr',loc:'Compascuum, Drenthe — 07:45',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Ryan Weylant. 42. Developer. Hacker. Radio amateur. En blijkbaar ook... game character.",color:''},
+    {speaker:'Ryan',charL:RY,text:"I live here. Farmhouse, Compascuum. In the middle of Drenthe. My nearest neighbour is a windmill.",color:''},
+    {speaker:'Ryan',charL:RY,text:"I have a partner named Max, three rescue dogs, an espresso machine and a mancave full of radio equipment. In that order.",color:''},
+  ]},
+
+// MAX — livingroom
+{ bg:BG('livingroom'),kb:'kb-zi',loc:'Woonkamer',grain:true,
+  dialog:[
+    {speaker:'Max',charR:MAX,text:"I'm Max. Ryan's partner. I deal with the dogs, the garden, and the consequences of Ryan's 'projects'.",color:''},
+    {speaker:'Max',charR:MAX,text:"I once came home to find the kitchen table covered in RF spectrum analysers. He called it 'research'. I called it dinner.",color:''},
+    {speaker:'Ryan',charL:RY,text:"She's also the smartest person I know. Don't tell her I said that.",color:''},
+  ]},
+
+// The dogs in the back garden
+{ bg:BG('garden_back'),kb:'kb-pr',loc:'Achtertuin',
+  dialog:[
+    {speaker:'Narrator',charR:PUG,text:"And then there are the dogs. Tino and Kessy, two white rescue dogs who sprawl across the living room couch. And ET — the pug — who snores on the floor.",color:'blue'},
+    {speaker:'Ryan',charL:RY,text:"ET has one gear: asleep. Occasionally he wakes up for food, then goes back to sleep. Honestly, I respect it.",color:''},
+  ]},
+
+// EVA WEBER — klooster context  
+{ chapter:{n:'CHAPTER II',t:'De Mysterieuze Contactpersoon'},
+  bg:BG('klooster'),kb:'kb-zi',duration:3200,lb:true,grain:true },
+
+{ bg:BG('klooster'),kb:'kb-pl',loc:'Ter Apel Klooster — 22:55',lb:true,grain:true,
+  dialog:[
+    {speaker:'Eva',charR:EVA,text:"My name is Eva Weber. I'm a data analyst at a defense contractor near Oldenburg, Germany.",color:'blue'},
+    {speaker:'Eva',charR:EVA,text:"Three months ago I discovered that my employer was running a classified weapons program. People died. I tried to report it internally. Then I understood who was involved.",color:'blue'},
+    {speaker:'Eva',charR:EVA,text:"I needed someone outside the system. Someone technically skilled. With no government ties. I remembered a Dutch radio amateur who asked very good questions about Meshtastic.",color:'blue'},
+    {speaker:'Eva',charR:EVA,text:"I sent him a USB stick under a monastery bench. I know. It sounds crazy. But I had seventy-two hours.",color:'blue'},
+  ]},
+
+// VOLKOV — villain reveal, facility server
+{ chapter:{n:'CHAPTER III',t:'De Antagonist'},
+  bg:BG('facility_server'),kb:'kb-zi',duration:3200,lb:true,grain:true,tint:'rgba(255,0,0,0.06)' },
+
+{ bg:BG('facility_server'),kb:'kb-pr',loc:'Steckerdoser Heide — Server Room',lb:true,grain:true,tint:'rgba(255,0,0,0.06)',
+  dialog:[
+    {speaker:'Volkov',charR:VOLKOV,text:"Commander Dmitri Volkov. Project Echo is not a weapon. It is a precision instrument. For surgical interventions.",color:'red'},
+    {speaker:'Volkov',charR:VOLKOV,text:"The Marlies Bakker incident was... an unfortunate calibration error. Collateral data. Progress requires sacrifice.",color:'red'},
+    {speaker:'Volkov',charR:VOLKOV,text:"And the Dutch hacker in his farmhouse, with his toy radio equipment — he is not a threat. He is an inconvenience.",color:'red'},
+  ]},
+
+// ALLIES — Cees Bassa, ASTRON
+{ chapter:{n:'CHAPTER IV',t:'De Bondgenoten'},
+  bg:BG('astron'),kb:'kb-zi',duration:3200 },
+
+{ bg:BG('astron'),kb:'kb-pl',loc:'ASTRON, Dwingeloo',
+  dialog:[
+    {speaker:'Cees',charL:CEES,text:"Cees Bassa, ASTRON. We use LOFAR to listen to the universe. It turns out it's also an excellent early-warning system for Russian-school signal attacks.",color:'blue'},
+    {speaker:'Cees',charL:CEES,text:"When Ryan brought me the schematics from the USB, it took me forty minutes to confirm. Weaponised beamforming. ZERFALL frequency signature. Real. Active.",color:'blue'},
+  ]},
+
+// David Prinsloo + Jaap Haartsen — videocall
+{ bg:BG('videocall'),kb:'kb-zi',loc:'Videocall — Drie Experts',
+  dialog:[
+    {speaker:'Narrator',charL:DAVID,charR:JAAP,text:"Professor David Prinsloo — TU Eindhoven. Antenna specialist, signal processing expert. And Jaap Haartsen — inventor of Bluetooth. Together they help Ryan map the ZERFALL transmission network.",color:'blue'},
+  ]},
+
+// Chris Kubecka — debrief
+{ bg:BG('debrief'),kb:'kb-pr',loc:'AIVD Debrief — Zoetermeer',
+  dialog:[
+    {speaker:'Kubecka',charL:KUBECKA,text:"Chris Kubecka. ICS security specialist. I've seen state-sponsored attacks on hospital infrastructure before. Project Echo is the worst I've encountered.",color:''},
+    {speaker:'Kubecka',charL:KUBECKA,text:"Ryan did something remarkable. No government resources. No agency backing. A HackRF, a Flipper Zero, and a Meshtastic node. He walked in and walked the evidence out.",color:''},
+  ]},
+
+// Hackerspace members
+{ bg:BG('hackerspace'),kb:'kb-zi',loc:'Hackerspace Drenthe — Coevorden',
+  dialog:[
+    {speaker:'Narrator',charL:HM1,charR:HF1,text:"Hackerspace Drenthe. Dennis, Sophie, Marco, Kim, Joris, Linda — makers, coders, radio enthusiasts. They don't know about Operation ZERFALL. But their Tuesday presentations keep Ryan sharp.",color:'blue'},
+    {speaker:'Ryan',charL:HM2,charR:HF2,text:"Good people. I trust them with my 3D printer. That's saying something.",color:''},
+  ]},
+
+// ─── CH2: THE INVESTIGATION ────────────────────────────────
+
+{ chapter:{n:'CHAPTER V',t:'Het Onderzoek'},
+  bg:BG('mancave'),kb:'kb-zo',duration:3200 },
+
+// SDR bench — the signal
+{ bg:BG('sdr_bench'),kb:'kb-zi',loc:'Mancave — SDR Bench',
+  caption:'📡 14.230 MHz — SSTV Burst detected',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"It started with noise. A burst on 14.230 MHz that didn't match anything I recognised. Martin M2 mode. SSTV.",color:''},
+    {speaker:'Ryan',charL:RY,text:"I decoded it with QSSTV. It was a photo. Coordinates. Ter Apel Klooster. And the text: TRUST NO DATABASE.",color:''},
+  ]},
+
+// SSTV terminal
+{ bg:BG('sstv_terminal'),kb:'kb-pr',loc:'SSTV Terminal',
+  dialog:[
+    {speaker:'Narrator',charR:EVA,text:"Eva used SSTV — Slow Scan Television — a 1960s amateur radio image protocol. No internet. No phone. Impossible to trace through conventional intelligence systems.",color:'blue'},
+  ]},
+
+// Klooster at night
+{ bg:BG('klooster'),kb:'kb-pl',loc:'Ter Apel Klooster — Nacht',lb:true,grain:true,
+  caption:'⛪ 22:55 — Ryan arrives at the monastery',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Medieval monastery. Midnight. Drizzle. I walked the courtyard three times before I found it.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Taped under the second bench from the south wall. A USB stick. And a handwritten note: PLUG IN ONLY ON AIR-GAPPED MACHINE.",color:''},
+  ]},
+
+// USB discovery cinematic
+{ bg:BG('usb_discovery'),kb:'kb-zi',loc:'Klooster — USB Ontdekking',lb:true,grain:true,
+  special:'usb',
+  dialog:[
+    {speaker:'Narrator',text:"The USB contained: a project codebook (ZERFALL), seven casualty reports, signal schematics, and a photo of Marlies Bakker. Age 67. Grandmother of four.",color:'blue'},
+    {speaker:'Ryan',charL:RY,text:"She went in for routine surgery. Cardiac monitor failed mid-operation. Cover story: equipment malfunction. I read that three times.",color:''},
+  ]},
+
+// Airgapped laptop / forensics
+{ bg:BG('airgapped_laptop'),kb:'kb-pr',loc:'Mancave — Forensische Analyse',
+  caption:'🔬 Write-blocker · SHA-256 · Firejail sandbox',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Forensic discipline first. Air-gapped ThinkPad. Tableau T35u write-blocker. SHA-256 checksums on every file before I opened anything.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Three hours later I had a full picture of Project Echo. And a name. Volkov.",color:''},
+  ]},
+
+// Planboard — evidence board
+{ bg:BG('planboard'),kb:'kb-zi',loc:'Planboard — Bewijs',
+  special:'planboard',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"This is my investigation board. Photos, dossiers, connection maps, timeline. Classic detective work, hacker edition.",color:''},
+  ]},
+
+// Secure phone — Meshtastic contact
+{ bg:BG('secure_phone'),kb:'kb-pr',loc:'Secure Phone — Meshtastic Contact',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"She said: 'If you need to reach me, think mesh. 906.875 MHz. I'm listening.' It was hidden in the USB README file.",color:''},
+    {speaker:'Eva',charR:EVA,text:"906.875 MHz. EU LoRa. AES-256 channel ZERFALL. When his Meshtastic node found mine, I knew he'd read everything.",color:'blue'},
+  ]},
+
+// Regional map
+{ bg:BG('regional_map'),kb:'kb-zi',loc:'Regionale Kaart — Drenthe',
+  caption:'🗺️ Compascuum · WSRT · LOFAR · Klooster · Steckerdoser Heide',
+  dialog:[
+    {speaker:'Narrator',text:"Ryan's investigation spans the entire region. Each location unlocks new evidence, new allies — and moves him closer to Steckerdoser Heide.",color:'blue'},
+  ]},
+
+// ─── CH3: THE FIELD MISSIONS ───────────────────────────────
+
+{ chapter:{n:'CHAPTER VI',t:'Veldmissies — Schans en Technologie'},
+  bg:BG('lofar'),kb:'kb-zo',duration:3200,grain:true },
+
+// LOFAR
+{ bg:BG('lofar'),kb:'kb-zi',loc:'LOFAR Superterp — Exloo',
+  caption:'📡 638 SVG lines · 51 stations · 13 Tbit/s',
+  dialog:[
+    {speaker:'Cees',charL:CEES,text:"The LOFAR Superterp. 96 LBA dipole antennas and 24 HBA tiles on this island alone. We listen to the universe at 10 to 250 MHz.",color:'blue'},
+    {speaker:'Cees',charL:CEES,text:"Ryan's USB data matched a LOFAR anomaly we'd logged six weeks earlier. ZERFALL was using our own infrastructure as an accidental repeater.",color:'blue'},
+  ]},
+
+// Westerbork + Memorial
+{ bg:BG('westerbork_memorial'),kb:'kb-pl',loc:'Kamp Westerbork Herinneringscentrum',lb:true,
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Westerbork. The WSRT dishes are visible from the memorial grounds. Surveillance technology standing next to the tracks where 93,000 people were deported.",color:''},
+    {speaker:'Ryan',charL:RY,text:"I found a covert ZERFALL node here. A modified surveillance camera with a Bluetooth mesh antenna. Flipper Zero cracked the pairing in 18 seconds.",color:''},
+  ]},
+
+// Dwingeloo
+{ bg:BG('dwingeloo'),kb:'kb-zi',loc:'Dwingeloo Radio Observatory',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"The Dwingeloo dish first mapped the spiral arms of the Milky Way in 1951. Someone had installed a ZERFALL relay transmitter inside the dish structure.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Using a 70-year-old historic telescope as a clandestine relay node. Volkov has taste. I'll give him that.",color:''},
+  ]},
+
+// Driving
+{ bg:BG('driving_day'),kb:'kb-pr',loc:'N34 — Richting WSRT, Dagrijden',lb:true,
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"RTV Drenthe on the radio. Flat fields. White WSRT dishes above the treeline. I could be heading to a picnic.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Instead I have three hacking devices in a Faraday bag and Eva Weber's code burned into my memory. 2847.",color:''},
+  ]},
+
+// Planetenpad
+{ bg:BG('planetenpad'),kb:'kb-zi',loc:'Planetenpad — WSRT Westerbork',
+  dialog:[
+    {speaker:'Narrator',text:"The Planetenpad. A scale model of the solar system along a 5km walking route near the WSRT. Each planet correctly sized and spaced.",color:'blue'},
+    {speaker:'Ryan',charL:RY,text:"On any other day this would be a lovely walk. Today I'm debugging a GPS spoofing algorithm between Uranus and Neptune.",color:''},
+  ]},
+
+// ─── CH4: ACTION ───────────────────────────────────────────
+
+{ chapter:{n:'CHAPTER VII',t:'Actie — de Steckerdoser Heide'},
+  bg:BG('drone_hunt'),kb:'kb-zo',duration:3200,lb:true,grain:true },
+
+// DRONE HUNT — phase 1: setup
+{ bg:BG('drone_hunt'),kb:'kb-zi',loc:'Steckerdoser Heide Bos — 23:30',lb:true,grain:true,
+  special:'drones-start',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Parked two kilometres from the facility. Moving on foot through the Steckerdoser forest. Then I heard them. Drone rotors.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Four surveillance drones. Thermal imaging. They can see body heat through the canopy. Standard Volkov security perimeter.",color:''},
+  ]},
+
+// GPS PANEL
+{ bg:BG('drone_hunt'),kb:'kb-pr',loc:'GPS Spoof — HackRF One',lb:true,grain:true,
+  special:'gps-panel',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"GPS L1 frequency: 1575.42 MHz. No authentication. Completely spoofable with a HackRF One. I give them fake coordinates pointing at the bog 800m south.",color:''},
+  ]},
+
+// DRONE CRASH
+{ bg:BG('drone_hunt'),kb:'kb-zi',loc:'GPS Spoofing — EXECUTE',lb:true,grain:true,
+  special:'drones-crash',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"And then they went down. Four drones, spinning into a marsh. I stood there for a moment listening to the splashes.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Volkov just lost fifty thousand euros of hardware to an old ham radio trick and some open-source firmware. Let's go.",color:''},
+  ]},
+
+// FACILITY EXTERIOR
+{ bg:BG('facility'),kb:'kb-pr',loc:'Facility Exterieur — Steckerdoser Heide',lb:true,
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Eva was inside. Guiding me via Meshtastic. Flipper Zero cloned the RFID badge in four seconds. The gate opened.",color:''},
+  ]},
+
+// LASER CORRIDOR — intro
+{ bg:BG('laser_corridor'),kb:'kb-zi',loc:'Facility — Basement Level B',lb:true,grain:true,
+  special:'lasers-start',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Underground corridor. Laser grid, motion sensors, biometric lock. Three layers of security between me and the server room.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Flipper Zero handles the IR. HackRF jams the ultrasonic motion sensors at 40 kHz. And Eva gave me the code. 2847.",color:''},
+  ]},
+
+// LASER BYPASS
+{ bg:BG('laser_corridor'),kb:'kb-pl',loc:'Laser Grid — Bypass Sequence',lb:true,grain:true,
+  special:'lasers-bypass',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"38 kHz modulation on the laser emitters. Standard industrial protocol. I replayed the shutdown command from thirty centimetres.",color:''},
+    {speaker:'Ryan',charL:RY,text:"The corridor went green. All three layers disabled inside ninety seconds. Sometimes hacking is just... listening carefully.",color:''},
+  ]},
+
+// FACILITY SERVER — climax
+{ bg:BG('facility_server'),kb:'kb-zi',loc:'Server Room — Toegang verkregen',lb:true,grain:true,tint:'rgba(0,255,136,0.04)',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Volkov's terminal. I downloaded 4.2 gigabytes of Project Echo calibration data and research notes. Then I corrupted the main calibration database.",color:''},
+    {speaker:'Eva',charR:EVA,text:"Ryan, you have four minutes before the shift change. The external drive is cloning. Don't rush the checksums.",color:'blue'},
+    {speaker:'Ryan',charL:RY,text:"I love this woman. Forensic discipline. Under pressure. In a facility we're illegally infiltrating.",color:''},
+  ]},
+
+// FACILITY INTERIOR
+{ bg:BG('facility_interior'),kb:'kb-pr',loc:'Facility Interieur — Ontsnapping',lb:true,
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Out the same way I came in. Eva scrambled the logging timestamps. By the time the shift noticed, the Volvo was already on the A31 heading north.",color:''},
+  ]},
+
+// ─── CH5: PUZZLES ──────────────────────────────────────────
+
+{ chapter:{n:'CHAPTER VIII',t:'De Puzzels'},
+  bg:BG('laptop'),kb:'kb-zo',duration:3200 },
+
+// Puzzle showcase 1 — GPS
+{ bg:BG('drone_hunt'),kb:'kb-zi',loc:'Puzzel 1 — GPS Spoofing',
+  special:'puzzle-gps',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"GPS L1, 1575.42 MHz. HackRF transmit power 40 dBm. Spoof coordinates pointing to the bog. All parameters must be exact.",color:''},
+  ]},
+
+// Puzzle showcase 2 — Laser frequency
+{ bg:BG('laser_corridor'),kb:'kb-pl',loc:'Puzzel 2 — Flipper Zero IR (38 kHz)',lb:true,
+  special:'puzzle-laser',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Standard IR emitter modulation. The Flipper Zero IR analyser reads 38 kHz. Feed it back as a shutdown command. Done.",color:''},
+  ]},
+
+// Puzzle showcase 3 — SSTV decode
+{ bg:BG('sstv_terminal'),kb:'kb-zi',loc:'Puzzel 3 — SSTV Decode',
+  special:'puzzle-sstv',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"SSTV: Slow Scan Television. Analogue image transmission over radio. Eva encoded the klooster coordinates as an image in Martin M2 mode. Decoded with QSSTV.",color:''},
+  ]},
+
+// ─── COMIC RELIEF — SITMOWER ───────────────────────────────
+
+{ chapter:{n:'INTERMEZZO',t:'De Zitmaaier — Mandatory Lawn Care'},
+  bg:BG('garden_back'),kb:'kb-zo',duration:3200 },
+
+{ bg:BG('garden_back'),kb:'kb-zi',loc:'Achtertuin — Zitmaaier Minigame',
+  special:'mower',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Between the SSTV signal and the klooster trip, the lawn needed mowing. Max was very clear about this priority.",color:''},
+    {speaker:'Max',charR:MAX,text:"I don't care about Russian weapons programs until the lawn is done. That's a boundary, Ryan.",color:''},
+    {speaker:'Ryan',charL:RY,text:"Avoid the dogs. Avoid the fire drum. Mow every patch. Controls: arrow keys or WASD. Actual game mechanic.",color:''},
+  ]},
+
+// ─── CH6: AFTERMATH ────────────────────────────────────────
+
+{ chapter:{n:'CHAPTER IX',t:'De Nasleep'},
+  bg:BG('long_night'),kb:'kb-zo',duration:3200,grain:true },
+
+// Long night
+{ bg:BG('long_night'),kb:'kb-zi',loc:'Mancave — 01:30–09:30',grain:true,
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"Seven hours in the mancave. Hoffmann's personal logs. Eva's Meshtastic messages. The calibration database corrupted. Test failure confirmed.",color:''},
+    {speaker:'Ryan',charL:RY,text:"At 07:15, I pressed SEND on the press package. Four encrypted copies. Reuters, NRC, Der Spiegel, and Tom at the Drenthe local paper. Sorry Tom, but you deserved to be on that list.",color:''},
+  ]},
+
+// Morning after
+{ bg:BG('morning_after'),kb:'kb-pr',loc:'Mancave — Ochtend Erna',
+  dialog:[
+    {speaker:'Ryan',charL:RY,text:"247 unread emails. An AIVD business card on the desk. And a Protonmail from Eva: 'I'm safe. Thank you for believing a stranger.'",color:''},
+    {speaker:'Max',charR:MAX,text:"I'm proud of you. Now eat something and let the dogs out.",color:''},
+  ]},
+
+// Return home
+{ bg:BG('return_to_ies'),kb:'kb-zi',loc:'Thuis — Terug',lb:true,
+  dialog:[
+    {speaker:'Narrator',text:"He came home the same way he left. Through the front door. Max opened it before he reached the step. She opened her arms before he said a word.",color:'blue'},
+  ]},
+
+// Epilogue
+{ bg:BG('epilogue'),kb:'kb-zo',loc:'Drie Maanden Later — Mei 2026',lb:true,grain:true,
+  titleCard:{label:'Epilogue',main:'Drie Maanden Later',sub:'Mei 2026 — Compascuum, Drenthe'},
+  dialog:[
+    {speaker:'Narrator',text:"Facility shut down. Seven officials arrested. Volkov awaiting trial in Munich. Hoffmann in witness protection.",color:'blue'},
+    {speaker:'Narrator',text:"Eva testified to the European Parliament. Cees Bassa returned to ASTRON. And Ryan — Ryan accepted the AIVD offer.",color:'blue'},
+    {speaker:'Ryan',charL:RY,text:"Part time. Remote. From my mancave in Compascuum. And I kept the HackRF.",color:''},
+  ]},
+
+// ─── END: CREDITS / PLAY ───────────────────────────────────
+
+{ bg:BG('credits'),kb:'kb-zi',grain:true,lb:true,tint:'rgba(0,255,136,0.05)',
+  titleCard:{label:'CyberQuest: Operation ZERFALL',main:'Speel het nu',sub:'ryanweylant.tech  ·  Open index.html  ·  v0.7.0-alpha\nCC BY-SA 4.0  ·  Rein Velt × GitHub Copilot Claude'},
+  duration:99999 },
+
+]; // end SLIDES
+
+// ── Special handlers ──────────────────────────────────────────
+
+function specialEnter(id,slideIdx){
+  setTimeout(()=>{
+    switch(id){
+      case 'drones-start': buildDrones(false); break;
+      case 'gps-panel':    buildDrones(false); showGpsPanel(); break;
+      case 'drones-crash': buildDrones(true);  break;
+      case 'lasers-start': buildLasers(false); A.laserHum(); break;
+      case 'lasers-bypass':buildLasers(true);  A.stopLaser(); break;
+      case 'planboard':    buildPlanboard(); break;
+      case 'mower':        startMower(); break;
+      case 'puzzle-gps':   showPuzzle('gps'); break;
+      case 'puzzle-laser': showPuzzle('laser'); break;
+      case 'puzzle-sstv':  showPuzzle('sstv'); break;
+      case 'usb':          /* handled by caption */ break;
+    }
+  },600);
+}
+
+// DRONES
+let _droneEls=[];
+function buildDrones(crash){
+  const layer=$('drone-l');layer.innerHTML='';_droneEls=[];
+  show('drone-l');
+  const positions=[
+    {left:'18%',top:'18%',pat:'p1'},
+    {left:'58%',top:'12%',pat:'p2'},
+    {left:'72%',top:'32%',pat:'p3'},
+    {left:'38%',top:'22%',pat:'p4'},
+  ];
+  positions.forEach((p,i)=>{
+    const d=document.createElement('div');d.className='dr '+p.pat;
+    d.style.left=p.left;d.style.top=p.top;
+    const lt=document.createElement('div');lt.className='dr-lt';d.appendChild(lt);
+    layer.appendChild(d);_droneEls.push(d);
+  });
+  if(crash){
+    setTimeout(()=>{
+      _droneEls.forEach((d,i)=>{
+        const rect=d.getBoundingClientRect();
+        const layerRect=layer.getBoundingClientRect();
+        const cx=d.offsetLeft+26,cy=d.offsetTop+10;
+        setTimeout(()=>{
+          d.classList.remove('p1','p2','p3','p4');
+          d.classList.add('crash');
+          A.explosion();
+          // explosion effect
+          setTimeout(()=>{
+            const ex=document.createElement('div');ex.className='expl';
+            ex.style.cssText=`left:${cx}px;top:${cy}px;width:60px;height:60px;`;
+            layer.appendChild(ex);
+            setTimeout(()=>ex.remove(),1000);
+          },200+i*150);
+        },i*450);
+      });
+    },1200);
+  }
+}
+
+function showGpsPanel(){
+  show('gpsp');
+  const steps=[
+    {id:'gv-freq',val:'1575.42 MHz (GPS L1)',delay:600},
+    {id:'gv-pwr', val:'40 dBm',delay:1400},
+    {id:'gv-coord',val:'52.8340° N, 7.4185° E (bog)',delay:2200},
+    {id:'gv-drones',val:'4 × ZERFALL-1 drones',delay:3000},
+  ];
+  steps.forEach(s=>setTimeout(()=>{
+    const el=$(s.id);el.textContent=s.val;el.classList.add('a');A.beep(900,.06);
+  },s.delay));
+  setTimeout(()=>{
+    const ex=$('gexec');ex.classList.add('fire');A.beep(1200,.15);
+  },4000);
+}
+
+// LASERS
+function buildLasers(bypass){
+  const layer=$('laser-l');layer.innerHTML='';
+  layer.innerHTML='<div id="laser-status"></div>';
+  show('laser-l');
+  // Diagonal horizontal beams across corridor
+  const beams=[
+    {type:'h',top:'32%',left:'0%',width:'45%',rot:'-12deg'},
+    {type:'h',top:'52%',left:'20%',width:'50%',rot:'8deg'},
+    {type:'h',top:'68%',left:'0%',width:'38%',rot:'-6deg'},
+    {type:'v',left:'42%',top:'28%',height:'40%',rot:'15deg'},
+    {type:'v',left:'62%',top:'20%',height:'50%',rot:'-10deg'},
+  ];
+  const els=[];
+  beams.forEach((b,i)=>{
+    const el=document.createElement('div');
+    if(b.type==='h'){
+      el.className='lb';el.style.cssText=`top:${b.top};left:${b.left};width:${b.width};transform:rotate(${b.rot});animation-delay:${i*.07}s;`;
+    }else{
+      el.className='lv';el.style.cssText=`left:${b.left};top:${b.top};height:${b.height};transform:rotate(${b.rot});animation-delay:${i*.07}s;`;
+    }
+    layer.appendChild(el);els.push(el);
+    // sensor dots
+    const d=document.createElement('div');d.className='ldot';
+    d.style.cssText=`left:calc(${b.left||b.left});top:calc(${b.top||b.top});`;
+    d.style.left=b.left;d.style.top=b.top;
+    layer.appendChild(d);
+    const s=document.createElement('div');s.className='lsns';
+    s.style.left=(b.type==='h')?(parseFloat(b.left)+parseFloat(b.width)+'%'):b.left;
+    s.style.top=(b.type==='h')?b.top:(parseFloat(b.top)+parseFloat(b.height)+'%');
+    layer.appendChild(s);els.push(s);
+  });
+  if(bypass){
+    // Disable beams one by one
+    const allBeams=layer.querySelectorAll('.lb,.lv,.ldot,.lsns');
+    allBeams.forEach((el,i)=>{
+      setTimeout(()=>{el.classList.add('off');A.beep(Math.max(200,600-i*50),.12);},i*400);
+    });
+    setTimeout(()=>{
+      const st=$('laser-status');
+      st.textContent='✓ LASER GRID DISABLED';st.classList.add('on');
+    },allBeams.length*400+200);
+  }
+}
+
+// PLANBOARD
+function buildPlanboard(){
+  const g=$('pbg');g.innerHTML='';show('pb');
+  const cards=[
+    {label:'Ryan Weylant',img:'assets/images/characters/ryan_southpark.svg'},
+    {label:'Eva Weber',img:'assets/images/characters/eva_southpark.svg'},
+    {label:'Volkov',img:'assets/images/characters/volkov_southpark.svg'},
+    {label:'USB Stick',img:'assets/images/overlayimg/planboard-usb-photo.svg'},
+    {label:'SSTV Photo',img:'assets/images/overlayimg/planboard-sstv-photo.svg'},
+    {label:'Facility Photo',img:'assets/images/overlayimg/planboard-facility-photo.svg'},
+    {label:'Eva Silhouette',img:'assets/images/overlayimg/planboard-eva-silhouette.svg'},
+    {label:'Weapon Schema',img:'assets/images/overlayimg/planboard-weapon-schematic.svg'},
+  ];
+  cards.forEach((c,i)=>{
+    const div=document.createElement('div');div.className='pbc'+(c.highlight?' hl':'');
+    div.innerHTML=`<img src="${c.img}" alt="${c.label}"><div class="pbc-lbl">${c.label}</div>`;
+    div.style.animationDelay=i*.1+'s';
+    g.appendChild(div);
+    setTimeout(()=>div.style.opacity='1',i*120);
+    div.style.opacity='0';div.style.transition='opacity .4s';
+  });
+}
+
+// MOWER
+function startMower(){
+  show('mwr-l');show('mwr-hud');
+  const canvas=$('mwr-canvas');
+  const W=canvas.offsetWidth,H=canvas.offsetHeight;
+  canvas.width=W;canvas.height=H;
+  const ctx=canvas.getContext('2d');
+  const COLS=24,ROWS=16,CW=W/COLS,CH=H/ROWS;
+  const grid=Array.from({length:ROWS},()=>Array(COLS).fill(0));
+  // Mower state
+  let mx=1,my=1,dir=1,step=0;
+  const DOG_POSITIONS=[[6,8],[12,10],[18,7]]; // dog obstacles
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // Draw cells
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+      const mowed=grid[r][c];
+      ctx.fillStyle=mowed?'rgba(200,220,160,0.35)':'rgba(60,120,40,0.25)';
+      ctx.fillRect(c*CW,r*CH,CW-1,CH-1);
+    }
+    // Dogs
+    DOG_POSITIONS.forEach(([dc,dr])=>{
+      ctx.fillStyle='rgba(255,200,100,0.8)';
+      ctx.beginPath();ctx.ellipse(dc*CW+CW/2,dr*CH+CH/2,CW*.4,CH*.35,0,0,Math.PI*2);ctx.fill();
+      ctx.font=`${CW*.7}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('🐕',dc*CW+CW/2,dr*CH+CH/2);
+    });
+    // Mower
+    ctx.fillStyle='rgba(255,200,0,0.9)';
+    ctx.fillRect(mx*CW+2,my*CH+2,CW-4,CH-4);
+    ctx.font=`${CW*.75}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText('🚜',mx*CW+CW/2,my*CH+CH/2);
+  }
+  // Serpentine path
+  const path=[];
+  for(let r=1;r<ROWS-1;r++){
+    if(r%2===1)for(let c=1;c<COLS-1;c++)path.push([c,r]);
+    else for(let c=COLS-2;c>=1;c--)path.push([c,r]);
+  }
+  let pathIdx=0;
+  const moverInterval=setInterval(()=>{
+    if(pathIdx>=path.length){clearInterval(moverInterval);return;}
+    const [nc,nr]=path[pathIdx++];
+    const isDog=DOG_POSITIONS.some(([dc,dr])=>dc===nc&&dr===nr);
+    if(!isDog){mx=nc;my=nr;grid[nr][nc]=1;}
+    draw();
+  },80);
+  draw();
+}
+
+// PUZZLES
+function showPuzzle(type){
+  const puz=$('puz');show('puz');
+  $('puz-r').textContent='';$('puz-r').className='';
+  $('puz-fields').innerHTML='';
+  if(type==='gps'){
+    $('puz-title').textContent='📡 GPS Spoof — Enter Parameters';
+    $('puz-fields').innerHTML=`
+      <div class="pf"><span class="pl">Frequency (MHz):</span><input class="pv" id="pi-f" placeholder="e.g. 1575.42"></div>
+      <div class="pf"><span class="pl">TX Power (dBm):</span><input class="pv" id="pi-p" placeholder="e.g. 40"></div>
+      <div class="pf"><span class="pl">Target:</span><input class="pv" id="pi-t" placeholder="e.g. bog / swamp"></div>
+      <button class="pbtn" onclick="checkPuzzle('gps')">[ EXECUTE SPOOF ]</button>`;
+  }else if(type==='laser'){
+    $('puz-title').textContent='🔴 Flipper Zero IR — Find the Frequency';
+    $('puz-fields').innerHTML=`
+      <div class="pf"><span class="pl">IR Modulation (kHz):</span><input class="pv" id="pi-f" placeholder="?? kHz"></div>
+      <div class="pf"><span class="pl">Command:</span><input class="pv" id="pi-p" placeholder="e.g. shutdown / replay"></div>
+      <button class="pbtn" onclick="checkPuzzle('laser')">[ SEND COMMAND ]</button>`;
+  }else if(type==='sstv'){
+    $('puz-title').textContent='📺 SSTV Decode — Identify the Mode';
+    $('puz-fields').innerHTML=`
+      <div class="pf"><span class="pl">SSTV Mode:</span><input class="pv" id="pi-f" placeholder="e.g. Martin M1, M2..."></div>
+      <div class="pf"><span class="pl">Frequency (MHz):</span><input class="pv" id="pi-p" placeholder="e.g. 14.230"></div>
+      <button class="pbtn" onclick="checkPuzzle('sstv')">[ DECODE ]</button>`;
+  }
+}
+window.checkPuzzle=function(type){
+  const f=$('pi-f'),p=$('pi-p'),r=$('puz-r');
+  if(!f||!p)return;
+  const fv=f.value.trim().toLowerCase(),pv=p.value.trim().toLowerCase();
+  let ok=false;
+  if(type==='gps')   ok=(fv.includes('1575')&&(pv==='40'||pv.includes('dbm')));
+  if(type==='laser') ok=(fv.includes('38')&&(pv.includes('shutdown')||pv.includes('replay')));
+  if(type==='sstv')  ok=(fv.includes('martin')&&(fv.includes('m2')||fv.includes('2'))&&pv.includes('14.23'));
+  if(ok){
+    f.classList.add('solved');p.classList.add('solved');
+    r.textContent='✓ CORRECT — ACCESS GRANTED';r.className='ok';A.chime();
+  }else{
+    r.textContent='✗ Incorrect parameters. Try again.';r.className='err';A.beep(200,.2);
+  }
 };
 
-// Start
-window.addEventListener('load', () => {
-    Pres.init();
-    // Show initial audio indicator
-    setTimeout(() => {
-        $('audio-indicator').textContent = Voice.synth ? '🔊 TTS actief' : '📖 tekst modus';
-    }, 2000);
+// ── Main Presentation Engine ──────────────────────────────────
+const P={
+  cur:0,paused:false,autoTimer:null,started:false,
+
+  start(){
+    this.started=true;
+    $('ctrls').style.display='flex';
+    this.goTo(0);
+  },
+
+  goTo(idx){
+    if(idx<0||idx>=SLIDES.length)return;
+    clearTimeout(this.autoTimer);V.stop();
+    $('sb').classList.add('fo');
+    setTimeout(()=>{
+      this.cur=idx;
+      $('sb').classList.remove('fo');
+      this._render(SLIDES[idx]);
+    },450);
+  },
+
+  next(){if(_dActive){advanceDialog();return;} if(this.cur<SLIDES.length-1)this.goTo(this.cur+1);},
+  prev(){clearTimeout(this.autoTimer);V.stop();if(this.cur>0)this.goTo(this.cur-1);},
+
+  togglePause(){
+    this.paused=!this.paused;
+    $('b-pause').textContent=this.paused?'▶ doorgaan':'⏸ pauze';
+    if(!this.paused)this._scheduleAuto();
+    else{clearTimeout(this.autoTimer);V.stop();}
+  },
+
+  _render(s){
+    hideAll();
+    // HUD
+    const pct=Math.round((this.cur/(SLIDES.length-1))*100);
+    $('hud-pf').style.width=pct+'%';
+    $('hud-sl').textContent=`${this.cur+1} / ${SLIDES.length}`;
+    // Background
+    if(s.bg){$('bg-img').src=s.bg;setKB(s.kb||null);}
+    if(s.grain)$('grain-ovl').style.opacity='.45';
+    if(s.lb){show('lb-t');show('lb-b');}
+    if(s.tint){$('color-tint').style.background=s.tint;$('color-tint').style.opacity='1';}
+    if(s.loc){$('loc').textContent=s.loc;show('loc');}
+    if(s.caption){$('cap-t').textContent=s.caption;show('cap');}
+    // Chapter divider
+    if(s.chapter){
+      $('ch-n').textContent=s.chapter.n||'';
+      $('ch-t').textContent=s.chapter.t||'';
+      show('chap');A.chime();
+      setTimeout(()=>{hide('chap');},s.duration||3000);
+      this._scheduleAuto((s.duration||3000)+300);
+      return;
+    }
+    // Title card
+    if(s.titleCard){
+      $('tc-lb').textContent=s.titleCard.label||'';
+      $('tc-m').textContent=s.titleCard.main||'';
+      $('tc-s').textContent=s.titleCard.sub||'';
+      show('tc');A.chime();
+    }
+    // Special action
+    if(s.special)specialEnter(s.special,this.cur);
+    // Audio
+    if(!s.special||s.special.includes('laser')||s.special.includes('drone')||s.special.includes('facility'))
+      A.drone(38,20,.15);
+    // Dialog or auto-advance
+    if(s.dialog&&s.dialog.length){
+      const startDlg=()=>showDialog(s.dialog,()=>{this._scheduleAuto(s.duration||3500);});
+      setTimeout(startDlg,s.titleCard?2800:700);
+    }else{
+      this._scheduleAuto(s.duration||5000);
+    }
+  },
+
+  _scheduleAuto(ms=4000){
+    clearTimeout(this.autoTimer);
+    if(this.paused)return;
+    this.autoTimer=setTimeout(()=>{
+      if(this.cur<SLIDES.length-1)this.goTo(this.cur+1);
+    },ms);
+  }
+};
+
+// ── Controls binding ──────────────────────────────────────────
+document.addEventListener('click',e=>{
+  if(!P.started)return;
+  A.resume();
+  if(e.target.closest('#dlg'))advanceDialog();
+  else if(e.target.closest('#ctrls'))return;
+  else P.next();
+});
+$('b-next').onclick=e=>{e.stopPropagation();A.resume();P.next();};
+$('b-prev').onclick=e=>{e.stopPropagation();A.resume();P.prev();};
+$('b-pause').onclick=e=>{e.stopPropagation();A.resume();P.togglePause();};
+$('b-restart').onclick=e=>{e.stopPropagation();A.resume();P.goTo(0);};
+document.addEventListener('keydown',e=>{
+  if(!P.started)return;
+  A.resume();
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();P.next();}
+  else if(e.key==='ArrowLeft'){P.prev();}
+  else if(e.key==='p'||e.key==='P'){P.togglePause();}
+});
+
+// ── Boot ──────────────────────────────────────────────────────
+window.addEventListener('load',()=>{
+  V.init();A.init();
+  $('ctrls').style.display='none';
+  runIntro();
 });
 </script>
 </body>
