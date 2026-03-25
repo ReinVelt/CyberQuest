@@ -4,6 +4,49 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CyberQuest: Operation ZERFALL — About</title>
+
+<!-- ── Primary meta ─────────────────────────────────────── -->
+<meta name="description" content="A point-and-click cyberpunk adventure. You are Ryan Weylant — Dutch hacker, radio amateur, reluctant hero. Uncover a Russian infiltration operation before it's too late.">
+<meta name="author" content="CyberQuest">
+<meta name="theme-color" content="#00ff88">
+<link rel="canonical" href="https://ryanweylant.tech/presentation.html">
+
+<!-- ── Open Graph (Facebook, LinkedIn, WhatsApp, Discord) ── -->
+<meta property="og:type"        content="website">
+<meta property="og:site_name"   content="CyberQuest">
+<meta property="og:url"         content="https://ryanweylant.tech/presentation.html">
+<meta property="og:title"       content="CyberQuest: Operation ZERFALL">
+<meta property="og:description" content="A point-and-click cyberpunk adventure. Dutch hacker Ryan Weylant must uncover a Russian infiltration operation at a radio telescope facility before it's too late.">
+<meta property="og:image"              content="https://ryanweylant.tech/assets/images/cover-wide.png">
+<meta property="og:image:width"        content="1280">
+<meta property="og:image:height"       content="720">
+<meta property="og:image:type"         content="image/png">
+<meta property="og:image:alt"          content="CyberQuest: Operation ZERFALL — cyberpunk key art">
+<meta property="og:locale"             content="en_US">
+
+<!-- ── Twitter / X Card ────────────────────────────────── -->
+<meta name="twitter:card"        content="summary_large_image">
+<meta name="twitter:title"       content="CyberQuest: Operation ZERFALL">
+<meta name="twitter:description" content="A point-and-click cyberpunk adventure. Dutch hacker Ryan Weylant must uncover a Russian infiltration operation at a radio telescope facility before it's too late.">
+<meta name="twitter:image"       content="https://ryanweylant.tech/assets/images/cover-wide.png">
+<meta name="twitter:image:alt"   content="CyberQuest: Operation ZERFALL — cyberpunk key art">
+
+<!-- ── Structured data (Google Rich Results) ───────────── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "CyberQuest: Operation ZERFALL",
+  "description": "A point-and-click cyberpunk adventure. You are Ryan Weylant — Dutch hacker, radio amateur, reluctant hero. Uncover a Russian infiltration operation before it's too late.",
+  "url": "https://ryanweylant.tech",
+  "image": "https://ryanweylant.tech/assets/images/cover-wide.png",
+  "genre": ["Adventure", "Cyberpunk", "Puzzle"],
+  "gamePlatform": "Web Browser",
+  "applicationCategory": "Game",
+  "inLanguage": "en",
+  "author": { "@type": "Organization", "name": "CyberQuest" }
+}
+</script>
 <style>
 /* ====================================================
    CYBERQUEST — ABOUT PRESENTATION
@@ -781,6 +824,11 @@ const A = {
     });
   },
 
+  // ── SCORE stub — delegates to M ──────────────────────────
+  setScoreMood(mood){ M.setMood(mood); },
+  startScore(mood){ M.start(mood); },
+  stopScore(){ M.stop(); },
+
   // ── Ambient sound system ──────────────────────────────────
   ambientGain:null,ambientNodes:[],
   stopAmbient(secs=1.2){
@@ -855,6 +903,244 @@ const A = {
   },
 };
 
+// ── M — Hollywood Cyberpunk Score (Web Audio lookahead scheduler) ─
+const M=(()=>{
+  let ctx=null,masterG=null,dry=null,revSend=null,_timer=null;
+  let _running=false,_mood='calm',_nextT=0,_step={},_delayN=null;
+  const BPM={calm:84,tension:98,action:130,danger:106};
+  const LOOK=0.15,TICK=25,VOL=0.32;
+
+  /* ── DSP helpers ── */
+  function mkReverb(){
+    const dur=3.2,decay=3.8,sr=ctx.sampleRate;
+    const len=Math.ceil(sr*dur),buf=ctx.createBuffer(2,len,sr);
+    for(let ch=0;ch<2;ch++){const d=buf.getChannelData(ch);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,decay);}
+    const r=ctx.createConvolver();r.buffer=buf;return r;
+  }
+  function mkDist(k=35){
+    const ws=ctx.createWaveShaper(),n=256,c=new Float32Array(n);
+    for(let i=0;i<n;i++){const x=i*2/n-1;c[i]=(Math.PI+k)*x/(Math.PI+k*Math.abs(x));}
+    ws.curve=c;ws.oversample='4x';return ws;
+  }
+  function mkNoise(dur,decay){
+    const n=Math.ceil(ctx.sampleRate*dur),b=ctx.createBuffer(1,n,ctx.sampleRate),d=b.getChannelData(0);
+    for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.exp(-i*decay/n);
+    return b;
+  }
+  function ensureDelay(bpm){
+    if(_delayN)return;
+    _delayN=ctx.createDelay(.5);_delayN.delayTime.value=60/bpm*.5;
+    const fb=ctx.createGain(),lp=ctx.createBiquadFilter();
+    fb.gain.value=.32;lp.type='lowpass';lp.frequency.value=2800;
+    _delayN.connect(lp);lp.connect(fb);fb.connect(_delayN);
+    _delayN.connect(revSend);
+  }
+
+  /* ── sound emitters ── */
+  function kick(t,vol=1){
+    // Body
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.type='sine';o.frequency.setValueAtTime(160,t);o.frequency.exponentialRampToValueAtTime(40,t+.13);
+    g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+.28);
+    o.connect(g);g.connect(dry);o.start(t);o.stop(t+.3);
+    // Click transient
+    const s=ctx.createBufferSource(),cg=ctx.createGain(),cf=ctx.createBiquadFilter();
+    s.buffer=mkNoise(.01,60);cf.type='bandpass';cf.frequency.value=4200;cf.Q.value=2;
+    cg.gain.value=vol*.45;s.connect(cf);cf.connect(cg);cg.connect(dry);s.start(t);
+  }
+  function snare(t,vol=.55){
+    // Body oscillator
+    const o=ctx.createOscillator(),og=ctx.createGain();
+    o.type='triangle';o.frequency.setValueAtTime(210,t);o.frequency.exponentialRampToValueAtTime(110,t+.09);
+    og.gain.setValueAtTime(vol*.55,t);og.gain.exponentialRampToValueAtTime(.001,t+.1);
+    o.connect(og);og.connect(dry);o.start(t);o.stop(t+.15);
+    // Noise
+    const s=ctx.createBufferSource(),sg=ctx.createGain(),sf=ctx.createBiquadFilter();
+    s.buffer=mkNoise(.22,14);sf.type='bandpass';sf.frequency.value=190;sf.Q.value=.9;
+    sg.gain.value=vol;s.connect(sf);sf.connect(sg);sg.connect(dry);s.start(t);
+    // Reverb splash
+    const rs=ctx.createBufferSource(),rsg=ctx.createGain();
+    rs.buffer=mkNoise(.22,14);rsg.gain.value=vol*.28;
+    rs.connect(rsg);rsg.connect(revSend);rs.start(t);
+  }
+  function hat(t,vol=.18,open=false){
+    const s=ctx.createBufferSource(),g=ctx.createGain(),f=ctx.createBiquadFilter();
+    s.buffer=mkNoise(open?.14:.03,open?50:400);f.type='highpass';f.frequency.value=8500;
+    g.gain.value=vol;s.connect(f);f.connect(g);g.connect(dry);s.start(t);
+  }
+  function bass(t,semi,dur,vol=.45){
+    const fr=55*Math.pow(2,semi/12);
+    // Sub octave sine
+    const sb=ctx.createOscillator(),sbg=ctx.createGain();
+    sb.type='sine';sb.frequency.value=fr/2;
+    sbg.gain.setValueAtTime(vol*.55,t);sbg.gain.exponentialRampToValueAtTime(.001,t+dur*.88);
+    sb.connect(sbg);sbg.connect(dry);sb.start(t);sb.stop(t+dur+.02);
+    // Sawtooth through distortion
+    const o=ctx.createOscillator(),dist=mkDist(28),lp=ctx.createBiquadFilter(),g=ctx.createGain();
+    o.type='sawtooth';o.frequency.value=fr;lp.type='lowpass';lp.frequency.value=620;
+    g.gain.setValueAtTime(vol*.38,t);g.gain.exponentialRampToValueAtTime(.001,t+dur*.9);
+    o.connect(dist);dist.connect(lp);lp.connect(g);g.connect(dry);o.start(t);o.stop(t+dur+.02);
+  }
+  function pad(t,semis,dur,vol=.07){
+    semis.forEach(s=>{
+      const fr=55*Math.pow(2,s/12);
+      // 3-voice unison chorus
+      [-5,0,5].forEach(dt=>{
+        const o=ctx.createOscillator(),g=ctx.createGain(),lp=ctx.createBiquadFilter();
+        o.type='sawtooth';o.frequency.value=fr;o.detune.value=dt;
+        lp.type='lowpass';lp.frequency.value=850;
+        g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol/3,t+.25);
+        g.gain.setValueAtTime(vol/3,t+dur-.3);g.gain.linearRampToValueAtTime(0,t+dur);
+        o.connect(lp);lp.connect(g);
+        g.connect(dry);g.connect(revSend);    // dry + wet
+        o.start(t);o.stop(t+dur+.05);
+      });
+    });
+  }
+  function lead(t,semi,dur,vol=.12){
+    ensureDelay(BPM[_mood]);
+    const fr=220*Math.pow(2,semi/12);
+    const o=ctx.createOscillator(),g=ctx.createGain(),lp=ctx.createBiquadFilter();
+    o.type='square';o.frequency.value=fr;
+    lp.type='lowpass';lp.frequency.setValueAtTime(3000,t);lp.frequency.exponentialRampToValueAtTime(1200,t+dur);
+    g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur*.9);
+    o.connect(lp);lp.connect(g);g.connect(dry);
+    if(_delayN)g.connect(_delayN);
+    o.start(t);o.stop(t+dur+.02);
+  }
+  function sub(t,fr,dur,vol=.55){
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.type='sine';o.frequency.setValueAtTime(fr,t);o.frequency.exponentialRampToValueAtTime(fr*.72,t+dur);
+    g.gain.setValueAtTime(vol,t);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+    o.connect(g);g.connect(dry);o.start(t);o.stop(t+dur+.02);
+  }
+  function riser(dur=1.8){
+    const t=ctx.currentTime;
+    const o=ctx.createOscillator(),g=ctx.createGain(),lp=ctx.createBiquadFilter();
+    o.type='sawtooth';o.frequency.setValueAtTime(80,t);o.frequency.exponentialRampToValueAtTime(900,t+dur);
+    lp.type='lowpass';lp.frequency.setValueAtTime(200,t);lp.frequency.exponentialRampToValueAtTime(6000,t+dur);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.2,t+dur*.75);g.gain.exponentialRampToValueAtTime(.001,t+dur);
+    o.connect(lp);lp.connect(g);g.connect(revSend);o.start(t);o.stop(t+dur+.05);
+  }
+
+  /* ── step sequencers ── */
+  function stepCalm(t){
+    const spb=60/BPM.calm,s=spb/2;
+    const i=(_step.c=(_step.c||0))%32;
+    const BL=[0,0,3,0,7,7,5,3,0,0,3,5,7,5,3,0,0,3,5,7,0,0,7,5,3,5,7,3,0,0,5,7];
+    if(!(i%2))bass(t,BL[i>>1],s*1.7,.32);
+    if(i===0)  pad(t,[0,7,12,19],spb*8,.065);
+    if(i===16) pad(t,[3,10,15,22],spb*8,.055);
+    if(i===0||i===16) sub(t,27.5,spb*8,.14);
+    const LL=[0,null,null,3,null,7,null,null,12,null,10,null,7,null,3,null,
+               0,null,null,3,null,5,null,7,null,null,12,null,10,7,null,null];
+    if(LL[i]!==null)lead(t,LL[i]-12,s*1.6,.068);
+    hat(t,i%2===0?.15:.07);
+    if(i===8||i===24)hat(t,.26,true);
+    _step.c++;return s;
+  }
+  function stepTension(t){
+    const spb=60/BPM.tension,s=spb/2;
+    const i=(_step.t=(_step.t||0))%16;
+    const TL=[0,0,6,0,0,5,6,3,0,0,6,0,5,6,3,6];
+    bass(t,TL[i],s*.85,.4);
+    if(i===4||i===12)snare(t,.55);
+    if(i===8)snare(t,.28);
+    if(i===0)  pad(t,[0,5,10],spb*4,.052);
+    if(i===8)  pad(t,[1,6,11],spb*4,.046);
+    hat(t,i%4===0?.22:.1);
+    if(i%8===0)hat(t,.32,true);
+    if(i===0)  sub(t,41,spb*1.6,.65);
+    if(i===8)  sub(t,36.7,spb*.8,.42);
+    const TLL=[0,null,6,null,5,null,3,6,0,null,6,null,5,3,6,null];
+    if(TLL[i]!==null)lead(t,TLL[i],s*.72,.085);
+    _step.t++;return s;
+  }
+  function stepAction(t){
+    const spb=60/BPM.action,s=spb/4;
+    const i=(_step.a=(_step.a||0))%16;
+    if(i%4===0)kick(t,1);
+    if(i===4||i===12)snare(t,.62);
+    if(i===2||i===6||i===10||i===14)snare(t,.14);
+    hat(t,i%4===0?.26:i%2===0?.16:.08);
+    if(i===12)hat(t,.38,true);
+    const BL=[0,0,3,0,7,5,3,0,0,0,5,3,7,0,3,7];
+    bass(t,BL[i],s*.78,.46);
+    if(i===0) pad(t,[0,7,12,19],spb*.42,.13);
+    if(i===6) pad(t,[5,10,15],   spb*.32,.1);
+    if(i===8) pad(t,[3,10,15,22],spb*.42,.12);
+    if(i===14)pad(t,[7,12,17],   spb*.32,.09);
+    const LL=[0,null,3,null,7,5,null,3,0,null,5,null,10,7,5,null];
+    if(LL[i]!==null)lead(t,LL[i],s*1.5,.12);
+    if(i%2===1)hat(t,.045);
+    _step.a++;return s;
+  }
+  function stepDanger(t){
+    const spb=60/BPM.danger,s=spb/2;
+    const i=(_step.d=(_step.d||0))%16;
+    if(i===0)sub(t,36.7,spb*1.9,.75);
+    if(i===3)sub(t,36.7,spb*.7,.46);
+    const DL=[0,0,6,0,0,6,0,1,0,0,6,0,3,0,6,1];
+    if(i%2===0)bass(t,DL[i],s*.82,.36);
+    if(i===0) pad(t,[0,6,10,16],spb*4,.046);
+    if(i===8) pad(t,[1,7,11,17],spb*4,.040);
+    if(i===12)snare(t,.44);
+    if(i===4) snare(t,.18);
+    if(i%4===2)hat(t,.068);
+    const DLL=[null,null,6,null,null,null,10,null,null,null,6,null,null,null,1,null];
+    if(DLL[i]!==null)lead(t,DLL[i]+12,s*.9,.058);
+    _step.d++;return s;
+  }
+
+  function scheduleNext(){
+    if(!_running||!ctx)return;
+    const now=ctx.currentTime;
+    while(_nextT<now+LOOK){
+      const dt=_mood==='calm'?stepCalm(_nextT):_mood==='tension'?stepTension(_nextT):_mood==='action'?stepAction(_nextT):stepDanger(_nextT);
+      _nextT+=dt;
+    }
+  }
+
+  return{
+    init(audioCtx){
+      ctx=audioCtx;
+      masterG=ctx.createGain();masterG.gain.value=0;
+      const cmp=ctx.createDynamicsCompressor();
+      cmp.threshold.value=-14;cmp.knee.value=8;cmp.ratio.value=4;cmp.release.value=.25;
+      const rev=mkReverb(),revG=ctx.createGain();revG.gain.value=.38;
+      dry=ctx.createGain();dry.gain.value=1;
+      revSend=ctx.createGain();revSend.gain.value=1;
+      dry.connect(cmp);revSend.connect(rev);rev.connect(revG);revG.connect(cmp);
+      cmp.connect(masterG);masterG.connect(ctx.destination);
+    },
+    start(mood='calm'){
+      if(!ctx)return;
+      _delayN=null;_mood=mood;_running=true;_step={};
+      _nextT=ctx.currentTime+.05;
+      masterG.gain.cancelScheduledValues(ctx.currentTime);
+      masterG.gain.setValueAtTime(0,ctx.currentTime);
+      masterG.gain.linearRampToValueAtTime(VOL,ctx.currentTime+2.5);
+      if(_timer)clearInterval(_timer);
+      _timer=setInterval(scheduleNext,TICK);
+      scheduleNext();
+    },
+    setMood(mood){
+      if(!ctx||mood===_mood)return;
+      const prev=_mood;_mood=mood;
+      if(prev==='calm'||(prev==='tension'&&(mood==='action'||mood==='danger')))riser(1.6);
+      if(mood==='action')_step.a=0;
+      if(mood==='danger')_step.d=0;
+    },
+    stop(fade=1.8){
+      _running=false;if(_timer){clearInterval(_timer);_timer=null;}
+      if(masterG)masterG.gain.setTargetAtTime(0,ctx.currentTime,fade/3);
+    },
+    duck(){if(masterG)masterG.gain.setTargetAtTime(.06,ctx.currentTime,.2);},
+    unduck(){if(masterG)masterG.gain.setTargetAtTime(VOL,ctx.currentTime,.8);},
+    get running(){return _running;}
+  };
+})();
+
 // ── Helpers ───────────────────────────────────────────────────
 const $=id=>document.getElementById(id);
 const show=id=>{const e=$(id);if(e)e.classList.add('on');};
@@ -879,6 +1165,16 @@ function hideLive(){$('live-ind').classList.remove('on');}
 function dangerMode(on){
   if(on){$('danger-pulse').classList.add('on');$('dlg').classList.add('danger');}
   else{$('danger-pulse').classList.remove('on');$('dlg').classList.remove('danger');}
+}
+function scoreMoodForBg(bg,tint){
+  if(!bg)return'calm';const n=bg.toLowerCase();
+  // Danger: red tint or facility server = ominous
+  if(tint==='rgba(255,0,0,0.06)'||/facility_server/.test(n))return'danger';
+  // Action: drone hunt / laser corridor / facility assault
+  if(/drone_hunt|laser_corridor|facility_interior|\/facility\./.test(n))return'action';
+  // Tension: surveillance, sstv, secure comms
+  if(/usb_discovery|sstv|secure_phone|klooster/.test(n))return'tension';
+  return'calm';
 }
 function soundForBg(bg){
   if(!bg)return'indoor';const n=bg.toLowerCase();
@@ -1037,6 +1333,7 @@ function _showLine(){
   if(ln.charR){showChar('R',ln.charR,true);}
   else{$('cr').classList.remove('in','tk');}
   // Speak — advance only after TTS finishes the full sentence
+  M.duck(); // duck score during dialog
   V.speak(ln.text,{...prof,onEnd:()=>{
     stopTalking();
     _speechDone=true;
@@ -1056,6 +1353,7 @@ function _showLine(){
 }
 function _endDialog(){
   _dActive=false;V.stop();stopTalking();hide('dlg');
+  M.unduck(); // restore score after dialog
   if(_dDone)_dDone();
 }
 function advanceDialog(){
@@ -1367,14 +1665,14 @@ const SLIDES=[
 // ─── CH6: WHAT HAPPENS NEXT? ────────────────────────────
 
 { chapter:{n:'CHAPTER IX',t:'What Happens Next?'},
-  bg:BG('long_night'),kb:'kb-zo',duration:2800,grain:true },
+  bg:BG('mancave'),kb:'kb-zo',duration:2800,grain:true },
 
-{ bg:BG('long_night'),kb:'kb-zi',loc:'Mancave — 01:30',grain:true,
+{ bg:BG('mancave'),kb:'kb-zi',loc:'Mancave — 01:30',grain:true,
   dialog:[
     {speaker:'Ryan',charL:RY,text:"01:30. The data was all there. The 07:15 decision was mine to make.",color:''},
   ]},
 
-{ bg:BG('morning_after'),kb:'kb-pr',loc:'Morning After',
+{ bg:BG('bedroom'),kb:'kb-pr',loc:'Morning After',
   dialog:[
     {speaker:'Ryan',charL:RY,text:"I'm not going to tell you what happened next. That's what the game is for.",color:''},
   ]},
@@ -1635,6 +1933,7 @@ const P={
   start(){
     this.started=true;
     $('ctrls').style.display='flex';
+    M.start('calm');
     this.goTo(0);
   },
 
@@ -1698,6 +1997,8 @@ const P={
     const _isAction=/drone_hunt|laser_corridor/.test(_bgL)||/facility/.test(_bgL);
     if(_isDanger){dangerMode(true);setTimeout(doGlitch,1600+Math.random()*900);}
     if(_isAction&&!_isDanger){A.tension();}
+    // Score mood
+    A.setScoreMood(scoreMoodForBg(s.bg,s.tint));
     // Audio + Particles
     A.ambient(s.sound!==undefined?s.sound:soundForBg(s.bg));
     startParticles(s.particles!==undefined?s.particles:particlesForBg(s.bg));
@@ -1741,7 +2042,7 @@ document.addEventListener('keydown',e=>{
 
 // ── Boot ──────────────────────────────────────────────────────
 window.addEventListener('load',()=>{
-  V.init();A.init();
+  V.init();A.init();M.init(A.ctx);
   $('ctrls').style.display='none';
   runIntro();
 });
